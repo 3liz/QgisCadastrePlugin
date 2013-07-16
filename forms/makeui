@@ -1,0 +1,6 @@
+#!/bin/bash
+for ui in *.ui; do
+	py=${ui/.ui/.py}
+	echo $ui ">" $py
+	pyuic4 $ui > $py
+done
