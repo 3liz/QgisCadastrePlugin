@@ -29,6 +29,7 @@ import operator
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
+from qgis.gui import QgsGenericProjectionSelector
 
 from qadastre_library import *
 
@@ -49,61 +50,206 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         QDialog.__init__(self)
         self.iface = iface
         self.setupUi(self)
-
+        
         # Signals/Slot Connections
         self.liDbType.currentIndexChanged[str].connect(self.updateConnectionList)
         self.liDbConnection.currentIndexChanged[str].connect(self.updateSchemaList)
+        self.btProcessImport.clicked.connect(self.processImport)
+        self.btDbCreateSchema.clicked.connect(self.createSchema)
+        
+        # path buttons selectors
+        from functools import partial
+        self.pathSelectors = {
+            "edigeoSourceDir" : {
+                "button" : self.btEdigeoSourceDir,
+                "input" : self.inEdigeoSourceDir
+            },
+            "majicSourceDir" : {
+                "button" : self.btMajicSourceDir,
+                "input" : self.inMajicSourceDir
+            }
+        }
+        for key, item in self.pathSelectors.items():
+            control = item['button']
+            slot = partial(self.chooseDataPath, key)
+            control.clicked.connect(slot)
+            
+        # projection selector
+        self.projSelectors = {
+            "edigeoSourceProj" : {
+                "button" : self.btEdigeoSourceProj,
+                "input" : self.inEdigeoSourceProj,
+                "sentence" : "Choisir la projection des fichiers Edigeo"
+            },
+            "edigeoTargetProj" : {
+                "button" : self.btEdigeoTargetProj,
+                "input" : self.inEdigeoTargetProj,
+                "sentence" : "Choisir la projection de destination"
+            }
+        }
+        for key, item in self.projSelectors.items():
+            control = item['button']
+            slot = partial(self.chooseProjection, key)
+            control.clicked.connect(slot)
         
         # Set initial values
+        self.dataVersionList = [ '2011', '2012']
+        self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/Qadastre"
         
+        self.dbType = None
+        self.dbpluginclass = None
+        self.connectionName = None
+        self.connection = None
+        self.db = None
+        self.schema = None
+        self.schemaList = None
+        self.edigeoSourceProj = None
+        self.edigeoTargetProj = None
+        
+        
+        self.qadastreImportOptions = {
+            'dataVersion' : '2012',
+            'dataYear' : '2011',
+            'edigeoSourceDir' : None,
+            'edigeoSourceProj' : None,
+            'edigeoTargetProj' : None,
+            'majicSourceDir' : None
+        }
+        
+    def populateDataVersionCombobox(self):
+        '''
+        Populate the list of data version (representing a year)
+        '''
+        self.liDataVersion.clear()
+        for year in self.dataVersionList:
+            self.liDataVersion.addItem(year)
     
     def updateLog(self, msg):
         '''
         Update the log 
         '''
-        self.txtImportLog.append(msg)
+        self.txtImportLog.append(msg.decode('UTF8'))
         
         
     def updateConnectionList(self):
         '''
         Update the combo box containing the database connection list
         '''
-        dbType = unicode(self.liDbType.currentText()).lower()
+        QApplication.setOverrideCursor(Qt.WaitCursor)
         
-        # instance of db_manager plugin class
-        dbpluginclass = createDbPlugin( dbType )
-          
-        # fill the connections combobox
+        dbType = unicode(self.liDbType.currentText()).lower()       
         self.liDbConnection.clear()
-        self.liDbConnection.addItem( u"--Choisir--")
-        for c in dbpluginclass.connections():
-            self.liDbConnection.addItem( unicode(c.connectionName()))
+        
+        if self.liDbType.currentIndex() != 0:
+            self.dbType = dbType
+            # instance of db_manager plugin class
+            dbpluginclass = createDbPlugin( dbType )
+            self.dbpluginclass = dbpluginclass
+          
+            # fill the connections combobox
+            for c in dbpluginclass.connections():
+                self.liDbConnection.addItem( unicode(c.connectionName()))
+        QApplication.restoreOverrideCursor()
 
+    def toggleSchemaList(self, t):
+        '''
+        Toggle Schema list and inputs
+        '''
+        self.liDbSchema.setEnabled(t)
+        self.inDbCreateSchema.setEnabled(t)
+        self.btDbCreateSchema.setEnabled(t)   
+        
 
     def updateSchemaList(self):
         '''
         Update the combo box containing the schema list if relevant
         '''
-        dbConnectionName = unicode(self.liDbConnection.currentText())
-        dbType = unicode(self.liDbType.currentText()).lower()
-        
         self.liDbSchema.clear()
-        if dbConnectionName != u"--Choisir--":
+        
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+        connectionName = unicode(self.liDbConnection.currentText())
+        dbType = unicode(self.liDbType.currentText()).lower()
+
+        # Deactivate schema fields
+        self.toggleSchemaList(False)
+        
+        if dbType == 'postgis':            
             
-            if dbType == 'postgis':
-                # Activate schema fields
-                self.liDbSchema.setEnabled(True)              
-                self.liDbSchema.addItem( u"--Choisir--")
-                
-                # Get schema list
-                dbpluginclass = createDbPlugin( dbType, dbConnectionName )
-                con = dbpluginclass.connect()
+            # Activate schema fields
+            self.toggleSchemaList(True)
+            
+            # Get schema list
+            dbpluginclass = createDbPlugin( dbType, connectionName )
+            self.dbpluginclass = dbpluginclass
+            connection = dbpluginclass.connect()
+            if connection:
+                self.connection = connection
                 db = dbpluginclass.database()
-                for s in db.schemas():
-                    self.liDbSchema.addItem( unicode(s.name))                
+                if db:
+                    self.db = db
+                    self.schemaList = []
+                    for s in db.schemas():
+                        self.liDbSchema.addItem( unicode(s.name))
+                        self.schemaList.append(unicode(s.name))
+        QApplication.restoreOverrideCursor()
+                
+    def createSchema(self):
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+        try:
+            if self.db == None:
+                QMessageBox.information(self, QApplication.translate("DBManagerPlugin", "Sorry"), QApplication.translate("DBManagerPlugin", "No database selected or you are not connected to it."))
+                return
+            schema = self.inDbCreateSchema.text()
+        finally:
+            QApplication.restoreOverrideCursor()
+
+        if schema:
+            self.db.createSchema(schema)
+            self.updateSchemaList()
+            listDic = { self.schemaList[i]:i for i in range(0, len(self.schemaList)) }
+            self.liDbSchema.setCurrentIndex(listDic[schema])
+            self.inDbCreateSchema.clear()
+
+            
+    def chooseDataPath(self, key):
+        '''
+        Ask the user to select a folder 
+        and write down the path to appropriate field
+        '''
+        ipath = QFileDialog.getExistingDirectory( 
+            None, 
+            "Choisir le répertoire contenant les fichiers", 
+            str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t') 
+        )
+        if os.path.exists(unicode(ipath)):
+            self.pathSelectors[key]['input'].setText(unicode(ipath))
+            
+    def chooseProjection(self, key):
+        '''
+        Let the user choose a SCR
+        '''
+        header = u"Choisir la projection"
+        sentence = self.projSelectors[key]['sentence']
+        projSelector = QgsGenericProjectionSelector(self)
+        projSelector.setMessage( "<h2>%s</h2>%s" % (header.encode('UTF8'), sentence.encode('UTF8')) )
+        if projSelector.exec_():
+            self.crs = QgsCoordinateReferenceSystem( projSelector.selectedCrsId(), QgsCoordinateReferenceSystem.InternalCrsId )
+            if len(projSelector.selectedAuthId()) == 0:
+                QMessageBox.information(self, self.tr("Export to new projection"), self.tr("No Valid CRS selected"))
+                return
             else:
-                # Deactivate schema fields
-                self.liDbSchema.setEnabled(False)
+                self.projSelectors[key]['input'].clear()
+                self.projSelectors[key]['input'].setText(self.crs.authid() + " - " + self.crs.description())
+        else:
+            return        
+        
+                
+                
+    def processImport(self):
+        '''
+        Lancement du processus d'import
+        '''
+        self.updateLog("<h2>Démarrage de l'import</h2>")
         
         
 

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_qadastre.ui'
 #
-# Created: Fri Jul  5 15:18:44 2013
+# Created: Tue Jul 16 11:53:12 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
