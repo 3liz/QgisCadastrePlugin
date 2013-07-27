@@ -31,8 +31,6 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import QgsGenericProjectionSelector
 
-from qadastre_library import *
-
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/forms")
 
@@ -43,7 +41,9 @@ from db_manager.db_plugins import createDbPlugin
 #        import - Import data from EDIGEO and MAJIC files
 # --------------------------------------------------------
 
+
 from qadastre_import_form import *
+from qadastre_import import *
 
 class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
     def __init__(self, iface):
@@ -106,7 +106,6 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.edigeoSourceProj = None
         self.edigeoTargetProj = None
         
-        
         self.qadastreImportOptions = {
             'dataVersion' : '2012',
             'dataYear' : '2011',
@@ -114,6 +113,15 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             'edigeoSourceProj' : None,
             'edigeoTargetProj' : None,
             'majicSourceDir' : None
+        }
+        
+        self.majicSourceFileNames = {
+            'bati' : 'REVBATI.800',
+            'fantoir' : 'TOPFANR.800',
+            'lotlocal': 'REVD166.800',
+            'nbati': 'REVNBAT.800',
+            'pdl': 'REVFPDL.800',
+            'prop': 'REVPROP.800'
         }
         
     def populateDataVersionCombobox(self):
@@ -192,7 +200,8 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
                         self.liDbSchema.addItem( unicode(s.name))
                         self.schemaList.append(unicode(s.name))
         QApplication.restoreOverrideCursor()
-                
+
+
     def createSchema(self):
         QApplication.setOverrideCursor(Qt.WaitCursor)
         try:
@@ -204,11 +213,21 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             QApplication.restoreOverrideCursor()
 
         if schema:
-            self.db.createSchema(schema)
-            self.updateSchemaList()
-            listDic = { self.schemaList[i]:i for i in range(0, len(self.schemaList)) }
-            self.liDbSchema.setCurrentIndex(listDic[schema])
-            self.inDbCreateSchema.clear()
+            try:
+                self.db.createSchema(schema)
+
+            except BaseError as e:
+            
+                DlgDbError.showError(e, self)
+                self.updateLog(e.msg)
+                return
+
+            finally:        
+                self.updateSchemaList()
+                listDic = { self.schemaList[i]:i for i in range(0, len(self.schemaList)) }
+                self.liDbSchema.setCurrentIndex(listDic[schema])
+                self.inDbCreateSchema.clear()
+                QApplication.restoreOverrideCursor()
 
             
     def chooseDataPath(self, key):
@@ -249,7 +268,24 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         '''
         Lancement du processus d'import
         '''
-        self.updateLog("<h2>Démarrage de l'import</h2>")
+        
+        self.dataVersion = unicode(self.liDataVersion.currentText())
+        self.dataYear = unicode(self.inDataYear.text())
+        self.schema = unicode(self.liDbSchema.currentText())
+        self.majicSourceDir = str(self.inMajicSourceDir.text().encode('utf-8')).strip(' \t')
+        self.edigeoSourceDir = unicode(self.inEdigeoSourceDir.text())
+               
+        # qadastreImport instance
+        qi = qadastreImport(self)
+               
+        # Run Script for creating tables
+        qi.installOpencadastreStructure()
+
+        # Run Edigeo import
+#        qi.importEdigeo()
+
+        # Run MAJIC import
+        qi.importMajic()
         
         
 
