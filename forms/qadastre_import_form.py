@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_import_form.ui'
 #
-# Created: Wed Jul 17 11:29:00 2013
+# Created: Mon Jul 29 13:31:32 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,7 +24,7 @@ class Ui_qadastre_import_form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 489, 625))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 489, 656))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -171,10 +171,14 @@ class Ui_qadastre_import_form(object):
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_14.addItem(spacerItem1)
         self.verticalLayout_15.addLayout(self.horizontalLayout_14)
-        self.btProcessImport = QtGui.QPushButton(self.groupBox_7)
-        self.btProcessImport.setObjectName(_fromUtf8("btProcessImport"))
-        self.verticalLayout_15.addWidget(self.btProcessImport)
         self.verticalLayout_6.addWidget(self.groupBox_7)
+        self.btProcessImport = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
+        self.btProcessImport.setObjectName(_fromUtf8("btProcessImport"))
+        self.verticalLayout_6.addWidget(self.btProcessImport)
+        self.pbProcessImport = QtGui.QProgressBar(self.scrollAreaWidgetContents_2)
+        self.pbProcessImport.setProperty("value", 0)
+        self.pbProcessImport.setObjectName(_fromUtf8("pbProcessImport"))
+        self.verticalLayout_6.addWidget(self.pbProcessImport)
         self.txtImportLog = QtGui.QTextEdit(self.scrollAreaWidgetContents_2)
         self.txtImportLog.setObjectName(_fromUtf8("txtImportLog"))
         self.verticalLayout_6.addWidget(self.txtImportLog)

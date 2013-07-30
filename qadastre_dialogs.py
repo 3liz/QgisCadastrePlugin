@@ -136,7 +136,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         '''
         Update the log 
         '''
-        self.txtImportLog.append(msg.decode('UTF8'))
+        self.txtImportLog.append(msg)
         
         
     def updateConnectionList(self):

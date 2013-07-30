@@ -1289,7 +1289,8 @@ CREATE TABLE geo_commune
   tex2 character varying(80),
   creat_date date,
   update_dat date,
-  commune character varying(10)
+  commune character varying(10),
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1320,7 +1321,8 @@ CREATE TABLE geo_section
   tex character varying(2),
   geo_commune character varying(7) NOT NULL,
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1368,7 +1370,8 @@ CREATE TABLE geo_subdsect
   geo_inp character varying(2),
   dred date,
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1417,7 +1420,8 @@ CREATE TABLE geo_parcelle
   codm character varying(80),
   creat_date date,
   update_dat date,
-  parcelle character varying(19)
+  parcelle character varying(19),
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1453,7 +1457,8 @@ CREATE TABLE geo_subdfisc
   object_rid character varying(80),
   tex character varying(1),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1494,7 +1499,8 @@ CREATE TABLE geo_voiep
   object_rid character varying(80),
   tex character varying(80),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1522,7 +1528,8 @@ CREATE TABLE geo_numvoie
   object_rid character varying(80),
   tex character varying(5),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1563,7 +1570,8 @@ CREATE TABLE geo_lieudit
   object_rid character varying(80),
   tex character varying(80),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1595,7 +1603,8 @@ CREATE TABLE geo_batiment
   geo_dur character varying(2),
   tex character varying(80),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1637,7 +1646,8 @@ CREATE TABLE geo_zoncommuni
   object_rid character varying(80),
   tex character varying(255),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=TRUE
@@ -1665,7 +1675,8 @@ CREATE TABLE geo_tronfluv
   object_rid character varying(80),
   tex character varying(255),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (  OIDS=FALSE
 );
@@ -1708,7 +1719,8 @@ CREATE TABLE geo_ptcanv
   geo_map character varying(2),
   geo_sym character varying(2),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1740,7 +1752,8 @@ CREATE TABLE geo_borne
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1779,7 +1792,8 @@ CREATE TABLE geo_croix
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1820,7 +1834,8 @@ CREATE TABLE geo_symblim
   ori numeric(12,9),
   geo_sym  character varying(2),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1864,7 +1879,8 @@ CREATE TABLE geo_tpoint
   tex character varying(80),
   geo_sym  character varying(2),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1908,7 +1924,8 @@ CREATE TABLE geo_tline
   tex character varying(80),
   geo_sym  character varying(2),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -1951,7 +1968,8 @@ CREATE TABLE geo_tsurf
   tex character varying(80),
   geo_sym  character varying(2),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -2022,7 +2040,8 @@ CREATE TABLE geo_label
   geo_tline character varying(14),
   geo_tronfluv character varying(14),
   creat_date date,
-  update_dat date
+  update_dat date,
+  lot character(3)
 )
 WITH (
   OIDS=FALSE
@@ -2080,198 +2099,4 @@ COMMENT ON COLUMN geo_label.geo_tronfluv IS 'TronFluv';
 CREATE TABLE edigeo_rel ( edigeo_rel serial,nom character varying(30),de character varying(80),vers character varying(80));
 ALTER TABLE edigeo_rel ADD PRIMARY KEY (edigeo_rel );
 
-INSERT INTO om_parametre values (3,'année','2011',1);
-CREATE TABLE dgi_parcelle AS
- SELECT 
-	row_number() OVER(ORDER BY g.geo_parcelle DESC) AS dgi_parcelle, 
-	p.ccosec || p.dnupla AS code, 
-	p.ccodep || p.ccocom AS code_insee, 
-	p.ccosec as section, 
-	p.dnupla as dnupla, 
-	g.geom AS geom
-   FROM geo_parcelle g
-   JOIN parcelle p 
-	ON  g.parcelle = p.parcelle
-   JOIN om_parametre o 
-	ON p.annee = o.valeur AND o.om_parametre = 3;
-ALTER TABLE dgi_parcelle
-  ADD CONSTRAINT dgi_parcelle_pk PRIMARY KEY(dgi_parcelle );
-ALTER TABLE dgi_parcelle DROP COLUMN geom;
-SELECT AddGeometryColumn ( current_schema::text, 'dgi_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX dgi_parcelle_geom_idx
-  ON dgi_parcelle
-  USING gist
-  (geom );
 
-
-CREATE TABLE dgi_uf AS
-   SELECT
-	row_number() OVER(ORDER BY g.geo_parcelle DESC) AS dgi_uf, 
-	p.ccosec || p.dnupla AS code, 
-	p.ccodep || p.ccocom AS code_insee, 
-	p.ccosec as section, 
-	p.dnupla as dnupla, 
-	g.geom_uf AS geom
-   FROM geo_parcelle g
-   JOIN parcelle p 
-	ON  g.parcelle = p.parcelle
-   JOIN om_parametre o 
-	ON p.annee = o.valeur AND o.om_parametre = 3
-   WHERE geom_uf is not null;
-ALTER TABLE dgi_uf
-  ADD CONSTRAINT dgi_uf_pk PRIMARY KEY(dgi_uf );
-ALTER TABLE dgi_uf DROP COLUMN geom;
-SELECT AddGeometryColumn ( current_schema::text, 'dgi_uf', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX dgi_uf_geom_idx
-  ON dgi_uf
-  USING gist
-  (geom );
-
-CREATE TABLE dgi_batiment AS
-   SELECT 
-	row_number() OVER(ORDER BY b.geo_batiment DESC) AS dgi_batiment,
-	b.geo_batiment AS code,
-	CASE WHEN geo_dur='01' THEN 'bâti dur' ELSE 'bâti léger' END AS type,
-	b.geom AS geom
-   FROM geo_batiment b
-   JOIN om_parametre o 
-	ON b.annee = o.valeur AND o.om_parametre = 3;
-ALTER TABLE dgi_batiment
-  ADD CONSTRAINT dgi_batiment_pk PRIMARY KEY(dgi_batiment );
-ALTER TABLE dgi_batiment DROP COLUMN geom;
-SELECT AddGeometryColumn ( current_schema::text, 'dgi_batiment', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX dgi_batiment_geom_idx
-  ON dgi_batiment
-  USING gist
-  (geom );
-
-CREATE TABLE dgi_adresse_parcelle AS
-	SELECT	row_number() OVER(ORDER BY parcelle DESC) AS dgi_adresse_parcelle,
-		parcelle,
-		code_insee,
-		section,
-		dnupla,
-		code_rivoli,
-		numero,
-		repetition,
-		lib_voie,
-		numero||' '||CASE WHEN repetition='' THEN '' ELSE  repetition||' ' END||lib_voie AS adresse,
-		numero||' '||CASE WHEN repetition='' THEN '' ELSE  repetition END AS affichage,
-		'-'||code_rivoli||'-' AS cle_rivoli,
-		'-'||code_rivoli||'-'||numero||'-' AS cle_rivoli_numero,
-		'-'||code_rivoli||'-'||numero||'-'||repetition||'-' AS cle_rivoli_numero_rep,
-		1 as multi_adresse,
-		geom
-	FROM (
-	SELECT DISTINCT l.ccosec || l.dnupla AS parcelle, 
-		l.ccodep || l.ccocom AS code_insee, 
-		l.ccosec AS section, 
-		l.dnupla AS dnupla,
-		l.ccodep || l.ccocom||l.ccoriv AS code_rivoli,
-		to_number(CASE WHEN trim(dnvoiri)='' THEN '0' ELSE trim(dnvoiri) END,'0000') AS numero,
-		CASE WHEN trim(l.dindic) IN ('','-','6','7') THEN '' WHEN trim(l.dindic)='3' THEN 'TER' WHEN trim(l.dindic)='4' THEN 'QUATER' WHEN trim(l.dindic)='5' THEN 'CINQUIES' ELSE  trim(l.dindic) END AS repetition,
-		trim(l.dvoilib) AS lib_voie,
-		g.geom AS geom
-	FROM	local00 l
-	JOIN	om_parametre p
-		ON om_parametre=3 AND l.annee=p.valeur
-	JOIN	geo_parcelle g
-		ON g.parcelle=l.parcelle
-	 ) AS v;
-ALTER TABLE dgi_adresse_parcelle
-  ADD CONSTRAINT dgi_adresse_parcelle_pk PRIMARY KEY(dgi_adresse_parcelle );
-ALTER TABLE dgi_adresse_parcelle DROP COLUMN geom;
-SELECT AddGeometryColumn ( current_schema::text, 'dgi_adresse_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX dgi_adresse_parcelle_geom_idx
-  ON dgi_adresse_parcelle
-  USING gist
-  (geom );
-
-CREATE TABLE dgi_adresse_uf AS
-SELECT	row_number() OVER(ORDER BY parcelle DESC) AS dgi_adresse_uf,
-	parcelle,
-	code_insee,
-	section,
-	dnupla,
-	code_rivoli,
-	numero,
-	repetition,
-	lib_voie,
-	adresse,
-	affichage,
-	cle_rivoli,
-	cle_rivoli_numero,
-	cle_rivoli_numero_rep,
-	1 as multi_adresse,
-	geom
-FROM (
-	SELECT DISTINCT 
-		parcelle,
-		code_insee,
-		section,
-		dnupla,
-		code_rivoli,
-		numero,
-		repetition,
-		lib_voie,
-		numero||' '||CASE WHEN repetition='' THEN '' ELSE  repetition||' ' END||lib_voie AS adresse,
-		numero||' '||CASE WHEN repetition='' THEN '' ELSE  repetition END AS affichage,
-		'-'||code_rivoli||'-' AS cle_rivoli,
-		'-'||code_rivoli||'-'||numero||'-' AS cle_rivoli_numero,
-		'-'||code_rivoli||'-'||numero||'-'||repetition||'-' AS cle_rivoli_numero_rep,
-		geom
-	FROM (
-		SELECT DISTINCT 
-			l.ccosec || l.dnupla AS parcelle, 
-			l.ccodep || l.ccocom AS code_insee, 
-			l.ccosec AS section, 
-			l.dnupla AS dnupla,
-			l.ccodep || l.ccocom||l.ccoriv AS code_rivoli,
-			to_number(CASE WHEN trim(dnvoiri)='' THEN '0' ELSE trim(dnvoiri) END,'0000') AS numero,
-			CASE WHEN trim(l.dindic) IN ('','-','6','7') THEN '' WHEN trim(l.dindic)='3' THEN 'TER' WHEN trim(l.dindic)='4' THEN 'QUATER' WHEN trim(l.dindic)='5' THEN 'CINQUIES' ELSE  trim(l.dindic) END AS repetition,
-			trim(l.dvoilib) AS lib_voie,
-			g.geom_uf AS geom
-		FROM	local00 l
-		JOIN	om_parametre p
-			ON om_parametre=3 AND l.annee=p.valeur
-		JOIN	geo_parcelle g
-			ON g.parcelle=l.parcelle
-		WHERE	l.parcelle NOT IN (select parcellea from parcellecomposante)
-	  UNION
-		SELECT DISTINCT 
-			uf.ccosec || uf.dnupla AS parcelle, 
-			uf.ccodep || uf.ccocom AS code_insee, 
-			uf.ccosec AS section, 
-			uf.dnupla AS dnupla,
-			l.ccodep || l.ccocom||l.ccoriv AS code_rivoli,
-			to_number(CASE WHEN trim(l.dnvoiri)='' THEN '0' ELSE trim(l.dnvoiri) END,'0000') AS numero,
-			CASE WHEN trim(l.dindic) IN ('','-','6','7') THEN '' WHEN trim(l.dindic)='3' THEN 'TER' WHEN trim(l.dindic)='4' THEN 'QUATER' WHEN trim(l.dindic)='5' THEN 'CINQUIES' ELSE  trim(l.dindic) END AS repetition,
-			trim(l.dvoilib) AS lib_voie,
-			g.geom_uf AS geom
-		FROM	local00 l
-		JOIN	parcellecomposante pc
-			ON pc.parcellea=l.parcelle
-		JOIN	om_parametre p
-			ON om_parametre=3 AND l.annee=p.valeur
-		JOIN	parcelle uf
-			ON pc.parcelle=uf.parcelle
-		JOIN	geo_parcelle g
-			ON g.parcelle=uf.parcelle
-	  ) b
-) c;
-ALTER TABLE dgi_adresse_uf
-  ADD CONSTRAINT dgi_adresse_uf_pk PRIMARY KEY(dgi_adresse_uf );
-ALTER TABLE dgi_adresse_uf DROP COLUMN geom;
-SELECT AddGeometryColumn ( current_schema::text, 'dgi_adresse_uf', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX dgi_adresse_uf_geom_idx
-  ON dgi_adresse_uf
-  USING gist
-  (geom );
- 
-UPDATE dgi_adresse_parcelle set multi_adresse=c.cpt
-FROM (select parcelle, count(*) AS cpt FROM dgi_adresse_uf GROUP BY parcelle HAVING count(*) > 1) c
-WHERE c.parcelle=dgi_adresse_parcelle.parcelle;
-
-UPDATE dgi_adresse_uf set multi_adresse=c.cpt
-FROM (select parcelle, count(*) AS cpt FROM dgi_adresse_uf GROUP BY parcelle HAVING count(*) > 1) c
-WHERE c.parcelle=dgi_adresse_uf.parcelle;

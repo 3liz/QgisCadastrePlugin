@@ -31,6 +31,7 @@ from distutils import dir_util
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
+from datetime import datetime
 
 # db_manager scripts
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
@@ -62,19 +63,52 @@ class qadastreImport(QObject):
             '[FICHIER_PROP]': self.dialog.majicSourceFileNames['prop']
         }
         self.go = True
+        self.startTime = datetime.now()
+        self.step = 0
+        self.totalSteps = 10
+        
+        self.beginImport()
+        
+    def beginImport(self):
+        '''
+        Process to run before importing data
+        '''
+        self.dialog.updateLog(u'<h3>Initialisation</h3>')
+        self.updateProgressBar(False)
         
         # copy opencadastre script files to temporary dir
-        self.copyFilesToTemp(self.scriptSourceDir, self.scriptDir)
+        self.copyFilesToTemp(self.scriptSourceDir, self.scriptDir)        
 
+    def updateProgressBar(self, move=True):
+        '''
+        Update the progress bar
+        '''
+        self.step+=1
+        self.dialog.pbProcessImport.setValue(int(self.step * 100/self.totalSteps))
+        if not move:
+            self.step-=1
+            
+    def updateTimer(self):
+        '''
+        Update the timer for each process
+        '''
+        b = datetime.now()
+        diff = b - self.startTime
+        self.dialog.updateLog(u'%s s' % diff.seconds)
 
     def installOpencadastreStructure(self):
         '''
         Create the empty db structure
         '''        
         # install opencadastre structure
-        self.executeSqlScript('create_metier.sql')
-        self.executeSqlScript('create_constraints.sql')
-        self.executeSqlScript('insert_nomenclatures.sql')
+        scriptList = [
+            {'title' : u'Création des tables', 'script': 'create_metier.sql'},
+            {'title' : u'Ajout des contraintes', 'script': 'create_constraints.sql'},
+            {'title' : u'Ajout de la nomenclature', 'script': 'insert_nomenclatures.sql'}
+        ]
+        for item in scriptList:
+            s = item['script']
+            self.executeSqlScript(s, item['title'])
         
         return None
 
@@ -90,6 +124,8 @@ class qadastreImport(QObject):
 
     def importMajic(self):
     
+        self.dialog.updateLog(u'<h3>Données MAJIC3</h3>')
+        self.updateProgressBar(False)
         
         # copy files in temp dir
         self.copyFilesToTemp(self.dialog.majicSourceDir, self.majicDir)
@@ -99,21 +135,50 @@ class qadastreImport(QObject):
         replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
         
         scriptList = [
-            'COMMUN/suppression_constraintes.sql',
-            'COMMUN/majic3_purge_donnees.sql',
-            'COMMUN/majic3_import_donnees_brutes.sql',
-            '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion,
-            'COMMUN/creation_contraintes.sql',
-            'COMMUN/majic3_purge_donnees_brutes.sql'
+            {'title' : u'Suppression des contraintes', 'script' : 'COMMUN/suppression_constraintes.sql'},
+            {'title' : u'Purge des données', 'script' : 'COMMUN/majic3_purge_donnees.sql'},
+            {'title' : u'Import des fichiers', 'script' : 'COMMUN/majic3_import_donnees_brutes.sql'},
+            {'title' : u'Formatage des données', 'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion},
+            {'title' : u'Restauration des contraintes', 'script' : 'COMMUN/creation_contraintes.sql'},
+            {'title' : u'Purge des données brutes', 'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'}
         ]
-        for s in scriptList:
+        for item in scriptList:
+            s = item['script']
             scriptPath = os.path.join(self.scriptDir, s)
             self.replaceParametersInScript(scriptPath, replaceDict)
-            self.executeSqlScript(s)
-    
-        return None
+            self.executeSqlScript(s, item['title'])
         
+        self.endImport()
+        
+        return None
 
+        
+    def endImport(self):
+        '''
+        Actions done when import has finished
+        '''
+
+        # Remove the temp folders
+        try:            
+            shutil.rmtree(self.scriptDir)
+            shutil.rmtree(self.edigeoDir)
+            shutil.rmtree(self.majicDir)
+            
+        except IOError, e:
+            msg = u"Erreur lors de la suppresion des répertoires temporaires: %s" % e
+            self.go = False
+            return msg
+
+        if self.go:
+            msg = u"Import terminé"
+        else:
+            msg = u"Des erreurs ont été rencontrées pendant l'import. Veuillez consulter le log."
+
+        QMessageBox.information(self.dialog, "Qadastre", msg)
+        self.step = self.totalSteps
+        self.updateProgressBar()
+        
+        return None
         
     #
     # TOOLS
@@ -125,23 +190,27 @@ class qadastreImport(QObject):
         Copy opencadastre scripts
         into a temporary folder
         '''
+        if self.go:
         
-        self.dialog.updateLog('Copie des fichiers de %s' % source)
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+            self.dialog.updateLog(u'* Copie du répertoire %s' % source.decode('UTF8'))
+            self.updateProgressBar(False)
+            QApplication.setOverrideCursor(Qt.WaitCursor)
+            
+            # copy script directory
+            try:
+                dir_util.copy_tree(source, target)
+                os.chmod(target, 0777)
+            except IOError, e:
+                msg = u"Erreur lors de la copie des scripts d'import: %s" % e
+                QMessageBox.information(self.dialog, 
+                "Qadastre", msg)
+                self.go = False
+                return msg
         
-        # copy script directory
-        try:
-            dir_util.copy_tree(source, target)
-            os.chmod(target, 0777)
-        except IOError, e:
-            msg = u"Erreur lors de la copie des scripts d'import: %s" % e
-            QMessageBox.information(self.dialog, 
-            "Qadastre", msg)
-            self.go = False
-            return msg
-    
-        finally:
-            QApplication.restoreOverrideCursor()
+            finally:
+                QApplication.restoreOverrideCursor()
+                self.updateTimer()
+                self.updateProgressBar()
         
         return None
 
@@ -153,30 +222,31 @@ class qadastreImport(QObject):
         with given values
         '''
         
-        self.dialog.updateLog('Configuration du script %s' % scriptPath)
-        QApplication.setOverrideCursor(Qt.WaitCursor)
-        
-        def replfunc(match):
-            return replaceDict[match.group(0)]
-        regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
+        if self.go:
 
-        try:       
-            fin = open(scriptPath)
-            data = fin.read().decode("utf-8-sig")
-            fin.close()
-            fout = open(scriptPath, 'w')
-            data = regex.sub(replfunc, data).encode('utf-8')
-            fout.write(data)
-            fout.close()
+            QApplication.setOverrideCursor(Qt.WaitCursor)
             
-        except IOError, e:
-            msg = u"Erreur lors du paramétrage des scripts d'import: %s" % e
-            self.dialog.updateLog(msg)
-            return msg
-            
-        finally:
-            QApplication.restoreOverrideCursor()            
-        
+            def replfunc(match):
+                return replaceDict[match.group(0)]
+            regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
+
+            try:       
+                fin = open(scriptPath)
+                data = fin.read().decode("utf-8-sig")
+                fin.close()
+                fout = open(scriptPath, 'w')
+                data = regex.sub(replfunc, data).encode('utf-8')
+                fout.write(data)
+                fout.close()
+                
+            except IOError, e:
+                msg = u"Erreur lors du paramétrage des scripts d'import: %s" % e
+                self.go = False
+                self.dialog.updateLog(msg)
+                return msg
+                
+            finally:
+                QApplication.restoreOverrideCursor()            
         
         return None
 
@@ -186,55 +256,52 @@ class qadastreImport(QObject):
         Set the search_path parameters if postgis database
         '''        
         prefix = u'SET search_path = %s, public, pg_catalog;' % schema
-        sql = prefix + sql
+        if re.search('^BEGIN;', sql):
+            sql = sql.replace('BEGIN;', 'BEGIN;%s' % prefix)
+        else:
+            sql = prefix + sql
 
         return sql
 
 
-    def executeSqlScript(self, scriptName):
+    def executeSqlScript(self, scriptName, scriptTitle):
         '''
         Execute an SQL script file
         from opencadastre
         '''
-    
-        self.dialog.updateLog('Lancement du script %s' % scriptName)
-        QApplication.setOverrideCursor(Qt.WaitCursor)
         
-        # Read sql script
-        sql = open(os.path.join(self.scriptDir, scriptName)).read()
-        sql = sql.decode("utf-8-sig")
-        
-        # Set schema if needed
-        if self.dialog.dbType == 'postgis':
-            sql = self.setSearchPath(sql, self.dialog.schema)
+        if self.go:
+
+            self.dialog.updateLog(u'* %s' % scriptTitle)
+            self.updateProgressBar(False)
+            QApplication.setOverrideCursor(Qt.WaitCursor)
             
-        if scriptName == 'create_metier.sql':
-            sup = u'''
-              SET search_path = %s, public, pg_catalog;
-              CREATE TABLE om_parametre (
-              om_parametre serial,
-              libelle character varying(20) NOT NULL,
-              valeur character varying(50) NOT NULL,
-              om_collectivite integer NOT NULL
-              );
-            ''' % self.dialog.schema
-            sql = sup + sql
-        
-        # Execute query
-        c = None
-        try:
-            c = self.connector._execute_and_commit(sql)
+            # Read sql script
+            sql = open(os.path.join(self.scriptDir, scriptName)).read()
+            sql = sql.decode("utf-8-sig")
+            
+            # Set schema if needed
+            if self.dialog.dbType == 'postgis':
+                sql = self.setSearchPath(sql, self.dialog.schema)
 
-        except BaseError as e:
-        
-            DlgDbError.showError(e, self.dialog)
-            self.dialog.updateLog(e.msg)
-            return
+            # Execute query
+            c = None
+            try:
+                c = self.connector._execute_and_commit(sql)
 
-        finally:
-            QApplication.restoreOverrideCursor()
-            if c:
-                c.close()
-                del c
+            except BaseError as e:
+            
+                DlgDbError.showError(e, self.dialog)
+                self.go = False
+                self.dialog.updateLog(e.msg)
+                return
+
+            finally:
+                QApplication.restoreOverrideCursor()
+                if c:
+                    c.close()
+                    del c
+                self.updateTimer()
+                self.updateProgressBar()
     
         return None

@@ -345,6 +345,8 @@ INSERT INTO gnextl VALUES ('GS', 'Exo pour groupement de coopération sanitaire'
 INSERT INTO gnextl VALUES ('HU', 'Exo de 15 ans pour logements sociaux acquis ou aménagés');
 INSERT INTO gnextl VALUES ('HY', 'Exo de 25 ans pour logements sociaux acquis ou aménagés');
 INSERT INTO gnextl VALUES ('LA', 'Durée variable - totale ou partielle - PLA');
+INSERT INTO gnextl VALUES ('LE', 'Exonération de 15 ans pour les logements acquis avec l’aide de
+l’aide de l’Etat en vue de leur location');
 INSERT INTO gnextl VALUES ('LM', 'Local situé dans une zone de revitalisation rurale. Article 1383 E bis du CGI.');
 INSERT INTO gnextl VALUES ('LR', 'Durée variable - totale ou partielle habilitation');
 INSERT INTO gnextl VALUES ('LW', 'Exonération de 25 ans pour les logements acquis avec l''aide de l''Etat en vue de leur location.');

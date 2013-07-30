@@ -12,6 +12,7 @@ SET search_path = opencadastre, public, pg_catalog;
 
 \i init.sql
 \i create_metier.sql
+\i create_table_dgi.sql
 \i create_constraints.sql
 \i insert_nomenclatures.sql
 \i insert_droits.sql

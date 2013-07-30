@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>489</width>
-        <height>625</height>
+        <height>656</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -360,14 +360,21 @@
             </item>
            </layout>
           </item>
-          <item>
-           <widget class="QPushButton" name="btProcessImport">
-            <property name="text">
-             <string>Lancer l'import</string>
-            </property>
-           </widget>
-          </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btProcessImport">
+         <property name="text">
+          <string>Lancer l'import</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="pbProcessImport">
+         <property name="value">
+          <number>0</number>
+         </property>
         </widget>
        </item>
        <item>
