@@ -176,6 +176,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         
         QApplication.setOverrideCursor(Qt.WaitCursor)
         connectionName = unicode(self.liDbConnection.currentText())
+        self.connectionName = connectionName
         dbType = unicode(self.liDbType.currentText()).lower()
 
         # Deactivate schema fields
@@ -268,12 +269,16 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         '''
         Lancement du processus d'import
         '''
+        if not self.db:
+            msg = u'Veuillez sélectionner une base de données'
+            QMessageBox.critical(self, self.tr("Qadatre"), self.tr(msg))
+            return None
         
         self.dataVersion = unicode(self.liDataVersion.currentText())
         self.dataYear = unicode(self.inDataYear.text())
         self.schema = unicode(self.liDbSchema.currentText())
         self.majicSourceDir = str(self.inMajicSourceDir.text().encode('utf-8')).strip(' \t')
-        self.edigeoSourceDir = unicode(self.inEdigeoSourceDir.text())
+        self.edigeoSourceDir = str(self.inEdigeoSourceDir.text().encode('utf-8')).strip(' \t')
                
         # qadastreImport instance
         qi = qadastreImport(self)
@@ -282,12 +287,14 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         qi.installOpencadastreStructure()
 
         # Run Edigeo import
-#        qi.importEdigeo()
+        if os.path.exists(self.edigeoSourceDir):
+            qi.importEdigeo()
 
         # Run MAJIC import
-        qi.importMajic()
+        if os.path.exists(self.majicSourceDir):
+            qi.importMajic()
         
-        
+        qi.endImport()
 
 # --------------------------------------------------------
 #        load - Load data from database

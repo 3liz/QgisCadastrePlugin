@@ -22,7 +22,7 @@
  ***************************************************************************/
 """
 
-import sys, os
+import sys, os, glob
 import re
 import time
 import tempfile
@@ -46,10 +46,12 @@ class qadastreImport(QObject):
     def __init__(self, dialog):
         self.dialog = dialog
         
-        self.connector = self.dialog.db.connector    
+        self.db = self.dialog.db   
+        self.connector = self.db.connector
         self.scriptSourceDir = os.path.join(self.dialog.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
         self.scriptDir = tempfile.mkdtemp()
         self.edigeoDir = tempfile.mkdtemp()
+        self.edigeoPlainDir = tempfile.mkdtemp()
         self.majicDir = tempfile.mkdtemp()
         self.replaceDict = {
             '[PREFIXE]': '"%s".' % self.dialog.schema, 
@@ -115,9 +117,26 @@ class qadastreImport(QObject):
 
 
     def importEdigeo(self):
-    
+
+        try:
+            from osgeo import gdal, ogr, osr
+            gdalAvailable = True
+        except:
+            msg = u"Erreur : la librairie GDAL n'est pas accessible"
+            self.go = False
+            return msg
+
+        self.dialog.updateLog(u'<h3>Données EDIGEO</h3>')
+        self.updateProgressBar(False)
+        
         # copy files in temp dir
         self.copyFilesToTemp(self.dialog.edigeoSourceDir, self.edigeoDir)
+
+        # unzip edigeo files in temp dir
+        self.unzipFolderContent(self.edigeoDir)
+
+        # convert edigeo files into shapefile
+        self.importAllEdigeoToDatabase()
     
         return None
         
@@ -148,8 +167,6 @@ class qadastreImport(QObject):
             self.replaceParametersInScript(scriptPath, replaceDict)
             self.executeSqlScript(s, item['title'])
         
-        self.endImport()
-        
         return None
 
         
@@ -159,10 +176,16 @@ class qadastreImport(QObject):
         '''
 
         # Remove the temp folders
-        try:            
-            shutil.rmtree(self.scriptDir)
-            shutil.rmtree(self.edigeoDir)
-            shutil.rmtree(self.majicDir)
+        tempFolderList = [
+            self.scriptDir,
+            self.edigeoDir,
+            self.edigeoPlainDir,
+            self.majicDir
+        ]
+        try:
+            for rep in tempFolderList:
+                if os.path.exists(rep):
+                    shutil.rmtree(rep)
             
         except IOError, e:
             msg = u"Erreur lors de la suppresion des répertoires temporaires: %s" % e
@@ -215,6 +238,61 @@ class qadastreImport(QObject):
         return None
 
 
+    def listFilesInDirectory(self, path, ext=None): 
+        '''
+        List all files from folder and subfolder
+        for a specific extension if given
+        '''
+        fileList = [] 
+        for root, dirs, files in os.walk(path): 
+            for i in files:
+                if not ext or (ext and os.path.splitext(i)[1][1:].lower() == ext):
+                    fileList.append(os.path.join(root, i)) 
+        return fileList
+        
+
+    def unzipFolderContent(self, path):
+        '''
+        Scan content of specified path 
+        and unzip all content into a single folder
+        '''
+        if self.go:
+            QApplication.setOverrideCursor(Qt.WaitCursor)
+            self.dialog.updateLog(u'* Décompression des fichiers de %s' % path.decode('UTF8'))
+            self.updateProgressBar(False)
+            
+            # get all the zip files
+            zipFileList = self.listFilesInDirectory(path, 'zip')
+            tarFileList = self.listFilesInDirectory(path, 'bz2')
+            
+            # unzip all files
+            import zipfile
+            import tarfile
+            try:
+                for z in zipFileList:
+                    zipfile.ZipFile(z).extractall(self.edigeoPlainDir)
+
+                inner_zips_pattern = os.path.join(self.edigeoPlainDir, "*.zip")
+                for filename in glob.glob(inner_zips_pattern):
+                    inner_folder = filename[:-4]
+                    zipfile.ZipFile(filename).extractall(inner_folder)     
+                    
+                for z in tarFileList:
+                    tar = tarfile.open(z).extractall(self.edigeoPlainDir)
+                    tar.close()                  
+            
+            except IOError, e:
+                msg = u"Erreur lors de l'extraction des fichiers EDIGEO: %s" % e
+                self.go = False
+                self.dialog.updateLog(msg)
+                return msg
+                
+            finally:
+                QApplication.restoreOverrideCursor()   
+                self.updateTimer()
+                self.updateProgressBar()             
+    
+
 
     def replaceParametersInScript(self, scriptPath, replaceDict):
         '''
@@ -246,7 +324,8 @@ class qadastreImport(QObject):
                 return msg
                 
             finally:
-                QApplication.restoreOverrideCursor()            
+                QApplication.restoreOverrideCursor()
+                        
         
         return None
 
@@ -305,3 +384,54 @@ class qadastreImport(QObject):
                 self.updateProgressBar()
     
         return None
+        
+    def importAllEdigeoToDatabase(self):
+        '''
+        Loop through all THF files
+        and import each one into database
+        '''
+               
+        if self.go:
+
+            self.dialog.updateLog(u'* Import des fichiers EDIGEO dans la base')
+            self.updateProgressBar(False)
+                   
+            thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')
+            self.totalSteps+= len(thfList)
+            for thf in thfList:
+                self.importEdigeoThfToDatabase(thf)
+    
+            QApplication.restoreOverrideCursor()
+            self.updateTimer()
+            self.updateProgressBar()     
+        
+    
+    def importEdigeoThfToDatabase(self, filename):
+        '''
+        Import one edigeo THF files into database
+        source : db_manager/dlg_import_vector.py
+        '''
+        self.dialog.updateLog(u'  - fichier THF: %s' % filename)
+        self.updateProgressBar(False)
+        
+        # Build ogr2ogr command
+        conn_name = self.dialog.connectionName
+        settings = QSettings()
+        settings.beginGroup( u"/%s/%s" % (self.db.dbplugin().connectionSettingsKey(), conn_name) )
+        if not settings.contains( "database" ): # non-existent entry?
+            raise InvalidDataException( self.tr('There is no defined database connection "%s".') % conn_name )
+        settingsList = ["service", "host", "port", "database", "username", "password"]
+        service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
+
+        sourceSrid = '2154'
+        targetSrid = '2154'
+        ogrCommand = 'ogr2ogr -a_srs "EPSG:%s" -t_srs "EPSG:%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+        
+        # Run command
+        proc = QProcess()
+        proc.start(ogrCommand)
+        proc.waitForFinished()
+        
+        self.updateProgressBar()
+        
+        return None        

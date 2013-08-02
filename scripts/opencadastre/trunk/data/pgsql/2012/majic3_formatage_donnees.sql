@@ -1,17 +1,16 @@
-BEGIN;
-
--- FORMATAGE DONNEES : DEBUT;
+﻿-- FORMATAGE DONNEES : DEBUT;
 -- création des index pour optimisation;
+BEGIN;
 CREATE INDEX idx_voie_codvoi ON [PREFIXE]voie (codvoi);
 CREATE INDEX idx_lots_comptecommunal ON [PREFIXE]lots (annee, ccodep, ccodir, ccocom, dnuprol);
 -- Traitement: parcelle;
-ALTER TABLE [PREFIXE]parcelle ADD COLUMN z text;
+ALTER TABLE [PREFIXE]parcelle ADD COLUMN tempo_import text;
 INSERT INTO [PREFIXE]parcelle 
 (
  parcelle, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, dcntpa, dsrpar, dnupro, jdatat, dreflf, gpdl, cprsecr, ccosecr, dnuplar, dnupdl, gurbpa,
  dparpi, ccoarp, gparnf, gparbat, parrev, gpardp, fviti, dnvoiri, dindic, ccovoi, ccoriv, ccocif, gpafpd, ajoutcoherence,
  comptecommunal, pdl, voie, 
- cconvo, dvoilib, ccocomm, ccoprem, ccosecm, dnuplam, parcellefiliation, type_filiation, z
+ cconvo, dvoilib, ccocomm, ccoprem, ccosecm, dnuplam, parcellefiliation, type_filiation, tempo_import
 )
 SELECT 
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ','-') AS parcelle,
@@ -58,7 +57,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,174,4))='' THEN NULL ELSE SUBSTRING(tmp,174,4) END AS dnuplam, 
   CASE WHEN trim(SUBSTRING(tmp,174,4))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,3)||SUBSTRING(tmp,166,12),' ','-') END AS parcellefiliation,
   SUBSTRING(tmp,178,1) AS type_filiation,
-  '-'||'[ANNEE]'||'-'||SUBSTRING(tmp,1,2)||'-'||SUBSTRING(tmp,3,1)||'-'||SUBSTRING(tmp,4,3)||'-'||SUBSTRING(tmp,32,6)||'-' AS z
+   '-'||'[ANNEE]'||'-'||SUBSTRING(tmp,1,2)||'-'||SUBSTRING(tmp,3,1)||'-'||SUBSTRING(tmp,4,3)||'-'||SUBSTRING(tmp,32,6)||'-' AS tempo_import
 FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='10';
 -- Traitement: suf;
 INSERT INTO [PREFIXE]suf 
@@ -622,11 +621,11 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,33,4)) ='' THEN null ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,28,9),' ', '-') END parcellea
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='20';
 -- Traitement: lots;
-ALTER TABLE [PREFIXE]lots ADD COLUMN z text;
+ALTER TABLE [PREFIXE]lots ADD COLUMN tempo_import text;
 INSERT INTO [PREFIXE]lots 
 (
  lots, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, dnupdl, dnulot, cconlo, dcntlo, dnumql, ddenql, dfilot, datact, dnuprol, dreflf, ccocif,
- pdl, comptecommunal, parcelle, z
+ pdl, comptecommunal, parcelle, tempo_import
 )
 SELECT
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,25),' ', '-') AS lots,
@@ -651,7 +650,7 @@ SELECT
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18),' ', '-') AS pdl,
   REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,83,6),' ', '-'),'+','¤') AS comptecommunal,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '-') AS parcelle,
-  '-'||'[ANNEE]'||'-'||SUBSTRING(tmp,1,2)||'-'||SUBSTRING(tmp,3,1)||'-'||SUBSTRING(tmp,4,3)||'-'||SUBSTRING(tmp,83,6)||'-' AS z
+  '-'||'[ANNEE]'||'-'||SUBSTRING(tmp,1,2)||'-'||SUBSTRING(tmp,3,1)||'-'||SUBSTRING(tmp,4,3)||'-'||SUBSTRING(tmp,83,6)||'-' AS tempo_import
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='30';
 -- Traitement: lotslocaux;
 INSERT INTO [PREFIXE]lotslocaux 
@@ -746,36 +745,33 @@ SELECT
 FROM [PREFIXE]fanr WHERE trim(SUBSTRING(tmp,4,3)) <>'' AND trim(SUBSTRING(tmp,7,4)) <>'';
 -- purge des doublons : voie;
 DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHERE annee='[ANNEE]' GROUP BY codvoi HAVING COUNT(*) > 1) AND annee='[ANNEE]';
-
-
--- ajout données manquantes : comptecommunal à partir de lots;
--- création d'une table temporaire
-CREATE TABLE mytable AS
-SELECT l.z
+-- création d'une table temporaire d'optimisation du traitement d'importation (lots);
+CREATE TABLE [PREFIXE]tempo_import AS
+SELECT l.tempo_import
 FROM [PREFIXE]lots l, [PREFIXE]comptecommunal c 
 WHERE l.ccodep = c.ccodep AND l.dnuprol = c.dnupro AND l.annee='[ANNEE]' and c.annee='[ANNEE]';
-CREATE INDEX idx_mytable_z ON mytable (z);
-CREATE INDEX idx_lots_z ON [PREFIXE]lots (z);
--- insert data
+CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
+CREATE INDEX idx_lots_tempo_import ON [PREFIXE]lots (tempo_import);
+-- ajout données manquantes : comptecommunal à partir de lots;
 INSERT INTO [PREFIXE]comptecommunal 
  ( comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
 SELECT REPLACE(REPLACE(a.annee||a.ccodep||a.dnuprol,' ', '-'),'+','¤') AS comptecommunal, a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol,'O' 
 FROM [PREFIXE]lots a
-LEFT OUTER JOIN mytable t ON t.z = a.z  
-WHERE t.z is null and a.annee='[ANNEE]'
+LEFT OUTER JOIN [PREFIXE]tempo_import t ON t.tempo_import = a.tempo_import 
+WHERE t.tempo_import is null and a.annee='[ANNEE]'
 GROUP BY a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol;
--- remove temporary table
-DROP INDEX idx_mytable_z;
-DROP TABLE mytable;
-ALTER TABLE [PREFIXE]lots DROP COLUMN z;
-
--- ajout données manquantes : parcelle à partir de local00;
-CREATE TABLE mytable AS
+-- suppression de la table temporaire (lots)
+DROP INDEX [PREFIXE]idx_tempo_import;
+DROP TABLE [PREFIXE]tempo_import;
+ALTER TABLE [PREFIXE]lots DROP COLUMN tempo_import;
+-- création d'une table temporaire d'optimisation du traitement d'importation (local00/parcelle);
+CREATE TABLE [PREFIXE]tempo_import AS
 SELECT invar 
 FROM [PREFIXE]local10 l, [PREFIXE]parcelle p 
 WHERE l.ccodep=p.ccodep AND l.ccodir=p.ccodir AND l.ccocom=p.ccocom AND l.ccopre=p.ccopre AND l.ccosec=p.ccosec AND l.dnupla=p.dnupla AND l.annee='[ANNEE]' AND p.annee='[ANNEE]';
-CREATE INDEX idx_mytable_invar ON mytable (invar);
+CREATE INDEX idx_tempo_import_invar ON [PREFIXE]tempo_import (invar);
 CREATE INDEX idx_local10_invar ON [PREFIXE]local10 (invar);
+-- ajout données manquantes : parcelle à partir de local00;
 INSERT INTO [PREFIXE]parcelle 
  ( parcelle, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ajoutcoherence, comptecommunal,voie) 
 SELECT 
@@ -791,35 +787,35 @@ SELECT
   REPLACE(annee||ccodep||dnupro,' ', '-'),
   REPLACE(annee||ccodep||ccodir||ccocom||ccovoi,' ', '-')
 FROM [PREFIXE]local10 l
-LEFT OUTER JOIN mytable AS t ON t.invar = l.invar
-WHERE  t.invar IS NULL AND annee='[ANNEE]'
+LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.invar = l.invar
+WHERE t.invar IS NULL AND annee='[ANNEE]'
 GROUP BY annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, dnupro, ccovoi;
+-- suppression de la table temporaire (local00/parcelle);
 DROP INDEX [PREFIXE]idx_local10_invar;
-DROP TABLE mytable;
-
--- ajout données manquantes : comptecommunal à partir de parcelles;
-CREATE TABLE mytable AS
-SELECT p.z
+DROP TABLE [PREFIXE]tempo_import;
+-- création d'une table temporaire d'optimisation du traitement d'importation (comptecommunal/parcelle);
+CREATE TABLE [PREFIXE]tempo_import AS
+SELECT p.tempo_import
 FROM [PREFIXE]parcelle p, [PREFIXE]comptecommunal c 
 WHERE p.ccodep = c.ccodep AND p.dnupro = c.dnupro AND p.annee='[ANNEE]' and c.annee='[ANNEE]';
-CREATE INDEX idx_mytable_z ON mytable (z);
-CREATE INDEX idx_parcelle_z ON [PREFIXE]parcelle (z);
+CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
+CREATE INDEX idx_parcelle_tempo_import ON [PREFIXE]parcelle (tempo_import);
+-- ajout données manquantes : comptecommunal à partir de parcelles;
 INSERT INTO [PREFIXE]comptecommunal 
  ( comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
 SELECT REPLACE(REPLACE(annee||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, ccocom, dnupro,'O' 
 FROM [PREFIXE]parcelle a
-LEFT OUTER JOIN mytable AS t ON t.z = a.z
-WHERE t.z IS NULL AND annee='[ANNEE]'
+LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.tempo_import = a.tempo_import
+WHERE t.tempo_import IS NULL AND annee='[ANNEE]'
 GROUP BY annee, ccodep, ccodir, ccocom, dnupro;
-DROP INDEX [PREFIXE]idx_parcelle_z;
-ALTER TABLE [PREFIXE]parcelle DROP COLUMN z;
-DROP TABLE mytable;
-
+-- suppression des éléments temporaires (local00/parcelle);
+DROP INDEX [PREFIXE]idx_parcelle_tempo_import;
+ALTER TABLE [PREFIXE]parcelle DROP COLUMN tempo_import;
+DROP TABLE [PREFIXE]tempo_import;
 -- suppression des index pour optimisation;
 DROP INDEX [PREFIXE]idx_voie_codvoi;
 DROP INDEX [PREFIXE]idx_lots_comptecommunal;
--- FORMATAGE DONNEES : FIN;
-
+-- ANALYSES;
 ANALYSE [PREFIXE]parcelle;
 ANALYSE [PREFIXE]suf;
 ANALYSE [PREFIXE]sufexoneration;
@@ -840,6 +836,5 @@ ANALYSE [PREFIXE]lots;
 ANALYSE [PREFIXE]lotslocaux;
 ANALYSE [PREFIXE]commune;
 ANALYSE [PREFIXE]voie;
-
 COMMIT;
-
+-- FORMATAGE DONNEES : FIN;
