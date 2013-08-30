@@ -92,8 +92,6 @@ ALTER TABLE geo_tline_commune ADD CONSTRAINT geo_tline_commune_pk PRIMARY KEY (g
 ALTER TABLE geo_tsurf ADD CONSTRAINT geo_tsurf_pk PRIMARY KEY (geo_tsurf );
 -- clé primaire : geo_tsurf_commune
 ALTER TABLE geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_pk PRIMARY KEY (geo_tsurf_commune );
--- clé primaire : geo_label
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_pk PRIMARY KEY (geo_label );
 -- clé étrangère : parcelle -> comptecommunal
 ALTER TABLE parcelle ADD CONSTRAINT parcelle_comptecommunal_fk FOREIGN KEY (comptecommunal) REFERENCES comptecommunal (comptecommunal) ON DELETE CASCADE;
 -- clé étrangère : parcelle -> pdl
@@ -320,15 +318,4 @@ ALTER TABLE geo_tsurf ADD CONSTRAINT geo_tsurf_sym_n_fk FOREIGN KEY (geo_sym) RE
 ALTER TABLE geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_n_fk FOREIGN KEY (geo_tsurf) REFERENCES geo_tsurf (geo_tsurf) ON DELETE CASCADE;
 -- clé étrangère : geo_tsurf_commune_p_fk
 ALTER TABLE geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_p_fk FOREIGN KEY (geo_commune) REFERENCES geo_commune (geo_commune) ON DELETE CASCADE;
--- clés étrangères : geo_label_???
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_parcelle_fk FOREIGN KEY (geo_parcelle) REFERENCES geo_parcelle (geo_parcelle) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_section_fk FOREIGN KEY (geo_section) REFERENCES geo_section (geo_section) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_voiep_fk FOREIGN KEY (geo_voiep) REFERENCES geo_voiep (geo_voiep) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_tsurf_fk FOREIGN KEY (geo_tsurf) REFERENCES geo_tsurf (geo_tsurf) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_numvoie_fk FOREIGN KEY (geo_numvoie) REFERENCES geo_numvoie (geo_numvoie) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_lieudit_fk FOREIGN KEY (geo_lieudit) REFERENCES geo_lieudit (geo_lieudit) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_zoncommuni_fk FOREIGN KEY (geo_zoncommuni) REFERENCES geo_zoncommuni (geo_zoncommuni) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_tpoint_fk FOREIGN KEY (geo_tpoint) REFERENCES geo_tpoint (geo_tpoint) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_subdfisc_fk FOREIGN KEY (geo_subdfisc) REFERENCES geo_subdfisc (geo_subdfisc) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_tline_fk FOREIGN KEY (geo_tline) REFERENCES geo_tline (geo_tline) ON DELETE CASCADE;
-ALTER TABLE geo_label ADD CONSTRAINT geo_label_tronfluv_fk FOREIGN KEY (geo_tronfluv) REFERENCES geo_tronfluv (geo_tronfluv) ON DELETE CASCADE;
+

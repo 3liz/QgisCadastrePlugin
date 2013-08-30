@@ -1452,10 +1452,10 @@ COMMENT ON COLUMN geo_parcelle.update_dat IS 'Date de dernière modification';
 
 CREATE TABLE geo_subdfisc
 (
-  geo_subdfisc character varying(15) NOT NULL,
+  geo_subdfisc serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
-  tex character varying(1),
+  tex character varying,
   creat_date date,
   update_dat date,
   lot character(3)
@@ -1483,7 +1483,7 @@ CREATE TABLE geo_subdfisc_parcelle
 (
   geo_subdfisc_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_subdfisc character varying(15) NOT NULL,
+  geo_subdfisc integer NOT NULL,
   geo_parcelle character varying(16) NOT NULL
 );
 COMMENT ON TABLE geo_subdfisc_parcelle IS 'Lien subdivision fiscale - parcelle';
@@ -1494,7 +1494,7 @@ COMMENT ON COLUMN geo_subdfisc_parcelle.geo_parcelle IS 'geo_parcelle';
 
 CREATE TABLE geo_voiep
 (
-  geo_voiep character varying(14) NOT NULL,
+  geo_voiep serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   tex character varying(80),
@@ -1523,7 +1523,7 @@ COMMENT ON COLUMN geo_voiep.update_dat IS 'Date de dernière modification';
 
 CREATE TABLE geo_numvoie
 (
-  geo_numvoie character varying(14) NOT NULL,
+  geo_numvoie serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   tex character varying(5),
@@ -1554,7 +1554,7 @@ CREATE TABLE geo_numvoie_parcelle
 (
   geo_numvoie_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_numvoie character varying(14) NOT NULL,
+  geo_numvoie integer NOT NULL,
   geo_parcelle character varying(16) NOT NULL
 );
 COMMENT ON TABLE geo_numvoie_parcelle IS 'Lien subdivision fiscale - parcelle';
@@ -1565,7 +1565,7 @@ COMMENT ON COLUMN geo_numvoie_parcelle.geo_parcelle IS 'Parcelle';
 
 CREATE TABLE geo_lieudit
 (
-  geo_lieudit character varying(14) NOT NULL,
+  geo_lieudit serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   tex character varying(80),
@@ -1641,7 +1641,7 @@ COMMENT ON COLUMN geo_batiment_parcelle.geo_parcelle IS 'Parcelle';
 
 CREATE TABLE geo_zoncommuni
 (
-  geo_zoncommuni character varying(14) NOT NULL,
+  geo_zoncommuni serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   tex character varying(255),
@@ -1670,7 +1670,7 @@ COMMENT ON COLUMN geo_zoncommuni.update_dat IS 'Date de dernière modification';
 
 CREATE TABLE geo_tronfluv
 (
-  geo_tronfluv character varying(14) NOT NULL,
+  geo_tronfluv serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   tex character varying(255),
@@ -1709,7 +1709,7 @@ ALTER TABLE geo_sym ADD PRIMARY KEY (geo_sym);
 
 CREATE TABLE geo_ptcanv
 (
-  geo_ptcanv character varying(14) NOT NULL,
+  geo_ptcanv serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   idu character varying(8),
@@ -1748,7 +1748,7 @@ COMMENT ON COLUMN geo_ptcanv.update_dat IS 'Date de dernière modification';
 
 CREATE TABLE geo_borne
 (
-  geo_borne character varying(14) NOT NULL,
+  geo_borne serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   creat_date date,
@@ -1777,7 +1777,7 @@ CREATE TABLE geo_borne_parcelle
 (
   geo_borne_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_borne character varying(14) NOT NULL,
+  geo_borne integer NOT NULL,
   geo_parcelle character varying(16) NOT NULL
 );
 COMMENT ON TABLE geo_borne_parcelle IS 'Lien borne - parcelle';
@@ -1788,7 +1788,7 @@ COMMENT ON COLUMN geo_borne_parcelle.geo_parcelle IS 'Parcelle';
 
 CREATE TABLE geo_croix
 (
-  geo_croix character varying(14) NOT NULL,
+  geo_croix serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   creat_date date,
@@ -1817,7 +1817,7 @@ CREATE TABLE geo_croix_parcelle
 (
   geo_croix_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_croix character varying(14) NOT NULL,
+  geo_croix integer NOT NULL,
   geo_parcelle character varying(16) NOT NULL
 );
 COMMENT ON TABLE geo_croix_parcelle IS 'Lien croix - parcelle';
@@ -1828,7 +1828,7 @@ COMMENT ON COLUMN geo_croix_parcelle.geo_parcelle IS 'Parcelle';
 
 CREATE TABLE geo_symblim
 (
-  geo_symblim character varying(14) NOT NULL,
+  geo_symblim serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   ori numeric(12,9),
@@ -1861,7 +1861,7 @@ CREATE TABLE geo_symblim_parcelle
 (
   geo_symblim_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_symblim character varying(14) NOT NULL,
+  geo_symblim integer NOT NULL,
   geo_parcelle character varying(16) NOT NULL
 );
 COMMENT ON TABLE geo_symblim_parcelle IS 'Lien symblim - parcelle';
@@ -1872,7 +1872,7 @@ COMMENT ON COLUMN geo_symblim_parcelle.geo_parcelle IS 'Parcelle';
 
 CREATE TABLE geo_tpoint
 (
-  geo_tpoint character varying(14) NOT NULL,
+  geo_tpoint serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   ori numeric(12,9),
@@ -1907,7 +1907,7 @@ CREATE TABLE geo_tpoint_commune
 (
   geo_tpoint_commune serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_tpoint character varying(14) NOT NULL,
+  geo_tpoint integer NOT NULL,
   geo_commune character varying(7) NOT NULL
 );
 COMMENT ON TABLE geo_tpoint_commune IS 'Lien tpoint - commune';
@@ -1918,7 +1918,7 @@ COMMENT ON COLUMN geo_tpoint_commune.geo_commune IS 'commune';
 
 CREATE TABLE geo_tline
 (
-  geo_tline character varying(14) NOT NULL,
+  geo_tline serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   tex character varying(80),
@@ -1951,7 +1951,7 @@ CREATE TABLE geo_tline_commune
 (
   geo_tline_commune serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_tline character varying(14) NOT NULL,
+  geo_tline integer NOT NULL,
   geo_commune character varying(7) NOT NULL
 );
 COMMENT ON TABLE geo_tline_commune IS 'Lien tline - commune';
@@ -1962,7 +1962,7 @@ COMMENT ON COLUMN geo_tline_commune.geo_commune IS 'commune';
 
 CREATE TABLE geo_tsurf
 (
-  geo_tsurf character varying(14) NOT NULL,
+  geo_tsurf serial NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   tex character varying(80),
@@ -1995,7 +1995,7 @@ CREATE TABLE geo_tsurf_commune
 (
   geo_tsurf_commune serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_tsurf character varying(14) NOT NULL,
+  geo_tsurf integer NOT NULL,
   geo_commune character varying(7) NOT NULL
 );
 COMMENT ON TABLE geo_tsurf_commune IS 'Lien tsurf - commune';
@@ -2003,98 +2003,6 @@ COMMENT ON COLUMN geo_tsurf_commune.geo_tsurf_commune IS 'Identifiant';
 COMMENT ON COLUMN geo_tsurf_commune.annee IS 'Année';
 COMMENT ON COLUMN geo_tsurf_commune.geo_tsurf IS 'tsurf';
 COMMENT ON COLUMN geo_tsurf_commune.geo_commune IS 'commune';
-
-CREATE TABLE geo_label
-(
-  geo_label character varying(14) NOT NULL,
-  annee character varying(4) NOT NULL,
-  ogc_fid integer,
-  object_rid character varying(80),
-  fon character varying(80),
-  hei numeric(24,15),
-  tyu character varying(80),
-  cef numeric(24,15),
-  csp numeric(24,15),
-  di1 numeric(24,15),
-  di2 numeric(24,15),
-  di3 numeric(24,15),
-  di4 numeric(24,15),
-  tpa character varying(80),
-  hta character varying(80),
-  vta character varying(80),
-  atr character varying(80),
-  ogr_obj_ln character varying(80),
-  ogr_obj__1 character varying(80),
-  ogr_atr_va character varying(80),
-  ogr_angle numeric(24,15),
-  ogr_font_s numeric(24,15),
-  geo_parcelle character varying(16),
-  geo_section character varying(12),
-  geo_voiep character varying(14),
-  geo_tsurf character varying(14),
-  geo_numvoie character varying(14),
-  geo_lieudit character varying(14),
-  geo_zoncommuni character varying(14),
-  geo_tpoint character varying(14),
-  geo_subdfisc character varying(15),
-  geo_tline character varying(14),
-  geo_tronfluv character varying(14),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-CREATE SEQUENCE geo_label_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1;
-SELECT AddGeometryColumn ( current_schema::text, 'geo_label', 'geom', 2154 , 'POINT', 2 );
-CREATE INDEX geo_label_geom_idx
-  ON geo_label
-  USING gist
-  (geom );
-CREATE INDEX geo_label_annee_idx
-  ON geo_label
-  (annee,object_rid );
-COMMENT ON TABLE geo_label IS 'Libellés';
-COMMENT ON COLUMN geo_label.geo_label IS 'Identifiant';
-COMMENT ON COLUMN geo_label.annee IS 'Année';
-COMMENT ON COLUMN geo_label.ogc_fid IS 'Numéro d''enregistrement source';
-COMMENT ON COLUMN geo_label.object_rid IS 'Numéro d''objet';
-COMMENT ON COLUMN geo_label.creat_date IS 'Date de création';
-COMMENT ON COLUMN geo_label.update_dat IS 'Date de dernière modification';
-COMMENT ON COLUMN geo_label.fon IS 'Nom en clair de la police typographique'; 
-COMMENT ON COLUMN geo_label.hei IS 'Hauteur des caractères'; 
-COMMENT ON COLUMN geo_label.tyu IS 'Type de l''unité utilisée'; 
-COMMENT ON COLUMN geo_label.cef IS 'Facteur d''agrandissement'; 
-COMMENT ON COLUMN geo_label.csp IS 'Espacement intercaractères'; 
-COMMENT ON COLUMN geo_label.di1 IS 'Orientation composante X du vecteur hauteur'; 
-COMMENT ON COLUMN geo_label.di2 IS 'Orientation composante Y du vecteur hauteur'; 
-COMMENT ON COLUMN geo_label.di3 IS 'Orientation composante X du vecteur base'; 
-COMMENT ON COLUMN geo_label.di4 IS 'Orientation composante Y du vecteur base'; 
-COMMENT ON COLUMN geo_label.tpa IS 'Sens de l''écriture'; 
-COMMENT ON COLUMN geo_label.hta IS 'Alignement horizontal du texte'; 
-COMMENT ON COLUMN geo_label.vta IS 'Alignement vertical du texte'; 
-COMMENT ON COLUMN geo_label.atr IS 'Identificateur de l''attribut à écrire'; 
-COMMENT ON COLUMN geo_label.ogr_obj_ln IS 'lien n°objet'; 
-COMMENT ON COLUMN geo_label.ogr_obj__1 IS 'type objet'; 
-COMMENT ON COLUMN geo_label.ogr_atr_va IS 'Ogr valeur'; 
-COMMENT ON COLUMN geo_label.ogr_angle IS 'Ogr angle';
-COMMENT ON COLUMN geo_label.ogr_font_s IS 'Ogr taille fonte';
-COMMENT ON COLUMN geo_label.geo_parcelle IS 'Parcelle'; 
-COMMENT ON COLUMN geo_label.geo_section IS 'Section'; 
-COMMENT ON COLUMN geo_label.geo_voiep IS 'Voip'; 
-COMMENT ON COLUMN geo_label.geo_tsurf IS 'TSurf'; 
-COMMENT ON COLUMN geo_label.geo_numvoie IS 'Numvoie'; 
-COMMENT ON COLUMN geo_label.geo_lieudit IS 'Lieudit'; 
-COMMENT ON COLUMN geo_label.geo_zoncommuni IS 'ZonCommuni'; 
-COMMENT ON COLUMN geo_label.geo_tpoint IS 'TPoint'; 
-COMMENT ON COLUMN geo_label.geo_subdfisc IS 'SubdFisc'; 
-COMMENT ON COLUMN geo_label.geo_tline IS 'TLine'; 
-COMMENT ON COLUMN geo_label.geo_tronfluv IS 'TronFluv'; 
 
 CREATE TABLE edigeo_rel ( edigeo_rel serial,nom character varying(30),de character varying(80),vers character varying(80));
 ALTER TABLE edigeo_rel ADD PRIMARY KEY (edigeo_rel );

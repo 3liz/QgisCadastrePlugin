@@ -47,7 +47,6 @@ ALTER TABLE [PREFIXE]geo_tline ADD CONSTRAINT geo_tline_pk PRIMARY KEY (geo_tlin
 ALTER TABLE [PREFIXE]geo_tline_commune ADD CONSTRAINT geo_tline_commune_pk PRIMARY KEY (geo_tline_commune );
 ALTER TABLE [PREFIXE]geo_tsurf ADD CONSTRAINT geo_tsurf_pk PRIMARY KEY (geo_tsurf );
 ALTER TABLE [PREFIXE]geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_pk PRIMARY KEY (geo_tsurf_commune );
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_pk PRIMARY KEY (geo_label );
 -- création clé étrangère;
 ALTER TABLE [PREFIXE]commune ADD CONSTRAINT commune_geo_commune_fk FOREIGN KEY (geo_commune) REFERENCES [PREFIXE]geo_commune (geo_commune) ON DELETE SET NULL;
 ALTER TABLE [PREFIXE]parcelle ADD CONSTRAINT parcelle_comptecommunal_fk FOREIGN KEY (comptecommunal) REFERENCES [PREFIXE]comptecommunal (comptecommunal) ON DELETE CASCADE;
@@ -164,15 +163,4 @@ ALTER TABLE [PREFIXE]geo_tline_commune ADD CONSTRAINT geo_tline_commune_p_fk FOR
 ALTER TABLE [PREFIXE]geo_tsurf ADD CONSTRAINT geo_tsurf_sym_n_fk FOREIGN KEY (geo_sym) REFERENCES [PREFIXE]geo_sym (geo_sym) ON DELETE CASCADE;
 ALTER TABLE [PREFIXE]geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_n_fk FOREIGN KEY (geo_tsurf) REFERENCES [PREFIXE]geo_tsurf (geo_tsurf) ON DELETE CASCADE;
 ALTER TABLE [PREFIXE]geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_p_fk FOREIGN KEY (geo_commune) REFERENCES [PREFIXE]geo_commune (geo_commune) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_parcelle_fk FOREIGN KEY (geo_parcelle) REFERENCES [PREFIXE]geo_parcelle (geo_parcelle) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_section_fk FOREIGN KEY (geo_section) REFERENCES [PREFIXE]geo_section (geo_section) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_voiep_fk FOREIGN KEY (geo_voiep) REFERENCES [PREFIXE]geo_voiep (geo_voiep) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_tsurf_fk FOREIGN KEY (geo_tsurf) REFERENCES [PREFIXE]geo_tsurf (geo_tsurf) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_numvoie_fk FOREIGN KEY (geo_numvoie) REFERENCES [PREFIXE]geo_numvoie (geo_numvoie) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_lieudit_fk FOREIGN KEY (geo_lieudit) REFERENCES [PREFIXE]geo_lieudit (geo_lieudit) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_zoncommuni_fk FOREIGN KEY (geo_zoncommuni) REFERENCES [PREFIXE]geo_zoncommuni (geo_zoncommuni) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_tpoint_fk FOREIGN KEY (geo_tpoint) REFERENCES [PREFIXE]geo_tpoint (geo_tpoint) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_subdfisc_fk FOREIGN KEY (geo_subdfisc) REFERENCES [PREFIXE]geo_subdfisc (geo_subdfisc) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_tline_fk FOREIGN KEY (geo_tline) REFERENCES [PREFIXE]geo_tline (geo_tline) ON DELETE CASCADE;
-ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_tronfluv_fk FOREIGN KEY (geo_tronfluv) REFERENCES [PREFIXE]geo_tronfluv (geo_tronfluv) ON DELETE CASCADE;
 -- CREATION DES CONTRAINTES D'INTEGRITEES : FIN;

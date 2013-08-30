@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>489</width>
-        <height>656</height>
+        <width>505</width>
+        <height>622</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -46,6 +46,12 @@
             </item>
             <item row="0" column="1">
              <widget class="QComboBox" name="liDbType">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <item>
                <property name="text">
                 <string>-- Choisir --</string>
@@ -63,20 +69,10 @@
               </item>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Connexions</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QComboBox" name="liDbConnection"/>
-            </item>
             <item row="2" column="0">
              <widget class="QLabel" name="label_3">
               <property name="text">
-               <string>Schéma</string>
+               <string>Schémas</string>
               </property>
              </widget>
             </item>
@@ -87,38 +83,50 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QLineEdit" name="inDbCreateSchema">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="btDbCreateSchema">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>nouveau schéma</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_2">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Connexions</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="inDbCreateSchema">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QComboBox" name="liDbConnection"/>
+            </item>
+            <item row="2" column="3">
+             <widget class="QPushButton" name="btDbCreateSchema">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>créer</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -163,7 +171,7 @@
             <item>
              <widget class="QLabel" name="label_12">
               <property name="text">
-               <string>Projection source</string>
+               <string>Projections: source</string>
               </property>
              </widget>
             </item>
@@ -183,14 +191,10 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_10">
             <item>
              <widget class="QLabel" name="label_13">
               <property name="text">
-               <string>Projection cible</string>
+               <string>Cible</string>
               </property>
              </widget>
             </item>
@@ -207,6 +211,44 @@
               </property>
               <property name="text">
                <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Département</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="inEdigeoDepartement">
+              <property name="inputMask">
+               <string/>
+              </property>
+              <property name="maxLength">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Direction</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="inEdigeoDirection">
+              <property name="inputMask">
+               <string/>
+              </property>
+              <property name="maxLength">
+               <number>32767</number>
               </property>
              </widget>
             </item>
@@ -303,26 +345,6 @@
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_14">
-            <item>
              <widget class="QLabel" name="label_16">
               <property name="text">
                <string>Année</string>
@@ -346,17 +368,18 @@
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>Lot</string>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="inEdigeoLot">
+              <property name="maxLength">
+               <number>3</number>
               </property>
-             </spacer>
+             </widget>
             </item>
            </layout>
           </item>
@@ -369,6 +392,31 @@
           <string>Lancer l'import</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Étape</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="stepLabel">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="subStepLabel">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QProgressBar" name="pbProcessImport">

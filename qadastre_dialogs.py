@@ -3,8 +3,8 @@
 /***************************************************************************
  Qadastre - Dialog classes
                                                                  A QGIS plugin
- This plugins helps users to import the french land registry ('cadastre') 
- into a database. It is meant to ease the use of the data in QGIs 
+ This plugins helps users to import the french land registry ('cadastre')
+ into a database. It is meant to ease the use of the data in QGIs
  by providing search tools and appropriate layer symbology.
                                                             -------------------
                 begin                                : 2013-06-11
@@ -50,13 +50,13 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         QDialog.__init__(self)
         self.iface = iface
         self.setupUi(self)
-        
+
         # Signals/Slot Connections
         self.liDbType.currentIndexChanged[str].connect(self.updateConnectionList)
         self.liDbConnection.currentIndexChanged[str].connect(self.updateSchemaList)
         self.btProcessImport.clicked.connect(self.processImport)
         self.btDbCreateSchema.clicked.connect(self.createSchema)
-        
+
         # path buttons selectors
         from functools import partial
         self.pathSelectors = {
@@ -73,7 +73,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             control = item['button']
             slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
-            
+
         # projection selector
         self.projSelectors = {
             "edigeoSourceProj" : {
@@ -91,11 +91,11 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             control = item['button']
             slot = partial(self.chooseProjection, key)
             control.clicked.connect(slot)
-        
+
         # Set initial values
         self.dataVersionList = [ '2011', '2012']
         self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/Qadastre"
-        
+
         self.dbType = None
         self.dbpluginclass = None
         self.connectionName = None
@@ -103,9 +103,13 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.db = None
         self.schema = None
         self.schemaList = None
+        self.dbHasData = None
         self.edigeoSourceProj = None
         self.edigeoTargetProj = None
-        
+        self.edigeoDepartement = None
+        self.edigeoDirection = None
+        self.edigeoLot = None
+
         self.qadastreImportOptions = {
             'dataVersion' : '2012',
             'dataYear' : '2011',
@@ -114,16 +118,16 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             'edigeoTargetProj' : None,
             'majicSourceDir' : None
         }
-        
-        self.majicSourceFileNames = {
-            'bati' : 'REVBATI.800',
-            'fantoir' : 'TOPFANR.800',
-            'lotlocal': 'REVD166.800',
-            'nbati': 'REVNBAT.800',
-            'pdl': 'REVFPDL.800',
-            'prop': 'REVPROP.800'
-        }
-        
+
+        self.majicSourceFileNames = [
+            {'key': '[FICHIER_BATI]', 'value': 'REVBATI.800'},
+            {'key': '[FICHIER_FANTOIR]', 'value': 'TOPFANR.800'},
+            {'key': '[FICHIER_LOTLOCAL]', 'value': 'REVD166.800'},
+            {'key': '[FICHIER_NBATI]', 'value': 'REVNBAT.800'},
+            {'key': '[FICHIER_PDL]', 'value': 'REVFPDL.800'},
+            {'key': '[FICHIER_PROP]', 'value': 'REVPROP.800'}
+        ]
+
     def populateDataVersionCombobox(self):
         '''
         Populate the list of data version (representing a year)
@@ -131,29 +135,29 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.liDataVersion.clear()
         for year in self.dataVersionList:
             self.liDataVersion.addItem(year)
-    
+
     def updateLog(self, msg):
         '''
-        Update the log 
+        Update the log
         '''
         self.txtImportLog.append(msg)
-        
-        
+
+
     def updateConnectionList(self):
         '''
         Update the combo box containing the database connection list
         '''
         QApplication.setOverrideCursor(Qt.WaitCursor)
-        
-        dbType = unicode(self.liDbType.currentText()).lower()       
+
+        dbType = unicode(self.liDbType.currentText()).lower()
         self.liDbConnection.clear()
-        
+
         if self.liDbType.currentIndex() != 0:
             self.dbType = dbType
             # instance of db_manager plugin class
             dbpluginclass = createDbPlugin( dbType )
             self.dbpluginclass = dbpluginclass
-          
+
             # fill the connections combobox
             for c in dbpluginclass.connections():
                 self.liDbConnection.addItem( unicode(c.connectionName()))
@@ -165,15 +169,15 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         '''
         self.liDbSchema.setEnabled(t)
         self.inDbCreateSchema.setEnabled(t)
-        self.btDbCreateSchema.setEnabled(t)   
-        
+        self.btDbCreateSchema.setEnabled(t)
+
 
     def updateSchemaList(self):
         '''
         Update the combo box containing the schema list if relevant
         '''
         self.liDbSchema.clear()
-        
+
         QApplication.setOverrideCursor(Qt.WaitCursor)
         connectionName = unicode(self.liDbConnection.currentText())
         self.connectionName = connectionName
@@ -181,12 +185,12 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
 
         # Deactivate schema fields
         self.toggleSchemaList(False)
-        
-        if dbType == 'postgis':            
-            
+
+        if dbType == 'postgis':
+
             # Activate schema fields
             self.toggleSchemaList(True)
-            
+
             # Get schema list
             dbpluginclass = createDbPlugin( dbType, connectionName )
             self.dbpluginclass = dbpluginclass
@@ -201,6 +205,24 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
                         self.liDbSchema.addItem( unicode(s.name))
                         self.schemaList.append(unicode(s.name))
         QApplication.restoreOverrideCursor()
+
+
+    def checkDatabaseForExistingData(self):
+        '''
+        Search among a database / schema
+        if there are alreaday Cadastre data
+        in it
+        '''
+        hasData = False
+        searchTable = u'"commune_id"'
+        if self.db:
+            schemaSearch = [s for s in self.db.schemas() if s.name == self.schema]
+            schemaInst = schemaSearch[0]
+            getSearchTable = [a for a in self.db.tables(schemaInst) if a.quotedName == searchTable]
+            if getSearchTable:
+                hasData = True
+
+        self.dbHasData = hasData
 
 
     def createSchema(self):
@@ -218,32 +240,32 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
                 self.db.createSchema(schema)
 
             except BaseError as e:
-            
+
                 DlgDbError.showError(e, self)
                 self.updateLog(e.msg)
                 return
 
-            finally:        
+            finally:
                 self.updateSchemaList()
                 listDic = { self.schemaList[i]:i for i in range(0, len(self.schemaList)) }
                 self.liDbSchema.setCurrentIndex(listDic[schema])
                 self.inDbCreateSchema.clear()
                 QApplication.restoreOverrideCursor()
 
-            
+
     def chooseDataPath(self, key):
         '''
-        Ask the user to select a folder 
+        Ask the user to select a folder
         and write down the path to appropriate field
         '''
-        ipath = QFileDialog.getExistingDirectory( 
-            None, 
-            "Choisir le répertoire contenant les fichiers", 
-            str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t') 
+        ipath = QFileDialog.getExistingDirectory(
+            None,
+            "Choisir le répertoire contenant les fichiers",
+            str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
         )
         if os.path.exists(unicode(ipath)):
             self.pathSelectors[key]['input'].setText(unicode(ipath))
-            
+
     def chooseProjection(self, key):
         '''
         Let the user choose a SCR
@@ -261,10 +283,10 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
                 self.projSelectors[key]['input'].clear()
                 self.projSelectors[key]['input'].setText(self.crs.authid() + " - " + self.crs.description())
         else:
-            return        
-        
-                
-                
+            return
+
+
+
     def processImport(self):
         '''
         Lancement du processus d'import
@@ -273,27 +295,36 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             msg = u'Veuillez sélectionner une base de données'
             QMessageBox.critical(self, self.tr("Qadatre"), self.tr(msg))
             return None
-        
+
         self.dataVersion = unicode(self.liDataVersion.currentText())
         self.dataYear = unicode(self.inDataYear.text())
         self.schema = unicode(self.liDbSchema.currentText())
         self.majicSourceDir = str(self.inMajicSourceDir.text().encode('utf-8')).strip(' \t')
         self.edigeoSourceDir = str(self.inEdigeoSourceDir.text().encode('utf-8')).strip(' \t')
-               
+        self.edigeoDepartement = unicode(self.inEdigeoDepartement.text())
+        self.edigeoDirection = unicode(self.inEdigeoDirection.text())
+        self.edigeoLot = unicode(self.inEdigeoLot.text())
+
         # qadastreImport instance
         qi = qadastreImport(self)
-               
+
+        # Check if data already exists in the database/schema
+        self.checkDatabaseForExistingData()
+        if self.dbHasData:
+            self.updateLog('Des données sont déjà dans la base de données')
+
         # Run Script for creating tables
-        qi.installOpencadastreStructure()
+        if not self.dbHasData:
+            qi.installOpencadastreStructure()
+
+        # Run MAJIC import
+        if os.path.exists(self.majicSourceDir):
+            qi.importMajic()
 
         # Run Edigeo import
         if os.path.exists(self.edigeoSourceDir):
             qi.importEdigeo()
 
-        # Run MAJIC import
-        if os.path.exists(self.majicSourceDir):
-            qi.importMajic()
-        
         qi.endImport()
 
 # --------------------------------------------------------
@@ -309,7 +340,7 @@ class qadastre_load_dialog(QDialog, Ui_qadastre_load_form):
         self.setupUi(self)
 
         # Signals/Slot Connections
-        
+
         # Set initial widget values
 
 
@@ -331,9 +362,9 @@ class qadastre_interface_dialog(QDialog, Ui_qadastre_interface_form):
         # Signals/Slot Connections
         self.btInterfaceQadastre.clicked.connect(self.change_interface)
 
-        
+
         # Set initial widget values
-        
+
     def change_interface(self):
         onetext = unicode(self.lineEdit.text())
         qadastre_interface(self, onetext)

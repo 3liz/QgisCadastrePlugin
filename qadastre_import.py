@@ -3,8 +3,8 @@
 /***************************************************************************
  Qadastre - import main methods
                                  A QGIS plugin
- This plugins helps users to import the french land registry ('cadastre') 
- into a database. It is meant to ease the use of the data in QGIs 
+ This plugins helps users to import the french land registry ('cadastre')
+ into a database. It is meant to ease the use of the data in QGIs
  by providing search tools and appropriate layer symbology.
                               -------------------
         begin                : 2013-06-11
@@ -37,7 +37,7 @@ from datetime import datetime
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
 from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
-       
+
 
 
 
@@ -45,8 +45,8 @@ class qadastreImport(QObject):
 
     def __init__(self, dialog):
         self.dialog = dialog
-        
-        self.db = self.dialog.db   
+
+        self.db = self.dialog.db
         self.connector = self.db.connector
         self.scriptSourceDir = os.path.join(self.dialog.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
         self.scriptDir = tempfile.mkdtemp()
@@ -54,66 +54,144 @@ class qadastreImport(QObject):
         self.edigeoPlainDir = tempfile.mkdtemp()
         self.majicDir = tempfile.mkdtemp()
         self.replaceDict = {
-            '[PREFIXE]': '"%s".' % self.dialog.schema, 
+            '[PREFIXE]': '"%s".' % self.dialog.schema,
             '[VERSION]': self.dialog.dataVersion,
-            '[ANNEE]': self.dialog.dataYear,
-            '[FICHIER_BATI]': self.dialog.majicSourceFileNames['bati'],
-            '[FICHIER_FANTOIR]': self.dialog.majicSourceFileNames['fantoir'],
-            '[FICHIER_LOTLOCAL]': self.dialog.majicSourceFileNames['lotlocal'],
-            '[FICHIER_NBATI]': self.dialog.majicSourceFileNames['nbati'],
-            '[FICHIER_PDL]': self.dialog.majicSourceFileNames['pdl'],
-            '[FICHIER_PROP]': self.dialog.majicSourceFileNames['prop']
+            '[ANNEE]': self.dialog.dataYear
         }
         self.go = True
         self.startTime = datetime.now()
         self.step = 0
-        self.totalSteps = 10
-        
-        self.beginImport()
-        
-    def beginImport(self):
-        '''
-        Process to run before importing data
-        '''
-        self.dialog.updateLog(u'<h3>Initialisation</h3>')
-        self.updateProgressBar(False)
-        
-        # copy opencadastre script files to temporary dir
-        self.copyFilesToTemp(self.scriptSourceDir, self.scriptDir)        
+        self.totalSteps = 0
 
-    def updateProgressBar(self, move=True):
+        self.beginImport()
+
+
+    def beginJobLog(self, stepNumber, title):
+        '''
+        reinit progress bar
+        '''
+        self.totalSteps = stepNumber
+        self.step = 0
+        self.dialog.stepLabel.setText('<b>%s</b>' % title)
+        self.dialog.updateLog('<h3>%s</h3>' % title)
+
+
+    def updateProgressBar(self):
         '''
         Update the progress bar
         '''
-        self.step+=1
-        self.dialog.pbProcessImport.setValue(int(self.step * 100/self.totalSteps))
-        if not move:
-            self.step-=1
-            
+        if self.go:
+            self.step+=1
+            self.dialog.pbProcessImport.setValue(int(self.step * 100/self.totalSteps))
+
+
     def updateTimer(self):
         '''
         Update the timer for each process
         '''
-        b = datetime.now()
-        diff = b - self.startTime
-        self.dialog.updateLog(u'%s s' % diff.seconds)
+        if self.go:
+            b = datetime.now()
+            diff = b - self.startTime
+            self.dialog.updateLog(u'%s s' % diff.seconds)
+
+
+    def beginImport(self):
+        '''
+        Process to run before importing data
+        '''
+
+        # Log
+        jobTitle = u'INITIALISATION'
+        self.beginJobLog(2, jobTitle)
+
+        # copy opencadastre script files to temporary dir
+        self.updateProgressBar()
+        self.copyFilesToTemp(self.scriptSourceDir, self.scriptDir)
+        self.updateTimer()
+        self.updateProgressBar()
+
 
     def installOpencadastreStructure(self):
         '''
         Create the empty db structure
-        '''        
+        '''
+
+        # Log
+        jobTitle = u'STRUCTURATION BDD'
+        self.beginJobLog(6, jobTitle)
+
         # install opencadastre structure
         scriptList = [
-            {'title' : u'Création des tables', 'script': 'create_metier.sql'},
-            {'title' : u'Ajout des contraintes', 'script': 'create_constraints.sql'},
-            {'title' : u'Ajout de la nomenclature', 'script': 'insert_nomenclatures.sql'}
+            {'title' : u'Création des tables',
+                'script': '%s' % os.path.join(self.scriptDir, 'create_metier.sql')},
+            {'title': u'Création des tables edigeo',
+                'script': '%s' % os.path.join(self.dialog.plugin_dir, 'scripts/edigeo_create_import_tables.sql')},
+            {'title' : u'Ajout des contraintes',
+                'script': '%s' % os.path.join(self.scriptDir, 'create_constraints.sql')},
+            {'title' : u'Ajout de la nomenclature',
+                'script': '%s' % os.path.join(self.scriptDir, 'insert_nomenclatures.sql')}
         ]
+
         for item in scriptList:
             s = item['script']
-            self.executeSqlScript(s, item['title'])
-        
-        return None
+            self.dialog.subStepLabel.setText(item['title'])
+            self.dialog.updateLog('%s' % item['title'])
+            self.updateProgressBar()
+            self.executeSqlScript(s)
+            self.updateProgressBar()
 
+        self.updateTimer()
+
+
+    def importMajic(self):
+
+        # Log
+        jobTitle = u'MAJIC'
+        self.beginJobLog(14, jobTitle)
+
+        # copy files in temp dir
+        self.dialog.subStepLabel.setText('Copie des fichiers')
+        self.updateProgressBar()
+        self.copyFilesToTemp(self.dialog.majicSourceDir, self.majicDir)
+        self.updateTimer()
+        self.updateProgressBar()
+
+        # replace parameters
+        replaceDict = self.replaceDict.copy()
+        for item in self.dialog.majicSourceFileNames:
+            replaceDict[item['key']] = item['value']
+
+            # create file if not there
+            fpath = os.path.join(os.path.realpath(self.majicDir) + '/' , item['value'])
+            if not os.path.exists(fpath):
+                # create empty file
+                fout = open(fpath, 'w')
+                data = ''
+                fout.write(data)
+                fout.close()
+
+        replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
+
+        scriptList = [
+            {'title' : u'Suppression des contraintes', 'script' : 'COMMUN/suppression_constraintes.sql'},
+            {'title' : u'Purge des données', 'script' : 'COMMUN/majic3_purge_donnees.sql'},
+            {'title' : u'Import des fichiers', 'script' : 'COMMUN/majic3_import_donnees_brutes.sql'},
+            {'title' : u'Formatage des données', 'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion},
+            {'title' : u'Restauration des contraintes', 'script' : 'COMMUN/creation_contraintes.sql'},
+            {'title' : u'Purge des données brutes', 'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'}
+        ]
+        for item in scriptList:
+            self.dialog.subStepLabel.setText(item['title'])
+            self.dialog.updateLog('%s' % item['title'])
+            s = item['script']
+            scriptPath = os.path.join(self.scriptDir, s)
+            self.replaceParametersInScript(scriptPath, replaceDict)
+            self.updateProgressBar()
+            self.executeSqlScript(scriptPath)
+            self.updateTimer()
+            self.updateProgressBar()
+
+        return None
 
 
     def importEdigeo(self):
@@ -126,54 +204,87 @@ class qadastreImport(QObject):
             self.go = False
             return msg
 
-        self.dialog.updateLog(u'<h3>Données EDIGEO</h3>')
-        self.updateProgressBar(False)
-        
+        # Log
+        jobTitle = u'EDIGEO'
+        self.beginJobLog(14, jobTitle)
+
         # copy files in temp dir
+        self.dialog.subStepLabel.setText('Copie des fichiers')
+        self.updateProgressBar()
         self.copyFilesToTemp(self.dialog.edigeoSourceDir, self.edigeoDir)
+        self.updateTimer()
+        self.updateProgressBar()
 
         # unzip edigeo files in temp dir
+        self.dialog.subStepLabel.setText('Extraction des fichiers')
+        self.updateProgressBar()
         self.unzipFolderContent(self.edigeoDir)
+        self.updateTimer()
+        self.updateProgressBar()
 
-        # convert edigeo files into shapefile
+        # import edigeo thf files into database
+        self.dialog.subStepLabel.setText('Import des fichiers')
+        self.updateProgressBar()
         self.importAllEdigeoToDatabase()
-    
-        return None
-        
+        self.updateTimer()
+        self.updateProgressBar()
 
-    def importMajic(self):
-    
-        self.dialog.updateLog(u'<h3>Données MAJIC3</h3>')
-        self.updateProgressBar(False)
-        
-        # copy files in temp dir
-        self.copyFilesToTemp(self.dialog.majicSourceDir, self.majicDir)
-        
-        # replace parameters
+        # Format edigeo data
         replaceDict = self.replaceDict.copy()
-        replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
-        
+        replaceDict['[DEPDIR]'] = '%s%s' % (self.dialog.edigeoDepartement, self.dialog.edigeoDirection)
+        replaceDict['[LOT]'] = self.dialog.edigeoLot
         scriptList = [
-            {'title' : u'Suppression des contraintes', 'script' : 'COMMUN/suppression_constraintes.sql'},
-            {'title' : u'Purge des données', 'script' : 'COMMUN/majic3_purge_donnees.sql'},
-            {'title' : u'Import des fichiers', 'script' : 'COMMUN/majic3_import_donnees_brutes.sql'},
-            {'title' : u'Formatage des données', 'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion},
-            {'title' : u'Restauration des contraintes', 'script' : 'COMMUN/creation_contraintes.sql'},
-            {'title' : u'Purge des données brutes', 'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'}
+            {
+                'title' : u'Formatage des données',
+                'script' : '%s' % os.path.join(
+                    self.scriptDir,
+                    '%s/edigeo_formatage_donnees.sql' % self.dialog.dataVersion
+                )
+            },
+            {   'title' : u'Création Unités foncières',
+                'script' : '%s' % os.path.join(
+                    self.scriptDir,
+                    '%s/edigeo_unite_fonciere.sql' % self.dialog.dataVersion
+                )
+            },
+            {
+                'title' : u'Placement des étiquettes',
+                'script' : '%s/edigeo_add_labels_xy.sql' % os.path.join(
+                    self.dialog.plugin_dir,
+                    "scripts/"
+                )
+            }
         ]
         for item in scriptList:
-            s = item['script']
-            scriptPath = os.path.join(self.scriptDir, s)
+            self.dialog.subStepLabel.setText(item['title'])
+            self.dialog.updateLog('%s' % item['title'])
+            scriptPath = item['script']
             self.replaceParametersInScript(scriptPath, replaceDict)
-            self.executeSqlScript(s, item['title'])
-        
+            self.updateProgressBar()
+            self.executeSqlScript(scriptPath)
+            self.updateTimer()
+            self.updateProgressBar()
+
+
+        # drop edigeo raw data
+        self.dialog.subStepLabel.setText('Suppression des fichiers temporaires')
+        self.dropEdigeoRawData()
+        self.updateTimer()
+        self.updateProgressBar()
+
         return None
 
-        
+
+
+
+
     def endImport(self):
         '''
         Actions done when import has finished
         '''
+        # Log
+        jobTitle = u'FINALISATION'
+        self.beginJobLog(1, jobTitle)
 
         # Remove the temp folders
         tempFolderList = [
@@ -186,7 +297,7 @@ class qadastreImport(QObject):
             for rep in tempFolderList:
                 if os.path.exists(rep):
                     shutil.rmtree(rep)
-            
+
         except IOError, e:
             msg = u"Erreur lors de la suppresion des répertoires temporaires: %s" % e
             self.go = False
@@ -197,12 +308,11 @@ class qadastreImport(QObject):
         else:
             msg = u"Des erreurs ont été rencontrées pendant l'import. Veuillez consulter le log."
 
-        QMessageBox.information(self.dialog, "Qadastre", msg)
-        self.step = self.totalSteps
         self.updateProgressBar()
-        
+        self.updateTimer()
+        QMessageBox.information(self.dialog, "Qadastre", msg)
         return None
-        
+
     #
     # TOOLS
     #
@@ -214,57 +324,55 @@ class qadastreImport(QObject):
         into a temporary folder
         '''
         if self.go:
-        
+
             self.dialog.updateLog(u'* Copie du répertoire %s' % source.decode('UTF8'))
-            self.updateProgressBar(False)
+
             QApplication.setOverrideCursor(Qt.WaitCursor)
-            
+
             # copy script directory
             try:
                 dir_util.copy_tree(source, target)
                 os.chmod(target, 0777)
             except IOError, e:
                 msg = u"Erreur lors de la copie des scripts d'import: %s" % e
-                QMessageBox.information(self.dialog, 
+                QMessageBox.information(self.dialog,
                 "Qadastre", msg)
                 self.go = False
                 return msg
-        
+
             finally:
                 QApplication.restoreOverrideCursor()
-                self.updateTimer()
-                self.updateProgressBar()
-        
+
+
         return None
 
 
-    def listFilesInDirectory(self, path, ext=None): 
+    def listFilesInDirectory(self, path, ext=None):
         '''
         List all files from folder and subfolder
         for a specific extension if given
         '''
-        fileList = [] 
-        for root, dirs, files in os.walk(path): 
+        fileList = []
+        for root, dirs, files in os.walk(path):
             for i in files:
                 if not ext or (ext and os.path.splitext(i)[1][1:].lower() == ext):
-                    fileList.append(os.path.join(root, i)) 
+                    fileList.append(os.path.join(root, i))
         return fileList
-        
+
 
     def unzipFolderContent(self, path):
         '''
-        Scan content of specified path 
+        Scan content of specified path
         and unzip all content into a single folder
         '''
         if self.go:
             QApplication.setOverrideCursor(Qt.WaitCursor)
             self.dialog.updateLog(u'* Décompression des fichiers de %s' % path.decode('UTF8'))
-            self.updateProgressBar(False)
-            
+
             # get all the zip files
             zipFileList = self.listFilesInDirectory(path, 'zip')
             tarFileList = self.listFilesInDirectory(path, 'bz2')
-            
+
             # unzip all files
             import zipfile
             import tarfile
@@ -273,25 +381,29 @@ class qadastreImport(QObject):
                     zipfile.ZipFile(z).extractall(self.edigeoPlainDir)
 
                 inner_zips_pattern = os.path.join(self.edigeoPlainDir, "*.zip")
+                i=0
                 for filename in glob.glob(inner_zips_pattern):
-                    inner_folder = filename[:-4]
-                    zipfile.ZipFile(filename).extractall(inner_folder)     
-                    
+                    inner_folder = filename[:-4] + '_%s' % i
+                    zipfile.ZipFile(filename).extractall(inner_folder)
+                    i+=1
+                i=0
                 for z in tarFileList:
-                    tar = tarfile.open(z).extractall(self.edigeoPlainDir)
-                    tar.close()                  
-            
+                    with tarfile.open(z) as t:
+                        tar = t.extractall(os.path.join(self.edigeoPlainDir, '_%s' % i))
+                        i+=1
+                        t.close()
+
             except IOError, e:
                 msg = u"Erreur lors de l'extraction des fichiers EDIGEO: %s" % e
                 self.go = False
                 self.dialog.updateLog(msg)
                 return msg
-                
+
             finally:
-                QApplication.restoreOverrideCursor()   
+                QApplication.restoreOverrideCursor()
                 self.updateTimer()
-                self.updateProgressBar()             
-    
+                self.updateProgressBar()
+
 
 
     def replaceParametersInScript(self, scriptPath, replaceDict):
@@ -299,16 +411,16 @@ class qadastreImport(QObject):
         Replace all parameters in sql scripts
         with given values
         '''
-        
+
         if self.go:
 
             QApplication.setOverrideCursor(Qt.WaitCursor)
-            
+
             def replfunc(match):
                 return replaceDict[match.group(0)]
             regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
 
-            try:       
+            try:
                 fin = open(scriptPath)
                 data = fin.read().decode("utf-8-sig")
                 fin.close()
@@ -316,24 +428,24 @@ class qadastreImport(QObject):
                 data = regex.sub(replfunc, data).encode('utf-8')
                 fout.write(data)
                 fout.close()
-                
+
             except IOError, e:
                 msg = u"Erreur lors du paramétrage des scripts d'import: %s" % e
                 self.go = False
                 self.dialog.updateLog(msg)
                 return msg
-                
+
             finally:
                 QApplication.restoreOverrideCursor()
-                        
-        
+
+
         return None
 
-        
+
     def setSearchPath(self, sql, schema):
         '''
         Set the search_path parameters if postgis database
-        '''        
+        '''
         prefix = u'SET search_path = %s, public, pg_catalog;' % schema
         if re.search('^BEGIN;', sql):
             sql = sql.replace('BEGIN;', 'BEGIN;%s' % prefix)
@@ -343,77 +455,132 @@ class qadastreImport(QObject):
         return sql
 
 
-    def executeSqlScript(self, scriptName, scriptTitle):
+    def executeSqlScript(self, scriptPath):
         '''
         Execute an SQL script file
         from opencadastre
         '''
-        
+
         if self.go:
 
-            self.dialog.updateLog(u'* %s' % scriptTitle)
-            self.updateProgressBar(False)
             QApplication.setOverrideCursor(Qt.WaitCursor)
-            
+
             # Read sql script
-            sql = open(os.path.join(self.scriptDir, scriptName)).read()
+            sql = open(scriptPath).read()
             sql = sql.decode("utf-8-sig")
-            
+
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
                 sql = self.setSearchPath(sql, self.dialog.schema)
 
             # Execute query
-            c = None
-            try:
-                c = self.connector._execute_and_commit(sql)
+            self.executeSqlQuery(sql)
 
-            except BaseError as e:
-            
-                DlgDbError.showError(e, self.dialog)
-                self.go = False
-                self.dialog.updateLog(e.msg)
-                return
 
-            finally:
-                QApplication.restoreOverrideCursor()
-                if c:
-                    c.close()
-                    del c
-                self.updateTimer()
-                self.updateProgressBar()
-    
         return None
-        
+
+
+    def fetchDataFromSqlQuery(self, sql):
+        '''
+        Execute a SQL query and
+        return [header, data, rowCount]
+        '''
+        self.db = db.connector
+
+        c = self.db._execute(None, unicode(sql))
+
+        data = []
+        header = []
+        rowCount = 0
+        c = None
+
+        try:
+            c = self.connector._execute(None,unicode(sql))
+            data = []
+            header = self.db._get_cursor_columns(c)
+
+            if header == None:
+                header = []
+
+            if len(header) > 0:
+                data = self.connector._fetchall(c)
+
+            rowCount = c.rowcount
+
+        except BaseError as e:
+
+            DlgDbError.showError(e, self.dialog)
+            self.go = False
+            self.dialog.updateLog(e.msg)
+            return
+
+        finally:
+            QApplication.restoreOverrideCursor()
+            if c:
+                c.close()
+                del c
+
+        return [header, data, rowCount]
+
+
+    def executeSqlQuery(self, sql):
+        '''
+        Execute a SQL string query
+        And commit
+        '''
+        c = None
+        try:
+            c = self.connector._execute_and_commit(sql)
+
+        except BaseError as e:
+
+            DlgDbError.showError(e, self.dialog)
+            self.go = False
+            self.dialog.updateLog(e.msg)
+            return
+
+        finally:
+            QApplication.restoreOverrideCursor()
+            if c:
+                c.close()
+                del c
+
+
     def importAllEdigeoToDatabase(self):
         '''
         Loop through all THF files
         and import each one into database
         '''
-               
+
         if self.go:
 
             self.dialog.updateLog(u'* Import des fichiers EDIGEO dans la base')
-            self.updateProgressBar(False)
-                   
+
+            # THF
             thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')
-            self.totalSteps+= len(thfList)
+            numFile = len(thfList) * 2
+            self.totalSteps+= numFile
             for thf in thfList:
                 self.importEdigeoThfToDatabase(thf)
-    
+                self.updateProgressBar()
+
+            # VEC
+            vecList = self.listFilesInDirectory(self.edigeoPlainDir, 'vec')
+            self.totalSteps+= len(vecList)
+            for vec in vecList:
+                self.importEdigeoVecToDatabase(vec)
+                self.updateProgressBar()
+
             QApplication.restoreOverrideCursor()
-            self.updateTimer()
-            self.updateProgressBar()     
-        
-    
+            self.totalSteps-= numFile
+
+
     def importEdigeoThfToDatabase(self, filename):
         '''
         Import one edigeo THF files into database
         source : db_manager/dlg_import_vector.py
         '''
-        self.dialog.updateLog(u'  - fichier THF: %s' % filename)
-        self.updateProgressBar(False)
-        
+
         # Build ogr2ogr command
         conn_name = self.dialog.connectionName
         settings = QSettings()
@@ -425,13 +592,49 @@ class qadastreImport(QObject):
 
         sourceSrid = '2154'
         targetSrid = '2154'
-        ogrCommand = 'ogr2ogr -a_srs "EPSG:%s" -t_srs "EPSG:%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
-        
+        ogrCommand = 'ogr2ogr -a_srs "EPSG:%s" -t_srs "EPSG:%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -nlt GEOMETRY' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+
         # Run command
         proc = QProcess()
         proc.start(ogrCommand)
         proc.waitForFinished()
-        
-        self.updateProgressBar()
-        
-        return None        
+
+        return None
+
+
+
+    def importEdigeoVecToDatabase(self, path):
+        '''
+        Get edigeo relations between objects
+        from a .VEC file
+        and add them in edigeo_rel table
+        '''
+
+        import re
+        reg = reg='^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_.+)_(Objet_.+)$'
+        with open(path) as inputFile:
+            # Get a list of RID relations combining a "Rel" and two "_Objet"
+            l = [ a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
+
+            # Create a sql script to insert all items
+            sql="BEGIN;"
+            for item in l:
+                sql+= "INSERT INTO %s.edigeo_rel ( nom,de,vers) values ( '%s', '%s', '%s');" % (self.dialog.schema, item[0], item[1], item[2] )
+            sql+="COMMIT;"
+
+            # Execute query
+            self.executeSqlQuery(sql)
+
+
+
+    def dropEdigeoRawData(self):
+        '''
+        Drop Edigeo raw data tables
+        '''
+
+        if self.go:
+            edigeoTables = [
+                'test'
+            ]
+
+
