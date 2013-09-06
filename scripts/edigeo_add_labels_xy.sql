@@ -5,3 +5,4 @@ UPDATE geo_label SET x_label = ST_X(geom);
 UPDATE geo_label SET y_label = ST_Y(geom);
 CREATE INDEX geo_label_x_label_idx  ON geo_label (x_label );
 CREATE INDEX geo_label_y_label_idx  ON geo_label (y_label );
+CREATE INDEX geo_label_ogr_obj_lnk_layer_idx ON geo_label (ogr_obj_lnk_layer);

@@ -446,7 +446,7 @@ class qadastreImport(QObject):
         '''
         Set the search_path parameters if postgis database
         '''
-        prefix = u'SET search_path = %s, public, pg_catalog;' % schema
+        prefix = u'SET search_path = "%s", public, pg_catalog;' % schema
         if re.search('^BEGIN;', sql):
             sql = sql.replace('BEGIN;', 'BEGIN;%s' % prefix)
         else:
@@ -590,8 +590,9 @@ class qadastreImport(QObject):
         settingsList = ["service", "host", "port", "database", "username", "password"]
         service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
 
-        sourceSrid = '2154'
-        targetSrid = '2154'
+        sourceSrid = self.edigeoSourceProj
+        targetSrid = self.edigeoTargetProj
+
         ogrCommand = 'ogr2ogr -a_srs "EPSG:%s" -t_srs "EPSG:%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -nlt GEOMETRY' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
 
         # Run command
@@ -611,7 +612,7 @@ class qadastreImport(QObject):
         '''
 
         import re
-        reg = reg='^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_.+)_(Objet_.+)$'
+        reg = '^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_[0-9]+)_(Objet_[0-9]+)'
         with open(path) as inputFile:
             # Get a list of RID relations combining a "Rel" and two "_Objet"
             l = [ a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
@@ -619,7 +620,7 @@ class qadastreImport(QObject):
             # Create a sql script to insert all items
             sql="BEGIN;"
             for item in l:
-                sql+= "INSERT INTO %s.edigeo_rel ( nom,de,vers) values ( '%s', '%s', '%s');" % (self.dialog.schema, item[0], item[1], item[2] )
+                sql+= "INSERT INTO \"%s\".edigeo_rel ( nom, de, vers) values ( '%s', '%s', '%s');" % (self.dialog.schema, item[0], item[1], item[2] )
             sql+="COMMIT;"
 
             # Execute query

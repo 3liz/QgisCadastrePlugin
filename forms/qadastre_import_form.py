@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_import_form.ui'
 #
-# Created: Thu Aug 29 15:28:18 2013
+# Created: Tue Sep  3 17:03:14 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -192,9 +192,6 @@ class Ui_qadastre_import_form(object):
         self.verticalLayout_6.addWidget(self.btProcessImport)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label_7 = QtGui.QLabel(self.scrollAreaWidgetContents_2)
-        self.label_7.setObjectName(_fromUtf8("label_7"))
-        self.horizontalLayout.addWidget(self.label_7)
         self.stepLabel = QtGui.QLabel(self.scrollAreaWidgetContents_2)
         self.stepLabel.setText(_fromUtf8(""))
         self.stepLabel.setObjectName(_fromUtf8("stepLabel"))
@@ -248,7 +245,6 @@ class Ui_qadastre_import_form(object):
         self.label_16.setText(QtGui.QApplication.translate("qadastre_import_form", "Année", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setText(QtGui.QApplication.translate("qadastre_import_form", "Lot", None, QtGui.QApplication.UnicodeUTF8))
         self.btProcessImport.setText(QtGui.QApplication.translate("qadastre_import_form", "Lancer l\'import", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("qadastre_import_form", "Étape", None, QtGui.QApplication.UnicodeUTF8))
         self.txtImportLog.setHtml(QtGui.QApplication.translate("qadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

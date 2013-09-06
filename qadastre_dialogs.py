@@ -214,13 +214,14 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         in it
         '''
         hasData = False
-        searchTable = u'"commune_id"'
+        searchTable = u'geo_commune'
         if self.db:
             schemaSearch = [s for s in self.db.schemas() if s.name == self.schema]
             schemaInst = schemaSearch[0]
-            getSearchTable = [a for a in self.db.tables(schemaInst) if a.quotedName == searchTable]
+            getSearchTable = [a for a in self.db.tables(schemaInst) if a.name == searchTable]
             if getSearchTable:
                 hasData = True
+
 
         self.dbHasData = hasData
 
@@ -304,16 +305,16 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.edigeoDepartement = unicode(self.inEdigeoDepartement.text())
         self.edigeoDirection = unicode(self.inEdigeoDirection.text())
         self.edigeoLot = unicode(self.inEdigeoLot.text())
+        self.edigeoSourceProj = self.inEdigeoSourceProj.text().split( " - " )[ 0 ]
+        self.edigeoTargetProj = self.inEdigeoTargetProj.text().split( " - " )[ 0 ]
 
         # qadastreImport instance
         qi = qadastreImport(self)
 
         # Check if data already exists in the database/schema
         self.checkDatabaseForExistingData()
-        if self.dbHasData:
-            self.updateLog('Des données sont déjà dans la base de données')
 
-        # Run Script for creating tables
+        #~ # Run Script for creating tables
         if not self.dbHasData:
             qi.installOpencadastreStructure()
 
@@ -342,8 +343,6 @@ class qadastre_load_dialog(QDialog, Ui_qadastre_load_form):
         # Signals/Slot Connections
 
         # Set initial widget values
-
-
 
 
 

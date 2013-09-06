@@ -16,6 +16,10 @@ DELETE FROM [PREFIXE]geo_subdfisc WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_batiment WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_commune WHERE lot='[LOT]';
 
+-- index pour optimisation
+CREATE INDEX idx_edigeorel_vers ON [PREFIXE]edigeo_rel (vers);
+CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
+
 -- geo_commune;
 INSERT INTO [PREFIXE]geo_commune
 ( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, geom,lot)
@@ -28,12 +32,12 @@ UPDATE [PREFIXE]commune SET geo_commune=g.geo_commune FROM [PREFIXE]geo_commune 
 -- geo_section;
 INSERT INTO [PREFIXE]geo_section
 ( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot)
-SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Collect(geom)), '[LOT]'
+SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union((geom))), '[LOT]'
 FROM [PREFIXE]section_id
 GROUP BY object_rid, idu, tex, creat_date, update_date;
 
 -- geo_subdsect;
-INSERT INTO [PREFIXE]geo_subdsect 
+INSERT INTO [PREFIXE]geo_subdsect
 (geo_subdsect, annee, object_rid, idu, geo_section, geo_qupl, geo_copl, eor, dedi, icl, dis, geo_inp, dred, creat_date, update_dat, geom, lot)
 SELECT '[ANNEE]'||SUBSTRING(idu,1,10), '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), qupl, copl, to_number(eor,'0000000000'), to_date(dedi, 'DD/MM/YYYYY'), floor(icl), to_date(dis, 'DD/MM/YYYYY'), inp, to_date(dred,'DD/MM/YYYY'), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom),'[LOT]'
 FROM [PREFIXE]subdsect_id;
@@ -43,7 +47,7 @@ INSERT INTO [PREFIXE]geo_parcelle
 (geo_parcelle, annee, object_rid, idu, geo_section, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot)
 SELECT '[ANNEE]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), supf, indp, coar, tex, tex2, codm, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
 FROM [PREFIXE]parcelle_id;
-UPDATE [PREFIXE]geo_parcelle set geo_subdsect=s.geo_subdsect FROM [PREFIXE]geo_subdsect s, [PREFIXE]edigeo_rel r 
+UPDATE [PREFIXE]geo_parcelle set geo_subdsect=s.geo_subdsect FROM [PREFIXE]geo_subdsect s, [PREFIXE]edigeo_rel r
 WHERE s.annee=geo_parcelle.annee AND geo_parcelle.annee='[ANNEE]' AND r.nom='Rel_PARCELLE_SUBDSECT' AND r.de=geo_parcelle.object_rid AND vers=s.object_rid;
 UPDATE [PREFIXE]geo_parcelle set parcelle= p.parcelle FROM [PREFIXE]parcelle p WHERE p.annee='[ANNEE]' AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,3)||replace(SUBSTRING(geo_parcelle.geo_parcelle,8,5),'0','-')||SUBSTRING(geo_parcelle.geo_parcelle,13,4) AND geo_parcelle.annee='[ANNEE]';
 UPDATE [PREFIXE]parcelle SET geo_parcelle=g.geo_parcelle FROM [PREFIXE]geo_parcelle g WHERE g.parcelle=parcelle.parcelle AND g.annee='[ANNEE]';
@@ -177,6 +181,11 @@ INSERT INTO [PREFIXE]geo_tsurf_commune (annee, geo_tsurf, geo_commune)
 SELECT s.annee, s.geo_tsurf, p.geo_commune
 FROM [PREFIXE]geo_tsurf s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
+
+-- suppression des index
+DROP INDEX [PREFIXE]idx_edigeorel_vers;
+DROP INDEX [PREFIXE]idx_edigeorel_de;
+
 
 -- ANALYSES;
 ANALYSE [PREFIXE]geo_commune;
