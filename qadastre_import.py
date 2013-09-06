@@ -46,6 +46,9 @@ class qadastreImport(QObject):
     def __init__(self, dialog):
         self.dialog = dialog
 
+        # common qadastre methods
+        self.qc = self.dialog.qc(self)
+
         self.db = self.dialog.db
         self.connector = self.db.connector
         self.scriptSourceDir = os.path.join(self.dialog.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
@@ -73,7 +76,8 @@ class qadastreImport(QObject):
         self.totalSteps = stepNumber
         self.step = 0
         self.dialog.stepLabel.setText('<b>%s</b>' % title)
-        self.dialog.updateLog('<h3>%s</h3>' % title)
+        self.qc.updateLog('<h3>%s</h3>' % title)
+        self.qc.updateLog(self.txtImportLog, e.msg)
 
 
     def updateProgressBar(self):
@@ -92,7 +96,7 @@ class qadastreImport(QObject):
         if self.go:
             b = datetime.now()
             diff = b - self.startTime
-            self.dialog.updateLog(u'%s s' % diff.seconds)
+            self.qc.updateLog(u'%s s' % diff.seconds)
 
 
     def beginImport(self):
@@ -135,7 +139,7 @@ class qadastreImport(QObject):
         for item in scriptList:
             s = item['script']
             self.dialog.subStepLabel.setText(item['title'])
-            self.dialog.updateLog('%s' % item['title'])
+            self.qc.updateLog('%s' % item['title'])
             self.updateProgressBar()
             self.executeSqlScript(s)
             self.updateProgressBar()
@@ -182,7 +186,7 @@ class qadastreImport(QObject):
         ]
         for item in scriptList:
             self.dialog.subStepLabel.setText(item['title'])
-            self.dialog.updateLog('%s' % item['title'])
+            self.qc.updateLog('%s' % item['title'])
             s = item['script']
             scriptPath = os.path.join(self.scriptDir, s)
             self.replaceParametersInScript(scriptPath, replaceDict)
@@ -257,7 +261,7 @@ class qadastreImport(QObject):
         ]
         for item in scriptList:
             self.dialog.subStepLabel.setText(item['title'])
-            self.dialog.updateLog('%s' % item['title'])
+            self.qc.updateLog('%s' % item['title'])
             scriptPath = item['script']
             self.replaceParametersInScript(scriptPath, replaceDict)
             self.updateProgressBar()
@@ -325,7 +329,7 @@ class qadastreImport(QObject):
         '''
         if self.go:
 
-            self.dialog.updateLog(u'* Copie du répertoire %s' % source.decode('UTF8'))
+            self.qc.updateLog(u'* Copie du répertoire %s' % source.decode('UTF8'))
 
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
@@ -367,7 +371,7 @@ class qadastreImport(QObject):
         '''
         if self.go:
             QApplication.setOverrideCursor(Qt.WaitCursor)
-            self.dialog.updateLog(u'* Décompression des fichiers de %s' % path.decode('UTF8'))
+            self.qc.updateLog(u'* Décompression des fichiers de %s' % path.decode('UTF8'))
 
             # get all the zip files
             zipFileList = self.listFilesInDirectory(path, 'zip')
@@ -396,7 +400,7 @@ class qadastreImport(QObject):
             except IOError, e:
                 msg = u"Erreur lors de l'extraction des fichiers EDIGEO: %s" % e
                 self.go = False
-                self.dialog.updateLog(msg)
+                self.qc.updateLog(msg)
                 return msg
 
             finally:
@@ -432,7 +436,7 @@ class qadastreImport(QObject):
             except IOError, e:
                 msg = u"Erreur lors du paramétrage des scripts d'import: %s" % e
                 self.go = False
-                self.dialog.updateLog(msg)
+                self.qc.updateLog(msg)
                 return msg
 
             finally:
@@ -511,7 +515,7 @@ class qadastreImport(QObject):
 
             DlgDbError.showError(e, self.dialog)
             self.go = False
-            self.dialog.updateLog(e.msg)
+            self.qc.updateLog(e.msg)
             return
 
         finally:
@@ -536,7 +540,7 @@ class qadastreImport(QObject):
 
             DlgDbError.showError(e, self.dialog)
             self.go = False
-            self.dialog.updateLog(e.msg)
+            self.qc.updateLog(e.msg)
             return
 
         finally:
@@ -554,7 +558,7 @@ class qadastreImport(QObject):
 
         if self.go:
 
-            self.dialog.updateLog(u'* Import des fichiers EDIGEO dans la base')
+            self.qc.updateLog(u'* Import des fichiers EDIGEO dans la base')
 
             # THF
             thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')

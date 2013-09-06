@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_import_form.ui'
 #
-# Created: Tue Sep  3 17:03:14 2013
+# Created: Fri Sep  6 18:31:31 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -201,13 +201,13 @@ class Ui_qadastre_import_form(object):
         self.subStepLabel.setObjectName(_fromUtf8("subStepLabel"))
         self.horizontalLayout.addWidget(self.subStepLabel)
         self.verticalLayout_6.addLayout(self.horizontalLayout)
-        self.pbProcessImport = QtGui.QProgressBar(self.scrollAreaWidgetContents_2)
-        self.pbProcessImport.setProperty("value", 0)
-        self.pbProcessImport.setObjectName(_fromUtf8("pbProcessImport"))
-        self.verticalLayout_6.addWidget(self.pbProcessImport)
-        self.txtImportLog = QtGui.QTextEdit(self.scrollAreaWidgetContents_2)
-        self.txtImportLog.setObjectName(_fromUtf8("txtImportLog"))
-        self.verticalLayout_6.addWidget(self.txtImportLog)
+        self.pbProcess = QtGui.QProgressBar(self.scrollAreaWidgetContents_2)
+        self.pbProcess.setProperty("value", 0)
+        self.pbProcess.setObjectName(_fromUtf8("pbProcess"))
+        self.verticalLayout_6.addWidget(self.pbProcess)
+        self.txtLog = QtGui.QTextEdit(self.scrollAreaWidgetContents_2)
+        self.txtLog.setObjectName(_fromUtf8("txtLog"))
+        self.verticalLayout_6.addWidget(self.txtLog)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout_6.addItem(spacerItem)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
@@ -245,7 +245,7 @@ class Ui_qadastre_import_form(object):
         self.label_16.setText(QtGui.QApplication.translate("qadastre_import_form", "Année", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setText(QtGui.QApplication.translate("qadastre_import_form", "Lot", None, QtGui.QApplication.UnicodeUTF8))
         self.btProcessImport.setText(QtGui.QApplication.translate("qadastre_import_form", "Lancer l\'import", None, QtGui.QApplication.UnicodeUTF8))
-        self.txtImportLog.setHtml(QtGui.QApplication.translate("qadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.txtLog.setHtml(QtGui.QApplication.translate("qadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"

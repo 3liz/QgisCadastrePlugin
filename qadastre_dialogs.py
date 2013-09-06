@@ -42,6 +42,119 @@ from db_manager.db_plugins import createDbPlugin
 # --------------------------------------------------------
 
 
+class qadastre_common():
+
+    def __init__(self, dialog):
+
+        self.dialog = dialog
+
+        # plugin directory path
+        self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/Qadastre"
+
+        # default auth id for layers
+        self.defaultAuthId = 'EPSG:2154'
+
+
+    def updateLog(self, msg):
+        '''
+        Update the log
+        '''
+        self.dialog.txtLog.append(msg)
+
+
+    def updateProgressBar(self):
+        '''
+        Update the progress bar
+        '''
+        if self.dialog.go:
+            self.dialog.step+=1
+            self.dialog.pbProcess.setValue(int(self.dialog.step * 100/self.dialog.totalSteps))
+
+
+    def updateConnectionList(self):
+        '''
+        Update the combo box containing the database connection list
+        '''
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+
+        dbType = unicode(self.dialog.liDbType.currentText()).lower()
+        self.dialog.liDbConnection.clear()
+
+        if self.dialog.liDbType.currentIndex() != 0:
+            self.dialog.dbType = dbType
+            # instance of db_manager plugin class
+            dbpluginclass = createDbPlugin( dbType )
+            self.dialog.dbpluginclass = dbpluginclass
+
+            # fill the connections combobox
+            for c in dbpluginclass.connections():
+                self.dialog.liDbConnection.addItem( unicode(c.connectionName()))
+        QApplication.restoreOverrideCursor()
+
+    def toggleSchemaList(self, t):
+        '''
+        Toggle Schema list and inputs
+        '''
+        self.dialog.liDbSchema.setEnabled(t)
+        if hasattr(self.dialog, "inDbCreateSchema"):
+            self.dialog.inDbCreateSchema.setEnabled(t)
+            self.dialog.btDbCreateSchema.setEnabled(t)
+
+
+    def updateSchemaList(self):
+        '''
+        Update the combo box containing the schema list if relevant
+        '''
+        self.dialog.liDbSchema.clear()
+
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+        connectionName = unicode(self.dialog.liDbConnection.currentText())
+        self.dialog.connectionName = connectionName
+        dbType = unicode(self.dialog.liDbType.currentText()).lower()
+
+        # Deactivate schema fields
+        self.toggleSchemaList(False)
+
+        if dbType == 'postgis':
+
+            # Activate schema fields
+            self.toggleSchemaList(True)
+
+            # Get schema list
+            dbpluginclass = createDbPlugin( dbType, connectionName )
+            self.dialog.dbpluginclass = dbpluginclass
+            connection = dbpluginclass.connect()
+            if connection:
+                self.dialog.connection = connection
+                db = dbpluginclass.database()
+                if db:
+                    self.dialog.db = db
+                    self.dialog.schemaList = []
+                    for s in db.schemas():
+                        self.dialog.liDbSchema.addItem( unicode(s.name))
+                        self.dialog.schemaList.append(unicode(s.name))
+        QApplication.restoreOverrideCursor()
+
+
+    def checkDatabaseForExistingStructure(self):
+        '''
+        Search among a database / schema
+        if there are alreaday Cadastre data
+        in it
+        '''
+        hasData = False
+        searchTable = u'geo_commune'
+        if self.dialog.db:
+            schemaSearch = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
+            schemaInst = schemaSearch[0]
+            getSearchTable = [a for a in self.dialog.db.tables(schemaInst) if a.name == searchTable]
+            if getSearchTable:
+                hasData = True
+
+        self.dialog.dbHasData = hasData
+
+
+
 from qadastre_import_form import *
 from qadastre_import import *
 
@@ -51,11 +164,14 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.iface = iface
         self.setupUi(self)
 
+        # common qadastre methods
+        self.qc = qadastre_common(self)
+
         # Signals/Slot Connections
-        self.liDbType.currentIndexChanged[str].connect(self.updateConnectionList)
-        self.liDbConnection.currentIndexChanged[str].connect(self.updateSchemaList)
-        self.btProcessImport.clicked.connect(self.processImport)
+        self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
+        self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
         self.btDbCreateSchema.clicked.connect(self.createSchema)
+        self.btProcessImport.clicked.connect(self.processImport)
 
         # path buttons selectors
         from functools import partial
@@ -94,8 +210,6 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
 
         # Set initial values
         self.dataVersionList = [ '2011', '2012']
-        self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/Qadastre"
-
         self.dbType = None
         self.dbpluginclass = None
         self.connectionName = None
@@ -136,94 +250,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         for year in self.dataVersionList:
             self.liDataVersion.addItem(year)
 
-    def updateLog(self, msg):
-        '''
-        Update the log
-        '''
-        self.txtImportLog.append(msg)
 
-
-    def updateConnectionList(self):
-        '''
-        Update the combo box containing the database connection list
-        '''
-        QApplication.setOverrideCursor(Qt.WaitCursor)
-
-        dbType = unicode(self.liDbType.currentText()).lower()
-        self.liDbConnection.clear()
-
-        if self.liDbType.currentIndex() != 0:
-            self.dbType = dbType
-            # instance of db_manager plugin class
-            dbpluginclass = createDbPlugin( dbType )
-            self.dbpluginclass = dbpluginclass
-
-            # fill the connections combobox
-            for c in dbpluginclass.connections():
-                self.liDbConnection.addItem( unicode(c.connectionName()))
-        QApplication.restoreOverrideCursor()
-
-    def toggleSchemaList(self, t):
-        '''
-        Toggle Schema list and inputs
-        '''
-        self.liDbSchema.setEnabled(t)
-        self.inDbCreateSchema.setEnabled(t)
-        self.btDbCreateSchema.setEnabled(t)
-
-
-    def updateSchemaList(self):
-        '''
-        Update the combo box containing the schema list if relevant
-        '''
-        self.liDbSchema.clear()
-
-        QApplication.setOverrideCursor(Qt.WaitCursor)
-        connectionName = unicode(self.liDbConnection.currentText())
-        self.connectionName = connectionName
-        dbType = unicode(self.liDbType.currentText()).lower()
-
-        # Deactivate schema fields
-        self.toggleSchemaList(False)
-
-        if dbType == 'postgis':
-
-            # Activate schema fields
-            self.toggleSchemaList(True)
-
-            # Get schema list
-            dbpluginclass = createDbPlugin( dbType, connectionName )
-            self.dbpluginclass = dbpluginclass
-            connection = dbpluginclass.connect()
-            if connection:
-                self.connection = connection
-                db = dbpluginclass.database()
-                if db:
-                    self.db = db
-                    self.schemaList = []
-                    for s in db.schemas():
-                        self.liDbSchema.addItem( unicode(s.name))
-                        self.schemaList.append(unicode(s.name))
-        QApplication.restoreOverrideCursor()
-
-
-    def checkDatabaseForExistingData(self):
-        '''
-        Search among a database / schema
-        if there are alreaday Cadastre data
-        in it
-        '''
-        hasData = False
-        searchTable = u'geo_commune'
-        if self.db:
-            schemaSearch = [s for s in self.db.schemas() if s.name == self.schema]
-            schemaInst = schemaSearch[0]
-            getSearchTable = [a for a in self.db.tables(schemaInst) if a.name == searchTable]
-            if getSearchTable:
-                hasData = True
-
-
-        self.dbHasData = hasData
 
 
     def createSchema(self):
@@ -243,11 +270,11 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             except BaseError as e:
 
                 DlgDbError.showError(e, self)
-                self.updateLog(e.msg)
+                self.qc.updateLog(e.msg)
                 return
 
             finally:
-                self.updateSchemaList()
+                self.qc.updateSchemaList()
                 listDic = { self.schemaList[i]:i for i in range(0, len(self.schemaList)) }
                 self.liDbSchema.setCurrentIndex(listDic[schema])
                 self.inDbCreateSchema.clear()
@@ -275,6 +302,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         sentence = self.projSelectors[key]['sentence']
         projSelector = QgsGenericProjectionSelector(self)
         projSelector.setMessage( "<h2>%s</h2>%s" % (header.encode('UTF8'), sentence.encode('UTF8')) )
+        projSelector.setSelectedAuthId(self.qc.defaultAuthId)
         if projSelector.exec_():
             self.crs = QgsCoordinateReferenceSystem( projSelector.selectedCrsId(), QgsCoordinateReferenceSystem.InternalCrsId )
             if len(projSelector.selectedAuthId()) == 0:
@@ -311,8 +339,8 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         # qadastreImport instance
         qi = qadastreImport(self)
 
-        # Check if data already exists in the database/schema
-        self.checkDatabaseForExistingData()
+        # Check if structure already exists in the database/schema
+        self.qc.checkDatabaseForExistingStructure(self)
 
         #~ # Run Script for creating tables
         if not self.dbHasData:
@@ -340,9 +368,163 @@ class qadastre_load_dialog(QDialog, Ui_qadastre_load_form):
         self.iface = iface
         self.setupUi(self)
 
-        # Signals/Slot Connections
+        # common qadastre methods
+        self.qc = qadastre_common(self)
 
-        # Set initial widget values
+        # default style to apply for Qadastre layers
+        self.defaultStyleDir = 'default'
+
+        # set Qadastre SVG path if not set
+        qadastreSvgPath = os.path.join(
+            self.qc.plugin_dir,
+            "styles/%s/svg" % self.defaultStyleDir
+        )
+        s = QSettings()
+        qgisSvgPaths = s.value("svg/searchPathsForSVG", 10, type=str)
+        if not qadastreSvgPath in qgisSvgPaths:
+            s.setValue("svg/searchPathsForSVG", qadastreSvgPath)
+            self.qc.updateLog(u"* Le chemin contenant les SVG du plugin Qadastre a été ajouté dans les options de QGIS")
+
+        # Signals/Slot Connections
+        self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
+        self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
+        self.btProcessLoading.clicked.connect(self.processLoading)
+
+        # Set initial values
+        self.go = True
+        self.step = 0
+        self.totalSteps = 0
+        self.dbType = None
+        self.dbpluginclass = None
+        self.connectionName = None
+        self.connection = None
+        self.db = None
+        self.schema = None
+        self.schemaList = None
+        self.dbHasData = None
+
+        self.qgisQadastreLayerList = [
+            {'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom'},
+            {'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni'},
+            {'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'ZONCOMMUNI_id\''},
+            {'name': 'geo_subdsect', 'table': 'geo_subdsect', 'geom': 'geom'},
+            {'name': 'geo_subdfisc', 'table': 'geo_subdfisc', 'geom': 'geom'},
+            {'name': 'geo_label_subdfisc', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SUBDFISC_id\''},
+            {'name': 'geo_batiment', 'table': 'geo_batiment', 'geom': 'geom'},
+            {'name': 'geo_parcelle', 'table': 'geo_parcelle', 'geom': 'geom'},
+            {'name': 'geo_label_parcelle', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\''},
+            {'name': 'geo_lieudit', 'table': 'geo_lieudit', 'geom': 'geom'},
+            {'name': 'geo_label_lieudit', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'LIEUDIT_id\''},
+            {'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom'},
+            {'name': 'geo_label_section', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SECTION_id\''},
+            {'name': 'geo_borne', 'table': 'geo_borne', 'geom': 'geom'},
+            {'name': 'geo_croix', 'table': 'geo_croix'},
+            {'name': 'geo_ptcanv', 'table': 'geo_ptcanv', 'geom': 'geom'},
+            {'name': 'geo_symblim', 'table': 'geo_symblim', 'geom': 'geom'},
+            {'name': 'geo_tronfluv', 'table': 'geo_tronfluv', 'geom': 'geom'},
+            {'name': 'geo_label_tronfluv', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TRONFLUV_id\''},
+            {'name': 'geo_tsurf', 'table': 'geo_tsurf', 'geom': 'geom'},
+            {'name': 'geo_label_tsurf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TSURF_id\''},
+            {'name': 'geo_tpoint', 'table': 'geo_tpoint', 'geom': 'geom'},
+            {'name': 'geo_label_tpoint', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TPOINT_id\''},
+            {'name': 'geo_tline', 'table': 'geo_tline', 'geom': 'geom'},
+            {'name': 'geo_label_tline', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TLINE_id\''},
+            {'name': 'geo_label_num_voie', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'NUMVOIE_id\''},
+            {'name': 'geo_label_voiep', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'VOIEP_id\''},
+            {'name': 'geo_parcelle_uf', 'table': 'geo_parcelle', 'geom':'geom_uf'},
+            {'name': 'geo_label_parcelle_uf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\''}
+        ]
+
+
+    def processLoading(self):
+
+        # Get selected options
+        providerName = self.dbpluginclass.providerName()
+        qgisQadastreLayers = []
+        communeLayer = None
+        self.schema = unicode(self.liDbSchema.currentText())
+        self.totalSteps = len(self.qgisQadastreLayerList)
+
+        # Run the loading
+        if self.connection:
+            if self.db:
+                # Get database list of tables
+                layerUri = self.db.uri()
+                schemaSearch = [s for s in self.db.schemas() if s.name == self.schema]
+                schemaInst = schemaSearch[0]
+                dbTables = self.db.tables(schemaInst)
+
+                # Loop throuhg qgisQastreLayerList and load each corresponding table
+                for item in self.qgisQadastreLayerList:
+
+                    # update progress bar
+                    self.qc.updateLog(u'Récupération de la couche %s' % item['name'])
+                    self.step+=1
+                    self.qc.updateProgressBar()
+
+                    # Get db_manager table instance
+                    table = [a for a in dbTables if a.name == item['table']][0]
+                    sql = ""
+                    if item.has_key('sql'):
+                        sql = item['sql']
+                    geomCol = ""
+                    if item.has_key('geom'):
+                        geomCol = item['geom']
+
+                    # Create vector layer
+                    if table:
+                        tableName = table.name
+                        uniqueCol = table.getValidQGisUniqueFields(True) if table.isView else None
+                        layerUri.setDataSource(
+                            self.schema,
+                            tableName,
+                            geomCol,
+                            sql,
+                            uniqueCol.name if uniqueCol else ""
+                        )
+                        vlayer = QgsVectorLayer(layerUri.uri(), item['name'], providerName)
+
+                        # apply style
+                        qmlPath = os.path.join(
+                            self.qc.plugin_dir,
+                            "styles/%s/%s.qml" % (self.defaultStyleDir, item['name'])
+                        )
+                        if os.path.exists(qmlPath):
+                            vlayer.loadNamedStyle(qmlPath)
+
+                        # append vector layer to the list
+                        qgisQadastreLayers.append(vlayer)
+
+                        # keep commune layer to later zoom to extent
+                        if item['name'] == 'geo_commune':
+                            communeLayer = vlayer
+
+
+                # Add layer to QGIS registry
+                QgsMapLayerRegistry.instance().addMapLayers(qgisQadastreLayers)
+
+                # Zoom to layer commune
+                if communeLayer:
+                    self.iface.setActiveLayer(communeLayer)
+                    activeLayer = self.iface.activeLayer()
+                    if activeLayer:
+                        self.iface.zoomToActiveLayer()
+
+                # progress bar
+                self.qc.updateLog(u'Chargement des couches dans QGIS')
+                self.step+=1
+                self.qc.updateProgressBar()
+
+                # Final message
+                QMessageBox.information(
+                    self,
+                    self.tr("Qadastre"),
+                    self.tr(u"Les données ont bien été chargées dans QGIS")
+                )
+
+
+
+
 
 
 
