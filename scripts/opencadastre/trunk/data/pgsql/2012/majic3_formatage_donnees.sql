@@ -759,7 +759,7 @@ INSERT INTO [PREFIXE]comptecommunal
 SELECT REPLACE(REPLACE(a.annee||a.ccodep||a.dnuprol,' ', '-'),'+','¤') AS comptecommunal, a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol,'O'
 FROM [PREFIXE]lots a
 LEFT OUTER JOIN [PREFIXE]tempo_import t ON t.tempo_import = a.tempo_import
-WHERE t.tempo_import is null and a.annee='[ANNEE]' AND
+WHERE t.tempo_import is null and a.annee='[ANNEE]'
 GROUP BY a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol;
 DELETE FROM [PREFIXE]comptecommunal WHERE comptecommunal IS NULL AND annee='[ANNEE]';
 -- suppression de la table temporaire (lots)

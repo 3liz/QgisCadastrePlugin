@@ -47,11 +47,11 @@ class qadastreImport(QObject):
         self.dialog = dialog
 
         # common qadastre methods
-        self.qc = self.dialog.qc(self)
+        self.qc = self.dialog.qc
 
         self.db = self.dialog.db
         self.connector = self.db.connector
-        self.scriptSourceDir = os.path.join(self.dialog.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
+        self.scriptSourceDir = os.path.join(self.qc.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
         self.scriptDir = tempfile.mkdtemp()
         self.edigeoDir = tempfile.mkdtemp()
         self.edigeoPlainDir = tempfile.mkdtemp()
@@ -77,7 +77,6 @@ class qadastreImport(QObject):
         self.step = 0
         self.dialog.stepLabel.setText('<b>%s</b>' % title)
         self.qc.updateLog('<h3>%s</h3>' % title)
-        self.qc.updateLog(self.txtImportLog, e.msg)
 
 
     def updateProgressBar(self):
@@ -86,7 +85,7 @@ class qadastreImport(QObject):
         '''
         if self.go:
             self.step+=1
-            self.dialog.pbProcessImport.setValue(int(self.step * 100/self.totalSteps))
+            self.dialog.pbProcess.setValue(int(self.step * 100/self.totalSteps))
 
 
     def updateTimer(self):
@@ -107,6 +106,12 @@ class qadastreImport(QObject):
         # Log
         jobTitle = u'INITIALISATION'
         self.beginJobLog(2, jobTitle)
+
+        # Set postgresql synchronous_commit to off
+        # to speed up bulk inserts
+        if self.dialog.dbType == 'postgis':
+            sql = "SET synchronous_commit TO off;"
+            self.executeSqlQuery(sql)
 
         # copy opencadastre script files to temporary dir
         self.updateProgressBar()
@@ -129,7 +134,7 @@ class qadastreImport(QObject):
             {'title' : u'Création des tables',
                 'script': '%s' % os.path.join(self.scriptDir, 'create_metier.sql')},
             {'title': u'Création des tables edigeo',
-                'script': '%s' % os.path.join(self.dialog.plugin_dir, 'scripts/edigeo_create_import_tables.sql')},
+                'script': '%s' % os.path.join(self.qc.plugin_dir, 'scripts/edigeo_create_import_tables.sql')},
             {'title' : u'Ajout des contraintes',
                 'script': '%s' % os.path.join(self.scriptDir, 'create_constraints.sql')},
             {'title' : u'Ajout de la nomenclature',
@@ -211,6 +216,14 @@ class qadastreImport(QObject):
         # Log
         jobTitle = u'EDIGEO'
         self.beginJobLog(14, jobTitle)
+        self.qc.updateLog(u'Type de base : %s, Connexion: %s, Schéma: %s' % (
+                self.dialog.dbType,
+                self.dialog.connectionName,
+                self.dialog.schema
+            )
+        )
+        self.updateProgressBar()
+
 
         # copy files in temp dir
         self.dialog.subStepLabel.setText('Copie des fichiers')
@@ -254,7 +267,7 @@ class qadastreImport(QObject):
             {
                 'title' : u'Placement des étiquettes',
                 'script' : '%s/edigeo_add_labels_xy.sql' % os.path.join(
-                    self.dialog.plugin_dir,
+                    self.qc.plugin_dir,
                     "scripts/"
                 )
             }
@@ -290,7 +303,14 @@ class qadastreImport(QObject):
         jobTitle = u'FINALISATION'
         self.beginJobLog(1, jobTitle)
 
+        # Re-set synchronous_commit to on
+        if self.dialog.dbType == 'postgis':
+            sql = "SET synchronous_commit TO on;"
+            self.executeSqlQuery(sql)
+
         # Remove the temp folders
+        self.dialog.subStepLabel.setText(u'Suppression des données temporaires')
+        self.updateProgressBar()
         tempFolderList = [
             self.scriptDir,
             self.edigeoDir,
@@ -301,7 +321,6 @@ class qadastreImport(QObject):
             for rep in tempFolderList:
                 if os.path.exists(rep):
                     shutil.rmtree(rep)
-
         except IOError, e:
             msg = u"Erreur lors de la suppresion des répertoires temporaires: %s" % e
             self.go = False
@@ -405,8 +424,6 @@ class qadastreImport(QObject):
 
             finally:
                 QApplication.restoreOverrideCursor()
-                self.updateTimer()
-                self.updateProgressBar()
 
 
 
@@ -560,23 +577,33 @@ class qadastreImport(QObject):
 
             self.qc.updateLog(u'* Import des fichiers EDIGEO dans la base')
 
+            initialStep = self.step
+            initialTotalSteps = self.totalSteps
+
             # THF
+            self.dialog.subStepLabel.setText(u'Import des fichiers via ogr2ogr')
+            self.qc.updateLog(u'  - Import des fichiers via ogr2ogr')
             thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')
-            numFile = len(thfList) * 2
-            self.totalSteps+= numFile
+            self.step = 0
+            self.totalSteps = len(thfList)
             for thf in thfList:
                 self.importEdigeoThfToDatabase(thf)
                 self.updateProgressBar()
 
             # VEC
+            self.dialog.subStepLabel.setText(u'Import des relations (*.vec)')
+            self.qc.updateLog(u'  - Import des relations (*.vec)')
             vecList = self.listFilesInDirectory(self.edigeoPlainDir, 'vec')
-            self.totalSteps+= len(vecList)
+            self.step = 0
+            self.totalSteps = len(vecList)
             for vec in vecList:
                 self.importEdigeoVecToDatabase(vec)
                 self.updateProgressBar()
 
+            # Reinit progress var
+            self.step = initialStep
+            self.totalSteps = initialTotalSteps
             QApplication.restoreOverrideCursor()
-            self.totalSteps-= numFile
 
 
     def importEdigeoThfToDatabase(self, filename):
@@ -594,10 +621,10 @@ class qadastreImport(QObject):
         settingsList = ["service", "host", "port", "database", "username", "password"]
         service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
 
-        sourceSrid = self.edigeoSourceProj
-        targetSrid = self.edigeoTargetProj
+        sourceSrid = self.dialog.edigeoSourceProj
+        targetSrid = self.dialog.edigeoTargetProj
+        ogrCommand = 'ogr2ogr -a_srs "%s" -t_srs "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -nlt GEOMETRY' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
 
-        ogrCommand = 'ogr2ogr -a_srs "EPSG:%s" -t_srs "EPSG:%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -nlt GEOMETRY' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
 
         # Run command
         proc = QProcess()
@@ -639,7 +666,15 @@ class qadastreImport(QObject):
 
         if self.go:
             edigeoTables = [
-                'test'
+                'batiment_id',
+                'batiment_id_label',
+                'borne_id',
+                'boulon_id',
+                'commune_id',
+                'croix_id',
+                'lieu_id'
+                'lieu_id_label'
+
             ]
 
 

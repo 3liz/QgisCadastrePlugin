@@ -333,14 +333,14 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.edigeoDepartement = unicode(self.inEdigeoDepartement.text())
         self.edigeoDirection = unicode(self.inEdigeoDirection.text())
         self.edigeoLot = unicode(self.inEdigeoLot.text())
-        self.edigeoSourceProj = self.inEdigeoSourceProj.text().split( " - " )[ 0 ]
-        self.edigeoTargetProj = self.inEdigeoTargetProj.text().split( " - " )[ 0 ]
-
+        self.edigeoSourceProj = unicode(self.inEdigeoSourceProj.text().split( " - " )[ 0 ])
+        self.edigeoTargetProj = unicode(self.inEdigeoTargetProj.text().split( " - " )[ 0 ])
+        self.qc.updateLog("%s" % self.edigeoSourceProj)
         # qadastreImport instance
         qi = qadastreImport(self)
 
         # Check if structure already exists in the database/schema
-        self.qc.checkDatabaseForExistingStructure(self)
+        self.qc.checkDatabaseForExistingStructure()
 
         #~ # Run Script for creating tables
         if not self.dbHasData:
