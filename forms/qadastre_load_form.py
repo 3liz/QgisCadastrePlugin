@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_load_form.ui'
 #
-# Created: Tue Sep 10 10:19:44 2013
+# Created: Tue Sep 10 18:33:16 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -83,7 +83,6 @@ class Ui_qadastre_load_form(object):
         self.liOverrideLayer.setObjectName(_fromUtf8("liOverrideLayer"))
         self.liOverrideLayer.addItem(_fromUtf8(""))
         self.liOverrideLayer.addItem(_fromUtf8(""))
-        self.liOverrideLayer.addItem(_fromUtf8(""))
         self.verticalLayout_15.addWidget(self.liOverrideLayer)
         self.verticalLayout_13.addWidget(self.groupBox_6)
         self.btProcessLoading = QtGui.QPushButton(self.scrollAreaWidgetContents_3)
@@ -121,7 +120,6 @@ class Ui_qadastre_load_form(object):
         self.liOverrideLayer.setToolTip(QtGui.QApplication.translate("qadastre_load_form", "<html><head/><body><p>Comportement lors du chargement si des données sont déjà ouvertes dans le projet</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.liOverrideLayer.setItemText(0, QtGui.QApplication.translate("qadastre_load_form", "Conserver", None, QtGui.QApplication.UnicodeUTF8))
         self.liOverrideLayer.setItemText(1, QtGui.QApplication.translate("qadastre_load_form", "Remplacer", None, QtGui.QApplication.UnicodeUTF8))
-        self.liOverrideLayer.setItemText(2, QtGui.QApplication.translate("qadastre_load_form", "Tout annuler", None, QtGui.QApplication.UnicodeUTF8))
         self.btProcessLoading.setText(QtGui.QApplication.translate("qadastre_load_form", "Charger les données", None, QtGui.QApplication.UnicodeUTF8))
         self.txtLog.setHtml(QtGui.QApplication.translate("qadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

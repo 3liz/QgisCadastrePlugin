@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>qadastre_load_form</class>
- <widget class="QDockWidget" name="qadastre_load_form">
+ <class>qadastre_search_form</class>
+ <widget class="QDockWidget" name="qadastre_search_form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>281</width>
+    <width>355</width>
     <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Qadastre - Charger les données</string>
+   <string>Qadastre - Outils de recherche</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -25,7 +25,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>261</width>
+         <width>335</width>
          <height>580</height>
         </rect>
        </property>
@@ -33,55 +33,33 @@
         <item>
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>Base de données de travail</string>
+           <string>Recherche d'adresse</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <layout class="QGridLayout" name="gridLayout">
-             <item row="1" column="1">
-              <widget class="QComboBox" name="liDbConnection"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_2">
+            <widget class="QLineEdit" name="inAdresse"/>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QPushButton" name="btCentrerAdresse">
                <property name="text">
-                <string>Connexions</string>
+                <string>Centrer</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_3">
+             <item>
+              <widget class="QPushButton" name="btZoomerAdresse">
                <property name="text">
-                <string>Schéma</string>
+                <string>Zoomer</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QComboBox" name="liDbSchema"/>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label">
+             <item>
+              <widget class="QPushButton" name="btSelectionnerAdresse">
                <property name="text">
-                <string>Type de base</string>
+                <string>Sélectionner</string>
                </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="liDbType">
-               <item>
-                <property name="text">
-                 <string>-- Choisir --</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Postgis</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Spatialite</string>
-                </property>
-               </item>
               </widget>
              </item>
             </layout>
@@ -92,12 +70,12 @@
         <item>
          <widget class="QGroupBox" name="groupBox_5">
           <property name="title">
-           <string>Styles à appliquer</string>
+           <string>Recherche de lieux</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_14">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <item>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
               <widget class="QLabel" name="label_12">
                <property name="maximumSize">
                 <size>
@@ -106,17 +84,56 @@
                 </size>
                </property>
                <property name="text">
-                <string>Thème</string>
+                <string>Commune</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="inParcelle"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Parcelle</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Section</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="liCommune"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="liSection"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QPushButton" name="btCentrerLieu">
+               <property name="text">
+                <string>Centrer</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="liTheme">
-               <item>
-                <property name="text">
-                 <string>classique</string>
-                </property>
-               </item>
+              <widget class="QPushButton" name="btZoomerLieu">
+               <property name="text">
+                <string>Zoomer</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btSelectionnerLieu">
+               <property name="text">
+                <string>Sélectionner</string>
+               </property>
               </widget>
              </item>
             </layout>
@@ -127,46 +144,38 @@
         <item>
          <widget class="QGroupBox" name="groupBox_6">
           <property name="title">
-           <string>Surcharge</string>
+           <string>Recherche de propriétaire</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_15">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QComboBox" name="liOverrideLayer">
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comportement lors du chargement si des données sont déjà ouvertes dans le projet&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
+            <widget class="QLineEdit" name="inProprietaire"/>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
-              <property name="text">
-               <string>Conserver</string>
-              </property>
+              <widget class="QPushButton" name="btCentrerProprietaire">
+               <property name="text">
+                <string>Centrer</string>
+               </property>
+              </widget>
              </item>
              <item>
-              <property name="text">
-               <string>Remplacer</string>
-              </property>
+              <widget class="QPushButton" name="btZoomerProprietaire">
+               <property name="text">
+                <string>Zoomer</string>
+               </property>
+              </widget>
              </item>
              <item>
-              <property name="text">
-               <string>Tout annuler</string>
-              </property>
+              <widget class="QPushButton" name="btSelectionnerProprietaire">
+               <property name="text">
+                <string>Sélectionner</string>
+               </property>
+              </widget>
              </item>
-            </widget>
+            </layout>
            </item>
           </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btProcessLoading">
-          <property name="text">
-           <string>Charger les données</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QProgressBar" name="pbProcess">
-          <property name="value">
-           <number>0</number>
-          </property>
          </widget>
         </item>
         <item>

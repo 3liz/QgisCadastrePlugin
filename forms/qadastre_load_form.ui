@@ -145,11 +145,6 @@
                <string>Remplacer</string>
               </property>
              </item>
-             <item>
-              <property name="text">
-               <string>Tout annuler</string>
-              </property>
-             </item>
             </widget>
            </item>
           </layout>

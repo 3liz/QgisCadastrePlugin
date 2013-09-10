@@ -25,7 +25,7 @@
 import csv
 import os.path
 import operator
-
+import re
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
@@ -154,6 +154,25 @@ class qadastre_common():
         self.dialog.dbHasData = hasData
 
 
+    def getLayerFromLegendByTableName(self, tablename):
+        '''
+        Get the layer from QGIS legend
+        corresponding to a database
+        table name (postgis or sqlite)
+        '''
+
+        layer = None
+        layers = self.dialog.iface.legendInterface().layers()
+        for layer in layers:
+            if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.providerType() in (u'postgres', u'spatialite'):
+                    uri = layer.dataProvider().dataSourceUri()
+                    if '"%s"' % tablename in uri:
+                        return layer
+
+
+
+
 
 from qadastre_import_form import *
 from qadastre_import import *
@@ -257,7 +276,11 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         QApplication.setOverrideCursor(Qt.WaitCursor)
         try:
             if self.db == None:
-                QMessageBox.information(self, QApplication.translate("DBManagerPlugin", "Sorry"), QApplication.translate("DBManagerPlugin", "No database selected or you are not connected to it."))
+                QMessageBox.information(
+                    self,
+                    QApplication.translate("DBManagerPlugin", "Sorry"),
+                    QApplication.translate("DBManagerPlugin", "No database selected or you are not connected to it.")
+                )
                 return
             schema = self.inDbCreateSchema.text()
         finally:
@@ -306,7 +329,11 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         if projSelector.exec_():
             self.crs = QgsCoordinateReferenceSystem( projSelector.selectedCrsId(), QgsCoordinateReferenceSystem.InternalCrsId )
             if len(projSelector.selectedAuthId()) == 0:
-                QMessageBox.information(self, self.tr("Export to new projection"), self.tr("No Valid CRS selected"))
+                QMessageBox.information(
+                    self,
+                    self.tr("Qadastre"),
+                    self.tr(u"Aucun système de coordonnée de référence valide n'a été sélectionné")
+                )
                 return
             else:
                 self.projSelectors[key]['input'].clear()
@@ -459,11 +486,14 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
                 schemaInst = schemaSearch[0]
                 dbTables = self.db.tables(schemaInst)
 
+                # Get status of override combobox
+                override = unicode(self.liOverrideLayer.currentText())
+
                 # Loop throuhg qgisQastreLayerList and load each corresponding table
                 for item in self.qgisQadastreLayerList:
 
                     # update progress bar
-                    self.qc.updateLog(u'Récupération de la couche %s' % item['name'])
+                    self.qc.updateLog(u'* Table %s' % item['name'])
                     self.step+=1
                     self.qc.updateProgressBar()
 
@@ -476,8 +506,19 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
                     if item.has_key('geom'):
                         geomCol = item['geom']
 
+                    # Check if the layer is already in QGIS
+                    load = True
+                    cLayer = self.qc.getLayerFromLegendByTableName(item['table'])
+                    if cLayer:
+                        if override == 'Remplacer':
+                            self.qc.updateLog(u'  - Remplacement de la couche %s' % item['name'])
+
+                        else:
+                            self.qc.updateLog(u'  - La couche %s a été conservée' % item['name'])
+                            load = False
+
                     # Create vector layer
-                    if table:
+                    if table and load:
                         tableName = table.name
                         uniqueCol = table.getValidQGisUniqueFields(True) if table.isView else None
                         layerUri.setDataSource(
@@ -526,10 +567,311 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
                     self.tr("Qadastre"),
                     self.tr(u"Les données ont bien été chargées dans QGIS")
                 )
+                self.pbProcess.setValue(0)
 
 
 
 
+# --------------------------------------------------------
+#        search - search for data among database
+# --------------------------------------------------------
+
+from qadastre_search_form import *
+
+class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
+    def __init__(self, iface):
+        QDockWidget.__init__(self)
+        self.iface = iface
+        self.setupUi(self)
+        self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
+
+        # common qadastre methods
+        self.qc = qadastre_common(self)
+
+        self.mc = self.iface.mapCanvas()
+        self.communeLayer = None
+        self.communeFeatures = None
+        self.communeRequest = None
+        self.selectedCommuneFeature = None
+        self.sectionLayer = None
+        self.sectionFeatures = None
+        self.sectionRequest = None
+        self.sectionCommuneFeature = None
+
+
+        self.searchComboBoxes = {
+            'commune': {
+                'widget': self.liCommune,
+                'labelAttribute': 'tex2',
+                'valueAttribute': 'tex2',
+                'table': 'geo_commune',
+                'layer': None,
+                'request': None,
+                'attributes': ['tex2','idu','geom'],
+                'features': None,
+                'chosenFeature': None
+            },
+            'section': {
+                'widget': self.liSection,
+                'labelAttribute': 'idu',
+                'valueAttribute': 'idu',
+                'table': 'geo_section',
+                'layer': None,
+                'request': None,
+                'attributes': ['tex','idu','geom'],
+                'features': None,
+                'chosenFeature': None
+            }
+        }
+
+        # setup some gui items
+        self.setupCommuneCombobox()
+        self.setupSectionCombobox()
+
+        # signals/slots
+        self.visibilityChanged.connect(self.onVisibilityChange)
+
+        # commune combobox
+        self.liCommune.editTextChanged[str].connect(self.onCommuneUpdate)
+        # section combobox
+        self.liSection.editTextChanged[str].connect(self.onSectionUpdate)
+        # place action buttons
+        self.btZoomerLieu.clicked.connect(self.setZoomToChosenPlace)
+        self.btCentrerLieu.clicked.connect(self.setCenterToChosenPlace)
+        self.btSelectionnerLieu.clicked.connect(self.setSelectionToChosenPlace)
+
+
+    def setupSearchCombobox(self, combo, filterExpression=None):
+        '''
+        Create and fill a line edit with town list
+        And add autiocompletion
+        '''
+
+        # Get widget
+        searchCombo = self.searchComboBoxes[combo]
+        cb = searchCombo['widget']
+        cb.clear()
+        cb.addItem('', '')
+
+        # Get corresponding QGIS layer
+        itemList = []
+        layer = self.qc.getLayerFromLegendByTableName(searchCombo['table'])
+        self.searchComboBoxes[combo]['layer'] = layer
+        if layer:
+
+            # Get all features
+            keepattributes = self.searchComboBoxes[combo]['attributes']
+            request = QgsFeatureRequest().setSubsetOfAttributes(
+                keepattributes,
+                layer.pendingFields()
+            )
+
+            self.searchComboBoxes[combo]['request'] = request
+            features = layer.getFeatures(request)
+            self.searchComboBoxes[combo]['features'] = features
+            labelAttribute = self.searchComboBoxes[combo]['labelAttribute']
+            valueAttribute = self.searchComboBoxes[combo]['valueAttribute']
+
+            # setup optionnal filter
+            qe = None
+            if filterExpression:
+                qe = QgsExpression(filterExpression)
+            for feat in features:
+                keep = True
+                if qe:
+                    if not qe.evaluate(feat):
+                        keep = False
+                if keep:
+                    itemList.append(feat[labelAttribute])
+                    cb.addItem(feat[labelAttribute], unicode(feat[valueAttribute]))
+
+            # Activate autocompletion
+            completer = QCompleter(itemList, self)
+            completer.setCompletionMode(QCompleter.PopupCompletion)
+            completer.setMaxVisibleItems(30)
+            completer.setCaseSensitivity(Qt.CaseInsensitive)
+            #~ completer.popup().setStyleSheet("background-color: lightblue")
+            cb.setEditable(True)
+            cb.setCompleter(completer)
+
+        else:
+            self.qc.updateLog(u'Veuillez charger des données cadastrales dans QGIS pour pouvoir effectuer une recherche')
+            self.searchComboBoxes[combo]['layer'] = None
+            self.searchComboBoxes[combo]['request'] = None
+            self.searchComboBoxes[combo]['features'] = None
+            self.searchComboBoxes[combo]['chosenFeature'] = None
+
+
+    def setupCommuneCombobox(self):
+        '''
+        Create and fill a line edit with commune list
+        And add autiocompletion
+        '''
+        self.setupSearchCombobox('commune')
+
+
+    def setupSectionCombobox(self, filterAttribute=None, filterValue=None):
+        '''
+        Create and fill a line edit with section list
+        And add autiocompletion
+        '''
+        self.setupSearchCombobox('section')
+
+
+    def onSearchComboboxUpdate(self, combo):
+        '''
+        Update the combo box content
+        '''
+
+        # Get widget
+        searchCombo = self.searchComboBoxes[combo]
+        cb = searchCombo['widget']
+
+        # Reinit
+        self.searchComboBoxes[combo]['chosenFeature'] = None
+
+        # Get chosen value
+        searchValue = unicode(cb.currentText())
+        searchColumn = searchCombo['valueAttribute']
+
+        # Get corresponding feature and store it
+        found = False
+        if searchCombo['layer'] and searchCombo['features']:
+            qe = QgsExpression('"%s" = \'%s\'' % (searchColumn, searchValue))
+            for feat in searchCombo['layer'].getFeatures(searchCombo['request']):
+                if qe.evaluate(feat):
+                    # get geometry
+                    self.searchComboBoxes[combo]['chosenFeature'] = feat
+                    found = True
+
+        #~ if found:
+            #~ self.qc.updateLog(u'Trouvé pour %s et searchvalue %s' % (combo, searchValue))
+
+    def onCommuneUpdate(self):
+        '''
+        Update the section combo box content
+        depending on commune selected
+        '''
+        # Get commune feature and store it
+        self.onSearchComboboxUpdate('commune')
+
+        # update section combobox
+        communeFeature = self.searchComboBoxes['commune']['chosenFeature']
+        if communeFeature:
+            filterExpression = "idu LIKE '" + communeFeature['idu'] + "%'"
+            self.setupSearchCombobox('section', filterExpression)
+        else:
+            self.setupSearchCombobox('section')
+
+    def onSectionUpdate(self):
+        '''
+        Update the section combo box content
+        depending on section selected
+        '''
+        # Get commune feature and store it
+        self.onSearchComboboxUpdate('section')
+
+
+
+    def setZoomToChosenSearchCombobox(self, combo):
+        '''
+        Zoom to the item
+        selected in Commune Section or Parcelle
+        '''
+        # Get widget
+        searchCombo = self.searchComboBoxes[combo]
+        cb = searchCombo['widget']
+
+        # Zoom
+        if searchCombo['chosenFeature']:
+            geom = searchCombo['chosenFeature'].geometry()
+            self.mc.setExtent(geom.boundingBox())
+            self.mc.refresh()
+
+
+    def setCenterToChosenSearchCombobox(self, combo):
+        '''
+        Center to the chosen commune
+        in the combo box
+        '''
+        # Get widget
+        searchCombo = self.searchComboBoxes[combo]
+        cb = searchCombo['widget']
+
+        # Center
+        if searchCombo['chosenFeature']:
+            # first get scale
+            scale = self.mc.scale()
+            # then zoom to geometry extent
+            geom = searchCombo['chosenFeature'].geometry()
+            self.mc.setExtent(geom.boundingBox())
+            # the set the scale back
+            self.mc.zoomScale(scale)
+            self.mc.refresh()
+
+    def setSelectionToChosenSearchCombobox(self, combo):
+        '''
+        Select the feature
+        corresponding to the chosen commune
+        '''
+        # Get widget
+        searchCombo = self.searchComboBoxes[combo]
+        cb = searchCombo['widget']
+
+        # Select
+        if searchCombo['chosenFeature']:
+            searchCombo['layer'].select(searchCombo['chosenFeature'].id())
+
+
+
+    # COMMUNE
+
+    def setZoomToChosenPlace(self):
+        '''
+        Zoom to the selected place
+        in the combo box
+        '''
+        # Loop through 3 items and get the last
+        w = None
+        for key, item in self.searchComboBoxes.items():
+            if item['chosenFeature']:
+                w = key
+        if w:
+            self.setZoomToChosenSearchCombobox(w)
+
+    def setCenterToChosenPlace(self):
+        '''
+        Center to the chosen place
+        in the combo box
+        '''
+        # Loop through 3 items and get the last
+        w = None
+        for key, item in self.searchComboBoxes.items():
+            if item['chosenFeature']:
+                w = key
+        if w:
+            self.setCenterToChosenSearchCombobox(w)
+
+    def setSelectionToChosenPlace(self):
+        '''
+        Select the feature
+        corresponding to the chosen place
+        '''
+        # Loop through 3 items and get the last
+        w = None
+        for key, item in self.searchComboBoxes.items():
+            if item['chosenFeature']:
+                w = key
+        if w:
+            self.setSelectionToChosenSearchCombobox(w)
+
+
+
+    def onVisibilityChange(self, visible):
+        if visible:
+            self.setupCommuneCombobox()
+        else:
+            self.txtLog.clear()
 
 
 

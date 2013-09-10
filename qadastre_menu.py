@@ -35,6 +35,7 @@ class qadastre_menu:
         self.iface = iface
         self.qadastre_menu = None
         self.qadastre_load_dialog = None
+        self.qadastre_search_dialog = None
 
     def qadastre_add_submenu(self, submenu):
         if self.qadastre_menu != None:
@@ -56,8 +57,20 @@ class qadastre_menu:
         # Load Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.load_action = QAction(icon, u"Charger des données", self.iface.mainWindow())
-        QObject.connect(self.load_action, SIGNAL("triggered()"), self.open_load_dialog)
+        QObject.connect(self.load_action, SIGNAL("triggered()"), self.toggle_load_dialog)
         self.qadastre_menu.addAction(self.load_action)
+        if not self.qadastre_load_dialog:
+            dialog = qadastre_load_dialog(self.iface)
+            self.qadastre_load_dialog = dialog
+
+        # Search Submenu
+        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
+        self.search_action = QAction(icon, u"Outils de recherche", self.iface.mainWindow())
+        QObject.connect(self.search_action, SIGNAL("triggered()"), self.toggle_search_dialog)
+        self.qadastre_menu.addAction(self.search_action)
+        if not self.qadastre_search_dialog:
+            dialog = qadastre_search_dialog(self.iface)
+            self.qadastre_search_dialog = dialog
 
         # Interface Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
@@ -65,17 +78,42 @@ class qadastre_menu:
         QObject.connect(self.interface_action, SIGNAL("triggered()"), self.open_interface_dialog)
         self.qadastre_menu.addAction(self.interface_action)
 
+
     def open_import_dialog(self):
+        '''
+        Import dialog
+        '''
         dialog = qadastre_import_dialog(self.iface)
         dialog.exec_()
 
+    def toggle_load_dialog(self):
+        '''
+        Load dock widget
+        '''
+        if self.qadastre_load_dialog.isVisible():
+            self.qadastre_load_dialog.hide()
+        else:
+            self.qadastre_load_dialog.show()
 
-    def open_load_dialog(self):
-        if not self.qadastre_load_dialog:
-            dialog = qadastre_load_dialog(self.iface)
-            self.qadastre_load_dialog = dialog
+            # hide search dialog if necessary
+            self.qadastre_search_dialog.hide()
+
+    def toggle_search_dialog(self):
+        '''
+        Search dock widget
+        '''
+        if self.qadastre_search_dialog.isVisible():
+            self.qadastre_search_dialog.hide()
+        else:
+            self.qadastre_search_dialog.show()
+
+            # hide load dialog if necessary
+            self.qadastre_load_dialog.hide()
 
     def open_interface_dialog(self):
+        '''
+        Config dock widget
+        '''
         dialog = qadastre_interface_dialog(self.iface)
         dialog.exec_()
 
@@ -83,8 +121,10 @@ class qadastre_menu:
     def unload(self):
         if self.qadastre_menu != None:
             self.iface.mainWindow().menuBar().removeAction(self.qadastre_menu.menuAction())
+            self.qadastre_menu.deleteLater()
         else:
             self.iface.removePluginMenu("&qadastre", self.qadastre_menu.menuAction())
+            self.qadastre_menu.deleteLater()
 
         if self.qadastre_load_dialog:
             self.iface.removeDockWidget(self.qadastre_load_dialog)

@@ -656,7 +656,6 @@ class qadastreImport(QObject):
         and add them in edigeo_rel table
         '''
 
-        import re
         reg = '^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_[0-9]+)_(Objet_[0-9]+)'
         with open(path) as inputFile:
             # Get a list of RID relations combining a "Rel" and two "_Objet"
