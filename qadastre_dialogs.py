@@ -362,11 +362,12 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
 
 from qadastre_load_form import *
 
-class qadastre_load_dialog(QDialog, Ui_qadastre_load_form):
+class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
     def __init__(self, iface):
-        QDialog.__init__(self)
+        QDockWidget.__init__(self)
         self.iface = iface
         self.setupUi(self)
+        self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
 
         # common qadastre methods
         self.qc = qadastre_common(self)

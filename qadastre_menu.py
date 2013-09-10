@@ -3,8 +3,8 @@
 /***************************************************************************
  Qadastre - QGIS plugin menu class
                                                                  A QGIS plugin
- This plugins helps users to import the french land registry ('cadastre') 
- into a database. It is meant to ease the use of the data in QGIs 
+ This plugins helps users to import the french land registry ('cadastre')
+ into a database. It is meant to ease the use of the data in QGIs
  by providing search tools and appropriate layer symbology.
                                                             -------------------
                 begin                                : 2013-06-11
@@ -34,6 +34,7 @@ class qadastre_menu:
     def __init__(self, iface):
         self.iface = iface
         self.qadastre_menu = None
+        self.qadastre_load_dialog = None
 
     def qadastre_add_submenu(self, submenu):
         if self.qadastre_menu != None:
@@ -64,25 +65,26 @@ class qadastre_menu:
         QObject.connect(self.interface_action, SIGNAL("triggered()"), self.open_interface_dialog)
         self.qadastre_menu.addAction(self.interface_action)
 
+    def open_import_dialog(self):
+        dialog = qadastre_import_dialog(self.iface)
+        dialog.exec_()
+
+
+    def open_load_dialog(self):
+        if not self.qadastre_load_dialog:
+            dialog = qadastre_load_dialog(self.iface)
+            self.qadastre_load_dialog = dialog
+
+    def open_interface_dialog(self):
+        dialog = qadastre_interface_dialog(self.iface)
+        dialog.exec_()
+
 
     def unload(self):
         if self.qadastre_menu != None:
             self.iface.mainWindow().menuBar().removeAction(self.qadastre_menu.menuAction())
         else:
             self.iface.removePluginMenu("&qadastre", self.qadastre_menu.menuAction())
-            
-    def open_import_dialog(self):
-        dialog = qadastre_import_dialog(self.iface)
-        dialog.exec_()
 
-            
-    def open_load_dialog(self):
-        dialog = qadastre_load_dialog(self.iface)
-        dialog.exec_()
-
-            
-    def open_interface_dialog(self):
-        dialog = qadastre_interface_dialog(self.iface)
-        dialog.exec_()
-
-
+        if self.qadastre_load_dialog:
+            self.iface.removeDockWidget(self.qadastre_load_dialog)

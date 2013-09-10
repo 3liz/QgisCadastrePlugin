@@ -50,8 +50,6 @@ class Qadastre:
             if qVersion() > '4.3.3':
                 QCoreApplication.installTranslator(self.translator)
 
-        # Create the dialog (after translation) and keep reference
-        self.dlg = QadastreDialog()
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -70,14 +68,3 @@ class Qadastre:
         self.iface.removePluginMenu(u"&Qadastre", self.action)
         self.iface.removeToolBarIcon(self.action)
 
-    # run method that performs all the real work
-    def run(self):
-        # show the dialog
-        self.dlg.show()
-        # Run the dialog event loop
-        result = self.dlg.exec_()
-        # See if OK was pressed
-        if result == 1:
-            # do something useful (delete the line containing pass and
-            # substitute with your code)
-            pass
