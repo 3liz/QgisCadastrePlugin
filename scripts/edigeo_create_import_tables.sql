@@ -562,38 +562,3 @@ CREATE TABLE IF NOT EXISTS zoncommuni_id_label (
     ogr_angle double precision,
     ogr_font_size double precision
 );
-
-
-CREATE INDEX batiment_id_geom_idx ON batiment_id USING gist (geom);
-CREATE INDEX batiment_id_label_geom_idx ON batiment_id_label USING gist (geom);
-CREATE INDEX borne_id_geom_idx ON borne_id USING gist (geom);
-CREATE INDEX commune_id_geom_idx ON commune_id USING gist (geom);
-CREATE INDEX croix_id_geom_idx ON croix_id USING gist (geom);
-CREATE INDEX id_s_obj_z_1_2_2_geom_idx ON id_s_obj_z_1_2_2 USING gist (geom);
-CREATE INDEX lieudit_id_geom_idx ON lieudit_id USING gist (geom);
-CREATE INDEX lieudit_id_label_geom_idx ON lieudit_id_label USING gist (geom);
-CREATE INDEX numvoie_id_geom_idx ON numvoie_id USING gist (geom);
-CREATE INDEX numvoie_id_label_geom_idx ON numvoie_id_label USING gist (geom);
-CREATE INDEX parcelle_id_geom_idx ON parcelle_id USING gist (geom);
-CREATE INDEX parcelle_id_label_geom_idx ON parcelle_id_label USING gist (geom);
-CREATE INDEX ptcanv_id_geom_idx ON ptcanv_id USING gist (geom);
-CREATE INDEX section_id_geom_idx ON section_id USING gist (geom);
-CREATE INDEX section_id_label_geom_idx ON section_id_label USING gist (geom);
-CREATE INDEX subdfisc_id_geom_idx ON subdfisc_id USING gist (geom);
-CREATE INDEX subdfisc_id_label_geom_idx ON subdfisc_id_label USING gist (geom);
-CREATE INDEX subdsect_id_geom_idx ON subdsect_id USING gist (geom);
-CREATE INDEX symblim_id_geom_idx ON symblim_id USING gist (geom);
-CREATE INDEX tline_id_geom_idx ON tline_id USING gist (geom);
-CREATE INDEX tline_id_label_geom_idx ON tline_id_label USING gist (geom);
-CREATE INDEX tpoint_id_geom_idx ON tpoint_id USING gist (geom);
-CREATE INDEX tpoint_id_label_geom_idx ON tpoint_id_label USING gist (geom);
-CREATE INDEX tronfluv_id_geom_idx ON tronfluv_id USING gist (geom);
-CREATE INDEX tronfluv_id_label_geom_idx ON tronfluv_id_label USING gist (geom);
-CREATE INDEX tronroute_id_geom_idx ON tronroute_id USING gist (geom);
-CREATE INDEX tronroute_id_label_geom_idx ON tronroute_id_label USING gist (geom);
-CREATE INDEX tsurf_id_geom_idx ON tsurf_id USING gist (geom);
-CREATE INDEX tsurf_id_label_geom_idx ON tsurf_id_label USING gist (geom);
-CREATE INDEX voiep_id_geom_idx ON voiep_id USING gist (geom);
-CREATE INDEX voiep_id_label_geom_idx ON voiep_id_label USING gist (geom);
-CREATE INDEX zoncommuni_id_geom_idx ON zoncommuni_id USING gist (geom);
-CREATE INDEX zoncommuni_id_label_geom_idx ON zoncommuni_id_label USING gist (geom);

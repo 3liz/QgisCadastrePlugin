@@ -120,7 +120,7 @@
              <widget class="QComboBox" name="liTheme">
               <item>
                <property name="text">
-                <string>Défaut</string>
+                <string>classique</string>
                </property>
               </item>
              </widget>

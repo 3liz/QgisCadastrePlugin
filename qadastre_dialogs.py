@@ -335,7 +335,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.edigeoLot = unicode(self.inEdigeoLot.text())
         self.edigeoSourceProj = unicode(self.inEdigeoSourceProj.text().split( " - " )[ 0 ])
         self.edigeoTargetProj = unicode(self.inEdigeoTargetProj.text().split( " - " )[ 0 ])
-        self.qc.updateLog("%s" % self.edigeoSourceProj)
+
         # qadastreImport instance
         qi = qadastreImport(self)
 
@@ -372,12 +372,16 @@ class qadastre_load_dialog(QDialog, Ui_qadastre_load_form):
         self.qc = qadastre_common(self)
 
         # default style to apply for Qadastre layers
-        self.defaultStyleDir = 'default'
-
+        self.themeDir = unicode(self.liTheme.currentText())
+        if not os.path.exists(os.path.join(
+            self.qc.plugin_dir,
+            "styles/%s" % self.themeDir
+        )):
+            self.themeDir = 'classique'
         # set Qadastre SVG path if not set
         qadastreSvgPath = os.path.join(
             self.qc.plugin_dir,
-            "styles/%s/svg" % self.defaultStyleDir
+            "styles/%s/svg" % self.themeDir
         )
         s = QSettings()
         qgisSvgPaths = s.value("svg/searchPathsForSVG", 10, type=str)
@@ -487,7 +491,7 @@ class qadastre_load_dialog(QDialog, Ui_qadastre_load_form):
                         # apply style
                         qmlPath = os.path.join(
                             self.qc.plugin_dir,
-                            "styles/%s/%s.qml" % (self.defaultStyleDir, item['name'])
+                            "styles/%s/%s.qml" % (self.themeDir, item['name'])
                         )
                         if os.path.exists(qmlPath):
                             vlayer.loadNamedStyle(qmlPath)

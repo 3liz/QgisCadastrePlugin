@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_load_form.ui'
 #
-# Created: Fri Sep  6 18:31:31 2013
+# Created: Sat Sep  7 16:26:29 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -124,7 +124,7 @@ class Ui_qadastre_load_form(object):
         self.label_10.setText(QtGui.QApplication.translate("qadastre_load_form", "Connecté à", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_5.setTitle(QtGui.QApplication.translate("qadastre_load_form", "Styles à appliquer", None, QtGui.QApplication.UnicodeUTF8))
         self.label_12.setText(QtGui.QApplication.translate("qadastre_load_form", "Thème", None, QtGui.QApplication.UnicodeUTF8))
-        self.liTheme.setItemText(0, QtGui.QApplication.translate("qadastre_load_form", "Défaut", None, QtGui.QApplication.UnicodeUTF8))
+        self.liTheme.setItemText(0, QtGui.QApplication.translate("qadastre_load_form", "classique", None, QtGui.QApplication.UnicodeUTF8))
         self.btImportTheme.setText(QtGui.QApplication.translate("qadastre_load_form", "Importer", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_6.setTitle(QtGui.QApplication.translate("qadastre_load_form", "Surcharge", None, QtGui.QApplication.UnicodeUTF8))
         self.label_11.setText(QtGui.QApplication.translate("qadastre_load_form", "Comportement lors du chargement\n"

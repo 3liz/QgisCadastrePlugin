@@ -21,6 +21,11 @@
  *                                                                         *
  ***************************************************************************/
 """
+#enlever les indexs des tables machin_id et id_ machin. avant import
+#~ enlever l'option ogr pour crer les index spatiaux
+#~ enlever tous les indexs lors de create_metier et les passer après ?
+#~ vérifier qu'on ajoute bien des index spatiaux aux tables geo_
+#~ verifier qu'on a pas d'index sur edigeo_rel pendant import
 
 import sys, os, glob
 import re
@@ -186,7 +191,7 @@ class qadastreImport(QObject):
             {'title' : u'Purge des données', 'script' : 'COMMUN/majic3_purge_donnees.sql'},
             {'title' : u'Import des fichiers', 'script' : 'COMMUN/majic3_import_donnees_brutes.sql'},
             {'title' : u'Formatage des données', 'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion},
-            {'title' : u'Restauration des contraintes', 'script' : 'COMMUN/creation_contraintes.sql'},
+            #~ {'title' : u'Restauration des contraintes', 'script' : 'COMMUN/creation_contraintes.sql'},
             {'title' : u'Purge des données brutes', 'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'}
         ]
         for item in scriptList:
@@ -267,6 +272,13 @@ class qadastreImport(QObject):
             {
                 'title' : u'Placement des étiquettes',
                 'script' : '%s/edigeo_add_labels_xy.sql' % os.path.join(
+                    self.qc.plugin_dir,
+                    "scripts/"
+                )
+            },
+            {
+                'title' : u'Création des indexes spatiaux',
+                'script' : '%s/edigeo_create_indexes.sql' % os.path.join(
                     self.qc.plugin_dir,
                     "scripts/"
                 )
@@ -623,7 +635,9 @@ class qadastreImport(QObject):
 
         sourceSrid = self.dialog.edigeoSourceProj
         targetSrid = self.dialog.edigeoTargetProj
-        ogrCommand = 'ogr2ogr -a_srs "%s" -t_srs "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -nlt GEOMETRY' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+        #~ penser à mettre l'option pour ne pas utiliser d'index spatial
+        #~ ajouter aussi l'option pour ne pas créer les tables de label
+        ogrCommand = 'ogr2ogr -a_srs "%s" -t_srs "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 1000' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
 
 
         # Run command
@@ -673,8 +687,32 @@ class qadastreImport(QObject):
                 'commune_id',
                 'croix_id',
                 'lieu_id'
-                'lieu_id_label'
-
+                'lieu_id_label',
+                'numvoie_id',
+                'numvoie_id_label',
+                'parcelle_id',
+                'parcelle_id_label',
+                'ptcanv_id',
+                'section_id',
+                'section_id_label',
+                'subdfisc_id',
+                'subdfisc_id_label',
+                'subdsect_id',
+                'symblim_id',
+                'tline_id',
+                'tline_id_label',
+                'tpoint_id_'
+                'tpoint_id_label',
+                'tronfluv_id'
+                'tronfluv_id_label',
+                'tronroute_id',
+                'tronroute_id_label',
+                'tsurf_id',
+                'tsurf_id_label',
+                'voiep_id',
+                'voiep_id_label',
+                'zoncommuni_id',
+                'zoncommuni_id_label'
             ]
 
 
