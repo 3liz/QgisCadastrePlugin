@@ -1,3 +1,4 @@
+-- geometries
 CREATE INDEX geo_commune_geom_idx ON geo_commune USING gist (geom );
 CREATE INDEX geo_section_geom_idx ON geo_section USING gist (geom );
 CREATE INDEX geo_subdsect_geom_idx ON geo_subdsect USING gist (geom );
@@ -16,3 +17,13 @@ CREATE INDEX geo_symblim_geom_idx ON geo_symblim USING gist (geom );
 CREATE INDEX geo_tpoint_geom_idx ON geo_tpoint USING gist (geom );
 CREATE INDEX geo_tline_geom_idx ON geo_tline USING gist (geom );
 CREATE INDEX geo_tsurf_geom_idx ON geo_tsurf USING gist (geom );
+-- attributes
+CREATE INDEX geo_commune_tex2_idx ON geo_commune (tex2);
+CREATE INDEX geo_section_idu_idx ON geo_section (idu);
+CREATE INDEX geo_parcelle_idu_idx ON geo_parcelle (idu);
+CREATE INDEX geo_parcelle_geo_parcelle_idx ON geo_parcelle (geo_parcelle);
+CREATE INDEX parcelle_geo_parcelle_idx ON parcelle (geo_parcelle);
+CREATE INDEX parcelle_comptecommunal_idx ON parcelle (comptecommunal);
+CREATE INDEX proprietaire_dnupro_idx ON proprietaire (dnupro);
+CREATE INDEX proprietaire_ddenom_idx ON proprietaire (ddenom);
+CREATE INDEX parcelle_dnupro_idx ON parcelle (dnupro);

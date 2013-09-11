@@ -513,48 +513,6 @@ class qadastreImport(QObject):
         return None
 
 
-    def fetchDataFromSqlQuery(self, sql):
-        '''
-        Execute a SQL query and
-        return [header, data, rowCount]
-        '''
-        self.db = db.connector
-
-        c = self.db._execute(None, unicode(sql))
-
-        data = []
-        header = []
-        rowCount = 0
-        c = None
-
-        try:
-            c = self.connector._execute(None,unicode(sql))
-            data = []
-            header = self.db._get_cursor_columns(c)
-
-            if header == None:
-                header = []
-
-            if len(header) > 0:
-                data = self.connector._fetchall(c)
-
-            rowCount = c.rowcount
-
-        except BaseError as e:
-
-            DlgDbError.showError(e, self.dialog)
-            self.go = False
-            self.qc.updateLog(e.msg)
-            return
-
-        finally:
-            QApplication.restoreOverrideCursor()
-            if c:
-                c.close()
-                del c
-
-        return [header, data, rowCount]
-
 
     def executeSqlQuery(self, sql):
         '''

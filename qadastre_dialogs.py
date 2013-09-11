@@ -171,6 +171,100 @@ class qadastre_common():
                         return layer
 
 
+    def getConnectionParameterFromDbLayer(self, layer):
+        '''
+        Get connection parameters
+        from the layer datasource
+        '''
+        connectionParams = None
+
+        # Get params via regex
+        uri = layer.dataProvider().dataSourceUri()
+        reg = "dbname='([^ ]+)' (?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
+        result = re.findall(r'%s' % reg, uri)
+        res = result[0]
+        if res:
+            dbname = res[0]
+            host = res[1]
+            port = res[2]
+            user = res[3]
+            password = res[4]
+            sslmode = res[5]
+            key = res[6]
+            estimatedmetadata = res[7]
+            srid = res[8]
+            gtype = res[9]
+            table = res[10]
+            geocol = res[11]
+            sql = res[12]
+
+            schema = ''
+            if re.search('"\."', table):
+                table = '"' + table + '"'
+                sp = table.replace('"', '').split('.')
+                schema = sp[0]
+                table = sp[1]
+
+            connectionParams = {
+                'dbname' : dbname,
+                'host' : host,
+                'port': port,
+                'user' : user,
+                'password': password,
+                'sslmode' : sslmode,
+                'key': key,
+                'estimatedmetadata' : estimatedmetadata,
+                'srid' : srid,
+                'type': gtype,
+                'schema': schema,
+                'table' : table,
+                'geocol' : geocol,
+                'sql' : sql,
+            }
+
+        return connectionParams
+
+
+    def fetchDataFromSqlQuery(self, connector, sql):
+        '''
+        Execute a SQL query and
+        return [header, data, rowCount]
+        '''
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+
+        data = []
+        header = []
+        rowCount = 0
+        c = None
+
+
+        try:
+            c = connector._execute(None,unicode(sql))
+            data = []
+            header = connector._get_cursor_columns(c)
+
+            if header == None:
+                header = []
+
+            if len(header) > 0:
+                data = connector._fetchall(c)
+
+            rowCount = c.rowcount
+
+        except BaseError as e:
+
+            DlgDbError.showError(e, self.dialog)
+            self.dialog.go = False
+            self.updateLog(e.msg)
+            return
+
+        finally:
+            QApplication.restoreOverrideCursor()
+            if c:
+                c.close()
+                del c
+
+        return [header, data, rowCount]
 
 
 
@@ -463,12 +557,14 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
             {'name': 'geo_label_tline', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TLINE_id\''},
             {'name': 'geo_label_num_voie', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'NUMVOIE_id\''},
             {'name': 'geo_label_voiep', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'VOIEP_id\''},
-            {'name': 'geo_parcelle_uf', 'table': 'geo_parcelle', 'geom':'geom_uf'},
-            {'name': 'geo_label_parcelle_uf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\''}
+            #~ {'name': 'geo_parcelle_uf', 'table': 'geo_parcelle', 'geom':'geom_uf'},
+            #~ {'name': 'geo_label_parcelle_uf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\''}
         ]
 
 
     def processLoading(self):
+
+        QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get selected options
         providerName = self.dbpluginclass.providerName()
@@ -569,7 +665,7 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
                 )
                 self.pbProcess.setValue(0)
 
-
+        QApplication.restoreOverrideCursor()
 
 
 # --------------------------------------------------------
@@ -621,6 +717,30 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 'attributes': ['tex','idu','geom'],
                 'features': None,
                 'chosenFeature': None
+            },
+            'parcelle': {
+                'widget': self.liParcelle,
+                'labelAttribute': 'idu',
+                'valueAttribute': 'idu',
+                'table': 'geo_parcelle',
+                'layer': None,
+                'request': None,
+                'attributes': ['tex','idu','geom'],
+                'features': None,
+                'chosenFeature': None,
+                'connector': None
+            },
+            'proprietaire': {
+                'widget': self.liProprietaire,
+                'labelAttribute': 'idu',
+                'valueAttribute': 'idu',
+                'table': 'geo_parcelle',
+                'layer': None,
+                'request': None,
+                'attributes': ['comptecommunal','idu','geom'],
+                'features': None,
+                'chosenFeature': None,
+                'connector': None
             }
         }
 
@@ -631,17 +751,26 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         # signals/slots
         self.visibilityChanged.connect(self.onVisibilityChange)
 
+        # adresse search
+        self.btSearchAdresse.clicked.connect(self.searchAdresse)
         # commune combobox
         self.liCommune.editTextChanged[str].connect(self.onCommuneUpdate)
         # section combobox
         self.liSection.editTextChanged[str].connect(self.onSectionUpdate)
+        # parcelle combobox
+        self.btSearchParcelle.clicked.connect(self.searchParcelle)
+        self.liParcelle.currentIndexChanged[str].connect(self.onParcelleChoose)
         # place action buttons
         self.btZoomerLieu.clicked.connect(self.setZoomToChosenPlace)
         self.btCentrerLieu.clicked.connect(self.setCenterToChosenPlace)
         self.btSelectionnerLieu.clicked.connect(self.setSelectionToChosenPlace)
 
+        # proprietaire search
+        self.liProprietaire.currentIndexChanged[str].connect(self.onProprietaireChoose)
+        self.btSearchProprietaire.clicked.connect(self.searchProprietaire)
+        self.btSelectionnerProprietaire.clicked.connect(self.selectParcelleForChosenProprietaire)
 
-    def setupSearchCombobox(self, combo, filterExpression=None):
+    def setupSearchCombobox(self, combo, fillCombo=True, filterExpression=None):
         '''
         Create and fill a line edit with town list
         And add autiocompletion
@@ -676,26 +805,27 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
             qe = None
             if filterExpression:
                 qe = QgsExpression(filterExpression)
-            for feat in features:
-                keep = True
-                if qe:
-                    if not qe.evaluate(feat):
-                        keep = False
-                if keep:
-                    itemList.append(feat[labelAttribute])
-                    cb.addItem(feat[labelAttribute], unicode(feat[valueAttribute]))
+            if fillCombo:
+                for feat in features:
+                    keep = True
+                    if qe:
+                        if not qe.evaluate(feat):
+                            keep = False
+                    if keep:
+                        itemList.append(feat[labelAttribute])
+                        cb.addItem(feat[labelAttribute], unicode(feat[valueAttribute]))
 
-            # Activate autocompletion
-            completer = QCompleter(itemList, self)
-            completer.setCompletionMode(QCompleter.PopupCompletion)
-            completer.setMaxVisibleItems(30)
-            completer.setCaseSensitivity(Qt.CaseInsensitive)
-            #~ completer.popup().setStyleSheet("background-color: lightblue")
-            cb.setEditable(True)
-            cb.setCompleter(completer)
+                # Activate autocompletion
+                completer = QCompleter(itemList, self)
+                completer.setCompletionMode(QCompleter.PopupCompletion)
+                completer.setMaxVisibleItems(30)
+                completer.setCaseSensitivity(Qt.CaseInsensitive)
+                #~ completer.popup().setStyleSheet("background-color: lightblue")
+                cb.setEditable(True)
+                cb.setCompleter(completer)
 
         else:
-            self.qc.updateLog(u'Veuillez charger des données cadastrales dans QGIS pour pouvoir effectuer une recherche')
+            #~ self.qc.updateLog(u'Veuillez charger des données cadastrales dans QGIS pour pouvoir effectuer une recherche')
             self.searchComboBoxes[combo]['layer'] = None
             self.searchComboBoxes[combo]['request'] = None
             self.searchComboBoxes[combo]['features'] = None
@@ -736,13 +866,14 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
 
         # Get corresponding feature and store it
         found = False
-        if searchCombo['layer'] and searchCombo['features']:
+        if searchCombo['layer']:
             qe = QgsExpression('"%s" = \'%s\'' % (searchColumn, searchValue))
             for feat in searchCombo['layer'].getFeatures(searchCombo['request']):
                 if qe.evaluate(feat):
                     # get geometry
                     self.searchComboBoxes[combo]['chosenFeature'] = feat
                     found = True
+                    break
 
         #~ if found:
             #~ self.qc.updateLog(u'Trouvé pour %s et searchvalue %s' % (combo, searchValue))
@@ -759,7 +890,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         communeFeature = self.searchComboBoxes['commune']['chosenFeature']
         if communeFeature:
             filterExpression = "idu LIKE '" + communeFeature['idu'] + "%'"
-            self.setupSearchCombobox('section', filterExpression)
+            self.setupSearchCombobox('section', True, filterExpression)
         else:
             self.setupSearchCombobox('section')
 
@@ -770,7 +901,6 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         '''
         # Get commune feature and store it
         self.onSearchComboboxUpdate('section')
-
 
 
     def setZoomToChosenSearchCombobox(self, combo):
@@ -823,13 +953,10 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
             searchCombo['layer'].select(searchCombo['chosenFeature'].id())
 
 
-
-    # COMMUNE
-
     def setZoomToChosenPlace(self):
         '''
-        Zoom to the selected place
-        in the combo box
+        Zoom to the last existing
+        place among the 3 combo boxes
         '''
         # Loop through 3 items and get the last
         w = None
@@ -865,6 +992,262 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         if w:
             self.setSelectionToChosenSearchCombobox(w)
 
+
+    def searchAdresse(self):
+        '''
+        Query database to get parcelles
+        corresponding to given adresse
+        '''
+        print "hop"
+
+
+    def searchParcelle(self):
+        '''
+        Query database to get parcelles
+        corresponding to given idu
+        '''
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+
+        # Get value
+        searchValue = unicode(self.liParcelle.currentText())
+
+        # Abort if searchValue length too small
+        minlen = 7
+        if len(searchValue) < minlen:
+            self.qc.updateLog(u"%s caractères minimum pour la recherche par parcelle" % minlen)
+            self.searchComboBoxes['parcelle']['layer'] = layer
+            self.searchComboBoxes['parcelle']['connector'] = connector
+            QApplication.restoreOverrideCursor()
+            return None
+
+        # Get database connection parameters
+        layer = self.qc.getLayerFromLegendByTableName('geo_parcelle')
+        if not layer:
+            QApplication.restoreOverrideCursor()
+            return None
+        connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
+        if not connectionParams:
+            QApplication.restoreOverrideCursor()
+            return None
+
+        # Use db_manager tool to run the query
+        from db_manager.db_plugins.postgis.connector import PostGisDBConnector
+        uri = QgsDataSourceURI()
+        uri.setConnection(
+            connectionParams['host'],
+            connectionParams['port'],
+            connectionParams['dbname'],
+            connectionParams['user'],
+            connectionParams['password']
+        )
+        connector = PostGisDBConnector(uri)
+
+        # SQL
+        sql = ' SELECT idu, geo_parcelle FROM "%s".geo_parcelle' % connectionParams['schema']
+        sql+= " WHERE idu LIKE '%s%%'" % searchValue
+        sql+= ' ORDER BY idu'
+        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
+
+        # Fill parcelle combobox
+        self.qc.updateLog(u"%s parcelles correpondent à '%s'" % (rowCount,searchValue))
+        cb = self.liParcelle
+        cb.clear()
+        cb.addItem('', '')
+        itemList = []
+        for line in data:
+            itemList.append(line[0])
+            cb.addItem(line[0], unicode(line[1]))
+
+        # Set appropriate combobox properties
+        self.searchComboBoxes['parcelle']['layer'] = layer
+        self.searchComboBoxes['parcelle']['connector'] = connector
+        keepattributes = self.searchComboBoxes['parcelle']['attributes']
+        request = QgsFeatureRequest().setSubsetOfAttributes(
+            keepattributes,
+            layer.pendingFields()
+        )
+        self.searchComboBoxes['parcelle']['request'] = request
+
+        # Restore cursor
+        QApplication.restoreOverrideCursor()
+
+
+    def onParcelleChoose(self):
+        '''
+        ACtion run when the user
+        selects a parcelle via the combobox
+        '''
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+
+        # Get value
+        searchValue = unicode(self.liParcelle.currentText())
+
+        layer = self.searchComboBoxes['parcelle']['layer']
+        if not layer:
+            QApplication.restoreOverrideCursor()
+            return None
+
+        request = self.searchComboBoxes['parcelle']['request']
+        qe = QgsExpression('"%s" = \'%s\'' % ('idu', searchValue))
+        for feat in layer.getFeatures(request):
+            if qe.evaluate(feat):
+                # get geometry
+                self.searchComboBoxes['parcelle']['chosenFeature'] = feat
+                break
+
+
+        QApplication.restoreOverrideCursor()
+
+    def searchProprietaire(self):
+        '''
+        Query database to get parcelles
+        corresponding to given proprietaire name
+        '''
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+
+        # Get value
+        searchValue = unicode(self.liProprietaire.currentText())
+
+        # Abort if searchValue length too small
+        minlen = 3
+        if len(searchValue) < minlen:
+            self.qc.updateLog(u"%s caractères minimum pour la recherche par propriétaire" % minlen)
+            QApplication.restoreOverrideCursor()
+            return None
+
+        # Get database connection parameters from a random qgis layer
+        layer = self.qc.getLayerFromLegendByTableName('geo_commune')
+        if not layer:
+            QApplication.restoreOverrideCursor()
+            return None
+        connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
+        if not connectionParams:
+            QApplication.restoreOverrideCursor()
+            return None
+
+        # Use db_manager tool to run the query
+        from db_manager.db_plugins.postgis.connector import PostGisDBConnector
+        uri = QgsDataSourceURI()
+        uri.setConnection(
+            connectionParams['host'],
+            connectionParams['port'],
+            connectionParams['dbname'],
+            connectionParams['user'],
+            connectionParams['password']
+        )
+        connector = PostGisDBConnector(uri)
+
+        # SQL
+        sql = ' SELECT comptecommunal, dnupro, trim(ddenom)'
+        sql+= ' FROM "%s".proprietaire' % connectionParams['schema']
+        sql+= " WHERE ddenom LIKE '%s%%'" % searchValue.upper()
+        sql+= ' ORDER BY ddenom'
+        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
+
+        # Fill  combobox
+        self.qc.updateLog(u"%s propriétaires correpondent à '%s'" % (rowCount,searchValue))
+        cb = self.liProprietaire
+        cb.clear()
+        cb.addItem('', '')
+        itemList = []
+        for line in data:
+            cb.addItem('%s - %s' % (line[1], line[2]), unicode(line[0]))
+
+        # Restore cursor
+        QApplication.restoreOverrideCursor()
+
+
+    def onProprietaireChoose(self):
+        '''
+        ACtion run when the user
+        selects a proprietaire via the combobox
+        '''
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+
+        # Get value
+        searchValue = unicode(self.liProprietaire.itemData(self.liProprietaire.currentIndex()))
+        if not searchValue:
+            QApplication.restoreOverrideCursor()
+            return None
+
+        # Get database connection parameters from a random qgis layer
+        layer = self.qc.getLayerFromLegendByTableName('geo_parcelle')
+        if not layer:
+            QApplication.restoreOverrideCursor()
+            return None
+        connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
+        if not connectionParams:
+            QApplication.restoreOverrideCursor()
+            return None
+
+        # Use db_manager tool to run the query
+        from db_manager.db_plugins.postgis.connector import PostGisDBConnector
+        uri = QgsDataSourceURI()
+        uri.setConnection(
+            connectionParams['host'],
+            connectionParams['port'],
+            connectionParams['dbname'],
+            connectionParams['user'],
+            connectionParams['password']
+        )
+        connector = PostGisDBConnector(uri)
+
+        # SQL
+        sql = ' SELECT parcelle'
+        sql+= ' FROM "%s".parcelle' % connectionParams['schema']
+        sql+= ' WHERE geo_parcelle IS NOT NULL'
+        sql+= " AND comptecommunal = '%s'" % searchValue
+        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
+
+        if rowCount <= 0:
+            QApplication.restoreOverrideCursor()
+            return None
+            self.qc.updateLog(u'Aucune parcelle trouvée pour ce propriétaire')
+
+        layer = self.qc.getLayerFromLegendByTableName('geo_parcelle')
+        if not layer:
+            QApplication.restoreOverrideCursor()
+            return None
+
+        parcelles = ["'%s'" % a[0] for a in data]
+        searchValue = ','.join(parcelles)
+
+        qe = QgsExpression('"%s" IN (%s)' % ('parcelle', searchValue))
+        features = []
+        for feat in layer.getFeatures():
+            if qe.evaluate(feat):
+                # get geometry
+                features.append(feat)
+
+        nb = len(features)
+        self.qc.updateLog(u'%s parcelles ont été trouvées pour ce propriétaire' % nb)
+
+        # Fill parcelle combobox with parcelles
+        cb = self.liParcelle
+        cb.clear()
+        cb.addItem('', '')
+        for feat in features:
+            cb.addItem(feat['idu'], unicode(feat['idu']))
+
+
+        self.searchComboBoxes['proprietaire']['layer'] = layer
+        self.searchComboBoxes['proprietaire']['features'] = features
+
+        QApplication.restoreOverrideCursor()
+
+
+    def selectParcelleForChosenProprietaire(self):
+        '''
+        Select the feature
+        corresponding to the chosen commune
+        '''
+        # Get widget
+        searchCombo = self.searchComboBoxes['proprietaire']
+
+        # Select
+        if searchCombo['features']:
+            ids = [a.id() for a in searchCombo['features']]
+            searchCombo['layer'].select(ids)
 
 
     def onVisibilityChange(self, visible):
