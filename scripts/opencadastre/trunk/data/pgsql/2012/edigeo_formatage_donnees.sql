@@ -22,8 +22,8 @@ CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
 
 -- geo_commune;
 INSERT INTO [PREFIXE]geo_commune
-( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, geom,lot)
-SELECT DISTINCT ON (tex2, idu) '[ANNEE]'||SUBSTRING(idu,1,3), '[ANNEE]', object_rid, idu, tex2, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
+( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, geom, lot, ogc_fid)
+SELECT DISTINCT ON (tex2, idu) '[ANNEE]'||SUBSTRING(idu,1,3), '[ANNEE]', object_rid, idu, tex2, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]', ogc_fid
 FROM [PREFIXE]commune_id
 ORDER BY tex2, idu, update_date DESC, creat_date DESC;
 UPDATE [PREFIXE]geo_commune set commune= p.commune FROM [PREFIXE]commune p WHERE p.annee='[ANNEE]' AND p.commune=SUBSTRING(geo_commune.geo_commune,1,4)||'[DEPDIR]'||SUBSTRING(geo_commune.geo_commune,5,3) AND geo_commune.annee='[ANNEE]';
@@ -31,10 +31,10 @@ UPDATE [PREFIXE]commune SET geo_commune=g.geo_commune FROM [PREFIXE]geo_commune 
 
 -- geo_section;
 INSERT INTO [PREFIXE]geo_section
-( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot)
-SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union((geom))), '[LOT]'
+( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot, ogc_fid)
+SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union((geom))), '[LOT]', ogc_fid
 FROM [PREFIXE]section_id
-GROUP BY object_rid, idu, tex, creat_date, update_date;
+GROUP BY object_rid, idu, tex, creat_date, update_date, ogc_fid;
 
 -- geo_subdsect;
 INSERT INTO [PREFIXE]geo_subdsect
@@ -44,12 +44,19 @@ FROM [PREFIXE]subdsect_id;
 
 -- geo_parcelle;
 INSERT INTO [PREFIXE]geo_parcelle
-(geo_parcelle, annee, object_rid, idu, geo_section, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), supf, indp, coar, tex, tex2, codm, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
+(geo_parcelle, annee, object_rid, idu, geo_section, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot, ogc_fid)
+SELECT '[ANNEE]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), supf, indp, coar, tex, tex2, codm, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]', ogc_fid
 FROM [PREFIXE]parcelle_id;
+-- ajout des subdsect
 UPDATE [PREFIXE]geo_parcelle set geo_subdsect=s.geo_subdsect FROM [PREFIXE]geo_subdsect s, [PREFIXE]edigeo_rel r
 WHERE s.annee=geo_parcelle.annee AND geo_parcelle.annee='[ANNEE]' AND r.nom='Rel_PARCELLE_SUBDSECT' AND r.de=geo_parcelle.object_rid AND vers=s.object_rid;
-UPDATE [PREFIXE]geo_parcelle set parcelle= p.parcelle FROM [PREFIXE]parcelle p WHERE p.annee='[ANNEE]' AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,3)||replace(SUBSTRING(geo_parcelle.geo_parcelle,8,5),'0','-')||SUBSTRING(geo_parcelle.geo_parcelle,13,4) AND geo_parcelle.annee='[ANNEE]';
+
+-- ajout de l'identifiant de parcelle dans la table geo_parcelle
+UPDATE [PREFIXE]geo_parcelle SET (parcelle, dvoilib, comptecommunal ) = (p.parcelle, p.dvoilib, p.comptecommunal)
+FROM [PREFIXE]parcelle p
+WHERE p.annee='[ANNEE]' AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,3)||replace(SUBSTRING(geo_parcelle.geo_parcelle,8,5),'0','-')||SUBSTRING(geo_parcelle.geo_parcelle,13,4) AND geo_parcelle.annee='[ANNEE]';
+
+-- ajout de l'identifiant de geo_parcelle dans la table parcelle
 UPDATE [PREFIXE]parcelle SET geo_parcelle=g.geo_parcelle FROM [PREFIXE]geo_parcelle g WHERE g.parcelle=parcelle.parcelle AND g.annee='[ANNEE]';
 
 -- geo_subdfisc;

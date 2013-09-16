@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'qadastre_import_form.ui'
 #
-# Created: Wed Sep 11 11:22:36 2013
-#      by: PyQt4 UI code generator 4.9.3
+# Created: Mon Sep 16 17:01:01 2013
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_qadastre_import_form(object):
     def setupUi(self, qadastre_import_form):
@@ -217,37 +226,37 @@ class Ui_qadastre_import_form(object):
         QtCore.QMetaObject.connectSlotsByName(qadastre_import_form)
 
     def retranslateUi(self, qadastre_import_form):
-        qadastre_import_form.setWindowTitle(QtGui.QApplication.translate("qadastre_import_form", "Qadastre", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("qadastre_import_form", "Base de données de travail", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("qadastre_import_form", "Type de base", None, QtGui.QApplication.UnicodeUTF8))
-        self.liDbType.setItemText(0, QtGui.QApplication.translate("qadastre_import_form", "-- Choisir --", None, QtGui.QApplication.UnicodeUTF8))
-        self.liDbType.setItemText(1, QtGui.QApplication.translate("qadastre_import_form", "Postgis", None, QtGui.QApplication.UnicodeUTF8))
-        self.liDbType.setItemText(2, QtGui.QApplication.translate("qadastre_import_form", "Spatialite", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("qadastre_import_form", "Schémas", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("qadastre_import_form", "Connexions", None, QtGui.QApplication.UnicodeUTF8))
-        self.btDbCreateSchema.setText(QtGui.QApplication.translate("qadastre_import_form", "créer", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_5.setTitle(QtGui.QApplication.translate("qadastre_import_form", "Fichiers EDIGEO", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("qadastre_import_form", "Répertoire", None, QtGui.QApplication.UnicodeUTF8))
-        self.btEdigeoSourceDir.setText(QtGui.QApplication.translate("qadastre_import_form", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("qadastre_import_form", "Projections: source", None, QtGui.QApplication.UnicodeUTF8))
-        self.btEdigeoSourceProj.setText(QtGui.QApplication.translate("qadastre_import_form", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_13.setText(QtGui.QApplication.translate("qadastre_import_form", "Cible", None, QtGui.QApplication.UnicodeUTF8))
-        self.btEdigeoTargetProj.setText(QtGui.QApplication.translate("qadastre_import_form", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("qadastre_import_form", "Département", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("qadastre_import_form", "Direction", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_6.setTitle(QtGui.QApplication.translate("qadastre_import_form", "Fichiers MAJIC", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_14.setText(QtGui.QApplication.translate("qadastre_import_form", "Répertoire", None, QtGui.QApplication.UnicodeUTF8))
-        self.btMajicSourceDir.setText(QtGui.QApplication.translate("qadastre_import_form", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_7.setTitle(QtGui.QApplication.translate("qadastre_import_form", "Paramètres", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("qadastre_import_form", "Version du format", None, QtGui.QApplication.UnicodeUTF8))
-        self.liDataVersion.setItemText(0, QtGui.QApplication.translate("qadastre_import_form", "2012", None, QtGui.QApplication.UnicodeUTF8))
-        self.liDataVersion.setItemText(1, QtGui.QApplication.translate("qadastre_import_form", "2011", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_16.setText(QtGui.QApplication.translate("qadastre_import_form", "Année", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("qadastre_import_form", "Lot", None, QtGui.QApplication.UnicodeUTF8))
-        self.btProcessImport.setText(QtGui.QApplication.translate("qadastre_import_form", "Lancer l\'import", None, QtGui.QApplication.UnicodeUTF8))
-        self.txtLog.setHtml(QtGui.QApplication.translate("qadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        qadastre_import_form.setWindowTitle(_translate("qadastre_import_form", "Qadastre", None))
+        self.groupBox.setTitle(_translate("qadastre_import_form", "Base de données de travail", None))
+        self.label.setText(_translate("qadastre_import_form", "Type de base", None))
+        self.liDbType.setItemText(0, _translate("qadastre_import_form", "-- Choisir --", None))
+        self.liDbType.setItemText(1, _translate("qadastre_import_form", "Postgis", None))
+        self.liDbType.setItemText(2, _translate("qadastre_import_form", "Spatialite", None))
+        self.label_3.setText(_translate("qadastre_import_form", "Schémas", None))
+        self.label_2.setText(_translate("qadastre_import_form", "Connexions", None))
+        self.btDbCreateSchema.setText(_translate("qadastre_import_form", "créer", None))
+        self.groupBox_5.setTitle(_translate("qadastre_import_form", "Fichiers EDIGEO", None))
+        self.label_11.setText(_translate("qadastre_import_form", "Répertoire", None))
+        self.btEdigeoSourceDir.setText(_translate("qadastre_import_form", "...", None))
+        self.label_12.setText(_translate("qadastre_import_form", "Projections: source", None))
+        self.btEdigeoSourceProj.setText(_translate("qadastre_import_form", "...", None))
+        self.label_13.setText(_translate("qadastre_import_form", "Cible", None))
+        self.btEdigeoTargetProj.setText(_translate("qadastre_import_form", "...", None))
+        self.label_4.setText(_translate("qadastre_import_form", "Département", None))
+        self.label_5.setText(_translate("qadastre_import_form", "Direction", None))
+        self.groupBox_6.setTitle(_translate("qadastre_import_form", "Fichiers MAJIC", None))
+        self.label_14.setText(_translate("qadastre_import_form", "Répertoire", None))
+        self.btMajicSourceDir.setText(_translate("qadastre_import_form", "...", None))
+        self.groupBox_7.setTitle(_translate("qadastre_import_form", "Paramètres", None))
+        self.label_15.setText(_translate("qadastre_import_form", "Version du format", None))
+        self.liDataVersion.setItemText(0, _translate("qadastre_import_form", "2012", None))
+        self.liDataVersion.setItemText(1, _translate("qadastre_import_form", "2011", None))
+        self.label_16.setText(_translate("qadastre_import_form", "Année", None))
+        self.label_6.setText(_translate("qadastre_import_form", "Lot", None))
+        self.btProcessImport.setText(_translate("qadastre_import_form", "Lancer l\'import", None))
+        self.txtLog.setHtml(_translate("qadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
 

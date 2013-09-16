@@ -1290,7 +1290,8 @@ CREATE TABLE geo_commune
   creat_date date,
   update_dat date,
   commune character varying(10),
-  lot character(3)
+  lot character(3),
+  ogc_fid integer NOT NULL
 )
 WITH (
   OIDS=FALSE
@@ -1319,7 +1320,8 @@ CREATE TABLE geo_section
   geo_commune character varying(7) NOT NULL,
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character(3),
+  ogc_fid integer NOT NULL
 )
 WITH (
   OIDS=FALSE
@@ -1410,7 +1412,10 @@ CREATE TABLE geo_parcelle
   creat_date date,
   update_dat date,
   parcelle character varying(19),
-  lot character(3)
+  lot character(3),
+  comptecommunal text,
+  dvoilib text,
+  ogc_fid integer NOT NULL
 )
 WITH (
   OIDS=FALSE

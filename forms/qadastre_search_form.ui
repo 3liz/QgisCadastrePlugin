@@ -37,24 +37,51 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <item>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="1">
               <widget class="QComboBox" name="liAdresse">
                <property name="editable">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item>
+             <item row="0" column="2">
               <widget class="QPushButton" name="btSearchAdresse">
                <property name="maximumSize">
                 <size>
-                 <width>40</width>
+                 <width>30</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="text">
                 <string>...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Adresse</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="maximumSize">
+                <size>
+                 <width>60</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Parcelle</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="liParcelleAdresse">
+               <property name="editable">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -142,7 +169,7 @@
                 <widget class="QPushButton" name="btSearchParcelle">
                  <property name="maximumSize">
                   <size>
-                   <width>40</width>
+                   <width>30</width>
                    <height>16777215</height>
                   </size>
                  </property>
@@ -190,24 +217,51 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <item>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="2">
+              <widget class="QPushButton" name="btSearchProprietaire">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
               <widget class="QComboBox" name="liProprietaire">
                <property name="editable">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="btSearchProprietaire">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_3">
                <property name="maximumSize">
                 <size>
-                 <width>40</width>
+                 <width>60</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="text">
-                <string>...</string>
+                <string>Parcelle</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="liParcelleProprietaire">
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Nom</string>
                </property>
               </widget>
              </item>
@@ -272,6 +326,29 @@ p, li { white-space: pre-wrap; }
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>scrollArea_3</tabstop>
+  <tabstop>liAdresse</tabstop>
+  <tabstop>btSearchAdresse</tabstop>
+  <tabstop>liParcelleAdresse</tabstop>
+  <tabstop>btCentrerAdresse</tabstop>
+  <tabstop>btZoomerAdresse</tabstop>
+  <tabstop>btSelectionnerAdresse</tabstop>
+  <tabstop>liCommune</tabstop>
+  <tabstop>liSection</tabstop>
+  <tabstop>liParcelle</tabstop>
+  <tabstop>btSearchParcelle</tabstop>
+  <tabstop>btCentrerLieu</tabstop>
+  <tabstop>btZoomerLieu</tabstop>
+  <tabstop>btSelectionnerLieu</tabstop>
+  <tabstop>liProprietaire</tabstop>
+  <tabstop>btSearchProprietaire</tabstop>
+  <tabstop>liParcelleProprietaire</tabstop>
+  <tabstop>btCentrerProprietaire</tabstop>
+  <tabstop>btZoomerProprietaire</tabstop>
+  <tabstop>btSelectionnerProprietaire</tabstop>
+  <tabstop>txtLog</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

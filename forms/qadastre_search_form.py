@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'qadastre_search_form.ui'
 #
-# Created: Wed Sep 11 11:22:37 2013
-#      by: PyQt4 UI code generator 4.9.3
+# Created: Mon Sep 16 17:01:01 2013
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_qadastre_search_form(object):
     def setupUi(self, qadastre_search_form):
@@ -34,17 +43,28 @@ class Ui_qadastre_search_form(object):
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.groupBox)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
-        self.horizontalLayout_6 = QtGui.QHBoxLayout()
-        self.horizontalLayout_6.setObjectName(_fromUtf8("horizontalLayout_6"))
+        self.gridLayout_3 = QtGui.QGridLayout()
+        self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
         self.liAdresse = QtGui.QComboBox(self.groupBox)
         self.liAdresse.setEditable(True)
         self.liAdresse.setObjectName(_fromUtf8("liAdresse"))
-        self.horizontalLayout_6.addWidget(self.liAdresse)
+        self.gridLayout_3.addWidget(self.liAdresse, 0, 1, 1, 1)
         self.btSearchAdresse = QtGui.QPushButton(self.groupBox)
-        self.btSearchAdresse.setMaximumSize(QtCore.QSize(40, 16777215))
+        self.btSearchAdresse.setMaximumSize(QtCore.QSize(30, 16777215))
         self.btSearchAdresse.setObjectName(_fromUtf8("btSearchAdresse"))
-        self.horizontalLayout_6.addWidget(self.btSearchAdresse)
-        self.verticalLayout_6.addLayout(self.horizontalLayout_6)
+        self.gridLayout_3.addWidget(self.btSearchAdresse, 0, 2, 1, 1)
+        self.label_5 = QtGui.QLabel(self.groupBox)
+        self.label_5.setObjectName(_fromUtf8("label_5"))
+        self.gridLayout_3.addWidget(self.label_5, 0, 0, 1, 1)
+        self.label_6 = QtGui.QLabel(self.groupBox)
+        self.label_6.setMaximumSize(QtCore.QSize(60, 16777215))
+        self.label_6.setObjectName(_fromUtf8("label_6"))
+        self.gridLayout_3.addWidget(self.label_6, 1, 0, 1, 1)
+        self.liParcelleAdresse = QtGui.QComboBox(self.groupBox)
+        self.liParcelleAdresse.setEditable(True)
+        self.liParcelleAdresse.setObjectName(_fromUtf8("liParcelleAdresse"))
+        self.gridLayout_3.addWidget(self.liParcelleAdresse, 1, 1, 1, 1)
+        self.verticalLayout_6.addLayout(self.gridLayout_3)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.btCentrerAdresse = QtGui.QPushButton(self.groupBox)
@@ -87,7 +107,7 @@ class Ui_qadastre_search_form(object):
         self.liParcelle.setObjectName(_fromUtf8("liParcelle"))
         self.horizontalLayout_4.addWidget(self.liParcelle)
         self.btSearchParcelle = QtGui.QPushButton(self.groupBox_5)
-        self.btSearchParcelle.setMaximumSize(QtCore.QSize(40, 16777215))
+        self.btSearchParcelle.setMaximumSize(QtCore.QSize(30, 16777215))
         self.btSearchParcelle.setObjectName(_fromUtf8("btSearchParcelle"))
         self.horizontalLayout_4.addWidget(self.btSearchParcelle)
         self.gridLayout.addLayout(self.horizontalLayout_4, 2, 1, 1, 1)
@@ -109,17 +129,28 @@ class Ui_qadastre_search_form(object):
         self.groupBox_6.setObjectName(_fromUtf8("groupBox_6"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.groupBox_6)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.horizontalLayout_5 = QtGui.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
+        self.gridLayout_2 = QtGui.QGridLayout()
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+        self.btSearchProprietaire = QtGui.QPushButton(self.groupBox_6)
+        self.btSearchProprietaire.setMaximumSize(QtCore.QSize(30, 16777215))
+        self.btSearchProprietaire.setObjectName(_fromUtf8("btSearchProprietaire"))
+        self.gridLayout_2.addWidget(self.btSearchProprietaire, 0, 2, 1, 1)
         self.liProprietaire = QtGui.QComboBox(self.groupBox_6)
         self.liProprietaire.setEditable(True)
         self.liProprietaire.setObjectName(_fromUtf8("liProprietaire"))
-        self.horizontalLayout_5.addWidget(self.liProprietaire)
-        self.btSearchProprietaire = QtGui.QPushButton(self.groupBox_6)
-        self.btSearchProprietaire.setMaximumSize(QtCore.QSize(40, 16777215))
-        self.btSearchProprietaire.setObjectName(_fromUtf8("btSearchProprietaire"))
-        self.horizontalLayout_5.addWidget(self.btSearchProprietaire)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
+        self.gridLayout_2.addWidget(self.liProprietaire, 0, 1, 1, 1)
+        self.label_3 = QtGui.QLabel(self.groupBox_6)
+        self.label_3.setMaximumSize(QtCore.QSize(60, 16777215))
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.gridLayout_2.addWidget(self.label_3, 1, 0, 1, 1)
+        self.liParcelleProprietaire = QtGui.QComboBox(self.groupBox_6)
+        self.liParcelleProprietaire.setEditable(True)
+        self.liParcelleProprietaire.setObjectName(_fromUtf8("liParcelleProprietaire"))
+        self.gridLayout_2.addWidget(self.liParcelleProprietaire, 1, 1, 1, 1)
+        self.label_4 = QtGui.QLabel(self.groupBox_6)
+        self.label_4.setObjectName(_fromUtf8("label_4"))
+        self.gridLayout_2.addWidget(self.label_4, 0, 0, 1, 1)
+        self.verticalLayout_2.addLayout(self.gridLayout_2)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.btCentrerProprietaire = QtGui.QPushButton(self.groupBox_6)
@@ -144,30 +175,54 @@ class Ui_qadastre_search_form(object):
 
         self.retranslateUi(qadastre_search_form)
         QtCore.QMetaObject.connectSlotsByName(qadastre_search_form)
+        qadastre_search_form.setTabOrder(self.scrollArea_3, self.liAdresse)
+        qadastre_search_form.setTabOrder(self.liAdresse, self.btSearchAdresse)
+        qadastre_search_form.setTabOrder(self.btSearchAdresse, self.liParcelleAdresse)
+        qadastre_search_form.setTabOrder(self.liParcelleAdresse, self.btCentrerAdresse)
+        qadastre_search_form.setTabOrder(self.btCentrerAdresse, self.btZoomerAdresse)
+        qadastre_search_form.setTabOrder(self.btZoomerAdresse, self.btSelectionnerAdresse)
+        qadastre_search_form.setTabOrder(self.btSelectionnerAdresse, self.liCommune)
+        qadastre_search_form.setTabOrder(self.liCommune, self.liSection)
+        qadastre_search_form.setTabOrder(self.liSection, self.liParcelle)
+        qadastre_search_form.setTabOrder(self.liParcelle, self.btSearchParcelle)
+        qadastre_search_form.setTabOrder(self.btSearchParcelle, self.btCentrerLieu)
+        qadastre_search_form.setTabOrder(self.btCentrerLieu, self.btZoomerLieu)
+        qadastre_search_form.setTabOrder(self.btZoomerLieu, self.btSelectionnerLieu)
+        qadastre_search_form.setTabOrder(self.btSelectionnerLieu, self.liProprietaire)
+        qadastre_search_form.setTabOrder(self.liProprietaire, self.btSearchProprietaire)
+        qadastre_search_form.setTabOrder(self.btSearchProprietaire, self.liParcelleProprietaire)
+        qadastre_search_form.setTabOrder(self.liParcelleProprietaire, self.btCentrerProprietaire)
+        qadastre_search_form.setTabOrder(self.btCentrerProprietaire, self.btZoomerProprietaire)
+        qadastre_search_form.setTabOrder(self.btZoomerProprietaire, self.btSelectionnerProprietaire)
+        qadastre_search_form.setTabOrder(self.btSelectionnerProprietaire, self.txtLog)
 
     def retranslateUi(self, qadastre_search_form):
-        qadastre_search_form.setWindowTitle(QtGui.QApplication.translate("qadastre_search_form", "Qadastre - Outils de recherche", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("qadastre_search_form", "Recherche d\'adresse", None, QtGui.QApplication.UnicodeUTF8))
-        self.btSearchAdresse.setText(QtGui.QApplication.translate("qadastre_search_form", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.btCentrerAdresse.setText(QtGui.QApplication.translate("qadastre_search_form", "Centrer", None, QtGui.QApplication.UnicodeUTF8))
-        self.btZoomerAdresse.setText(QtGui.QApplication.translate("qadastre_search_form", "Zoomer", None, QtGui.QApplication.UnicodeUTF8))
-        self.btSelectionnerAdresse.setText(QtGui.QApplication.translate("qadastre_search_form", "Sélectionner", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_5.setTitle(QtGui.QApplication.translate("qadastre_search_form", "Recherche de lieux", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("qadastre_search_form", "Commune", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("qadastre_search_form", "Parcelle", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("qadastre_search_form", "Section", None, QtGui.QApplication.UnicodeUTF8))
-        self.btSearchParcelle.setText(QtGui.QApplication.translate("qadastre_search_form", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.btCentrerLieu.setText(QtGui.QApplication.translate("qadastre_search_form", "Centrer", None, QtGui.QApplication.UnicodeUTF8))
-        self.btZoomerLieu.setText(QtGui.QApplication.translate("qadastre_search_form", "Zoomer", None, QtGui.QApplication.UnicodeUTF8))
-        self.btSelectionnerLieu.setText(QtGui.QApplication.translate("qadastre_search_form", "Sélectionner", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_6.setTitle(QtGui.QApplication.translate("qadastre_search_form", "Recherche de propriétaire", None, QtGui.QApplication.UnicodeUTF8))
-        self.btSearchProprietaire.setText(QtGui.QApplication.translate("qadastre_search_form", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.btCentrerProprietaire.setText(QtGui.QApplication.translate("qadastre_search_form", "Centrer", None, QtGui.QApplication.UnicodeUTF8))
-        self.btZoomerProprietaire.setText(QtGui.QApplication.translate("qadastre_search_form", "Zoomer", None, QtGui.QApplication.UnicodeUTF8))
-        self.btSelectionnerProprietaire.setText(QtGui.QApplication.translate("qadastre_search_form", "Sélectionner", None, QtGui.QApplication.UnicodeUTF8))
-        self.txtLog.setHtml(QtGui.QApplication.translate("qadastre_search_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        qadastre_search_form.setWindowTitle(_translate("qadastre_search_form", "Qadastre - Outils de recherche", None))
+        self.groupBox.setTitle(_translate("qadastre_search_form", "Recherche d\'adresse", None))
+        self.btSearchAdresse.setText(_translate("qadastre_search_form", "...", None))
+        self.label_5.setText(_translate("qadastre_search_form", "Adresse", None))
+        self.label_6.setText(_translate("qadastre_search_form", "Parcelle", None))
+        self.btCentrerAdresse.setText(_translate("qadastre_search_form", "Centrer", None))
+        self.btZoomerAdresse.setText(_translate("qadastre_search_form", "Zoomer", None))
+        self.btSelectionnerAdresse.setText(_translate("qadastre_search_form", "Sélectionner", None))
+        self.groupBox_5.setTitle(_translate("qadastre_search_form", "Recherche de lieux", None))
+        self.label_12.setText(_translate("qadastre_search_form", "Commune", None))
+        self.label_2.setText(_translate("qadastre_search_form", "Parcelle", None))
+        self.label.setText(_translate("qadastre_search_form", "Section", None))
+        self.btSearchParcelle.setText(_translate("qadastre_search_form", "...", None))
+        self.btCentrerLieu.setText(_translate("qadastre_search_form", "Centrer", None))
+        self.btZoomerLieu.setText(_translate("qadastre_search_form", "Zoomer", None))
+        self.btSelectionnerLieu.setText(_translate("qadastre_search_form", "Sélectionner", None))
+        self.groupBox_6.setTitle(_translate("qadastre_search_form", "Recherche de propriétaire", None))
+        self.btSearchProprietaire.setText(_translate("qadastre_search_form", "...", None))
+        self.label_3.setText(_translate("qadastre_search_form", "Parcelle", None))
+        self.label_4.setText(_translate("qadastre_search_form", "Nom", None))
+        self.btCentrerProprietaire.setText(_translate("qadastre_search_form", "Centrer", None))
+        self.btZoomerProprietaire.setText(_translate("qadastre_search_form", "Zoomer", None))
+        self.btSelectionnerProprietaire.setText(_translate("qadastre_search_form", "Sélectionner", None))
+        self.txtLog.setHtml(_translate("qadastre_search_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
 

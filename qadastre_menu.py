@@ -72,11 +72,11 @@ class qadastre_menu:
             dialog = qadastre_search_dialog(self.iface)
             self.qadastre_search_dialog = dialog
 
-        # Interface Submenu
+        # Options Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
-        self.interface_action = QAction(icon, u"Choisir l'interface", self.iface.mainWindow())
-        QObject.connect(self.interface_action, SIGNAL("triggered()"), self.open_interface_dialog)
-        self.qadastre_menu.addAction(self.interface_action)
+        self.option_action = QAction(icon, u"Configurer le plugin", self.iface.mainWindow())
+        QObject.connect(self.option_action, SIGNAL("triggered()"), self.open_option_dialog)
+        self.qadastre_menu.addAction(self.option_action)
 
 
     def open_import_dialog(self):
@@ -110,11 +110,11 @@ class qadastre_menu:
             # hide load dialog if necessary
             self.qadastre_load_dialog.hide()
 
-    def open_interface_dialog(self):
+    def open_option_dialog(self):
         '''
         Config dock widget
         '''
-        dialog = qadastre_interface_dialog(self.iface)
+        dialog = qadastre_option_dialog(self.iface)
         dialog.exec_()
 
 

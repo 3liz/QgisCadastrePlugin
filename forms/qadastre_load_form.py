@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'qadastre_load_form.ui'
 #
-# Created: Wed Sep 11 11:22:37 2013
-#      by: PyQt4 UI code generator 4.9.3
+# Created: Mon Sep 16 17:01:01 2013
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_qadastre_load_form(object):
     def setupUi(self, qadastre_load_form):
@@ -105,25 +114,25 @@ class Ui_qadastre_load_form(object):
         QtCore.QMetaObject.connectSlotsByName(qadastre_load_form)
 
     def retranslateUi(self, qadastre_load_form):
-        qadastre_load_form.setWindowTitle(QtGui.QApplication.translate("qadastre_load_form", "Qadastre - Charger les données", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("qadastre_load_form", "Base de données de travail", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("qadastre_load_form", "Connexions", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("qadastre_load_form", "Schéma", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("qadastre_load_form", "Type de base", None, QtGui.QApplication.UnicodeUTF8))
-        self.liDbType.setItemText(0, QtGui.QApplication.translate("qadastre_load_form", "-- Choisir --", None, QtGui.QApplication.UnicodeUTF8))
-        self.liDbType.setItemText(1, QtGui.QApplication.translate("qadastre_load_form", "Postgis", None, QtGui.QApplication.UnicodeUTF8))
-        self.liDbType.setItemText(2, QtGui.QApplication.translate("qadastre_load_form", "Spatialite", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_5.setTitle(QtGui.QApplication.translate("qadastre_load_form", "Styles à appliquer", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("qadastre_load_form", "Thème", None, QtGui.QApplication.UnicodeUTF8))
-        self.liTheme.setItemText(0, QtGui.QApplication.translate("qadastre_load_form", "classique", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_6.setTitle(QtGui.QApplication.translate("qadastre_load_form", "Surcharge", None, QtGui.QApplication.UnicodeUTF8))
-        self.liOverrideLayer.setToolTip(QtGui.QApplication.translate("qadastre_load_form", "<html><head/><body><p>Comportement lors du chargement si des données sont déjà ouvertes dans le projet</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.liOverrideLayer.setItemText(0, QtGui.QApplication.translate("qadastre_load_form", "Conserver", None, QtGui.QApplication.UnicodeUTF8))
-        self.liOverrideLayer.setItemText(1, QtGui.QApplication.translate("qadastre_load_form", "Remplacer", None, QtGui.QApplication.UnicodeUTF8))
-        self.btProcessLoading.setText(QtGui.QApplication.translate("qadastre_load_form", "Charger les données", None, QtGui.QApplication.UnicodeUTF8))
-        self.txtLog.setHtml(QtGui.QApplication.translate("qadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        qadastre_load_form.setWindowTitle(_translate("qadastre_load_form", "Qadastre - Charger les données", None))
+        self.groupBox.setTitle(_translate("qadastre_load_form", "Base de données de travail", None))
+        self.label_2.setText(_translate("qadastre_load_form", "Connexions", None))
+        self.label_3.setText(_translate("qadastre_load_form", "Schéma", None))
+        self.label.setText(_translate("qadastre_load_form", "Type de base", None))
+        self.liDbType.setItemText(0, _translate("qadastre_load_form", "-- Choisir --", None))
+        self.liDbType.setItemText(1, _translate("qadastre_load_form", "Postgis", None))
+        self.liDbType.setItemText(2, _translate("qadastre_load_form", "Spatialite", None))
+        self.groupBox_5.setTitle(_translate("qadastre_load_form", "Styles à appliquer", None))
+        self.label_12.setText(_translate("qadastre_load_form", "Thème", None))
+        self.liTheme.setItemText(0, _translate("qadastre_load_form", "classique", None))
+        self.groupBox_6.setTitle(_translate("qadastre_load_form", "Surcharge", None))
+        self.liOverrideLayer.setToolTip(_translate("qadastre_load_form", "<html><head/><body><p>Comportement lors du chargement si des données sont déjà ouvertes dans le projet</p></body></html>", None))
+        self.liOverrideLayer.setItemText(0, _translate("qadastre_load_form", "Conserver", None))
+        self.liOverrideLayer.setItemText(1, _translate("qadastre_load_form", "Remplacer", None))
+        self.btProcessLoading.setText(_translate("qadastre_load_form", "Charger les données", None))
+        self.txtLog.setHtml(_translate("qadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
 
