@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.0.0-Dufour" minimumScale="-4.65661e-10" maximumScale="1e+08" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="0" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.0.1-Dufour" minimumScale="-4.65661e-10" maximumScale="1e+08" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="0" scaleBasedLabelVisibilityFlag="0">
   <renderer-v2 symbollevels="0" type="RuleRenderer">
     <rules>
       <rule scalemaxdenom="100000" symbol="0" scalemindenom="1"/>
@@ -42,10 +42,10 @@
     <property key="labeling/bufferColorB" value="255"/>
     <property key="labeling/bufferColorG" value="255"/>
     <property key="labeling/bufferColorR" value="255"/>
-    <property key="labeling/bufferDraw" value="false"/>
+    <property key="labeling/bufferDraw" value="true"/>
     <property key="labeling/bufferJoinStyle" value="64"/>
     <property key="labeling/bufferNoFill" value="false"/>
-    <property key="labeling/bufferSize" value="1"/>
+    <property key="labeling/bufferSize" value="0.5"/>
     <property key="labeling/bufferSizeInMapUnits" value="false"/>
     <property key="labeling/bufferTransp" value="0"/>
     <property key="labeling/centroidWhole" value="false"/>
@@ -53,21 +53,21 @@
     <property key="labeling/displayAll" value="false"/>
     <property key="labeling/dist" value="0"/>
     <property key="labeling/distInMapUnits" value="false"/>
-    <property key="labeling/enabled" value="false"/>
-    <property key="labeling/fieldName" value=""/>
+    <property key="labeling/enabled" value="true"/>
+    <property key="labeling/fieldName" value="tex2"/>
     <property key="labeling/fontBold" value="true"/>
     <property key="labeling/fontCapitals" value="0"/>
     <property key="labeling/fontFamily" value="Ubuntu"/>
     <property key="labeling/fontItalic" value="true"/>
     <property key="labeling/fontLetterSpacing" value="0"/>
-    <property key="labeling/fontLimitPixelSize" value="false"/>
+    <property key="labeling/fontLimitPixelSize" value="true"/>
     <property key="labeling/fontMaxPixelSize" value="10000"/>
     <property key="labeling/fontMinPixelSize" value="3"/>
     <property key="labeling/fontSize" value="11"/>
     <property key="labeling/fontSizeInMapUnits" value="false"/>
     <property key="labeling/fontStrikeout" value="false"/>
     <property key="labeling/fontUnderline" value="false"/>
-    <property key="labeling/fontWeight" value="75"/>
+    <property key="labeling/fontWeight" value="63"/>
     <property key="labeling/fontWordSpacing" value="0"/>
     <property key="labeling/formatNumbers" value="false"/>
     <property key="labeling/isExpression" value="false"/>
@@ -82,7 +82,7 @@
     <property key="labeling/minFeatureSize" value="0"/>
     <property key="labeling/multilineAlign" value="0"/>
     <property key="labeling/multilineHeight" value="1"/>
-    <property key="labeling/namedStyle" value="Bold Italic"/>
+    <property key="labeling/namedStyle" value="Medium Italic"/>
     <property key="labeling/obstacle" value="true"/>
     <property key="labeling/placeDirectionSymbol" value="0"/>
     <property key="labeling/placement" value="0"/>
@@ -94,9 +94,9 @@
     <property key="labeling/quadOffset" value="4"/>
     <property key="labeling/reverseDirectionSymbol" value="false"/>
     <property key="labeling/rightDirectionSymbol" value=">"/>
-    <property key="labeling/scaleMax" value="10000000"/>
-    <property key="labeling/scaleMin" value="1"/>
-    <property key="labeling/scaleVisibility" value="false"/>
+    <property key="labeling/scaleMax" value="1000000"/>
+    <property key="labeling/scaleMin" value="10000"/>
+    <property key="labeling/scaleVisibility" value="true"/>
     <property key="labeling/shadowBlendMode" value="6"/>
     <property key="labeling/shadowColorB" value="0"/>
     <property key="labeling/shadowColorG" value="0"/>
@@ -141,9 +141,9 @@
     <property key="labeling/shapeTransparency" value="0"/>
     <property key="labeling/shapeType" value="0"/>
     <property key="labeling/textColorA" value="255"/>
-    <property key="labeling/textColorB" value="0"/>
-    <property key="labeling/textColorG" value="0"/>
-    <property key="labeling/textColorR" value="0"/>
+    <property key="labeling/textColorB" value="72"/>
+    <property key="labeling/textColorG" value="72"/>
+    <property key="labeling/textColorR" value="72"/>
     <property key="labeling/textTransp" value="0"/>
     <property key="labeling/upsidedownLabels" value="0"/>
     <property key="labeling/wrapChar" value=""/>
@@ -190,6 +190,7 @@
     <edittype labelontop="0" editable="1" type="0" name="idu"/>
     <edittype labelontop="0" editable="1" type="0" name="lot"/>
     <edittype labelontop="0" editable="1" type="0" name="object_rid"/>
+    <edittype labelontop="0" editable="1" type="0" name="ogc_fid"/>
     <edittype labelontop="0" editable="1" type="0" name="parcelle"/>
     <edittype labelontop="0" editable="1" type="0" name="supf"/>
     <edittype labelontop="0" editable="1" type="0" name="tex"/>

@@ -17,6 +17,7 @@ CREATE INDEX geo_symblim_geom_idx ON geo_symblim USING gist (geom );
 CREATE INDEX geo_tpoint_geom_idx ON geo_tpoint USING gist (geom );
 CREATE INDEX geo_tline_geom_idx ON geo_tline USING gist (geom );
 CREATE INDEX geo_tsurf_geom_idx ON geo_tsurf USING gist (geom );
+CREATE INDEX geo_label_geom_idx ON geo_label USING gist (geom );
 -- attributes
 CREATE INDEX geo_commune_tex2_idx ON geo_commune (tex2);
 CREATE INDEX geo_section_idu_idx ON geo_section (idu);

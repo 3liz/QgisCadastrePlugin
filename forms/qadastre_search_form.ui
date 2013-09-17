@@ -45,19 +45,6 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="btSearchAdresse">
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
@@ -82,6 +69,28 @@
               <widget class="QComboBox" name="liParcelleAdresse">
                <property name="editable">
                 <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QToolButton" name="btResetParcelleAdresse">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/qadastre/icons/delete.png</normaloff>:/plugins/qadastre/icons/delete.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QToolButton" name="btSearchAdresse">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/qadastre/icons/search.png</normaloff>:/plugins/qadastre/icons/search.png</iconset>
                </property>
               </widget>
              </item>
@@ -165,20 +174,40 @@
                  </property>
                 </widget>
                </item>
-               <item>
-                <widget class="QPushButton" name="btSearchParcelle">
-                 <property name="maximumSize">
-                  <size>
-                   <width>30</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>...</string>
-                 </property>
-                </widget>
-               </item>
               </layout>
+             </item>
+             <item row="0" column="2">
+              <widget class="QToolButton" name="btResetCommune">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/qadastre/icons/delete.png</normaloff>:/plugins/qadastre/icons/delete.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QToolButton" name="btResetSection">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/qadastre/icons/delete.png</normaloff>:/plugins/qadastre/icons/delete.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QToolButton" name="btResetParcelle">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/qadastre/icons/delete.png</normaloff>:/plugins/qadastre/icons/delete.png</iconset>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -218,19 +247,6 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="2">
-              <widget class="QPushButton" name="btSearchProprietaire">
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="1">
               <widget class="QComboBox" name="liProprietaire">
                <property name="editable">
@@ -262,6 +278,28 @@
               <widget class="QLabel" name="label_4">
                <property name="text">
                 <string>Nom</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QToolButton" name="btSearchProprietaire">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/qadastre/icons/search.png</normaloff>:/plugins/qadastre/icons/search.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QToolButton" name="btResetParcelleProprietaire">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/qadastre/icons/delete.png</normaloff>:/plugins/qadastre/icons/delete.png</iconset>
                </property>
               </widget>
              </item>
@@ -329,7 +367,6 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>scrollArea_3</tabstop>
   <tabstop>liAdresse</tabstop>
-  <tabstop>btSearchAdresse</tabstop>
   <tabstop>liParcelleAdresse</tabstop>
   <tabstop>btCentrerAdresse</tabstop>
   <tabstop>btZoomerAdresse</tabstop>
@@ -337,18 +374,18 @@ p, li { white-space: pre-wrap; }
   <tabstop>liCommune</tabstop>
   <tabstop>liSection</tabstop>
   <tabstop>liParcelle</tabstop>
-  <tabstop>btSearchParcelle</tabstop>
   <tabstop>btCentrerLieu</tabstop>
   <tabstop>btZoomerLieu</tabstop>
   <tabstop>btSelectionnerLieu</tabstop>
   <tabstop>liProprietaire</tabstop>
-  <tabstop>btSearchProprietaire</tabstop>
   <tabstop>liParcelleProprietaire</tabstop>
   <tabstop>btCentrerProprietaire</tabstop>
   <tabstop>btZoomerProprietaire</tabstop>
   <tabstop>btSelectionnerProprietaire</tabstop>
   <tabstop>txtLog</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

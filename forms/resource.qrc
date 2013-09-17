@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/plugins/qadastre">
-    <file>icon.png</file>
+    <file>icons/search.png</file>
+    <file>icons/delete.png</file>
   </qresource>
 </RCC>
