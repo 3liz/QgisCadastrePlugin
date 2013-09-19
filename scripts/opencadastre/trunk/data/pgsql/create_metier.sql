@@ -53,8 +53,6 @@ CREATE TABLE parcelle (
     geo_parcelle character varying(16)
 
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_parcelle
-   ON parcelle (annee ASC NULLS LAST);
 CREATE TABLE suf (
     suf character varying(21),
     annee character varying (4),
@@ -90,8 +88,6 @@ CREATE TABLE suf (
     datja date,
     postel character varying (1)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_suf
-   ON suf (annee ASC NULLS LAST);
 
 CREATE TABLE sufexoneration (
     sufexoneration character varying (23),
@@ -117,8 +113,6 @@ CREATE TABLE sufexoneration (
     rcexnba numeric(10,2),
     mpexnba character varying (10)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_sufexoneration
-   ON sufexoneration (annee ASC NULLS LAST);
 
 CREATE TABLE suftaxation (
     suftaxation character varying (21),
@@ -141,8 +135,6 @@ CREATE TABLE suftaxation (
     c4bisufad numeric(10,2),
     cntmajtc integer
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_suftaxation
-   ON suftaxation (annee ASC NULLS LAST);
 
 CREATE TABLE local00 (
     local00 character varying (14),
@@ -169,8 +161,6 @@ CREATE TABLE local00 (
     cleinvar character varying (1),
     locinc character varying (1)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_local00
-   ON local00 (annee ASC NULLS LAST);
 
 CREATE TABLE local10 (
     local10 character varying (14),
@@ -228,8 +218,6 @@ CREATE TABLE local10 (
     jrtabt character varying (4),
     jacloc character varying (4)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_local10
-   ON local10 (annee ASC NULLS LAST);
 
 CREATE TABLE pev (
     pev character varying (17),
@@ -264,8 +252,6 @@ CREATE TABLE pev (
     dvltpe integer,
     dcralc character varying (3)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_pev
-   ON pev (annee ASC NULLS LAST);
 
 CREATE TABLE pevexoneration (
     pevexoneration character varying (24),
@@ -294,8 +280,6 @@ CREATE TABLE pevexoneration (
     fcexba2 integer,
     rcexba2 integer
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_pevexoneration
-   ON pevexoneration (annee ASC NULLS LAST);
 
 CREATE TABLE pevtaxation (
     pevtaxation character varying (17),
@@ -325,8 +309,6 @@ CREATE TABLE pevtaxation (
     tse_vlbaia integer,
     tse_bipevla integer
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_pevtaxation
-   ON pevtaxation (annee ASC NULLS LAST);
 
 CREATE TABLE pevprincipale (
     pevprincipale character varying (20),
@@ -378,8 +360,6 @@ CREATE TABLE pevprincipale (
     detent character varying (1),
     dnbniv character varying (2)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_pevprincipale
-   ON pevprincipale (annee ASC NULLS LAST);
 
 CREATE TABLE pevprofessionnelle (
     pevprofessionnelle character varying (20),
@@ -399,8 +379,6 @@ CREATE TABLE pevprofessionnelle (
     vsurb1 character varying (9),
     vsurb2 character varying (9)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_pevprofessionnelle
-   ON pevprofessionnelle (annee ASC NULLS LAST);
 
 CREATE TABLE pevdependances (
     pevdependances character varying (20),
@@ -430,8 +408,6 @@ CREATE TABLE pevdependances (
     dcetde numeric(3,2),
     dcspde character varying (3)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_pevdependances
-   ON pevdependances (annee ASC NULLS LAST);
 
 CREATE TABLE proprietaire (
     proprietaire character varying (20),
@@ -502,8 +478,6 @@ CREATE TABLE proprietaire (
     jantfc character varying (4),
     jantbc character varying (4)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_proprietaire
-   ON proprietaire (annee ASC NULLS LAST);
 
 CREATE TABLE comptecommunal (
     comptecommunal character varying (12),
@@ -514,8 +488,7 @@ CREATE TABLE comptecommunal (
     dnupro character varying (6),
     ajoutcoherence character varying(1)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_comptecommunal
-   ON comptecommunal (annee ASC NULLS LAST);
+
 
 CREATE TABLE pdl (
     pdl character varying (22),
@@ -536,8 +509,6 @@ CREATE TABLE pdl (
     comptecommunal character varying (12),
     ccocif character varying (4)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_pdl
-   ON pdl (annee ASC NULLS LAST);
 
 CREATE TABLE parcellecomposante(
     parcellecomposante character varying (31),
@@ -557,8 +528,6 @@ CREATE TABLE parcellecomposante(
     parcellea character varying(19),
     ccocif character varying (4)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_parcellecomposante
-   ON parcellecomposante (annee ASC NULLS LAST);
 
 CREATE TABLE lots (
     lots character varying (29),
@@ -584,10 +553,7 @@ CREATE TABLE lots (
     dreflf character varying (5),
     ccocif character varying (4)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_lots
-   ON lots (annee ASC NULLS LAST);
-CREATE INDEX idx_lots_tmp1
-   ON lots (annee, ccodep, ccodir, ccocom, dnuprol);
+
 CREATE TABLE lotslocaux (
     lotslocaux character varying (39),
     annee character varying (4),
@@ -610,8 +576,6 @@ CREATE TABLE lotslocaux (
     dnumql character varying (7),
     ddenql character varying (7)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_lotslocaux
-   ON lotslocaux (annee ASC NULLS LAST);
 
 CREATE TABLE commune (
     commune character varying (10),
@@ -637,8 +601,6 @@ CREATE TABLE commune (
     motclas character varying (8),
     geo_commune character varying(7)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_commune
-   ON commune (annee ASC NULLS LAST);
 
 CREATE TABLE voie (
     voie character varying (15),
@@ -667,9 +629,6 @@ CREATE TABLE voie (
     indldnbat character varying (1),
     motclas character varying (8)
 ) WITH(OIDS=TRUE);
-CREATE INDEX idxan_voie
-   ON voie (annee ASC NULLS LAST);
-
 
 COMMENT ON TABLE parcelle IS 'Article descriptif de parcelle';
 COMMENT ON COLUMN parcelle.ccodep IS 'Code département - ';
@@ -1297,9 +1256,6 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_commune', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_commune_annee_idx
-  ON geo_commune
-  (annee );
 
 COMMENT ON TABLE geo_commune IS 'Territoire contenant un nombre entier de subdivisions de section cadastrales';
 COMMENT ON COLUMN geo_commune.geo_commune IS 'Identifiant';
@@ -1327,9 +1283,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_section', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_section_annee_idx
-  ON geo_section
-  (annee );
+
 COMMENT ON TABLE geo_section IS 'Partie du plan cadastral correspondant à une portion du territoire communal et comportant, suivant le cas, une ou plusieurs subdivisions de section';
 COMMENT ON COLUMN geo_section.geo_section IS 'Identifiant';
 COMMENT ON COLUMN geo_section.annee IS 'Année';
@@ -1372,9 +1326,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_subdsect', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_subdsect_annee_idx
-  ON geo_subdsect
-  (annee, object_rid);
+
 COMMENT ON TABLE geo_subdsect IS 'Portion de section cadastrale disposant de caractéristiques propres au regard notamment de son échelle, sa qualité, son mode de confection. Une section a au moins une subdivision de section. Cet objet correspond à la feuille cadastrale.';
 COMMENT ON COLUMN geo_subdsect.geo_subdsect IS 'Identifiant';
 COMMENT ON COLUMN geo_subdsect.annee IS 'Année';
@@ -1422,9 +1374,7 @@ WITH (
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom_uf', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_parcelle_annee_idx
-  ON geo_parcelle
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_parcelle IS 'Portion de section cadastrale disposant de caractéristiques propres au regard notamment de son échelle, sa qualité, son mode de confection. Une section a au moins une subdivision de section. Cet objet correspond à la feuille cadastrale.';
 COMMENT ON COLUMN geo_parcelle.geo_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_parcelle.annee IS 'Année';
@@ -1454,9 +1404,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_subdfisc', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_subdfisc_annee_idx
-  ON geo_subdfisc
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_subdfisc IS 'Partie d''une parcelle ayant une seule nature de culture ou de propriété et constituant une unité au regard de la fiscalité directe locale.';
 COMMENT ON COLUMN geo_subdfisc.geo_subdfisc IS 'Identifiant';
 COMMENT ON COLUMN geo_subdfisc.annee IS 'Année';
@@ -1492,9 +1440,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_voiep', 'geom', 2154 , 'POINT', 2 );
-CREATE INDEX geo_voiep_annee_idx
-  ON geo_voiep
-  (annee );
+
 COMMENT ON TABLE geo_voiep IS 'Élément ponctuel permettant la gestion de l''ensemble immobilier auquel est associé son libellé.';
 COMMENT ON COLUMN geo_voiep.geo_voiep IS 'Identifiant';
 COMMENT ON COLUMN geo_voiep.annee IS 'Année';
@@ -1517,9 +1463,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_numvoie', 'geom', 2154 , 'POINT', 2 );
-CREATE INDEX geo_numvoie_annee_idx
-  ON geo_numvoie
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_numvoie IS 'Numéro correspondant à l''adresse de la parcelle.';
 COMMENT ON COLUMN geo_numvoie.geo_numvoie IS 'Identifiant';
 COMMENT ON COLUMN geo_numvoie.annee IS 'Année';
@@ -1555,9 +1499,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_lieudit', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_lieudit_annee_idx
-  ON geo_lieudit
-  (annee );
+
 COMMENT ON TABLE geo_lieudit IS 'Ensemble de parcelles entières comportant une même dénomination géographique résultant de l''usage.';
 COMMENT ON COLUMN geo_lieudit.geo_lieudit IS 'Identifiant';
 COMMENT ON COLUMN geo_lieudit.annee IS 'Année';
@@ -1584,9 +1526,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_batiment', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_batiment_annee_idx
-  ON geo_batiment
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_batiment IS 'Construction assise sur une ou plusieurs parcelles cadastrales.';
 COMMENT ON COLUMN geo_batiment.geo_batiment IS 'Identifiant';
 COMMENT ON COLUMN geo_batiment.annee IS 'Année';
@@ -1623,9 +1563,7 @@ WITH (
   OIDS=TRUE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_zoncommuni', 'geom', 2154 , 'MULTILINESTRING', 2 );
-CREATE INDEX geo_zoncommuni_annee_idx
-  ON geo_zoncommuni
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_zoncommuni IS 'Voie du domaine non cadastré (ou passant sur des parcelles non figurées au plan) représentée par un élément linéaire correspondant à son axe.';
 COMMENT ON COLUMN geo_zoncommuni.geo_zoncommuni IS 'Identifiant';
 COMMENT ON COLUMN geo_zoncommuni.annee IS 'Année';
@@ -1647,9 +1585,7 @@ CREATE TABLE geo_tronfluv
 WITH (  OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tronfluv', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_tronfluv_annee_idx
-  ON geo_tronfluv
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_tronfluv IS 'Élément surfacique (fermé) utilisé pour tous les cours d''eau et les rivages de mers. Un libellé y est associé.';
 COMMENT ON COLUMN geo_tronfluv.geo_tronfluv IS 'Identifiant';
 COMMENT ON COLUMN geo_tronfluv.annee IS 'Année';
@@ -1688,9 +1624,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_ptcanv', 'geom', 2154 , 'POINT', 2 );
-CREATE INDEX geo_ptcanv_annee_idx
-  ON geo_ptcanv
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_ptcanv IS 'Objet ponctuel servant d''appui aux opérations de lever des plans..';
 COMMENT ON COLUMN geo_ptcanv.geo_ptcanv IS 'Identifiant';
 COMMENT ON COLUMN geo_ptcanv.annee IS 'Année';
@@ -1717,9 +1651,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_borne', 'geom', 2154 , 'POINT', 2 );
-CREATE INDEX geo_borne_annee_idx
-  ON geo_borne
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_borne IS 'Borne située en limite de propriété et représentée par un symbole ponctuel.';
 COMMENT ON COLUMN geo_borne.geo_borne IS 'Identifiant';
 COMMENT ON COLUMN geo_borne.annee IS 'Année';
@@ -1753,9 +1685,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_croix', 'geom', 2154 , 'POINT', 2 );
-CREATE INDEX geo_croix_annee_idx
-  ON geo_croix
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_croix IS 'Borne située en limite de propriété et représentée par un symbole ponctuel.';
 COMMENT ON COLUMN geo_croix.geo_croix IS 'Identifiant';
 COMMENT ON COLUMN geo_croix.annee IS 'Année';
@@ -1791,9 +1721,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_symblim', 'geom', 2154 , 'POINT', 2 );
-CREATE INDEX geo_symblim_annee_idx
-  ON geo_symblim
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_symblim IS 'Symbole de limite de propriété représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_symblim.geo_symblim IS 'Identifiant';
 COMMENT ON COLUMN geo_symblim.annee IS 'Année';
@@ -1832,9 +1760,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tpoint', 'geom', 2154 , 'POINT', 2 );
-CREATE INDEX geo_tpoint_annee_idx
-  ON geo_tpoint
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_tpoint IS 'Détail topographique ponctuel représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_tpoint.geo_tpoint IS 'Identifiant';
 COMMENT ON COLUMN geo_tpoint.annee IS 'Année';
@@ -1873,9 +1799,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tline', 'geom', 2154 , 'MULTILINESTRING', 2 );
-CREATE INDEX geo_tline_annee_idx
-  ON geo_tline
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_tline IS 'Détail topographique linéaire représenté par un signe conventionnel de type linéaire permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_tline.geo_tline IS 'Identifiant';
 COMMENT ON COLUMN geo_tline.annee IS 'Année';
@@ -1913,9 +1837,7 @@ WITH (
   OIDS=FALSE
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tsurf', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-CREATE INDEX geo_tsurf_annee_idx
-  ON geo_tsurf
-  (annee,object_rid );
+
 COMMENT ON TABLE geo_tsurf IS 'Détail topographique surfacique représenté par un signe conventionnel de type surfacique permettant de documenter le plan cadastral et d''en améliorer la lisibilité';
 COMMENT ON COLUMN geo_tsurf.geo_tsurf IS 'Identifiant';
 COMMENT ON COLUMN geo_tsurf.annee IS 'Année';

@@ -192,7 +192,7 @@ WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p
 -- suppression des index
 DROP INDEX [PREFIXE]idx_edigeorel_vers;
 DROP INDEX [PREFIXE]idx_edigeorel_de;
-
+DROP TABLE [PREFIXE]edigeo_rel;
 
 -- ANALYSES;
 ANALYSE [PREFIXE]geo_commune;

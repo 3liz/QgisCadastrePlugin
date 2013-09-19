@@ -1,8 +1,5 @@
 ﻿-- FORMATAGE DONNEES : DEBUT;
--- création des index pour optimisation;
 BEGIN;
-CREATE INDEX idx_voie_codvoi ON [PREFIXE]voie (codvoi);
-CREATE INDEX idx_lots_comptecommunal ON [PREFIXE]lots (annee, ccodep, ccodir, ccocom, dnuprol);
 
 -- Traitement: parcelle;
 ALTER TABLE [PREFIXE]parcelle ADD COLUMN tempo_import text;
@@ -245,6 +242,9 @@ SELECT
   SUBSTRING(tmp,160,4) AS jacloc,
   REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,38,6),' ', '-'),'+','¤') AS comptecommunal
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='10';
+
+CREATE INDEX idxan_local00 ON local00 (annee);
+CREATE INDEX idxan_local10 ON local10 (annee);
 UPDATE [PREFIXE]local10 SET
   ccopre = local00.ccopre,
   ccosec = local00.ccosec,
@@ -560,18 +560,20 @@ SELECT DISTINCT ON (ccodep,dnupro,dnulp,dnuper)
 FROM [PREFIXE]prop
 ORDER BY ccodep,dnupro,dnulp,dnuper;
 -- création: comptecommunal à partir de proprietaire;
+CREATE INDEX idxan_proprietaire ON proprietaire (annee);
 INSERT INTO [PREFIXE]comptecommunal
-  (comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
+  (comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
 SELECT
   REPLACE(REPLACE('[ANNEE]'||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal,
   '[ANNEE]',
   ccodep,
   ccodir,
-  ccocom,
+  --array_agg(ccocom),
   dnupro,
   'N'
 FROM [PREFIXE]proprietaire
-where annee='[ANNEE]' group by ccodep, ccodir, ccocom, dnupro;
+WHERE annee='[ANNEE]'
+GROUP BY ccodep, ccodir, dnupro;
 -- Traitement: pdl;
 INSERT INTO [PREFIXE]pdl
 (
@@ -745,28 +747,36 @@ SELECT
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6),' ', '-') AS commune
 FROM [PREFIXE]fanr WHERE trim(SUBSTRING(tmp,4,3)) <>'' AND trim(SUBSTRING(tmp,7,4)) <>'';
 -- purge des doublons : voie;
+CREATE INDEX idxan_voie ON voie (annee);
 DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHERE annee='[ANNEE]' GROUP BY codvoi HAVING COUNT(*) > 1) AND annee='[ANNEE]';
+
+
 -- création d'une table temporaire d'optimisation du traitement d'importation (lots);
+-- création des index pour optimisation;
+CREATE INDEX idx_voie_codvoi ON [PREFIXE]voie (codvoi);
+CREATE INDEX idx_lots_comptecommunal ON [PREFIXE]lots (annee, ccodep, ccodir, ccocom, dnuprol);
+CREATE INDEX idxan_comptecommunal ON comptecommunal (annee);
+CREATE INDEX idxan_lots ON lots (annee);
 CREATE TABLE [PREFIXE]tempo_import AS
-SELECT l.tempo_import
+SELECT DISTINCT l.tempo_import
 FROM [PREFIXE]lots l, [PREFIXE]comptecommunal c
 WHERE l.ccodep = c.ccodep AND l.dnuprol = c.dnupro AND l.annee='[ANNEE]' and c.annee='[ANNEE]';
 CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
 CREATE INDEX idx_lots_tempo_import ON [PREFIXE]lots (tempo_import);
 -- ajout données manquantes : comptecommunal à partir de lots;
 INSERT INTO [PREFIXE]comptecommunal
- ( comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
-SELECT REPLACE(REPLACE(a.annee||a.ccodep||a.dnuprol,' ', '-'),'+','¤') AS comptecommunal, a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol,'O'
+ ( comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
+SELECT REPLACE(REPLACE(a.annee||a.ccodep||a.dnuprol,' ', '-'),'+','¤') AS comptecommunal, a.annee, a.ccodep, a.ccodir, a.dnuprol,'O'
 FROM [PREFIXE]lots a
 LEFT OUTER JOIN [PREFIXE]tempo_import t ON t.tempo_import = a.tempo_import
 WHERE t.tempo_import is null and a.annee='[ANNEE]'
 GROUP BY a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol;
-DELETE FROM [PREFIXE]comptecommunal WHERE comptecommunal IS NULL AND annee='[ANNEE]';
 -- suppression de la table temporaire (lots)
 DROP INDEX [PREFIXE]idx_tempo_import;
 DROP TABLE [PREFIXE]tempo_import;
 ALTER TABLE [PREFIXE]lots DROP COLUMN tempo_import;
 -- création d'une table temporaire d'optimisation du traitement d'importation (local00/parcelle);
+CREATE INDEX idxan_parcelle ON parcelle (annee);
 CREATE TABLE [PREFIXE]tempo_import AS
 SELECT invar
 FROM [PREFIXE]local10 l, [PREFIXE]parcelle p
@@ -797,19 +807,19 @@ DROP INDEX [PREFIXE]idx_local10_invar;
 DROP TABLE [PREFIXE]tempo_import;
 -- création d'une table temporaire d'optimisation du traitement d'importation (comptecommunal/parcelle);
 CREATE TABLE [PREFIXE]tempo_import AS
-SELECT p.tempo_import
+SELECT DISTINCT p.tempo_import
 FROM [PREFIXE]parcelle p, [PREFIXE]comptecommunal c
 WHERE p.ccodep = c.ccodep AND p.dnupro = c.dnupro AND p.annee='[ANNEE]' and c.annee='[ANNEE]';
 CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
 CREATE INDEX idx_parcelle_tempo_import ON [PREFIXE]parcelle (tempo_import);
 -- ajout données manquantes : comptecommunal à partir de parcelles;
 INSERT INTO [PREFIXE]comptecommunal
- ( comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
-SELECT REPLACE(REPLACE(annee||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, ccocom, dnupro,'O'
+ ( comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
+SELECT REPLACE(REPLACE(annee||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, dnupro,'O'
 FROM [PREFIXE]parcelle a
 LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.tempo_import = a.tempo_import
 WHERE t.tempo_import IS NULL AND annee='[ANNEE]'
-GROUP BY annee, ccodep, ccodir, ccocom, dnupro;
+GROUP BY annee, ccodep, ccodir, dnupro;
 -- suppression des éléments temporaires (local00/parcelle);
 DROP INDEX [PREFIXE]idx_parcelle_tempo_import;
 ALTER TABLE [PREFIXE]parcelle DROP COLUMN tempo_import;
@@ -817,6 +827,25 @@ DROP TABLE [PREFIXE]tempo_import;
 -- suppression des index pour optimisation;
 DROP INDEX [PREFIXE]idx_voie_codvoi;
 DROP INDEX [PREFIXE]idx_lots_comptecommunal;
+
+-- INDEXES
+CREATE INDEX idxan_suf ON suf (annee);
+CREATE INDEX idxan_sufexoneration ON sufexoneration (annee);
+CREATE INDEX idxan_suftaxation ON suftaxation (annee);
+CREATE INDEX idxan_pev ON pev (annee);
+CREATE INDEX idxan_pevexoneration ON pevexoneration (annee);
+CREATE INDEX idxan_pevtaxation ON pevtaxation (annee);
+CREATE INDEX idxan_pevprincipale ON pevprincipale (annee);
+CREATE INDEX idxan_pevprofessionnelle ON pevprofessionnelle (annee);
+CREATE INDEX idxan_pevdependances ON pevdependances (annee);
+CREATE INDEX idxan_pdl ON pdl (annee);
+CREATE INDEX idxan_parcellecomposante ON parcellecomposante (annee);
+CREATE INDEX idx_lots_tmp1 ON lots (annee, ccodep, ccodir, ccocom, dnuprol);
+CREATE INDEX idxan_lotslocaux ON lotslocaux (annee);
+CREATE INDEX idxan_commune ON commune (annee);
+CREATE INDEX proprietaire_dnupro_idx ON proprietaire (dnupro);
+CREATE INDEX proprietaire_ddenom_idx ON proprietaire (ddenom);
+CREATE INDEX parcelle_dnupro_idx ON parcelle (dnupro);
 
 -- ANALYSES;
 ANALYSE [PREFIXE]parcelle;

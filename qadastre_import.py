@@ -191,7 +191,6 @@ class qadastreImport(QObject):
             {'title' : u'Purge des données', 'script' : 'COMMUN/majic3_purge_donnees.sql'},
             {'title' : u'Import des fichiers', 'script' : 'COMMUN/majic3_import_donnees_brutes.sql'},
             {'title' : u'Formatage des données', 'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion},
-            #~ {'title' : u'Restauration des contraintes', 'script' : 'COMMUN/creation_contraintes.sql'},
             {'title' : u'Purge des données brutes', 'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'}
         ]
         for item in scriptList:
@@ -285,14 +284,15 @@ class qadastreImport(QObject):
             }
         ]
         for item in scriptList:
-            self.dialog.subStepLabel.setText(item['title'])
-            self.qc.updateLog('%s' % item['title'])
-            scriptPath = item['script']
-            self.replaceParametersInScript(scriptPath, replaceDict)
-            self.updateProgressBar()
-            self.executeSqlScript(scriptPath)
-            self.updateTimer()
-            self.updateProgressBar()
+            if self.go:
+                self.dialog.subStepLabel.setText(item['title'])
+                self.qc.updateLog('%s' % item['title'])
+                scriptPath = item['script']
+                self.replaceParametersInScript(scriptPath, replaceDict)
+                self.updateProgressBar()
+                self.executeSqlScript(scriptPath)
+                self.updateTimer()
+                self.updateProgressBar()
 
 
         # drop edigeo raw data
@@ -524,7 +524,6 @@ class qadastreImport(QObject):
             c = self.connector._execute_and_commit(sql)
 
         except BaseError as e:
-
             DlgDbError.showError(e, self.dialog)
             self.go = False
             self.qc.updateLog(e.msg)
@@ -560,7 +559,7 @@ class qadastreImport(QObject):
                 self.importEdigeoThfToDatabase(thf)
                 self.updateProgressBar()
 
-            # VEC
+            # VEC - import relations between objects
             self.dialog.subStepLabel.setText(u'Import des relations (*.vec)')
             self.qc.updateLog(u'  - Import des relations (*.vec)')
             vecList = self.listFilesInDirectory(self.edigeoPlainDir, 'vec')
@@ -581,27 +580,31 @@ class qadastreImport(QObject):
         Import one edigeo THF files into database
         source : db_manager/dlg_import_vector.py
         '''
+        if self.go:
+            # Build ogr2ogr command
+            conn_name = self.dialog.connectionName
+            settings = QSettings()
+            settings.beginGroup( u"/%s/%s" % (self.db.dbplugin().connectionSettingsKey(), conn_name) )
+            if not settings.contains( "database" ): # non-existent entry?
+                raise InvalidDataException( self.tr('There is no defined database connection "%s".') % conn_name )
+            settingsList = ["service", "host", "port", "database", "username", "password"]
+            service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
 
-        # Build ogr2ogr command
-        conn_name = self.dialog.connectionName
-        settings = QSettings()
-        settings.beginGroup( u"/%s/%s" % (self.db.dbplugin().connectionSettingsKey(), conn_name) )
-        if not settings.contains( "database" ): # non-existent entry?
-            raise InvalidDataException( self.tr('There is no defined database connection "%s".') % conn_name )
-        settingsList = ["service", "host", "port", "database", "username", "password"]
-        service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
+            sourceSrid = self.dialog.edigeoSourceProj
+            targetSrid = self.dialog.edigeoTargetProj
+            targetSridOption = '-t_srs'
+            if sourceSrid == targetSrid:
+                targetSridOption = '-a_srs'
 
-        sourceSrid = self.dialog.edigeoSourceProj
-        targetSrid = self.dialog.edigeoTargetProj
-        #~ penser à mettre l'option pour ne pas utiliser d'index spatial
-        #~ ajouter aussi l'option pour ne pas créer les tables de label
-        ogrCommand = 'ogr2ogr -a_srs "%s" -t_srs "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 1000' % (sourceSrid, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+            #~ penser à mettre l'option pour ne pas utiliser d'index spatial
+            #~ ajouter aussi l'option pour ne pas créer les tables de label
+            ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO' % (sourceSrid, targetSridOption, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+            #~ self.qc.updateLog(ogrCommand)
 
-
-        # Run command
-        proc = QProcess()
-        proc.start(ogrCommand)
-        proc.waitForFinished()
+            # Run command
+            proc = QProcess()
+            proc.start(ogrCommand)
+            proc.waitForFinished()
 
         return None
 
@@ -613,21 +616,20 @@ class qadastreImport(QObject):
         from a .VEC file
         and add them in edigeo_rel table
         '''
+        if self.go:
+            reg = '^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_[0-9]+)_(Objet_[0-9]+)'
+            with open(path) as inputFile:
+                # Get a list of RID relations combining a "Rel" and two "_Objet"
+                l = [ a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
 
-        reg = '^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_[0-9]+)_(Objet_[0-9]+)'
-        with open(path) as inputFile:
-            # Get a list of RID relations combining a "Rel" and two "_Objet"
-            l = [ a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
+                # Create a sql script to insert all items
+                sql="BEGIN;"
+                for item in l:
+                    sql+= "INSERT INTO \"%s\".edigeo_rel ( nom, de, vers) values ( '%s', '%s', '%s');" % (self.dialog.schema, item[0], item[1], item[2] )
+                sql+="COMMIT;"
 
-            # Create a sql script to insert all items
-            sql="BEGIN;"
-            for item in l:
-                sql+= "INSERT INTO \"%s\".edigeo_rel ( nom, de, vers) values ( '%s', '%s', '%s');" % (self.dialog.schema, item[0], item[1], item[2] )
-            sql+="COMMIT;"
-
-            # Execute query
-            self.executeSqlQuery(sql)
-
+                # Execute query
+                self.executeSqlQuery(sql)
 
 
     def dropEdigeoRawData(self):
@@ -636,40 +638,31 @@ class qadastreImport(QObject):
         '''
 
         if self.go:
+            # DROP edigeo import tables
             edigeoTables = [
                 'batiment_id',
-                'batiment_id_label',
                 'borne_id',
                 'boulon_id',
                 'commune_id',
                 'croix_id',
                 'lieu_id'
-                'lieu_id_label',
                 'numvoie_id',
-                'numvoie_id_label',
                 'parcelle_id',
-                'parcelle_id_label',
                 'ptcanv_id',
                 'section_id',
-                'section_id_label',
                 'subdfisc_id',
-                'subdfisc_id_label',
                 'subdsect_id',
                 'symblim_id',
                 'tline_id',
-                'tline_id_label',
                 'tpoint_id_'
-                'tpoint_id_label',
                 'tronfluv_id'
-                'tronfluv_id_label',
                 'tronroute_id',
-                'tronroute_id_label',
                 'tsurf_id',
-                'tsurf_id_label',
                 'voiep_id',
-                'voiep_id_label',
                 'zoncommuni_id',
-                'zoncommuni_id_label'
             ]
-
+            sql = ''
+            for table in edigeoTables:
+                sql+= 'DROP TABLE IF EXISTS "%s".%s ;' % (self.dialog.schema, table)
+            self.executeSqlQuery(sql)
 
