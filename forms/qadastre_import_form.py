@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_import_form.ui'
 #
-# Created: Thu Sep 19 12:12:41 2013
+# Created: Thu Sep 19 16:08:17 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,7 +33,7 @@ class Ui_qadastre_import_form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 505, 622))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 505, 589))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -222,6 +222,10 @@ class Ui_qadastre_import_form(object):
         self.verticalLayout_6.addItem(spacerItem)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea)
+        self.buttonBox = QtGui.QDialogButtonBox(qadastre_import_form)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close)
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
+        self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(qadastre_import_form)
         QtCore.QMetaObject.connectSlotsByName(qadastre_import_form)

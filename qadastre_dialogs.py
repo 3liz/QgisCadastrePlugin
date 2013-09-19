@@ -305,6 +305,8 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
         self.btDbCreateSchema.clicked.connect(self.createSchema)
         self.btProcessImport.clicked.connect(self.processImport)
+        self.rejected.connect(self.onClose)
+        self.buttonBox.rejected.connect(self.onClose)
 
         # path buttons selectors
         # paths needed to be chosen by user
@@ -440,6 +442,13 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             {'key': '[FICHIER_PROP]',
                 'value': s.value("qadastre/propFileName", 'REVPROP.800', type=str)}
         ]
+
+
+    def onClose(self):
+        '''
+        Close dialog
+        '''
+        self.close()
 
 
     def getValuesFromSettings(self):
@@ -1664,3 +1673,37 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
         string = "qadastre option dialog closed"
         self.close()
 
+
+
+# --------------------------------------------------------
+#        About - Let the user display the about dialog
+# --------------------------------------------------------
+
+from qadastre_about_form import *
+
+class qadastre_about_dialog(QDialog, Ui_qadastre_about_form):
+    def __init__(self, iface):
+        QDialog.__init__(self)
+        self.iface = iface
+        self.setupUi(self)
+
+        # common qadastre methods
+        self.qc = qadastre_common(self)
+
+        # Signals/Slot Connections
+        self.rejected.connect(self.onReject)
+        self.buttonBox.rejected.connect(self.onReject)
+        self.buttonBox.accepted.connect(self.onAccept)
+
+    def onAccept(self):
+        '''
+        Save options when pressing OK button
+        '''
+        self.accept()
+
+    def onReject(self):
+        '''
+        Run some actions when
+        the user closes the dialog
+        '''
+        self.close()

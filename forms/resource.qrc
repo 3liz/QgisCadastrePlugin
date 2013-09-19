@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="/plugins/qadastre">
+    <file>images/logo_gnu3.png</file>
+    <file>images/logo_europe.png</file>
+    <file>images/logo_3liz.png</file>
+    <file>images/logo_feder.png</file>
+    <file>images/logo_picardie.png</file>
+    <file>images/logo_aduga.png</file>
     <file>icons/open.png</file>
     <file>icons/search.png</file>
     <file>icons/delete.png</file>

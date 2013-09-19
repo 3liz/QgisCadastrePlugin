@@ -78,6 +78,12 @@ class qadastre_menu:
         QObject.connect(self.option_action, SIGNAL("triggered()"), self.open_option_dialog)
         self.qadastre_menu.addAction(self.option_action)
 
+        # About Submenu
+        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
+        self.about_action = QAction(icon, u"À propos", self.iface.mainWindow())
+        QObject.connect(self.about_action, SIGNAL("triggered()"), self.open_about_dialog)
+        self.qadastre_menu.addAction(self.about_action)
+
 
     def open_import_dialog(self):
         '''
@@ -112,9 +118,17 @@ class qadastre_menu:
 
     def open_option_dialog(self):
         '''
-        Config dock widget
+        Config dialog
         '''
         dialog = qadastre_option_dialog(self.iface)
+        dialog.exec_()
+
+
+    def open_about_dialog(self):
+        '''
+        About dialog
+        '''
+        dialog = qadastre_about_dialog(self.iface)
         dialog.exec_()
 
 
