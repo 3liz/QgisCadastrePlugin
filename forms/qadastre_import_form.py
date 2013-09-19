@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_import_form.ui'
 #
-# Created: Thu Sep 19 11:35:31 2013
+# Created: Thu Sep 19 12:12:41 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -91,8 +91,10 @@ class Ui_qadastre_import_form(object):
         self.inEdigeoSourceDir = QtGui.QLineEdit(self.groupBox_5)
         self.inEdigeoSourceDir.setObjectName(_fromUtf8("inEdigeoSourceDir"))
         self.horizontalLayout_8.addWidget(self.inEdigeoSourceDir)
-        self.btEdigeoSourceDir = QtGui.QPushButton(self.groupBox_5)
-        self.btEdigeoSourceDir.setMaximumSize(QtCore.QSize(30, 16777215))
+        self.btEdigeoSourceDir = QtGui.QToolButton(self.groupBox_5)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/qadastre/icons/open.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btEdigeoSourceDir.setIcon(icon)
         self.btEdigeoSourceDir.setObjectName(_fromUtf8("btEdigeoSourceDir"))
         self.horizontalLayout_8.addWidget(self.btEdigeoSourceDir)
         self.verticalLayout_13.addLayout(self.horizontalLayout_8)
@@ -153,9 +155,8 @@ class Ui_qadastre_import_form(object):
         self.inMajicSourceDir.setEnabled(True)
         self.inMajicSourceDir.setObjectName(_fromUtf8("inMajicSourceDir"))
         self.horizontalLayout_11.addWidget(self.inMajicSourceDir)
-        self.btMajicSourceDir = QtGui.QPushButton(self.groupBox_6)
-        self.btMajicSourceDir.setEnabled(True)
-        self.btMajicSourceDir.setMaximumSize(QtCore.QSize(30, 16777215))
+        self.btMajicSourceDir = QtGui.QToolButton(self.groupBox_6)
+        self.btMajicSourceDir.setIcon(icon)
         self.btMajicSourceDir.setObjectName(_fromUtf8("btMajicSourceDir"))
         self.horizontalLayout_11.addWidget(self.btMajicSourceDir)
         self.verticalLayout_14.addLayout(self.horizontalLayout_11)
@@ -260,3 +261,4 @@ class Ui_qadastre_import_form(object):
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
 
+import resource_rc

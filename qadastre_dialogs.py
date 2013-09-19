@@ -26,6 +26,7 @@ import csv
 import os.path
 import operator
 import re
+import tempfile
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
@@ -273,6 +274,19 @@ class qadastre_common():
         return [header, data, rowCount]
 
 
+    def chooseDataPath(self, key):
+        '''
+        Ask the user to select a folder
+        and write down the path to appropriate field
+        '''
+        ipath = QFileDialog.getExistingDirectory(
+            None,
+            "Choisir le répertoire contenant les fichiers",
+            str(self.dialog.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
+        )
+        if os.path.exists(unicode(ipath)):
+            self.dialog.pathSelectors[key]['input'].setText(unicode(ipath))
+
 
 from qadastre_import_form import *
 from qadastre_import import *
@@ -293,7 +307,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.btProcessImport.clicked.connect(self.processImport)
 
         # path buttons selectors
-        from functools import partial
+        # paths needed to be chosen by user
         self.pathSelectors = {
             "edigeoSourceDir" : {
                 "button" : self.btEdigeoSourceDir,
@@ -304,9 +318,10 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
                 "input" : self.inMajicSourceDir
             }
         }
+        from functools import partial
         for key, item in self.pathSelectors.items():
             control = item['button']
-            slot = partial(self.chooseDataPath, key)
+            slot = partial(self.qc.chooseDataPath, key)
             control.clicked.connect(slot)
 
         # projection selector
@@ -329,6 +344,8 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
 
         # Set initial values
         self.dataVersionList = [ '2011', '2012']
+        self.dataVersion = None
+        self.dataYear = None
         self.dbType = None
         self.dbpluginclass = None
         self.connectionName = None
@@ -342,6 +359,62 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.edigeoDepartement = None
         self.edigeoDirection = None
         self.edigeoLot = None
+        self.majicSourceDir = None
+        self.edigeoSourceDir = None
+
+        # set input values from settings
+        self.sList = {
+            'dataVersion': {
+                'widget': self.liDataVersion,
+                'wType': 'combobox',
+                'property': self.dataVersion,
+                'list': self.dataVersionList
+            },
+            'dataYear': {
+                'widget': self.inDataYear,
+                'wType': 'spinbox',
+                'property': self.dataYear
+            } ,
+            'schema': {
+                'widget': None
+            } ,
+            'majicSourceDir': {
+                'widget': self.inMajicSourceDir,
+                'wType': 'text',
+                'property': self.majicSourceDir
+            },
+            'edigeoSourceDir': {
+                'widget': self.inEdigeoSourceDir,
+                'wType': 'text',
+                'property': self.edigeoSourceDir
+            },
+            'edigeoDepartement': {
+                'widget': self.inEdigeoDepartement,
+                'wType': 'text',
+                'property': self.edigeoDepartement
+            },
+            'edigeoDirection': {
+                'widget': self.inEdigeoDirection,
+                'wType': 'text',
+                'property': self.edigeoDirection
+            },
+            'edigeoLot': {
+                'widget': self.inEdigeoLot,
+                'wType': 'text',
+                'property': self.edigeoLot
+            },
+            'edigeoSourceProj': {
+                'widget': self.inEdigeoSourceProj,
+                'wType': 'text',
+                'property': self.edigeoSourceProj
+            },
+            'edigeoTargetProj': {
+                'widget': self.inEdigeoTargetProj,
+                'wType': 'text',
+                'property': self.edigeoTargetProj
+            }
+        }
+        self.getValuesFromSettings()
 
         self.qadastreImportOptions = {
             'dataVersion' : '2012',
@@ -367,6 +440,24 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             {'key': '[FICHIER_PROP]',
                 'value': s.value("qadastre/propFileName", 'REVPROP.800', type=str)}
         ]
+
+
+    def getValuesFromSettings(self):
+        '''
+        get values from QGIS settings
+        and set input fields appropriately
+        '''
+        s = QSettings()
+        for k,v in self.sList.items():
+            value = s.value("qadastre/%s" % k, '', type=str)
+            if value and value != 'None' and v['widget']:
+                if v['wType'] == 'text':
+                    v['widget'].setText(str(value))
+                if v['wType'] == 'spinbox':
+                    v['widget'].setValue(int(value))
+                if v['wType'] == 'combobox':
+                    listDic = {v['list'][i]:i for i in range(0, len(v['list']))}
+                    v['widget'].setCurrentIndex(listDic[value])
 
     def populateDataVersionCombobox(self):
         '''
@@ -411,19 +502,6 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
                 QApplication.restoreOverrideCursor()
 
 
-    def chooseDataPath(self, key):
-        '''
-        Ask the user to select a folder
-        and write down the path to appropriate field
-        '''
-        ipath = QFileDialog.getExistingDirectory(
-            None,
-            "Choisir le répertoire contenant les fichiers",
-            str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
-        )
-        if os.path.exists(unicode(ipath)):
-            self.pathSelectors[key]['input'].setText(unicode(ipath))
-
     def chooseProjection(self, key):
         '''
         Let the user choose a SCR
@@ -448,8 +526,6 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         else:
             return
 
-
-
     def processImport(self):
         '''
         Lancement du processus d'import
@@ -469,6 +545,19 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         self.edigeoLot = unicode(self.inEdigeoLot.text())
         self.edigeoSourceProj = unicode(self.inEdigeoSourceProj.text().split( " - " )[ 0 ])
         self.edigeoTargetProj = unicode(self.inEdigeoTargetProj.text().split( " - " )[ 0 ])
+
+        # store chosen data in QGIS settings
+        s = QSettings()
+        s.setValue("qadastre/dataVersion", str(self.dataVersion))
+        s.setValue("qadastre/dataYear", int(self.dataYear))
+        s.setValue("qadastre/majicSourceDir", str(self.majicSourceDir))
+        s.setValue("qadastre/edigeoSourceDir", str(self.edigeoSourceDir))
+        s.setValue("qadastre/edigeoDepartement", str(self.edigeoDepartement))
+        s.setValue("qadastre/edigeoDirection", str(self.edigeoDirection))
+        s.setValue("qadastre/edigeoLot", str(self.edigeoLot))
+        s.setValue("qadastre/edigeoSourceProj", str(self.edigeoSourceProj))
+        s.setValue("qadastre/edigeoTargetProj", str(self.edigeoTargetProj))
+
 
         # qadastreImport instance
         qi = qadastreImport(self)
@@ -1492,19 +1581,37 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
         self.iface = iface
         self.setupUi(self)
 
+        # common qadastre methods
+        self.qc = qadastre_common(self)
+
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
         self.buttonBox.rejected.connect(self.onReject)
         self.buttonBox.accepted.connect(self.onAccept)
 
+        # path buttons selectors
+        # paths needed to be chosen by user
+        self.pathSelectors = {
+            "tempDir" : {
+                "button" : self.btTempDir,
+                "input" : self.inTempDir
+            }
+        }
+        from functools import partial
+        for key, item in self.pathSelectors.items():
+            control = item['button']
+            slot = partial(self.qc.chooseDataPath, key)
+            control.clicked.connect(slot)
+
         # Set initial widget values
-        self.getMajicFileNameFromSettings()
+        self.getValuesFromSettings()
 
 
-    def getMajicFileNameFromSettings(self):
+
+    def getValuesFromSettings(self):
         '''
-        Get majic file names from settings
-        and set corresponding inputs
+        Get majic file names and other options
+        from settings and set corresponding inputs
         '''
         s = QSettings()
         batiFileName = s.value("qadastre/batiFileName", 'REVBATI.800', type=str)
@@ -1525,12 +1632,17 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
         propFileName = s.value("qadastre/propFileName", 'REVPROP.800', type=str)
         if propFileName:
             self.inMajicProp.setText(propFileName)
+        tempDir = s.value("qadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        if tempDir:
+            self.inTempDir.setText(tempDir)
+
 
     def onAccept(self):
         '''
         Save options when pressing OK button
         '''
-        # Majic file names
+
+        # Save Majic file names
         s = QSettings()
         s.setValue("qadastre/batiFileName", self.inMajicBati.text().strip(' \t\n\r'))
         s.setValue("qadastre/fantoirFileName", self.inMajicFantoir.text().strip(' \t\n\r'))
@@ -1538,7 +1650,10 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
         s.setValue("qadastre/nbatiFileName", self.inMajicNbati.text().strip(' \t\n\r'))
         s.setValue("qadastre/pdlFileName", self.inMajicPdl.text().strip(' \t\n\r'))
         s.setValue("qadastre/propFileName", self.inMajicProp.text().strip(' \t\n\r'))
-        #~ super(MyDialog, self).accept()
+
+        # Save temp dir
+        s.setValue("qadastre/tempDir", self.inTempDir.text().strip(' \t\n\r'))
+
         self.accept()
 
     def onReject(self):

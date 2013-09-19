@@ -57,10 +57,14 @@ class qadastreImport(QObject):
         self.db = self.dialog.db
         self.connector = self.db.connector
         self.scriptSourceDir = os.path.join(self.qc.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
-        self.scriptDir = tempfile.mkdtemp()
-        self.edigeoDir = tempfile.mkdtemp()
-        self.edigeoPlainDir = tempfile.mkdtemp()
-        self.majicDir = tempfile.mkdtemp()
+
+        # create temporary directories
+        s = QSettings()
+        tempDir = s.value("qadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        self.scriptDir = tempfile.mkdtemp('', 'qad', tempDir)
+        self.edigeoDir = tempfile.mkdtemp('', 'qad', tempDir)
+        self.edigeoPlainDir = tempfile.mkdtemp('', 'qad', tempDir)
+        self.majicDir = tempfile.mkdtemp('', 'qad', tempDir)
         self.replaceDict = {
             '[PREFIXE]': '"%s".' % self.dialog.schema,
             '[VERSION]': self.dialog.dataVersion,
