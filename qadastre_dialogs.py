@@ -116,7 +116,7 @@ class qadastre_common():
         # Deactivate schema fields
         self.toggleSchemaList(False)
 
-        if dbType == 'postgis':
+        if dbType == 'postgis' and connectionName:
 
             # Activate schema fields
             self.toggleSchemaList(True)
@@ -352,13 +352,20 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             'majicSourceDir' : None
         }
 
+        s = QSettings()
         self.majicSourceFileNames = [
-            {'key': '[FICHIER_BATI]', 'value': 'REVBATI.800'},
-            {'key': '[FICHIER_FANTOIR]', 'value': 'TOPFANR.800'},
-            {'key': '[FICHIER_LOTLOCAL]', 'value': 'REVD166.800'},
-            {'key': '[FICHIER_NBATI]', 'value': 'REVNBAT.800'},
-            {'key': '[FICHIER_PDL]', 'value': 'REVFPDL.800'},
-            {'key': '[FICHIER_PROP]', 'value': 'REVPROP.800'}
+            {'key': '[FICHIER_BATI]',
+                'value': s.value("qadastre/batiFileName", 'REVBATI.800', type=str)},
+            {'key': '[FICHIER_FANTOIR]',
+                'value': s.value("qadastre/fantoirFileName", 'TOPFANR.800', type=str)},
+            {'key': '[FICHIER_LOTLOCAL]',
+                'value': s.value("qadastre/lotlocalFileName", 'REVD166.800', type=str)},
+            {'key': '[FICHIER_NBATI]',
+                'value': s.value("qadastre/nbatiFileName", 'REVNBAT.800', type=str)},
+            {'key': '[FICHIER_PDL]',
+                'value': s.value("qadastre/pdlFileName", 'REVFPDL.800', type=str)},
+            {'key': '[FICHIER_PROP]',
+                'value': s.value("qadastre/propFileName", 'REVPROP.800', type=str)}
         ]
 
     def populateDataVersionCombobox(self):
@@ -1486,11 +1493,59 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
         self.setupUi(self)
 
         # Signals/Slot Connections
-
-
+        self.rejected.connect(self.onReject)
+        self.buttonBox.rejected.connect(self.onReject)
+        self.buttonBox.accepted.connect(self.onAccept)
 
         # Set initial widget values
+        self.getMajicFileNameFromSettings()
 
 
+    def getMajicFileNameFromSettings(self):
+        '''
+        Get majic file names from settings
+        and set corresponding inputs
+        '''
+        s = QSettings()
+        batiFileName = s.value("qadastre/batiFileName", 'REVBATI.800', type=str)
+        if batiFileName:
+            self.inMajicBati.setText(batiFileName)
+        fantoirFileName = s.value("qadastre/fantoirFileName", 'TOPFANR.800', type=str)
+        if fantoirFileName:
+            self.inMajicFantoir.setText(fantoirFileName)
+        lotlocalFileName = s.value("qadastre/lotlocalFileName", 'REVD166.800', type=str)
+        if lotlocalFileName:
+            self.inMajicLotlocal.setText(lotlocalFileName)
+        nbatiFileName = s.value("qadastre/nbatiFileName", 'REVNBAT.800', type=str)
+        if nbatiFileName:
+            self.inMajicNbati.setText(nbatiFileName)
+        pdlFileName = s.value("qadastre/pdlFileName", 'REVFPDL.800', type=str)
+        if pdlFileName:
+            self.inMajicPdl.setText(pdlFileName)
+        propFileName = s.value("qadastre/propFileName", 'REVPROP.800', type=str)
+        if propFileName:
+            self.inMajicProp.setText(propFileName)
 
+    def onAccept(self):
+        '''
+        Save options when pressing OK button
+        '''
+        # Majic file names
+        s = QSettings()
+        s.setValue("qadastre/batiFileName", self.inMajicBati.text().strip(' \t\n\r'))
+        s.setValue("qadastre/fantoirFileName", self.inMajicFantoir.text().strip(' \t\n\r'))
+        s.setValue("qadastre/lotlocalFileName", self.inMajicLotlocal.text().strip(' \t\n\r'))
+        s.setValue("qadastre/nbatiFileName", self.inMajicNbati.text().strip(' \t\n\r'))
+        s.setValue("qadastre/pdlFileName", self.inMajicPdl.text().strip(' \t\n\r'))
+        s.setValue("qadastre/propFileName", self.inMajicProp.text().strip(' \t\n\r'))
+        #~ super(MyDialog, self).accept()
+        self.accept()
+
+    def onReject(self):
+        '''
+        Run some actions when
+        the user closes the dialog
+        '''
+        string = "qadastre option dialog closed"
+        self.close()
 

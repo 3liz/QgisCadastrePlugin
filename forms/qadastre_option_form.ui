@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>395</width>
-    <height>317</height>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>375</width>
-        <height>297</height>
+        <height>451</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -76,16 +76,86 @@ ou de revenir à l'interface par défaut</string>
             <item row="0" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>non bâti</string>
+               <string>BATI</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="lineEdit"/>
+             <widget class="QLineEdit" name="inMajicBati"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>FANTOIR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>NBATI</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QLineEdit" name="inMajicProp"/>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="inMajicLotlocal"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>LOTLOCAL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="inMajicFantoir"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="inMajicNbati"/>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>PROP</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>PDL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="inMajicPdl"/>
             </item>
            </layout>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QDialogButtonBox" name="buttonBox">
+         <property name="standardButtons">
+          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+         </property>
         </widget>
        </item>
       </layout>
@@ -94,6 +164,18 @@ ou de revenir à l'interface par défaut</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>btInterfaceQadastre</tabstop>
+  <tabstop>btInterfaceQgis</tabstop>
+  <tabstop>inMajicBati</tabstop>
+  <tabstop>inMajicFantoir</tabstop>
+  <tabstop>inMajicLotlocal</tabstop>
+  <tabstop>inMajicNbati</tabstop>
+  <tabstop>inMajicPdl</tabstop>
+  <tabstop>inMajicProp</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
