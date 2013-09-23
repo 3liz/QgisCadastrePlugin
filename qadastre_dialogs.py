@@ -39,6 +39,8 @@ from db_manager.db_plugins.plugin import DBPlugin, Schema, Table
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
 
+from functools import partial
+
 # --------------------------------------------------------
 #        import - Import data from EDIGEO and MAJIC files
 # --------------------------------------------------------
@@ -320,7 +322,6 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
                 "input" : self.inMajicSourceDir
             }
         }
-        from functools import partial
         for key, item in self.pathSelectors.items():
             control = item['button']
             slot = partial(self.qc.chooseDataPath, key)
@@ -682,7 +683,6 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         self.sectionRequest = None
         self.sectionCommuneFeature = None
 
-
         self.searchComboBoxes = {
             'commune': {
                 'widget': self.liCommune,
@@ -728,7 +728,11 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 'orderBy': ['ddenom'],
                 'features': None,
                 'chosenFeature': None,
-                'connector': None
+                'connector': None,
+                'search': {
+                    'button' : self.btSearchProprietaire,
+                    'minlen': 3
+                }
             },
             'parcelle_proprietaire': {
                 'widget': self.liParcelleProprietaire,
@@ -752,7 +756,11 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 'orderBy': ['dvoilib'],
                 'features': None,
                 'chosenFeature': None,
-                'connector': None
+                'connector': None,
+                'search': {
+                    'button' : self.btSearchAdresse,
+                    'minlen': 3
+                }
             },
             'parcelle_adresse': {
                 'widget': self.liParcelleAdresse,
@@ -773,18 +781,65 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         self.setupSectionCombobox()
 
         # signals/slots
+
+        # Detect that the user has hidden/showed the dock
         self.visibilityChanged.connect(self.onVisibilityChange)
 
-        # adresse search
-        self.btSearchAdresse.clicked.connect(self.searchAdresse)
-        self.liAdresse.currentIndexChanged[str].connect(self.onAdresseChoose)
-        self.btZoomerAdresse.clicked.connect(self.setZoomToChosenAdresse)
-        self.btCentrerAdresse.clicked.connect(self.setCenterToChosenAdresse)
-        self.btSelectionnerAdresse.clicked.connect(self.setSelectionToChosenAdresse)
+        # center/zoom/selection buttons
+        self.zoomButtons = {
+            'lieu':{
+                'buttons':{
+                    'centre': self.btCentrerLieu,
+                    'zoom': self.btZoomerLieu,
+                    'select': self.btSelectionnerLieu
+                },
+                'comboboxes': ['commune', 'section', 'parcelle']
+            },
+            'adresse':{
+                'buttons':{
+                    'centre': self.btCentrerAdresse,
+                    'zoom': self.btZoomerAdresse,
+                    'select': self.btSelectionnerAdresse
+                },
+                'comboboxes': ['adresse', 'parcelle_adresse']
+            },
+            'proprietaire':{
+                'buttons':{
+                    'centre': self.btCentrerProprietaire,
+                    'zoom': self.btZoomerProprietaire,
+                    'select': self.btSelectionnerProprietaire
+                },
+                'comboboxes': ['proprietaire', 'parcelle_proprietaire']
+            }
+
+        }
+        zoomButtonsFunctions = {
+            'centre': self.setCenterToChosenItem,
+            'zoom': self.setZoomToChosenItem,
+            'select': self.setSelectionToChosenItem
+        }
+        for key, item in self.zoomButtons.items():
+            for k, button in item['buttons'].items():
+                control = button
+                slot = partial(zoomButtonsFunctions[k], key)
+                control.clicked.connect(slot)
+
+        # Manuel search button and combo (proprietaire, adresse)
+        for key, item in self.searchComboBoxes.items():
+            if item.has_key('search'):
+                # search button
+                control = item['search']['button']
+                slot = partial(self.searchItem, key)
+                control.clicked.connect(slot)
+                # when a search result is chosen in combobox
+                control = self.searchComboBoxes[key]['widget']
+                slot = partial(self.onSearchItemChoose, key)
+                control.currentIndexChanged[str].connect(slot)
+
+        # adresse combobox
         self.liParcelleAdresse.currentIndexChanged[str].connect(self.onParcelleAdresseUpdate)
         self.liParcelleAdresse.editTextChanged[str].connect(self.onParcelleAdresseEdit)
         self.btResetParcelleAdresse.clicked.connect(self.resetParcelleAdresse)
-
         # commune combobox
         self.liCommune.editTextChanged[str].connect(self.onCommuneUpdate)
         self.liCommune.currentIndexChanged[str].connect(self.onCommuneChoose)
@@ -797,17 +852,8 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         self.liParcelle.currentIndexChanged[str].connect(self.onParcelleUpdate)
         self.liParcelle.editTextChanged[str].connect(self.onParcelleEdit)
         self.btResetParcelle.clicked.connect(self.resetParcelle)
-        # place action buttons
-        self.btZoomerLieu.clicked.connect(self.setZoomToChosenPlace)
-        self.btCentrerLieu.clicked.connect(self.setCenterToChosenPlace)
-        self.btSelectionnerLieu.clicked.connect(self.setSelectionToChosenPlace)
 
-        # proprietaire search
-        self.btSearchProprietaire.clicked.connect(self.searchProprietaire)
-        self.liProprietaire.currentIndexChanged[str].connect(self.onProprietaireChoose)
-        self.btZoomerProprietaire.clicked.connect(self.setZoomToChosenProprietaire)
-        self.btCentrerProprietaire.clicked.connect(self.setCenterToChosenProprietaire)
-        self.btSelectionnerProprietaire.clicked.connect(self.setSelectionToChosenProprietaire)
+        # proprietaire combobox
         self.liParcelleProprietaire.currentIndexChanged[str].connect(self.onParcelleProprietaireUpdate)
         self.liParcelleProprietaire.editTextChanged[str].connect(self.onParcelleProprietaireEdit)
         self.btResetParcelleProprietaire.clicked.connect(self.resetParcelleProprietaire)
@@ -1058,9 +1104,6 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 extent = searchCombo['chosenFeature'].geometry().boundingBox()
             self.mc.setExtent(extent)
             self.mc.refresh()
-            #~ self.setSelectionToChosenSearchCombobox(combo)
-            #~ self.mc.zoomToSelected(searchCombo['layer'])
-            #~ searchCombo['layer'].removeSelection()
 
 
     def setCenterToChosenSearchCombobox(self, combo):
@@ -1111,134 +1154,6 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
             searchCombo['layer'].select(i)
 
 
-    def setZoomToChosenPlace(self):
-        '''
-        Zoom to the last existing
-        place among the 3 combo boxes
-        '''
-        # Loop through items and get the last
-        w = None
-        for item in ['commune', 'section', 'parcelle']:
-            if self.searchComboBoxes[item]['chosenFeature'] \
-            and self.searchComboBoxes[item]['layer']:
-                w = item
-        if w:
-            self.setZoomToChosenSearchCombobox(w)
-
-    def setCenterToChosenPlace(self):
-        '''
-        Center to the chosen place
-        in the combo box
-        '''
-        # Loop through items and get the last
-        w = None
-        for item in ['commune', 'section', 'parcelle']:
-            if self.searchComboBoxes[item]['chosenFeature'] \
-            and self.searchComboBoxes[item]['layer']:
-                w = item
-        if w:
-            self.setCenterToChosenSearchCombobox(w)
-
-    def setSelectionToChosenPlace(self):
-        '''
-        Select the feature
-        corresponding to the chosen place
-        '''
-        # Loop through items and get the last
-        w = None
-        for item in ['commune', 'section', 'parcelle']:
-            if self.searchComboBoxes[item]['chosenFeature'] \
-            and self.searchComboBoxes[item]['layer']:
-                w = item
-        if w:
-            self.setSelectionToChosenSearchCombobox(w)
-
-
-    def searchProprietaire(self):
-        '''
-        Query database to get parcelles
-        corresponding to given proprietaire name
-        '''
-        QApplication.setOverrideCursor(Qt.WaitCursor)
-
-        # Get value
-        searchValue = unicode(self.liProprietaire.currentText())
-
-        # Abort if searchValue length too small
-        minlen = 3
-        if len(searchValue) < minlen:
-            self.qc.updateLog(u"%s caractères minimum pour la recherche par propriétaire" % minlen)
-            QApplication.restoreOverrideCursor()
-            return None
-
-        # Get database connection parameters from a random qgis layer
-        layer = self.qc.getLayerFromLegendByTableProps('geo_commune')
-        if not layer:
-            QApplication.restoreOverrideCursor()
-            return None
-        connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
-        if not connectionParams:
-            QApplication.restoreOverrideCursor()
-            return None
-
-        # Use db_manager tool to run the query
-        uri = QgsDataSourceURI()
-        uri.setConnection(
-            connectionParams['host'],
-            connectionParams['port'],
-            connectionParams['dbname'],
-            connectionParams['user'],
-            connectionParams['password']
-        )
-        connector = PostGisDBConnector(uri)
-
-        # SQL
-        sql = " SELECT trim(ddenom), string_agg(comptecommunal, ',')"
-        sql+= ' FROM "%s".proprietaire' % connectionParams['schema']
-        sql+= " WHERE ddenom LIKE '%s%%'" % searchValue.upper()
-        sql+= ' GROUP BY ddenom, dlign4'
-        sql+= ' ORDER BY ddenom'
-        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
-
-        # Fill  combobox
-        self.qc.updateLog(u"%s propriétaires correpondent à '%s'" % (rowCount,searchValue))
-        cb = self.liProprietaire
-        cb.clear()
-        cb.addItem(u'%s résultat(s)' % rowCount, '')
-        itemList = []
-        for line in data:
-            cc = ["'%s'" % a for a in line[1].split(',')]
-            cb.addItem('%s' % (line[0]), cc )
-
-        # Restore cursor
-        QApplication.restoreOverrideCursor()
-
-
-    def onProprietaireChoose(self):
-        '''
-        ACtion run when the user
-        selects a proprietaire via the combobox
-        '''
-        QApplication.setOverrideCursor(Qt.WaitCursor)
-
-        # Get value
-        comptecommunal = self.liProprietaire.itemData(self.liProprietaire.currentIndex())
-        if not comptecommunal:
-            QApplication.restoreOverrideCursor()
-            return None
-
-        filterExpression = "comptecommunal IN (%s)" % ', '.join(comptecommunal)
-        [layer, features] = self.setupSearchCombobox('parcelle_proprietaire', filterExpression, 'sql')
-
-        self.searchComboBoxes['proprietaire']['layer'] = layer
-        self.searchComboBoxes['proprietaire']['features'] = features
-        self.searchComboBoxes['proprietaire']['chosenFeature'] = features
-
-        self.qc.updateLog(u"%s parcelle(s) trouvée(s) pour '%s'" % (len(features), self.liProprietaire.currentText()))
-
-        QApplication.restoreOverrideCursor()
-
-
     def onParcelleProprietaireUpdate(self):
         '''
         Get commune feature from chosen item in combobox
@@ -1249,68 +1164,28 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         # Empty previous stored feature
         self.searchComboBoxes['parcelle_proprietaire']['chosenFeature'] = None
 
-    def setCenterToChosenProprietaire(self):
-        '''
-        Select the parcelle features
-        corresponding to the chosen proprietaire
-        '''
-        # Loop through items and get the last
-        w = None
-        for item in ['proprietaire', 'parcelle_proprietaire']:
-            if self.searchComboBoxes[item]['chosenFeature'] \
-            and self.searchComboBoxes[item]['layer']:
-                w = item
-        if w:
-            self.setCenterToChosenSearchCombobox(w)
 
-    def setZoomToChosenProprietaire(self):
+    def searchItem(self, key):
         '''
-        Select the parcelle features
-        corresponding to the chosen proprietaire
-        '''
-        # Loop through items and get the last
-        w = None
-        for item in ['proprietaire', 'parcelle_proprietaire']:
-            if self.searchComboBoxes[item]['chosenFeature'] \
-            and self.searchComboBoxes[item]['layer']:
-                w = item
-        if w:
-            self.setZoomToChosenSearchCombobox(w)
-
-    def setSelectionToChosenProprietaire(self):
-        '''
-        Select the parcelle features
-        corresponding to the chosen proprietaire
-        '''
-        # Loop through items and get the last
-        w = None
-        for item in ['proprietaire', 'parcelle_proprietaire']:
-            if self.searchComboBoxes[item]['chosenFeature'] \
-            and self.searchComboBoxes[item]['layer']:
-                w = item
-        if w:
-            self.setSelectionToChosenSearchCombobox(w)
-
-
-    def searchAdresse(self):
-        '''
-        Query database to get adresses
-        corresponding to given adresse name
+        Query database to get item (adresse, proprietaire)
+        corresponding to given name
         '''
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get value
-        searchValue = unicode(self.liAdresse.currentText())
+        combo = self.searchComboBoxes[key]['widget']
+        searchValue = unicode(combo.currentText())
 
         # Abort if searchValue length too small
-        minlen = 3
+        minlen = self.searchComboBoxes[key]['search']['minlen']
         if len(searchValue) < minlen:
-            self.qc.updateLog(u"%s caractères minimum pour la recherche par adresse" % minlen)
+            self.qc.updateLog(u"%s caractères minimum requis pour la recherche !" % minlen)
             QApplication.restoreOverrideCursor()
             return None
 
-        # Get database connection parameters from a random qgis layer
-        layer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
+        # Get database connection parameters from a qgis layer
+        dbtable = self.searchComboBoxes[key]['table']
+        layer = self.qc.getLayerFromLegendByTableProps(dbtable)
         if not layer:
             QApplication.restoreOverrideCursor()
             return None
@@ -1331,49 +1206,82 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         connector = PostGisDBConnector(uri)
 
         # SQL
-        sql = ' SELECT DISTINCT dvoilib'
-        sql+= ' FROM "%s".geo_parcelle' % connectionParams['schema']
-        sql+= " WHERE dvoilib LIKE '%s%%'" % searchValue.upper()
-        sql+= ' ORDER BY dvoilib'
+        if key == 'adresse':
+            sql = ' SELECT DISTINCT dvoilib AS k'
+            sql+= ' FROM "%s".geo_parcelle' % connectionParams['schema']
+            sql+= " WHERE dvoilib LIKE '%s%%'" % searchValue.upper()
+            sql+= ' ORDER BY dvoilib'
+        if key == 'proprietaire':
+            sql = " SELECT trim(ddenom) AS k, string_agg(comptecommunal, ',') AS v"
+            sql+= ' FROM "%s".proprietaire' % connectionParams['schema']
+            sql+= " WHERE ddenom LIKE '%s%%'" % searchValue.upper()
+            sql+= ' GROUP BY ddenom, dlign4'
+            sql+= ' ORDER BY ddenom'
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
 
         # Fill  combobox
-        self.qc.updateLog(u"%s voies correpondent à '%s'" % (rowCount, searchValue))
-        cb = self.liAdresse
+        self.qc.updateLog(u"%s résultats correpondent à '%s'" % (rowCount, searchValue))
+        cb = self.searchComboBoxes[key]['widget']
         cb.clear()
         cb.addItem(u'%s résultat(s)' % rowCount , '')
         itemList = []
         for line in data:
-            cb.addItem('%s' % line[0].strip(), unicode(line[0]))
+            if key == 'adresse':
+                val = unicode(line[0])
+            if key == 'proprietaire':
+                val = ["'%s'" % a for a in line[1].split(',')]
+            cb.addItem('%s' % line[0].strip(), val )
 
         # Restore cursor
         QApplication.restoreOverrideCursor()
 
 
-    def onAdresseChoose(self):
+    def onSearchItemChoose(self, key):
         '''
         Select parcelles corresponding
-        to chosen adresse in combo box
+        to chosen item in combo box
+        (adresse, proprietaire)
         '''
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get value
-        adresse = unicode(self.liAdresse.itemData(self.liAdresse.currentIndex())).upper()
-        if not adresse:
+        combo = self.searchComboBoxes[key]['widget']
+        value = combo.itemData(combo.currentIndex())
+        if key == 'adresse':
+            value = unicode(value).upper()
+        if not value:
             QApplication.restoreOverrideCursor()
             return None
 
-        filterExpression = "dvoilib = '%s'" % adresse
-        [layer, features] = self.setupSearchCombobox('parcelle_adresse', filterExpression, 'sql')
+        # Set filter expression
+        if key == 'adresse':
+            filterExpression = "dvoilib = '%s'" % value
+        if key == 'proprietaire':
+            filterExpression = "comptecommunal IN (%s)" % ', '.join(value)
+        self.qc.updateLog(filterExpression)
 
-        self.searchComboBoxes['adresse']['layer'] = layer
-        self.searchComboBoxes['adresse']['features'] = features
-        self.searchComboBoxes['adresse']['chosenFeature'] = features
+        # Get data
+        [layer, features] = self.setupSearchCombobox(
+            'parcelle_%s' % key,
+            filterExpression,
+            'sql'
+        )
 
-        self.qc.updateLog(u"%s parcelle(s) trouvée(s) pour '%s'" % (len(features), self.liAdresse.currentText()))
+        # Set properties
+        self.searchComboBoxes[key]['layer'] = layer
+        self.searchComboBoxes[key]['features'] = features
+        self.searchComboBoxes[key]['chosenFeature'] = features
+
+        self.qc.updateLog(
+            u"%s parcelle(s) trouvée(s) pour '%s'" % (
+                len(features),
+                combo.currentText()
+            )
+        )
 
         QApplication.restoreOverrideCursor()
+
 
     def onParcelleAdresseUpdate(self):
         '''
@@ -1385,39 +1293,39 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         # Empty previous stored feature
         self.searchComboBoxes['parcelle_adresse']['chosenFeature'] = None
 
-    def setCenterToChosenAdresse(self):
+    def setCenterToChosenItem(self, key):
         '''
-        Select the parcelle features
-        corresponding to the chosen adresse
+        Set map center corresponding
+        to the chosen feature(s)
         '''
         w = None
-        for item in ['adresse', 'parcelle_adresse']:
+        for item in self.zoomButtons[key]['comboboxes']:
             if self.searchComboBoxes[item]['chosenFeature'] \
             and self.searchComboBoxes[item]['layer']:
                 w = item
         if w:
             self.setCenterToChosenSearchCombobox(w)
 
-    def setZoomToChosenAdresse(self):
+    def setZoomToChosenItem(self, key):
         '''
-        Select the parcelle features
-        corresponding to the chosen adresse
+        Zoom to the feature(s)
+        corresponding to the chosen item
         '''
         w = None
-        for item in ['adresse', 'parcelle_adresse']:
+        for item in self.zoomButtons[key]['comboboxes']:
             if self.searchComboBoxes[item]['chosenFeature'] \
             and self.searchComboBoxes[item]['layer']:
                 w = item
         if w:
             self.setZoomToChosenSearchCombobox(w)
 
-    def setSelectionToChosenAdresse(self):
+    def setSelectionToChosenItem(self, key):
         '''
         Select the parcelle features
-        corresponding to the chosen adresse
+        corresponding to the chosen item
         '''
         w = None
-        for item in ['adresse', 'parcelle_adresse']:
+        for item in self.zoomButtons[key]['comboboxes']:
             if self.searchComboBoxes[item]['chosenFeature'] \
             and self.searchComboBoxes[item]['layer']:
                 w = item
