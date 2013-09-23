@@ -194,7 +194,7 @@ class qadastreImport(QObject):
             {'title' : u'Suppression des contraintes', 'script' : 'COMMUN/suppression_constraintes.sql'},
             {'title' : u'Purge des données', 'script' : 'COMMUN/majic3_purge_donnees.sql'},
             {'title' : u'Import des fichiers', 'script' : 'COMMUN/majic3_import_donnees_brutes.sql'},
-            {'title' : u'Formatage des données', 'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion},
+            {'title' : u'Mise en forme des données', 'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion},
             {'title' : u'Purge des données brutes', 'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'}
         ]
         for item in scriptList:
@@ -260,7 +260,7 @@ class qadastreImport(QObject):
         replaceDict['[LOT]'] = self.dialog.edigeoLot
         scriptList = [
             {
-                'title' : u'Formatage des données',
+                'title' : u'Mise en forme des données',
                 'script' : '%s' % os.path.join(
                     self.scriptDir,
                     '%s/edigeo_formatage_donnees.sql' % self.dialog.dataVersion

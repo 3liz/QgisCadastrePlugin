@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_load_form.ui'
 #
-# Created: Thu Sep 19 11:35:32 2013
+# Created: Mon Sep 23 14:28:57 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -84,6 +84,9 @@ class Ui_qadastre_load_form(object):
         self.horizontalLayout_8.addWidget(self.liTheme)
         self.verticalLayout_14.addLayout(self.horizontalLayout_8)
         self.verticalLayout_13.addWidget(self.groupBox_5)
+        self.btProcessLoading = QtGui.QPushButton(self.scrollAreaWidgetContents_3)
+        self.btProcessLoading.setObjectName(_fromUtf8("btProcessLoading"))
+        self.verticalLayout_13.addWidget(self.btProcessLoading)
         self.groupBox_6 = QtGui.QGroupBox(self.scrollAreaWidgetContents_3)
         self.groupBox_6.setObjectName(_fromUtf8("groupBox_6"))
         self.verticalLayout_15 = QtGui.QVBoxLayout(self.groupBox_6)
@@ -94,9 +97,6 @@ class Ui_qadastre_load_form(object):
         self.liOverrideLayer.addItem(_fromUtf8(""))
         self.verticalLayout_15.addWidget(self.liOverrideLayer)
         self.verticalLayout_13.addWidget(self.groupBox_6)
-        self.btProcessLoading = QtGui.QPushButton(self.scrollAreaWidgetContents_3)
-        self.btProcessLoading.setObjectName(_fromUtf8("btProcessLoading"))
-        self.verticalLayout_13.addWidget(self.btProcessLoading)
         self.pbProcess = QtGui.QProgressBar(self.scrollAreaWidgetContents_3)
         self.pbProcess.setProperty("value", 0)
         self.pbProcess.setObjectName(_fromUtf8("pbProcess"))
@@ -125,11 +125,11 @@ class Ui_qadastre_load_form(object):
         self.groupBox_5.setTitle(_translate("qadastre_load_form", "Styles à appliquer", None))
         self.label_12.setText(_translate("qadastre_load_form", "Thème", None))
         self.liTheme.setItemText(0, _translate("qadastre_load_form", "classique", None))
-        self.groupBox_6.setTitle(_translate("qadastre_load_form", "Surcharge", None))
+        self.btProcessLoading.setText(_translate("qadastre_load_form", "Charger les données", None))
+        self.groupBox_6.setTitle(_translate("qadastre_load_form", "Remplacement des couches ?", None))
         self.liOverrideLayer.setToolTip(_translate("qadastre_load_form", "<html><head/><body><p>Comportement lors du chargement si des données sont déjà ouvertes dans le projet</p></body></html>", None))
         self.liOverrideLayer.setItemText(0, _translate("qadastre_load_form", "Conserver", None))
         self.liOverrideLayer.setItemText(1, _translate("qadastre_load_form", "Remplacer", None))
-        self.btProcessLoading.setText(_translate("qadastre_load_form", "Charger les données", None))
         self.txtLog.setHtml(_translate("qadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

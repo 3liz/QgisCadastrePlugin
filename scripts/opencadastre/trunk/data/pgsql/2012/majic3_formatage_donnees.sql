@@ -846,6 +846,8 @@ CREATE INDEX idxan_commune ON commune (annee);
 CREATE INDEX proprietaire_dnupro_idx ON proprietaire (dnupro);
 CREATE INDEX proprietaire_ddenom_idx ON proprietaire (ddenom);
 CREATE INDEX parcelle_dnupro_idx ON parcelle (dnupro);
+CREATE INDEX suf_parcelle_idx ON suf (parcelle);
+CREATE INDEX sufexoneration_suf_idx ON sufexoneration (suf);
 
 -- ANALYSES;
 ANALYSE [PREFIXE]parcelle;
