@@ -38,6 +38,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/forms")
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
+from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
 
 from functools import partial
 
@@ -95,6 +96,7 @@ class qadastre_common():
                 self.dialog.liDbConnection.addItem( unicode(c.connectionName()))
         QApplication.restoreOverrideCursor()
 
+
     def toggleSchemaList(self, t):
         '''
         Toggle Schema list and inputs
@@ -119,24 +121,34 @@ class qadastre_common():
         # Deactivate schema fields
         self.toggleSchemaList(False)
 
-        if dbType == 'postgis' and connectionName:
-
-            # Activate schema fields
-            self.toggleSchemaList(True)
-
+        connection = None
+        if connectionName:
             # Get schema list
             dbpluginclass = createDbPlugin( dbType, connectionName )
             self.dialog.dbpluginclass = dbpluginclass
-            connection = dbpluginclass.connect()
-            if connection:
-                self.dialog.connection = connection
-                db = dbpluginclass.database()
-                if db:
-                    self.dialog.db = db
-                    self.dialog.schemaList = []
-                    for s in db.schemas():
-                        self.dialog.liDbSchema.addItem( unicode(s.name))
-                        self.dialog.schemaList.append(unicode(s.name))
+            try:
+                connection = dbpluginclass.connect()
+            except BaseError as e:
+
+                DlgDbError.showError(e, self.dialog)
+                self.dialog.go = False
+                self.updateLog(e.msg)
+                return
+
+        if connection:
+            self.dialog.connection = connection
+            db = dbpluginclass.database()
+            if db:
+                self.dialog.db = db
+                self.dialog.schemaList = []
+
+            if dbType == 'postgis':
+                # Activate schema fields
+                self.toggleSchemaList(True)
+                for s in db.schemas():
+                    self.dialog.liDbSchema.addItem( unicode(s.name))
+                    self.dialog.schemaList.append(unicode(s.name))
+
         QApplication.restoreOverrideCursor()
 
 
@@ -149,9 +161,12 @@ class qadastre_common():
         hasData = False
         searchTable = u'geo_commune'
         if self.dialog.db:
-            schemaSearch = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
-            schemaInst = schemaSearch[0]
-            getSearchTable = [a for a in self.dialog.db.tables(schemaInst) if a.name == searchTable]
+            if self.dialog.dbType == 'postgis':
+                schemaSearch = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
+                schemaInst = schemaSearch[0]
+                getSearchTable = [a for a in self.dialog.db.tables(schemaInst) if a.name == searchTable]
+            if self.dialog.dbType == 'spatialite':
+                getSearchTable = [a for a in self.dialog.db.tables() if a.name == searchTable]
             if getSearchTable:
                 hasData = True
 
@@ -214,6 +229,11 @@ class qadastre_common():
                 schema = sp[0]
                 table = sp[1]
 
+            if layer.providerType() == u'postgres':
+                dbType = 'postgis'
+            else:
+                dbType = 'spatialite'
+
             connectionParams = {
                 'dbname' : dbname,
                 'host' : host,
@@ -229,12 +249,25 @@ class qadastre_common():
                 'table' : table,
                 'geocol' : geocol,
                 'sql' : sql,
+                'dbType': dbType
             }
 
         return connectionParams
 
+    def setSearchPath(self, sql, schema):
+        '''
+        Set the search_path parameters if postgis database
+        '''
+        prefix = u'SET search_path = "%s", public, pg_catalog;' % schema
+        if re.search('^BEGIN;', sql):
+            sql = sql.replace('BEGIN;', 'BEGIN;%s' % prefix)
+        else:
+            sql = prefix + sql
 
-    def fetchDataFromSqlQuery(self, connector, sql):
+        return sql
+
+
+    def fetchDataFromSqlQuery(self, connector, sql, schema=None):
         '''
         Execute a SQL query and
         return [header, data, rowCount]
@@ -274,6 +307,30 @@ class qadastre_common():
                 del c
 
         return [header, data, rowCount]
+
+
+
+    def getConnectorFromUri(self, connectionParams):
+        '''
+        Set connector property
+        for the given database type
+        and parameters
+        '''
+        uri = QgsDataSourceURI()
+        if connectionParams['dbType'] == 'postgis':
+            uri.setConnection(
+                connectionParams['host'],
+                connectionParams['port'],
+                connectionParams['dbname'],
+                connectionParams['user'],
+                connectionParams['password']
+            )
+            connector = PostGisDBConnector(uri)
+        if connectionParams['dbType'] == 'spatialite':
+            uri.setConnection('', '', connectionParams['dbname'], '', '')
+            connector = SpatiaLiteDBConnector(uri)
+
+        return connector
 
 
     def chooseDataPath(self, key):
@@ -346,7 +403,6 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             control.clicked.connect(slot)
 
         # Set initial values
-        self.dataVersionList = [ '2011', '2012']
         self.dataVersion = None
         self.dataYear = None
         self.dbType = None
@@ -368,10 +424,9 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         # set input values from settings
         self.sList = {
             'dataVersion': {
-                'widget': self.liDataVersion,
-                'wType': 'combobox',
-                'property': self.dataVersion,
-                'list': self.dataVersionList
+                'widget': self.inDataVersion,
+                'wType': 'spinbox',
+                'property': self.dataVersion
             },
             'dataYear': {
                 'widget': self.inDataYear,
@@ -431,17 +486,29 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         s = QSettings()
         self.majicSourceFileNames = [
             {'key': '[FICHIER_BATI]',
-                'value': s.value("qadastre/batiFileName", 'REVBATI.800', type=str)},
+                'value': s.value("qadastre/batiFileName", 'REVBATI.800', type=str),
+                'table': 'bati'
+            },
             {'key': '[FICHIER_FANTOIR]',
-                'value': s.value("qadastre/fantoirFileName", 'TOPFANR.800', type=str)},
+                'value': s.value("qadastre/fantoirFileName", 'TOPFANR.800', type=str),
+                'table': 'fanr'
+            },
             {'key': '[FICHIER_LOTLOCAL]',
-                'value': s.value("qadastre/lotlocalFileName", 'REVD166.800', type=str)},
+                'value': s.value("qadastre/lotlocalFileName", 'REVD166.800', type=str),
+                'table': 'lloc'
+            },
             {'key': '[FICHIER_NBATI]',
-                'value': s.value("qadastre/nbatiFileName", 'REVNBAT.800', type=str)},
+                'value': s.value("qadastre/nbatiFileName", 'REVNBAT.800', type=str),
+                'table': 'nbat'
+            },
             {'key': '[FICHIER_PDL]',
-                'value': s.value("qadastre/pdlFileName", 'REVFPDL.800', type=str)},
+                'value': s.value("qadastre/pdlFileName", 'REVFPDL.800', type=str),
+                'table': 'pdll'
+            },
             {'key': '[FICHIER_PROP]',
-                'value': s.value("qadastre/propFileName", 'REVPROP.800', type=str)}
+                'value': s.value("qadastre/propFileName", 'REVPROP.800', type=str),
+                'table': 'prop'
+            }
         ]
 
 
@@ -468,16 +535,6 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
                 if v['wType'] == 'combobox':
                     listDic = {v['list'][i]:i for i in range(0, len(v['list']))}
                     v['widget'].setCurrentIndex(listDic[value])
-
-    def populateDataVersionCombobox(self):
-        '''
-        Populate the list of data version (representing a year)
-        '''
-        self.liDataVersion.clear()
-        for year in self.dataVersionList:
-            self.liDataVersion.addItem(year)
-
-
 
 
     def createSchema(self):
@@ -545,7 +602,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             QMessageBox.critical(self, self.tr("Qadatre"), self.tr(msg))
             return None
 
-        self.dataVersion = unicode(self.liDataVersion.currentText())
+        self.dataVersion = unicode(self.inDataVersion.text())
         self.dataYear = unicode(self.inDataYear.text())
         self.schema = unicode(self.liDbSchema.currentText())
         self.majicSourceDir = str(self.inMajicSourceDir.text().encode('utf-8')).strip(' \t')
@@ -657,11 +714,12 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
 
 
 
-# --------------------------------------------------------
-#        search - search for data among database
-# --------------------------------------------------------
+# ---------------------------------------------------------
+#        search - search for data among database ans export
+# ---------------------------------------------------------
 
 from qadastre_search_form import *
+from qadastre_export import *
 
 class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
     def __init__(self, iface):
@@ -673,6 +731,11 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         # common qadastre methods
         self.qc = qadastre_common(self)
 
+        # database properties
+        self.connector = None
+        self.dbType = None
+        self.schema = None
+
         self.mc = self.iface.mapCanvas()
         self.communeLayer = None
         self.communeFeatures = None
@@ -683,6 +746,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         self.sectionRequest = None
         self.sectionCommuneFeature = None
 
+        # signals/slots
         self.searchComboBoxes = {
             'commune': {
                 'widget': self.liCommune,
@@ -737,7 +801,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 'table': 'geo_parcelle',
                 'layer': None,
                 'request': None,
-                'attributes': ['comptecommunal','idu','geom'],
+                'attributes': ['comptecommunal','idu','dnupro','geom'],
                 'orderBy': ['ddenom'],
                 'features': None,
                 'chosenFeature': None,
@@ -792,8 +856,6 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 'resetWidget': self.btResetParcelleAdresse
             }
         }
-
-        # signals/slots
 
         # Detect that the user has hidden/showed the dock
         self.visibilityChanged.connect(self.onVisibilityChange)
@@ -862,9 +924,22 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 slot = partial(self.onNonSearchItemReset, key)
                 control.clicked.connect(slot)
 
+        # export buttons
+        self.btExportProprietaire.clicked.connect(self.exportProprietaire)
+        self.exportParcelleButtons = {
+            'parcelle': self.btExportParcelle,
+            'parcelle_adresse': self.btExportParcelleAdresse,
+            'parcelle_proprietaire': self.btExportProprietaire
+        }
+        for key, item in self.exportParcelleButtons.items():
+            control = item
+            slot = partial(self.exportParcelle, key)
+            control.clicked.connect(slot)
+
         # setup some gui items
         self.setupSearchCombobox('commune', None, 'sql')
         self.setupSearchCombobox('section', None, 'sql')
+
 
     def setupSearchCombobox(self, combo, filterExpression=None, queryMode='qgis'):
         '''
@@ -964,27 +1039,27 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
             QApplication.restoreOverrideCursor()
             return None
 
+        # set properties
+        self.dbType = connectionParams['dbType']
+        self.schema = connectionParams['schema']
+
         # Use db_manager tool to run the query
-        uri = QgsDataSourceURI()
-        uri.setConnection(
-            connectionParams['host'],
-            connectionParams['port'],
-            connectionParams['dbname'],
-            connectionParams['user'],
-            connectionParams['password']
-        )
-        connector = PostGisDBConnector(uri)
+        connector = self.qc.getConnectorFromUri(connectionParams)
+        self.connector = connector
 
         # SQL
         sql = ' SELECT %s' % ', '.join(attributes)
-        sql+= ' FROM "%s"."%s"' % (connectionParams['schema'], connectionParams['table'])
+        sql+= ' FROM "%s"' % connectionParams['table']
         sql+= " WHERE 2>1"
         if filterExpression:
             sql+= " AND %s" % filterExpression
         if orderBy:
             sql+= ' ORDER BY %s' % ', '.join(orderBy)
 
+        if self.dbType == 'postgis':
+            sql = self.qc.setSearchPath(sql, connectionParams['schema'])
         # Get data
+        #~ self.qc.updateLog(sql)
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
 
         # Get features
@@ -1048,29 +1123,28 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
             return None
 
         # Use db_manager tool to run the query
-        uri = QgsDataSourceURI()
-        uri.setConnection(
-            connectionParams['host'],
-            connectionParams['port'],
-            connectionParams['dbname'],
-            connectionParams['user'],
-            connectionParams['password']
-        )
-        connector = PostGisDBConnector(uri)
+        connector = self.qc.getConnectorFromUri(connectionParams)
+        self.connector = connector
 
         # SQL
         if key == 'adresse':
             sql = ' SELECT DISTINCT dvoilib AS k'
-            sql+= ' FROM "%s".geo_parcelle' % connectionParams['schema']
+            sql+= ' FROM geo_parcelle'
             sql+= " WHERE dvoilib LIKE '%s%%'" % searchValue.upper()
             sql+= ' ORDER BY dvoilib'
         if key == 'proprietaire':
-            sql = " SELECT trim(ddenom) AS k, string_agg(comptecommunal, ',') AS v"
-            sql+= ' FROM "%s".proprietaire' % connectionParams['schema']
+            sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS v"
+            sql+= ' FROM proprietaire'
             sql+= " WHERE ddenom LIKE '%s%%'" % searchValue.upper()
             sql+= ' GROUP BY ddenom, dlign4'
             sql+= ' ORDER BY ddenom'
-        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
+        self.dbType = connectionParams['dbType']
+        if self.dbType == 'postgis':
+            sql = self.qc.setSearchPath(sql, connectionParams['schema'])
+            sql = sql.replace('MyStringAgg', 'string_agg')
+        else:
+            sql = sql.replace('MyStringAgg', 'group_concat')
+        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector,sql)
 
         # Fill  combobox
         self.qc.updateLog(u"%s résultats correpondent à '%s'" % (rowCount, searchValue))
@@ -1286,6 +1360,28 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 w = item
         if w:
             self.setSelectionToChosenSearchCombobox(w)
+
+    def exportProprietaire(self):
+        '''
+        Export the selected proprietaire
+        as PDF using the template composer
+        filled with appropriate data
+        '''
+        feat = self.searchComboBoxes['proprietaire']['chosenFeature']
+        if feat and self.connector:
+            qe = qadastreExport(self, 'proprietaire', feat)
+            qe.exportAsPDF()
+        else:
+            self.qc.updateLog(u'Aucun propriétaire sélectionné !')
+
+
+    def exportParcelle(self, key):
+        '''
+        Export the selected parcelle
+        as PDF using the template composer
+        filled with appropriate data
+        '''
+        print 'export parcelle'
 
 
     def onVisibilityChange(self, visible):

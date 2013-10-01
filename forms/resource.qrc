@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="/plugins/qadastre">
+    <file>icons/centrer.png</file>
+    <file>icons/select.png</file>
+    <file>icons/zoom.png</file>
+    <file>icons/releve.png</file>
     <file>images/logo_gnu3.png</file>
     <file>images/logo_europe.png</file>
     <file>images/logo_3liz.png</file>

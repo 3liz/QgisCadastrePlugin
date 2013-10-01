@@ -1,6 +1,3 @@
-DROP TABLE IF EXISTS geo_label;
-ALTER TABLE id_s_obj_z_1_2_2 RENAME TO geo_label;
-ALTER TABLE geo_label ADD COLUMN x_label numeric;
-ALTER TABLE geo_label ADD COLUMN y_label numeric;
-UPDATE geo_label SET x_label = ST_X(geom);
-UPDATE geo_label SET y_label = ST_Y(geom);
+INSERT INTO geo_label (ogc_fid, object_rid, fon, hei, tyu, cef, csp, di1, di2, di3, di4, tpa, hta, vta, atr, ogr_obj_lnk, ogr_obj_lnk_layer, ogr_atr_val, ogr_angle, ogr_font_size, x_label, y_label, geom)
+SELECT ogc_fid, object_rid, fon, hei, tyu, cef, csp, di1, di2, di3, di4, tpa, hta, vta, atr, ogr_obj_lnk, ogr_obj_lnk_layer, ogr_atr_val, ogr_angle, ogr_font_size, ST_X(geom), ST_Y(geom), geom
+FROM id_s_obj_z_1_2_2

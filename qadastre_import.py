@@ -21,11 +21,6 @@
  *                                                                         *
  ***************************************************************************/
 """
-#enlever les indexs des tables machin_id et id_ machin. avant import
-#~ enlever l'option ogr pour crer les index spatiaux
-#~ enlever tous les indexs lors de create_metier et les passer après ?
-#~ vérifier qu'on ajoute bien des index spatiaux aux tables geo_
-#~ verifier qu'on a pas d'index sur edigeo_rel pendant import
 
 import sys, os, glob
 import re
@@ -66,10 +61,13 @@ class qadastreImport(QObject):
         self.edigeoPlainDir = tempfile.mkdtemp('', 'qad', tempDir)
         self.majicDir = tempfile.mkdtemp('', 'qad', tempDir)
         self.replaceDict = {
-            '[PREFIXE]': '"%s".' % self.dialog.schema,
             '[VERSION]': self.dialog.dataVersion,
             '[ANNEE]': self.dialog.dataYear
         }
+        if self.dialog.dbType == 'postgis':
+            self.replaceDict['[PREFIXE]'] = '"%s".' % self.dialog.schema
+        else:
+            self.replaceDict['[PREFIXE]'] = ''
         self.go = True
         self.startTime = datetime.now()
         self.step = 0
@@ -119,8 +117,12 @@ class qadastreImport(QObject):
         # Set postgresql synchronous_commit to off
         # to speed up bulk inserts
         if self.dialog.dbType == 'postgis':
-            sql = "SET synchronous_commit TO off;"
-            self.executeSqlQuery(sql)
+            sql = "SET LOCAL synchronous_commit TO off;"
+
+        if self.dialog.dbType == 'spatialite':
+            sql = 'PRAGMA synchronous = OFF;PRAGMA journal_mode = MEMORY;PRAGMA temp_store = MEMORY;PRAGMA cache_size = 500000'
+
+        self.executeSqlQuery(sql)
 
         # copy opencadastre script files to temporary dir
         self.updateProgressBar()
@@ -144,8 +146,8 @@ class qadastreImport(QObject):
                 'script': '%s' % os.path.join(self.scriptDir, 'create_metier.sql')},
             {'title': u'Création des tables edigeo',
                 'script': '%s' % os.path.join(self.qc.plugin_dir, 'scripts/edigeo_create_import_tables.sql')},
-            {'title' : u'Ajout des contraintes',
-                'script': '%s' % os.path.join(self.scriptDir, 'create_constraints.sql')},
+            #~ {'title' : u'Ajout des contraintes',
+                #~ 'script': '%s' % os.path.join(self.scriptDir, 'create_constraints.sql')},
             {'title' : u'Ajout de la nomenclature',
                 'script': '%s' % os.path.join(self.scriptDir, 'insert_nomenclatures.sql')}
         ]
@@ -190,25 +192,88 @@ class qadastreImport(QObject):
 
         replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
 
-        scriptList = [
-            {'title' : u'Suppression des contraintes', 'script' : 'COMMUN/suppression_constraintes.sql'},
-            {'title' : u'Purge des données', 'script' : 'COMMUN/majic3_purge_donnees.sql'},
-            {'title' : u'Import des fichiers', 'script' : 'COMMUN/majic3_import_donnees_brutes.sql'},
-            {'title' : u'Mise en forme des données', 'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion},
-            {'title' : u'Purge des données brutes', 'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'}
-        ]
+        scriptList = []
+        #~ scriptList.append(
+            #~ {
+            #~ 'title' : u'Suppression des contraintes',
+            #~ 'script' : 'COMMUN/suppression_constraintes.sql'
+            #~ }
+        #~ )
+        scriptList.append(
+            {
+            'title' : u'Purge des données',
+            'script' : 'COMMUN/majic3_purge_donnees.sql'
+            }
+        )
+        if self.dialog.dbType == 'postgis':
+            importScript = {
+                'title' : u'Import des fichiers majic',
+                'script' : 'COMMUN/majic3_import_donnees_brutes.sql'
+            }
+        if self.dialog.dbType == 'spatialite':
+            importScript = {
+                'title' : u'Import des fichiers majic',
+                'method' : self.importMajicIntoSpatialite
+            }
+        scriptList.append(importScript)
+        scriptList.append(
+            {
+            'title' : u'Mise en forme des données',
+            'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion
+            }
+        )
+        scriptList.append(
+            {
+            'title' : u'Purge des données brutes',
+            'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'
+            }
+        )
+
         for item in scriptList:
             self.dialog.subStepLabel.setText(item['title'])
             self.qc.updateLog('%s' % item['title'])
-            s = item['script']
-            scriptPath = os.path.join(self.scriptDir, s)
-            self.replaceParametersInScript(scriptPath, replaceDict)
-            self.updateProgressBar()
-            self.executeSqlScript(scriptPath)
+            if item.has_key('script'):
+                s = item['script']
+                scriptPath = os.path.join(self.scriptDir, s)
+                self.replaceParametersInScript(scriptPath, replaceDict)
+                self.updateProgressBar()
+                self.executeSqlScript(scriptPath)
+            else:
+                self.updateProgressBar()
+                item['method']()
             self.updateTimer()
             self.updateProgressBar()
 
         return None
+
+
+    def chunks(self, data, rows=50000):
+        '''
+        Divides the data into 50000 rows each
+        '''
+        for i in xrange(0, len(data), rows):
+            yield data[i:i+rows]
+
+    def importMajicIntoSpatialite(self):
+        '''
+        Method wich read each majic file
+        and bulk import data intp temp tables
+        - Specific for sqlite cause to COPY statement
+        '''
+        # Loop through all majic files
+        for item in self.dialog.majicSourceFileNames:
+            fpath = os.path.join(os.path.realpath(self.majicDir) + '/' , item['value'])
+            table = item['table']
+            # read file content
+            lines = None
+            with open(fpath) as fin:
+                lines = fin.read().splitlines()
+            if lines:
+                divLines = self.chunks(lines)
+                for a in divLines:
+                    c = self.connector._get_cursor()
+                    c.executemany('insert into %s values (?)' % table, [(x,) for x in a] )
+                    self.connector._commit()
 
 
     def importEdigeo(self):
@@ -266,12 +331,12 @@ class qadastreImport(QObject):
                     '%s/edigeo_formatage_donnees.sql' % self.dialog.dataVersion
                 )
             },
-            {   'title' : u'Création Unités foncières',
-                'script' : '%s' % os.path.join(
-                    self.scriptDir,
-                    '%s/edigeo_unite_fonciere.sql' % self.dialog.dataVersion
-                )
-            },
+            #~ {   'title' : u'Création Unités foncières',
+                #~ 'script' : '%s' % os.path.join(
+                    #~ self.scriptDir,
+                    #~ '%s/edigeo_unite_fonciere.sql' % self.dialog.dataVersion
+                #~ )
+            #~ },
             {
                 'title' : u'Placement des étiquettes',
                 'script' : '%s/edigeo_add_labels_xy.sql' % os.path.join(
@@ -319,9 +384,9 @@ class qadastreImport(QObject):
         jobTitle = u'FINALISATION'
         self.beginJobLog(1, jobTitle)
 
-        # Re-set synchronous_commit to on
+        # Re-set SQL optimization parameters to default
         if self.dialog.dbType == 'postgis':
-            sql = "SET synchronous_commit TO on;"
+            sql = "SET LOCAL synchronous_commit TO on;"
             self.executeSqlQuery(sql)
 
         # Remove the temp folders
@@ -442,6 +507,18 @@ class qadastreImport(QObject):
                 QApplication.restoreOverrideCursor()
 
 
+    def replaceParametersInString(self, string, replaceDict):
+        '''
+        Replace all occurences in string
+        '''
+
+        def replfunc(match):
+            return replaceDict[match.group(0)]
+
+        regex = re.compile('|'.join(re.escape(x) for x in replaceDict), re.IGNORECASE)
+        string = regex.sub(replfunc, string)
+        return string
+
 
     def replaceParametersInScript(self, scriptPath, replaceDict):
         '''
@@ -453,16 +530,13 @@ class qadastreImport(QObject):
 
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
-            def replfunc(match):
-                return replaceDict[match.group(0)]
-            regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
-
             try:
                 fin = open(scriptPath)
                 data = fin.read().decode("utf-8-sig")
                 fin.close()
                 fout = open(scriptPath, 'w')
-                data = regex.sub(replfunc, data).encode('utf-8')
+                data = self.replaceParametersInString(data, replaceDict)
+                data = data.encode('utf-8')
                 fout.write(data)
                 fout.close()
 
@@ -477,19 +551,6 @@ class qadastreImport(QObject):
 
 
         return None
-
-
-    def setSearchPath(self, sql, schema):
-        '''
-        Set the search_path parameters if postgis database
-        '''
-        prefix = u'SET search_path = "%s", public, pg_catalog;' % schema
-        if re.search('^BEGIN;', sql):
-            sql = sql.replace('BEGIN;', 'BEGIN;%s' % prefix)
-        else:
-            sql = prefix + sql
-
-        return sql
 
 
     def executeSqlScript(self, scriptPath):
@@ -508,8 +569,7 @@ class qadastreImport(QObject):
 
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
-                sql = self.setSearchPath(sql, self.dialog.schema)
-
+                sql = self.qc.setSearchPath(sql, self.dialog.schema)
             # Execute query
             self.executeSqlQuery(sql)
 
@@ -517,27 +577,115 @@ class qadastreImport(QObject):
         return None
 
 
+    def postgisToSpatialite(self, sql):
+        '''
+        Convert postgis SQL statement
+        into spatialite compatible
+        statements
+        '''
+
+        # delete some incompatible options
+        # replace other by spatialite syntax
+        replaceDict = [
+            # delete
+            {'in': r'with\(oids=.+\)', 'out': ''},
+            {'in': r'comment on [^;]+;', 'out': ''},
+            {'in': r'alter table [^;]+add primary key[^;]+;', 'out': ''},
+            {'in': r'alter table [^;]+drop column[^;]+;', 'out': ''},
+            {'in': r'analyse [^;]+;', 'out': ''},
+            # replace
+            {'in': r'distinct on *\([a-z, ]+\)', 'out': 'distinct'},
+            {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
+            {'in': r'current_schema::text, ', 'out': ''},
+            {'in': r'substring', 'out': 'SUBSTR'},
+            {'in': r"(to_char\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS TEXT)"},
+            {'in': r"(to_number\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS integer)"},
+            {'in': r"(to_date\()([^']+) *, *'DDMMYYYY' *\)", 'out': r"strftime('%d%m%Y',\2)"},
+            {'in': r"(to_date\()([^']+) *, *'DD/MM/YYYY' *\)", 'out': r"strftime('%d/%m/%Y',\2)"},
+            {'in': r"(to_date\()([^']+) *, *'YYYYMMDD' *\)", 'out': r"strftime('%Y%m%d',\2)"},
+        ]
+
+
+        for a in replaceDict:
+            r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
+            sql = r.sub(a['out'], sql)
+
+        # index spatiaux
+        r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
+        sql = r.sub(r'SELECT createSpatialIndex("\2", "\5");', sql)
+
+        # replace postgresql "update from" statement
+        r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE|re.MULTILINE)
+        sql = r.sub(r'\1=(SELECT \3);', sql)
+
+        # replace multiple column update for geo_parcelle
+        r = re.compile(r'update [^;]+parcelle, dvoilib, comptecommunal[^;]+;',  re.IGNORECASE|re.MULTILINE)
+        res = r.findall(sql)
+        replaceBy = ''
+        for statement in res:
+            for a in ['parcelle', 'dvoilib', 'comptecommunal']:
+                st = statement
+                st = st.replace('(parcelle, dvoilib, comptecommunal)', '%s' % a)
+                st = st.replace('(p.parcelle, p.dvoilib, p.comptecommunal)', '(SELECT p.%s' % a)
+                st = st.replace(';', ');')
+                replaceBy+= st
+            sql = sql.replace(statement, replaceBy)
+
+
+        # majic formatage : replace multiple column update for geo_parcelle
+        r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
+        res = r.findall(sql)
+        replaceBy = ''
+        for statement in res:
+            replaceBy = '''
+            UPDATE local10 SET
+              ccopre = $ local00.ccopre @,
+              ccosec = $ local00.ccosec @,
+              dnupla = $ local00.dnupla @,
+              ccoriv = $ local00.ccoriv @,
+              ccovoi = $ local00.ccovoi @,
+              dnvoiri = $ local00.dnvoiri @,
+              local00 = $ local10.annee||local10.invar @,
+              parcelle = $ REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '-') @,
+              voie= $  REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi,' ', '-') @
+            WHERE local10.annee='%s';
+            ''' % self.dialog.dataYear
+            replaceBy = replaceBy.replace('$', '(SELECT ')
+            replaceBy = replaceBy.replace('@', " FROM local00 WHERE local00.invar = local10.invar AND local00.annee='%s' AND local10.annee='%s')" % (self.dialog.dataYear, self.dialog.dataYear))
+            sql = sql.replace(statement, replaceBy)
+
+        return sql
 
     def executeSqlQuery(self, sql):
         '''
         Execute a SQL string query
         And commit
         '''
-        c = None
-        try:
-            c = self.connector._execute_and_commit(sql)
+        if self.go:
+            if self.dialog.dbType == 'spatialite':
+                # compatibility issues
+                sql = self.postgisToSpatialite(sql)
+            if sql:
+                self.qc.updateLog('|%s|' % sql)
+                c = None
+                try:
+                    if self.dialog.dbType == 'postgis':
+                        c = self.connector._execute(sql)
+                    if self.dialog.dbType == 'spatialite':
+                        c = self.connector._get_cursor()
+                        c.executescript(sql)
 
-        except BaseError as e:
-            DlgDbError.showError(e, self.dialog)
-            self.go = False
-            self.qc.updateLog(e.msg)
-            return
+                except BaseError as e:
+                    DlgDbError.showError(e, self.dialog)
+                    self.go = False
+                    self.qc.updateLog(e.msg)
+                    return
 
-        finally:
-            QApplication.restoreOverrideCursor()
-            if c:
-                c.close()
-                del c
+                finally:
+                    QApplication.restoreOverrideCursor()
+                    if c:
+                        c.close()
+                        del c
 
 
     def importAllEdigeoToDatabase(self):
@@ -585,24 +733,32 @@ class qadastreImport(QObject):
         source : db_manager/dlg_import_vector.py
         '''
         if self.go:
-            # Build ogr2ogr command
-            conn_name = self.dialog.connectionName
-            settings = QSettings()
-            settings.beginGroup( u"/%s/%s" % (self.db.dbplugin().connectionSettingsKey(), conn_name) )
-            if not settings.contains( "database" ): # non-existent entry?
-                raise InvalidDataException( self.tr('There is no defined database connection "%s".') % conn_name )
-            settingsList = ["service", "host", "port", "database", "username", "password"]
-            service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
-
+            # Get options
             sourceSrid = self.dialog.edigeoSourceProj
             targetSrid = self.dialog.edigeoTargetProj
             targetSridOption = '-t_srs'
             if sourceSrid == targetSrid:
                 targetSridOption = '-a_srs'
 
-            #~ penser à mettre l'option pour ne pas utiliser d'index spatial
-            #~ ajouter aussi l'option pour ne pas créer les tables de label
-            ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO' % (sourceSrid, targetSridOption, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+            # Build ogr2ogr command
+            conn_name = self.dialog.connectionName
+            settings = QSettings()
+            settings.beginGroup( u"/%s/%s" % (self.db.dbplugin().connectionSettingsKey(), conn_name) )
+            if self.dialog.dbType == 'postgis':
+                if not settings.contains( "database" ): # non-existent entry?
+                    raise InvalidDataException( self.tr('There is no defined database connection "%s".') % conn_name )
+                settingsList = ["service", "host", "port", "database", "username", "password"]
+                service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
+
+                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO' % (sourceSrid, targetSridOption, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+
+            if self.dialog.dbType == 'spatialite':
+                if not settings.contains( "sqlitepath" ): # non-existent entry?
+                    raise InvalidDataException( u'there is no defined database connection "%s".' % conn_name )
+
+                database = settings.value("sqlitepath")
+
+                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "SQLite" "%s" %s -lco GEOMETRY_NAME=geom -nlt GEOMETRY  -dsco SPATIALITE=YES -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO --config OGR_SQLITE_SYNCHRONOUS OFF --config OGR_SQLITE_CACHE 512' % (sourceSrid, targetSridOption, targetSrid, database, filename)
             #~ self.qc.updateLog(ogrCommand)
 
             # Run command
@@ -629,10 +785,12 @@ class qadastreImport(QObject):
                 # Create a sql script to insert all items
                 sql="BEGIN;"
                 for item in l:
-                    sql+= "INSERT INTO \"%s\".edigeo_rel ( nom, de, vers) values ( '%s', '%s', '%s');" % (self.dialog.schema, item[0], item[1], item[2] )
+                    sql+= "INSERT INTO edigeo_rel ( nom, de, vers) values ( '%s', '%s', '%s');" % (item[0], item[1], item[2] )
                 sql+="COMMIT;"
 
                 # Execute query
+                if self.dialog.dbType == 'postgis':
+                    sql = self.qc.setSearchPath(sql, self.dialog.schema)
                 self.executeSqlQuery(sql)
 
 
@@ -664,9 +822,13 @@ class qadastreImport(QObject):
                 'tsurf_id',
                 'voiep_id',
                 'zoncommuni_id',
+                'id_s_obj_z_1_2_2',
+                'edigeo_rel',
             ]
             sql = ''
             for table in edigeoTables:
-                sql+= 'DROP TABLE IF EXISTS "%s".%s ;' % (self.dialog.schema, table)
+                sql+= 'DROP TABLE IF EXISTS "%s";' % table
+            if self.dialog.dbType == 'postgis':
+                sql = self.qc.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qadastre_import_form.ui'
 #
-# Created: Thu Sep 19 16:08:17 2013
+# Created: Mon Sep 30 11:40:17 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -171,13 +171,12 @@ class Ui_qadastre_import_form(object):
         self.label_15.setEnabled(True)
         self.label_15.setObjectName(_fromUtf8("label_15"))
         self.horizontalLayout_12.addWidget(self.label_15)
-        self.liDataVersion = QtGui.QComboBox(self.groupBox_7)
-        self.liDataVersion.setEnabled(True)
-        self.liDataVersion.setMaximumSize(QtCore.QSize(80, 16777215))
-        self.liDataVersion.setObjectName(_fromUtf8("liDataVersion"))
-        self.liDataVersion.addItem(_fromUtf8(""))
-        self.liDataVersion.addItem(_fromUtf8(""))
-        self.horizontalLayout_12.addWidget(self.liDataVersion)
+        self.inDataVersion = QtGui.QSpinBox(self.groupBox_7)
+        self.inDataVersion.setMinimum(2011)
+        self.inDataVersion.setMaximum(2012)
+        self.inDataVersion.setProperty("value", 2012)
+        self.inDataVersion.setObjectName(_fromUtf8("inDataVersion"))
+        self.horizontalLayout_12.addWidget(self.inDataVersion)
         self.label_16 = QtGui.QLabel(self.groupBox_7)
         self.label_16.setObjectName(_fromUtf8("label_16"))
         self.horizontalLayout_12.addWidget(self.label_16)
@@ -254,8 +253,6 @@ class Ui_qadastre_import_form(object):
         self.btMajicSourceDir.setText(_translate("qadastre_import_form", "...", None))
         self.groupBox_7.setTitle(_translate("qadastre_import_form", "Paramètres", None))
         self.label_15.setText(_translate("qadastre_import_form", "Version du format", None))
-        self.liDataVersion.setItemText(0, _translate("qadastre_import_form", "2012", None))
-        self.liDataVersion.setItemText(1, _translate("qadastre_import_form", "2011", None))
         self.label_16.setText(_translate("qadastre_import_form", "Année", None))
         self.label_6.setText(_translate("qadastre_import_form", "Lot", None))
         self.btProcessImport.setText(_translate("qadastre_import_form", "Lancer l\'import", None))

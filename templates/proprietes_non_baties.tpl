@@ -1,4 +1,4 @@
-<table style="width: 100%;font-size:10pt;" border="1" cellspacing="0">
+<table style="width: 100%;font-size:8pt;" border="1px" cellspacing="0" cellpadding="0">
   <thead>
     <tr>
       <td style="text-align: center;" colspan="5" rowspan="1">DÉSIGNATION
@@ -31,7 +31,7 @@
     </tr>
   </thead>
   <tbody>
-    {$lines}
+    $lines
   </tbody>
 </table>
 <p><br>

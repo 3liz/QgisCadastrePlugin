@@ -95,13 +95,17 @@ class qadastreLoading(QObject):
         self.dialog.totalSteps = len(self.qgisQadastreLayerList)
 
         # Run the loading
-        self.qc.updateLog('test')
+        self.qc.updateLog(u'Chargement des tables :')
 
         # Get database list of tables
         layerUri = self.dialog.db.uri()
-        schemaSearch = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
-        schemaInst = schemaSearch[0]
-        dbTables = self.dialog.db.tables(schemaInst)
+        if self.dialog.dbType == 'postgis':
+            schemaSearch = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
+            schemaInst = schemaSearch[0]
+            dbTables = self.dialog.db.tables(schemaInst)
+        if self.dialog.dbType == 'spatialite':
+            dbTables = self.dialog.db.tables()
+
 
         # Get status of override combobox
         override = unicode(self.dialog.liOverrideLayer.currentText())

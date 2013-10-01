@@ -52,7 +52,7 @@ CREATE TABLE parcelle (
     type_filiation character varying(1),
     geo_parcelle character varying(16)
 
-) WITH(OIDS=TRUE);
+);
 CREATE TABLE suf (
     suf character varying(21),
     annee character varying (4),
@@ -87,7 +87,7 @@ CREATE TABLE suf (
     topja character varying (1),
     datja date,
     postel character varying (1)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE sufexoneration (
     sufexoneration character varying (23),
@@ -112,7 +112,7 @@ CREATE TABLE sufexoneration (
     rcexna character varying (10),
     rcexnba numeric(10,2),
     mpexnba character varying (10)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE suftaxation (
     suftaxation character varying (21),
@@ -134,7 +134,7 @@ CREATE TABLE suftaxation (
     c4majposa numeric(10,2),
     c4bisufad numeric(10,2),
     cntmajtc integer
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE local00 (
     local00 character varying (14),
@@ -160,7 +160,7 @@ CREATE TABLE local00 (
     dvoilib character varying (30),
     cleinvar character varying (1),
     locinc character varying (1)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE local10 (
     local10 character varying (14),
@@ -217,7 +217,7 @@ CREATE TABLE local10 (
     jdtabt character varying (4),
     jrtabt character varying (4),
     jacloc character varying (4)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE pev (
     pev character varying (17),
@@ -251,7 +251,7 @@ CREATE TABLE pev (
     clocv character varying (1),
     dvltpe integer,
     dcralc character varying (3)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE pevexoneration (
     pevexoneration character varying (24),
@@ -279,7 +279,7 @@ CREATE TABLE pevexoneration (
     fcexb2 integer,
     fcexba2 integer,
     rcexba2 integer
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE pevtaxation (
     pevtaxation character varying (17),
@@ -308,7 +308,7 @@ CREATE TABLE pevtaxation (
     tse_vlbai integer,
     tse_vlbaia integer,
     tse_bipevla integer
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE pevprincipale (
     pevprincipale character varying (20),
@@ -359,7 +359,7 @@ CREATE TABLE pevprincipale (
     jannat character varying (4),
     detent character varying (1),
     dnbniv character varying (2)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE pevprofessionnelle (
     pevprofessionnelle character varying (20),
@@ -378,7 +378,7 @@ CREATE TABLE pevprofessionnelle (
     vsurzt integer,
     vsurb1 character varying (9),
     vsurb2 character varying (9)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE pevdependances (
     pevdependances character varying (20),
@@ -407,7 +407,7 @@ CREATE TABLE pevdependances (
     dcimlc numeric(2,1),
     dcetde numeric(3,2),
     dcspde character varying (3)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE proprietaire (
     proprietaire character varying (20),
@@ -477,7 +477,7 @@ CREATE TABLE proprietaire (
     jandge character varying (4),
     jantfc character varying (4),
     jantbc character varying (4)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE comptecommunal (
     comptecommunal character varying (12),
@@ -487,7 +487,7 @@ CREATE TABLE comptecommunal (
     ccocom character varying (3),
     dnupro character varying (6),
     ajoutcoherence character varying(1)
-) WITH(OIDS=TRUE);
+);
 
 
 CREATE TABLE pdl (
@@ -508,7 +508,7 @@ CREATE TABLE pdl (
     dnupro character varying (6),
     comptecommunal character varying (12),
     ccocif character varying (4)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE parcellecomposante(
     parcellecomposante character varying (31),
@@ -527,7 +527,7 @@ CREATE TABLE parcellecomposante(
     dnuplaa character varying (4),
     parcellea character varying(19),
     ccocif character varying (4)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE lots (
     lots character varying (29),
@@ -552,7 +552,7 @@ CREATE TABLE lots (
     comptecommunal character varying (12),
     dreflf character varying (5),
     ccocif character varying (4)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE lotslocaux (
     lotslocaux character varying (39),
@@ -575,7 +575,7 @@ CREATE TABLE lotslocaux (
     local10 character varying (14),
     dnumql character varying (7),
     ddenql character varying (7)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE commune (
     commune character varying (10),
@@ -600,7 +600,7 @@ CREATE TABLE commune (
     indldnbat character varying (1),
     motclas character varying (8),
     geo_commune character varying(7)
-) WITH(OIDS=TRUE);
+);
 
 CREATE TABLE voie (
     voie character varying (15),
@@ -628,7 +628,449 @@ CREATE TABLE voie (
     typvoi character varying (1),
     indldnbat character varying (1),
     motclas character varying (8)
-) WITH(OIDS=TRUE);
+);
+
+
+CREATE TABLE gpdl (gpdl character varying(1) primary key,gpdl_lib character varying(150));
+CREATE TABLE gnexps (gnexps character varying (2) primary key,gnexps_lib character varying (150));
+CREATE TABLE cgrnum ( cgrnum character varying (2) primary key,cgrnum_lib character varying (150));
+CREATE TABLE dsgrpf (dsgrpf character varying(2) primary key, dsgrpf_lib character varying(150));
+CREATE TABLE cnatsp (cnatsp character varying(5) primary key, cnatsp_lib character varying(150));
+CREATE TABLE ccolloc (ccolloc character varying(2) primary key, ccolloc_lib character varying(150));
+CREATE TABLE gnexts (gnexts character varying(2) primary key, gnexts_lib character varying(150));
+CREATE TABLE ccoeva (ccoeva character varying(1) primary key, ccoeva_lib character varying(150));
+CREATE TABLE dteloc (dteloc character varying(1) primary key, dteloc_lib character varying(150));
+CREATE TABLE ccoplc (ccoplc character varying(1) primary key, ccoplc_lib character varying(150));
+CREATE TABLE cconlc (cconlc character varying(2) primary key, cconlc_lib character varying(150));
+CREATE TABLE top48a (top48a character varying(1) primary key, top48a_lib character varying(150));
+CREATE TABLE dnatlc (dnatlc character varying(1) primary key, dnatlc_lib character varying(150));
+CREATE TABLE hlmsem (hlmsem character varying(1) primary key, hlmsem_lib character varying(150));
+CREATE TABLE ccoaff (ccoaff character varying(1) primary key, ccoaff_lib character varying(150));
+CREATE TABLE gnexpl (gnexpl character varying(2) primary key, gnexpl_lib character varying(150));
+CREATE TABLE gnextl (gnextl character varying(2) primary key, gnextl_lib character varying(150));
+CREATE TABLE cconad (cconad character varying(2) primary key, cconad_lib character varying(150));
+CREATE TABLE ctpdl (ctpdl character varying(3) primary key, ctpdl_lib character varying(150));
+CREATE TABLE cconlo (cconlo character varying(1) primary key, cconlo_lib character varying(150));
+CREATE TABLE ccodro (ccodro character varying(1) primary key, ccodro_lib character varying(150));
+CREATE TABLE ccodem (ccodem character varying(1) primary key, ccodem_lib character varying(150));
+CREATE TABLE gtoper (gtoper character varying(1) primary key, gtoper_lib character varying(150));
+CREATE TABLE ccoqua (ccoqua character varying(1) primary key, ccoqua_lib character varying(150));
+CREATE TABLE dnatpr (dnatpr character varying(3) primary key, dnatpr_lib character varying(150));
+CREATE TABLE ccogrm (ccogrm character varying(2) primary key, ccogrm_lib character varying(150));
+CREATE TABLE gtyp3 (gtyp3 character varying(1) primary key, gtyp3_lib character varying(150));
+CREATE TABLE gtyp4 (gtyp4 character varying(1) primary key, gtyp4_lib character varying(150));
+CREATE TABLE gtyp5 (gtyp5 character varying(1) primary key, gtyp5_lib character varying(150));
+CREATE TABLE gtyp6 (gtyp6 character varying(1) primary key, gtyp6_lib character varying(150));
+CREATE TABLE typcom (typcom character varying(1) primary key, typcom_lib character varying(150));
+CREATE TABLE natvoiriv (natvoiriv character varying(1) primary key, natvoiriv_lib character varying(150));
+CREATE TABLE carvoi (carvoi character varying(1) primary key, carvoi_lib character varying(150));
+CREATE TABLE annul (annul character varying(1) primary key, annul_lib character varying(150));
+CREATE TABLE typvoi (typvoi character varying(1) primary key, typvoi_lib character varying(150));
+CREATE TABLE indldnbat (indldnbat character varying(1) primary key, indldnbat_lib character varying(150));
+
+CREATE TABLE geo_commune
+(
+  geo_commune character varying(7) NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  idu character varying(3),
+  tex2 character varying(80),
+  creat_date date,
+  update_dat date,
+  commune character varying(10),
+  lot character(3),
+  ogc_fid integer NOT NULL
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_commune', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
+
+CREATE TABLE geo_section
+(
+  geo_section character varying(12) NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  idu character varying(8),
+  tex character varying(2),
+  geo_commune character varying(7) NOT NULL,
+  creat_date date,
+  update_dat date,
+  lot character(3),
+  ogc_fid integer NOT NULL
+)
+;
+SELECT AddGeometryColumn ( current_schema::text, 'geo_section', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
+CREATE TABLE geo_qupl (geo_qupl character varying(2) PRIMARY KEY,geo_qupl_lib character varying(150));
+CREATE TABLE geo_copl (geo_copl character varying(2) PRIMARY KEY,geo_copl_lib character varying(150));
+CREATE TABLE geo_inp (geo_inp character varying(2) PRIMARY KEY,geo_inp_lib character varying(150));
+
+CREATE TABLE geo_subdsect
+(
+  geo_subdsect character varying(14) NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  idu character varying(10),
+  geo_section character varying(12) NOT NULL,
+  geo_qupl character varying(2),
+  geo_copl character varying(2),
+  eor integer,
+  dedi date,
+  icl integer,
+  dis date,
+  geo_inp character varying(2),
+  dred date,
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_subdsect', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
+CREATE TABLE geo_indp (geo_indp character varying(2),geo_indp_lib character varying(150));
+ALTER TABLE geo_indp ADD PRIMARY KEY (geo_indp);
+
+CREATE TABLE geo_parcelle
+(
+  geo_parcelle character varying(16) NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  idu character varying(12),
+  geo_section character varying(12) NOT NULL,
+  geo_subdsect character varying(14),
+  supf numeric(10,3),
+  geo_indp character varying(2),
+  coar character varying(2),
+  tex character varying(4),
+  tex2 character varying(80),
+  codm character varying(80),
+  creat_date date,
+  update_dat date,
+  parcelle character varying(19),
+  lot character(3),
+  comptecommunal text,
+  dvoilib text,
+  ogc_fid integer NOT NULL
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom_uf', 2154 , 'MULTIPOLYGON', 2 );
+
+
+CREATE TABLE geo_subdfisc
+(
+  geo_subdfisc serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying,
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_subdfisc', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
+CREATE TABLE geo_subdfisc_parcelle
+(
+  geo_subdfisc_parcelle serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_subdfisc integer NOT NULL,
+  geo_parcelle character varying(16) NOT NULL
+);
+
+CREATE TABLE geo_voiep
+(
+  geo_voiep serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying(80),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_voiep', 'geom', 2154 , 'POINT', 2 );
+
+
+CREATE TABLE geo_numvoie
+(
+  geo_numvoie serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying(15),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_numvoie', 'geom', 2154 , 'POINT', 2 );
+
+
+CREATE TABLE geo_numvoie_parcelle
+(
+  geo_numvoie_parcelle serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_numvoie integer NOT NULL,
+  geo_parcelle character varying(16) NOT NULL
+);
+
+CREATE TABLE geo_lieudit
+(
+  geo_lieudit serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying(80),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_lieudit', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
+CREATE TABLE geo_dur (geo_dur character varying(2),geo_dur_lib character varying(150));
+ALTER TABLE geo_dur ADD PRIMARY KEY (geo_dur);
+
+CREATE TABLE geo_batiment
+(
+  geo_batiment character varying(14) NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  geo_dur character varying(2),
+  tex character varying(80),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_batiment', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
+CREATE TABLE geo_batiment_parcelle
+(
+  geo_batiment_parcelle serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_batiment character varying(14) NOT NULL,
+  geo_parcelle character varying(16) NOT NULL
+);
+
+CREATE TABLE geo_zoncommuni
+(
+  geo_zoncommuni serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying(255),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_zoncommuni', 'geom', 2154 , 'MULTILINESTRING', 2 );
+
+
+CREATE TABLE geo_tronfluv
+(
+  geo_tronfluv serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying(255),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_tronfluv', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
+CREATE TABLE geo_can (geo_can character varying(2),geo_can_lib character varying(150));
+ALTER TABLE geo_can ADD PRIMARY KEY (geo_can);
+CREATE TABLE geo_ppln (geo_ppln character varying(2),geo_ppln_lib character varying(150));
+ALTER TABLE geo_ppln ADD PRIMARY KEY (geo_ppln);
+CREATE TABLE geo_palt (geo_palt character varying(2),geo_palt_lib character varying(150));
+ALTER TABLE geo_palt ADD PRIMARY KEY (geo_palt);
+CREATE TABLE geo_map (geo_map character varying(2),geo_map_lib character varying(150));
+ALTER TABLE geo_map ADD PRIMARY KEY (geo_map);
+CREATE TABLE geo_sym (geo_sym character varying(2),geo_sym_lib character varying(150));
+ALTER TABLE geo_sym ADD PRIMARY KEY (geo_sym);
+
+CREATE TABLE geo_ptcanv
+(
+  geo_ptcanv serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  idu character varying(8),
+  geo_can character varying(2),
+  geo_ppln character varying(2),
+  geo_palt character varying(2),
+  geo_map character varying(2),
+  geo_sym character varying(2),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_ptcanv', 'geom', 2154 , 'POINT', 2 );
+
+
+CREATE TABLE geo_borne
+(
+  geo_borne serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_borne', 'geom', 2154 , 'POINT', 2 );
+
+
+CREATE TABLE geo_borne_parcelle
+(
+  geo_borne_parcelle serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_borne integer NOT NULL,
+  geo_parcelle character varying(16) NOT NULL
+);
+
+CREATE TABLE geo_croix
+(
+  geo_croix serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_croix', 'geom', 2154 , 'POINT', 2 );
+
+
+CREATE TABLE geo_croix_parcelle
+(
+  geo_croix_parcelle serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_croix integer NOT NULL,
+  geo_parcelle character varying(16) NOT NULL
+);
+
+CREATE TABLE geo_symblim
+(
+  geo_symblim serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  ori numeric(12,9),
+  geo_sym  character varying(2),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_symblim', 'geom', 2154 , 'POINT', 2 );
+
+
+CREATE TABLE geo_symblim_parcelle
+(
+  geo_symblim_parcelle serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_symblim integer NOT NULL,
+  geo_parcelle character varying(16) NOT NULL
+);
+
+CREATE TABLE geo_tpoint
+(
+  geo_tpoint serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  ori numeric(12,9),
+  tex character varying(80),
+  geo_sym  character varying(2),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_tpoint', 'geom', 2154 , 'POINT', 2 );
+
+
+CREATE TABLE geo_tpoint_commune
+(
+  geo_tpoint_commune serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_tpoint integer NOT NULL,
+  geo_commune character varying(7) NOT NULL
+);
+
+CREATE TABLE geo_tline
+(
+  geo_tline serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying(80),
+  geo_sym  character varying(2),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_tline', 'geom', 2154 , 'MULTILINESTRING', 2 );
+
+
+CREATE TABLE geo_tline_commune
+(
+  geo_tline_commune serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_tline integer NOT NULL,
+  geo_commune character varying(7) NOT NULL
+);
+
+CREATE TABLE geo_tsurf
+(
+  geo_tsurf serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying(80),
+  geo_sym  character varying(2),
+  creat_date date,
+  update_dat date,
+  lot character(3)
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_tsurf', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
+CREATE TABLE geo_tsurf_commune
+(
+  geo_tsurf_commune serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  geo_tsurf integer NOT NULL,
+  geo_commune character varying(7) NOT NULL
+);
+
+
+CREATE TABLE geo_label
+(
+  ogc_fid integer NOT NULL,
+  object_rid character varying(80),
+  fon character varying(80),
+  hei numeric(24,15),
+  tyu character varying(80),
+  cef numeric(24,15),
+  csp numeric(24,15),
+  di1 numeric(24,15),
+  di2 numeric(24,15),
+  di3 numeric(24,15),
+  di4 numeric(24,15),
+  tpa character varying(80),
+  hta character varying(80),
+  vta character varying(80),
+  atr character varying(80),
+  ogr_obj_lnk character varying,
+  ogr_obj_lnk_layer character varying,
+  ogr_atr_val character varying,
+  ogr_angle double precision,
+  ogr_font_size double precision,
+  x_label numeric,
+  y_label numeric
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_label', 'geom', 2154 , 'POINT', 2 );
+
+
+CREATE TABLE edigeo_rel ( edigeo_rel serial,nom character varying(30),de character varying(80),vers character varying(80));
+ALTER TABLE edigeo_rel ADD PRIMARY KEY (edigeo_rel );
+
+
+
+
+
+-- COMMENTS
 
 COMMENT ON TABLE parcelle IS 'Article descriptif de parcelle';
 COMMENT ON COLUMN parcelle.ccodep IS 'Code département - ';
@@ -1131,132 +1573,6 @@ COMMENT ON COLUMN voie.typvoi IS 'Type de voie - Indicateur de la classe de la v
 COMMENT ON COLUMN voie.indldnbat IS 'Indicateur lieu-dit non bâti - Zone servie uniquement pour les lieux-dits.Permet d’indiquer si le lieu-dit comporte ou non un bâtiment dans MAJIC.1 pour lieu-dit non bâti, 0 sinon.';
 COMMENT ON COLUMN voie.motclas IS 'Mot classant - Dernier mot entièrement alphabétique du libellé de voie - Permet de restituer l''ordre alphabétique.';
 
-CREATE TABLE gpdl (gpdl character varying(1),gpdl_lib character varying(150));
-alter table gpdl add primary key (gpdl);
-
-CREATE TABLE gnexps (gnexps character varying (2),gnexps_lib character varying (150));
-alter table gnexps add primary key (gnexps);
-
-CREATE TABLE cgrnum ( cgrnum character varying (2),cgrnum_lib character varying (150));
-alter table cgrnum add primary key (cgrnum);
-
-CREATE TABLE dsgrpf (dsgrpf character varying(2),dsgrpf_lib character varying(150));
-alter table dsgrpf add primary key (dsgrpf);
-
-CREATE TABLE cnatsp (cnatsp character varying(5),cnatsp_lib character varying(150));
-alter table cnatsp add primary key (cnatsp);
-
-CREATE TABLE ccolloc (ccolloc character varying(2),ccolloc_lib character varying(150));
-alter table ccolloc add primary key (ccolloc);
-
-CREATE TABLE gnexts (gnexts character varying(2),gnexts_lib character varying(150));
-alter table gnexts add primary key (gnexts);
-
-CREATE TABLE ccoeva (ccoeva character varying(1),ccoeva_lib character varying(150));
-alter table ccoeva add primary key (ccoeva);
-
-CREATE TABLE dteloc (dteloc character varying(1),dteloc_lib character varying(150));
-alter table dteloc add primary key (dteloc);
-
-CREATE TABLE ccoplc (ccoplc character varying(1),ccoplc_lib character varying(150));
-alter table ccoplc add primary key (ccoplc);
-
-CREATE TABLE cconlc (cconlc character varying(2),cconlc_lib character varying(150));
-alter table cconlc add primary key (cconlc);
-
-CREATE TABLE top48a (top48a character varying(1),top48a_lib character varying(150));
-alter table top48a add primary key (top48a);
-
-CREATE TABLE dnatlc (dnatlc character varying(1),dnatlc_lib character varying(150));
-alter table dnatlc add primary key (dnatlc);
-
-CREATE TABLE hlmsem (hlmsem character varying(1),hlmsem_lib character varying(150));
-alter table hlmsem add primary key (hlmsem);
-
-CREATE TABLE ccoaff (ccoaff character varying(1),ccoaff_lib character varying(150));
-alter table ccoaff add primary key (ccoaff);
-
-CREATE TABLE gnexpl (gnexpl character varying(2),gnexpl_lib character varying(150));
-alter table gnexpl add primary key (gnexpl);
-
-CREATE TABLE gnextl (gnextl character varying(2),gnextl_lib character varying(150));
-alter table gnextl add primary key (gnextl);
-
-CREATE TABLE cconad (cconad character varying(2),cconad_lib character varying(150));
-alter table cconad add primary key (cconad);
-
-CREATE TABLE ctpdl (ctpdl character varying(3),ctpdl_lib character varying(150));
-alter table ctpdl add primary key (ctpdl);
-
-CREATE TABLE cconlo (cconlo character varying(1),cconlo_lib character varying(150));
-alter table cconlo add primary key (cconlo);
-
-CREATE TABLE ccodro (ccodro character varying(1),ccodro_lib character varying(150));
-alter table ccodro add primary key (ccodro);
-
-CREATE TABLE ccodem (ccodem character varying(1),ccodem_lib character varying(150));
-alter table ccodem add primary key (ccodem);
-
-CREATE TABLE gtoper (gtoper character varying(1),gtoper_lib character varying(150));
-alter table gtoper add primary key (gtoper);
-
-CREATE TABLE ccoqua (ccoqua character varying(1),ccoqua_lib character varying(150));
-alter table ccoqua add primary key (ccoqua);
-
-CREATE TABLE dnatpr (dnatpr character varying(3),dnatpr_lib character varying(150));
-alter table dnatpr add primary key (dnatpr);
-
-CREATE TABLE ccogrm (ccogrm character varying(2),ccogrm_lib character varying(150));
-alter table ccogrm add primary key (ccogrm);
-
-CREATE TABLE gtyp3 (gtyp3 character varying(1),gtyp3_lib character varying(150));
-alter table gtyp3 add primary key (gtyp3);
-
-CREATE TABLE gtyp4 (gtyp4 character varying(1),gtyp4_lib character varying(150));
-alter table gtyp4 add primary key (gtyp4);
-
-CREATE TABLE gtyp5 (gtyp5 character varying(1),gtyp5_lib character varying(150));
-alter table gtyp5 add primary key (gtyp5);
-
-CREATE TABLE gtyp6 (gtyp6 character varying(1),gtyp6_lib character varying(150));
-alter table gtyp6 add primary key (gtyp6);
-
-CREATE TABLE typcom (typcom character varying(1),typcom_lib character varying(150));
-alter table typcom add primary key (typcom);
-
-CREATE TABLE natvoiriv (natvoiriv character varying(1),natvoiriv_lib character varying(150));
-alter table natvoiriv add primary key (natvoiriv);
-
-CREATE TABLE carvoi (carvoi character varying(1),carvoi_lib character varying(150));
-alter table carvoi add primary key (carvoi);
-
-CREATE TABLE annul (annul character varying(1),annul_lib character varying(150));
-alter table annul add primary key (annul);
-
-CREATE TABLE typvoi (typvoi character varying(1),typvoi_lib character varying(150));
-alter table typvoi add primary key (typvoi);
-
-CREATE TABLE indldnbat (indldnbat character varying(1),indldnbat_lib character varying(150));
-alter table indldnbat add primary key (indldnbat);
-
-CREATE TABLE geo_commune
-(
-  geo_commune character varying(7) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(3),
-  tex2 character varying(80),
-  creat_date date,
-  update_dat date,
-  commune character varying(10),
-  lot character(3),
-  ogc_fid integer NOT NULL
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_commune', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_commune IS 'Territoire contenant un nombre entier de subdivisions de section cadastrales';
 COMMENT ON COLUMN geo_commune.geo_commune IS 'Identifiant';
 COMMENT ON COLUMN geo_commune.annee IS 'Année';
@@ -1265,25 +1581,6 @@ COMMENT ON COLUMN geo_commune.idu IS 'Code INSEE';
 COMMENT ON COLUMN geo_commune.tex2 IS 'Nom commune';
 COMMENT ON COLUMN geo_commune.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_commune.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_section
-(
-  geo_section character varying(12) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(8),
-  tex character varying(2),
-  geo_commune character varying(7) NOT NULL,
-  creat_date date,
-  update_dat date,
-  lot character(3),
-  ogc_fid integer NOT NULL
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_section', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_section IS 'Partie du plan cadastral correspondant à une portion du territoire communal et comportant, suivant le cas, une ou plusieurs subdivisions de section';
 COMMENT ON COLUMN geo_section.geo_section IS 'Identifiant';
 COMMENT ON COLUMN geo_section.annee IS 'Année';
@@ -1293,40 +1590,6 @@ COMMENT ON COLUMN geo_section.tex IS 'Lettre(s) de section';
 COMMENT ON COLUMN geo_section.geo_commune IS 'Commune';
 COMMENT ON COLUMN geo_section.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_section.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_qupl (geo_qupl character varying(2),geo_qupl_lib character varying(150));
-ALTER TABLE geo_qupl ADD PRIMARY KEY (geo_qupl);
-
-CREATE TABLE geo_copl (geo_copl character varying(2),geo_copl_lib character varying(150));
-ALTER TABLE geo_copl ADD PRIMARY KEY (geo_copl);
-
-CREATE TABLE geo_inp (geo_inp character varying(2),geo_inp_lib character varying(150));
-ALTER TABLE geo_inp ADD PRIMARY KEY (geo_inp);
-
-CREATE TABLE geo_subdsect
-(
-  geo_subdsect character varying(14) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(10),
-  geo_section character varying(12) NOT NULL,
-  geo_qupl character varying(2),
-  geo_copl character varying(2),
-  eor integer,
-  dedi date,
-  icl integer,
-  dis date,
-  geo_inp character varying(2),
-  dred date,
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_subdsect', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_subdsect IS 'Portion de section cadastrale disposant de caractéristiques propres au regard notamment de son échelle, sa qualité, son mode de confection. Une section a au moins une subdivision de section. Cet objet correspond à la feuille cadastrale.';
 COMMENT ON COLUMN geo_subdsect.geo_subdsect IS 'Identifiant';
 COMMENT ON COLUMN geo_subdsect.annee IS 'Année';
@@ -1343,38 +1606,6 @@ COMMENT ON COLUMN geo_subdsect.geo_inp IS 'Mode d''incorporation au plan';
 COMMENT ON COLUMN geo_subdsect.dred IS 'Date de réédition';
 COMMENT ON COLUMN geo_subdsect.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_subdsect.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_indp (geo_indp character varying(2),geo_indp_lib character varying(150));
-ALTER TABLE geo_indp ADD PRIMARY KEY (geo_indp);
-
-CREATE TABLE geo_parcelle
-(
-  geo_parcelle character varying(16) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(12),
-  geo_section character varying(12) NOT NULL,
-  geo_subdsect character varying(14),
-  supf numeric(10,3),
-  geo_indp character varying(2),
-  coar character varying(2),
-  tex character varying(4),
-  tex2 character varying(80),
-  codm character varying(80),
-  creat_date date,
-  update_dat date,
-  parcelle character varying(19),
-  lot character(3),
-  comptecommunal text,
-  dvoilib text,
-  ogc_fid integer NOT NULL
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom_uf', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_parcelle IS 'Portion de section cadastrale disposant de caractéristiques propres au regard notamment de son échelle, sa qualité, son mode de confection. Une section a au moins une subdivision de section. Cet objet correspond à la feuille cadastrale.';
 COMMENT ON COLUMN geo_parcelle.geo_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_parcelle.annee IS 'Année';
@@ -1389,22 +1620,6 @@ COMMENT ON COLUMN geo_parcelle.tex2 IS 'tex2 - non documenté';
 COMMENT ON COLUMN geo_parcelle.codm IS 'codm - non documenté';
 COMMENT ON COLUMN geo_parcelle.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_parcelle.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_subdfisc
-(
-  geo_subdfisc serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_subdfisc', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_subdfisc IS 'Partie d''une parcelle ayant une seule nature de culture ou de propriété et constituant une unité au regard de la fiscalité directe locale.';
 COMMENT ON COLUMN geo_subdfisc.geo_subdfisc IS 'Identifiant';
 COMMENT ON COLUMN geo_subdfisc.annee IS 'Année';
@@ -1412,35 +1627,11 @@ COMMENT ON COLUMN geo_subdfisc.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_subdfisc.tex IS 'Lettre d''ordre';
 COMMENT ON COLUMN geo_subdfisc.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_subdfisc.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_subdfisc_parcelle
-(
-  geo_subdfisc_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_subdfisc integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
-);
 COMMENT ON TABLE geo_subdfisc_parcelle IS 'Lien subdivision fiscale - parcelle';
 COMMENT ON COLUMN geo_subdfisc_parcelle.geo_subdfisc_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_subdfisc_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_subdfisc_parcelle.geo_subdfisc IS 'subdivision fiscale';
 COMMENT ON COLUMN geo_subdfisc_parcelle.geo_parcelle IS 'geo_parcelle';
-
-CREATE TABLE geo_voiep
-(
-  geo_voiep serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying(80),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_voiep', 'geom', 2154 , 'POINT', 2 );
-
 COMMENT ON TABLE geo_voiep IS 'Élément ponctuel permettant la gestion de l''ensemble immobilier auquel est associé son libellé.';
 COMMENT ON COLUMN geo_voiep.geo_voiep IS 'Identifiant';
 COMMENT ON COLUMN geo_voiep.annee IS 'Année';
@@ -1448,22 +1639,6 @@ COMMENT ON COLUMN geo_voiep.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_voiep.tex IS 'Nom de la voie';
 COMMENT ON COLUMN geo_voiep.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_voiep.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_numvoie
-(
-  geo_numvoie serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying(15),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_numvoie', 'geom', 2154 , 'POINT', 2 );
-
 COMMENT ON TABLE geo_numvoie IS 'Numéro correspondant à l''adresse de la parcelle.';
 COMMENT ON COLUMN geo_numvoie.geo_numvoie IS 'Identifiant';
 COMMENT ON COLUMN geo_numvoie.annee IS 'Année';
@@ -1471,35 +1646,11 @@ COMMENT ON COLUMN geo_numvoie.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_numvoie.tex IS 'Numéro';
 COMMENT ON COLUMN geo_numvoie.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_numvoie.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_numvoie_parcelle
-(
-  geo_numvoie_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_numvoie integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
-);
 COMMENT ON TABLE geo_numvoie_parcelle IS 'Lien subdivision fiscale - parcelle';
 COMMENT ON COLUMN geo_numvoie_parcelle.geo_numvoie_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_numvoie_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_numvoie_parcelle.geo_numvoie IS 'Subdivision fiscale';
 COMMENT ON COLUMN geo_numvoie_parcelle.geo_parcelle IS 'Parcelle';
-
-CREATE TABLE geo_lieudit
-(
-  geo_lieudit serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying(80),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_lieudit', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_lieudit IS 'Ensemble de parcelles entières comportant une même dénomination géographique résultant de l''usage.';
 COMMENT ON COLUMN geo_lieudit.geo_lieudit IS 'Identifiant';
 COMMENT ON COLUMN geo_lieudit.annee IS 'Année';
@@ -1507,26 +1658,6 @@ COMMENT ON COLUMN geo_lieudit.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_lieudit.tex IS 'Libellé';
 COMMENT ON COLUMN geo_lieudit.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_lieudit.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_dur (geo_dur character varying(2),geo_dur_lib character varying(150));
-ALTER TABLE geo_dur ADD PRIMARY KEY (geo_dur);
-
-CREATE TABLE geo_batiment
-(
-  geo_batiment character varying(14) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  geo_dur character varying(2),
-  tex character varying(80),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_batiment', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_batiment IS 'Construction assise sur une ou plusieurs parcelles cadastrales.';
 COMMENT ON COLUMN geo_batiment.geo_batiment IS 'Identifiant';
 COMMENT ON COLUMN geo_batiment.annee IS 'Année';
@@ -1535,35 +1666,11 @@ COMMENT ON COLUMN geo_batiment.geo_dur IS 'Type de bâtiment';
 COMMENT ON COLUMN geo_batiment.tex IS 'Texte du bâtiment';
 COMMENT ON COLUMN geo_batiment.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_batiment.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_batiment_parcelle
-(
-  geo_batiment_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_batiment character varying(14) NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
-);
 COMMENT ON TABLE geo_batiment_parcelle IS 'Lien subdivision fiscale - parcelle';
 COMMENT ON COLUMN geo_batiment_parcelle.geo_batiment_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_batiment_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_batiment_parcelle.geo_batiment IS 'Bâtiment';
 COMMENT ON COLUMN geo_batiment_parcelle.geo_parcelle IS 'Parcelle';
-
-CREATE TABLE geo_zoncommuni
-(
-  geo_zoncommuni serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying(255),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=TRUE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_zoncommuni', 'geom', 2154 , 'MULTILINESTRING', 2 );
-
 COMMENT ON TABLE geo_zoncommuni IS 'Voie du domaine non cadastré (ou passant sur des parcelles non figurées au plan) représentée par un élément linéaire correspondant à son axe.';
 COMMENT ON COLUMN geo_zoncommuni.geo_zoncommuni IS 'Identifiant';
 COMMENT ON COLUMN geo_zoncommuni.annee IS 'Année';
@@ -1571,21 +1678,6 @@ COMMENT ON COLUMN geo_zoncommuni.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_zoncommuni.tex IS 'Nom de la voie';
 COMMENT ON COLUMN geo_zoncommuni.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_zoncommuni.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_tronfluv
-(
-  geo_tronfluv serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying(255),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_tronfluv', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_tronfluv IS 'Élément surfacique (fermé) utilisé pour tous les cours d''eau et les rivages de mers. Un libellé y est associé.';
 COMMENT ON COLUMN geo_tronfluv.geo_tronfluv IS 'Identifiant';
 COMMENT ON COLUMN geo_tronfluv.annee IS 'Année';
@@ -1593,38 +1685,6 @@ COMMENT ON COLUMN geo_tronfluv.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_tronfluv.tex IS 'Nom du cours d''eau';
 COMMENT ON COLUMN geo_tronfluv.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_tronfluv.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_can (geo_can character varying(2),geo_can_lib character varying(150));
-ALTER TABLE geo_can ADD PRIMARY KEY (geo_can);
-CREATE TABLE geo_ppln (geo_ppln character varying(2),geo_ppln_lib character varying(150));
-ALTER TABLE geo_ppln ADD PRIMARY KEY (geo_ppln);
-CREATE TABLE geo_palt (geo_palt character varying(2),geo_palt_lib character varying(150));
-ALTER TABLE geo_palt ADD PRIMARY KEY (geo_palt);
-CREATE TABLE geo_map (geo_map character varying(2),geo_map_lib character varying(150));
-ALTER TABLE geo_map ADD PRIMARY KEY (geo_map);
-CREATE TABLE geo_sym (geo_sym character varying(2),geo_sym_lib character varying(150));
-ALTER TABLE geo_sym ADD PRIMARY KEY (geo_sym);
-
-CREATE TABLE geo_ptcanv
-(
-  geo_ptcanv serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(8),
-  geo_can character varying(2),
-  geo_ppln character varying(2),
-  geo_palt character varying(2),
-  geo_map character varying(2),
-  geo_sym character varying(2),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_ptcanv', 'geom', 2154 , 'POINT', 2 );
-
 COMMENT ON TABLE geo_ptcanv IS 'Objet ponctuel servant d''appui aux opérations de lever des plans..';
 COMMENT ON COLUMN geo_ptcanv.geo_ptcanv IS 'Identifiant';
 COMMENT ON COLUMN geo_ptcanv.annee IS 'Année';
@@ -1637,91 +1697,28 @@ COMMENT ON COLUMN geo_ptcanv.geo_map IS 'Stabilité de matérialisation du suppo
 COMMENT ON COLUMN geo_ptcanv.geo_sym IS 'Genre du point';
 COMMENT ON COLUMN geo_ptcanv.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_ptcanv.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_borne
-(
-  geo_borne serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_borne', 'geom', 2154 , 'POINT', 2 );
-
 COMMENT ON TABLE geo_borne IS 'Borne située en limite de propriété et représentée par un symbole ponctuel.';
 COMMENT ON COLUMN geo_borne.geo_borne IS 'Identifiant';
 COMMENT ON COLUMN geo_borne.annee IS 'Année';
 COMMENT ON COLUMN geo_borne.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_borne.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_borne.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_borne_parcelle
-(
-  geo_borne_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_borne integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
-);
 COMMENT ON TABLE geo_borne_parcelle IS 'Lien borne - parcelle';
 COMMENT ON COLUMN geo_borne_parcelle.geo_borne_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_borne_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_borne_parcelle.geo_borne IS 'borne';
 COMMENT ON COLUMN geo_borne_parcelle.geo_parcelle IS 'Parcelle';
-
-CREATE TABLE geo_croix
-(
-  geo_croix serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_croix', 'geom', 2154 , 'POINT', 2 );
-
 COMMENT ON TABLE geo_croix IS 'Borne située en limite de propriété et représentée par un symbole ponctuel.';
 COMMENT ON COLUMN geo_croix.geo_croix IS 'Identifiant';
 COMMENT ON COLUMN geo_croix.annee IS 'Année';
 COMMENT ON COLUMN geo_croix.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_croix.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_croix.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_croix_parcelle
-(
-  geo_croix_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_croix integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
-);
 COMMENT ON TABLE geo_croix_parcelle IS 'Lien croix - parcelle';
 COMMENT ON COLUMN geo_croix_parcelle.geo_croix_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_croix_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_croix_parcelle.geo_croix IS 'Croix';
 COMMENT ON COLUMN geo_croix_parcelle.geo_parcelle IS 'Parcelle';
-
-CREATE TABLE geo_symblim
-(
-  geo_symblim serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  ori numeric(12,9),
-  geo_sym  character varying(2),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_symblim', 'geom', 2154 , 'POINT', 2 );
-
 COMMENT ON TABLE geo_symblim IS 'Symbole de limite de propriété représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_symblim.geo_symblim IS 'Identifiant';
 COMMENT ON COLUMN geo_symblim.annee IS 'Année';
@@ -1730,37 +1727,11 @@ COMMENT ON COLUMN geo_symblim.ori IS 'Orientation';
 COMMENT ON COLUMN geo_symblim.geo_sym IS 'Genre';
 COMMENT ON COLUMN geo_symblim.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_symblim.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_symblim_parcelle
-(
-  geo_symblim_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_symblim integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
-);
 COMMENT ON TABLE geo_symblim_parcelle IS 'Lien symblim - parcelle';
 COMMENT ON COLUMN geo_symblim_parcelle.geo_symblim_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_symblim_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_symblim_parcelle.geo_symblim IS 'symblim';
 COMMENT ON COLUMN geo_symblim_parcelle.geo_parcelle IS 'Parcelle';
-
-CREATE TABLE geo_tpoint
-(
-  geo_tpoint serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  ori numeric(12,9),
-  tex character varying(80),
-  geo_sym  character varying(2),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_tpoint', 'geom', 2154 , 'POINT', 2 );
-
 COMMENT ON TABLE geo_tpoint IS 'Détail topographique ponctuel représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_tpoint.geo_tpoint IS 'Identifiant';
 COMMENT ON COLUMN geo_tpoint.annee IS 'Année';
@@ -1770,36 +1741,11 @@ COMMENT ON COLUMN geo_tpoint.tex IS 'Texte du détail';
 COMMENT ON COLUMN geo_tpoint.geo_sym IS 'Genre';
 COMMENT ON COLUMN geo_tpoint.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_tpoint.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_tpoint_commune
-(
-  geo_tpoint_commune serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_tpoint integer NOT NULL,
-  geo_commune character varying(7) NOT NULL
-);
 COMMENT ON TABLE geo_tpoint_commune IS 'Lien tpoint - commune';
 COMMENT ON COLUMN geo_tpoint_commune.geo_tpoint_commune IS 'Identifiant';
 COMMENT ON COLUMN geo_tpoint_commune.annee IS 'Année';
 COMMENT ON COLUMN geo_tpoint_commune.geo_tpoint IS 'tpoint';
 COMMENT ON COLUMN geo_tpoint_commune.geo_commune IS 'commune';
-
-CREATE TABLE geo_tline
-(
-  geo_tline serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying(80),
-  geo_sym  character varying(2),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_tline', 'geom', 2154 , 'MULTILINESTRING', 2 );
-
 COMMENT ON TABLE geo_tline IS 'Détail topographique linéaire représenté par un signe conventionnel de type linéaire permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_tline.geo_tline IS 'Identifiant';
 COMMENT ON COLUMN geo_tline.annee IS 'Année';
@@ -1808,36 +1754,11 @@ COMMENT ON COLUMN geo_tline.tex IS 'Texte du détail';
 COMMENT ON COLUMN geo_tline.geo_sym IS 'Genre';
 COMMENT ON COLUMN geo_tline.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_tline.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_tline_commune
-(
-  geo_tline_commune serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_tline integer NOT NULL,
-  geo_commune character varying(7) NOT NULL
-);
 COMMENT ON TABLE geo_tline_commune IS 'Lien tline - commune';
 COMMENT ON COLUMN geo_tline_commune.geo_tline_commune IS 'Identifiant';
 COMMENT ON COLUMN geo_tline_commune.annee IS 'Année';
 COMMENT ON COLUMN geo_tline_commune.geo_tline IS 'tline';
 COMMENT ON COLUMN geo_tline_commune.geo_commune IS 'commune';
-
-CREATE TABLE geo_tsurf
-(
-  geo_tsurf serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying(80),
-  geo_sym  character varying(2),
-  creat_date date,
-  update_dat date,
-  lot character(3)
-)
-WITH (
-  OIDS=FALSE
-);
-SELECT AddGeometryColumn ( current_schema::text, 'geo_tsurf', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-
 COMMENT ON TABLE geo_tsurf IS 'Détail topographique surfacique représenté par un signe conventionnel de type surfacique permettant de documenter le plan cadastral et d''en améliorer la lisibilité';
 COMMENT ON COLUMN geo_tsurf.geo_tsurf IS 'Identifiant';
 COMMENT ON COLUMN geo_tsurf.annee IS 'Année';
@@ -1846,21 +1767,35 @@ COMMENT ON COLUMN geo_tsurf.tex IS 'Texte du détail';
 COMMENT ON COLUMN geo_tsurf.geo_sym IS 'Genre';
 COMMENT ON COLUMN geo_tsurf.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_tsurf.update_dat IS 'Date de dernière modification';
-
-CREATE TABLE geo_tsurf_commune
-(
-  geo_tsurf_commune serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_tsurf integer NOT NULL,
-  geo_commune character varying(7) NOT NULL
-);
 COMMENT ON TABLE geo_tsurf_commune IS 'Lien tsurf - commune';
 COMMENT ON COLUMN geo_tsurf_commune.geo_tsurf_commune IS 'Identifiant';
 COMMENT ON COLUMN geo_tsurf_commune.annee IS 'Année';
 COMMENT ON COLUMN geo_tsurf_commune.geo_tsurf IS 'tsurf';
 COMMENT ON COLUMN geo_tsurf_commune.geo_commune IS 'commune';
-
-CREATE TABLE edigeo_rel ( edigeo_rel serial,nom character varying(30),de character varying(80),vers character varying(80));
-ALTER TABLE edigeo_rel ADD PRIMARY KEY (edigeo_rel );
-
-
+COMMENT ON TABLE geo_label IS 'Libellés';
+COMMENT ON COLUMN geo_label.geo_label IS 'Identifiant';
+COMMENT ON COLUMN geo_label.annee IS 'Année';
+COMMENT ON COLUMN geo_label.ogc_fid IS 'Numéro d''enregistrement source';
+COMMENT ON COLUMN geo_label.object_rid IS 'Numéro d''objet';
+COMMENT ON COLUMN geo_label.creat_date IS 'Date de création';
+COMMENT ON COLUMN geo_label.update_dat IS 'Date de dernière modification';
+COMMENT ON COLUMN geo_label.fon IS 'Nom en clair de la police typographique';
+COMMENT ON COLUMN geo_label.hei IS 'Hauteur des caractères';
+COMMENT ON COLUMN geo_label.tyu IS 'Type de l''unité utilisée';
+COMMENT ON COLUMN geo_label.cef IS 'Facteur d''agrandissement';
+COMMENT ON COLUMN geo_label.csp IS 'Espacement intercaractères';
+COMMENT ON COLUMN geo_label.di1 IS 'Orientation composante X du vecteur hauteur';
+COMMENT ON COLUMN geo_label.di2 IS 'Orientation composante Y du vecteur hauteur';
+COMMENT ON COLUMN geo_label.di3 IS 'Orientation composante X du vecteur base';
+COMMENT ON COLUMN geo_label.di4 IS 'Orientation composante Y du vecteur base';
+COMMENT ON COLUMN geo_label.tpa IS 'Sens de l''écriture';
+COMMENT ON COLUMN geo_label.hta IS 'Alignement horizontal du texte';
+COMMENT ON COLUMN geo_label.vta IS 'Alignement vertical du texte';
+COMMENT ON COLUMN geo_label.atr IS 'Identificateur de l''attribut à écrire';
+COMMENT ON COLUMN geo_label.ogr_obj_ln IS 'lien n°objet';
+COMMENT ON COLUMN geo_label.ogr_obj__1 IS 'type objet';
+COMMENT ON COLUMN geo_label.ogr_atr_va IS 'Ogr valeur';
+COMMENT ON COLUMN geo_label.ogr_angle IS 'Ogr angle';
+COMMENT ON COLUMN geo_label.ogr_font_s IS 'Ogr taille fonte';
+COMMENT ON COLUMN geo_label.x_label IS 'Longitude';
+COMMENT ON COLUMN geo_label.y_label IS 'Latitude';

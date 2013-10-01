@@ -252,7 +252,7 @@ UPDATE [PREFIXE]local10 SET
   ccoriv = local00.ccoriv,
   ccovoi = local00.ccovoi,
   dnvoiri = local00.dnvoiri,
-  local00=local10.annee||local10.invar,
+  local00 = local10.annee||local10.invar,
   parcelle = REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '-'),
   voie= REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi,' ', '-')
 FROM [PREFIXE]local00
@@ -532,7 +532,7 @@ SELECT DISTINCT ON (ccodep,dnupro,dnulp,dnuper)
   SUBSTRING(tmp,287,3) AS dqualp,
   SUBSTRING(tmp,290,30) AS dnomlp,
   SUBSTRING(tmp,320,15) AS dprnlp,
-  CASE WHEN trim(SUBSTRING(tmp,335,10))='' THEN NULL WHEN SUBSTRING(tmp,335,10)='00/00/0000' THEN NULL ELSE to_date(SUBSTRING(tmp,335,10),'DD/MM/YYYYY') END AS jdatnss,
+  CASE WHEN trim(SUBSTRING(tmp,335,10))='' THEN NULL WHEN SUBSTRING(tmp,335,10)='00/00/0000' THEN NULL ELSE to_date(SUBSTRING(tmp,335,10),'DD/MM/YYYY') END AS jdatnss,
   SUBSTRING(tmp,345,58) AS dldnss,
   SUBSTRING(tmp,403,3) AS epxnee,
   SUBSTRING(tmp,406,30) AS dnomcp,

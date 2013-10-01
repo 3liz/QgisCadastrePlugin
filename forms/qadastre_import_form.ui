@@ -315,26 +315,16 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="liDataVersion">
-              <property name="enabled">
-               <bool>true</bool>
+             <widget class="QSpinBox" name="inDataVersion">
+              <property name="minimum">
+               <number>2011</number>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>80</width>
-                <height>16777215</height>
-               </size>
+              <property name="maximum">
+               <number>2012</number>
               </property>
-              <item>
-               <property name="text">
-                <string>2012</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>2011</string>
-               </property>
-              </item>
+              <property name="value">
+               <number>2012</number>
+              </property>
              </widget>
             </item>
             <item>
