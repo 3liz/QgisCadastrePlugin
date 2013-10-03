@@ -1,11 +1,15 @@
+<style type="text/css">
+   table tbody tr:nth-child(odd) { background-color: #E2E2E2; }
+</style>
+
 <table style="width: 100%;font-size:8pt;" border="1px" cellspacing="0" cellpadding="0">
   <thead>
     <tr>
-      <td style="text-align: center;" colspan="5" rowspan="1">DÉSIGNATION
+      <td style="text-align: center;" colspan="5" rowspan="1" width="35%">DÉSIGNATION
         DES PROPRIÉTÉS</td>
-      <td style="text-align: center;" colspan="7" rowspan="1">IDENTIFIANT</td>
-      <td style="text-align: center;" colspan="8" rowspan="1">ÉVALUATION</td>
-      <td colspan="1" rowspan="2">LIVRE FONCIER FEUILLET</td>
+      <td style="text-align: center;" colspan="7" rowspan="1" width="30%">IDENTIFIANT</td>
+      <td style="text-align: center;" colspan="8" rowspan="1" width="30%">ÉVALUATION</td>
+      <td colspan="1" rowspan="2" width="5%" align="center">LIVRE FONCIER FEUILLET</td>
     </tr>
     <tr>
       <td style="text-align: center;">SECTION</td>

@@ -790,7 +790,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 'table': 'geo_parcelle', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
-                'attributes': ['ogc_fid','tex','idu','geo_section','geom'],
+                'attributes': ['ogc_fid','tex','idu','geo_section','geom', 'comptecommunal', 'geo_parcelle'],
                 'orderBy': ['geo_parcelle'],
                 'features': None,
                 'chosenFeature': None,
@@ -820,7 +820,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 'table': 'geo_parcelle', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
-                'attributes': ['ogc_fid','tex','idu','comptecommunal','geom'],
+                'attributes': ['ogc_fid','tex','idu','comptecommunal','geom', 'geo_parcelle'],
                 'orderBy': ['geo_parcelle'],
                 'features': None,
                 'chosenFeature': None,
@@ -850,7 +850,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
                 'table': 'geo_parcelle', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
-                'attributes': ['ogc_fid','tex','idu','dvoilib','geom'],
+                'attributes': ['ogc_fid','tex','idu','dvoilib','geom', 'comptecommunal', 'geo_parcelle'],
                 'orderBy': ['geo_parcelle'],
                 'features': None,
                 'chosenFeature': None,
@@ -995,7 +995,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
             if filterExpression and queryMode == 'qgis':
                 qe = QgsExpression(filterExpression)
             if queryMode == 'sql':
-                emptyLabel = u'%s résultats' % len(features)
+                emptyLabel = u'%s ligne(s)' % len(features)
             else:
                 emptyLabel = ''
             cb.addItem('%s' % emptyLabel, '')
@@ -1152,7 +1152,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         self.qc.updateLog(u"%s résultats correpondent à '%s'" % (rowCount, searchValue))
         cb = self.searchComboBoxes[key]['widget']
         cb.clear()
-        cb.addItem(u'%s résultat(s)' % rowCount , '')
+        cb.addItem(u'%s ligne(s)' % rowCount , '')
         itemList = []
         for line in data:
             if key == 'adresse':
@@ -1383,7 +1383,12 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         as PDF using the template composer
         filled with appropriate data
         '''
-        print 'export parcelle'
+        feat = self.searchComboBoxes[key]['chosenFeature']
+        if feat and self.connector:
+            qe = qadastreExport(self, 'parcelle', feat)
+            qe.exportAsPDF()
+        else:
+            self.qc.updateLog(u'Aucune parcelle sélectionnée !')
 
 
     def onVisibilityChange(self, visible):

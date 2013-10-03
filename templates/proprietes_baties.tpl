@@ -1,11 +1,16 @@
+<style type="text/css">
+   table tbody tr:nth-child(odd) { background-color: #E2E2E2; }
+</style>
+
+
 <table style="width: 100%;font-size:8pt;" border="1px" cellspacing="0" cellpadding="0">
   <thead>
     <tr>
-      <td style="text-align: center;" colspan="5" rowspan="1">DÉSIGNATION DES
+      <td style="text-align: center;" colspan="5" rowspan="1" width="40%">DÉSIGNATION DES
         PROPRIÉTÉS</td>
-      <td style="text-align: center;" colspan="5" rowspan="1">IDENTIFIANT DU
+      <td style="text-align: center;" colspan="5" rowspan="1" width="20%">IDENTIFIANT DU
         LOCAL</td>
-      <td style="text-align: center;" colspan="14" rowspan="1">ÉVALUATION DU
+      <td style="text-align: center;" colspan="14" rowspan="1" width="25%">ÉVALUATION DU
         LOCAL</td>
     </tr>
     <tr>

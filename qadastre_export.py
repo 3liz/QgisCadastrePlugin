@@ -43,15 +43,9 @@ class qadastreExport(QObject):
         # label for header2
         if self.etype == 'proprietaire':
             self.typeLabel = u'DE PROPRIÉTÉ'
+            self.feat = feat[0]
         else:
             self.typeLabel = u'PARCELLAIRE'
-
-        # Sql filters
-        self.sqlFilters = {}
-        if feat.has_key('geo_parcelle'):
-            self.sqlFilters['geo_parcelle'] = u" AND geo_parcelle = '%s'" % feat['geo_parcelle']
-        if feat.has_key('comptecommunal'):
-            self.sqlFilters['comptecommunal'] = u" AND comptecommunal = '%s'" % feat['comptecommunal']
 
         # List of templates
         self.composerTemplates = [
@@ -59,7 +53,11 @@ class qadastreExport(QObject):
                 'key': 'header1',
                 'names': ['annee', 'ccodep', 'ccodir', 'ccocom', 'libcom'],
                 'type': 'sql',
-                'filter': 'comptecommunal'
+                'filter': 'comptecommunal',
+                'and': {
+                    'proprietaire': u" AND comptecommunal = '%s'" % self.feat['comptecommunal'],
+                    'parcelle': u" AND comptecommunal = '%s'" % self.feat['comptecommunal']
+                }
             },
             {
                 'key': 'header2',
@@ -71,19 +69,27 @@ class qadastreExport(QObject):
                 'key': 'header3',
                 'names': ['comptecommunal'],
                 'type': 'properties',
-                'source': ['uncomtecommunal']
+                'source': [self.feat['comptecommunal'][6:]]
             },
             {
                 'key': 'proprietaires',
                 'names': ['proprietaires'],
                 'type': 'sql',
-                'filter': 'comptecommunal'
+                'filter': 'comptecommunal',
+                'and': {
+                    'proprietaire': u" AND comptecommunal = '%s'" % self.feat['comptecommunal'],
+                    'parcelle': u" AND comptecommunal = '%s'" % self.feat['comptecommunal']
+                }
             },
             {
                 'key': 'proprietes_baties_line',
                 'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'bat', 'ent', 'niv', 'ndeporte', 'numeroinvar', 'star', 'meval', 'af', 'natloc', 'cat', 'revenucadastral', 'coll', 'natexo', 'anret', 'andeb', 'fractionrcexo', 'pourcentageexo', 'txom', 'coefreduc'],
                 'type': 'sql',
-                'filter': 'comptecommunal'
+                'filter': 'comptecommunal',
+                'and': {
+                    'proprietaire': u" AND l10.comptecommunal = '%s'" % self.feat['comptecommunal'],
+                    'parcelle': u" AND p.geo_parcelle = '%s'" % self.feat['geo_parcelle']
+                }
             },
             {
                 'key': 'proprietes_baties',
@@ -94,7 +100,11 @@ class qadastreExport(QObject):
             {
                 'key': 'proprietes_non_baties_line',
                 'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'nparcprim', 'fpdp', 'star', 'suf', 'grssgr', 'cl', 'natcult', 'contenance', 'revenucadastral', 'coll', 'natexo', 'anret', 'fractionrcexo', 'pourcentageexo', 'tc', 'lff'],
-                'type': 'sql'
+                'type': 'sql',
+                'and': {
+                    'proprietaire': u" AND p.comptecommunal = '%s'" % self.feat['comptecommunal'],
+                    'parcelle': u" AND geo_parcelle = '%s'" % self.feat['geo_parcelle']
+                }
             },
             {
                 'key': 'proprietes_non_baties',
@@ -125,7 +135,7 @@ class qadastreExport(QObject):
         # and replace data inside it
         qgisReplaceDict = {}
         for item in self.composerTemplates:
-            qgisReplaceDict[item['key']] = item['content']
+            qgisReplaceDict[item['key']] = item['content'].replace('@', '<br>').replace('None', '')
         composition = self.loadComposerFromTemplate(qgisReplaceDict)
 
         # Export as pdf
@@ -157,8 +167,8 @@ class qadastreExport(QObject):
             if self.dialog.dbType == 'postgis':
                 sql = self.qc.setSearchPath(sql, self.dialog.schema)
             # Add where clause depending on etype
-            #~ if self.etype == 'proprietaire':
-                #~ sql+= " AND p.comptecommunal = '201280*00461'"
+            sql = sql.replace('$and', item['and'][self.etype] )
+            #~ self.qc.updateLog(sql)
             # Run SQL
             [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
 
