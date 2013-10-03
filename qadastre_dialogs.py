@@ -292,6 +292,8 @@ class qadastre_common():
                 data = connector._fetchall(c)
 
             rowCount = c.rowcount
+            if rowCount == -1:
+                rowCount = len(data)
 
         except BaseError as e:
 

@@ -245,6 +245,8 @@ FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='10';
 
 CREATE INDEX idxan_local00 ON local00 (annee);
 CREATE INDEX idxan_local10 ON local10 (annee);
+CREATE INDEX idx_local10_invar ON [PREFIXE]local10 (invar);
+CREATE INDEX idx_local00_invar ON [PREFIXE]local00 (invar);
 UPDATE [PREFIXE]local10 SET
   ccopre = local00.ccopre,
   ccosec = local00.ccosec,
@@ -750,83 +752,83 @@ FROM [PREFIXE]fanr WHERE trim(SUBSTRING(tmp,4,3)) <>'' AND trim(SUBSTRING(tmp,7,
 CREATE INDEX idxan_voie ON voie (annee);
 DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHERE annee='[ANNEE]' GROUP BY codvoi HAVING COUNT(*) > 1) AND annee='[ANNEE]';
 
-
--- création d'une table temporaire d'optimisation du traitement d'importation (lots);
--- création des index pour optimisation;
-CREATE INDEX idx_voie_codvoi ON [PREFIXE]voie (codvoi);
-CREATE INDEX idx_lots_comptecommunal ON [PREFIXE]lots (annee, ccodep, ccodir, ccocom, dnuprol);
-CREATE INDEX idxan_comptecommunal ON comptecommunal (annee);
-CREATE INDEX idxan_lots ON lots (annee);
-CREATE TABLE [PREFIXE]tempo_import AS
-SELECT DISTINCT l.tempo_import
-FROM [PREFIXE]lots l, [PREFIXE]comptecommunal c
-WHERE l.ccodep = c.ccodep AND l.dnuprol = c.dnupro AND l.annee='[ANNEE]' and c.annee='[ANNEE]';
-CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
-CREATE INDEX idx_lots_tempo_import ON [PREFIXE]lots (tempo_import);
--- ajout données manquantes : comptecommunal à partir de lots;
-INSERT INTO [PREFIXE]comptecommunal
- ( comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
-SELECT REPLACE(REPLACE(a.annee||a.ccodep||a.dnuprol,' ', '-'),'+','¤') AS comptecommunal, a.annee, a.ccodep, a.ccodir, a.dnuprol,'O'
-FROM [PREFIXE]lots a
-LEFT OUTER JOIN [PREFIXE]tempo_import t ON t.tempo_import = a.tempo_import
-WHERE t.tempo_import is null and a.annee='[ANNEE]'
-GROUP BY a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol;
--- suppression de la table temporaire (lots)
-DROP INDEX [PREFIXE]idx_tempo_import;
-DROP TABLE [PREFIXE]tempo_import;
-ALTER TABLE [PREFIXE]lots DROP COLUMN tempo_import;
--- création d'une table temporaire d'optimisation du traitement d'importation (local00/parcelle);
-CREATE INDEX idxan_parcelle ON parcelle (annee);
-CREATE TABLE [PREFIXE]tempo_import AS
-SELECT invar
-FROM [PREFIXE]local10 l, [PREFIXE]parcelle p
-WHERE l.ccodep=p.ccodep AND l.ccodir=p.ccodir AND l.ccocom=p.ccocom AND l.ccopre=p.ccopre AND l.ccosec=p.ccosec AND l.dnupla=p.dnupla AND l.annee='[ANNEE]' AND p.annee='[ANNEE]';
-CREATE INDEX idx_tempo_import_invar ON [PREFIXE]tempo_import (invar);
-CREATE INDEX idx_local10_invar ON [PREFIXE]local10 (invar);
--- ajout données manquantes : parcelle à partir de local00;
-INSERT INTO [PREFIXE]parcelle
- ( parcelle, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ajoutcoherence, comptecommunal,voie)
-SELECT
-  REPLACE(annee||ccodep||ccodir||ccocom||ccopre||ccosec||dnupla,' ','-') as parcelle,
-  annee,
-  ccodep,
-  ccodir,
-  ccocom,
-  ccopre,
-  ccosec,
-  dnupla,
-  'O' ,
-  Max(REPLACE(annee||ccodep||dnupro,' ', '-')) AS comptecommunal,
-  Max(REPLACE(annee||ccodep||ccodir||ccocom||ccovoi,' ', '-')) AS voie
-FROM [PREFIXE]local10 l
-LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.invar = l.invar
-WHERE t.invar IS NULL AND annee='[ANNEE]'
-GROUP BY annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla;
--- suppression de la table temporaire (local00/parcelle);
-DROP INDEX [PREFIXE]idx_local10_invar;
-DROP TABLE [PREFIXE]tempo_import;
--- création d'une table temporaire d'optimisation du traitement d'importation (comptecommunal/parcelle);
-CREATE TABLE [PREFIXE]tempo_import AS
-SELECT DISTINCT p.tempo_import
-FROM [PREFIXE]parcelle p, [PREFIXE]comptecommunal c
-WHERE p.ccodep = c.ccodep AND p.dnupro = c.dnupro AND p.annee='[ANNEE]' and c.annee='[ANNEE]';
-CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
-CREATE INDEX idx_parcelle_tempo_import ON [PREFIXE]parcelle (tempo_import);
--- ajout données manquantes : comptecommunal à partir de parcelles;
-INSERT INTO [PREFIXE]comptecommunal
- ( comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
-SELECT REPLACE(REPLACE(annee||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, dnupro,'O'
-FROM [PREFIXE]parcelle a
-LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.tempo_import = a.tempo_import
-WHERE t.tempo_import IS NULL AND annee='[ANNEE]'
-GROUP BY annee, ccodep, ccodir, dnupro;
--- suppression des éléments temporaires (local00/parcelle);
-DROP INDEX [PREFIXE]idx_parcelle_tempo_import;
-ALTER TABLE [PREFIXE]parcelle DROP COLUMN tempo_import;
-DROP TABLE [PREFIXE]tempo_import;
--- suppression des index pour optimisation;
-DROP INDEX [PREFIXE]idx_voie_codvoi;
-DROP INDEX [PREFIXE]idx_lots_comptecommunal;
+--~
+--~ -- creation d'une table temporaire d'optimisation du traitement d'importation (lots);
+--~ -- création des index pour optimisation;
+--~ CREATE INDEX idx_voie_codvoi ON [PREFIXE]voie (codvoi);
+--~ CREATE INDEX idx_lots_comptecommunal ON [PREFIXE]lots (annee, ccodep, ccodir, ccocom, dnuprol);
+--~ CREATE INDEX idxan_comptecommunal ON comptecommunal (annee);
+--~ CREATE INDEX idxan_lots ON lots (annee);
+--~ CREATE TABLE [PREFIXE]tempo_import AS
+--~ SELECT DISTINCT l.tempo_import
+--~ FROM [PREFIXE]lots l, [PREFIXE]comptecommunal c
+--~ WHERE l.ccodep = c.ccodep AND l.dnuprol = c.dnupro AND l.annee='[ANNEE]' and c.annee='[ANNEE]';
+--~ CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
+--~ CREATE INDEX idx_lots_tempo_import ON [PREFIXE]lots (tempo_import);
+--~ -- ajout données manquantes : comptecommunal à partir de lots;
+--~ INSERT INTO [PREFIXE]comptecommunal
+ --~ ( comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
+--~ SELECT REPLACE(REPLACE(a.annee||a.ccodep||a.dnuprol,' ', '-'),'+','¤') AS comptecommunal, a.annee, a.ccodep, a.ccodir, a.dnuprol,'O'
+--~ FROM [PREFIXE]lots a
+--~ LEFT OUTER JOIN [PREFIXE]tempo_import t ON t.tempo_import = a.tempo_import
+--~ WHERE t.tempo_import is null and a.annee='[ANNEE]'
+--~ GROUP BY a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol;
+--~ -- suppression de la table temporaire (lots)
+--~ DROP INDEX [PREFIXE]idx_tempo_import;
+--~ DROP TABLE [PREFIXE]tempo_import;
+--~ ALTER TABLE [PREFIXE]lots DROP COLUMN tempo_import;
+--~ -- création d'une table temporaire d'optimisation du traitement d'importation (local00/parcelle);
+--~ CREATE INDEX idxan_parcelle ON parcelle (annee);
+--~ CREATE TABLE [PREFIXE]tempo_import AS
+--~ SELECT invar
+--~ FROM [PREFIXE]local10 l, [PREFIXE]parcelle p
+--~ WHERE l.ccodep=p.ccodep AND l.ccodir=p.ccodir AND l.ccocom=p.ccocom AND l.ccopre=p.ccopre AND l.ccosec=p.ccosec AND l.dnupla=p.dnupla AND l.annee='[ANNEE]' AND p.annee='[ANNEE]';
+--~ CREATE INDEX idx_tempo_import_invar ON [PREFIXE]tempo_import (invar);
+--~
+--~ -- ajout données manquantes : parcelle à partir de local00;
+--~ INSERT INTO [PREFIXE]parcelle
+ --~ ( parcelle, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ajoutcoherence, comptecommunal,voie)
+--~ SELECT
+  --~ REPLACE(annee||ccodep||ccodir||ccocom||ccopre||ccosec||dnupla,' ','-') as parcelle,
+  --~ annee,
+  --~ ccodep,
+  --~ ccodir,
+  --~ ccocom,
+  --~ ccopre,
+  --~ ccosec,
+  --~ dnupla,
+  --~ 'O' ,
+  --~ Max(REPLACE(annee||ccodep||dnupro,' ', '-')) AS comptecommunal,
+  --~ Max(REPLACE(annee||ccodep||ccodir||ccocom||ccovoi,' ', '-')) AS voie
+--~ FROM [PREFIXE]local10 l
+--~ LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.invar = l.invar
+--~ WHERE t.invar IS NULL AND annee='[ANNEE]'
+--~ GROUP BY annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla;
+--~ -- suppression de la table temporaire (local00/parcelle);
+--~ DROP INDEX [PREFIXE]idx_local10_invar;
+--~ DROP TABLE [PREFIXE]tempo_import;
+--~ -- création d'une table temporaire d'optimisation du traitement d'importation (comptecommunal/parcelle);
+--~ CREATE TABLE [PREFIXE]tempo_import AS
+--~ SELECT DISTINCT p.tempo_import
+--~ FROM [PREFIXE]parcelle p, [PREFIXE]comptecommunal c
+--~ WHERE p.ccodep = c.ccodep AND p.dnupro = c.dnupro AND p.annee='[ANNEE]' and c.annee='[ANNEE]';
+--~ CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
+--~ CREATE INDEX idx_parcelle_tempo_import ON [PREFIXE]parcelle (tempo_import);
+--~ -- ajout données manquantes : comptecommunal à partir de parcelles;
+--~ INSERT INTO [PREFIXE]comptecommunal
+ --~ ( comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
+--~ SELECT REPLACE(REPLACE(annee||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, dnupro,'O'
+--~ FROM [PREFIXE]parcelle a
+--~ LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.tempo_import = a.tempo_import
+--~ WHERE t.tempo_import IS NULL AND annee='[ANNEE]'
+--~ GROUP BY annee, ccodep, ccodir, dnupro;
+--~ -- suppression des éléments temporaires (local00/parcelle);
+--~ DROP INDEX [PREFIXE]idx_parcelle_tempo_import;
+--~ ALTER TABLE [PREFIXE]parcelle DROP COLUMN tempo_import;
+--~ DROP TABLE [PREFIXE]tempo_import;
+--~ -- suppression des index pour optimisation;
+--~ DROP INDEX [PREFIXE]idx_voie_codvoi;
+--~ DROP INDEX [PREFIXE]idx_lots_comptecommunal;
 
 -- INDEXES
 CREATE INDEX idxan_suf ON suf (annee);

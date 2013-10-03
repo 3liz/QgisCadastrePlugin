@@ -193,12 +193,12 @@ SELECT s.annee, s.geo_tsurf, p.geo_commune
 FROM [PREFIXE]geo_tsurf s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
 
--- suppression des index
+-- suppression des index temporaires
 DROP INDEX [PREFIXE]idx_edigeorel_vers;
 DROP INDEX [PREFIXE]idx_edigeorel_de;
---DROP TABLE [PREFIXE]edigeo_rel;
+DROP TABLE [PREFIXE]edigeo_rel;
 
--- ANALYSES;
+-- analyses;
 ANALYSE [PREFIXE]geo_commune;
 ANALYSE [PREFIXE]geo_section;
 ANALYSE [PREFIXE]geo_subdsect;

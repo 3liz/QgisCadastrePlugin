@@ -219,7 +219,8 @@ class qadastreImport(QObject):
         scriptList.append(
             {
             'title' : u'Mise en forme des données',
-            'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion
+            'script' : '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion,
+            'divide': True
             }
         )
         scriptList.append(
@@ -237,7 +238,10 @@ class qadastreImport(QObject):
                 scriptPath = os.path.join(self.scriptDir, s)
                 self.replaceParametersInScript(scriptPath, replaceDict)
                 self.updateProgressBar()
-                self.executeSqlScript(scriptPath)
+                if item.has_key('divide'):
+                    self.executeSqlScript(scriptPath, True)
+                else:
+                    self.executeSqlScript(scriptPath)
             else:
                 self.updateProgressBar()
                 item['method']()
@@ -329,14 +333,15 @@ class qadastreImport(QObject):
                 'script' : '%s' % os.path.join(
                     self.scriptDir,
                     '%s/edigeo_formatage_donnees.sql' % self.dialog.dataVersion
+                ),
+                'divide': True
+            },
+            {   'title' : u'Création Unités foncières',
+                'script' : '%s' % os.path.join(
+                    self.scriptDir,
+                    '%s/edigeo_unite_fonciere.sql' % self.dialog.dataVersion
                 )
             },
-            #~ {   'title' : u'Création Unités foncières',
-                #~ 'script' : '%s' % os.path.join(
-                    #~ self.scriptDir,
-                    #~ '%s/edigeo_unite_fonciere.sql' % self.dialog.dataVersion
-                #~ )
-            #~ },
             {
                 'title' : u'Placement des étiquettes',
                 'script' : '%s/edigeo_add_labels_xy.sql' % os.path.join(
@@ -359,10 +364,9 @@ class qadastreImport(QObject):
                 scriptPath = item['script']
                 self.replaceParametersInScript(scriptPath, replaceDict)
                 self.updateProgressBar()
-                self.executeSqlScript(scriptPath)
+                self.executeSqlScript(scriptPath, item.has_key('divide'))
                 self.updateTimer()
                 self.updateProgressBar()
-
 
         # drop edigeo raw data
         self.dialog.subStepLabel.setText('Suppression des fichiers temporaires')
@@ -471,7 +475,7 @@ class qadastreImport(QObject):
         '''
         if self.go:
             QApplication.setOverrideCursor(Qt.WaitCursor)
-            self.qc.updateLog(u'* Décompression des fichiers de %s' % path.decode('UTF8'))
+            self.qc.updateLog(u'* Décompression des fichiers')
 
             # get all the zip files
             zipFileList = self.listFilesInDirectory(path, 'zip')
@@ -553,7 +557,7 @@ class qadastreImport(QObject):
         return None
 
 
-    def executeSqlScript(self, scriptPath):
+    def executeSqlScript(self, scriptPath, divide=False):
         '''
         Execute an SQL script file
         from opencadastre
@@ -570,10 +574,32 @@ class qadastreImport(QObject):
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
                 sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            # Convert SQL into spatialite syntax
+            if self.dialog.dbType == 'spatialite':
+                sql = self.postgisToSpatialite(sql)
             # Execute query
-            self.executeSqlQuery(sql)
-
-
+            if not divide:
+                self.executeSqlQuery(sql)
+                #~ self.qc.updateLog('|%s|' % sql)
+            else:
+                statements = sql.split(';')
+                self.totalSteps = len(statements)
+                self.updateProgressBar()
+                r = re.compile(r'select |insert |update |delete |alter |create |drop |truncate |comment |copy |vacuum |analyse ', re.IGNORECASE|re.MULTILINE)
+                for sqla in statements:
+                    cr = re.compile(r'-- (.+)', re.IGNORECASE|re.MULTILINE)
+                    ut = False
+                    for comment in cr.findall(sqla):
+                        self.qc.updateLog('  - %s' % comment.strip(' \n\r\t'))
+                        ut = True
+                    if r.search(sqla) and len(sqla.split('~')) == 1:
+                        sql = 'BEGIN;%s;COMMIT;' % sqla
+                        #~ self.qc.updateLog('$$%s@@' % sql)
+                        self.updateProgressBar()
+                        self.executeSqlQuery(sql)
+                        if ut:
+                            self.updateTimer()
+                        self.updateProgressBar()
         return None
 
 
@@ -594,6 +620,7 @@ class qadastreImport(QObject):
             {'in': r'alter table [^;]+drop column[^;]+;', 'out': ''},
             {'in': r'analyse [^;]+;', 'out': ''},
             # replace
+            {'in': r'truncate ', 'out': 'delete from '},
             {'in': r'distinct on *\([a-z, ]+\)', 'out': 'distinct'},
             {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
             {'in': r'current_schema::text, ', 'out': ''},
@@ -604,8 +631,6 @@ class qadastreImport(QObject):
             {'in': r"(to_date\()([^']+) *, *'DD/MM/YYYY' *\)", 'out': r"strftime('%d/%m/%Y',\2)"},
             {'in': r"(to_date\()([^']+) *, *'YYYYMMDD' *\)", 'out': r"strftime('%Y%m%d',\2)"},
         ]
-
-
         for a in replaceDict:
             r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
             sql = r.sub(a['out'], sql)
@@ -631,27 +656,39 @@ class qadastreImport(QObject):
                 replaceBy+= st
             sql = sql.replace(statement, replaceBy)
 
-
-        # majic formatage : replace multiple column update for geo_parcelle
+        # majic formatage : replace multiple column update for loca10
         r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
         res = r.findall(sql)
         replaceBy = ''
         for statement in res:
             replaceBy = '''
-            UPDATE local10 SET
-              ccopre = $ local00.ccopre @,
-              ccosec = $ local00.ccosec @,
-              dnupla = $ local00.dnupla @,
-              ccoriv = $ local00.ccoriv @,
-              ccovoi = $ local00.ccovoi @,
-              dnvoiri = $ local00.dnvoiri @,
-              local00 = $ local10.annee||local10.invar @,
-              parcelle = $ REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '-') @,
-              voie= $  REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi,' ', '-') @
-            WHERE local10.annee='%s';
-            ''' % self.dialog.dataYear
-            replaceBy = replaceBy.replace('$', '(SELECT ')
-            replaceBy = replaceBy.replace('@', " FROM local00 WHERE local00.invar = local10.invar AND local00.annee='%s' AND local10.annee='%s')" % (self.dialog.dataYear, self.dialog.dataYear))
+            CREATE TABLE ll AS
+            SELECT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
+            FROM local00 l
+            INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
+            WHERE l10.annee='?';
+            CREATE INDEX  idx_ll_invar ON ll (invar);
+            UPDATE local10 SET ccopre = (SELECT ll.ccopre FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET ccosec = (SELECT ll.ccosec FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET dnupla = (SELECT ll.dnupla FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET ccoriv = (SELECT ll.ccoriv FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET ccovoi = (SELECT ll.ccovoi FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET dnvoiri = (SELECT ll.dnvoiri FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET local00 = (SELECT ll.local00 FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET parcelle = (SELECT ll.parcelle FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET voie = (SELECT ll.voie FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            DROP TABLE ll;
+            '''
+            replaceBy = replaceBy.replace('?', self.dialog.dataYear)
             sql = sql.replace(statement, replaceBy)
 
         return sql
@@ -662,30 +699,27 @@ class qadastreImport(QObject):
         And commit
         '''
         if self.go:
-            if self.dialog.dbType == 'spatialite':
-                # compatibility issues
-                sql = self.postgisToSpatialite(sql)
-            if sql:
-                self.qc.updateLog('|%s|' % sql)
-                c = None
-                try:
-                    if self.dialog.dbType == 'postgis':
-                        c = self.connector._execute(sql)
-                    if self.dialog.dbType == 'spatialite':
-                        c = self.connector._get_cursor()
-                        c.executescript(sql)
+            QApplication.setOverrideCursor(Qt.WaitCursor)
 
-                except BaseError as e:
-                    DlgDbError.showError(e, self.dialog)
-                    self.go = False
-                    self.qc.updateLog(e.msg)
-                    return
+            c = None
+            try:
+                if self.dialog.dbType == 'postgis':
+                    c = self.connector._execute_and_commit(sql)
+                if self.dialog.dbType == 'spatialite':
+                    c = self.connector._get_cursor()
+                    c.executescript(sql)
 
-                finally:
-                    QApplication.restoreOverrideCursor()
-                    if c:
-                        c.close()
-                        del c
+            except BaseError as e:
+                DlgDbError.showError(e, self.dialog)
+                self.go = False
+                self.qc.updateLog(e.msg)
+                return
+
+            finally:
+                QApplication.restoreOverrideCursor()
+                if c:
+                    c.close()
+                    del c
 
 
     def importAllEdigeoToDatabase(self):
