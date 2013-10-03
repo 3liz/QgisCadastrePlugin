@@ -736,7 +736,7 @@ class qadastreImport(QObject):
             initialTotalSteps = self.totalSteps
 
             # THF
-            self.dialog.subStepLabel.setText(u'Import des fichiers via ogr2ogr')
+            self.dialog.subStepLabel.setText(u'Import des fichiers via ogr2ogr (*.thf)')
             self.qc.updateLog(u'  - Import des fichiers via ogr2ogr')
             thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')
             self.step = 0

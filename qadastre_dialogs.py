@@ -995,7 +995,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
             if filterExpression and queryMode == 'qgis':
                 qe = QgsExpression(filterExpression)
             if queryMode == 'sql':
-                emptyLabel = u'-- %s résultats --' % len(features)
+                emptyLabel = u'%s résultats' % len(features)
             else:
                 emptyLabel = ''
             cb.addItem('%s' % emptyLabel, '')
