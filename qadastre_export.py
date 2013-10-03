@@ -22,7 +22,8 @@
  ***************************************************************************/
 """
 
-import csv
+import csv, sys
+import subprocess
 import os.path
 import operator
 import re
@@ -140,7 +141,14 @@ class qadastreExport(QObject):
 
         # Export as pdf
         if composition:
-            composition.exportAsPDF('/tmp/test.pdf')
+            from time import time
+            temp = "releve_%s.%.7f.pdf" % (self.etype, time())
+            temppath = os.path.join(tempfile.gettempdir(), temp)
+            composition.exportAsPDF(temppath)
+            if sys.platform == 'linux2':
+                subprocess.call(["xdg-open", temppath])
+            else:
+                os.startfile(temppath)
 
 
     def assignDataToTemplate(self, index, item):
@@ -221,6 +229,8 @@ class qadastreExport(QObject):
 
         finally:
             QApplication.restoreOverrideCursor()
+
+
 
     def loadComposerFromTemplate(self, replaceDict):
         '''
