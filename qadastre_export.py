@@ -41,6 +41,12 @@ class qadastreExport(QObject):
         self.etype = etype
         self.feat = feat
 
+        self.maxLineNumber = 15 # max number of line per main table
+        self.numPages = 1
+        self.pageHeight = 210
+        self.pageWidth = 297
+        self.printResolution = 300
+
         # label for header2
         if self.etype == 'proprietaire':
             self.typeLabel = u'DE PROPRIÉTÉ'
@@ -49,41 +55,66 @@ class qadastreExport(QObject):
             self.typeLabel = u'PARCELLAIRE'
 
         # List of templates
-        self.composerTemplates = [
-            {
-                'key': 'header1',
+        self.composerTemplates = {
+            'header1' : {
                 'names': ['annee', 'ccodep', 'ccodir', 'ccocom', 'libcom'],
+                'position': [3.5, 2.5, 145, 7.5], 'align': [ 128, 4],
+                'keepContent' : True,
                 'type': 'sql',
                 'filter': 'comptecommunal',
                 'and': {
                     'proprietaire': u" AND comptecommunal = '%s'" % self.feat['comptecommunal'],
                     'parcelle': u" AND comptecommunal = '%s'" % self.feat['comptecommunal']
-                }
+                },
             },
-            {
-                'key': 'header2',
+            'header2' : {
                 'names': ['type'],
+                'position': [153.5, 2.5, 60, 7.5], 'align': [ 128, 4],
+                'keepContent' : True,
                 'type': 'properties',
                 'source': [self.typeLabel]
             },
-            {
-                'key': 'header3',
+            'header3' : {
                 'names': ['comptecommunal'],
+                'position': [218.5, 2.5, 75, 7.5], 'align': [ 128, 2],
+                'keepContent' : True,
                 'type': 'properties',
                 'source': [self.feat['comptecommunal'][6:]]
             },
-            {
-                'key': 'proprietaires',
-                'names': ['proprietaires'],
+            'proprietaires' : {
+                'names': ['lines'],
+                'position': [3.5, 10, 290, 40], 'align': [ 32, 1],
+                'keepContent' : False,
+                'type': 'parent',
+                'source': 'proprietaires_line'
+            },
+            'proprietes_baties' : {
+                'names': ['lines'],
+                'position': [3.5, 50, 290, 80], 'align': [ 32, 1],
+                'keepContent' : False,
+                'type': 'parent',
+                'source': 'proprietes_baties_line'
+            },
+            'proprietes_non_baties' : {
+                'names': ['lines'],
+                'position': [3.5, 130, 290, 77.5], 'align': [ 32, 1],
+                'keepContent' : False,
+                'type': 'parent',
+                'source': 'proprietes_non_baties_line'
+            }
+        }
+        self.mainTables = {
+            'proprietaires_line' : {
+                'names': ['proprietaire'],
                 'type': 'sql',
+                'keepContent': True,
                 'filter': 'comptecommunal',
                 'and': {
                     'proprietaire': u" AND comptecommunal = '%s'" % self.feat['comptecommunal'],
                     'parcelle': u" AND comptecommunal = '%s'" % self.feat['comptecommunal']
                 }
             },
-            {
-                'key': 'proprietes_baties_line',
+            'proprietes_baties_line' : {
                 'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'bat', 'ent', 'niv', 'ndeporte', 'numeroinvar', 'star', 'meval', 'af', 'natloc', 'cat', 'revenucadastral', 'coll', 'natexo', 'anret', 'andeb', 'fractionrcexo', 'pourcentageexo', 'txom', 'coefreduc'],
                 'type': 'sql',
                 'filter': 'comptecommunal',
@@ -92,83 +123,62 @@ class qadastreExport(QObject):
                     'parcelle': u" AND p.geo_parcelle = '%s'" % self.feat['geo_parcelle']
                 }
             },
-            {
-                'key': 'proprietes_baties',
-                'names': ['lines'],
-                'type': 'parent',
-                'source': [4]
-            },
-            {
-                'key': 'proprietes_non_baties_line',
+            'proprietes_non_baties_line' : {
                 'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'nparcprim', 'fpdp', 'star', 'suf', 'grssgr', 'cl', 'natcult', 'contenance', 'revenucadastral', 'coll', 'natexo', 'anret', 'fractionrcexo', 'pourcentageexo', 'tc', 'lff'],
                 'type': 'sql',
                 'and': {
                     'proprietaire': u" AND p.comptecommunal = '%s'" % self.feat['comptecommunal'],
                     'parcelle': u" AND geo_parcelle = '%s'" % self.feat['geo_parcelle']
                 }
-            },
-            {
-                'key': 'proprietes_non_baties',
-                'names': ['lines'],
-                'type': 'parent',
-                'source': [6]
             }
-        ]
+
+        }
+
+        # items for which to count number of lines
+        self.lineCount = {
+            'proprietes_baties_line': 0,
+            'proprietes_non_baties_line': 0
+        }
+
+        # items for which not the run a query for each page
+        # but only once and keep content for next pages
+        self.contentKeeped = {}
+        for key, item in self.composerTemplates.items():
+            if item.has_key('keepContent') and item['keepContent']:
+                self.contentKeeped[key] = ''
+        for key, item in self.mainTables.items():
+            if item.has_key('keepContent') and item['keepContent']:
+                self.contentKeeped[key] = ''
 
         # common qadastre methods
         self.qc = self.dialog.qc
 
 
-    def exportAsPDF(self):
-        '''
-        Export as PDF using the template composer
-        filled with appropriate data
-        '''
-
-        # For each composer element
-        # get template and set data
-        index=0
-        for item in self.composerTemplates:
-            self.assignDataToTemplate(index, item)
-            index+=1
-
-        # Load the composer from template
-        # and replace data inside it
-        qgisReplaceDict = {}
-        for item in self.composerTemplates:
-            qgisReplaceDict[item['key']] = item['content'].replace('@', '<br>').replace('None', '')
-        composition = self.loadComposerFromTemplate(qgisReplaceDict)
-
-        # Export as pdf
-        if composition:
-            from time import time
-            temp = "releve_%s.%.7f.pdf" % (self.etype, time())
-            temppath = os.path.join(tempfile.gettempdir(), temp)
-            composition.exportAsPDF(temppath)
-            if sys.platform == 'linux2':
-                subprocess.call(["xdg-open", temppath])
-            else:
-                os.startfile(temppath)
-
-
-    def assignDataToTemplate(self, index, item):
+    def getContentForGivenItem(self, key, item, page=None):
         '''
         Take content from template file
         corresponding to the key
         and assign data from item
         '''
+        # First check previous stored content
+        if item.has_key('keepContent') and item['keepContent'] \
+         and self.contentKeeped[key]:
+            return self.contentKeeped[key]
+
         content = ''
         replaceDict = ''
         # Build template file path
         tplPath = os.path.join(
             self.qc.plugin_dir,
-            "templates/%s.tpl" % item['key']
+            "templates/%s.tpl" % key
         )
 
         # Build replace dict depending on source type
         if item['type'] == 'sql':
+            # Load SQL query and get data
             # Get sql file
-            fin = open(tplPath + '.sql')
+            sqlFile = tplPath + '.sql'
+            fin = open(sqlFile)
             sql = fin.read().decode('utf-8')
             fin.close()
             # Add schema to search_path if postgis
@@ -176,16 +186,38 @@ class qadastreExport(QObject):
                 sql = self.qc.setSearchPath(sql, self.dialog.schema)
             # Add where clause depending on etype
             sql = sql.replace('$and', item['and'][self.etype] )
-            #~ self.qc.updateLog(sql)
-            # Run SQL
-            [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
+            # Limit results if asked
+            if page and key in self.mainTables.keys() \
+            and key in self.lineCount.keys():
+                sql+= " LIMIT %s" % self.maxLineNumber
+                offset = int((page- 1) * self.maxLineNumber)
+                sql+= " OFFSET %s" % offset
 
-            # Build dict
-            for line in data:
-                replaceDict = {}
-                for i in range(len(item['names'])):
-                    replaceDict['$%s' % item['names'][i] ] = u'%s' % line[i]
-                content+= self.getHtmlFromTemplate(tplPath, replaceDict)
+            # Run SQL
+            #~ self.qc.updateLog(sql)
+            [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
+            # Add data length to lineCount object if appropriate
+            if not page:
+                if key in self.lineCount.keys():
+                    self.lineCount[key] = rowCount
+
+            if page:
+                # Get content for each line of data
+                for line in data:
+                    replaceDict = {}
+                    for i in range(len(item['names'])):
+                        replaceDict['$%s' % item['names'][i] ] = u'%s' % line[i]
+                    content+= self.getHtmlFromTemplate(tplPath, replaceDict)
+
+                # fill empty data to have full size table
+                if key in self.mainTables.keys() \
+                and key not in self.contentKeeped.keys() \
+                and len(data) < self.maxLineNumber:
+                    for l in range(self.maxLineNumber - len(data)):
+                        replaceDict = {}
+                        for i in range(len(item['names'])):
+                            replaceDict['$%s' % item['names'][i] ] = u'&nbsp;'
+                        content+= self.getHtmlFromTemplate(tplPath, replaceDict)
 
         elif item['type'] == 'properties':
             # build replace dict from properties
@@ -197,10 +229,17 @@ class qadastreExport(QObject):
         elif item['type'] == 'parent':
             replaceDict = {}
             for i in range(len(item['names'])):
-                replaceDict['$' + item['names'][i]] = self.composerTemplates[ item['source'][i] ]['content']
+                replaceDict['$' + item['names'][i]] = self.mainTables[ item['source'] ]['content']
             content = self.getHtmlFromTemplate(tplPath, replaceDict)
 
-        self.composerTemplates[index]['content'] = content
+        # Keep somme content globally
+        if item.has_key('keepContent') and item['keepContent']:
+            self.contentKeeped[key] = content
+
+        # replace some unwanted content
+        content = content.replace('None', '')
+
+        return content
 
 
     def getHtmlFromTemplate(self, tplPath, replaceDict):
@@ -231,19 +270,91 @@ class qadastreExport(QObject):
             QApplication.restoreOverrideCursor()
 
 
-
-    def loadComposerFromTemplate(self, replaceDict):
+    def createComposition(self):
         '''
-        Load the template composer
+        Create a composition
         '''
-        # Get composer template
-        from PyQt4 import QtXml
-        d = QtXml.QDomDocument()
-        template = file("/home/kimaidou/.qgis2/python/plugins/Qadastre/composers/releve.qpt").read()
-        d.setContent(template)
+        c = QgsComposition(QgsMapRenderer())
+        c.setPaperSize(self.pageWidth, self.pageHeight)
+        c.setPrintResolution(self.printResolution)
+        c.setSnapGridOffsetX(3.5)
+        c.setSnapGridOffsetY(0)
+        c.setSnapGridResolution(2.5)
 
-        # Get composition
-        composition = QgsComposition(QgsMapRenderer())
-        composition.loadFromTemplate(d, replaceDict)
+        # set page number
+        self.getPageNumberNeeded()
+        c.setNumPages(self.numPages)
 
-        return composition
+        return c
+
+
+    def getPageNumberNeeded(self):
+        '''
+        Calculate the minimum pages
+        needed to fit all the data
+        '''
+        # retrieve total data and get total count
+        for key in self.lineCount.keys():
+            self.getContentForGivenItem(key, self.mainTables[key])
+        self.numPages = max(
+            [
+            1 + int(self.lineCount['proprietes_baties_line'] / self.maxLineNumber),
+            1 + int(self.lineCount['proprietes_non_baties_line'] / self.maxLineNumber)
+            ]
+        )
+
+
+    def addPageContent(self, composition, page):
+        '''
+        Add all needed item for a single page
+        '''
+        # First get content for parent items
+        for key, item in self.mainTables.items():
+            self.mainTables[key]['content'] = self.getContentForGivenItem(
+                key,
+                item,
+                page
+            )
+
+        # Then get content for displayed items
+        for key, item in self.composerTemplates.items():
+            cl = QgsComposerLabel(composition)
+            cl.setItemPosition(
+                item['position'][0],
+                item['position'][1] + (page - 1) * (self.pageHeight + 10),
+                item['position'][2],
+                item['position'][3]
+            )
+            cl.setVAlign(item['align'][0])
+            cl.setHAlign(item['align'][1])
+            content = self.getContentForGivenItem(key, item, page)
+            cl.setMargin(0)
+            cl.setHtmlState(2)
+            cl.setText(content)
+            cl.setFrameEnabled(False)
+            composition.addItem(cl)
+
+
+    def exportAsPDF(self):
+        '''
+        Export as PDF using the template composer
+        filled with appropriate data
+        '''
+
+        # Load the composer from template
+        composition = self.createComposition()
+
+        # Populate composition
+        for i in range(self.numPages + 1):
+            self.addPageContent(composition, i)
+
+        # Export as pdf
+        if composition:
+            from time import time
+            temp = "releve_%s.%.7f.pdf" % (self.etype, time())
+            temppath = os.path.join(tempfile.gettempdir(), temp)
+            composition.exportAsPDF(temppath)
+            if sys.platform == 'linux2':
+                subprocess.call(["xdg-open", temppath])
+            else:
+                os.startfile(temppath)

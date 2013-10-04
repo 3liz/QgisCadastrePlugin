@@ -2,7 +2,7 @@
       <td align="center">$section</td>
       <td align="center">$ndeplan</td>
       <td align="center">$ndevoirie</td>
-      <td align="left">$adresse</td>
+      <td align="left" width="30%">$adresse</td>
       <td align="center">$coderivoli</td>
       <td align="center">$nparcprim</td>
       <td align="center">$fpdp</td>
