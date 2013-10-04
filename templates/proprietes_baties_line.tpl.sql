@@ -1,6 +1,6 @@
 
 SELECT --p.parcelle, p.geo_parcelle,
-p.ccosec AS section, p.dnupla AS ndeplan, p.dnvoiri AS ndevoirie, p.cconvo || p.dvoilib AS adresse, p.ccoriv AS coderivoli,
+l.ccosec AS section, l.dnupla AS ndeplan, l.dnvoiri AS ndevoirie, l.dvoilib AS adresse, l.ccoriv AS coderivoli,
 l.dnubat AS bat, l.descr AS ent, l.dniv AS niv, l.dpor AS ndeporte, l.invar AS numeroinvar,
 pev.ccostb AS star, l10.ccoeva AS meval, pev.ccoaff AS af, l10.cconlc AS natloc, pev.dcapec AS cat,
 pt.tse_bipevla AS revenucadastral, px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb, px.dvldif2a AS fractionrcexo,
@@ -14,4 +14,4 @@ LEFT JOIN pevexoneration px ON px.pev = pev.pev
 LEFT JOIN pevtaxation pt ON pt.pev = pev.pev
 WHERE 2>1
 $and
-ORDER BY p.parcelle, bat, ent, niv
+ORDER BY p.parcelle, l.dnvoiri, l.dvoilib, bat, ent, niv
