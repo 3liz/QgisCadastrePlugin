@@ -25,7 +25,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-
+from qadastre_identify_parcelle import IdentifyParcelle
 from qadastre_dialogs import *
 
 # ---------------------------------------------
@@ -33,9 +33,11 @@ from qadastre_dialogs import *
 class qadastre_menu:
     def __init__(self, iface):
         self.iface = iface
+        self.mapCanvas = iface.mapCanvas()
         self.qadastre_menu = None
         self.qadastre_load_dialog = None
         self.qadastre_search_dialog = None
+        self.qc = None
 
     def qadastre_add_submenu(self, submenu):
         if self.qadastre_menu != None:
@@ -44,7 +46,8 @@ class qadastre_menu:
             self.iface.addPluginToMenu("&qadastre", submenu.menuAction())
 
     def initGui(self):
-        # Uncomment the following two lines to have qadastre accessible from a top-level menu
+
+        # Add Qadastre to QGIS menu
         self.qadastre_menu = QMenu(QCoreApplication.translate("qadastre", "Qadastre"))
         self.iface.mainWindow().menuBar().insertMenu(self.iface.firstRightStandardMenu().menuAction(), self.qadastre_menu)
 
@@ -71,6 +74,7 @@ class qadastre_menu:
         if not self.qadastre_search_dialog:
             dialog = qadastre_search_dialog(self.iface)
             self.qadastre_search_dialog = dialog
+            self.qc = qadastre_common(dialog)
 
         # Options Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
@@ -83,6 +87,22 @@ class qadastre_menu:
         self.about_action = QAction(icon, u"À propos", self.iface.mainWindow())
         QObject.connect(self.about_action, SIGNAL("triggered()"), self.open_about_dialog)
         self.qadastre_menu.addAction(self.about_action)
+
+        # Add qadastre toolbar
+        self.toolbar = self.iface.addToolBar('Qadastre');
+
+        # Create action for "Parcelle information"
+        self.identifyParcelleAction = QAction(
+            QIcon(os.path.dirname(__file__) +"/icons/toolbar/get-parcelle-info.png"),
+            "Infos parcelle",
+            self.iface.mainWindow()
+        )
+        self.identifyParcelleAction.setCheckable(True)
+        self.identyParcelleTool = IdentifyParcelle(self.mapCanvas)
+        self.identyParcelleTool.geomIdentified.connect(self.getParcelleInfo)
+        self.identyParcelleTool.setAction(self.identifyParcelleAction)
+        self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
+        self.toolbar.addAction(self.identifyParcelleAction)
 
 
     def open_import_dialog(self):
@@ -132,12 +152,42 @@ class qadastre_menu:
         dialog.exec_()
 
 
+    def setIndentifyParcelleTool(self):
+        '''
+        Activite the identify tool
+        for the layer geo_parcelle
+        '''
+        # First set Parcelle as active layer
+        layer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
+        if not layer:
+            QMessageBox.critical(
+                self.qadastre_search_dialog,
+                "Qadastre",
+                u"La couche des parcelles n'a pas été trouvée !"
+            )
+            return
+        self.iface.setActiveLayer(layer)
+
+        # The activate identify tool
+        self.mapCanvas.setMapTool(self.identyParcelleTool)
+
+    def getParcelleInfo(self, layer, feature):
+        '''
+        Return information of the identified
+        parcelle
+        '''
+        # show parcelle form
+        parcelleDialog = qadastre_parcelle_dialog(self.iface, layer, feature)
+        parcelleDialog.show()
+
+
     def unload(self):
         if self.qadastre_menu != None:
             self.iface.mainWindow().menuBar().removeAction(self.qadastre_menu.menuAction())
             self.qadastre_menu.deleteLater()
         else:
             self.iface.removePluginMenu("&qadastre", self.qadastre_menu.menuAction())
+            self.iface.removeToolBar(self.toolbar)
             self.qadastre_menu.deleteLater()
 
         if self.qadastre_load_dialog:

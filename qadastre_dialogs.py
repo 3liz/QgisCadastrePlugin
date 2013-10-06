@@ -1532,3 +1532,200 @@ class qadastre_about_dialog(QDialog, Ui_qadastre_about_form):
         the user closes the dialog
         '''
         self.close()
+
+
+# --------------------------------------------------------
+#        Parcelle - Show parcelle information
+# --------------------------------------------------------
+
+from qadastre_parcelle_form import *
+from qadastre_export import *
+
+class qadastre_parcelle_dialog(QDialog, Ui_qadastre_parcelle_form):
+    def __init__(self, iface, layer, feature):
+        QDialog.__init__(self)
+        self.iface = iface
+        self.feature = feature
+        self.layer = layer
+        self.mc = iface.mapCanvas()
+        self.setupUi(self)
+
+        # common qadastre methods
+        self.qc = qadastre_common(self)
+
+        # Get connection parameters
+        connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
+        if not connectionParams:
+            return
+        self.connectionParams = connectionParams
+        self.dbType = connectionParams['dbType']
+        self.schema = connectionParams['schema']
+        connector = self.qc.getConnectorFromUri(connectionParams)
+        self.connector = connector
+
+        # Signals/Slot Connections
+        self.rejected.connect(self.onReject)
+        self.buttonBox.rejected.connect(self.onReject)
+        self.buttonBox.accepted.connect(self.onAccept)
+        # Export buttons
+        exportButtons = {
+            'parcelle' : self.btExportParcelle,
+            'proprietaire': self.btExportProprietaire
+        }
+        for key, item in exportButtons.items():
+            control = item
+            slot = partial(self.exportAsPDF, key)
+            control.clicked.connect(slot)
+        # Parcelle action button
+        self.btCentrer.clicked.connect(self.centerToParcelle)
+        self.btZoomer.clicked.connect(self.zoomToParcelle)
+        self.btSelectionner.clicked.connect(self.selectParcelle)
+
+        # Select parcelle from proprietaire action
+        self.btParcellesProprietaire.clicked.connect(self.selectParcellesProprietaire)
+
+        # Set dialog content
+        self.setParcelleContent()
+        self.setProprietairesContent()
+
+
+    def setParcelleContent(self):
+        '''
+        Get data for the selected
+        parcelle and set the dialog
+        text content
+        '''
+
+        # Get parcelle info
+        sql = '''
+        SELECT c.libcom AS nomcommune, c.ccocom AS codecommune, p.dcntpa AS contenance,
+        regexp_replace(p.dnvoiri, '^0+', '') || ' ' || p.cconvo || p.dvoilib AS adresse,
+        CASE
+                WHEN p.gurbpa = 'U' THEN 'Oui'
+                ELSE 'Non'
+        END  AS urbain
+        FROM parcelle p
+        INNER JOIN commune c ON p.ccocom = c.ccocom
+        WHERE 2>1
+        AND geo_parcelle = '%s'
+        LIMIT 1
+        ''' % self.feature['geo_parcelle']
+
+        if self.connectionParams['dbType'] == 'postgis':
+            sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
+        html = ''
+        for line in data:
+            html+= u'<b>Commune :</b> %s (%s)<br/>' % (line[0], line[1])
+            html+= u'<b>Surface géographique :</b> %s m²<br/>' % int(self.feature.geometry().area())
+            html+= u'<b>Contenance :</b> %s m²<br/>' % line[2]
+            html+= u'<b>Adresse :</b> %s<br/>' % line[3]
+            html+= u'<b>Urbaine :</b> %s<br/>' % line[4]
+
+        self.parcelleInfo.setText('%s' % html)
+
+
+    def setProprietairesContent(self):
+        '''
+        Get proprietaires data
+        and set the dialog content
+        '''
+
+        # Get proprietaire info
+        sql = '''
+        SELECT ccodro_lib || ' ' || p.dnuper || ' ' || trim(p.dqualp) || ' ' || trim(p.ddenom) || ' ' ||trim(p.dlign3) || ' ' || trim(p.dlign4) || trim(p.dlign5) || ' ' || trim(p.dlign6)
+        FROM proprietaire p
+        INNER JOIN ccodro ON ccodro.ccodro = p.ccodro
+        WHERE 2>1
+        AND comptecommunal = '%s'
+        ''' % self.feature['comptecommunal']
+        if self.connectionParams['dbType'] == 'postgis':
+            sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
+        html = ''
+        for line in data:
+            html+= u'%s<br>' % line[0]
+
+        self.proprietairesInfo.setText('%s' % html)
+
+
+    def exportAsPDF(self, key):
+        '''
+        Export the parcelle or proprietaire
+        information as a PDF file
+        '''
+        if self.feature and self.connector:
+            qe = qadastreExport(self, key, self.feature)
+            qe.exportAsPDF()
+
+    def centerToParcelle(self):
+        '''
+        Centre to parcelle feature
+        '''
+        if self.feature:
+            # first get scale
+            scale = self.mapca.scale()
+            extent = self.feature.geometry().boundingBox()
+            self.mc.setExtent(extent)
+            # the set the scale back
+            self.mc.zoomScale(scale)
+            self.mc.refresh()
+
+    def zoomToParcelle(self):
+        '''
+        Zoom to parcelle feature
+        '''
+        if self.feature:
+            extent = self.feature.geometry().boundingBox()
+            self.mc.setExtent(extent)
+            self.mc.refresh()
+
+    def selectParcelle(self):
+        '''
+        Zoom to parcelle feature
+        '''
+        if self.layer and self.feature:
+            self.layer.removeSelection()
+            self.layer.select(self.feature.id())
+
+    def selectParcellesProprietaire(self):
+        '''
+        Select all parcelles from this parcelle proprietaire.
+        Use search class tools.
+        Needs refactoring
+        '''
+        qs = qadastre_search_dialog(self.iface)
+        key = 'proprietaire'
+        value = self.feature['comptecommunal']
+        filterExpression = "comptecommunal IN ('%s')" % value
+
+        # Get data for child and fill combobox
+        ckey = qs.searchComboBoxes[key]['search']['child']
+        [layer, features] = qs.setupSearchCombobox(
+            ckey,
+            filterExpression,
+            'sql'
+        )
+
+        # Set properties
+        qs.searchComboBoxes[key]['layer'] = layer
+        qs.searchComboBoxes[key]['features'] = features
+        qs.searchComboBoxes[key]['chosenFeature'] = features
+
+        # Select all parcelles from proprietaire
+        qs.setSelectionToChosenSearchCombobox('proprietaire')
+
+
+    def onAccept(self):
+        '''
+        Save options when pressing OK button
+        '''
+        self.accept()
+
+    def onReject(self):
+        '''
+        Run some actions when
+        the user closes the dialog
+        '''
+        self.close()
+

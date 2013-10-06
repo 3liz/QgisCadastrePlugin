@@ -47,10 +47,13 @@ class qadastreExport(QObject):
         self.pageWidth = 297
         self.printResolution = 300
 
+        # if many features passed (selected parcelles for proprietaire)
+        if isinstance(self.feat, list):
+            self.feat = feat[0]
+
         # label for header2
         if self.etype == 'proprietaire':
             self.typeLabel = u'DE PROPRIÉTÉ'
-            self.feat = feat[0]
         else:
             self.typeLabel = u'PARCELLAIRE'
 
