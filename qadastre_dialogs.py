@@ -206,51 +206,56 @@ class qadastre_common():
         uri = layer.dataProvider().dataSourceUri()
         reg = "dbname='([^ ]+)' (?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
         result = re.findall(r'%s' % reg, uri)
+        if not result:
+            return None
+
         res = result[0]
-        if res:
-            dbname = res[0]
-            host = res[1]
-            port = res[2]
-            user = res[3]
-            password = res[4]
-            sslmode = res[5]
-            key = res[6]
-            estimatedmetadata = res[7]
-            srid = res[8]
-            gtype = res[9]
-            table = res[10]
-            geocol = res[11]
-            sql = res[12]
+        if not res:
+            return None
 
-            schema = ''
-            if re.search('"\."', table):
-                table = '"' + table + '"'
-                sp = table.replace('"', '').split('.')
-                schema = sp[0]
-                table = sp[1]
+        dbname = res[0]
+        host = res[1]
+        port = res[2]
+        user = res[3]
+        password = res[4]
+        sslmode = res[5]
+        key = res[6]
+        estimatedmetadata = res[7]
+        srid = res[8]
+        gtype = res[9]
+        table = res[10]
+        geocol = res[11]
+        sql = res[12]
 
-            if layer.providerType() == u'postgres':
-                dbType = 'postgis'
-            else:
-                dbType = 'spatialite'
+        schema = ''
+        if re.search('"\."', table):
+            table = '"' + table + '"'
+            sp = table.replace('"', '').split('.')
+            schema = sp[0]
+            table = sp[1]
 
-            connectionParams = {
-                'dbname' : dbname,
-                'host' : host,
-                'port': port,
-                'user' : user,
-                'password': password,
-                'sslmode' : sslmode,
-                'key': key,
-                'estimatedmetadata' : estimatedmetadata,
-                'srid' : srid,
-                'type': gtype,
-                'schema': schema,
-                'table' : table,
-                'geocol' : geocol,
-                'sql' : sql,
-                'dbType': dbType
-            }
+        if layer.providerType() == u'postgres':
+            dbType = 'postgis'
+        else:
+            dbType = 'spatialite'
+
+        connectionParams = {
+            'dbname' : dbname,
+            'host' : host,
+            'port': port,
+            'user' : user,
+            'password': password,
+            'sslmode' : sslmode,
+            'key': key,
+            'estimatedmetadata' : estimatedmetadata,
+            'srid' : srid,
+            'type': gtype,
+            'schema': schema,
+            'table' : table,
+            'geocol' : geocol,
+            'sql' : sql,
+            'dbType': dbType
+        }
 
         return connectionParams
 
@@ -931,7 +936,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         self.exportParcelleButtons = {
             'parcelle': self.btExportParcelle,
             'parcelle_adresse': self.btExportParcelleAdresse,
-            'parcelle_proprietaire': self.btExportProprietaire
+            'parcelle_proprietaire': self.btExportParcelleProprietaire
         }
         for key, item in self.exportParcelleButtons.items():
             control = item
@@ -1664,7 +1669,7 @@ class qadastre_parcelle_dialog(QDialog, Ui_qadastre_parcelle_form):
         '''
         if self.feature:
             # first get scale
-            scale = self.mapca.scale()
+            scale = self.mc.scale()
             extent = self.feature.geometry().boundingBox()
             self.mc.setExtent(extent)
             # the set the scale back
