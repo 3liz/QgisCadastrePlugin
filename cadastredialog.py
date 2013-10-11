@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- QadastreDialog
+ CadastreDialog
                                  A QGIS plugin
  This plugins helps users to import the french land registry ('cadastre') 
  into a database. It is meant to ease the use of the data in QGIs 
@@ -23,13 +23,13 @@
 """
 
 from PyQt4 import QtCore, QtGui
-from ui_qadastre import Ui_Qadastre
+from ui_cadastre import Ui_Cadastre
 # create the dialog for zoom to point
 
 
-class QadastreDialog(QtGui.QDialog):
+class CadastreDialog(QtGui.QDialog):
     def __init__(self):
         QtGui.QDialog.__init__(self)
         # Set up the user interface from Designer.
-        self.ui = Ui_Qadastre()
+        self.ui = Ui_Cadastre()
         self.ui.setupUi(self)

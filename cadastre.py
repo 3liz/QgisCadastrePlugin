@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Qadastre
+ Cadastre
                                  A QGIS plugin
  This plugins helps users to import the french land registry ('cadastre')
  into a database. It is meant to ease the use of the data in QGIs
@@ -28,11 +28,11 @@ from qgis.core import *
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
-from qadastredialog import QadastreDialog
+from cadastredialog import CadastreDialog
 import os.path
 
 
-class Qadastre:
+class Cadastre:
 
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -41,7 +41,7 @@ class Qadastre:
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
         locale = QSettings().value("locale/userLocale")[0:2]
-        localePath = os.path.join(self.plugin_dir, 'i18n', 'qadastre_{}.qm'.format(locale))
+        localePath = os.path.join(self.plugin_dir, 'i18n', 'cadastre_{}.qm'.format(locale))
 
         if os.path.exists(localePath):
             self.translator = QTranslator()
@@ -54,17 +54,17 @@ class Qadastre:
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
-            QIcon(":/plugins/qadastre/icon.png"),
-            u"Qadastre", self.iface.mainWindow())
+            QIcon(":/plugins/cadastre/icon.png"),
+            u"Cadastre", self.iface.mainWindow())
         # connect the action to the run method
         self.action.triggered.connect(self.run)
 
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu(u"&Qadastre", self.action)
+        self.iface.addPluginToMenu(u"&Cadastre", self.action)
 
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu(u"&Qadastre", self.action)
+        self.iface.removePluginMenu(u"&Cadastre", self.action)
         self.iface.removeToolBarIcon(self.action)
 

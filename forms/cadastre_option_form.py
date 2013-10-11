@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'qadastre_option_form.ui'
+# Form implementation generated from reading ui file 'cadastre_option_form.ui'
 #
-# Created: Thu Sep 19 12:20:24 2013
+# Created: Fri Oct 11 18:46:38 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,13 +23,13 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_qadastre_option_form(object):
-    def setupUi(self, qadastre_option_form):
-        qadastre_option_form.setObjectName(_fromUtf8("qadastre_option_form"))
-        qadastre_option_form.resize(469, 525)
-        self.verticalLayout = QtGui.QVBoxLayout(qadastre_option_form)
+class Ui_cadastre_option_form(object):
+    def setupUi(self, cadastre_option_form):
+        cadastre_option_form.setObjectName(_fromUtf8("cadastre_option_form"))
+        cadastre_option_form.resize(469, 525)
+        self.verticalLayout = QtGui.QVBoxLayout(cadastre_option_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.scrollArea = QtGui.QScrollArea(qadastre_option_form)
+        self.scrollArea = QtGui.QScrollArea(cadastre_option_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
@@ -46,9 +46,9 @@ class Ui_qadastre_option_form(object):
         self.verticalLayout_9.addWidget(self.label_13)
         self.horizontalLayout_9 = QtGui.QHBoxLayout()
         self.horizontalLayout_9.setObjectName(_fromUtf8("horizontalLayout_9"))
-        self.btInterfaceQadastre = QtGui.QPushButton(self.groupBox_7)
-        self.btInterfaceQadastre.setObjectName(_fromUtf8("btInterfaceQadastre"))
-        self.horizontalLayout_9.addWidget(self.btInterfaceQadastre)
+        self.btInterfaceCadastre = QtGui.QPushButton(self.groupBox_7)
+        self.btInterfaceCadastre.setObjectName(_fromUtf8("btInterfaceCadastre"))
+        self.horizontalLayout_9.addWidget(self.btInterfaceCadastre)
         self.btInterfaceQgis = QtGui.QPushButton(self.groupBox_7)
         self.btInterfaceQgis.setObjectName(_fromUtf8("btInterfaceQgis"))
         self.horizontalLayout_9.addWidget(self.btInterfaceQgis)
@@ -109,7 +109,7 @@ class Ui_qadastre_option_form(object):
         self.horizontalLayout.addWidget(self.inTempDir)
         self.btTempDir = QtGui.QToolButton(self.groupBox_2)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/qadastre/icons/open.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/cadastre/icons/open.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btTempDir.setIcon(icon)
         self.btTempDir.setObjectName(_fromUtf8("btTempDir"))
         self.horizontalLayout.addWidget(self.btTempDir)
@@ -124,34 +124,34 @@ class Ui_qadastre_option_form(object):
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
 
-        self.retranslateUi(qadastre_option_form)
-        QtCore.QMetaObject.connectSlotsByName(qadastre_option_form)
-        qadastre_option_form.setTabOrder(self.scrollArea, self.btInterfaceQadastre)
-        qadastre_option_form.setTabOrder(self.btInterfaceQadastre, self.btInterfaceQgis)
-        qadastre_option_form.setTabOrder(self.btInterfaceQgis, self.inMajicBati)
-        qadastre_option_form.setTabOrder(self.inMajicBati, self.inMajicFantoir)
-        qadastre_option_form.setTabOrder(self.inMajicFantoir, self.inMajicLotlocal)
-        qadastre_option_form.setTabOrder(self.inMajicLotlocal, self.inMajicNbati)
-        qadastre_option_form.setTabOrder(self.inMajicNbati, self.inMajicPdl)
-        qadastre_option_form.setTabOrder(self.inMajicPdl, self.inMajicProp)
-        qadastre_option_form.setTabOrder(self.inMajicProp, self.buttonBox)
+        self.retranslateUi(cadastre_option_form)
+        QtCore.QMetaObject.connectSlotsByName(cadastre_option_form)
+        cadastre_option_form.setTabOrder(self.scrollArea, self.btInterfaceCadastre)
+        cadastre_option_form.setTabOrder(self.btInterfaceCadastre, self.btInterfaceQgis)
+        cadastre_option_form.setTabOrder(self.btInterfaceQgis, self.inMajicBati)
+        cadastre_option_form.setTabOrder(self.inMajicBati, self.inMajicFantoir)
+        cadastre_option_form.setTabOrder(self.inMajicFantoir, self.inMajicLotlocal)
+        cadastre_option_form.setTabOrder(self.inMajicLotlocal, self.inMajicNbati)
+        cadastre_option_form.setTabOrder(self.inMajicNbati, self.inMajicPdl)
+        cadastre_option_form.setTabOrder(self.inMajicPdl, self.inMajicProp)
+        cadastre_option_form.setTabOrder(self.inMajicProp, self.buttonBox)
 
-    def retranslateUi(self, qadastre_option_form):
-        qadastre_option_form.setWindowTitle(_translate("qadastre_option_form", "Qadastre", None))
-        self.groupBox_7.setTitle(_translate("qadastre_option_form", "Interface QGIS", None))
-        self.label_13.setText(_translate("qadastre_option_form", "Vous pouvez choisir d\'appliquer une interface\n"
+    def retranslateUi(self, cadastre_option_form):
+        cadastre_option_form.setWindowTitle(_translate("cadastre_option_form", "Cadastre", None))
+        self.groupBox_7.setTitle(_translate("cadastre_option_form", "Interface QGIS", None))
+        self.label_13.setText(_translate("cadastre_option_form", "Vous pouvez choisir d\'appliquer une interface\n"
 "simplifiée de QGIS pour consulter le cadastre\n"
 "ou de revenir à l\'interface par défaut", None))
-        self.btInterfaceQadastre.setText(_translate("qadastre_option_form", "Interface Qadastre", None))
-        self.btInterfaceQgis.setText(_translate("qadastre_option_form", "Interface QGIS", None))
-        self.groupBox.setTitle(_translate("qadastre_option_form", "Nom des fichiers MAJIC", None))
-        self.label.setText(_translate("qadastre_option_form", "BATI", None))
-        self.label_2.setText(_translate("qadastre_option_form", "FANTOIR", None))
-        self.label_4.setText(_translate("qadastre_option_form", "NBATI", None))
-        self.label_3.setText(_translate("qadastre_option_form", "LOTLOCAL", None))
-        self.label_5.setText(_translate("qadastre_option_form", "PROP", None))
-        self.label_6.setText(_translate("qadastre_option_form", "PDL", None))
-        self.groupBox_2.setTitle(_translate("qadastre_option_form", "Répertoire temporaire", None))
-        self.btTempDir.setText(_translate("qadastre_option_form", "...", None))
+        self.btInterfaceCadastre.setText(_translate("cadastre_option_form", "Interface Cadastre", None))
+        self.btInterfaceQgis.setText(_translate("cadastre_option_form", "Interface QGIS", None))
+        self.groupBox.setTitle(_translate("cadastre_option_form", "Nom des fichiers MAJIC", None))
+        self.label.setText(_translate("cadastre_option_form", "BATI", None))
+        self.label_2.setText(_translate("cadastre_option_form", "FANTOIR", None))
+        self.label_4.setText(_translate("cadastre_option_form", "NBATI", None))
+        self.label_3.setText(_translate("cadastre_option_form", "LOTLOCAL", None))
+        self.label_5.setText(_translate("cadastre_option_form", "PROP", None))
+        self.label_6.setText(_translate("cadastre_option_form", "PDL", None))
+        self.groupBox_2.setTitle(_translate("cadastre_option_form", "Répertoire temporaire", None))
+        self.btTempDir.setText(_translate("cadastre_option_form", "...", None))
 
 import resource_rc

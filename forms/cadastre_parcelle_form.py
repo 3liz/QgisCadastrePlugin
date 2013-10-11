@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'qadastre_parcelle_form.ui'
+# Form implementation generated from reading ui file 'cadastre_parcelle_form.ui'
 #
-# Created: Sun Oct  6 21:58:47 2013
+# Created: Fri Oct 11 18:46:38 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,13 +23,13 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_qadastre_parcelle_form(object):
-    def setupUi(self, qadastre_parcelle_form):
-        qadastre_parcelle_form.setObjectName(_fromUtf8("qadastre_parcelle_form"))
-        qadastre_parcelle_form.resize(420, 477)
-        self.verticalLayout = QtGui.QVBoxLayout(qadastre_parcelle_form)
+class Ui_cadastre_parcelle_form(object):
+    def setupUi(self, cadastre_parcelle_form):
+        cadastre_parcelle_form.setObjectName(_fromUtf8("cadastre_parcelle_form"))
+        cadastre_parcelle_form.resize(420, 477)
+        self.verticalLayout = QtGui.QVBoxLayout(cadastre_parcelle_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.scrollArea = QtGui.QScrollArea(qadastre_parcelle_form)
+        self.scrollArea = QtGui.QScrollArea(cadastre_parcelle_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
@@ -61,7 +61,7 @@ class Ui_qadastre_parcelle_form(object):
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.btExportParcelle = QtGui.QPushButton(self.groupBox_3)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/qadastre/icons/releve.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/cadastre/icons/releve.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btExportParcelle.setIcon(icon)
         self.btExportParcelle.setObjectName(_fromUtf8("btExportParcelle"))
         self.horizontalLayout.addWidget(self.btExportParcelle)
@@ -74,19 +74,19 @@ class Ui_qadastre_parcelle_form(object):
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.btCentrer = QtGui.QPushButton(self.groupBox_3)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/qadastre/icons/centrer.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/cadastre/icons/centrer.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btCentrer.setIcon(icon1)
         self.btCentrer.setObjectName(_fromUtf8("btCentrer"))
         self.horizontalLayout_2.addWidget(self.btCentrer)
         self.btZoomer = QtGui.QPushButton(self.groupBox_3)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/qadastre/icons/zoom.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/cadastre/icons/zoom.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btZoomer.setIcon(icon2)
         self.btZoomer.setObjectName(_fromUtf8("btZoomer"))
         self.horizontalLayout_2.addWidget(self.btZoomer)
         self.btSelectionner = QtGui.QPushButton(self.groupBox_3)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/qadastre/icons/select.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/cadastre/icons/select.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btSelectionner.setIcon(icon3)
         self.btSelectionner.setObjectName(_fromUtf8("btSelectionner"))
         self.horizontalLayout_2.addWidget(self.btSelectionner)
@@ -101,32 +101,32 @@ class Ui_qadastre_parcelle_form(object):
         self.verticalLayout_2.addWidget(self.groupBox_3)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
-        self.buttonBox = QtGui.QDialogButtonBox(qadastre_parcelle_form)
+        self.buttonBox = QtGui.QDialogButtonBox(cadastre_parcelle_form)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(qadastre_parcelle_form)
-        QtCore.QMetaObject.connectSlotsByName(qadastre_parcelle_form)
-        qadastre_parcelle_form.setTabOrder(self.scrollArea, self.parcelleInfo)
-        qadastre_parcelle_form.setTabOrder(self.parcelleInfo, self.proprietairesInfo)
-        qadastre_parcelle_form.setTabOrder(self.proprietairesInfo, self.btExportParcelle)
-        qadastre_parcelle_form.setTabOrder(self.btExportParcelle, self.btExportProprietaire)
-        qadastre_parcelle_form.setTabOrder(self.btExportProprietaire, self.btCentrer)
-        qadastre_parcelle_form.setTabOrder(self.btCentrer, self.btZoomer)
-        qadastre_parcelle_form.setTabOrder(self.btZoomer, self.btSelectionner)
-        qadastre_parcelle_form.setTabOrder(self.btSelectionner, self.buttonBox)
+        self.retranslateUi(cadastre_parcelle_form)
+        QtCore.QMetaObject.connectSlotsByName(cadastre_parcelle_form)
+        cadastre_parcelle_form.setTabOrder(self.scrollArea, self.parcelleInfo)
+        cadastre_parcelle_form.setTabOrder(self.parcelleInfo, self.proprietairesInfo)
+        cadastre_parcelle_form.setTabOrder(self.proprietairesInfo, self.btExportParcelle)
+        cadastre_parcelle_form.setTabOrder(self.btExportParcelle, self.btExportProprietaire)
+        cadastre_parcelle_form.setTabOrder(self.btExportProprietaire, self.btCentrer)
+        cadastre_parcelle_form.setTabOrder(self.btCentrer, self.btZoomer)
+        cadastre_parcelle_form.setTabOrder(self.btZoomer, self.btSelectionner)
+        cadastre_parcelle_form.setTabOrder(self.btSelectionner, self.buttonBox)
 
-    def retranslateUi(self, qadastre_parcelle_form):
-        qadastre_parcelle_form.setWindowTitle(_translate("qadastre_parcelle_form", "Qadastre - Informations Parcelle", None))
-        self.groupBox.setTitle(_translate("qadastre_parcelle_form", "Résumé", None))
-        self.groupBox_2.setTitle(_translate("qadastre_parcelle_form", "Propriétaire(s)", None))
-        self.groupBox_3.setTitle(_translate("qadastre_parcelle_form", "Actions", None))
-        self.btExportParcelle.setText(_translate("qadastre_parcelle_form", "Relevé parcellaire", None))
-        self.btExportProprietaire.setText(_translate("qadastre_parcelle_form", "Relevé de propriété", None))
-        self.btCentrer.setText(_translate("qadastre_parcelle_form", "Centrer", None))
-        self.btZoomer.setText(_translate("qadastre_parcelle_form", "Zoomer", None))
-        self.btSelectionner.setText(_translate("qadastre_parcelle_form", "Sélect.", None))
-        self.btParcellesProprietaire.setText(_translate("qadastre_parcelle_form", "Sélectionner les parcelles du propriétaire", None))
+    def retranslateUi(self, cadastre_parcelle_form):
+        cadastre_parcelle_form.setWindowTitle(_translate("cadastre_parcelle_form", "Cadastre - Informations Parcelle", None))
+        self.groupBox.setTitle(_translate("cadastre_parcelle_form", "Résumé", None))
+        self.groupBox_2.setTitle(_translate("cadastre_parcelle_form", "Propriétaire(s)", None))
+        self.groupBox_3.setTitle(_translate("cadastre_parcelle_form", "Actions", None))
+        self.btExportParcelle.setText(_translate("cadastre_parcelle_form", "Relevé parcellaire", None))
+        self.btExportProprietaire.setText(_translate("cadastre_parcelle_form", "Relevé de propriété", None))
+        self.btCentrer.setText(_translate("cadastre_parcelle_form", "Centrer", None))
+        self.btZoomer.setText(_translate("cadastre_parcelle_form", "Zoomer", None))
+        self.btSelectionner.setText(_translate("cadastre_parcelle_form", "Sélect.", None))
+        self.btParcellesProprietaire.setText(_translate("cadastre_parcelle_form", "Sélectionner les parcelles du propriétaire", None))
 
 import resource_rc

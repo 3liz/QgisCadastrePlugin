@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Qadastre - loading main methods
+ Cadastre - loading main methods
                                  A QGIS plugin
  This plugins helps users to import the french land registry ('cadastre')
  into a database. It is meant to ease the use of the data in QGIs
@@ -37,16 +37,16 @@ from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
 
 
-class qadastreLoading(QObject):
+class cadastreLoading(QObject):
 
     def __init__(self, dialog):
         self.dialog = dialog
 
-        # common qadastre methods
+        # common cadastre methods
         self.qc = self.dialog.qc
 
         # List of database layers to load inQGIS
-        self.qgisQadastreLayerList = [
+        self.qgisCadastreLayerList = [
             {'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': ''},
             {'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': ''},
             {'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'ZONCOMMUNI_id\''},
@@ -89,10 +89,10 @@ class qadastreLoading(QObject):
 
         # Get selected options
         providerName = self.dialog.dbpluginclass.providerName()
-        qgisQadastreLayers = []
+        qgisCadastreLayers = []
         communeLayer = None
         self.dialog.schema = unicode(self.dialog.liDbSchema.currentText())
-        self.dialog.totalSteps = len(self.qgisQadastreLayerList)
+        self.dialog.totalSteps = len(self.qgisCadastreLayerList)
 
         # Run the loading
         self.qc.updateLog(u'Chargement des tables :')
@@ -111,7 +111,7 @@ class qadastreLoading(QObject):
         override = unicode(self.dialog.liOverrideLayer.currentText())
 
         # Loop throuhg qgisQastreLayerList and load each corresponding table
-        for item in self.qgisQadastreLayerList:
+        for item in self.qgisCadastreLayerList:
 
             # update progress bar
             self.qc.updateLog(u'* Table %s' % item['name'])
@@ -164,7 +164,7 @@ class qadastreLoading(QObject):
                     vlayer.loadNamedStyle(qmlPath)
 
                 # append vector layer to the list
-                qgisQadastreLayers.append(vlayer)
+                qgisCadastreLayers.append(vlayer)
 
                 # keep commune layer to later zoom to extent
                 if item['name'] == 'geo_commune':
@@ -172,7 +172,7 @@ class qadastreLoading(QObject):
 
 
         # Add layer to QGIS registry
-        QgsMapLayerRegistry.instance().addMapLayers(qgisQadastreLayers)
+        QgsMapLayerRegistry.instance().addMapLayers(qgisCadastreLayers)
 
         # Zoom to layer commune
         if communeLayer:
@@ -190,7 +190,7 @@ class qadastreLoading(QObject):
         QApplication.restoreOverrideCursor()
         QMessageBox.information(
             self.dialog,
-            u"Qadastre",
+            u"Cadastre",
             u"Les données ont bien été chargées dans QGIS"
         )
         self.dialog.pbProcess.setValue(0)

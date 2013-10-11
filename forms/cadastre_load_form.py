@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'qadastre_load_form.ui'
+# Form implementation generated from reading ui file 'cadastre_load_form.ui'
 #
-# Created: Mon Sep 23 14:28:57 2013
+# Created: Fri Oct 11 18:46:38 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,10 +23,10 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_qadastre_load_form(object):
-    def setupUi(self, qadastre_load_form):
-        qadastre_load_form.setObjectName(_fromUtf8("qadastre_load_form"))
-        qadastre_load_form.resize(281, 625)
+class Ui_cadastre_load_form(object):
+    def setupUi(self, cadastre_load_form):
+        cadastre_load_form.setObjectName(_fromUtf8("cadastre_load_form"))
+        cadastre_load_form.resize(281, 625)
         self.dockWidgetContents = QtGui.QWidget()
         self.dockWidgetContents.setObjectName(_fromUtf8("dockWidgetContents"))
         self.verticalLayout = QtGui.QVBoxLayout(self.dockWidgetContents)
@@ -108,29 +108,29 @@ class Ui_qadastre_load_form(object):
         self.verticalLayout_13.addItem(spacerItem)
         self.scrollArea_3.setWidget(self.scrollAreaWidgetContents_3)
         self.verticalLayout.addWidget(self.scrollArea_3)
-        qadastre_load_form.setWidget(self.dockWidgetContents)
+        cadastre_load_form.setWidget(self.dockWidgetContents)
 
-        self.retranslateUi(qadastre_load_form)
-        QtCore.QMetaObject.connectSlotsByName(qadastre_load_form)
+        self.retranslateUi(cadastre_load_form)
+        QtCore.QMetaObject.connectSlotsByName(cadastre_load_form)
 
-    def retranslateUi(self, qadastre_load_form):
-        qadastre_load_form.setWindowTitle(_translate("qadastre_load_form", "Qadastre - Charger les données", None))
-        self.groupBox.setTitle(_translate("qadastre_load_form", "Base de données de travail", None))
-        self.label_2.setText(_translate("qadastre_load_form", "Connexions", None))
-        self.label_3.setText(_translate("qadastre_load_form", "Schéma", None))
-        self.label.setText(_translate("qadastre_load_form", "Type de base", None))
-        self.liDbType.setItemText(0, _translate("qadastre_load_form", "-- Choisir --", None))
-        self.liDbType.setItemText(1, _translate("qadastre_load_form", "Postgis", None))
-        self.liDbType.setItemText(2, _translate("qadastre_load_form", "Spatialite", None))
-        self.groupBox_5.setTitle(_translate("qadastre_load_form", "Styles à appliquer", None))
-        self.label_12.setText(_translate("qadastre_load_form", "Thème", None))
-        self.liTheme.setItemText(0, _translate("qadastre_load_form", "classique", None))
-        self.btProcessLoading.setText(_translate("qadastre_load_form", "Charger les données", None))
-        self.groupBox_6.setTitle(_translate("qadastre_load_form", "Remplacement des couches ?", None))
-        self.liOverrideLayer.setToolTip(_translate("qadastre_load_form", "<html><head/><body><p>Comportement lors du chargement si des données sont déjà ouvertes dans le projet</p></body></html>", None))
-        self.liOverrideLayer.setItemText(0, _translate("qadastre_load_form", "Conserver", None))
-        self.liOverrideLayer.setItemText(1, _translate("qadastre_load_form", "Remplacer", None))
-        self.txtLog.setHtml(_translate("qadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, cadastre_load_form):
+        cadastre_load_form.setWindowTitle(_translate("cadastre_load_form", "Cadastre - Charger les données", None))
+        self.groupBox.setTitle(_translate("cadastre_load_form", "Base de données de travail", None))
+        self.label_2.setText(_translate("cadastre_load_form", "Connexions", None))
+        self.label_3.setText(_translate("cadastre_load_form", "Schéma", None))
+        self.label.setText(_translate("cadastre_load_form", "Type de base", None))
+        self.liDbType.setItemText(0, _translate("cadastre_load_form", "-- Choisir --", None))
+        self.liDbType.setItemText(1, _translate("cadastre_load_form", "Postgis", None))
+        self.liDbType.setItemText(2, _translate("cadastre_load_form", "Spatialite", None))
+        self.groupBox_5.setTitle(_translate("cadastre_load_form", "Styles à appliquer", None))
+        self.label_12.setText(_translate("cadastre_load_form", "Thème", None))
+        self.liTheme.setItemText(0, _translate("cadastre_load_form", "classique", None))
+        self.btProcessLoading.setText(_translate("cadastre_load_form", "Charger les données", None))
+        self.groupBox_6.setTitle(_translate("cadastre_load_form", "Remplacement des couches ?", None))
+        self.liOverrideLayer.setToolTip(_translate("cadastre_load_form", "<html><head/><body><p>Comportement lors du chargement si des données sont déjà ouvertes dans le projet</p></body></html>", None))
+        self.liOverrideLayer.setItemText(0, _translate("cadastre_load_form", "Conserver", None))
+        self.liOverrideLayer.setItemText(1, _translate("cadastre_load_form", "Remplacer", None))
+        self.txtLog.setHtml(_translate("cadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"

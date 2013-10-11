@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Qadastre
+ Cadastre
                                  A QGIS plugin
  This plugins helps users to import the french land registry ('cadastre') into a database. It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
                              -------------------
@@ -22,7 +22,7 @@
 """
 
 def classFactory(iface):
-    # load Qadastre class from file Qadastre
-    from qadastre_menu import qadastre_menu
-    return qadastre_menu(iface)
+    # load Cadastre class from file Cadastre
+    from cadastre_menu import cadastre_menu
+    return cadastre_menu(iface)
     

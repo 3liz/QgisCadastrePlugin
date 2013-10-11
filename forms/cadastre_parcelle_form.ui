@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>qadastre_parcelle_form</class>
- <widget class="QDialog" name="qadastre_parcelle_form">
+ <class>cadastre_parcelle_form</class>
+ <widget class="QDialog" name="cadastre_parcelle_form">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Qadastre - Informations Parcelle</string>
+   <string>Cadastre - Informations Parcelle</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -68,7 +68,7 @@
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/plugins/qadastre/icons/releve.png</normaloff>:/plugins/qadastre/icons/releve.png</iconset>
+                <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
               </property>
              </widget>
             </item>
@@ -79,7 +79,7 @@
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/plugins/qadastre/icons/releve.png</normaloff>:/plugins/qadastre/icons/releve.png</iconset>
+                <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
               </property>
              </widget>
             </item>
@@ -94,7 +94,7 @@
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/plugins/qadastre/icons/centrer.png</normaloff>:/plugins/qadastre/icons/centrer.png</iconset>
+                <normaloff>:/plugins/cadastre/icons/centrer.png</normaloff>:/plugins/cadastre/icons/centrer.png</iconset>
               </property>
              </widget>
             </item>
@@ -105,7 +105,7 @@
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/plugins/qadastre/icons/zoom.png</normaloff>:/plugins/qadastre/icons/zoom.png</iconset>
+                <normaloff>:/plugins/cadastre/icons/zoom.png</normaloff>:/plugins/cadastre/icons/zoom.png</iconset>
               </property>
              </widget>
             </item>
@@ -116,7 +116,7 @@
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/plugins/qadastre/icons/select.png</normaloff>:/plugins/qadastre/icons/select.png</iconset>
+                <normaloff>:/plugins/cadastre/icons/select.png</normaloff>:/plugins/cadastre/icons/select.png</iconset>
               </property>
              </widget>
             </item>
@@ -131,7 +131,7 @@
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/plugins/qadastre/icons/select.png</normaloff>:/plugins/qadastre/icons/select.png</iconset>
+                <normaloff>:/plugins/cadastre/icons/select.png</normaloff>:/plugins/cadastre/icons/select.png</iconset>
               </property>
              </widget>
             </item>

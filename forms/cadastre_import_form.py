@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'qadastre_import_form.ui'
+# Form implementation generated from reading ui file 'cadastre_import_form.ui'
 #
-# Created: Mon Sep 30 11:40:17 2013
+# Created: Fri Oct 11 18:46:38 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,13 +23,13 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_qadastre_import_form(object):
-    def setupUi(self, qadastre_import_form):
-        qadastre_import_form.setObjectName(_fromUtf8("qadastre_import_form"))
-        qadastre_import_form.resize(525, 642)
-        self.verticalLayout = QtGui.QVBoxLayout(qadastre_import_form)
+class Ui_cadastre_import_form(object):
+    def setupUi(self, cadastre_import_form):
+        cadastre_import_form.setObjectName(_fromUtf8("cadastre_import_form"))
+        cadastre_import_form.resize(525, 642)
+        self.verticalLayout = QtGui.QVBoxLayout(cadastre_import_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.scrollArea = QtGui.QScrollArea(qadastre_import_form)
+        self.scrollArea = QtGui.QScrollArea(cadastre_import_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
@@ -93,7 +93,7 @@ class Ui_qadastre_import_form(object):
         self.horizontalLayout_8.addWidget(self.inEdigeoSourceDir)
         self.btEdigeoSourceDir = QtGui.QToolButton(self.groupBox_5)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/qadastre/icons/open.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/cadastre/icons/open.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btEdigeoSourceDir.setIcon(icon)
         self.btEdigeoSourceDir.setObjectName(_fromUtf8("btEdigeoSourceDir"))
         self.horizontalLayout_8.addWidget(self.btEdigeoSourceDir)
@@ -221,42 +221,42 @@ class Ui_qadastre_import_form(object):
         self.verticalLayout_6.addItem(spacerItem)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea)
-        self.buttonBox = QtGui.QDialogButtonBox(qadastre_import_form)
+        self.buttonBox = QtGui.QDialogButtonBox(cadastre_import_form)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(qadastre_import_form)
-        QtCore.QMetaObject.connectSlotsByName(qadastre_import_form)
+        self.retranslateUi(cadastre_import_form)
+        QtCore.QMetaObject.connectSlotsByName(cadastre_import_form)
 
-    def retranslateUi(self, qadastre_import_form):
-        qadastre_import_form.setWindowTitle(_translate("qadastre_import_form", "Qadastre", None))
-        self.groupBox.setTitle(_translate("qadastre_import_form", "Base de données de travail", None))
-        self.label.setText(_translate("qadastre_import_form", "Type de base", None))
-        self.liDbType.setItemText(0, _translate("qadastre_import_form", "-- Choisir --", None))
-        self.liDbType.setItemText(1, _translate("qadastre_import_form", "Postgis", None))
-        self.liDbType.setItemText(2, _translate("qadastre_import_form", "Spatialite", None))
-        self.label_3.setText(_translate("qadastre_import_form", "Schémas", None))
-        self.label_2.setText(_translate("qadastre_import_form", "Connexions", None))
-        self.btDbCreateSchema.setText(_translate("qadastre_import_form", "créer", None))
-        self.groupBox_5.setTitle(_translate("qadastre_import_form", "Fichiers EDIGEO", None))
-        self.label_11.setText(_translate("qadastre_import_form", "Répertoire", None))
-        self.btEdigeoSourceDir.setText(_translate("qadastre_import_form", "...", None))
-        self.label_12.setText(_translate("qadastre_import_form", "Projections: source", None))
-        self.btEdigeoSourceProj.setText(_translate("qadastre_import_form", "...", None))
-        self.label_13.setText(_translate("qadastre_import_form", "Cible", None))
-        self.btEdigeoTargetProj.setText(_translate("qadastre_import_form", "...", None))
-        self.label_4.setText(_translate("qadastre_import_form", "Département", None))
-        self.label_5.setText(_translate("qadastre_import_form", "Direction", None))
-        self.groupBox_6.setTitle(_translate("qadastre_import_form", "Fichiers MAJIC", None))
-        self.label_14.setText(_translate("qadastre_import_form", "Répertoire", None))
-        self.btMajicSourceDir.setText(_translate("qadastre_import_form", "...", None))
-        self.groupBox_7.setTitle(_translate("qadastre_import_form", "Paramètres", None))
-        self.label_15.setText(_translate("qadastre_import_form", "Version du format", None))
-        self.label_16.setText(_translate("qadastre_import_form", "Année", None))
-        self.label_6.setText(_translate("qadastre_import_form", "Lot", None))
-        self.btProcessImport.setText(_translate("qadastre_import_form", "Lancer l\'import", None))
-        self.txtLog.setHtml(_translate("qadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, cadastre_import_form):
+        cadastre_import_form.setWindowTitle(_translate("cadastre_import_form", "Cadastre", None))
+        self.groupBox.setTitle(_translate("cadastre_import_form", "Base de données de travail", None))
+        self.label.setText(_translate("cadastre_import_form", "Type de base", None))
+        self.liDbType.setItemText(0, _translate("cadastre_import_form", "-- Choisir --", None))
+        self.liDbType.setItemText(1, _translate("cadastre_import_form", "Postgis", None))
+        self.liDbType.setItemText(2, _translate("cadastre_import_form", "Spatialite", None))
+        self.label_3.setText(_translate("cadastre_import_form", "Schémas", None))
+        self.label_2.setText(_translate("cadastre_import_form", "Connexions", None))
+        self.btDbCreateSchema.setText(_translate("cadastre_import_form", "créer", None))
+        self.groupBox_5.setTitle(_translate("cadastre_import_form", "Fichiers EDIGEO", None))
+        self.label_11.setText(_translate("cadastre_import_form", "Répertoire", None))
+        self.btEdigeoSourceDir.setText(_translate("cadastre_import_form", "...", None))
+        self.label_12.setText(_translate("cadastre_import_form", "Projections: source", None))
+        self.btEdigeoSourceProj.setText(_translate("cadastre_import_form", "...", None))
+        self.label_13.setText(_translate("cadastre_import_form", "Cible", None))
+        self.btEdigeoTargetProj.setText(_translate("cadastre_import_form", "...", None))
+        self.label_4.setText(_translate("cadastre_import_form", "Département", None))
+        self.label_5.setText(_translate("cadastre_import_form", "Direction", None))
+        self.groupBox_6.setTitle(_translate("cadastre_import_form", "Fichiers MAJIC", None))
+        self.label_14.setText(_translate("cadastre_import_form", "Répertoire", None))
+        self.btMajicSourceDir.setText(_translate("cadastre_import_form", "...", None))
+        self.groupBox_7.setTitle(_translate("cadastre_import_form", "Paramètres", None))
+        self.label_15.setText(_translate("cadastre_import_form", "Version du format", None))
+        self.label_16.setText(_translate("cadastre_import_form", "Année", None))
+        self.label_6.setText(_translate("cadastre_import_form", "Lot", None))
+        self.btProcessImport.setText(_translate("cadastre_import_form", "Lancer l\'import", None))
+        self.txtLog.setHtml(_translate("cadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"

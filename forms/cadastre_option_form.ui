@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>qadastre_option_form</class>
- <widget class="QDialog" name="qadastre_option_form">
+ <class>cadastre_option_form</class>
+ <widget class="QDialog" name="cadastre_option_form">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Qadastre</string>
+   <string>Cadastre</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -47,9 +47,9 @@ ou de revenir à l'interface par défaut</string>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <item>
-             <widget class="QPushButton" name="btInterfaceQadastre">
+             <widget class="QPushButton" name="btInterfaceCadastre">
               <property name="text">
-               <string>Interface Qadastre</string>
+               <string>Interface Cadastre</string>
               </property>
              </widget>
             </item>
@@ -156,7 +156,7 @@ ou de revenir à l'interface par défaut</string>
               </property>
               <property name="icon">
                <iconset resource="resource.qrc">
-                <normaloff>:/plugins/qadastre/icons/open.png</normaloff>:/plugins/qadastre/icons/open.png</iconset>
+                <normaloff>:/plugins/cadastre/icons/open.png</normaloff>:/plugins/cadastre/icons/open.png</iconset>
               </property>
              </widget>
             </item>
@@ -193,7 +193,7 @@ ou de revenir à l'interface par défaut</string>
  </widget>
  <tabstops>
   <tabstop>scrollArea</tabstop>
-  <tabstop>btInterfaceQadastre</tabstop>
+  <tabstop>btInterfaceCadastre</tabstop>
   <tabstop>btInterfaceQgis</tabstop>
   <tabstop>inMajicBati</tabstop>
   <tabstop>inMajicFantoir</tabstop>

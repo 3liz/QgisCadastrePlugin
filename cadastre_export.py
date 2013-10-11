@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Qadastre - Export method class
+ Cadastre - Export method class
                                                                  A QGIS plugin
  This plugins helps users to import the french land registry ('cadastre')
  into a database. It is meant to ease the use of the data in QGIs
@@ -33,7 +33,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 
 
-class qadastreExport(QObject):
+class cadastreExport(QObject):
 
     def __init__(self, dialog, etype='proprietaire', feat=None):
         self.dialog = dialog
@@ -153,7 +153,7 @@ class qadastreExport(QObject):
             if item.has_key('keepContent') and item['keepContent']:
                 self.contentKeeped[key] = ''
 
-        # common qadastre methods
+        # common cadastre methods
         self.qc = self.dialog.qc
 
 

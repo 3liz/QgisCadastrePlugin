@@ -2,7 +2,7 @@
 
 # Resource object code
 #
-# Created: mar. sept. 24 10:36:09 2013
+# Created: ven. oct. 11 18:48:11 2013
 #      by: The Resource Compiler for PyQt (Qt v4.8.4)
 #
 # WARNING! All changes made in this file will be lost!
@@ -2561,8 +2561,8 @@ qt_resource_name = "\
 \x00\x70\
 \x00\x6c\x00\x75\x00\x67\x00\x69\x00\x6e\x00\x73\
 \x00\x08\
-\x07\xa8\xa5\x65\
-\x00\x71\
+\x07\xa8\xa6\xa5\
+\x00\x63\
 \x00\x61\x00\x64\x00\x61\x00\x73\x00\x74\x00\x72\x00\x65\
 \x00\x05\
 \x00\x6f\xa6\x53\

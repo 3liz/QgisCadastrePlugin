@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# qadastre documentation build configuration file, created by
+# cadastre documentation build configuration file, created by
 # sphinx-quickstart on Sun Feb 12 17:11:03 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'qadastre'
+project = u'cadastre'
 copyright = u'2013, 3liz'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -178,7 +178,7 @@ htmlhelp_basename = 'templateclassdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'qadastre.tex', u'qadastre Documentation',
+  ('index', 'cadastre.tex', u'cadastre Documentation',
    u'3liz', 'manual'),
 ]
 
@@ -211,6 +211,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'templateclass', u'qadastre Documentation',
+    ('index', 'templateclass', u'cadastre Documentation',
      [u'3liz'], 1)
 ]

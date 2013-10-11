@@ -1,5 +1,5 @@
 #/***************************************************************************
-# Qadastre
+# Cadastre
 # 
 # This plugins helps users to import the french land registry ('cadastre') into a database. It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
 #                             -------------------
@@ -23,19 +23,19 @@ PLUGIN_UPLOAD = $(CURDIR)/plugin_upload.py
 # Makefile for a PyQGIS plugin 
 
 # translation
-SOURCES = qadastre.py ui_qadastre.py __init__.py qadastredialog.py
-#TRANSLATIONS = i18n/qadastre_en.ts
+SOURCES = cadastre.py ui_cadastre.py __init__.py cadastredialog.py
+#TRANSLATIONS = i18n/cadastre_en.ts
 TRANSLATIONS = 
 
 # global
 
-PLUGINNAME = qadastre
+PLUGINNAME = cadastre
 
-PY_FILES = qadastre.py qadastredialog.py __init__.py
+PY_FILES = cadastre.py cadastredialog.py __init__.py
 
 EXTRAS = icon.png metadata.txt
 
-UI_FILES = ui_qadastre.py
+UI_FILES = ui_cadastre.py
 
 RESOURCE_FILES = resources_rc.py
 

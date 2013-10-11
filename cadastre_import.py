@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Qadastre - import main methods
+ Cadastre - import main methods
                                  A QGIS plugin
  This plugins helps users to import the french land registry ('cadastre')
  into a database. It is meant to ease the use of the data in QGIs
@@ -41,12 +41,12 @@ from db_manager.dlg_db_error import DlgDbError
 
 
 
-class qadastreImport(QObject):
+class cadastreImport(QObject):
 
     def __init__(self, dialog):
         self.dialog = dialog
 
-        # common qadastre methods
+        # common cadastre methods
         self.qc = self.dialog.qc
 
         self.db = self.dialog.db
@@ -55,7 +55,7 @@ class qadastreImport(QObject):
 
         # create temporary directories
         s = QSettings()
-        tempDir = s.value("qadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
         self.scriptDir = tempfile.mkdtemp('', 'qad', tempDir)
         self.edigeoDir = tempfile.mkdtemp('', 'qad', tempDir)
         self.edigeoPlainDir = tempfile.mkdtemp('', 'qad', tempDir)
@@ -418,7 +418,7 @@ class qadastreImport(QObject):
 
         self.updateProgressBar()
         self.updateTimer()
-        QMessageBox.information(self.dialog, "Qadastre", msg)
+        QMessageBox.information(self.dialog, "Cadastre", msg)
         return None
 
     #
@@ -444,7 +444,7 @@ class qadastreImport(QObject):
             except IOError, e:
                 msg = u"Erreur lors de la copie des scripts d'import: %s" % e
                 QMessageBox.information(self.dialog,
-                "Qadastre", msg)
+                "Cadastre", msg)
                 self.go = False
                 return msg
 

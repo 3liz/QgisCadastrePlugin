@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Qadastre - Dialog classes
+ Cadastre - Dialog classes
                                                                  A QGIS plugin
  This plugins helps users to import the french land registry ('cadastre')
  into a database. It is meant to ease the use of the data in QGIs
@@ -47,14 +47,14 @@ from functools import partial
 # --------------------------------------------------------
 
 
-class qadastre_common():
+class cadastre_common():
 
     def __init__(self, dialog):
 
         self.dialog = dialog
 
         # plugin directory path
-        self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/Qadastre"
+        self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/cadastre"
 
         # default auth id for layers
         self.defaultAuthId = 'EPSG:2154'
@@ -354,17 +354,17 @@ class qadastre_common():
             self.dialog.pathSelectors[key]['input'].setText(unicode(ipath))
 
 
-from qadastre_import_form import *
-from qadastre_import import *
+from cadastre_import_form import *
+from cadastre_import import *
 
-class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
+class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
     def __init__(self, iface):
         QDialog.__init__(self)
         self.iface = iface
         self.setupUi(self)
 
-        # common qadastre methods
-        self.qc = qadastre_common(self)
+        # common cadastre methods
+        self.qc = cadastre_common(self)
 
         # Signals/Slot Connections
         self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
@@ -481,7 +481,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         }
         self.getValuesFromSettings()
 
-        self.qadastreImportOptions = {
+        self.cadastreImportOptions = {
             'dataVersion' : '2012',
             'dataYear' : '2011',
             'edigeoSourceDir' : None,
@@ -493,27 +493,27 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         s = QSettings()
         self.majicSourceFileNames = [
             {'key': '[FICHIER_BATI]',
-                'value': s.value("qadastre/batiFileName", 'REVBATI.800', type=str),
+                'value': s.value("cadastre/batiFileName", 'REVBATI.800', type=str),
                 'table': 'bati'
             },
             {'key': '[FICHIER_FANTOIR]',
-                'value': s.value("qadastre/fantoirFileName", 'TOPFANR.800', type=str),
+                'value': s.value("cadastre/fantoirFileName", 'TOPFANR.800', type=str),
                 'table': 'fanr'
             },
             {'key': '[FICHIER_LOTLOCAL]',
-                'value': s.value("qadastre/lotlocalFileName", 'REVD166.800', type=str),
+                'value': s.value("cadastre/lotlocalFileName", 'REVD166.800', type=str),
                 'table': 'lloc'
             },
             {'key': '[FICHIER_NBATI]',
-                'value': s.value("qadastre/nbatiFileName", 'REVNBAT.800', type=str),
+                'value': s.value("cadastre/nbatiFileName", 'REVNBAT.800', type=str),
                 'table': 'nbat'
             },
             {'key': '[FICHIER_PDL]',
-                'value': s.value("qadastre/pdlFileName", 'REVFPDL.800', type=str),
+                'value': s.value("cadastre/pdlFileName", 'REVFPDL.800', type=str),
                 'table': 'pdll'
             },
             {'key': '[FICHIER_PROP]',
-                'value': s.value("qadastre/propFileName", 'REVPROP.800', type=str),
+                'value': s.value("cadastre/propFileName", 'REVPROP.800', type=str),
                 'table': 'prop'
             }
         ]
@@ -533,7 +533,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
         '''
         s = QSettings()
         for k,v in self.sList.items():
-            value = s.value("qadastre/%s" % k, '', type=str)
+            value = s.value("cadastre/%s" % k, '', type=str)
             if value and value != 'None' and v['widget']:
                 if v['wType'] == 'text':
                     v['widget'].setText(str(value))
@@ -590,7 +590,7 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
             if len(projSelector.selectedAuthId()) == 0:
                 QMessageBox.information(
                     self,
-                    self.tr("Qadastre"),
+                    self.tr("Cadastre"),
                     self.tr(u"Aucun système de coordonnée de référence valide n'a été sélectionné")
                 )
                 return
@@ -622,19 +622,19 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
 
         # store chosen data in QGIS settings
         s = QSettings()
-        s.setValue("qadastre/dataVersion", str(self.dataVersion))
-        s.setValue("qadastre/dataYear", int(self.dataYear))
-        s.setValue("qadastre/majicSourceDir", str(self.majicSourceDir))
-        s.setValue("qadastre/edigeoSourceDir", str(self.edigeoSourceDir))
-        s.setValue("qadastre/edigeoDepartement", str(self.edigeoDepartement))
-        s.setValue("qadastre/edigeoDirection", str(self.edigeoDirection))
-        s.setValue("qadastre/edigeoLot", str(self.edigeoLot))
-        s.setValue("qadastre/edigeoSourceProj", str(self.edigeoSourceProj))
-        s.setValue("qadastre/edigeoTargetProj", str(self.edigeoTargetProj))
+        s.setValue("cadastre/dataVersion", str(self.dataVersion))
+        s.setValue("cadastre/dataYear", int(self.dataYear))
+        s.setValue("cadastre/majicSourceDir", str(self.majicSourceDir))
+        s.setValue("cadastre/edigeoSourceDir", str(self.edigeoSourceDir))
+        s.setValue("cadastre/edigeoDepartement", str(self.edigeoDepartement))
+        s.setValue("cadastre/edigeoDirection", str(self.edigeoDirection))
+        s.setValue("cadastre/edigeoLot", str(self.edigeoLot))
+        s.setValue("cadastre/edigeoSourceProj", str(self.edigeoSourceProj))
+        s.setValue("cadastre/edigeoTargetProj", str(self.edigeoTargetProj))
 
 
-        # qadastreImport instance
-        qi = qadastreImport(self)
+        # cadastreImport instance
+        qi = cadastreImport(self)
 
         # Check if structure already exists in the database/schema
         self.qc.checkDatabaseForExistingStructure()
@@ -657,10 +657,10 @@ class qadastre_import_dialog(QDialog, Ui_qadastre_import_form):
 #        load - Load data from database
 # --------------------------------------------------------
 
-from qadastre_load_form import *
-from qadastre_loading import *
+from cadastre_load_form import *
+from cadastre_loading import *
 
-class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
+class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
     def __init__(self, iface):
         QDockWidget.__init__(self)
         self.iface = iface
@@ -668,8 +668,8 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
         self.mc = self.iface.mapCanvas()
 
-        # common qadastre methods
-        self.qc = qadastre_common(self)
+        # common cadastre methods
+        self.qc = cadastre_common(self)
 
         # Set initial values
         self.go = True
@@ -684,7 +684,7 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
         self.schemaList = None
         self.dbHasData = None
 
-        # default style to apply for Qadastre layers
+        # default style to apply for Cadastre layers
         self.themeDir = unicode(self.liTheme.currentText())
         if not os.path.exists(os.path.join(
             self.qc.plugin_dir,
@@ -692,16 +692,16 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
         )):
             self.themeDir = 'classique'
 
-        # set Qadastre SVG path if not set
-        qadastreSvgPath = os.path.join(
+        # set Cadastre SVG path if not set
+        cadastreSvgPath = os.path.join(
             self.qc.plugin_dir,
             "styles/%s/svg" % self.themeDir
         )
         s = QSettings()
         qgisSvgPaths = s.value("svg/searchPathsForSVG", 10, type=str)
-        if not qadastreSvgPath in qgisSvgPaths:
-            s.setValue("svg/searchPathsForSVG", qadastreSvgPath)
-            self.qc.updateLog(u"* Le chemin contenant les SVG du plugin Qadastre a été ajouté dans les options de QGIS")
+        if not cadastreSvgPath in qgisSvgPaths:
+            s.setValue("svg/searchPathsForSVG", cadastreSvgPath)
+            self.qc.updateLog(u"* Le chemin contenant les SVG du plugin Cadastre a été ajouté dans les options de QGIS")
 
         # Signals/Slot Connections
         self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
@@ -716,7 +716,7 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
         '''
         if self.connection:
             if self.db:
-                ql = qadastreLoading(self)
+                ql = cadastreLoading(self)
                 ql.processLoading()
 
 
@@ -725,18 +725,18 @@ class qadastre_load_dialog(QDockWidget, Ui_qadastre_load_form):
 #        search - search for data among database ans export
 # ---------------------------------------------------------
 
-from qadastre_search_form import *
-from qadastre_export import *
+from cadastre_search_form import *
+from cadastre_export import *
 
-class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
+class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
     def __init__(self, iface):
         QDockWidget.__init__(self)
         self.iface = iface
         self.setupUi(self)
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
 
-        # common qadastre methods
-        self.qc = qadastre_common(self)
+        # common cadastre methods
+        self.qc = cadastre_common(self)
 
         # database properties
         self.connector = None
@@ -1376,7 +1376,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         '''
         feat = self.searchComboBoxes['proprietaire']['chosenFeature']
         if feat and self.connector:
-            qe = qadastreExport(self, 'proprietaire', feat)
+            qe = cadastreExport(self, 'proprietaire', feat)
             qe.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucun propriétaire sélectionné !')
@@ -1390,7 +1390,7 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
         '''
         feat = self.searchComboBoxes[key]['chosenFeature']
         if feat and self.connector:
-            qe = qadastreExport(self, 'parcelle', feat)
+            qe = cadastreExport(self, 'parcelle', feat)
             qe.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')
@@ -1412,16 +1412,16 @@ class qadastre_search_dialog(QDockWidget, Ui_qadastre_search_form):
 #        Option - Let the user configure options
 # --------------------------------------------------------
 
-from qadastre_option_form import *
+from cadastre_option_form import *
 
-class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
+class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
     def __init__(self, iface):
         QDialog.__init__(self)
         self.iface = iface
         self.setupUi(self)
 
-        # common qadastre methods
-        self.qc = qadastre_common(self)
+        # common cadastre methods
+        self.qc = cadastre_common(self)
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -1453,25 +1453,25 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
         from settings and set corresponding inputs
         '''
         s = QSettings()
-        batiFileName = s.value("qadastre/batiFileName", 'REVBATI.800', type=str)
+        batiFileName = s.value("cadastre/batiFileName", 'REVBATI.800', type=str)
         if batiFileName:
             self.inMajicBati.setText(batiFileName)
-        fantoirFileName = s.value("qadastre/fantoirFileName", 'TOPFANR.800', type=str)
+        fantoirFileName = s.value("cadastre/fantoirFileName", 'TOPFANR.800', type=str)
         if fantoirFileName:
             self.inMajicFantoir.setText(fantoirFileName)
-        lotlocalFileName = s.value("qadastre/lotlocalFileName", 'REVD166.800', type=str)
+        lotlocalFileName = s.value("cadastre/lotlocalFileName", 'REVD166.800', type=str)
         if lotlocalFileName:
             self.inMajicLotlocal.setText(lotlocalFileName)
-        nbatiFileName = s.value("qadastre/nbatiFileName", 'REVNBAT.800', type=str)
+        nbatiFileName = s.value("cadastre/nbatiFileName", 'REVNBAT.800', type=str)
         if nbatiFileName:
             self.inMajicNbati.setText(nbatiFileName)
-        pdlFileName = s.value("qadastre/pdlFileName", 'REVFPDL.800', type=str)
+        pdlFileName = s.value("cadastre/pdlFileName", 'REVFPDL.800', type=str)
         if pdlFileName:
             self.inMajicPdl.setText(pdlFileName)
-        propFileName = s.value("qadastre/propFileName", 'REVPROP.800', type=str)
+        propFileName = s.value("cadastre/propFileName", 'REVPROP.800', type=str)
         if propFileName:
             self.inMajicProp.setText(propFileName)
-        tempDir = s.value("qadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
         if tempDir:
             self.inTempDir.setText(tempDir)
 
@@ -1483,15 +1483,15 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
 
         # Save Majic file names
         s = QSettings()
-        s.setValue("qadastre/batiFileName", self.inMajicBati.text().strip(' \t\n\r'))
-        s.setValue("qadastre/fantoirFileName", self.inMajicFantoir.text().strip(' \t\n\r'))
-        s.setValue("qadastre/lotlocalFileName", self.inMajicLotlocal.text().strip(' \t\n\r'))
-        s.setValue("qadastre/nbatiFileName", self.inMajicNbati.text().strip(' \t\n\r'))
-        s.setValue("qadastre/pdlFileName", self.inMajicPdl.text().strip(' \t\n\r'))
-        s.setValue("qadastre/propFileName", self.inMajicProp.text().strip(' \t\n\r'))
+        s.setValue("cadastre/batiFileName", self.inMajicBati.text().strip(' \t\n\r'))
+        s.setValue("cadastre/fantoirFileName", self.inMajicFantoir.text().strip(' \t\n\r'))
+        s.setValue("cadastre/lotlocalFileName", self.inMajicLotlocal.text().strip(' \t\n\r'))
+        s.setValue("cadastre/nbatiFileName", self.inMajicNbati.text().strip(' \t\n\r'))
+        s.setValue("cadastre/pdlFileName", self.inMajicPdl.text().strip(' \t\n\r'))
+        s.setValue("cadastre/propFileName", self.inMajicProp.text().strip(' \t\n\r'))
 
         # Save temp dir
-        s.setValue("qadastre/tempDir", self.inTempDir.text().strip(' \t\n\r'))
+        s.setValue("cadastre/tempDir", self.inTempDir.text().strip(' \t\n\r'))
 
         self.accept()
 
@@ -1500,7 +1500,7 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
         Run some actions when
         the user closes the dialog
         '''
-        string = "qadastre option dialog closed"
+        string = "cadastre option dialog closed"
         self.close()
 
 
@@ -1509,16 +1509,16 @@ class qadastre_option_dialog(QDialog, Ui_qadastre_option_form):
 #        About - Let the user display the about dialog
 # --------------------------------------------------------
 
-from qadastre_about_form import *
+from cadastre_about_form import *
 
-class qadastre_about_dialog(QDialog, Ui_qadastre_about_form):
+class cadastre_about_dialog(QDialog, Ui_cadastre_about_form):
     def __init__(self, iface):
         QDialog.__init__(self)
         self.iface = iface
         self.setupUi(self)
 
-        # common qadastre methods
-        self.qc = qadastre_common(self)
+        # common cadastre methods
+        self.qc = cadastre_common(self)
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -1543,10 +1543,10 @@ class qadastre_about_dialog(QDialog, Ui_qadastre_about_form):
 #        Parcelle - Show parcelle information
 # --------------------------------------------------------
 
-from qadastre_parcelle_form import *
-from qadastre_export import *
+from cadastre_parcelle_form import *
+from cadastre_export import *
 
-class qadastre_parcelle_dialog(QDialog, Ui_qadastre_parcelle_form):
+class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
     def __init__(self, iface, layer, feature):
         QDialog.__init__(self)
         self.iface = iface
@@ -1555,8 +1555,8 @@ class qadastre_parcelle_dialog(QDialog, Ui_qadastre_parcelle_form):
         self.mc = iface.mapCanvas()
         self.setupUi(self)
 
-        # common qadastre methods
-        self.qc = qadastre_common(self)
+        # common cadastre methods
+        self.qc = cadastre_common(self)
 
         # Get connection parameters
         connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
@@ -1660,7 +1660,7 @@ class qadastre_parcelle_dialog(QDialog, Ui_qadastre_parcelle_form):
         information as a PDF file
         '''
         if self.feature and self.connector:
-            qe = qadastreExport(self, key, self.feature)
+            qe = cadastreExport(self, key, self.feature)
             qe.exportAsPDF()
 
     def centerToParcelle(self):
@@ -1699,7 +1699,7 @@ class qadastre_parcelle_dialog(QDialog, Ui_qadastre_parcelle_form):
         Use search class tools.
         Needs refactoring
         '''
-        qs = qadastre_search_dialog(self.iface)
+        qs = cadastre_search_dialog(self.iface)
         key = 'proprietaire'
         value = self.feature['comptecommunal']
         filterExpression = "comptecommunal IN ('%s')" % value

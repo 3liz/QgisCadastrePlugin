@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui_qadastre.ui'
+# Form implementation generated from reading ui file 'ui_cadastre.ui'
 #
 # Created: Tue Jul 16 11:53:12 2013
 #      by: PyQt4 UI code generator 4.9.3
@@ -14,13 +14,13 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Qadastre(object):
-    def setupUi(self, Qadastre):
-        Qadastre.setObjectName(_fromUtf8("Qadastre"))
-        Qadastre.resize(756, 593)
-        self.verticalLayout_2 = QtGui.QVBoxLayout(Qadastre)
+class Ui_Cadastre(object):
+    def setupUi(self, Cadastre):
+        Cadastre.setObjectName(_fromUtf8("Cadastre"))
+        Cadastre.resize(756, 593)
+        self.verticalLayout_2 = QtGui.QVBoxLayout(Cadastre)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.splitter = QtGui.QSplitter(Qadastre)
+        self.splitter = QtGui.QSplitter(Cadastre)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -293,9 +293,9 @@ class Ui_Qadastre(object):
         self.verticalLayout_9.addWidget(self.label_13)
         self.horizontalLayout_9 = QtGui.QHBoxLayout()
         self.horizontalLayout_9.setObjectName(_fromUtf8("horizontalLayout_9"))
-        self.btInterfaceQadastre = QtGui.QPushButton(self.groupBox_7)
-        self.btInterfaceQadastre.setObjectName(_fromUtf8("btInterfaceQadastre"))
-        self.horizontalLayout_9.addWidget(self.btInterfaceQadastre)
+        self.btInterfaceCadastre = QtGui.QPushButton(self.groupBox_7)
+        self.btInterfaceCadastre.setObjectName(_fromUtf8("btInterfaceCadastre"))
+        self.horizontalLayout_9.addWidget(self.btInterfaceCadastre)
         self.btInterfaceQgis = QtGui.QPushButton(self.groupBox_7)
         self.btInterfaceQgis.setObjectName(_fromUtf8("btInterfaceQgis"))
         self.horizontalLayout_9.addWidget(self.btInterfaceQgis)
@@ -306,78 +306,78 @@ class Ui_Qadastre(object):
         self.swOptions.addWidget(self.page)
         self.verticalLayout_3.addWidget(self.swOptions)
         self.verticalLayout_2.addWidget(self.splitter)
-        self.buttonBox = QtGui.QDialogButtonBox(Qadastre)
+        self.buttonBox = QtGui.QDialogButtonBox(Cadastre)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close|QtGui.QDialogButtonBox.Help)
         self.buttonBox.setCenterButtons(False)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout_2.addWidget(self.buttonBox)
 
-        self.retranslateUi(Qadastre)
+        self.retranslateUi(Cadastre)
         self.swOptions.setCurrentIndex(0)
         QtCore.QObject.connect(self.lwMenu, QtCore.SIGNAL(_fromUtf8("currentRowChanged(int)")), self.swOptions.setCurrentIndex)
-        QtCore.QMetaObject.connectSlotsByName(Qadastre)
+        QtCore.QMetaObject.connectSlotsByName(Cadastre)
 
-    def retranslateUi(self, Qadastre):
-        Qadastre.setWindowTitle(QtGui.QApplication.translate("Qadastre", "Qadastre", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("Qadastre", "Base de données de travail", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Qadastre", "Type de base", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox.setItemText(0, QtGui.QApplication.translate("Qadastre", "pgsql", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox.setItemText(1, QtGui.QApplication.translate("Qadastre", "sqlite", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Qadastre", "Connexions", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Qadastre", "Schéma", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("Qadastre", "Connecté à", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, Cadastre):
+        Cadastre.setWindowTitle(QtGui.QApplication.translate("Cadastre", "Cadastre", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("Cadastre", "Base de données de travail", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("Cadastre", "Type de base", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox.setItemText(0, QtGui.QApplication.translate("Cadastre", "pgsql", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox.setItemText(1, QtGui.QApplication.translate("Cadastre", "sqlite", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Cadastre", "Connexions", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("Cadastre", "Schéma", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("Cadastre", "Connecté à", None, QtGui.QApplication.UnicodeUTF8))
         __sortingEnabled = self.lwMenu.isSortingEnabled()
         self.lwMenu.setSortingEnabled(False)
         item = self.lwMenu.item(0)
-        item.setText(QtGui.QApplication.translate("Qadastre", "Importer", None, QtGui.QApplication.UnicodeUTF8))
+        item.setText(QtGui.QApplication.translate("Cadastre", "Importer", None, QtGui.QApplication.UnicodeUTF8))
         item = self.lwMenu.item(1)
-        item.setText(QtGui.QApplication.translate("Qadastre", "Charger", None, QtGui.QApplication.UnicodeUTF8))
+        item.setText(QtGui.QApplication.translate("Cadastre", "Charger", None, QtGui.QApplication.UnicodeUTF8))
         item = self.lwMenu.item(2)
-        item.setText(QtGui.QApplication.translate("Qadastre", "Options", None, QtGui.QApplication.UnicodeUTF8))
+        item.setText(QtGui.QApplication.translate("Cadastre", "Options", None, QtGui.QApplication.UnicodeUTF8))
         self.lwMenu.setSortingEnabled(__sortingEnabled)
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("Qadastre", "Fichiers EDIGEO", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Qadastre", "Répertoire", None, QtGui.QApplication.UnicodeUTF8))
-        self.btEdigeoSourceDir.setText(QtGui.QApplication.translate("Qadastre", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("Qadastre", "Projection source", None, QtGui.QApplication.UnicodeUTF8))
-        self.btEdigeoSourceProj.setText(QtGui.QApplication.translate("Qadastre", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("Qadastre", "Projection cible", None, QtGui.QApplication.UnicodeUTF8))
-        self.btEdigeoTargetProj.setText(QtGui.QApplication.translate("Qadastre", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_4.setTitle(QtGui.QApplication.translate("Qadastre", "Fichiers MAJIC", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Qadastre", "Répertoire", None, QtGui.QApplication.UnicodeUTF8))
-        self.btMajicSourceDir.setText(QtGui.QApplication.translate("Qadastre", "...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("Qadastre", "Format MAJIC", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_4.setItemText(0, QtGui.QApplication.translate("Qadastre", "2012", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_4.setItemText(1, QtGui.QApplication.translate("Qadastre", "2011", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_3.setTitle(QtGui.QApplication.translate("Qadastre", "Destination", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkBox.setText(QtGui.QApplication.translate("Qadastre", "nouveau schéma", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("Qadastre", "Année", None, QtGui.QApplication.UnicodeUTF8))
-        self.btImportRun.setText(QtGui.QApplication.translate("Qadastre", "Lancer l\'import", None, QtGui.QApplication.UnicodeUTF8))
-        self.txtImportLog.setHtml(QtGui.QApplication.translate("Qadastre", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("Cadastre", "Fichiers EDIGEO", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("Cadastre", "Répertoire", None, QtGui.QApplication.UnicodeUTF8))
+        self.btEdigeoSourceDir.setText(QtGui.QApplication.translate("Cadastre", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("Cadastre", "Projection source", None, QtGui.QApplication.UnicodeUTF8))
+        self.btEdigeoSourceProj.setText(QtGui.QApplication.translate("Cadastre", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("Cadastre", "Projection cible", None, QtGui.QApplication.UnicodeUTF8))
+        self.btEdigeoTargetProj.setText(QtGui.QApplication.translate("Cadastre", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_4.setTitle(QtGui.QApplication.translate("Cadastre", "Fichiers MAJIC", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("Cadastre", "Répertoire", None, QtGui.QApplication.UnicodeUTF8))
+        self.btMajicSourceDir.setText(QtGui.QApplication.translate("Cadastre", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("Cadastre", "Format MAJIC", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_4.setItemText(0, QtGui.QApplication.translate("Cadastre", "2012", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_4.setItemText(1, QtGui.QApplication.translate("Cadastre", "2011", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_3.setTitle(QtGui.QApplication.translate("Cadastre", "Destination", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkBox.setText(QtGui.QApplication.translate("Cadastre", "nouveau schéma", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("Cadastre", "Année", None, QtGui.QApplication.UnicodeUTF8))
+        self.btImportRun.setText(QtGui.QApplication.translate("Cadastre", "Lancer l\'import", None, QtGui.QApplication.UnicodeUTF8))
+        self.txtImportLog.setHtml(QtGui.QApplication.translate("Cadastre", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Log</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_5.setTitle(QtGui.QApplication.translate("Qadastre", "Styles à appliquer", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("Qadastre", "Thème", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_5.setItemText(0, QtGui.QApplication.translate("Qadastre", "Défaut", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton.setText(QtGui.QApplication.translate("Qadastre", "Importer", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_6.setTitle(QtGui.QApplication.translate("Qadastre", "Surcharge", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("Qadastre", "Comportement lors du chargement\n"
+        self.groupBox_5.setTitle(QtGui.QApplication.translate("Cadastre", "Styles à appliquer", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_12.setText(QtGui.QApplication.translate("Cadastre", "Thème", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_5.setItemText(0, QtGui.QApplication.translate("Cadastre", "Défaut", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton.setText(QtGui.QApplication.translate("Cadastre", "Importer", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_6.setTitle(QtGui.QApplication.translate("Cadastre", "Surcharge", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_11.setText(QtGui.QApplication.translate("Cadastre", "Comportement lors du chargement\n"
 "si des données sont déjà ouvertes dans le projet", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_6.setItemText(0, QtGui.QApplication.translate("Qadastre", "Conserver les couches actuelles", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_6.setItemText(1, QtGui.QApplication.translate("Qadastre", "Remplacer par les données de la table", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_6.setItemText(2, QtGui.QApplication.translate("Qadastre", "Annuler tout le chargement", None, QtGui.QApplication.UnicodeUTF8))
-        self.btLoadingDataRun.setText(QtGui.QApplication.translate("Qadastre", "Charger les données dans QGIS", None, QtGui.QApplication.UnicodeUTF8))
-        self.txtLoadingDataLog.setHtml(QtGui.QApplication.translate("Qadastre", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.comboBox_6.setItemText(0, QtGui.QApplication.translate("Cadastre", "Conserver les couches actuelles", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_6.setItemText(1, QtGui.QApplication.translate("Cadastre", "Remplacer par les données de la table", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_6.setItemText(2, QtGui.QApplication.translate("Cadastre", "Annuler tout le chargement", None, QtGui.QApplication.UnicodeUTF8))
+        self.btLoadingDataRun.setText(QtGui.QApplication.translate("Cadastre", "Charger les données dans QGIS", None, QtGui.QApplication.UnicodeUTF8))
+        self.txtLoadingDataLog.setHtml(QtGui.QApplication.translate("Cadastre", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Log</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_7.setTitle(QtGui.QApplication.translate("Qadastre", "Interface QGIS", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_13.setText(QtGui.QApplication.translate("Qadastre", "Vous pouvez choisir d\'appliquer une interface\n"
+        self.groupBox_7.setTitle(QtGui.QApplication.translate("Cadastre", "Interface QGIS", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_13.setText(QtGui.QApplication.translate("Cadastre", "Vous pouvez choisir d\'appliquer une interface\n"
 "simplifiée de QGIS pour consulter le cadastre\n"
 "ou de revenir à l\'interface par défaut", None, QtGui.QApplication.UnicodeUTF8))
-        self.btInterfaceQadastre.setText(QtGui.QApplication.translate("Qadastre", "Interface Qadastre", None, QtGui.QApplication.UnicodeUTF8))
-        self.btInterfaceQgis.setText(QtGui.QApplication.translate("Qadastre", "Interface QGIS", None, QtGui.QApplication.UnicodeUTF8))
+        self.btInterfaceCadastre.setText(QtGui.QApplication.translate("Cadastre", "Interface Cadastre", None, QtGui.QApplication.UnicodeUTF8))
+        self.btInterfaceQgis.setText(QtGui.QApplication.translate("Cadastre", "Interface QGIS", None, QtGui.QApplication.UnicodeUTF8))
 

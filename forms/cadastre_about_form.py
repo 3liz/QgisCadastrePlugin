@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'qadastre_about_form.ui'
+# Form implementation generated from reading ui file 'cadastre_about_form.ui'
 #
-# Created: Thu Sep 19 16:07:32 2013
+# Created: Fri Oct 11 18:46:38 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,13 +23,13 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_qadastre_about_form(object):
-    def setupUi(self, qadastre_about_form):
-        qadastre_about_form.setObjectName(_fromUtf8("qadastre_about_form"))
-        qadastre_about_form.resize(666, 593)
-        self.verticalLayout = QtGui.QVBoxLayout(qadastre_about_form)
+class Ui_cadastre_about_form(object):
+    def setupUi(self, cadastre_about_form):
+        cadastre_about_form.setObjectName(_fromUtf8("cadastre_about_form"))
+        cadastre_about_form.resize(666, 593)
+        self.verticalLayout = QtGui.QVBoxLayout(cadastre_about_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.scrollArea = QtGui.QScrollArea(qadastre_about_form)
+        self.scrollArea = QtGui.QScrollArea(cadastre_about_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
@@ -148,35 +148,35 @@ class Ui_qadastre_about_form(object):
         self.verticalLayout_2.addWidget(self.groupBox_4)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
-        self.buttonBox = QtGui.QDialogButtonBox(qadastre_about_form)
+        self.buttonBox = QtGui.QDialogButtonBox(cadastre_about_form)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(qadastre_about_form)
-        QtCore.QMetaObject.connectSlotsByName(qadastre_about_form)
+        self.retranslateUi(cadastre_about_form)
+        QtCore.QMetaObject.connectSlotsByName(cadastre_about_form)
 
-    def retranslateUi(self, qadastre_about_form):
-        qadastre_about_form.setWindowTitle(_translate("qadastre_about_form", "Qadastre - A propos", None))
-        self.groupBox.setTitle(_translate("qadastre_about_form", "Financeurs", None))
-        self.label_5.setText(_translate("qadastre_about_form", "La réalisation du plugin Qadastre a été financée par", None))
-        self.label_6.setText(_translate("qadastre_about_form", "<html><head/><body><p><a href=\"http://www.aduga.org/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/qadastre/images/logo_aduga.png\"/></a></p></body></html>", None))
-        self.label_7.setText(_translate("qadastre_about_form", "<html><head/><body><p><a href=\"http://www.picardie.fr/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/qadastre/images/logo_picardie.png\"/></a></p></body></html>", None))
-        self.label_8.setText(_translate("qadastre_about_form", "<html><head/><body><p><a href=\"http://europa.eu/index_fr.htm\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/qadastre/images/logo_europe.png\"/></a></p></body></html>", None))
-        self.label_9.setText(_translate("qadastre_about_form", "<html><head/><body><p><a href=\"http://www.picardie-europe.eu/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/qadastre/images/logo_feder.png\"/></a></p></body></html>", None))
-        self.label.setText(_translate("qadastre_about_form", "<a href=\"http://www.aduga.org/\" style=\"color:#434343;text-decoration:none;\">L\'Agence de Développement et  d\'Urbanisme du Grand Amiénois</a>", None))
-        self.label_2.setText(_translate("qadastre_about_form", "<a href=\"http://www.picardie.fr/\" style=\"color:#434343;text-decoration:none;\">Le Conseil Régional de Picardie</a>", None))
-        self.label_4.setText(_translate("qadastre_about_form", "<a href=\"http://www.picardie-europe.eu/\" style=\"color:#434343;text-decoration:none;\">Le  Fonds Européen de Développement Régional de Picardie</a>", None))
-        self.label_3.setText(_translate("qadastre_about_form", "<a href=\"http://europa.eu/index_fr.htm\" style=\"color:#434343;text-decoration:none;\">L\'Union Européenne</a>", None))
-        self.groupBox_2.setTitle(_translate("qadastre_about_form", "Conception", None))
-        self.label_10.setText(_translate("qadastre_about_form", "Le plugin 3liz a été conçu et développé par la Société 3LIZ", None))
-        self.label_12.setText(_translate("qadastre_about_form", "<html><head/><body><p><a href=\"http://www.3liz.com/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/qadastre/images/logo_3liz.png\"/></a></p></body></html>", None))
-        self.label_11.setText(_translate("qadastre_about_form", "<a href=\"http://www.3liz.com\" style=\"color:#7BA11A;text-decoration:none;\">Libérez vos SIG !</a>", None))
-        self.groupBox_3.setTitle(_translate("qadastre_about_form", "Auteurs", None))
-        self.label_13.setText(_translate("qadastre_about_form", "Michaël DOUCHIN", None))
-        self.label_14.setText(_translate("qadastre_about_form", "<a href=\"mailto:mdouchin@3liz.com?subject=Plugin cadastre - A propos\" style=\"color:#7BA11A;text-decoration:none;\">mdouchin@3liz.com</a>", None))
-        self.groupBox_4.setTitle(_translate("qadastre_about_form", "Licence", None))
-        self.label_15.setText(_translate("qadastre_about_form", "Licence GPL Version 3", None))
-        self.label_16.setText(_translate("qadastre_about_form", "<html><head/><body><p><a href=\"http://www.gnu.org/licenses/gpl.html\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/qadastre/images/logo_gnu3.png\"/></a></p></body></html>", None))
+    def retranslateUi(self, cadastre_about_form):
+        cadastre_about_form.setWindowTitle(_translate("cadastre_about_form", "Cadastre - A propos", None))
+        self.groupBox.setTitle(_translate("cadastre_about_form", "Financeurs", None))
+        self.label_5.setText(_translate("cadastre_about_form", "La réalisation du plugin Cadastre a été financée par", None))
+        self.label_6.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.aduga.org/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_aduga.png\"/></a></p></body></html>", None))
+        self.label_7.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.picardie.fr/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_picardie.png\"/></a></p></body></html>", None))
+        self.label_8.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://europa.eu/index_fr.htm\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_europe.png\"/></a></p></body></html>", None))
+        self.label_9.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.picardie-europe.eu/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_feder.png\"/></a></p></body></html>", None))
+        self.label.setText(_translate("cadastre_about_form", "<a href=\"http://www.aduga.org/\" style=\"color:#434343;text-decoration:none;\">L\'Agence de Développement et  d\'Urbanisme du Grand Amiénois</a>", None))
+        self.label_2.setText(_translate("cadastre_about_form", "<a href=\"http://www.picardie.fr/\" style=\"color:#434343;text-decoration:none;\">Le Conseil Régional de Picardie</a>", None))
+        self.label_4.setText(_translate("cadastre_about_form", "<a href=\"http://www.picardie-europe.eu/\" style=\"color:#434343;text-decoration:none;\">Le  Fonds Européen de Développement Régional de Picardie</a>", None))
+        self.label_3.setText(_translate("cadastre_about_form", "<a href=\"http://europa.eu/index_fr.htm\" style=\"color:#434343;text-decoration:none;\">L\'Union Européenne</a>", None))
+        self.groupBox_2.setTitle(_translate("cadastre_about_form", "Conception", None))
+        self.label_10.setText(_translate("cadastre_about_form", "Le plugin 3liz a été conçu et développé par la Société 3LIZ", None))
+        self.label_12.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.3liz.com/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_3liz.png\"/></a></p></body></html>", None))
+        self.label_11.setText(_translate("cadastre_about_form", "<a href=\"http://www.3liz.com\" style=\"color:#7BA11A;text-decoration:none;\">Libérez vos SIG !</a>", None))
+        self.groupBox_3.setTitle(_translate("cadastre_about_form", "Auteurs", None))
+        self.label_13.setText(_translate("cadastre_about_form", "Michaël DOUCHIN", None))
+        self.label_14.setText(_translate("cadastre_about_form", "<a href=\"mailto:mdouchin@3liz.com?subject=Plugin cadastre - A propos\" style=\"color:#7BA11A;text-decoration:none;\">mdouchin@3liz.com</a>", None))
+        self.groupBox_4.setTitle(_translate("cadastre_about_form", "Licence", None))
+        self.label_15.setText(_translate("cadastre_about_form", "Licence GPL Version 3", None))
+        self.label_16.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.gnu.org/licenses/gpl.html\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_gnu3.png\"/></a></p></body></html>", None))
 
 import resource_rc

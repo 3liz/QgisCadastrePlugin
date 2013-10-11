@@ -31,7 +31,7 @@ from PyQt4.QtGui import QPixmap, QCursor
 from qgis.core import QgsVectorLayer, QgsFeature
 from qgis.gui import QgsMapToolIdentify
 
-from qadastre_cursor import Cursor
+from cadastre_cursor import Cursor
 
 
 class IdentifyParcelle(QgsMapToolIdentify):

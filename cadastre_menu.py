@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Qadastre - QGIS plugin menu class
+ Cadastre - QGIS plugin menu class
                                                                  A QGIS plugin
  This plugins helps users to import the french land registry ('cadastre')
  into a database. It is meant to ease the use of the data in QGIs
@@ -25,71 +25,71 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-from qadastre_identify_parcelle import IdentifyParcelle
-from qadastre_dialogs import *
+from cadastre_identify_parcelle import IdentifyParcelle
+from cadastre_dialogs import *
 
 # ---------------------------------------------
 
-class qadastre_menu:
+class cadastre_menu:
     def __init__(self, iface):
         self.iface = iface
         self.mapCanvas = iface.mapCanvas()
-        self.qadastre_menu = None
-        self.qadastre_load_dialog = None
-        self.qadastre_search_dialog = None
+        self.cadastre_menu = None
+        self.cadastre_load_dialog = None
+        self.cadastre_search_dialog = None
         self.qc = None
 
-    def qadastre_add_submenu(self, submenu):
-        if self.qadastre_menu != None:
-            self.qadastre_menu.addMenu(submenu)
+    def cadastre_add_submenu(self, submenu):
+        if self.cadastre_menu != None:
+            self.cadastre_menu.addMenu(submenu)
         else:
-            self.iface.addPluginToMenu("&qadastre", submenu.menuAction())
+            self.iface.addPluginToMenu("&cadastre", submenu.menuAction())
 
     def initGui(self):
 
-        # Add Qadastre to QGIS menu
-        self.qadastre_menu = QMenu(QCoreApplication.translate("qadastre", "Qadastre"))
-        self.iface.mainWindow().menuBar().insertMenu(self.iface.firstRightStandardMenu().menuAction(), self.qadastre_menu)
+        # Add Cadastre to QGIS menu
+        self.cadastre_menu = QMenu(QCoreApplication.translate("cadastre", "Cadastre"))
+        self.iface.mainWindow().menuBar().insertMenu(self.iface.firstRightStandardMenu().menuAction(), self.cadastre_menu)
 
         # Import Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.import_action = QAction(icon, u"Importer des données", self.iface.mainWindow())
         QObject.connect(self.import_action, SIGNAL("triggered()"), self.open_import_dialog)
-        self.qadastre_menu.addAction(self.import_action)
+        self.cadastre_menu.addAction(self.import_action)
 
         # Load Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.load_action = QAction(icon, u"Charger des données", self.iface.mainWindow())
         QObject.connect(self.load_action, SIGNAL("triggered()"), self.toggle_load_dialog)
-        self.qadastre_menu.addAction(self.load_action)
-        if not self.qadastre_load_dialog:
-            dialog = qadastre_load_dialog(self.iface)
-            self.qadastre_load_dialog = dialog
+        self.cadastre_menu.addAction(self.load_action)
+        if not self.cadastre_load_dialog:
+            dialog = cadastre_load_dialog(self.iface)
+            self.cadastre_load_dialog = dialog
 
         # Search Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.search_action = QAction(icon, u"Outils de recherche", self.iface.mainWindow())
         QObject.connect(self.search_action, SIGNAL("triggered()"), self.toggle_search_dialog)
-        self.qadastre_menu.addAction(self.search_action)
-        if not self.qadastre_search_dialog:
-            dialog = qadastre_search_dialog(self.iface)
-            self.qadastre_search_dialog = dialog
-            self.qc = qadastre_common(dialog)
+        self.cadastre_menu.addAction(self.search_action)
+        if not self.cadastre_search_dialog:
+            dialog = cadastre_search_dialog(self.iface)
+            self.cadastre_search_dialog = dialog
+            self.qc = cadastre_common(dialog)
 
         # Options Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.option_action = QAction(icon, u"Configurer le plugin", self.iface.mainWindow())
         QObject.connect(self.option_action, SIGNAL("triggered()"), self.open_option_dialog)
-        self.qadastre_menu.addAction(self.option_action)
+        self.cadastre_menu.addAction(self.option_action)
 
         # About Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.about_action = QAction(icon, u"À propos", self.iface.mainWindow())
         QObject.connect(self.about_action, SIGNAL("triggered()"), self.open_about_dialog)
-        self.qadastre_menu.addAction(self.about_action)
+        self.cadastre_menu.addAction(self.about_action)
 
-        # Add qadastre toolbar
-        self.toolbar = self.iface.addToolBar('Qadastre');
+        # Add cadastre toolbar
+        self.toolbar = self.iface.addToolBar('Cadastre');
 
         # Create action for "Parcelle information"
         self.identifyParcelleAction = QAction(
@@ -109,38 +109,38 @@ class qadastre_menu:
         '''
         Import dialog
         '''
-        dialog = qadastre_import_dialog(self.iface)
+        dialog = cadastre_import_dialog(self.iface)
         dialog.exec_()
 
     def toggle_load_dialog(self):
         '''
         Load dock widget
         '''
-        if self.qadastre_load_dialog.isVisible():
-            self.qadastre_load_dialog.hide()
+        if self.cadastre_load_dialog.isVisible():
+            self.cadastre_load_dialog.hide()
         else:
-            self.qadastre_load_dialog.show()
+            self.cadastre_load_dialog.show()
 
             # hide search dialog if necessary
-            self.qadastre_search_dialog.hide()
+            self.cadastre_search_dialog.hide()
 
     def toggle_search_dialog(self):
         '''
         Search dock widget
         '''
-        if self.qadastre_search_dialog.isVisible():
-            self.qadastre_search_dialog.hide()
+        if self.cadastre_search_dialog.isVisible():
+            self.cadastre_search_dialog.hide()
         else:
-            self.qadastre_search_dialog.show()
+            self.cadastre_search_dialog.show()
 
             # hide load dialog if necessary
-            self.qadastre_load_dialog.hide()
+            self.cadastre_load_dialog.hide()
 
     def open_option_dialog(self):
         '''
         Config dialog
         '''
-        dialog = qadastre_option_dialog(self.iface)
+        dialog = cadastre_option_dialog(self.iface)
         dialog.exec_()
 
 
@@ -148,7 +148,7 @@ class qadastre_menu:
         '''
         About dialog
         '''
-        dialog = qadastre_about_dialog(self.iface)
+        dialog = cadastre_about_dialog(self.iface)
         dialog.exec_()
 
 
@@ -161,8 +161,8 @@ class qadastre_menu:
         layer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
         if not layer:
             QMessageBox.critical(
-                self.qadastre_search_dialog,
-                "Qadastre",
+                self.cadastre_search_dialog,
+                "Cadastre",
                 u"La couche des parcelles n'a pas été trouvée !"
             )
             return
@@ -177,18 +177,18 @@ class qadastre_menu:
         parcelle
         '''
         # show parcelle form
-        parcelleDialog = qadastre_parcelle_dialog(self.iface, layer, feature)
+        parcelleDialog = cadastre_parcelle_dialog(self.iface, layer, feature)
         parcelleDialog.show()
 
 
     def unload(self):
-        if self.qadastre_menu != None:
-            self.iface.mainWindow().menuBar().removeAction(self.qadastre_menu.menuAction())
-            self.qadastre_menu.deleteLater()
+        if self.cadastre_menu != None:
+            self.iface.mainWindow().menuBar().removeAction(self.cadastre_menu.menuAction())
+            self.cadastre_menu.deleteLater()
         else:
-            self.iface.removePluginMenu("&qadastre", self.qadastre_menu.menuAction())
+            self.iface.removePluginMenu("&cadastre", self.cadastre_menu.menuAction())
             self.iface.removeToolBar(self.toolbar)
-            self.qadastre_menu.deleteLater()
+            self.cadastre_menu.deleteLater()
 
-        if self.qadastre_load_dialog:
-            self.iface.removeDockWidget(self.qadastre_load_dialog)
+        if self.cadastre_load_dialog:
+            self.iface.removeDockWidget(self.cadastre_load_dialog)
