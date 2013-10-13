@@ -441,11 +441,11 @@ INSERT INTO ccodro VALUES ('C', 'FIDUCIAIRE');
 INSERT INTO ccodro VALUES ('M', 'OCCUPANT D’UNE PARCELLE APPARTENANT AU DEPARTEMENT DE MAYOTTE OU A L’ETAT (ASSOCIE A P).');
 
 -- nomenclature ccodem (proprietaire)
-INSERT INTO ccodem VALUES ('C', 'libellé C');
-INSERT INTO ccodem VALUES ('S', 'libellé S');
-INSERT INTO ccodem VALUES ('L', 'libellé L');
-INSERT INTO ccodem VALUES ('I', 'libellé I');
-INSERT INTO ccodem VALUES ('V', 'libellé V');
+INSERT INTO ccodem VALUES ('C', 'Un des copropriétaires');
+INSERT INTO ccodem VALUES ('S', 'Succession de');
+INSERT INTO ccodem VALUES ('L', 'Propriété en litige');
+INSERT INTO ccodem VALUES ('I', 'Indivision simple');
+INSERT INTO ccodem VALUES ('V', 'La veuve ou les héritiers de');
 -- nomenclature gtoper (proprietaire)
 INSERT INTO gtoper VALUES ('1', 'physique');
 INSERT INTO gtoper VALUES ('2', 'morale');

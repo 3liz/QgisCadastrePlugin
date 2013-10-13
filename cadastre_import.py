@@ -357,6 +357,16 @@ class cadastreImport(QObject):
                 )
             }
         ]
+        scriptList.append(
+            {
+                'title' : u'Ajout des contraintes',
+                'script' : '%s' % os.path.join(
+                    self.scriptDir,
+                    'create_constraints.sql'
+                )
+            }
+        )
+
         for item in scriptList:
             if self.go:
                 self.dialog.subStepLabel.setText(item['title'])
@@ -718,8 +728,12 @@ class cadastreImport(QObject):
             finally:
                 QApplication.restoreOverrideCursor()
                 if c:
-                    c.close()
-                    del c
+                    try:
+                        c.close()
+                        del c
+                    except:
+                        print "issue closing connection"
+                        pass
 
 
     def importAllEdigeoToDatabase(self):
@@ -735,15 +749,15 @@ class cadastreImport(QObject):
             initialStep = self.step
             initialTotalSteps = self.totalSteps
 
-            # THF
-            self.dialog.subStepLabel.setText(u'Import des fichiers via ogr2ogr (*.thf)')
-            self.qc.updateLog(u'  - Import des fichiers via ogr2ogr')
-            thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')
-            self.step = 0
-            self.totalSteps = len(thfList)
-            for thf in thfList:
-                self.importEdigeoThfToDatabase(thf)
-                self.updateProgressBar()
+            #~ # THF
+            #~ self.dialog.subStepLabel.setText(u'Import des fichiers via ogr2ogr (*.thf)')
+            #~ self.qc.updateLog(u'  - Import des fichiers via ogr2ogr')
+            #~ thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')
+            #~ self.step = 0
+            #~ self.totalSteps = len(thfList)
+            #~ for thf in thfList:
+                #~ self.importEdigeoThfToDatabase(thf)
+                #~ self.updateProgressBar()
 
             # VEC - import relations between objects
             self.dialog.subStepLabel.setText(u'Import des relations (*.vec)')
