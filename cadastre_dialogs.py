@@ -64,7 +64,12 @@ class cadastre_common():
         '''
         Update the log
         '''
-        self.dialog.txtLog.append(msg)
+        t = self.dialog.txtLog
+        t.ensureCursorVisible()
+        t.append(msg)
+        c = t.textCursor()
+        c.movePosition(QTextCursor.End, QTextCursor.MoveAnchor)
+        t.setTextCursor(c)
 
 
     def updateProgressBar(self):
@@ -993,7 +998,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             else:
                 features = layer.getFeatures(request)
             self.searchComboBoxes[combo]['features'] = features
-
+            
             # Loop through features
             # optionnaly filter by QgsExpression
             qe = None

@@ -362,7 +362,7 @@ class cadastreImport(QObject):
                 'title' : u'Ajout des contraintes',
                 'script' : '%s' % os.path.join(
                     self.scriptDir,
-                    'create_constraints.sql'
+                    'COMMUN/creation_contraintes.sql'
                 )
             }
         )
@@ -749,15 +749,15 @@ class cadastreImport(QObject):
             initialStep = self.step
             initialTotalSteps = self.totalSteps
 
-            #~ # THF
-            #~ self.dialog.subStepLabel.setText(u'Import des fichiers via ogr2ogr (*.thf)')
-            #~ self.qc.updateLog(u'  - Import des fichiers via ogr2ogr')
-            #~ thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')
-            #~ self.step = 0
-            #~ self.totalSteps = len(thfList)
-            #~ for thf in thfList:
-                #~ self.importEdigeoThfToDatabase(thf)
-                #~ self.updateProgressBar()
+            # THF
+            self.dialog.subStepLabel.setText(u'Import des fichiers via ogr2ogr (*.thf)')
+            self.qc.updateLog(u'  - Import des fichiers via ogr2ogr')
+            thfList = self.listFilesInDirectory(self.edigeoPlainDir, 'thf')
+            self.step = 0
+            self.totalSteps = len(thfList)
+            for thf in thfList:
+                self.importEdigeoThfToDatabase(thf)
+                self.updateProgressBar()
 
             # VEC - import relations between objects
             self.dialog.subStepLabel.setText(u'Import des relations (*.vec)')
@@ -792,13 +792,16 @@ class cadastreImport(QObject):
             conn_name = self.dialog.connectionName
             settings = QSettings()
             settings.beginGroup( u"/%s/%s" % (self.db.dbplugin().connectionSettingsKey(), conn_name) )
+            
+            # normalising file path
+            filename = os.path.normpath(filename)
             if self.dialog.dbType == 'postgis':
                 if not settings.contains( "database" ): # non-existent entry?
                     raise InvalidDataException( self.tr('There is no defined database connection "%s".') % conn_name )
                 settingsList = ["service", "host", "port", "database", "username", "password"]
                 service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
 
-                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" %s -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO' % (sourceSrid, targetSridOption, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" "%s" -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO' % (sourceSrid, targetSridOption, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
 
             if self.dialog.dbType == 'spatialite':
                 if not settings.contains( "sqlitepath" ): # non-existent entry?
@@ -806,7 +809,7 @@ class cadastreImport(QObject):
 
                 database = settings.value("sqlitepath")
 
-                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "SQLite" "%s" %s -lco GEOMETRY_NAME=geom -nlt GEOMETRY  -dsco SPATIALITE=YES -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO --config OGR_SQLITE_SYNCHRONOUS OFF --config OGR_SQLITE_CACHE 512' % (sourceSrid, targetSridOption, targetSrid, database, filename)
+                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "SQLite" "%s" "%s" -lco GEOMETRY_NAME=geom -nlt GEOMETRY  -dsco SPATIALITE=YES -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO --config OGR_SQLITE_SYNCHRONOUS OFF --config OGR_SQLITE_CACHE 512' % (sourceSrid, targetSridOption, targetSrid, database, filename)
             #~ self.qc.updateLog(ogrCommand)
 
             # Run command
