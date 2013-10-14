@@ -9,8 +9,9 @@
 
 
 [general]
-name=Cadastre
-qgisMinimumVersion=2.0
+name=cadastre
+qgisMinimumVersion=2.0.0
+qgisMaximumVersion=2.99.0
 description=This plugins helps users to import the french land registry ('cadastre') into a database. It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
 version=0.8
 author=3liz
@@ -24,11 +25,11 @@ email=info@3liz.com
 # changelog=
 
 # tags are comma separated with spaces allowed
-tags=cadastre, french, land registry
+tags=cadastre,majic,edigeo,import,recherche,postgis,spatialite,foncier,parcelle,3liz
 
-homepage=
-tracker=
-repository=
+homepage=https://github.com/3liz/Qadastre
+tracker=https://github.com/3liz/Qadastre/issues
+repository=https://github.com/3liz/Qadastre
 icon=icon.png
 # experimental flag
 experimental=True

@@ -60,6 +60,7 @@ class cadastreImport(QObject):
         self.edigeoDir = tempfile.mkdtemp('', 'qad', tempDir)
         self.edigeoPlainDir = tempfile.mkdtemp('', 'qad', tempDir)
         self.majicDir = tempfile.mkdtemp('', 'qad', tempDir)
+        os.chmod(self.majicDir, 0o755)
         self.replaceDict = {
             '[VERSION]': self.dialog.dataVersion,
             '[ANNEE]': self.dialog.dataYear
@@ -180,15 +181,17 @@ class cadastreImport(QObject):
         replaceDict = self.replaceDict.copy()
         for item in self.dialog.majicSourceFileNames:
             replaceDict[item['key']] = item['value']
-
-            # create file if not there
             fpath = os.path.join(os.path.realpath(self.majicDir) + '/' , item['value'])
+            # create file if not there
             if not os.path.exists(fpath):
                 # create empty file
                 fout = open(fpath, 'w')
                 data = ''
                 fout.write(data)
                 fout.close()
+
+            # chmod file to give access to postgresql for COPY FROM query
+            os.chmod(fpath, 0o755)
 
         replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
 
@@ -792,7 +795,7 @@ class cadastreImport(QObject):
             conn_name = self.dialog.connectionName
             settings = QSettings()
             settings.beginGroup( u"/%s/%s" % (self.db.dbplugin().connectionSettingsKey(), conn_name) )
-            
+
             # normalising file path
             filename = os.path.normpath(filename)
             if self.dialog.dbType == 'postgis':

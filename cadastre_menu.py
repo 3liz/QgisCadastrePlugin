@@ -192,3 +192,6 @@ class cadastre_menu:
 
         if self.cadastre_load_dialog:
             self.iface.removeDockWidget(self.cadastre_load_dialog)
+
+        if self.cadastre_search_dialog:
+            self.iface.removeDockWidget(self.cadastre_search_dialog)
