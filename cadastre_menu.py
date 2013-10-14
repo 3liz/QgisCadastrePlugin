@@ -177,7 +177,7 @@ class cadastre_menu:
         parcelle
         '''
         # show parcelle form
-        parcelleDialog = cadastre_parcelle_dialog(self.iface, layer, feature)
+        parcelleDialog = cadastre_parcelle_dialog(self.iface, layer, feature, self.cadastre_search_dialog)
         parcelleDialog.show()
 
 

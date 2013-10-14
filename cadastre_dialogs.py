@@ -998,7 +998,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             else:
                 features = layer.getFeatures(request)
             self.searchComboBoxes[combo]['features'] = features
-            
+
             # Loop through features
             # optionnaly filter by QgsExpression
             qe = None
@@ -1552,13 +1552,14 @@ from cadastre_parcelle_form import *
 from cadastre_export import *
 
 class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
-    def __init__(self, iface, layer, feature):
+    def __init__(self, iface, layer, feature, cadastre_search_dialog):
         QDialog.__init__(self)
         self.iface = iface
         self.feature = feature
         self.layer = layer
         self.mc = iface.mapCanvas()
         self.setupUi(self)
+        self.cadastre_search_dialog = cadastre_search_dialog
 
         # common cadastre methods
         self.qc = cadastre_common(self)
@@ -1704,7 +1705,8 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         Use search class tools.
         Needs refactoring
         '''
-        qs = cadastre_search_dialog(self.iface)
+        #~ qs = cadastre_search_dialog(self.iface)
+        qs = self.cadastre_search_dialog
         key = 'proprietaire'
         value = self.feature['comptecommunal']
         filterExpression = "comptecommunal IN ('%s')" % value
