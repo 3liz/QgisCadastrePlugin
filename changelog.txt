@@ -1,2 +1,6 @@
 CHANGELOG
 
+  Version 0.8.1
+  * Import - possibilité d'import vers une base de données distante
+  * Import - possibilité d'importer en plusieurs passes
+
