@@ -679,7 +679,7 @@ CREATE TABLE geo_commune
   update_dat date,
   commune character varying(10),
   lot character(3),
-  ogc_fid integer NOT NULL
+  ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_commune', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -696,7 +696,7 @@ CREATE TABLE geo_section
   creat_date date,
   update_dat date,
   lot character(3),
-  ogc_fid integer NOT NULL
+  ogc_fid serial NOT NULL
 )
 ;
 SELECT AddGeometryColumn ( current_schema::text, 'geo_section', 'geom', 2154 , 'MULTIPOLYGON', 2 );
@@ -751,7 +751,7 @@ CREATE TABLE geo_parcelle
   lot character(3),
   comptecommunal text,
   dvoilib text,
-  ogc_fid integer NOT NULL
+  ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom_uf', 2154 , 'MULTIPOLYGON', 2 );
@@ -1037,7 +1037,7 @@ CREATE TABLE geo_tsurf_commune
 
 CREATE TABLE geo_label
 (
-  ogc_fid integer NOT NULL,
+  ogc_fid serial NOT NULL,
   object_rid character varying(80),
   fon character varying(80),
   hei numeric(24,15),

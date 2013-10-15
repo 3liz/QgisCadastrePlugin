@@ -160,10 +160,12 @@ class cadastre_common():
     def checkDatabaseForExistingStructure(self):
         '''
         Search among a database / schema
-        if there are alreaday Cadastre data
+        if there are alreaday Cadastre structure tables
         in it
         '''
+        hasStructure = False
         hasData = False
+
         searchTable = u'geo_commune'
         if self.dialog.db:
             if self.dialog.dbType == 'postgis':
@@ -173,9 +175,19 @@ class cadastre_common():
             if self.dialog.dbType == 'spatialite':
                 getSearchTable = [a for a in self.dialog.db.tables() if a.name == searchTable]
             if getSearchTable:
-                hasData = True
+                hasStructure = True
 
-        self.dialog.dbHasData = hasData
+                # Check for data in it
+                sql = 'SELECT count(*) FROM "%s" ' % searchTable
+                if self.dialog.dbType == 'postgis':
+                    sql = self.setSearchPath(sql, self.dialog.schema)
+                [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if rowCount >= 1:
+                    hasData = True
+
+        # Set global properties
+        self.dialog.hasStructure = hasStructure
+        self.dialog.hasData = hasData
 
 
     def getLayerFromLegendByTableProps(self, tableName, geomCol='geom', sql=''):
@@ -424,7 +436,8 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.db = None
         self.schema = None
         self.schemaList = None
-        self.dbHasData = None
+        self.hasStructure = None
+        self.hasData = None
         self.edigeoSourceProj = None
         self.edigeoTargetProj = None
         self.edigeoDepartement = None
@@ -645,7 +658,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.qc.checkDatabaseForExistingStructure()
 
         #~ # Run Script for creating tables
-        if not self.dbHasData:
+        if not self.hasStructure:
             qi.installOpencadastreStructure()
 
         # Run MAJIC import
@@ -687,7 +700,7 @@ class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
         self.db = None
         self.schema = None
         self.schemaList = None
-        self.dbHasData = None
+        self.hasStructure = None
 
         # default style to apply for Cadastre layers
         self.themeDir = unicode(self.liTheme.currentText())

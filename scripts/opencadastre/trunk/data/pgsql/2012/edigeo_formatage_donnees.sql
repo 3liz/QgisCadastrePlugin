@@ -1,5 +1,7 @@
 -- FORMATAGE DONNEES : DEBUT
 BEGIN;
+
+-- Suppression des données du lot '[LOT]'
 DELETE FROM [PREFIXE]geo_tsurf WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_numvoie WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_voiep  WHERE lot='[LOT]';
@@ -15,6 +17,9 @@ DELETE FROM [PREFIXE]geo_ptcanv WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_subdfisc WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_batiment WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_commune WHERE lot='[LOT]';
+DELETE FROM [PREFIXE]geo_section WHERE lot='[LOT]';
+DELETE FROM [PREFIXE]geo_subdsect WHERE lot='[LOT]';
+DELETE FROM [PREFIXE]geo_parcelle WHERE lot='[LOT]';
 
 -- index pour optimisation
 CREATE INDEX idx_edigeorel_vers ON [PREFIXE]edigeo_rel (vers);
@@ -53,12 +58,14 @@ SELECT '[ANNEE]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8)
 FROM [PREFIXE]parcelle_id;
 
 -- ajout des subdsect à geo_parcelle
+DROP INDEX IF EXISTS [PREFIXE]geo_parcelle_annee_idx;
+DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 CREATE INDEX geo_parcelle_annee_idx ON [PREFIXE]geo_parcelle (annee, object_rid );
 CREATE INDEX geo_subdsect_annee_idx ON [PREFIXE]geo_subdsect (annee, object_rid);
 UPDATE [PREFIXE]geo_parcelle set geo_subdsect=s.geo_subdsect FROM [PREFIXE]geo_subdsect s, [PREFIXE]edigeo_rel r
 WHERE s.annee=geo_parcelle.annee AND geo_parcelle.annee='[ANNEE]' AND r.nom='Rel_PARCELLE_SUBDSECT' AND r.de=geo_parcelle.object_rid AND vers=s.object_rid;
-DROP INDEX geo_parcelle_annee_idx;
-DROP INDEX geo_subdsect_annee_idx;
+DROP INDEX [PREFIXE]geo_parcelle_annee_idx;
+DROP INDEX [PREFIXE]geo_subdsect_annee_idx;
 
 -- ajout de l'identifiant de parcelle dans la table geo_parcelle
 UPDATE [PREFIXE]geo_parcelle SET (parcelle, dvoilib, comptecommunal) = (p.parcelle, p.dvoilib, p.comptecommunal)

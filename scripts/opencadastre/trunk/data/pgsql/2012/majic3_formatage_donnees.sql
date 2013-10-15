@@ -721,7 +721,7 @@ SELECT
   SUBSTRING(tmp,46,1) AS ruract,
   SUBSTRING(tmp,49,1) AS carvoi,
   SUBSTRING(tmp,50,1) AS indpop,
-  to_number(SUBSTRING(tmp,53,7),'0000000') AS poprel,
+  CASE WHEN trim(SUBSTRING(tmp,53,7))='' THEN NULL ELSE to_number(trim(SUBSTRING(tmp,53,7)),'0000000') END AS poprel,
   to_number(SUBSTRING(tmp,60,7),'9999999') AS poppart,
   to_number(SUBSTRING(tmp,67,7),'0000000') AS popfict,
   SUBSTRING(tmp,74,1) AS annul,
@@ -796,7 +796,7 @@ DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHER
 --~ -- suppression de la table temporaire (lots)
 --~ DROP INDEX [PREFIXE]idx_tempo_import;
 --~ DROP TABLE [PREFIXE]tempo_import;
---~ ALTER TABLE [PREFIXE]lots DROP COLUMN tempo_import;
+ALTER TABLE [PREFIXE]lots DROP COLUMN tempo_import;
 --~ -- création d'une table temporaire d'optimisation du traitement d'importation (local00/parcelle);
 --~ CREATE INDEX idxan_parcelle ON parcelle (annee);
 --~ CREATE TABLE [PREFIXE]tempo_import AS
@@ -844,7 +844,7 @@ DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHER
 --~ GROUP BY annee, ccodep, ccodir, dnupro;
 --~ -- suppression des éléments temporaires (local00/parcelle);
 --~ DROP INDEX [PREFIXE]idx_parcelle_tempo_import;
---~ ALTER TABLE [PREFIXE]parcelle DROP COLUMN tempo_import;
+ALTER TABLE [PREFIXE]parcelle DROP COLUMN tempo_import;
 --~ DROP TABLE [PREFIXE]tempo_import;
 --~ -- suppression des index pour optimisation;
 --~ DROP INDEX [PREFIXE]idx_voie_codvoi;

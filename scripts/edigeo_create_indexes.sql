@@ -51,7 +51,3 @@ CREATE INDEX geo_parcelle_dvoilib_idx ON geo_parcelle (dvoilib);
 CREATE INDEX geo_label_x_label_idx  ON geo_label (x_label );
 CREATE INDEX geo_label_y_label_idx  ON geo_label (y_label );
 CREATE INDEX geo_label_ogr_obj_lnk_layer_idx ON geo_label (ogr_obj_lnk_layer);
---- Primary keys
-ALTER TABLE geo_commune ADD PRIMARY KEY (ogc_fid);
-ALTER TABLE geo_section ADD PRIMARY KEY (ogc_fid);
-ALTER TABLE geo_parcelle ADD PRIMARY KEY (ogc_fid); 
