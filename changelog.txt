@@ -1,5 +1,9 @@
 CHANGELOG
 
+  Version 0.8.2
+  * Import - debug du nom du schéma "a" précédemment écrit en dur (régression 0.8.1)
+  * Import - utilisation du serial pour geo_commune, geo_parcelle et geo_section : évite les erreurs de rétablissement des clés primaires
+
   Version 0.8.1
   * Import - possibilité d'import vers une base de données distante
   * Import - possibilité d'importer en plusieurs passes

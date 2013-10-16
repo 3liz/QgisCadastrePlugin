@@ -1,19 +1,10 @@
-# This file contains metadata for your plugin. Beginning
-# with version 1.8 this is the preferred way to supply information about a
-# plugin. The current method of embedding metadata in __init__.py will
-# be supported until version 2.0
-
-# This file should be included when you package your plugin.
-
 # Mandatory items:
-
-
 [general]
 name=cadastre
 qgisMinimumVersion=2.0.0
 qgisMaximumVersion=2.99.0
 description=This plugins helps users to import the french land registry ('cadastre') into a database. It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
-version=0.8.1
+version=0.8.2
 author=3liz
 email=info@3liz.com
 
@@ -23,9 +14,9 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.8.1
-  * Import - possibilité d'import vers une base de données distante
-  * Import - possibilité d'importer en plusieurs passes
+  Version 0.8.2
+  * Import - debug du nom du schéma "a" précédemment écrit en dur (régression version précédente)
+  * Import - utilisation du serial pour geo_commune, geo_parcelle et geo_section : évite les erreurs de rétablissement des clés primaires
 
 
 # tags are comma separated with spaces allowed
