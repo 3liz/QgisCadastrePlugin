@@ -27,8 +27,8 @@ CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
 
 -- geo_commune: utilisation de max et non distinct on pour compatibilite sqlite
 INSERT INTO [PREFIXE]geo_commune
-( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, geom, lot, ogc_fid)
-SELECT '[ANNEE]'||SUBSTRING(idu,1,3), '[ANNEE]', object_rid, idu, tex2, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]', max(ogc_fid)
+( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, geom, lot)
+SELECT '[ANNEE]'||SUBSTRING(idu,1,3), '[ANNEE]', object_rid, idu, tex2, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
 FROM [PREFIXE]commune_id
 JOIN (SELECT idu as t_idu, MAX(update_date) AS t_update_date, MAX(creat_date) AS t_creat_date FROM [PREFIXE]commune_id GROUP BY idu, tex2) t2
 ON idu = t2.t_idu AND update_date = t2.t_update_date AND creat_date = t2.t_creat_date
@@ -40,8 +40,8 @@ UPDATE [PREFIXE]commune SET geo_commune=g.geo_commune FROM [PREFIXE]geo_commune 
 
 -- geo_section
 INSERT INTO [PREFIXE]geo_section
-( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot, ogc_fid)
-SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union((geom))), '[LOT]', ogc_fid
+( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot)
+SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union((geom))), '[LOT]'--, ogc_fid
 FROM [PREFIXE]section_id
 GROUP BY object_rid, idu, tex, creat_date, update_date, ogc_fid;
 
@@ -53,8 +53,8 @@ FROM [PREFIXE]subdsect_id;
 
 -- geo_parcelle
 INSERT INTO [PREFIXE]geo_parcelle
-(geo_parcelle, annee, object_rid, idu, geo_section, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot, ogc_fid)
-SELECT '[ANNEE]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), supf, indp, coar, tex, tex2, codm, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]', ogc_fid
+(geo_parcelle, annee, object_rid, idu, geo_section, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot)
+SELECT '[ANNEE]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), supf, indp, coar, tex, tex2, codm, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
 FROM [PREFIXE]parcelle_id;
 
 -- ajout des subdsect à geo_parcelle
