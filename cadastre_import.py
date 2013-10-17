@@ -802,14 +802,14 @@ class cadastreImport(QObject):
         sql = r.sub(r'\1=(SELECT \3);', sql)
 
         # replace multiple column update for geo_parcelle
-        r = re.compile(r'update [^;]+parcelle, dvoilib, comptecommunal[^;]+;',  re.IGNORECASE|re.MULTILINE)
+        r = re.compile(r'update [^;]+parcelle, voie, comptecommunal[^;]+;',  re.IGNORECASE|re.MULTILINE)
         res = r.findall(sql)
         replaceBy = ''
         for statement in res:
-            for a in ['parcelle', 'dvoilib', 'comptecommunal']:
+            for a in ['parcelle', 'voie', 'comptecommunal']:
                 st = statement
-                st = st.replace('(parcelle, dvoilib, comptecommunal)', '%s' % a)
-                st = st.replace('(p.parcelle, p.dvoilib, p.comptecommunal)', '(SELECT p.%s' % a)
+                st = st.replace('(parcelle, voie, comptecommunal)', '%s' % a)
+                st = st.replace('(p.parcelle, p.voie, p.comptecommunal)', '(SELECT p.%s' % a)
                 st = st.replace(';', ');')
                 replaceBy+= st
             sql = sql.replace(statement, replaceBy)

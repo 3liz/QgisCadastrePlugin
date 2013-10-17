@@ -750,7 +750,7 @@ CREATE TABLE geo_parcelle
   parcelle character varying(19),
   lot character(3),
   comptecommunal text,
-  dvoilib text,
+  voie text,
   ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );

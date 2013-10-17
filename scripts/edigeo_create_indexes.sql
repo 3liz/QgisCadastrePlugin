@@ -47,7 +47,7 @@ CREATE INDEX parcelle_geo_parcelle_idx ON parcelle (geo_parcelle);
 CREATE INDEX geo_section_geo_commune_idx ON geo_section (geo_commune);
 CREATE INDEX geo_parcelle_geo_section_idx ON geo_parcelle (geo_section);
 CREATE INDEX geo_parcelle_comptecommunal_idx ON geo_parcelle (comptecommunal);
-CREATE INDEX geo_parcelle_dvoilib_idx ON geo_parcelle (dvoilib);
+CREATE INDEX geo_parcelle_voie_idx ON geo_parcelle (voie);
 CREATE INDEX geo_label_x_label_idx  ON geo_label (x_label );
 CREATE INDEX geo_label_y_label_idx  ON geo_label (y_label );
 CREATE INDEX geo_label_ogr_obj_lnk_layer_idx ON geo_label (ogr_obj_lnk_layer);

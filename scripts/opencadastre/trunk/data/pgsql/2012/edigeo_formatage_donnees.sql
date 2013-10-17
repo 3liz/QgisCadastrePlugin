@@ -68,7 +68,7 @@ DROP INDEX [PREFIXE]geo_parcelle_annee_idx;
 DROP INDEX [PREFIXE]geo_subdsect_annee_idx;
 
 -- ajout de l'identifiant de parcelle dans la table geo_parcelle
-UPDATE [PREFIXE]geo_parcelle SET (parcelle, dvoilib, comptecommunal) = (p.parcelle, p.dvoilib, p.comptecommunal)
+UPDATE [PREFIXE]geo_parcelle SET (parcelle, voie, comptecommunal) = (p.parcelle, p.voie, p.comptecommunal)
 FROM [PREFIXE]parcelle p
 WHERE p.annee='[ANNEE]' AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,3)||replace(SUBSTRING(geo_parcelle.geo_parcelle,8,5),'0','-')||SUBSTRING(geo_parcelle.geo_parcelle,13,4) AND geo_parcelle.annee='[ANNEE]';
 

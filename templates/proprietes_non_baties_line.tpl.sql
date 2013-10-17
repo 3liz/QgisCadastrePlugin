@@ -1,11 +1,14 @@
 SELECT --p.parcelle,
-p.ccosec AS section, p.dnupla AS ndeplan, regexp_replace(p.dnvoiri, '^0+', '') AS ndevoirie, p.cconvo || p.dvoilib AS adresse, p.ccoriv AS coderivoli,
+p.ccosec AS section, p.dnupla AS ndeplan, regexp_replace(p.dnvoiri, '^0+', '') AS ndevoirie,
+v.natvoi || v.libvoi AS adresse,
+p.ccoriv AS coderivoli,
 p.dparpi AS nparcprim, p.gparnf AS fpdp, s.ccostn AS star, s.ccosub AS suf, s.cgrnum || '/' || s.dsgrpf AS grssgr, s.dclssf AS cl, s.cnatsp AS natcult,
 s.dcntsf AS contenance, s.drcsuba AS revenucadastral, se.ccolloc AS coll, se.gnexts AS natexo, se.jfinex AS anret, se.fcexn AS fractionrcexo, se.pexn AS pourcentageexo, ''::text AS tc,
 p.dreflf AS lff
 
 FROM parcelle p
 INNER JOIN suf s ON p.parcelle = s.parcelle
+INNER JOIN voie v ON v.voie = p.voie
 LEFT JOIN sufexoneration se ON s.suf = se.suf
 WHERE 2>1
 $and

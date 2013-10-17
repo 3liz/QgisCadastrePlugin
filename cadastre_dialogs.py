@@ -31,6 +31,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import QgsGenericProjectionSelector
+import unicodedata
 
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/forms")
@@ -70,6 +71,7 @@ class cadastre_common():
         c = t.textCursor()
         c.movePosition(QTextCursor.End, QTextCursor.MoveAnchor)
         t.setTextCursor(c)
+        qApp.processEvents()
 
 
     def updateProgressBar(self):
@@ -79,6 +81,7 @@ class cadastre_common():
         if self.dialog.go:
             self.dialog.step+=1
             self.dialog.pbProcess.setValue(int(self.dialog.step * 100/self.dialog.totalSteps))
+            qApp.processEvents()
 
 
     def updateConnectionList(self):
@@ -369,6 +372,23 @@ class cadastre_common():
         )
         if os.path.exists(unicode(ipath)):
             self.dialog.pathSelectors[key]['input'].setText(unicode(ipath))
+
+
+
+    def unaccent(self, s):
+        '''
+        Removes all accents from
+        the given string and
+        replace e dans l'o
+        '''
+        p = re.compile( '(œ)')
+        s = p.sub('oe', s)
+
+        if isinstance(s,str):
+            s = unicode(s,"utf8","replace")
+        s=unicodedata.normalize('NFD',s)
+
+        return s.encode('ascii','ignore')
 
 
 from cadastre_import_form import *
@@ -852,12 +872,12 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             },
             'adresse': {
                 'widget': self.liAdresse,
-                'labelAttribute': 'dvoilib',
+                'labelAttribute': 'voie',
                 'table': 'geo_parcelle',
                 'layer': None,
                 'request': None,
-                'attributes': ['ogc_fid','dvoilib','idu','geom'],
-                'orderBy': ['dvoilib'],
+                'attributes': ['ogc_fid','voie','idu','geom'],
+                'orderBy': ['voie'],
                 'features': None,
                 'chosenFeature': None,
                 'connector': None,
@@ -873,7 +893,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 'table': 'geo_parcelle', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
-                'attributes': ['ogc_fid','tex','idu','dvoilib','geom', 'comptecommunal', 'geo_parcelle'],
+                'attributes': ['ogc_fid','tex','idu','voie','geom', 'comptecommunal', 'geo_parcelle'],
                 'orderBy': ['geo_parcelle'],
                 'features': None,
                 'chosenFeature': None,
@@ -1152,15 +1172,19 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.connector = connector
 
         # SQL
+        sqlSearchValue = self.qc.unaccent(searchValue).upper()
+
         if key == 'adresse':
-            sql = ' SELECT DISTINCT dvoilib AS k'
-            sql+= ' FROM geo_parcelle'
-            sql+= " WHERE dvoilib LIKE '%s%%'" % searchValue.upper()
-            sql+= ' ORDER BY dvoilib'
+            sql = ' SELECT DISTINCT v.voie, c.libcom, v.natvoi, v.libvoi'
+            sql+= ' FROM voie v'
+            sql+= ' INNER JOIN commune c ON c.ccodep = v.ccodep AND c.ccocom = v.ccocom'
+            sql+= " WHERE libvoi LIKE '%%%s%%'" % sqlSearchValue
+            sql+= ' ORDER BY c.libcom, v.natvoi, v.libvoi'
+
         if key == 'proprietaire':
             sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS v"
             sql+= ' FROM proprietaire'
-            sql+= " WHERE ddenom LIKE '%s%%'" % searchValue.upper()
+            sql+= " WHERE ddenom LIKE '%s%%'" % sqlSearchValue
             sql+= ' GROUP BY ddenom, dlign4'
             sql+= ' ORDER BY ddenom'
         self.dbType = connectionParams['dbType']
@@ -1169,6 +1193,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             sql = sql.replace('MyStringAgg', 'string_agg')
         else:
             sql = sql.replace('MyStringAgg', 'group_concat')
+        #~ self.qc.updateLog(sql)
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector,sql)
 
         # Fill  combobox
@@ -1177,12 +1202,21 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         cb.clear()
         cb.addItem(u'%s ligne(s)' % rowCount , '')
         itemList = []
+
         for line in data:
             if key == 'adresse':
-                val = unicode(line[0])
+                label = '%s - %s %s' % (
+                    line[1].strip(),
+                    line[2].strip(),
+                    line[3].strip()
+                )
+                val = {'voie' : line[0]}
+
             if key == 'proprietaire':
+                label = '%s' % line[0].strip()
                 val = ["'%s'" % a for a in line[1].split(',')]
-            cb.addItem('%s' % line[0].strip(), val )
+
+            cb.addItem(label, val)
 
         # Restore cursor
         QApplication.restoreOverrideCursor()
@@ -1199,15 +1233,15 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         # Get value
         combo = self.searchComboBoxes[key]['widget']
         value = combo.itemData(combo.currentIndex())
-        if key == 'adresse':
-            value = unicode(value).upper()
+
         if not value:
             QApplication.restoreOverrideCursor()
             return None
 
         # Set filter expression
         if key == 'adresse':
-            filterExpression = "dvoilib = '%s'" % value
+            filterExpression = "voie = '%s'" % value['voie']
+
         if key == 'proprietaire':
             filterExpression = "comptecommunal IN (%s)" % ', '.join(value)
 
@@ -1623,13 +1657,14 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         # Get parcelle info
         sql = '''
         SELECT c.libcom AS nomcommune, c.ccocom AS codecommune, p.dcntpa AS contenance,
-        regexp_replace(p.dnvoiri, '^0+', '') || ' ' || p.cconvo || p.dvoilib AS adresse,
+        regexp_replace(p.dnvoiri, '^0+', '') || ' ' || v.natvoi || v.libvoi AS adresse,
         CASE
                 WHEN p.gurbpa = 'U' THEN 'Oui'
                 ELSE 'Non'
         END  AS urbain
         FROM parcelle p
         INNER JOIN commune c ON p.ccocom = c.ccocom
+        INNER JOIN voie v ON v.voie = p.voie
         WHERE 2>1
         AND geo_parcelle = '%s'
         LIMIT 1
