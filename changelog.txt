@@ -1,4 +1,7 @@
 CHANGELOG
+  Version 0.8.3
+  * Import - majic: suppressions de caractères \x00
+  * Import - debug Windows sur chemins vers scripts contraintes
 
   Version 0.8.2
   * Import - debug du nom du schéma "a" précédemment écrit en dur (régression 0.8.1)
