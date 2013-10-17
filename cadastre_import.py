@@ -51,6 +51,12 @@ class cadastreImport(QObject):
         self.connector = self.db.connector
         self.scriptSourceDir = os.path.join(self.qc.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
 
+        # projections
+        self.sourceSridFull = self.dialog.edigeoSourceProj
+        self.targetSridFull = self.dialog.edigeoTargetProj
+        self.sourceSrid = self.sourceSridFull.split(":")[1]
+        self.targetSrid = self.targetSridFull.split(":")[1]
+
         # create temporary directories
         s = QSettings()
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
@@ -144,6 +150,15 @@ class cadastreImport(QObject):
         jobTitle = u'STRUCTURATION BDD'
         self.beginJobLog(6, jobTitle)
 
+        # Replace dictionnary
+        replaceDict = self.replaceDict.copy()
+        replaceDict['2154'] = self.targetSrid
+
+        # copy edige_create_import_tables in scriptDir
+        a = os.path.join(self.qc.plugin_dir, 'scripts/edigeo_create_import_tables.sql')
+        b = os.path.join(self.scriptDir, 'edigeo_create_import_tables.sql')
+        shutil.copy2(a, b)
+
         # install opencadastre structure
         scriptList = [
             {
@@ -152,7 +167,7 @@ class cadastreImport(QObject):
             },
             {
                 'title': u'Création des tables edigeo',
-                'script': '%s' % os.path.join(self.qc.plugin_dir, 'scripts/edigeo_create_import_tables.sql')
+                'script': '%s' % b
             },
             {
                 'title' : u'Ajout de la nomenclature',
@@ -171,9 +186,7 @@ class cadastreImport(QObject):
             self.dialog.subStepLabel.setText(item['title'])
             self.qc.updateLog('%s' % item['title'])
             self.updateProgressBar()
-            if item.has_key('constraints'):
-                replaceDict = self.replaceDict.copy()
-                self.replaceParametersInScript(s, replaceDict)
+            self.replaceParametersInScript(s, replaceDict)
             self.executeSqlScript(s)
             if item.has_key('constraints'):
                 self.hasConstraints = item['constraints']
@@ -930,10 +943,8 @@ class cadastreImport(QObject):
         '''
         if self.go:
             # Get options
-            sourceSrid = self.dialog.edigeoSourceProj
-            targetSrid = self.dialog.edigeoTargetProj
             targetSridOption = '-t_srs'
-            if sourceSrid == targetSrid:
+            if self.sourceSridFull == self.targetSridFull:
                 targetSridOption = '-a_srs'
 
             # Build ogr2ogr command
@@ -949,7 +960,7 @@ class cadastreImport(QObject):
                 settingsList = ["service", "host", "port", "database", "username", "password"]
                 service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
 
-                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" "%s" -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO' % (sourceSrid, targetSridOption, targetSrid, host, port, database, self.dialog.schema, username, password, filename)
+                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" "%s" -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO' % (self.sourceSridFull, targetSridOption, self.targetSridFull, host, port, database, self.dialog.schema, username, password, filename)
 
             if self.dialog.dbType == 'spatialite':
                 if not settings.contains( "sqlitepath" ): # non-existent entry?
@@ -957,7 +968,7 @@ class cadastreImport(QObject):
 
                 database = settings.value("sqlitepath")
 
-                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "SQLite" "%s" "%s" -lco GEOMETRY_NAME=geom -nlt GEOMETRY  -dsco SPATIALITE=YES -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO --config OGR_SQLITE_SYNCHRONOUS OFF --config OGR_SQLITE_CACHE 512' % (sourceSrid, targetSridOption, targetSrid, database, filename)
+                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "SQLite" "%s" "%s" -lco GEOMETRY_NAME=geom -nlt GEOMETRY  -dsco SPATIALITE=YES -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO --config OGR_SQLITE_SYNCHRONOUS OFF --config OGR_SQLITE_CACHE 512' % (self.sourceSridFull, targetSridOption, self.targetSridFull, database, filename)
             #~ self.qc.updateLog(ogrCommand)
 
             # Run command
