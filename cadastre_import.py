@@ -54,10 +54,10 @@ class cadastreImport(QObject):
         # create temporary directories
         s = QSettings()
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
-        self.scriptDir = tempfile.mkdtemp('', 'qad', tempDir)
-        self.edigeoDir = tempfile.mkdtemp('', 'qad', tempDir)
-        self.edigeoPlainDir = tempfile.mkdtemp('', 'qad', tempDir)
-        self.majicDir = tempfile.mkdtemp('', 'qad', tempDir)
+        self.scriptDir = tempfile.mkdtemp('', 'cad_script_', tempDir)
+        self.edigeoDir = tempfile.mkdtemp('', 'cad_edigeo_source_', tempDir)
+        self.edigeoPlainDir = tempfile.mkdtemp('', 'cad_edigeo_plain_', tempDir)
+        self.majicDir = tempfile.mkdtemp('', 'cad_majic_source_', tempDir)
         os.chmod(self.majicDir, 0o755)
         self.replaceDict = {
             '[VERSION]': self.dialog.dataVersion,
@@ -160,8 +160,8 @@ class cadastreImport(QObject):
             },
             {
                 'title' : u'Ajout des contraintes',
-                'script': '%s' % os.path.join(self.scriptDir,
-                'COMMUN/creation_contraintes.sql'),
+                'script': '%s' % os.path.normpath(os.path.join(self.scriptDir,
+                'COMMUN/creation_contraintes.sql')),
                 'constraints': True
             }
         ]
@@ -173,15 +173,10 @@ class cadastreImport(QObject):
             self.updateProgressBar()
             if item.has_key('constraints'):
                 replaceDict = self.replaceDict.copy()
-                scriptPath = os.path.join(self.scriptDir, s)
-                self.replaceParametersInScript(scriptPath, replaceDict)
+                self.replaceParametersInScript(s, replaceDict)
             self.executeSqlScript(s)
             if item.has_key('constraints'):
                 self.hasConstraints = item['constraints']
-                if self.hasConstraints:
-                    self.qc.updateLog( u"contraintes ajoutées")
-                else:
-                    self.qc.updateLog( u"contraintes retirées")
             self.updateProgressBar()
 
         self.updateTimer()
@@ -395,7 +390,7 @@ class cadastreImport(QObject):
             scriptList.append(
                 {
                     'title' : u'Suppression des contraintes',
-                    'script' : 'COMMUN/suppression_constraintes.sql',
+                    'script' : '%s' % os.path.join(self.scriptDir, 'COMMUN/suppression_constraintes.sql'),
                     'constraints': False
                 }
             )
@@ -433,10 +428,6 @@ class cadastreImport(QObject):
                 self.executeSqlScript(scriptPath, item.has_key('divide'))
                 if item.has_key('constraints'):
                     self.hasConstraints = item['constraints']
-                    if self.hasConstraints:
-                        self.qc.updateLog( u"contraintes ajoutées")
-                    else:
-                        self.qc.updateLog( u"contraintes retirées")
                 self.updateTimer()
                 self.updateProgressBar()
 
