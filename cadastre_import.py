@@ -326,20 +326,30 @@ class cadastreImport(QObject):
                 lines = fin.read().splitlines()
 
             if lines:
+
+                # Regex to remove some unwanted characters
+                r = re.compile('\x00', re.IGNORECASE|re.MULTILINE)
+
                 # Divide file into chuncks
                 divLines = self.chunks(lines)
                 for a in divLines:
+                    # Build sql INSERT query depending on database
                     if self.dialog.dbType == 'postgis':
                         sql = "BEGIN;"
                         sql = self.qc.setSearchPath(sql, self.dialog.schema)
                         sql+= ' \n'.join(
-                            ["INSERT INTO \"%s\" VALUES (%s);" % (table, self.connector.quoteString(x)) for x in a]
+                            [
+                            "INSERT INTO \"%s\" VALUES (%s);" % (
+                                table,
+                                self.connector.quoteString( r.sub(' ', x) )
+                            ) for x in a
+                            ]
                         )
                         sql+= "COMMIT;"
                         self.executeSqlQuery(sql)
                     else:
                         c = self.connector._get_cursor()
-                        c.executemany('INSERT INTO %s VALUES (?)' % table, [(x,) for x in a] )
+                        c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x) ,) for x in a] )
                         self.connector._commit()
 
 
@@ -746,7 +756,7 @@ class cadastreImport(QObject):
                         if ut:
                             self.updateTimer()
                         self.updateProgressBar()
-                QApplication.restoreOverrideCursor()
+            QApplication.restoreOverrideCursor()
 
         return None
 
