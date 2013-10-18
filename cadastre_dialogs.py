@@ -1327,6 +1327,15 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                     extent.combineExtentWith(feat.geometry().boundingBox())
             else:
                 extent = searchCombo['chosenFeature'].geometry().boundingBox()
+
+            # reproject extent if needed
+            if self.mc.hasCrsTransformEnabled():
+                crsDest = self.mc.mapRenderer().destinationCrs()
+                layer = searchCombo['layer']
+                crsSrc = layer.crs()
+                xform = QgsCoordinateTransform(crsSrc, crsDest)
+                extent = xform.transform(extent)
+
             self.mc.setExtent(extent)
             self.mc.refresh()
 
@@ -1354,6 +1363,15 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                     extent.combineExtentWith(feat.geometry().boundingBox())
             else:
                 extent = searchCombo['chosenFeature'].geometry().boundingBox()
+
+            # reproject extent if needed
+            if self.mc.hasCrsTransformEnabled():
+                crsDest = self.mc.mapRenderer().destinationCrs()
+                layer = searchCombo['layer']
+                crsSrc = layer.crs()
+                xform = QgsCoordinateTransform(crsSrc, crsDest)
+                extent = xform.transform(extent)
+
             self.mc.setExtent(extent)
 
             # the set the scale back
@@ -1634,6 +1652,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             control = item
             slot = partial(self.exportAsPDF, key)
             control.clicked.connect(slot)
+
         # Parcelle action button
         self.btCentrer.clicked.connect(self.centerToParcelle)
         self.btZoomer.clicked.connect(self.zoomToParcelle)
@@ -1725,7 +1744,17 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             # first get scale
             scale = self.mc.scale()
             extent = self.feature.geometry().boundingBox()
+
+            # reproject extent if needed
+            if self.mc.hasCrsTransformEnabled():
+                crsDest = self.mc.mapRenderer().destinationCrs()
+                layer = self.layer
+                crsSrc = layer.crs()
+                xform = QgsCoordinateTransform(crsSrc, crsDest)
+                extent = xform.transform(extent)
+
             self.mc.setExtent(extent)
+
             # the set the scale back
             self.mc.zoomScale(scale)
             self.mc.refresh()
@@ -1736,6 +1765,15 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         '''
         if self.feature:
             extent = self.feature.geometry().boundingBox()
+
+            # reproject extent if needed
+            if self.mc.hasCrsTransformEnabled():
+                crsDest = self.mc.mapRenderer().destinationCrs()
+                layer = self.layer
+                crsSrc = layer.crs()
+                xform = QgsCoordinateTransform(crsSrc, crsDest)
+                extent = xform.transform(extent)
+
             self.mc.setExtent(extent)
             self.mc.refresh()
 
