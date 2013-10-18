@@ -208,7 +208,8 @@ class cadastre_common():
             if not l.providerType() in (u'postgres', u'spatialite'):
                 pass
             connectionParams = self.getConnectionParameterFromDbLayer(l)
-            if connectionParams['table'] == tableName and \
+            if connectionParams and \
+                connectionParams['table'] == tableName and \
                 connectionParams['geocol'] == geomCol and \
                 connectionParams['sql'] == sql:
                 return l
