@@ -1,4 +1,9 @@
 CHANGELOG
+  Version 0.8.4
+  * Import - Modification dynamique de la projection des tables edigeo
+  * Recherche - Amélioration recherche d'adresse via table voie (fantoir)
+  * Chargement - utilisation de Times New Roman pour les étiquettes
+
   Version 0.8.3
   * Import - majic: suppressions de caractères \x00
   * Import - debug Windows sur chemins vers scripts contraintes
