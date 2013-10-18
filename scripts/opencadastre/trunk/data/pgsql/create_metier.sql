@@ -38,7 +38,7 @@ CREATE TABLE parcelle (
     dindic character varying (1),
     ccovoi character varying (5),
     ccoriv character varying (4),
-    voie character varying (15),
+    voie character varying (19),
     ccocif character varying (4),
     gpafpd character varying (1),
     ajoutcoherence character varying(1),
@@ -152,7 +152,7 @@ CREATE TABLE local00 (
     dniv character varying (2),
     dpor character varying (5),
     ccoriv character varying (4),
-    voie character varying (15),
+    voie character varying (19),
     ccovoi character varying (5),
     dnvoiri character varying (4),
     dindic character varying (1),
@@ -175,7 +175,7 @@ CREATE TABLE local10 (
     dnupla character varying (4),
     parcelle character varying(19),
     ccoriv character varying (4),
-    voie character varying (15),
+    voie character varying (19),
     ccovoi character varying (5),
     dnvoiri character varying (4),
     gpdl character varying (1),
@@ -603,7 +603,7 @@ CREATE TABLE commune (
 );
 
 CREATE TABLE voie (
-    voie character varying (15),
+    voie character varying (19),
     annee character varying (4),
     ccodep character varying (2),
     ccodir character varying (1),

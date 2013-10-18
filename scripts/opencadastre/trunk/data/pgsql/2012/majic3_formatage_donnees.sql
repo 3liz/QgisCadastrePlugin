@@ -46,7 +46,7 @@ SELECT
   'N',
   REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,32,6),' ', '-'),'+','¤') AS comptecommunal,
   CASE WHEN trim(SUBSTRING(tmp,61,3))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,52,9)||SUBSTRING(tmp,61,3),' ', '-') END AS pdl,
-  CASE WHEN trim(SUBSTRING(tmp,91,5))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,91,5),' ', '-') END AS voie,
+  CASE WHEN trim(SUBSTRING(tmp,91,5))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,91,5)||SUBSTRING(tmp,96,4),' ', '-') END AS voie,
   SUBSTRING(tmp,136,4) AS cconvo,
   SUBSTRING(tmp,140,26) AS dvoilib,
   CASE WHEN trim(SUBSTRING(tmp,166,3))='' THEN NULL ELSE SUBSTRING(tmp,166,3) END AS ccocomm,
@@ -189,7 +189,7 @@ SELECT
   SUBSTRING(tmp,106,1) AS cleinvar,
   SUBSTRING(tmp,107,1) AS locinc,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,36,9),' ', '-') AS parcelle,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,62,5),' ', '-') AS voie
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,62,5),' ', '-')||SUBSTRING(tmp,57,4) AS voie
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='00';
 
 -- Traitement: local10
@@ -261,7 +261,7 @@ UPDATE [PREFIXE]local10 SET
   dnvoiri = local00.dnvoiri,
   local00 = local10.annee||local10.invar,
   parcelle = REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '-'),
-  voie= REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi,' ', '-')
+  voie= REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi||local00.ccoriv,' ', '-')
 FROM [PREFIXE]local00
 WHERE local00.invar = local10.invar AND local00.annee='[ANNEE]' AND local10.annee='[ANNEE]';
 
@@ -741,7 +741,7 @@ INSERT INTO [PREFIXE]voie
  commune
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,104,5),' ', '-') AS voie,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,104,5)||SUBSTRING(tmp,7,4),' ', '-') AS voie,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -770,7 +770,7 @@ FROM [PREFIXE]fanr WHERE trim(SUBSTRING(tmp,4,3)) <>'' AND trim(SUBSTRING(tmp,7,
 
 -- purge des doublons : voie
 CREATE INDEX idxan_voie ON voie (annee);
-DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHERE annee='[ANNEE]' GROUP BY codvoi HAVING COUNT(*) > 1) AND annee='[ANNEE]';
+--~ DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHERE annee='[ANNEE]' GROUP BY codvoi HAVING COUNT(*) > 1) AND annee='[ANNEE]';
 
 --~
 --~ -- creation d'une table temporaire d'optimisation du traitement d'importation (lots);
