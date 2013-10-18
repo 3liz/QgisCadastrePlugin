@@ -312,12 +312,13 @@ class cadastreImport(QObject):
         return None
 
 
-    def chunks(self, data, rows=50000):
+    def chunk(self, iterable, n=100000, padvalue=None):
         '''
-        Divides the data into 50000 rows each
+        Chunks an iterable (file, etc.)
+        into pieces
         '''
-        for i in xrange(0, len(data), rows):
-            yield data[i:i+rows]
+        from itertools import izip_longest
+        return izip_longest(*[iter(iterable)]*n, fillvalue=padvalue)
 
 
     def importMajicIntoDatabase(self):
@@ -327,6 +328,9 @@ class cadastreImport(QObject):
         - Specific for sqlite cause to COPY statement
         '''
 
+        # Regex to remove some unwanted characters
+        r = re.compile('\x00', re.IGNORECASE|re.MULTILINE)
+
         # Loop through all majic files
         for item in self.dialog.majicSourceFileNames:
             # Get majic file path
@@ -334,35 +338,26 @@ class cadastreImport(QObject):
             table = item['table']
 
             # read file content
-            lines = None
             with open(fpath) as fin:
-                lines = fin.read().splitlines()
-
-            if lines:
-
-                # Regex to remove some unwanted characters
-                r = re.compile('\x00', re.IGNORECASE|re.MULTILINE)
-
                 # Divide file into chuncks
-                divLines = self.chunks(lines)
-                for a in divLines:
+                for a in self.chunk(fin):
                     # Build sql INSERT query depending on database
                     if self.dialog.dbType == 'postgis':
                         sql = "BEGIN;"
                         sql = self.qc.setSearchPath(sql, self.dialog.schema)
-                        sql+= ' \n'.join(
+                        sql+= '\n'.join(
                             [
                             "INSERT INTO \"%s\" VALUES (%s);" % (
                                 table,
-                                self.connector.quoteString( r.sub(' ', x) )
-                            ) for x in a
+                                self.connector.quoteString( r.sub(' ', x).strip('\r\n') )
+                            ) for x in a if x
                             ]
                         )
                         sql+= "COMMIT;"
                         self.executeSqlQuery(sql)
                     else:
                         c = self.connector._get_cursor()
-                        c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x) ,) for x in a] )
+                        c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x).strip('\r\n') ,) for x in a if x] )
                         self.connector._commit()
 
 
