@@ -328,8 +328,9 @@ class cadastreImport(QObject):
         - Specific for sqlite cause to COPY statement
         '''
 
-        # Regex to remove some unwanted characters
-        r = re.compile('\x00', re.IGNORECASE|re.MULTILINE)
+        # Regex to remove all chars not in the range in ASCII table from space to ~
+        # http://www.catonmat.net/blog/my-favorite-regex/
+        r = re.compile(r"[^ -~]")
 
         # Loop through all majic files
         for item in self.dialog.majicSourceFileNames:
@@ -349,7 +350,7 @@ class cadastreImport(QObject):
                             [
                             "INSERT INTO \"%s\" VALUES (%s);" % (
                                 table,
-                                self.connector.quoteString( r.sub(' ', x).strip('\r\n') )
+                                self.connector.quoteString( r.sub(' ', x.strip('\r\n')) )
                             ) for x in a if x
                             ]
                         )
@@ -357,7 +358,7 @@ class cadastreImport(QObject):
                         self.executeSqlQuery(sql)
                     else:
                         c = self.connector._get_cursor()
-                        c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x).strip('\r\n') ,) for x in a if x] )
+                        c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x.strip('\r\n')) ,) for x in a if x] )
                         self.connector._commit()
 
 
