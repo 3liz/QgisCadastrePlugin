@@ -4,7 +4,7 @@ name=cadastre
 qgisMinimumVersion=2.0.0
 qgisMaximumVersion=2.99.0
 description=This plugins helps users to import the french land registry ('cadastre') into a database. It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
-version=0.8.5
+version=0.8.6
 author=3liz
 email=info@3liz.com
 
