@@ -14,13 +14,9 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.8.5
-  * Import - debug utilisation mémoire lors de la leture des fichiers majic volumineux
-  * Recherche - suppression du bug si ouverture panneau avec couches hors cadastre
-  * Recherche/Indenfitication - Correction du Zoom/Centrer si reprojection à la volée
-  * Recherche - adaptation remplissage table voie pour gérer le multi-commune
-
-
+  Version 0.8.6
+  * Recherche/Export - Ajout ccocom dans comptecommunal (dédoublonnage)
+  * Import - MAJIC : suppression des caractères non imprimables et de contrôle
 
 
 # tags are comma separated with spaces allowed
