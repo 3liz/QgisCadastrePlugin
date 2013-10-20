@@ -1039,7 +1039,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             if filterExpression and queryMode == 'qgis':
                 qe = QgsExpression(filterExpression)
             if queryMode == 'sql':
-                emptyLabel = u'%s ligne(s)' % len(features)
+                emptyLabel = u'%s res.' % len(features)
             else:
                 emptyLabel = ''
             cb.addItem('%s' % emptyLabel, '')
@@ -1173,21 +1173,25 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.connector = connector
 
         # SQL
-        sqlSearchValue = self.qc.unaccent(searchValue).upper()
+        sp = searchValue.split('|')
+        if len(sp) > 1:
+            searchValue = sp[1]
+        sqlSearchValue = self.qc.unaccent(searchValue.strip(' \t\n')).upper()
 
         if key == 'adresse':
             sql = ' SELECT DISTINCT v.voie, c.libcom, v.natvoi, v.libvoi'
             sql+= ' FROM voie v'
             sql+= ' INNER JOIN commune c ON c.ccodep = v.ccodep AND c.ccocom = v.ccocom'
-            sql+= " WHERE libvoi LIKE '%%%s%%'" % sqlSearchValue
+            sql+= " WHERE v.natvoi || ' ' || libvoi LIKE '%%%s%%'" % sqlSearchValue
             sql+= ' ORDER BY c.libcom, v.natvoi, v.libvoi'
 
         if key == 'proprietaire':
-            sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS v"
-            sql+= ' FROM proprietaire'
+            sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper, c.ccocom"
+            sql+= ' FROM proprietaire p'
+            sql+= ' INNER JOIN commune c ON c.ccocom = p.ccocom'
             sql+= " WHERE ddenom LIKE '%s%%'" % sqlSearchValue
-            sql+= ' GROUP BY ddenom, dlign4'
-            sql+= ' ORDER BY ddenom'
+            sql+= ' GROUP BY dnuper, ddenom, dlign4, c.ccocom'
+            sql+= ' ORDER BY ddenom, ccocom'
         self.dbType = connectionParams['dbType']
         if self.dbType == 'postgis':
             sql = self.qc.setSearchPath(sql, connectionParams['schema'])
@@ -1201,12 +1205,12 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.qc.updateLog(u"%s résultats correpondent à '%s'" % (rowCount, searchValue))
         cb = self.searchComboBoxes[key]['widget']
         cb.clear()
-        cb.addItem(u'%s ligne(s)' % rowCount , '')
+        cb.addItem(u'%s res.' % rowCount , '')
         itemList = []
 
         for line in data:
             if key == 'adresse':
-                label = '%s - %s %s' % (
+                label = '%s | %s %s' % (
                     line[1].strip(),
                     line[2].strip(),
                     line[3].strip()
@@ -1214,8 +1218,11 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 val = {'voie' : line[0]}
 
             if key == 'proprietaire':
-                label = '%s' % line[0].strip()
-                val = ["'%s'" % a for a in line[1].split(',')]
+                label = '%s - %s | %s' % (line[3], line[2], line[0].strip())
+                val = {
+                    'cc' : ["'%s'" % a for a in line[1].split(',')],
+                    'dnuper' : line[2]
+                }
 
             cb.addItem(label, val)
 
@@ -1244,7 +1251,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             filterExpression = "voie = '%s'" % value['voie']
 
         if key == 'proprietaire':
-            filterExpression = "comptecommunal IN (%s)" % ', '.join(value)
+            filterExpression = "comptecommunal IN (%s)" % ', '.join(value['cc'])
 
         # Get data for child and fill combobox
         ckey = self.searchComboBoxes[key]['search']['child']

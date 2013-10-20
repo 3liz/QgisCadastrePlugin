@@ -44,7 +44,7 @@ SELECT
   SUBSTRING(tmp,100,4) AS ccocif,
   SUBSTRING(tmp,104,1) AS gpafpd,
   'N',
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,32,6),' ', '-'),'+','¤') AS comptecommunal,
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,32,6),' ', '-'),'+','¤') AS comptecommunal,
   CASE WHEN trim(SUBSTRING(tmp,61,3))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,52,9)||SUBSTRING(tmp,61,3),' ', '-') END AS pdl,
   CASE WHEN trim(SUBSTRING(tmp,91,5))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,91,5)||SUBSTRING(tmp,96,4),' ', '-') END AS voie,
   SUBSTRING(tmp,136,4) AS cconvo,
@@ -97,7 +97,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,139,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,139,8),'DDMMYYYY') END AS datja,
   SUBSTRING(tmp,147,1) AS postel,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '-') AS parcelle,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,31,6),' ', '-'),'+','¤') AS comptecommunal,
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,31,6),' ', '-'),'+','¤') AS comptecommunal,
   CASE WHEN  trim(SUBSTRING(tmp,81,3))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,72,9)||SUBSTRING(tmp,81,3),' ', '-') END AS pdl
 FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='21';
 
@@ -245,7 +245,7 @@ SELECT
   SUBSTRING(tmp,152,4) AS jdtabt,
   SUBSTRING(tmp,156,4) AS jrtabt,
   SUBSTRING(tmp,160,4) AS jacloc,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,38,6),' ', '-'),'+','¤') AS comptecommunal
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,38,6),' ', '-'),'+','¤') AS comptecommunal
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='10';
 
 CREATE INDEX idxan_local00 ON local00 (annee);
@@ -570,25 +570,25 @@ SELECT DISTINCT ON (ccodep,dnupro,dnulp,dnuper)
   SUBSTRING(tmp,500,4) AS jandge,
   SUBSTRING(tmp,504,4) AS jantfc,
   SUBSTRING(tmp,508,4) AS jantbc,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,7,6),' ', '-'),'+','¤') AS comptecommunal
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,7,6),' ', '-'),'+','¤') AS comptecommunal
 FROM [PREFIXE]prop
 ORDER BY ccodep,dnupro,dnulp,dnuper;
 
 -- création: comptecommunal à partir de proprietaire
 CREATE INDEX idxan_proprietaire ON proprietaire (annee);
 INSERT INTO [PREFIXE]comptecommunal
-  (comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
+  (comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
 SELECT
-  REPLACE(REPLACE('[ANNEE]'||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal,
+  REPLACE(REPLACE('[ANNEE]'||ccodep||ccocom||dnupro,' ', '-'),'+','¤') AS comptecommunal,
   '[ANNEE]',
   ccodep,
   ccodir,
-  --array_agg(ccocom),
+  ccocom,
   dnupro,
   'N'
 FROM [PREFIXE]proprietaire
 WHERE annee='[ANNEE]'
-GROUP BY ccodep, ccodir, dnupro;
+GROUP BY ccodep, ccodir, ccocom, dnupro;
 
 -- Traitement: pdl
 INSERT INTO [PREFIXE]pdl
@@ -613,7 +613,7 @@ SELECT
   SUBSTRING(tmp,83,6) AS dnupro,
   SUBSTRING(tmp,94,4) AS ccocif,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '-') AS parcelle,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,83,6),' ', '-'),'+','¤') AS comptecommunal
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,83,6),' ', '-'),'+','¤') AS comptecommunal
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='10';
 
 -- Traitement: parcellecomposante
@@ -669,7 +669,7 @@ SELECT
   SUBSTRING(tmp,89,5) AS dreflf,
   SUBSTRING(tmp,94,4) AS ccocif,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18),' ', '-') AS pdl,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,83,6),' ', '-'),'+','¤') AS comptecommunal,
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,83,6),' ', '-'),'+','¤') AS comptecommunal,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '-') AS parcelle,
   '-'||'[ANNEE]'||'-'||SUBSTRING(tmp,1,2)||'-'||SUBSTRING(tmp,3,1)||'-'||SUBSTRING(tmp,4,3)||'-'||SUBSTRING(tmp,83,6)||'-' AS tempo_import
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='30';
@@ -782,13 +782,13 @@ CREATE INDEX idxan_voie ON voie (annee);
 --~ CREATE TABLE [PREFIXE]tempo_import AS
 --~ SELECT DISTINCT l.tempo_import
 --~ FROM [PREFIXE]lots l, [PREFIXE]comptecommunal c
---~ WHERE l.ccodep = c.ccodep AND l.dnuprol = c.dnupro AND l.annee='[ANNEE]' and c.annee='[ANNEE]';
+--~ WHERE l.ccodep = c.ccodep AND l.ccocom = c.ccocom AND l.dnuprol = c.dnupro AND l.annee='[ANNEE]' and c.annee='[ANNEE]';
 --~ CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
 --~ CREATE INDEX idx_lots_tempo_import ON [PREFIXE]lots (tempo_import);
 --~ -- ajout données manquantes : comptecommunal à partir de lots;
 --~ INSERT INTO [PREFIXE]comptecommunal
- --~ ( comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
---~ SELECT REPLACE(REPLACE(a.annee||a.ccodep||a.dnuprol,' ', '-'),'+','¤') AS comptecommunal, a.annee, a.ccodep, a.ccodir, a.dnuprol,'O'
+ --~ ( comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
+--~ SELECT REPLACE(REPLACE(a.annee||a.ccodep||a.ccocom||a.dnuprol,' ', '-'),'+','¤') AS comptecommunal, a.annee, a.ccodep, a.ccodir, a.ccocom, a.dnuprol,'O'
 --~ FROM [PREFIXE]lots a
 --~ LEFT OUTER JOIN [PREFIXE]tempo_import t ON t.tempo_import = a.tempo_import
 --~ WHERE t.tempo_import is null and a.annee='[ANNEE]'
@@ -818,7 +818,7 @@ ALTER TABLE [PREFIXE]lots DROP COLUMN tempo_import;
   --~ ccosec,
   --~ dnupla,
   --~ 'O' ,
-  --~ Max(REPLACE(annee||ccodep||dnupro,' ', '-')) AS comptecommunal,
+  --~ Max(REPLACE(annee||ccodep||ccocom||dnupro,' ', '-')) AS comptecommunal,
   --~ Max(REPLACE(annee||ccodep||ccodir||ccocom||ccovoi,' ', '-')) AS voie
 --~ FROM [PREFIXE]local10 l
 --~ LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.invar = l.invar
@@ -831,13 +831,13 @@ ALTER TABLE [PREFIXE]lots DROP COLUMN tempo_import;
 --~ CREATE TABLE [PREFIXE]tempo_import AS
 --~ SELECT DISTINCT p.tempo_import
 --~ FROM [PREFIXE]parcelle p, [PREFIXE]comptecommunal c
---~ WHERE p.ccodep = c.ccodep AND p.dnupro = c.dnupro AND p.annee='[ANNEE]' and c.annee='[ANNEE]';
+--~ WHERE p.ccodep = c.ccodep AND p.ccocom = c.ccocom AND p.dnupro = c.dnupro AND p.annee='[ANNEE]' and c.annee='[ANNEE]';
 --~ CREATE INDEX idx_tempo_import ON [PREFIXE]tempo_import (tempo_import);
 --~ CREATE INDEX idx_parcelle_tempo_import ON [PREFIXE]parcelle (tempo_import);
 --~ -- ajout données manquantes : comptecommunal à partir de parcelles;
 --~ INSERT INTO [PREFIXE]comptecommunal
- --~ ( comptecommunal, annee, ccodep, ccodir, dnupro, ajoutcoherence)
---~ SELECT REPLACE(REPLACE(annee||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, dnupro,'O'
+ --~ ( comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
+--~ SELECT REPLACE(REPLACE(annee||ccodep||ccocom||dnupro,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, ccocom, dnupro,'O'
 --~ FROM [PREFIXE]parcelle a
 --~ LEFT OUTER JOIN [PREFIXE]tempo_import AS t ON t.tempo_import = a.tempo_import
 --~ WHERE t.tempo_import IS NULL AND annee='[ANNEE]'

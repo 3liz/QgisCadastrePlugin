@@ -17,7 +17,7 @@ CREATE TABLE parcelle (
     dcntpa integer,
     dsrpar character varying (1),
     dnupro character varying (6),
-    comptecommunal character varying (12),
+    comptecommunal character varying (15),
     jdatat date,
     dreflf character varying (5),
     gpdl character varying (1),
@@ -66,7 +66,7 @@ CREATE TABLE suf (
     ccosub character varying (2),
     dcntsf integer,
     dnupro character varying (6),
-    comptecommunal character varying (12),
+    comptecommunal character varying (15),
     gnexps character varying (2),
     drcsub numeric(10,2),
     drcsuba numeric(10,2),
@@ -181,7 +181,7 @@ CREATE TABLE local10 (
     gpdl character varying (1),
     dsrpar character varying (1),
     dnupro character varying (6),
-    comptecommunal character varying (12),
+    comptecommunal character varying (15),
     jdatat date,
     dnufnl character varying (6),
     ccoeva character varying (1),
@@ -416,7 +416,7 @@ CREATE TABLE proprietaire (
     ccodir character varying (1),
     ccocom character varying (3),
     dnupro character varying (6),
-    comptecommunal character varying (12),
+    comptecommunal character varying (15),
     dnulp character varying (2),
     ccocif character varying (4),
     dnuper character varying (6),
@@ -480,7 +480,7 @@ CREATE TABLE proprietaire (
 );
 
 CREATE TABLE comptecommunal (
-    comptecommunal character varying (12),
+    comptecommunal character varying (15),
     annee character varying (4),
     ccodep character varying (2),
     ccodir character varying (1),
@@ -506,7 +506,7 @@ CREATE TABLE pdl (
     dmrpdl character varying (20),
     gprmut character varying (1),
     dnupro character varying (6),
-    comptecommunal character varying (12),
+    comptecommunal character varying (15),
     ccocif character varying (4)
 );
 
@@ -549,7 +549,7 @@ CREATE TABLE lots (
     dfilot character varying (20),
     datact date,
     dnuprol character varying (6),
-    comptecommunal character varying (12),
+    comptecommunal character varying (15),
     dreflf character varying (5),
     ccocif character varying (4)
 );
@@ -749,7 +749,7 @@ CREATE TABLE geo_parcelle
   update_dat date,
   parcelle character varying(19),
   lot character(3),
-  comptecommunal text,
+  comptecommunal character varying(15),
   voie text,
   ogc_fid serial NOT NULL
 );
