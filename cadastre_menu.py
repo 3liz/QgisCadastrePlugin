@@ -55,37 +55,42 @@ class cadastre_menu:
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.import_action = QAction(icon, u"Importer des données", self.iface.mainWindow())
         QObject.connect(self.import_action, SIGNAL("triggered()"), self.open_import_dialog)
-        self.cadastre_menu.addAction(self.import_action)
-
-        # Load Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
-        self.load_action = QAction(icon, u"Charger des données", self.iface.mainWindow())
-        QObject.connect(self.load_action, SIGNAL("triggered()"), self.toggle_load_dialog)
-        self.cadastre_menu.addAction(self.load_action)
-        if not self.cadastre_load_dialog:
-            dialog = cadastre_load_dialog(self.iface)
-            self.cadastre_load_dialog = dialog
 
         # Search Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.search_action = QAction(icon, u"Outils de recherche", self.iface.mainWindow())
         QObject.connect(self.search_action, SIGNAL("triggered()"), self.toggle_search_dialog)
-        self.cadastre_menu.addAction(self.search_action)
         if not self.cadastre_search_dialog:
             dialog = cadastre_search_dialog(self.iface)
             self.cadastre_search_dialog = dialog
             self.qc = cadastre_common(dialog)
 
+        # Load Submenu
+        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
+        self.load_action = QAction(icon, u"Charger des données", self.iface.mainWindow())
+        QObject.connect(self.load_action, SIGNAL("triggered()"), self.toggle_load_dialog)
+        if not self.cadastre_load_dialog:
+            dialog = cadastre_load_dialog(
+                self.iface,
+                self.cadastre_search_dialog
+            )
+            self.cadastre_load_dialog = dialog
+
         # Options Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.option_action = QAction(icon, u"Configurer le plugin", self.iface.mainWindow())
         QObject.connect(self.option_action, SIGNAL("triggered()"), self.open_option_dialog)
-        self.cadastre_menu.addAction(self.option_action)
 
         # About Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
         self.about_action = QAction(icon, u"À propos", self.iface.mainWindow())
         QObject.connect(self.about_action, SIGNAL("triggered()"), self.open_about_dialog)
+
+        # Add actions to Cadastre menu
+        self.cadastre_menu.addAction(self.import_action)
+        self.cadastre_menu.addAction(self.load_action)
+        self.cadastre_menu.addAction(self.search_action)
+        self.cadastre_menu.addAction(self.option_action)
         self.cadastre_menu.addAction(self.about_action)
 
         # Add cadastre toolbar
@@ -177,7 +182,12 @@ class cadastre_menu:
         parcelle
         '''
         # show parcelle form
-        parcelleDialog = cadastre_parcelle_dialog(self.iface, layer, feature, self.cadastre_search_dialog)
+        parcelleDialog = cadastre_parcelle_dialog(
+            self.iface,
+            layer,
+            feature,
+            self.cadastre_search_dialog
+        )
         parcelleDialog.show()
 
 

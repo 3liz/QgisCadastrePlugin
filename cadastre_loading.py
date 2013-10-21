@@ -39,7 +39,10 @@ from db_manager.dlg_db_error import DlgDbError
 
 class cadastreLoading(QObject):
 
+    cadastreLoadingFinished = pyqtSignal()
+
     def __init__(self, dialog):
+        QObject.__init__(self)
         self.dialog = dialog
 
         # common cadastre methods
@@ -171,7 +174,7 @@ class cadastreLoading(QObject):
                     communeLayer = vlayer
 
 
-        # Add layer to QGIS registry
+        # Add all layers to QGIS registry
         QgsMapLayerRegistry.instance().addMapLayers(qgisCadastreLayers)
 
         # Zoom to layer commune
@@ -181,10 +184,14 @@ class cadastreLoading(QObject):
             if activeLayer:
                 self.dialog.iface.zoomToActiveLayer()
 
+
         # progress bar
         self.qc.updateLog(u'Chargement des couches dans QGIS')
         self.dialog.step+=1
         self.qc.updateProgressBar()
+
+        # Emit signal
+        self.cadastreLoadingFinished.emit()
 
         # Final message
         QApplication.restoreOverrideCursor()

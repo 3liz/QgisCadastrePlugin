@@ -700,15 +700,18 @@ from cadastre_load_form import *
 from cadastre_loading import *
 
 class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
-    def __init__(self, iface):
+    def __init__(self, iface, cadastre_search_dialog):
         QDockWidget.__init__(self)
         self.iface = iface
         self.setupUi(self)
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
         self.mc = self.iface.mapCanvas()
 
+        self.cadastre_search_dialog = cadastre_search_dialog
+
         # common cadastre methods
         self.qc = cadastre_common(self)
+        self.ql = cadastreLoading(self)
 
         # Set initial values
         self.go = True
@@ -742,10 +745,12 @@ class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
             s.setValue("svg/searchPathsForSVG", cadastreSvgPath)
             self.qc.updateLog(u"* Le chemin contenant les SVG du plugin Cadastre a été ajouté dans les options de QGIS")
 
+
         # Signals/Slot Connections
         self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
         self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
         self.btProcessLoading.clicked.connect(self.onProcessLoadingClicked)
+        self.ql.cadastreLoadingFinished.connect(self.onLoadingEnd)
 
     def onProcessLoadingClicked(self):
         '''
@@ -755,8 +760,16 @@ class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
         '''
         if self.connection:
             if self.db:
-                ql = cadastreLoading(self)
-                ql.processLoading()
+                self.ql.processLoading()
+
+    def onLoadingEnd(self):
+        '''
+        Actions to trigger
+        when all the layers
+        have been loaded
+        '''
+        self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
+        self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
 
 
 
