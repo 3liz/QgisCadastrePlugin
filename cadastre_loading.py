@@ -177,6 +177,12 @@ class cadastreLoading(QObject):
         # Add all layers to QGIS registry
         QgsMapLayerRegistry.instance().addMapLayers(qgisCadastreLayers)
 
+        # Create a group "Cadastre" and move all layers into it
+        li = self.dialog.iface.legendInterface()
+        g1 = li.addGroup("Cadastre")
+        for layer in qgisCadastreLayers:
+            li.moveLayer(layer, g1)
+
         # Zoom to layer commune
         if communeLayer:
             self.dialog.iface.setActiveLayer(communeLayer)
