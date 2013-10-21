@@ -48,7 +48,11 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QTextEdit" name="proprietairesInfo"/>
+           <widget class="QTextEdit" name="proprietairesInfo">
+            <property name="lineWrapMode">
+             <enum>QTextEdit::NoWrap</enum>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

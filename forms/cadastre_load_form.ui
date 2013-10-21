@@ -125,13 +125,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btProcessLoading">
-          <property name="text">
-           <string>Charger les données</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QGroupBox" name="groupBox_6">
           <property name="title">
            <string>Remplacement des couches ?</string>
@@ -155,6 +148,13 @@
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btProcessLoading">
+          <property name="text">
+           <string>Charger les données</string>
+          </property>
          </widget>
         </item>
         <item>

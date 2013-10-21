@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'cadastre_parcelle_form.ui'
 #
-# Created: Fri Oct 11 18:46:38 2013
+# Created: Mon Oct 21 16:50:22 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -50,6 +50,7 @@ class Ui_cadastre_parcelle_form(object):
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.groupBox_2)
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.proprietairesInfo = QtGui.QTextEdit(self.groupBox_2)
+        self.proprietairesInfo.setLineWrapMode(QtGui.QTextEdit.NoWrap)
         self.proprietairesInfo.setObjectName(_fromUtf8("proprietairesInfo"))
         self.verticalLayout_4.addWidget(self.proprietairesInfo)
         self.verticalLayout_2.addWidget(self.groupBox_2)

@@ -966,6 +966,9 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 control = item['search']['button']
                 slot = partial(self.searchItem, key)
                 control.clicked.connect(slot)
+                # connect Enter key pressed event
+                item['widget'].lineEdit().returnPressed.connect(slot)
+
                 # when a search result is chosen in combobox
                 control = item['widget']
                 slot = partial(self.onSearchItemChoose, key)
@@ -982,6 +985,8 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 control = item['resetWidget']
                 slot = partial(self.onNonSearchItemReset, key)
                 control.clicked.connect(slot)
+
+        # Connect Enter key pressed to corresponding actions
 
         # export buttons
         self.btExportProprietaire.clicked.connect(self.exportProprietaire)
@@ -1052,7 +1057,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             if filterExpression and queryMode == 'qgis':
                 qe = QgsExpression(filterExpression)
             if queryMode == 'sql':
-                emptyLabel = u'%s res.' % len(features)
+                emptyLabel = u'%s item(s)' % len(features)
             else:
                 emptyLabel = ''
             cb.addItem('%s' % emptyLabel, '')
@@ -1218,7 +1223,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.qc.updateLog(u"%s résultats correpondent à '%s'" % (rowCount, searchValue))
         cb = self.searchComboBoxes[key]['widget']
         cb.clear()
-        cb.addItem(u'%s res.' % rowCount , '')
+        cb.addItem(u'%s item(s)' % rowCount , '')
         itemList = []
 
         for line in data:
