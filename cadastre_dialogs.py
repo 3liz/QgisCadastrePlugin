@@ -1731,8 +1731,8 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         '''
 
         # Get proprietaire info
-        sql = '''
-        SELECT ccodro_lib || ' ' || p.dnuper || ' ' || trim(p.dqualp) || ' ' || trim(p.ddenom) || ' ' ||trim(p.dlign3) || ' ' || trim(p.dlign4) || trim(p.dlign5) || ' ' || trim(p.dlign6)
+        sql = u'''
+        SELECT ccodro_lib || ' - ' || p.dnuper || ' - ' || trim(p.dqualp) || ' ' || trim(p.ddenom) || ' - ' ||trim(p.dlign3) || ' / ' || trim(regexp_replace(p.dlign4, '^0+', '')) || trim(p.dlign5) || ' ' || trim(p.dlign6) || ' - Né(e) le ' || to_char(jdatnss, 'dd/mm/YYYY') || ' à ' || p.dldnss
         FROM proprietaire p
         INNER JOIN ccodro ON ccodro.ccodro = p.ccodro
         WHERE 2>1
