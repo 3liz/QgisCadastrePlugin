@@ -684,14 +684,18 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         if not self.hasStructure:
             qi.installOpencadastreStructure()
 
-        # Run MAJIC import
+        # defined properties
         if os.path.exists(self.majicSourceDir):
             self.doMajicImport = True
+        if os.path.exists(self.edigeoSourceDir):
+            self.doEdigeoImport = True
+
+        # Run MAJIC import
+        if os.path.exists(self.majicSourceDir):
             qi.importMajic()
 
         # Run Edigeo import
         if os.path.exists(self.edigeoSourceDir):
-            self.doEdigeoImport = True
             qi.importEdigeo()
 
         qi.endImport()
