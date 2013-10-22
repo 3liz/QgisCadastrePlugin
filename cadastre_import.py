@@ -598,7 +598,7 @@ class cadastreImport(QObject):
         '''
         if self.go:
 
-            self.qc.updateLog(u'* Copie du répertoire %s' % source.decode('UTF8'))
+            self.qc.updateLog(u'* Copie du répertoire %s' % source.decode('UTF-8'))
 
             QApplication.setOverrideCursor(Qt.WaitCursor)
 

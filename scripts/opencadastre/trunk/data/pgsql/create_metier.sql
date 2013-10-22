@@ -206,7 +206,7 @@ CREATE TABLE local10 (
     hlmsem character varying (1),
     postel character varying (1),
     dnatcg character varying (2),
-    jdatcgl character varying (8),
+    jdatcgl date,
     dnutbx character varying (6),
     dvltla character varying (9),
     janloc character varying (4),
@@ -254,7 +254,9 @@ CREATE TABLE pev (
     dcralc character varying (3),
     dcsplca character varying (5),
     dcsglca character varying (5),
-    dcralca character varying (5)
+    dcralca character varying (5),
+    topcn integer,
+    tpevtieom integer
 );
 
 CREATE TABLE pevexoneration (
@@ -311,7 +313,9 @@ CREATE TABLE pevtaxation (
     baomec integer,
     tse_vlbai integer,
     tse_vlbaia integer,
-    tse_bipevla integer
+    tse_bipevla integer,
+    mvltieomx integer,
+    pvltieom bigint
 );
 
 CREATE TABLE pevprincipale (
@@ -481,7 +485,8 @@ CREATE TABLE proprietaire (
     jmodge character varying (2),
     jandge character varying (4),
     jantfc character varying (4),
-    jantbc character varying (4)
+    jantbc character varying (4),
+    dformjur character varying (4)
 );
 
 CREATE TABLE comptecommunal (
@@ -672,6 +677,7 @@ CREATE TABLE carvoi (carvoi character varying(1) primary key, carvoi_lib charact
 CREATE TABLE annul (annul character varying(1) primary key, annul_lib character varying(150));
 CREATE TABLE typvoi (typvoi character varying(1) primary key, typvoi_lib character varying(150));
 CREATE TABLE indldnbat (indldnbat character varying(1) primary key, indldnbat_lib character varying(150));
+CREATE TABLE dformjur (dformjur character varying(4) primary key, formjur text, libformjur text);
 
 CREATE TABLE geo_commune
 (
@@ -1236,8 +1242,6 @@ COMMENT ON COLUMN local10.jannat IS 'Année de construction - ';
 COMMENT ON COLUMN local10.dnbniv IS 'Nombre de niveaux de la construction - ';
 COMMENT ON COLUMN local10.hlmsem IS 'Local appartenant à hlm ou sem - 5 = hlm, 6 = sem, sinon blanc';
 COMMENT ON COLUMN local10.postel IS 'Local de Poste ou France Telecom - X, Y, Z, ou blanc ';
-COMMENT ON COLUMN local10.dnatcg IS 'Code nature du changement évaluation - INDISPONIBLE';
-COMMENT ON COLUMN local10.jdatcgl IS 'date constatation changement - INDISPONIBLE';
 COMMENT ON COLUMN local10.dnutbx IS 'no gestionnaire déclarant taxe bureaux - INDISPONIBLE';
 COMMENT ON COLUMN local10.dvltla IS 'VL totale du local actualisée - INDISPONIBLE';
 COMMENT ON COLUMN local10.janloc IS 'Année de création du local - INDISPONIBLE';
@@ -1249,6 +1253,8 @@ COMMENT ON COLUMN local10.jdtabt IS 'Année début d’exonération ZS - ';
 COMMENT ON COLUMN local10.jrtabt IS 'Année fin d’exonération ZS - ';
 COMMENT ON COLUMN local10.jacloc IS 'Année d’achèvement du local - INDISPONIBLE';
 COMMENT ON COLUMN local10.cconac IS 'Code NACE pour les locaux professionnels';
+COMMENT ON COLUMN local10.dnatcg IS 'Code nature du changement d’évaluation (depuis 2013)';
+COMMENT ON COLUMN local10.jdatcgl IS 'Date changement évaluation - JJMMSSAA (Depuis 2013)';
 COMMENT ON TABLE pev IS 'Article descriptif de pev';
 COMMENT ON COLUMN pev.ccodep IS 'Code département - ';
 COMMENT ON COLUMN pev.ccodir IS 'Code direction - ';
@@ -1281,6 +1287,8 @@ COMMENT ON COLUMN pev.dcralc IS 'correctif d’ascenseur - format S9V99 - INDISP
 COMMENT ON COLUMN pev.dcsplca IS 'Coefficient de situation particulière';
 COMMENT ON COLUMN pev.dcsglca IS 'Coefficient de situation générale';
 COMMENT ON COLUMN pev.dcralca IS 'Correctif d’ascenseur';
+COMMENT ON COLUMN pev.topcn IS 'Top construction nouvelle (à partir de 2013)';
+COMMENT ON COLUMN pev.tpevtieom IS 'Top Local passible de la TEOM (à partir de 2013)';
 COMMENT ON TABLE pevexoneration IS 'Article exonération de pev';
 COMMENT ON COLUMN pevexoneration.ccodep IS 'Code département - ';
 COMMENT ON COLUMN pevexoneration.ccodir IS 'Code direction - ';
@@ -1328,6 +1336,8 @@ COMMENT ON COLUMN pevtaxation.baomec IS 'BASE ORDURES MENAGERES ECRETEE - ';
 COMMENT ON COLUMN pevtaxation.tse_vlbai IS 'TSE (à partir de 2012) - Part de VL imposée (valeur70) - ';
 COMMENT ON COLUMN pevtaxation.tse_vlbaia IS 'TSE (à partir de 2012) - Part de VL imposée (valeur de l’année) - ';
 COMMENT ON COLUMN pevtaxation.tse_bipevla IS 'TSE (à partir de 2012) - Base d’imposition de la pev(valeur de l’année) - ';
+COMMENT ON COLUMN pevtaxation.mvltieomx IS 'Montant TIEOM (depuis 2013)';
+COMMENT ON COLUMN pevtaxation.pvltieom IS 'Ratio VL n-1 de la PEV / VL n-1 collectivité - 9v999999999999999 (Depuis 2013)';
 
 COMMENT ON TABLE pevprincipale IS 'Article descriptif partie principale habitation';
 COMMENT ON COLUMN pevprincipale.ccodep IS 'Code département - ';
@@ -1479,6 +1489,7 @@ COMMENT ON COLUMN proprietaire.jmodge IS 'mois d’entrée à la DGE - INDISPONI
 COMMENT ON COLUMN proprietaire.jandge IS 'année d’entrée à la DGE - INDISPONIBLE';
 COMMENT ON COLUMN proprietaire.jantfc IS 'année d’entrée paiement TF - INDISPONIBLE';
 COMMENT ON COLUMN proprietaire.jantbc IS 'année d’entrée paiement TSBCS - INDISPONIBLE';
+COMMENT ON COLUMN proprietaire.dformjur IS 'Forme juridique (Depuis 2013)';
 COMMENT ON TABLE pdl IS 'Propriétés divisées en lots';
 COMMENT ON COLUMN pdl.ccodep IS 'code département - ';
 COMMENT ON COLUMN pdl.ccodir IS 'code direction - ';

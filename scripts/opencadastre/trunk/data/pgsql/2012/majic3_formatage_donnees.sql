@@ -234,7 +234,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,115,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,115,1)) END AS hlmsem,
   SUBSTRING(tmp,116,1) AS postel,
   SUBSTRING(tmp,117,2) AS dnatcg,
-  SUBSTRING(tmp,119,8) AS jdatcgl,
+  NULL AS jdatcgl,
   SUBSTRING(tmp,127,6) AS dnutbx,
   SUBSTRING(tmp,133,9) AS dvltla,
   SUBSTRING(tmp,142,4) AS janloc,
