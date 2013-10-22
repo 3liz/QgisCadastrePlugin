@@ -1,5 +1,6 @@
 SELECT --p.parcelle,
-p.ccosec AS section, p.dnupla AS ndeplan, regexp_replace(p.dnvoiri, '^0+', '') AS ndevoirie,
+p.ccosec AS section, p.dnupla AS ndeplan,
+regexp_replace(l.dnvoiri, '^0+', '') || l.dindic AS ndevoirie,
 v.natvoi || v.libvoi AS adresse,
 p.ccoriv AS coderivoli,
 p.dparpi AS nparcprim, p.gparnf AS fpdp, s.ccostn AS star, s.ccosub AS suf, s.cgrnum || '/' || s.dsgrpf AS grssgr, s.dclssf AS cl, s.cnatsp AS natcult,

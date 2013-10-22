@@ -1,6 +1,11 @@
 
 SELECT
-sum(px.rcexba2) AS revenucadastral,
+
+CASE
+  WHEN sum(px.rcexba2) > 0 THEN sum(px.rcexba2)
+  ELSE sum(pt.tse_bipevla)
+END AS revenucadastral,
+
 sum(pt.co_vlbaia) as co_vlbaia, sum(pt.co_bipevla) as co_bipevla,
 sum(pt.gp_vlbaia) as gp_vlbaia, sum(pt.gp_bipevla) as gp_bipevla,
 sum(pt.de_vlbaia) as de_vlbaia, sum(pt.de_bipevla) as de_bipevla,
