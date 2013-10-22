@@ -620,10 +620,10 @@ INSERT INTO geo_ppln VALUES ('23', 'canevas d''appui pour géoréférencement (d
 INSERT INTO geo_ppln VALUES ('24', 'canevas géodésique RGF93-RRF');
 INSERT INTO geo_ppln VALUES ('25', 'canevas géodésique RGF93-RBF');
 INSERT INTO geo_ppln VALUES ('26', 'canevas géodésique RGF93-RDF');
-INSERT INTO geo_ppln VALUES ('27', 'canevas géodésique WGS84-UTM Nord fuseau 20 (Guadeloupe et Martinique)');
-INSERT INTO geo_ppln VALUES ('28', 'canevas géodésique RGF95-UTM Nord fuseau 22 (Guyane)');
-INSERT INTO geo_ppln VALUES ('29', 'canevas géodésique RGR92-UTM Sud fuseau 40 (Réunion)');
-INSERT INTO geo_ppln VALUES ('30', 'canevas géodésique RGM04-UTM Sud fuseau 38 (Mayotte)');
+INSERT INTO geo_ppln VALUES ('27', 'canevas géodésique WGS84-UTM Nord fuseau 20 (Guadeloupe et Martinique  : 971 et 972)');
+INSERT INTO geo_ppln VALUES ('28', 'canevas géodésique RGF95-UTM Nord fuseau 22 (Guyane : 973)');
+INSERT INTO geo_ppln VALUES ('29', 'canevas géodésique RGR92-UTM Sud fuseau 40 (Réunion : 974)');
+INSERT INTO geo_ppln VALUES ('30', 'canevas géodésique RGM04-UTM Sud fuseau 38 (Mayotte : 976)');
 INSERT INTO geo_ppln VALUES ('98', 'point de levé cadastral');
 INSERT INTO geo_palt VALUES ('00', 'inconnu');
 INSERT INTO geo_palt VALUES ('01', 'canevas de nivellement direct de haute précision');
