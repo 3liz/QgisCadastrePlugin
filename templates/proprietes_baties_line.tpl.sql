@@ -6,7 +6,7 @@ v.natvoi || v.libvoi AS adresse,
 l.ccoriv AS coderivoli,
 l.dnubat AS bat, l.descr AS ent, l.dniv AS niv, l.dpor AS ndeporte, l.invar AS numeroinvar,
 pev.ccostb AS star, l10.ccoeva AS meval, pev.ccoaff AS af, l10.cconlc AS natloc, pev.dcapec AS cat,
-pt.tse_bipevla AS revenucadastral, px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb, px.dvldif2a AS fractionrcexo,
+px.rcexba2 AS revenucadastral, px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb, px.dvldif2a AS fractionrcexo,
 px.pexb AS pourcentageexo, l10.gtauom AS txom, '' AS coefreduc
 FROM
 parcelle p

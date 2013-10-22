@@ -93,17 +93,39 @@ class cadastreExport(QObject):
             },
             'proprietes_baties' : {
                 'names': ['lines'],
-                'position': [3.5, 50, 290, 80], 'align': [ 32, 1],
+                'position': [3.5, 50, 290, 65], 'align': [ 32, 1],
                 'keepContent' : False,
                 'type': 'parent',
                 'source': 'proprietes_baties_line'
             },
+            'proprietes_baties_sum' : {
+                'names': ['revenucadastral', 'co_vlbaia', 'co_bipevla', 'gp_vlbaia', 'gp_bipevla', 'de_vlbaia', 'de_bipevla', 're_vlbaia', 're_bipevla'],
+                'position': [3.5, 115, 290, 15], 'align': [ 32, 1],
+                'type': 'sql',
+                'keepContent' : True,
+                'filter': 'comptecommunal',
+                'and': {
+                    'proprietaire': u" AND l10.comptecommunal = '%s'" % self.feat['comptecommunal'],
+                    'parcelle': u" AND p.geo_parcelle = '%s'" % self.feat['geo_parcelle']
+                }
+            },
             'proprietes_non_baties' : {
                 'names': ['lines'],
-                'position': [3.5, 130, 290, 77.5], 'align': [ 32, 1],
+                'position': [3.5, 130, 290, 65], 'align': [ 32, 1],
                 'keepContent' : False,
                 'type': 'parent',
                 'source': 'proprietes_non_baties_line'
+            },
+            'proprietes_non_baties_sum' : {
+                'names': ['drcsuba'],
+                'position': [3.5, 195, 290, 15], 'align': [ 32, 1],
+                'type': 'sql',
+                'keepContent' : True,
+                'filter': 'comptecommunal',
+                'and': {
+                    'proprietaire': u" AND p.comptecommunal = '%s'" % self.feat['comptecommunal'],
+                    'parcelle': u" AND geo_parcelle = '%s'" % self.feat['geo_parcelle']
+                }
             }
         }
         self.mainTables = {
