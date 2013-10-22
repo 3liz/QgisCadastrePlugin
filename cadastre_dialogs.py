@@ -448,6 +448,8 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
             control.clicked.connect(slot)
 
         # Set initial values
+        self.doMajicImport = False
+        self.doEdigeoImport = False
         self.dataVersion = None
         self.dataYear = None
         self.dbType = None
@@ -684,10 +686,12 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
 
         # Run MAJIC import
         if os.path.exists(self.majicSourceDir):
+            self.doMajicImport = True
             qi.importMajic()
 
         # Run Edigeo import
         if os.path.exists(self.edigeoSourceDir):
+            self.doEdigeoImport = True
             qi.importEdigeo()
 
         qi.endImport()

@@ -282,6 +282,16 @@ class cadastreImport(QObject):
             }
         )
 
+        # Add constraints : only if no EDIGEO import afterwards
+        if not self.hasConstraints and not self.dialog.doEdigeoImport:
+            scriptList.append(
+                {
+                    'title' : u'Ajout des contraintes',
+                    'script' : 'COMMUN/creation_contraintes.sql',
+                    'constraints': True
+                }
+            )
+
         # Run previously defined SQL queries
         for item in scriptList:
             self.dialog.subStepLabel.setText(item['title'])
