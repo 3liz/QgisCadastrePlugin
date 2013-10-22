@@ -208,18 +208,25 @@ class cadastreImport(QObject):
         self.updateTimer()
         self.updateProgressBar()
 
-        # replace parameters
+        # dict for parameters replacement
         replaceDict = self.replaceDict.copy()
+        mandatoryFilesKeys =  ['[FICHIER_BATI]', '[FICHIER_FANTOIR]', '[FICHIER_NBATI]', '[FICHIER_PROP]']
+        missingMajicFiles = False
         for item in self.dialog.majicSourceFileNames:
             replaceDict[item['key']] = item['value']
             fpath = os.path.join(os.path.realpath(self.majicDir) + '/' , item['value'])
             # create file if not there
             if not os.path.exists(fpath):
-                # create empty file
-                fout = open(fpath, 'w')
-                data = ''
-                fout.write(data)
-                fout.close()
+                if item['key'] in mandatoryFilesKeys:
+                    self.go = False
+                    self.qc.updateLog( u"Il manque des fichiers MAJIC ! L'import est annulé.")
+                    return
+                else:
+                    # create empty file
+                    fout = open(fpath, 'w')
+                    data = ''
+                    fout.write(data)
+                    fout.close()
 
             # chmod file to give access to postgresql for COPY FROM query
             os.chmod(fpath, 0o755)
@@ -385,6 +392,9 @@ class cadastreImport(QObject):
             msg = u"Erreur : la librairie GDAL n'est pas accessible"
             self.go = False
             return msg
+
+        if not self.go:
+            return
 
         # Log : Print connection parameters to database
         jobTitle = u'EDIGEO'
