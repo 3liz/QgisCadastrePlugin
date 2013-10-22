@@ -197,7 +197,7 @@ INSERT INTO [PREFIXE]local10
 (
  local10, annee,ccodep, ccodir, ccocom, invar, gpdl, dsrpar, dnupro, jdatat, dnufnl, ccoeva, ccitlv, dteloc, gtauom, dcomrd, ccoplc, cconlc, dvltrt,
  ccoape, cc48lc, dloy48a, top48a, dnatlc, dnupas, gnexcf, dtaucf, cchpr, jannat, dnbniv, hlmsem, postel, dnatcg, jdatcgl, dnutbx, dvltla,
- janloc, ccsloc, fburx, gimtom, cbtabt, jdtabt, jrtabt, jacloc,
+ janloc, ccsloc, fburx, gimtom, cbtabt, jdtabt, jrtabt, jacloc, cconac,
  comptecommunal
 )
 SELECT
@@ -245,6 +245,7 @@ SELECT
   SUBSTRING(tmp,152,4) AS jdtabt,
   SUBSTRING(tmp,156,4) AS jrtabt,
   SUBSTRING(tmp,160,4) AS jacloc,
+  SUBSTRING(tmp,169,5) AS cconac,
   REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,38,6),' ', '-'),'+','¤') AS comptecommunal
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='10';
 
@@ -270,6 +271,7 @@ INSERT INTO [PREFIXE]pev
 (
  pev, annee, ccodep, ccodir, ccocom, invar, dnupev, ccoaff, ccostb, dcapec, dcetlc, dcsplc, dsupot, dvlper, dvlpera, gnexpl, libocc, ccthp, retimp,
  dnuref, rclsst, gnidom, dcsglc, ccogrb, cocdi, cosatp, gsatp, clocv, dvltpe, dcralc,
+ dcsplca, dcsglca, dcralca,
  local10
  )
 SELECT
@@ -303,6 +305,9 @@ SELECT
   SUBSTRING(tmp,152,1) AS clocv,
   CASE when trim(SUBSTRING(tmp,153,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,153,9),'999999999') END AS dvltpe,
   SUBSTRING(tmp,162,3) AS dcralc,
+  SUBSTRING(tmp,166,5) AS dcsplca,
+  SUBSTRING(tmp,171,5) AS dcsglca,
+  SUBSTRING(tmp,176,5) AS dcralca,
   '[ANNEE]'||SUBSTRING(tmp,7,10) AS local10
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='21';
 
@@ -462,7 +467,7 @@ FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='50';
 INSERT INTO [PREFIXE]pevdependances
 (
  pevdependances, annee, ccodep, ccodir, ccocom, invar, dnupev, dnudes, dsudep, cconad, asitet, dmatgm, dmatto, detent, geaulc, gelelc, gchclc, dnbbai, dnbdou,
- dnblav, dnbwc, deqtlc, dcimlc, dcetde, dcspde,
+ dnblav, dnbwc, deqtlc, dcimlc, dcetde, dcspde, dcspdea,
  pev
 )
 select
@@ -491,6 +496,7 @@ select
   CASE WHEN trim(SUBSTRING(tmp,69,2))='' THEN NULL ELSE to_number(SUBSTRING(tmp,69,2),'99')/10 END AS dcimlc,
   CASE WHEN trim(SUBSTRING(tmp,71,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,71,3),'999')/100 END AS dcetde,
   SUBSTRING(tmp,74,3) AS dcspde,
+  SUBSTRING(tmp,77,6) AS dcspdea,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '-') AS pev
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='60';
 

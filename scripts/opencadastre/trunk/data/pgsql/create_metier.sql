@@ -216,7 +216,8 @@ CREATE TABLE local10 (
     cbtabt character varying (2),
     jdtabt character varying (4),
     jrtabt character varying (4),
-    jacloc character varying (4)
+    jacloc character varying (4),
+    cconac character varying (5)
 );
 
 CREATE TABLE pev (
@@ -250,7 +251,10 @@ CREATE TABLE pev (
     gsatp character varying (1),
     clocv character varying (1),
     dvltpe integer,
-    dcralc character varying (3)
+    dcralc character varying (3),
+    dcsplca character varying (5),
+    dcsglca character varying (5),
+    dcralca character varying (5)
 );
 
 CREATE TABLE pevexoneration (
@@ -406,7 +410,8 @@ CREATE TABLE pevdependances (
     deqtlc integer,
     dcimlc numeric(2,1),
     dcetde numeric(3,2),
-    dcspde character varying (3)
+    dcspde character varying (3),
+    dcspdea character varying (6)
 );
 
 CREATE TABLE proprietaire (
@@ -1243,6 +1248,7 @@ COMMENT ON COLUMN local10.cbtabt IS 'Code exonération HLM zone sensible - ZS, Z
 COMMENT ON COLUMN local10.jdtabt IS 'Année début d’exonération ZS - ';
 COMMENT ON COLUMN local10.jrtabt IS 'Année fin d’exonération ZS - ';
 COMMENT ON COLUMN local10.jacloc IS 'Année d’achèvement du local - INDISPONIBLE';
+COMMENT ON COLUMN local10.cconac IS 'Code NACE pour les locaux professionnels';
 COMMENT ON TABLE pev IS 'Article descriptif de pev';
 COMMENT ON COLUMN pev.ccodep IS 'Code département - ';
 COMMENT ON COLUMN pev.ccodir IS 'Code direction - ';
@@ -1253,7 +1259,7 @@ COMMENT ON COLUMN pev.ccoaff IS 'Affectation de la pev - H P L S K tableau 2.3.7
 COMMENT ON COLUMN pev.ccostb IS 'lettre de série tarif bâtie ou secteur locatif - A à Z sauf';
 COMMENT ON COLUMN pev.dcapec IS 'Catégorie - Commentaires 2.2.3';
 COMMENT ON COLUMN pev.dcetlc IS 'Coefficient d entretien - 9V99';
-COMMENT ON COLUMN pev.dcsplc IS 'Coefficient de situation particulière - S9V99';
+COMMENT ON COLUMN pev.dcsplc IS 'Coefficient de situation particulière - S9V99 - INDISPONIBLE';
 COMMENT ON COLUMN pev.dsupot IS 'Surface pondérée - Présence non systématique';
 COMMENT ON COLUMN pev.dvlper IS 'Valeur locative de la pev, en valeur de référence (1970) sauf pour les établissements de code évaluation A - ';
 COMMENT ON COLUMN pev.dvlpera IS 'Valeur locative de la pev, en valeur de l’année - ';
@@ -1271,7 +1277,10 @@ COMMENT ON COLUMN pev.cosatp IS 'Code service topad - INDISPONIBLE';
 COMMENT ON COLUMN pev.gsatp IS 'Nature service gérant tp - INDISPONIBLE';
 COMMENT ON COLUMN pev.clocv IS 'Indicateur local vacant - INDISPONIBLE';
 COMMENT ON COLUMN pev.dvltpe IS 'VL TOTALE DE LA PEV MAJIC2 - ';
-COMMENT ON COLUMN pev.dcralc IS 'correctif d’ascenseur - format S9V99';
+COMMENT ON COLUMN pev.dcralc IS 'correctif d’ascenseur - format S9V99 - INDISPONIBLE';
+COMMENT ON COLUMN pev.dcsplca IS 'Coefficient de situation particulière';
+COMMENT ON COLUMN pev.dcsglca IS 'Coefficient de situation générale';
+COMMENT ON COLUMN pev.dcralca IS 'Correctif d’ascenseur';
 COMMENT ON TABLE pevexoneration IS 'Article exonération de pev';
 COMMENT ON COLUMN pevexoneration.ccodep IS 'Code département - ';
 COMMENT ON COLUMN pevexoneration.ccodir IS 'Code direction - ';
@@ -1403,7 +1412,8 @@ COMMENT ON COLUMN pevdependances.dnbwc IS 'Nombre de WC - ';
 COMMENT ON COLUMN pevdependances.deqtlc IS 'Equivalence superficielle des - ';
 COMMENT ON COLUMN pevdependances.dcimlc IS 'Coefficient de pondération - 1,0 - 0,2 à 0,6';
 COMMENT ON COLUMN pevdependances.dcetde IS 'Coefficient d entretien - 9V99';
-COMMENT ON COLUMN pevdependances.dcspde IS 'Coefficient de situation particulière - S9V99 de -0,10 à +0,10';
+COMMENT ON COLUMN pevdependances.dcspde IS 'Coefficient de situation particulière - S9V99 de -0,10 à +0,10  -- INDISPONIBLE';
+COMMENT ON COLUMN pevdependances.dcspdea IS 'Coefficient de situation particulière';
 COMMENT ON TABLE proprietaire IS 'Propriétaire';
 COMMENT ON COLUMN proprietaire.ccodep IS 'code département - ';
 COMMENT ON COLUMN proprietaire.ccodir IS 'code direction - ';
