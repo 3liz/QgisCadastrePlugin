@@ -692,7 +692,7 @@ INSERT INTO [PREFIXE]lotslocaux
  lotslocaux, annee, ccodepl, ccodirl, ccocoml, ccoprel, ccosecl, dnuplal, dnupdl, dnulot, ccodebpb, ccodird, ccocomb, ccopreb, invloc, dnumql, ddenql,
  lots, local00, local10
 )
-SELECT
+SELECT DISTINCT
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,25)||SUBSTRING(tmp,37,10),' ', '-') AS lotslocaux,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodepl,
