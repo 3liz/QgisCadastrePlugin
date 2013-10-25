@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_parcelle_form.ui'
 #
-# Created: Thu Oct 24 10:50:01 2013
+# Created: Fri Oct 25 16:02:02 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_parcelle_form(object):
     def setupUi(self, cadastre_parcelle_form):
         cadastre_parcelle_form.setObjectName(_fromUtf8("cadastre_parcelle_form"))
-        cadastre_parcelle_form.resize(420, 477)
+        cadastre_parcelle_form.resize(640, 612)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_parcelle_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_parcelle_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 400, 424))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 620, 559))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))

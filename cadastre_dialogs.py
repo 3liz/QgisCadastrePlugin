@@ -1725,12 +1725,14 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
 
         # Get parcelle info
         sql = '''
-        SELECT c.libcom AS nomcommune, c.ccocom AS codecommune, p.dcntpa AS contenance,
-        regexp_replace(p.dnvoiri, '^0+', '') || ' ' || v.natvoi || v.libvoi AS adresse,
+        SELECT
+        c.libcom AS nomcommune, c.ccocom AS codecommune, p.dcntpa AS contenance,
+        trim(regexp_replace(p.dnvoiri, '^0+', '') || ' ' || trim(v.natvoi) || ' ' || v.libvoi) AS adresse,
         CASE
                 WHEN p.gurbpa = 'U' THEN 'Oui'
                 ELSE 'Non'
-        END  AS urbain
+        END  AS urbain,
+        ccosec || dnupla
         FROM parcelle p
         INNER JOIN commune c ON p.ccocom = c.ccocom
         INNER JOIN voie v ON v.voie = p.voie
@@ -1741,9 +1743,11 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
 
         if self.connectionParams['dbType'] == 'postgis':
             sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
         html = ''
         for line in data:
+            html+= u'<h3>%s</h3>' % line[5]
             html+= u'<b>Commune :</b> %s (%s)<br/>' % (line[0], line[1])
             html+= u'<b>Surface géographique :</b> %s m²<br/>' % int(self.feature.geometry().area())
             html+= u'<b>Contenance :</b> %s m²<br/>' % line[2]
@@ -1761,14 +1765,20 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
 
         # Get proprietaire info
         sql = u'''
-        SELECT ccodro_lib || ' - ' || p.dnuper || ' - ' || trim(p.dqualp) || ' ' || trim(p.ddenom) || ' - ' ||trim(p.dlign3) || ' / ' || trim(regexp_replace(p.dlign4, '^0+', '')) || trim(p.dlign5) || ' ' || trim(p.dlign6) || ' - Né(e) le ' || to_char(jdatnss, 'dd/mm/YYYY') || ' à ' || p.dldnss
+        SELECT coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || ' - ' ||trim(coalesce(p.dlign3, '')) || ' / ' || trim(regexp_replace(coalesce(p.dlign4, ''), '^0+', '')) || trim(coalesce(p.dlign5), '') || ' ' || trim(coalesce(p.dlign6), '') ||
+        CASE
+          WHEN jdatnss IS NOT NULL
+          THEN ' - Né(e) le ' || coalesce(to_char(jdatnss, 'dd/mm/YYYY'), '') || ' à ' || coalesce(p.dldnss, '')
+          ELSE ''
+        END
         FROM proprietaire p
-        INNER JOIN ccodro ON ccodro.ccodro = p.ccodro
+        LEFT JOIN ccodro ON ccodro.ccodro = p.ccodro
         WHERE 2>1
         AND comptecommunal = '%s'
         ''' % self.feature['comptecommunal']
         if self.connectionParams['dbType'] == 'postgis':
             sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
         html = ''
         for line in data:
