@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'cadastre_parcelle_form.ui'
+# Form implementation generated from reading ui file 'forms/cadastre_parcelle_form.ui'
 #
-# Created: Mon Oct 21 16:50:22 2013
+# Created: Thu Oct 24 10:50:01 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,6 +42,8 @@ class Ui_cadastre_parcelle_form(object):
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.groupBox)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.parcelleInfo = QtGui.QTextEdit(self.groupBox)
+        self.parcelleInfo.setUndoRedoEnabled(False)
+        self.parcelleInfo.setReadOnly(True)
         self.parcelleInfo.setObjectName(_fromUtf8("parcelleInfo"))
         self.verticalLayout_3.addWidget(self.parcelleInfo)
         self.verticalLayout_2.addWidget(self.groupBox)
@@ -50,7 +52,9 @@ class Ui_cadastre_parcelle_form(object):
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.groupBox_2)
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.proprietairesInfo = QtGui.QTextEdit(self.groupBox_2)
+        self.proprietairesInfo.setUndoRedoEnabled(False)
         self.proprietairesInfo.setLineWrapMode(QtGui.QTextEdit.NoWrap)
+        self.proprietairesInfo.setReadOnly(True)
         self.proprietairesInfo.setObjectName(_fromUtf8("proprietairesInfo"))
         self.verticalLayout_4.addWidget(self.proprietairesInfo)
         self.verticalLayout_2.addWidget(self.groupBox_2)

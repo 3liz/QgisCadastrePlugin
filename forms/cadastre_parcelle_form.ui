@@ -36,7 +36,14 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QTextEdit" name="parcelleInfo"/>
+           <widget class="QTextEdit" name="parcelleInfo">
+            <property name="undoRedoEnabled">
+             <bool>false</bool>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -49,8 +56,14 @@
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QTextEdit" name="proprietairesInfo">
+            <property name="undoRedoEnabled">
+             <bool>false</bool>
+            </property>
             <property name="lineWrapMode">
              <enum>QTextEdit::NoWrap</enum>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
