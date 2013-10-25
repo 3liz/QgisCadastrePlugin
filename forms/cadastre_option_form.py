@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'cadastre_option_form.ui'
+# Form implementation generated from reading ui file 'forms/cadastre_option_form.ui'
 #
-# Created: Fri Oct 11 18:46:38 2013
+# Created: Fri Oct 25 16:45:10 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_option_form(object):
     def setupUi(self, cadastre_option_form):
         cadastre_option_form.setObjectName(_fromUtf8("cadastre_option_form"))
-        cadastre_option_form.resize(469, 525)
+        cadastre_option_form.resize(534, 589)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_option_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_option_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 449, 505))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 514, 569))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -115,6 +115,23 @@ class Ui_cadastre_option_form(object):
         self.horizontalLayout.addWidget(self.btTempDir)
         self.verticalLayout_4.addLayout(self.horizontalLayout)
         self.verticalLayout_2.addWidget(self.groupBox_2)
+        self.groupBox_3 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
+        self.verticalLayout_5 = QtGui.QVBoxLayout(self.groupBox_3)
+        self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
+        self.horizontalLayout_2 = QtGui.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.label_7 = QtGui.QLabel(self.groupBox_3)
+        self.label_7.setObjectName(_fromUtf8("label_7"))
+        self.horizontalLayout_2.addWidget(self.label_7)
+        self.inMaxInsertRows = QtGui.QSpinBox(self.groupBox_3)
+        self.inMaxInsertRows.setMinimum(1000)
+        self.inMaxInsertRows.setMaximum(1000000)
+        self.inMaxInsertRows.setProperty("value", 50000)
+        self.inMaxInsertRows.setObjectName(_fromUtf8("inMaxInsertRows"))
+        self.horizontalLayout_2.addWidget(self.inMaxInsertRows)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_2)
+        self.verticalLayout_2.addWidget(self.groupBox_3)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
         self.buttonBox = QtGui.QDialogButtonBox(self.scrollAreaWidgetContents)
@@ -153,5 +170,7 @@ class Ui_cadastre_option_form(object):
         self.label_6.setText(_translate("cadastre_option_form", "PDL", None))
         self.groupBox_2.setTitle(_translate("cadastre_option_form", "Répertoire temporaire", None))
         self.btTempDir.setText(_translate("cadastre_option_form", "...", None))
+        self.groupBox_3.setTitle(_translate("cadastre_option_form", "Performances", None))
+        self.label_7.setText(_translate("cadastre_option_form", "Taille maximum des requêtes INSERT", None))
 
 import resource_rc

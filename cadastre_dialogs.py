@@ -1594,6 +1594,9 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
         if tempDir:
             self.inTempDir.setText(tempDir)
+        maxInsertRows = s.value("cadastre/maxInsertRows", 100000, type=int)
+        if maxInsertRows:
+            self.inMaxInsertRows.setValue(maxInsertRows)
 
 
     def onAccept(self):
@@ -1612,6 +1615,9 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
 
         # Save temp dir
         s.setValue("cadastre/tempDir", self.inTempDir.text().strip(' \t\n\r'))
+
+        # Save maxInsertRows
+        s.setValue("cadastre/maxInsertRows", int(self.inMaxInsertRows.value()))
 
         self.accept()
 

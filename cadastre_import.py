@@ -69,6 +69,9 @@ class cadastreImport(QObject):
             '[VERSION]': self.dialog.dataVersion,
             '[ANNEE]': self.dialog.dataYear
         }
+        self.maxInsertRows = s.value("cadastre/maxInsertRows", 50000, type=int)
+        #~ self.qc.updateLog(str(self.maxInsertRows))
+
         if self.dialog.dbType == 'postgis':
             self.replaceDict['[PREFIXE]'] = '"%s".' % self.dialog.schema
         else:
@@ -358,7 +361,7 @@ class cadastreImport(QObject):
             # read file content
             with open(fpath) as fin:
                 # Divide file into chuncks
-                for a in self.chunk(fin):
+                for a in self.chunk(fin, self.maxInsertRows):
                     # Build sql INSERT query depending on database
                     if self.dialog.dbType == 'postgis':
                         sql = "BEGIN;"
