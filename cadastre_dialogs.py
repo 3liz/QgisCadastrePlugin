@@ -1198,17 +1198,33 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         connector = self.qc.getConnectorFromUri(connectionParams)
         self.connector = connector
 
-        # SQL
+        # Format searchValue
+        # get rid of contextual info
         sp = searchValue.split('|')
         if len(sp) > 1:
             searchValue = sp[1]
+
+        # get rid of double spaces
+        r = re.compile(r'[ ,]+', re.IGNORECASE)
+        searchValue = r.sub(' ', searchValue)
+
+        if key == 'adresse':
+            # get rid of stopwords
+            stopwords = ['allee', 'aqueduc', 'arceaux', 'avenue', 'avenues', 'boulevard', 'carrefour', 'carrer', 'chemin', 'chemins', 'chemin rural', 'clos', 'cour', 'cours', 'descente', 'enclos', 'escalier', 'espace', 'esplanade', 'grand rue', 'impasse', 'mail', 'montee', 'parvis', 'passage', 'passerelle', 'place', 'plan', 'pont', 'quai', 'rond-point', 'route', 'rue', 'ruisseau', 'sente', 'sentier', 'square', 'terrasse', 'traboule', 'traverse', 'traversee', 'traversier', 'tunnel', 'voie', 'voie communale', 'viaduc', 'zone',
+            'ach', 'all', 'angl', 'art', 'av', 'ave', 'bd', 'bv', 'camp', 'car', 'cc', 'cd', 'ch', 'che', 'chem', 'chs ', 'chv', 'cite', 'clos', 'cote', 'cour', 'cpg', 'cr', 'crs', 'crx', 'd', 'dig', 'dom', 'ecl', 'esc', 'esp', 'fg', 'fos', 'frm', 'gare', 'gpl', 'gr', 'ham', 'hle', 'hlm ', 'imp', 'jte ', 'lot', 'mail', 'mais', 'n', 'parc', 'pas', 'pch', 'pl', 'ple ', 'pont', 'port', 'prom', 'prv', 'pta', 'pte', 'ptr', 'ptte', 'qua', 'quai', 'rem', 'res', 'rive', 'rle', 'roc', 'rpe ', 'rpt ', 'rte ', 'rue', 'rult', 'sen', 'sq', 'tour', 'tsse', 'val', 'vc', 'ven', 'vla', 'voie', 'voir', 'voy', 'zone'
+            ]
+            sp = searchValue.split(' ')
+            if len(sp)>0 and self.qc.unaccent(sp[0]).lower() in stopwords:
+                searchValue = ' '.join(sp[1:])
+
         sqlSearchValue = self.qc.unaccent(searchValue.strip(' \t\n')).upper()
 
+        # Build SQL query
         if key == 'adresse':
             sql = ' SELECT DISTINCT v.voie, c.libcom, v.natvoi, v.libvoi'
             sql+= ' FROM voie v'
             sql+= ' INNER JOIN commune c ON c.ccodep = v.ccodep AND c.ccocom = v.ccocom'
-            sql+= " WHERE v.natvoi || ' ' || libvoi LIKE '%%%s%%'" % sqlSearchValue
+            sql+= " WHERE libvoi LIKE '%%%s%%'" % sqlSearchValue
             sql+= ' ORDER BY c.libcom, v.natvoi, v.libvoi'
 
         if key == 'proprietaire':
