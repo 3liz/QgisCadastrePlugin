@@ -1,4 +1,11 @@
 CHANGELOG
+  Version 0.8.8
+  * Import - ajout d'une option pour configurer le nombre de ligne INSERT max
+  * Propriétaires - debug affichage vide pour les personnes morales
+  * Recherche - ajout des stopwords pour les natvoi
+  * Indentification parcelle - textes en lecture seule + code section || dnupla
+  * Import majic - Vérfication unicité des lotslocaux
+
   Version 0.8.7
   * Export - changement du calcul du revenu cadastral non bati + numéro voirie
   * Import - possibilité d'importer un fichier MAJIC seul

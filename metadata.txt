@@ -4,7 +4,7 @@ name=cadastre
 qgisMinimumVersion=2.0.0
 qgisMaximumVersion=2.99.0
 description=This plugins helps users to import the french land registry ('cadastre') into a database. It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
-version=0.8.7
+version=0.8.8
 author=3liz
 email=info@3liz.com
 
@@ -14,18 +14,12 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.8.7
-  * Export - changement du calcul du revenu cadastral non bati + numéro voirie
-  * Import - possibilité d'importer un fichier MAJIC seul
-  * Import - Ajout des contraintes à la fin d'un import MAJIC seul
-  * Import - modification mineure nomenclature EDIGEO
-  * Import - Compatibilité avec les fichiers MAJIC 2013
-  * Import MAJIC - ajout de quelques colonnes (bati, nbat)
-  * Export - Calcul des sommes pour bati et nbat
-  * Recherche/export - ajout du lieu et date de naissance pour les propriétaires
-  * Chargement - Création d'un groupe 'Cadastre' et chargement des couches dans ce groupe
-  * Chargement - mise à jour auto des listes déroulantes suite à un import
-
+  Version 0.8.8
+  * Import - ajout d'une option pour configurer le nombre de ligne INSERT max
+  * Propriétaires - debug affichage vide pour les personnes morales
+  * Recherche - ajout des stopwords pour les natvoi
+  * Indentification parcelle - textes en lecture seule + code section || dnupla
+  * Import majic - Vérfication unicité des lotslocaux
 
 
 # tags are comma separated with spaces allowed
