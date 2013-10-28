@@ -39,7 +39,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/forms")
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
-from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
+
 
 from functools import partial
 
@@ -60,6 +60,17 @@ class cadastre_common():
         # default auth id for layers
         self.defaultAuthId = 'EPSG:2154'
 
+    def hasSpatialiteSupport(self):
+        '''
+        Check whether or not
+        spatialite support is ok
+        '''
+        try:
+            from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
+            return True
+        except ImportError:
+            return False
+            pass
 
     def updateLog(self, msg):
         '''
@@ -404,6 +415,12 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         # common cadastre methods
         self.qc = cadastre_common(self)
 
+        # spatialite support
+        self.hasSpatialiteSupport = self.qc.hasSpatialiteSupport()
+        if not self.hasSpatialiteSupport:
+            self.liDbType.removeItem(2)
+
+
         # Signals/Slot Connections
         self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
         self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
@@ -720,6 +737,11 @@ class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
         # common cadastre methods
         self.qc = cadastre_common(self)
         self.ql = cadastreLoading(self)
+
+        # spatialite support
+        self.hasSpatialiteSupport = self.qc.hasSpatialiteSupport()
+        if not self.hasSpatialiteSupport:
+            self.liDbType.removeItem(2)
 
         # Set initial values
         self.go = True
