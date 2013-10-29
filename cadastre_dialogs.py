@@ -441,6 +441,12 @@ class cadastre_common():
             {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",
             'out': r"strftime('%d/%m/%Y', \2)"},
         ]
+        #~ # ne pas recreer les colonnes tempo_import si existantes
+        #~ if self.dialog.hasStructure:
+            #~ replaceDict.append(
+                #~ {'in': r'alter table lots add column tempo_import[^;]+;', 'out': ''}
+            #~ )
+
         for a in replaceDict:
             r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
             sql = r.sub(a['out'], sql)
