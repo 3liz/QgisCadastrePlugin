@@ -441,11 +441,6 @@ class cadastre_common():
             {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",
             'out': r"strftime('%d/%m/%Y', \2)"},
         ]
-        #~ # ne pas recreer les colonnes tempo_import si existantes
-        #~ if self.dialog.hasStructure:
-            #~ replaceDict.append(
-                #~ {'in': r'alter table lots add column tempo_import[^;]+;', 'out': ''}
-            #~ )
 
         for a in replaceDict:
             r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
@@ -1945,7 +1940,6 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
         if self.connectionParams['dbType'] == 'spatialite':
             sql = self.qc.postgisToSpatialite(sql)
-        print sql
 
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
         html = ''
