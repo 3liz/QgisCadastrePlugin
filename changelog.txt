@@ -1,4 +1,7 @@
 CHANGELOG
+  Version 0.9.0
+  * Correction de régression de 0.8.9 : indentification parcelle et recherche propriétaire
+
   Version 0.8.9
   * Amélioration du support Spatialite : import, recherche, export
   * General - désactivation Spatialite si pyspatialite non présent

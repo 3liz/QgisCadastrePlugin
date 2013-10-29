@@ -4,7 +4,7 @@ name=cadastre
 qgisMinimumVersion=2.0.0
 qgisMaximumVersion=2.99.0
 description=This plugins helps users to import the french land registry ('cadastre') into a database. It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
-version=0.8.9
+version=0.9.0
 author=3liz
 email=info@3liz.com
 
@@ -14,9 +14,8 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.8.9
-  * Amélioration du support Spatialite : import, recherche, export
-  * General - désactivation Spatialite si pyspatialite non présent
+  Version 0.9.0
+  * Correction de régression de 0.8.9 : indentification parcelle et recherche propriétaire
 
 
 
