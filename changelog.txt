@@ -1,4 +1,8 @@
 CHANGELOG
+  Version 0.8.9
+  * Amélioration du support Spatialite : import, recherche, export
+  * General - désactivation Spatialite si pyspatialite non présent
+
   Version 0.8.8
   * Import - ajout d'une option pour configurer le nombre de ligne INSERT max
   * Propriétaires - debug affichage vide pour les personnes morales
