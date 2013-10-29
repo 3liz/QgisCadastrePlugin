@@ -70,7 +70,6 @@ class cadastreImport(QObject):
             '[ANNEE]': self.dialog.dataYear
         }
         self.maxInsertRows = s.value("cadastre/maxInsertRows", 50000, type=int)
-        #~ self.qc.updateLog(str(self.maxInsertRows))
 
         if self.dialog.dbType == 'postgis':
             self.replaceDict['[PREFIXE]'] = '"%s".' % self.dialog.schema
@@ -175,14 +174,17 @@ class cadastreImport(QObject):
             {
                 'title' : u'Ajout de la nomenclature',
                 'script': '%s' % os.path.join(self.scriptDir, 'insert_nomenclatures.sql')
-            },
-            {
-                'title' : u'Ajout des contraintes',
-                'script': '%s' % os.path.normpath(os.path.join(self.scriptDir,
-                'COMMUN/creation_contraintes.sql')),
-                'constraints': True
             }
         ]
+        if not self.dialog.dbType == 'spatialite':
+            scriptList.append(
+                {
+                    'title' : u'Ajout des contraintes',
+                    'script': '%s' % os.path.normpath(os.path.join(self.scriptDir,
+                    'COMMUN/creation_contraintes.sql')),
+                    'constraints': True
+                }
+            )
 
         for item in scriptList:
             s = item['script']
@@ -237,7 +239,7 @@ class cadastreImport(QObject):
         replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
 
         scriptList = []
-        if self.hasConstraints:
+        if self.hasConstraints and not self.dialog.dbType == 'spatialite':
             scriptList.append(
                 {
                 'title' : u'Suppression des contraintes',
@@ -285,15 +287,19 @@ class cadastreImport(QObject):
         )
 
         # Remove MAJIC raw data
-        scriptList.append(
-            {
-            'title' : u'Purge des données brutes',
-            'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'
-            }
-        )
+        removeRawData = True
+        if removeRawData:
+            scriptList.append(
+                {
+                'title' : u'Purge des données brutes',
+                'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'
+                }
+            )
 
         # Add constraints : only if no EDIGEO import afterwards
-        if not self.hasConstraints and not self.dialog.doEdigeoImport:
+        if not self.hasConstraints \
+        and not self.dialog.doEdigeoImport \
+        and not self.dialog.dbType == 'spatialite':
             scriptList.append(
                 {
                     'title' : u'Ajout des contraintes',
@@ -319,12 +325,9 @@ class cadastreImport(QObject):
                 self.updateProgressBar()
                 item['method']()
 
-            if item.has_key('constraints'):
+            if item.has_key('constraints') \
+            and not self.dialog.dbType == 'spatialite':
                 self.hasConstraints = item['constraints']
-                if self.hasConstraints:
-                    self.qc.updateLog( u"contraintes ajoutées")
-                else:
-                    self.qc.updateLog( u"contraintes retirées")
 
             self.updateTimer()
             self.updateProgressBar()
@@ -427,7 +430,8 @@ class cadastreImport(QObject):
         scriptList = []
 
         # Drop constraints if needed
-        if self.hasConstraints:
+        if self.hasConstraints \
+        and not self.dialog.dbType == 'spatialite':
             self.totalSteps+=4
             scriptList.append(
                 {
@@ -499,15 +503,15 @@ class cadastreImport(QObject):
                 'divide': True
             }
         )
-
-        scriptList.append(
-            {   'title' : u'Création Unités foncières',
-                'script' : '%s' % os.path.join(
-                    self.scriptDir,
-                    '%s/edigeo_unite_fonciere.sql' % self.dialog.dataVersion
-                )
-            }
-        )
+        if not self.dialog.dbType == 'spatialite':
+            scriptList.append(
+                {   'title' : u'Création Unités foncières',
+                    'script' : '%s' % os.path.join(
+                        self.scriptDir,
+                        '%s/edigeo_unite_fonciere.sql' % self.dialog.dataVersion
+                    )
+                }
+            )
         scriptList.append(
             {
                 'title' : u'Placement des étiquettes',
@@ -527,7 +531,8 @@ class cadastreImport(QObject):
             }
         )
 
-        if not self.hasConstraints:
+        if not self.hasConstraints \
+        and not self.dialog.dbType == 'spatialite':
             scriptList.append(
                 {
                     'title' : u'Ajout des contraintes',
@@ -549,10 +554,7 @@ class cadastreImport(QObject):
                 self.executeSqlScript(scriptPath, item.has_key('divide'))
                 if item.has_key('constraints'):
                     self.hasConstraints = item['constraints']
-                    if self.hasConstraints:
-                        self.qc.updateLog( u"contraintes ajoutées")
-                    else:
-                        self.qc.updateLog( u"contraintes retirées")
+
                 self.updateTimer()
                 self.updateProgressBar()
 
@@ -764,11 +766,12 @@ class cadastreImport(QObject):
                 sql = self.qc.setSearchPath(sql, self.dialog.schema)
             # Convert SQL into spatialite syntax
             if self.dialog.dbType == 'spatialite':
-                sql = self.postgisToSpatialite(sql)
+                sql = self.qc.postgisToSpatialite(sql)
+
+            #~ self.qc.updateLog('|%s|' % sql)
             # Execute query
             if not divide:
                 self.executeSqlQuery(sql)
-                #~ self.qc.updateLog('|%s|' % sql)
             else:
                 statements = sql.split(';')
                 self.totalSteps = len(statements)
@@ -792,96 +795,6 @@ class cadastreImport(QObject):
 
         return None
 
-
-    def postgisToSpatialite(self, sql):
-        '''
-        Convert postgis SQL statement
-        into spatialite compatible
-        statements
-        '''
-
-        # delete some incompatible options
-        # replace other by spatialite syntax
-        replaceDict = [
-            # delete
-            {'in': r'with\(oids=.+\)', 'out': ''},
-            {'in': r'comment on [^;]+;', 'out': ''},
-            {'in': r'alter table [^;]+add primary key[^;]+;', 'out': ''},
-            {'in': r'alter table [^;]+drop column[^;]+;', 'out': ''},
-            {'in': r'analyse [^;]+;', 'out': ''},
-            # replace
-            {'in': r'truncate ', 'out': 'delete from '},
-            {'in': r'distinct on *\([a-z, ]+\)', 'out': 'distinct'},
-            {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
-            {'in': r'current_schema::text, ', 'out': ''},
-            {'in': r'substring', 'out': 'SUBSTR'},
-            {'in': r"(to_char\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS TEXT)"},
-            {'in': r"(to_number\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS integer)"},
-            {'in': r"(to_date\()([^']+) *, *'DDMMYYYY' *\)", 'out': r"strftime('%d%m%Y',\2)"},
-            {'in': r"(to_date\()([^']+) *, *'DD/MM/YYYY' *\)", 'out': r"strftime('%d/%m/%Y',\2)"},
-            {'in': r"(to_date\()([^']+) *, *'YYYYMMDD' *\)", 'out': r"strftime('%Y%m%d',\2)"},
-        ]
-        for a in replaceDict:
-            r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
-            sql = r.sub(a['out'], sql)
-
-        # index spatiaux
-        r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
-        sql = r.sub(r'SELECT createSpatialIndex("\2", "\5");', sql)
-
-        # replace postgresql "update from" statement
-        r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE|re.MULTILINE)
-        sql = r.sub(r'\1=(SELECT \3);', sql)
-
-        # replace multiple column update for geo_parcelle
-        r = re.compile(r'update [^;]+parcelle, voie, comptecommunal[^;]+;',  re.IGNORECASE|re.MULTILINE)
-        res = r.findall(sql)
-        replaceBy = ''
-        for statement in res:
-            for a in ['parcelle', 'voie', 'comptecommunal']:
-                st = statement
-                st = st.replace('(parcelle, voie, comptecommunal)', '%s' % a)
-                st = st.replace('(p.parcelle, p.voie, p.comptecommunal)', '(SELECT p.%s' % a)
-                st = st.replace(';', ');')
-                replaceBy+= st
-            sql = sql.replace(statement, replaceBy)
-
-        # majic formatage : replace multiple column update for loca10
-        r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
-        res = r.findall(sql)
-        replaceBy = ''
-        for statement in res:
-            replaceBy = '''
-            CREATE TABLE ll AS
-            SELECT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
-            FROM local00 l
-            INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
-            WHERE l10.annee='?';
-            CREATE INDEX  idx_ll_invar ON ll (invar);
-            UPDATE local10 SET ccopre = (SELECT ll.ccopre FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET ccosec = (SELECT ll.ccosec FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET dnupla = (SELECT ll.dnupla FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET ccoriv = (SELECT ll.ccoriv FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET ccovoi = (SELECT ll.ccovoi FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET dnvoiri = (SELECT ll.dnvoiri FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET local00 = (SELECT ll.local00 FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET parcelle = (SELECT ll.parcelle FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET voie = (SELECT ll.voie FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            DROP TABLE ll;
-            '''
-            replaceBy = replaceBy.replace('?', self.dialog.dataYear)
-            sql = sql.replace(statement, replaceBy)
-
-        return sql
 
     def executeSqlQuery(self, sql):
         '''

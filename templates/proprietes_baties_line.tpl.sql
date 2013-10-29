@@ -1,7 +1,7 @@
 
 SELECT --p.parcelle, p.geo_parcelle,
 l.ccosec AS section, l.dnupla AS ndeplan,
-regexp_replace(l.dnvoiri, '^0+', '') || l.dindic AS ndevoirie,
+l.dnvoiri || l.dindic AS ndevoirie,
 v.natvoi || v.libvoi AS adresse,
 l.ccoriv AS coderivoli,
 l.dnubat AS bat, l.descr AS ent, l.dniv AS niv, l.dpor AS ndeporte, l.invar || ' ' || l.cleinvar AS numeroinvar,
@@ -12,7 +12,7 @@ CASE
   ELSE pt.tse_bipevla
 END AS revenucadastral,
 
-px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb, (px.rcexba2 * px.pexb / 100)::numeric(10,2) AS fractionrcexo,
+px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb, Cast(px.rcexba2 * px.pexb / 100 AS numeric(10,2)) AS fractionrcexo,
 px.pexb AS pourcentageexo, l10.gtauom AS txom, '' AS coefreduc
 FROM
 parcelle p

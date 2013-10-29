@@ -367,6 +367,8 @@ class cadastre_common():
             connector = PostGisDBConnector(uri)
         if connectionParams['dbType'] == 'spatialite':
             uri.setConnection('', '', connectionParams['dbname'], '', '')
+            if self.hasSpatialiteSupport():
+                from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
             connector = SpatiaLiteDBConnector(uri)
 
         return connector
@@ -401,6 +403,135 @@ class cadastre_common():
         s=unicodedata.normalize('NFD',s)
 
         return s.encode('ascii','ignore')
+
+
+    def postgisToSpatialite(self, sql):
+        '''
+        Convert postgis SQL statement
+        into spatialite compatible
+        statements
+        '''
+
+        # delete some incompatible options
+        # replace other by spatialite syntax
+        replaceDict = [
+            # delete
+            {'in': r'with\(oids=.+\)', 'out': ''},
+            {'in': r'comment on [^;]+;', 'out': ''},
+            {'in': r'alter table [^;]+add primary key[^;]+;', 'out': ''},
+            {'in': r'alter table [^;]+drop column[^;]+;', 'out': ''},
+            {'in': r'alter table [^;]+drop constraint[^;]+;', 'out': ''},
+            {'in': r'^analyse [^;]+;', 'out': ''},
+            # replace
+            {'in': r'truncate (bati|fanr|lloc|nbat|pdll|prop)',
+            'out': r'drop table \1;create table \1 (tmp text)'},
+            {'in': r'truncate ', 'out': 'delete from '},
+            {'in': r'distinct on *\([a-z, ]+\)', 'out': 'distinct'},
+            {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
+            {'in': r'current_schema::text, ', 'out': ''},
+            {'in': r'substring', 'out': 'SUBSTR'},
+            {'in': r"(to_char\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS TEXT)"},
+            {'in': r"(to_number\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS integer)"},
+            {'in': r"(to_date\()([^']+) *, *'DDMMYYYY' *\)",
+            'out': r"date(substr(\2, 5, 4) || '-' || substr(\2, 3, 2) || '-' || substr(\2, 1, 2))"},
+            {'in': r"(to_date\()([^']+) *, *'DD/MM/YYYY' *\)",
+            'out': r"date(substr(\2, 7, 4) || '-' || substr(\2, 4, 2) || '-' || substr(\2, 1, 2))"},
+            {'in': r"(to_date\()([^']+) *, *'YYYYMMDD' *\)",
+            'out': r"date(substr(\2, 1, 4) || '-' || substr(\2, 5, 2) || '-' || substr(\2, 7, 2))"},
+            {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",
+            'out': r"strftime('%d/%m/%Y', \2)"},
+        ]
+        for a in replaceDict:
+            r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
+            sql = r.sub(a['out'], sql)
+
+        # index spatiaux
+        r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
+        sql = r.sub(r'SELECT createSpatialIndex("\2", "\5");', sql)
+
+        # update from : geo_parcelle -> parcelle
+        r = re.compile(r'update parcelle SET geo_parcelle=g.geo_parcelle[^;]+;', re.IGNORECASE|re.MULTILINE)
+        res = r.findall(sql)
+        replaceBy = ''
+        for statement in res:
+            replaceBy = '''
+            CREATE INDEX idx_geo_parcelle_parcelle ON geo_parcelle (parcelle);
+            CREATE INDEX idx_parcelle_parcelle ON parcelle (parcelle);
+            CREATE TABLE parcelle_temp AS
+            SELECT p.parcelle, p.annee, p.ccodep, p.ccodir, p.ccocom, p.ccopre, p.ccosec, p.dnupla, p.dcntpa, p.dsrpar, p.dnupro, p.comptecommunal, p.jdatat, p.dreflf, p.gpdl, p.cprsecr, p.ccosecr, p.dnuplar, p.dnupdl, p.pdl, p.gurbpa, p.dparpi, p.ccoarp, p.gparnf, p.gparbat, p.parrev, p.gpardp, p.fviti, p.dnvoiri, p.dindic, p.ccovoi, p.ccoriv, p.voie, p.ccocif, p.gpafpd, p.ajoutcoherence, p.cconvo, p.dvoilib, p.ccocomm, p.ccoprem, p.ccosecm, p.dnuplam, p.parcellefiliation, p.type_filiation, gp.geo_parcelle
+            FROM parcelle p
+            LEFT JOIN geo_parcelle gp ON gp.parcelle = p.parcelle AND gp.annee='?';
+            DROP TABLE parcelle;
+            ALTER TABLE parcelle_temp RENAME TO parcelle;
+            DROP INDEX idx_geo_parcelle_parcelle;
+            '''
+            replaceBy = replaceBy.replace('?', self.dialog.dataYear)
+            sql = sql.replace(statement, replaceBy)
+
+        # replace postgresql "update from" statement
+        r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE|re.MULTILINE)
+        sql = r.sub(r'\1=(SELECT \3);', sql)
+
+        # replace multiple column update for geo_parcelle
+        r = re.compile(r'update [^;]+parcelle, voie, comptecommunal[^;]+;',  re.IGNORECASE|re.MULTILINE)
+        res = r.findall(sql)
+        replaceBy = ''
+        for statement in res:
+            replaceBy = '''
+            ALTER TABLE geo_parcelle ADD COLUMN temp_import text;
+            UPDATE geo_parcelle SET temp_import = SUBSTR(geo_parcelle,1,4) || '@' || SUBSTR(geo_parcelle,5,3) || replace(SUBSTR(geo_parcelle,8,5),'0','-') || SUBSTR(geo_parcelle,13,4) ;
+            CREATE INDEX idx_parcelle_temp_import ON geo_parcelle ( temp_import);
+            DROP TABLE IF EXISTS geo_parcelle_temp;
+            CREATE TABLE geo_parcelle_temp AS
+            SELECT geo_parcelle.geo_parcelle, geo_parcelle.annee, geo_parcelle.object_rid, geo_parcelle.idu, geo_parcelle.geo_section, geo_parcelle.geo_subdsect, geo_parcelle.supf, geo_parcelle.geo_indp, geo_parcelle.coar, geo_parcelle.tex, geo_parcelle.tex2, geo_parcelle.codm, geo_parcelle.creat_date, geo_parcelle.update_dat, p.parcelle, geo_parcelle.lot, p.comptecommunal, p.voie, geo_parcelle.ogc_fid, geo_parcelle.geom, geo_parcelle.geom_uf
+            FROM geo_parcelle
+            LEFT JOIN parcelle p ON p.parcelle=geo_parcelle.temp_import AND p.annee='?' AND geo_parcelle.annee='?'
+            ;
+            DROP TABLE geo_parcelle;
+            ALTER TABLE geo_parcelle_temp RENAME TO geo_parcelle;
+            '''
+            replaceBy = replaceBy.replace('?', self.dialog.dataYear)
+            replaceBy = replaceBy.replace('@', '%s%s' % (self.dialog.edigeoDepartement, self.dialog.edigeoDirection))
+            sql = sql.replace(statement, replaceBy)
+
+        # majic formatage : replace multiple column update for loca10
+        r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
+        res = r.findall(sql)
+        replaceBy = ''
+        for statement in res:
+            replaceBy = '''
+            CREATE TABLE ll AS
+            SELECT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
+            FROM local00 l
+            INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
+            WHERE l10.annee='?';
+            CREATE INDEX  idx_ll_invar ON ll (invar);
+            UPDATE local10 SET ccopre = (SELECT ll.ccopre FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET ccosec = (SELECT ll.ccosec FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET dnupla = (SELECT ll.dnupla FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET ccoriv = (SELECT ll.ccoriv FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET ccovoi = (SELECT ll.ccovoi FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET dnvoiri = (SELECT ll.dnvoiri FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET local00 = (SELECT ll.local00 FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET parcelle = (SELECT ll.parcelle FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            UPDATE local10 SET voie = (SELECT ll.voie FROM ll WHERE ll.invar = local10.invar)
+            WHERE local10.annee = '?';
+            DROP TABLE ll;
+            '''
+            replaceBy = replaceBy.replace('?', self.dialog.dataYear)
+            sql = sql.replace(statement, replaceBy)
+
+        #~ self.updateLog(sql)
+        return sql
+
 
 
 from cadastre_import_form import *
@@ -1255,7 +1386,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             sql+= ' INNER JOIN commune c ON c.ccocom = p.ccocom'
             sql+= " WHERE ddenom LIKE '%s%%'" % sqlSearchValue
             sql+= ' GROUP BY dnuper, ddenom, dlign4, c.ccocom'
-            sql+= ' ORDER BY ddenom, ccocom'
+            sql+= ' ORDER BY ddenom, c.ccocom'
         self.dbType = connectionParams['dbType']
         if self.dbType == 'postgis':
             sql = self.qc.setSearchPath(sql, connectionParams['schema'])
@@ -1755,7 +1886,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         sql = '''
         SELECT
         c.libcom AS nomcommune, c.ccocom AS codecommune, p.dcntpa AS contenance,
-        trim(regexp_replace(p.dnvoiri, '^0+', '') || ' ' || trim(v.natvoi) || ' ' || v.libvoi) AS adresse,
+        trim(p.dnvoiri || ' ' || trim(v.natvoi) || ' ' || v.libvoi) AS adresse,
         CASE
                 WHEN p.gurbpa = 'U' THEN 'Oui'
                 ELSE 'Non'
@@ -1793,7 +1924,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
 
         # Get proprietaire info
         sql = u'''
-        SELECT coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || ' - ' ||trim(coalesce(p.dlign3, '')) || ' / ' || trim(regexp_replace(coalesce(p.dlign4, ''), '^0+', '')) || trim(coalesce(p.dlign5), '') || ' ' || trim(coalesce(p.dlign6), '') ||
+        SELECT coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || ' - ' ||trim(coalesce(p.dlign3, '')) || ' / ' || trim(coalesce(p.dlign4, '')) || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, '')) ||
         CASE
           WHEN jdatnss IS NOT NULL
           THEN ' - Né(e) le ' || coalesce(to_char(jdatnss, 'dd/mm/YYYY'), '') || ' à ' || coalesce(p.dldnss, '')
@@ -1806,6 +1937,9 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         ''' % self.feature['comptecommunal']
         if self.connectionParams['dbType'] == 'postgis':
             sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+        if self.connectionParams['dbType'] == 'spatialite':
+            sql = self.qc.postgisToSpatialite(sql)
+        print sql
 
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
         html = ''

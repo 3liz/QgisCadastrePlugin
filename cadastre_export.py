@@ -220,6 +220,8 @@ class cadastreExport(QObject):
 
             # Run SQL
             #~ self.qc.updateLog(sql)
+            if self.dialog.dbType == 'spatialite':
+                sql = self.qc.postgisToSpatialite(sql)
             [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
             # Add data length to lineCount object if appropriate
             if not page:

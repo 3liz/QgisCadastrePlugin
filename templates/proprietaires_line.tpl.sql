@@ -1,5 +1,5 @@
 
-SELECT Coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(Coalesce(p.dqualp, '')) || ' ' || trim(Coalesce(p.ddenom, '')) || ' - ' ||trim(Coalesce(p.dlign3, '')) || ' / ' || trim(regexp_replace(Coalesce(p.dlign4, ''), '^0+', '')) || trim(Coalesce(p.dlign5, '')) || ' ' || trim(Coalesce(p.dlign6, '')) ||
+SELECT Coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(Coalesce(p.dqualp, '')) || ' ' || trim(Coalesce(p.ddenom, '')) || ' - ' ||trim(Coalesce(p.dlign3, '')) || ' / ' || trim(Coalesce(p.dlign4, '')) || trim(Coalesce(p.dlign5, '')) || ' ' || trim(Coalesce(p.dlign6, '')) ||
         CASE
           WHEN jdatnss IS NOT NULL
           THEN ' - Né(e) le ' || coalesce(to_char(jdatnss, 'dd/mm/YYYY'), '') || ' à ' || coalesce(p.dldnss, '')

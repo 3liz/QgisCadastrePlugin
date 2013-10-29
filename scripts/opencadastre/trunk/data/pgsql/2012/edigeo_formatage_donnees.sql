@@ -64,8 +64,8 @@ CREATE INDEX geo_parcelle_annee_idx ON [PREFIXE]geo_parcelle (annee, object_rid 
 CREATE INDEX geo_subdsect_annee_idx ON [PREFIXE]geo_subdsect (annee, object_rid);
 UPDATE [PREFIXE]geo_parcelle set geo_subdsect=s.geo_subdsect FROM [PREFIXE]geo_subdsect s, [PREFIXE]edigeo_rel r
 WHERE s.annee=geo_parcelle.annee AND geo_parcelle.annee='[ANNEE]' AND r.nom='Rel_PARCELLE_SUBDSECT' AND r.de=geo_parcelle.object_rid AND vers=s.object_rid;
-DROP INDEX [PREFIXE]geo_parcelle_annee_idx;
 DROP INDEX [PREFIXE]geo_subdsect_annee_idx;
+DROP INDEX [PREFIXE]geo_parcelle_annee_idx;
 
 -- ajout de l'identifiant de parcelle dans la table geo_parcelle
 UPDATE [PREFIXE]geo_parcelle SET (parcelle, voie, comptecommunal) = (p.parcelle, p.voie, p.comptecommunal)
