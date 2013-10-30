@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.0.0-Dufour" minimumScale="-4.65661e-10" maximumScale="250000" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="1" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.0.1-Dufour" minimumScale="0" maximumScale="250000" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="1" scaleBasedLabelVisibilityFlag="0">
   <renderer-v2 attr="geo_sym" symbollevels="0" type="categorizedSymbol">
     <categories>
       <category symbol="0" value="32" label="limite surfacique ne format pas parcelle"/>
@@ -10,7 +10,6 @@
       <category symbol="5" value="52" label="cimetière israélite"/>
       <category symbol="6" value="53" label="cimetière musulman"/>
       <category symbol="7" value="65" label="piscine"/>
-      <category symbol="8" value="" label=""/>
     </categories>
     <symbols>
       <symbol alpha="1" type="fill" name="0">
@@ -37,7 +36,7 @@
           <prop k="width_border" v="0.26"/>
         </layer>
       </symbol>
-      <symbol alpha="1" type="fill" name="2">
+      <symbol alpha="0.498039" type="fill" name="2">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_unit" v="MM"/>
           <prop k="color" v="26,122,172,255"/>
@@ -160,18 +159,6 @@
           <prop k="width_border" v="0.26"/>
         </layer>
       </symbol>
-      <symbol alpha="1" type="fill" name="8">
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_unit" v="MM"/>
-          <prop k="color" v="102,136,209,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="style" v="solid"/>
-          <prop k="style_border" v="solid"/>
-          <prop k="width_border" v="0.26"/>
-        </layer>
-      </symbol>
     </symbols>
     <rotation field=""/>
     <sizescale field="" scalemethod="area"/>
@@ -201,8 +188,8 @@
     <property key="labeling/fieldName" value=""/>
     <property key="labeling/fontBold" value="true"/>
     <property key="labeling/fontCapitals" value="0"/>
-    <property key="labeling/fontFamily" value="Ubuntu"/>
-    <property key="labeling/fontItalic" value="true"/>
+    <property key="labeling/fontFamily" value="Cantarell"/>
+    <property key="labeling/fontItalic" value="false"/>
     <property key="labeling/fontLetterSpacing" value="0"/>
     <property key="labeling/fontLimitPixelSize" value="false"/>
     <property key="labeling/fontMaxPixelSize" value="10000"/>
@@ -226,7 +213,7 @@
     <property key="labeling/minFeatureSize" value="0"/>
     <property key="labeling/multilineAlign" value="0"/>
     <property key="labeling/multilineHeight" value="1"/>
-    <property key="labeling/namedStyle" value="Bold Italic"/>
+    <property key="labeling/namedStyle" value="Bold"/>
     <property key="labeling/obstacle" value="true"/>
     <property key="labeling/placeDirectionSymbol" value="0"/>
     <property key="labeling/placement" value="0"/>
