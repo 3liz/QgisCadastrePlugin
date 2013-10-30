@@ -427,6 +427,9 @@ class cadastreImport(QObject):
         self.updateTimer()
         self.updateProgressBar()
 
+        # Copy eventual plain edigeo files in edigeoPlainDir
+        shutil.copytree(self.edigeoDir, os.path.join(self.edigeoPlainDir, 'plain'))
+
         scriptList = []
 
         # Drop constraints if needed
@@ -675,21 +678,31 @@ class cadastreImport(QObject):
             import zipfile
             import tarfile
             try:
+                # unzip all zip and child zip
                 for z in zipFileList:
-                    zipfile.ZipFile(z).extractall(self.edigeoPlainDir)
+                    with zipfile.ZipFile(z) as azip:
+                        azip.extractall(self.edigeoPlainDir)
+                    os.remove(z)
 
                 inner_zips_pattern = os.path.join(self.edigeoPlainDir, "*.zip")
                 i=0
                 for filename in glob.glob(inner_zips_pattern):
                     inner_folder = filename[:-4] + '_%s' % i
-                    zipfile.ZipFile(filename).extractall(inner_folder)
+
+                    with zipfile.ZipFile(filename) as myzip:
+                        myzip.extractall(inner_folder)
+                    os.remove(filename)
                     i+=1
                 i=0
+
+                # untar all tar.bz2 and all children
                 for z in tarFileList:
                     with tarfile.open(z) as t:
                         tar = t.extractall(os.path.join(self.edigeoPlainDir, '_%s' % i))
                         i+=1
                         t.close()
+                    os.remove(z)
+
 
             except IOError, e:
                 msg = u"Erreur lors de l'extraction des fichiers EDIGEO: %s" % e
