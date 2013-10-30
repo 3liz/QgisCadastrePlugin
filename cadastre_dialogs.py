@@ -111,8 +111,18 @@ class cadastre_common():
             self.dialog.dbpluginclass = dbpluginclass
 
             # fill the connections combobox
+            self.dialog.connectionDbList = []
             for c in dbpluginclass.connections():
                 self.dialog.liDbConnection.addItem( unicode(c.connectionName()))
+                self.dialog.connectionDbList.append(unicode(c.connectionName()))
+
+            # Show/Hide database specific pannel
+            if hasattr(self.dialog, 'databaseSpecificOptions'):
+                if dbType == 'postgis':
+                    self.dialog.databaseSpecificOptions.setCurrentIndex(0)
+                else:
+                    self.dialog.databaseSpecificOptions.setCurrentIndex(1)
+
         QApplication.restoreOverrideCursor()
 
 
@@ -381,7 +391,7 @@ class cadastre_common():
         '''
         ipath = QFileDialog.getExistingDirectory(
             None,
-            "Choisir le répertoire contenant les fichiers",
+            u"Choisir le répertoire contenant les fichiers",
             str(self.dialog.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
         )
         if os.path.exists(unicode(ipath)):
@@ -534,6 +544,51 @@ class cadastre_common():
         return sql
 
 
+    def createNewSpatialiteDatabase(self):
+        '''
+        Choose a file path to save
+        create the sqlite database with
+        spatial tools and create QGIS connection
+        '''
+        # Let the user choose new file path
+        ipath = QFileDialog.getSaveFileName (
+            None,
+            u"Choisir l'emplacement du nouveau fichier",
+            str(os.path.expanduser("~").encode('utf-8')).strip(' \t'),
+            "Sqlite database (*.sqlite)"
+        )
+        if not ipath:
+            self.updateLog(u"Aucune base de données créée (annulation)")
+            return None
+
+        # Delete file if exists (check already done above)
+        if os.path.exists(unicode(ipath)):
+            os.remove(unicode(ipath))
+
+        # Create the spatialite database
+        try:
+            from pyspatialite import dbapi2 as db
+            conn=db.connect(unicode(ipath))
+            c=conn.cursor()
+            sql = "select initspatialmetadata(1)"
+            c.execute(sql)
+        except:
+            self.updateLog(u"Échec lors de la création du fichier Spatialite !")
+            return None
+
+        # Create QGIS connexion
+        baseKey = "/SpatiaLite/connections/"
+        settings = QSettings()
+        myName = os.path.basename(ipath);
+        baseKey+= myName;
+        myFi = QFileInfo(ipath)
+        settings.setValue( baseKey + "/sqlitepath", myFi.canonicalFilePath());
+
+        # Update connections combo box and set new db selected
+        self.updateConnectionList()
+        listDic = { self.dialog.connectionDbList[i]:i for i in range(0, len(self.dialog.connectionDbList)) }
+        self.dialog.liDbConnection.setCurrentIndex(listDic[myName])
+
 
 from cadastre_import_form import *
 from cadastre_import import *
@@ -544,6 +599,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.iface = iface
         self.setupUi(self)
 
+        self.connectionDbList = []
         # common cadastre methods
         self.qc = cadastre_common(self)
 
@@ -551,12 +607,14 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.hasSpatialiteSupport = self.qc.hasSpatialiteSupport()
         if not self.hasSpatialiteSupport:
             self.liDbType.removeItem(2)
+            self.btCreateNewSpatialiteDb.setEnabled(False)
 
 
         # Signals/Slot Connections
         self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
         self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
         self.btDbCreateSchema.clicked.connect(self.createSchema)
+        self.btCreateNewSpatialiteDb.clicked.connect(self.qc.createNewSpatialiteDatabase)
         self.btProcessImport.clicked.connect(self.processImport)
         self.rejected.connect(self.onClose)
         self.buttonBox.rejected.connect(self.onClose)
@@ -796,7 +854,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         '''
         if not self.db:
             msg = u'Veuillez sélectionner une base de données'
-            QMessageBox.critical(self, self.tr("Qadatre"), self.tr(msg))
+            QMessageBox.critical(self, u"Cadastre", self.tr(msg))
             return None
 
         self.dataVersion = unicode(self.inDataVersion.text())

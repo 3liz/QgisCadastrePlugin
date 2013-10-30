@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>505</width>
-        <height>589</height>
+        <width>489</width>
+        <height>686</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -69,20 +69,6 @@
               </item>
              </widget>
             </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Schémas</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QComboBox" name="liDbSchema">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="2">
              <widget class="QLabel" name="label_2">
               <property name="maximumSize">
@@ -96,39 +82,111 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="2">
-             <widget class="QLineEdit" name="inDbCreateSchema">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="3">
              <widget class="QComboBox" name="liDbConnection"/>
             </item>
-            <item row="2" column="3">
-             <widget class="QPushButton" name="btDbCreateSchema">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>créer</string>
-              </property>
-             </widget>
-            </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QToolBox" name="databaseSpecificOptions">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="tabPostgis">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>445</width>
+               <height>73</height>
+              </rect>
+             </property>
+             <attribute name="label">
+              <string>PostGIS</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QLabel" name="label_3">
+                  <property name="text">
+                   <string>Schémas</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="liDbSchema">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="inDbCreateSchema">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btDbCreateSchema">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>créer</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tabSpatialite">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>445</width>
+               <height>73</height>
+              </rect>
+             </property>
+             <attribute name="label">
+              <string>Spatialite</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>Choisissez une connexion dans la liste ci-dessus, ou</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btCreateNewSpatialiteDb">
+                <property name="text">
+                 <string>Créer une base Spatialite</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
           </item>
          </layout>
         </widget>
