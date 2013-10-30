@@ -52,12 +52,12 @@ class cadastre_menu:
         self.iface.mainWindow().menuBar().insertMenu(self.iface.firstRightStandardMenu().menuAction(), self.cadastre_menu)
 
         # Import Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
+        icon = QIcon(os.path.dirname(__file__) + "/icons/database.png")
         self.import_action = QAction(icon, u"Importer des données", self.iface.mainWindow())
         QObject.connect(self.import_action, SIGNAL("triggered()"), self.open_import_dialog)
 
         # Search Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
+        icon = QIcon(os.path.dirname(__file__) + "/icons/search.png")
         self.search_action = QAction(icon, u"Outils de recherche", self.iface.mainWindow())
         QObject.connect(self.search_action, SIGNAL("triggered()"), self.toggle_search_dialog)
         if not self.cadastre_search_dialog:
@@ -66,7 +66,7 @@ class cadastre_menu:
             self.qc = cadastre_common(dialog)
 
         # Load Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
+        icon = QIcon(os.path.dirname(__file__) + "/icons/output.png")
         self.load_action = QAction(icon, u"Charger des données", self.iface.mainWindow())
         QObject.connect(self.load_action, SIGNAL("triggered()"), self.toggle_load_dialog)
         if not self.cadastre_load_dialog:
@@ -77,12 +77,12 @@ class cadastre_menu:
             self.cadastre_load_dialog = dialog
 
         # Options Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
+        icon = QIcon(os.path.dirname(__file__) + "/icons/config.png")
         self.option_action = QAction(icon, u"Configurer le plugin", self.iface.mainWindow())
         QObject.connect(self.option_action, SIGNAL("triggered()"), self.open_option_dialog)
 
         # About Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/icon.png")
+        icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
         self.about_action = QAction(icon, u"À propos", self.iface.mainWindow())
         QObject.connect(self.about_action, SIGNAL("triggered()"), self.open_about_dialog)
 
@@ -94,7 +94,54 @@ class cadastre_menu:
         self.cadastre_menu.addAction(self.about_action)
 
         # Add cadastre toolbar
-        self.toolbar = self.iface.addToolBar('Cadastre');
+        self.toolbar = self.iface.addToolBar(u'Cadastre');
+
+        # open import dialog
+        self.openImportAction = QAction(
+            QIcon(os.path.dirname(__file__) +"/icons/database.png"),
+            u"Importer des données",
+            self.iface.mainWindow()
+        )
+        self.openImportAction.triggered.connect(self.open_import_dialog)
+        self.toolbar.addAction(self.openImportAction)
+
+        # open load dialog
+        self.openLoadAction = QAction(
+            QIcon(os.path.dirname(__file__) +"/icons/output.png"),
+            u"Charger des données",
+            self.iface.mainWindow()
+        )
+        self.openLoadAction.triggered.connect(self.toggle_load_dialog)
+        #~ self.openLoadAction.setCheckable(True)
+        self.toolbar.addAction(self.openLoadAction)
+
+        # open search dialog
+        self.openSearchAction = QAction(
+            QIcon(os.path.dirname(__file__) +"/icons/search.png"),
+            u"Outils de recherche",
+            self.iface.mainWindow()
+        )
+        self.openSearchAction.triggered.connect(self.toggle_search_dialog)
+        #~ self.openSearchAction.setCheckable(True)
+        self.toolbar.addAction(self.openSearchAction)
+
+        # open Option dialog
+        self.openOptionAction = QAction(
+            QIcon(os.path.dirname(__file__) +"/icons/config.png"),
+            u"Configurer le plugin",
+            self.iface.mainWindow()
+        )
+        self.openOptionAction.triggered.connect(self.open_option_dialog)
+        self.toolbar.addAction(self.openOptionAction)
+
+        # open About dialog
+        self.openAboutAction = QAction(
+            QIcon(os.path.dirname(__file__) +"/icons/about.png"),
+            u"À propos",
+            self.iface.mainWindow()
+        )
+        self.openAboutAction.triggered.connect(self.open_about_dialog)
+        self.toolbar.addAction(self.openAboutAction)
 
         # Create action for "Parcelle information"
         self.identifyParcelleAction = QAction(

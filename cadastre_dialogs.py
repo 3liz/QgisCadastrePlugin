@@ -726,7 +726,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
             value = s.value("cadastre/%s" % k, '', type=str)
             if value and value != 'None' and v['widget']:
                 if v['wType'] == 'text':
-                    v['widget'].setText(str(value))
+                    v['widget'].setText(str(value.encode('utf-8')))
                 if v['wType'] == 'spinbox':
                     v['widget'].setValue(int(value))
                 if v['wType'] == 'combobox':
