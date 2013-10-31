@@ -383,6 +383,8 @@ class cadastreImport(QObject):
                         c = self.connector._get_cursor()
                         c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x.strip('\r\n')) ,) for x in a if x] )
                         self.connector._commit()
+                        c.close()
+                        del c
 
 
     def importEdigeo(self):

@@ -31,142 +31,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_13">
         <item>
-         <widget class="QGroupBox" name="groupBox">
-          <property name="title">
-           <string>Recherche d'adresse</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="1">
-              <widget class="QComboBox" name="liAdresse">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>Adresse</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_6">
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Parcelle</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="liParcelleAdresse">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QToolButton" name="btResetParcelleAdresse">
-               <property name="toolTip">
-                <string>Retour à l'ensemble des parcelles</string>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/delete.png</normaloff>:/plugins/cadastre/icons/delete.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QToolButton" name="btSearchAdresse">
-               <property name="toolTip">
-                <string>Lancer la recherche</string>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/search.png</normaloff>:/plugins/cadastre/icons/search.png</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QPushButton" name="btCentrerAdresse">
-               <property name="toolTip">
-                <string>Centrer sur la/les parcelle(s)</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/centrer.png</normaloff>:/plugins/cadastre/icons/centrer.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btZoomerAdresse">
-               <property name="toolTip">
-                <string>Zoomer sur la/les parcelle(s)</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/zoom.png</normaloff>:/plugins/cadastre/icons/zoom.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btSelectionnerAdresse">
-               <property name="toolTip">
-                <string>Sélectionner la/les parcelle(s)</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/select.png</normaloff>:/plugins/cadastre/icons/select.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btExportParcelleAdresse">
-               <property name="toolTip">
-                <string>Exporter le relevé parcellaire</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="groupBox_5">
+         <widget class="QGroupBox" name="grpLieu">
           <property name="title">
            <string>Recherche de lieux</string>
           </property>
@@ -325,7 +190,142 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_6">
+         <widget class="QGroupBox" name="grpAdresse">
+          <property name="title">
+           <string>Recherche d'adresse</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="1">
+              <widget class="QComboBox" name="liAdresse">
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Adresse</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="maximumSize">
+                <size>
+                 <width>60</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Parcelle</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="liParcelleAdresse">
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QToolButton" name="btResetParcelleAdresse">
+               <property name="toolTip">
+                <string>Retour à l'ensemble des parcelles</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/delete.png</normaloff>:/plugins/cadastre/icons/delete.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QToolButton" name="btSearchAdresse">
+               <property name="toolTip">
+                <string>Lancer la recherche</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/search.png</normaloff>:/plugins/cadastre/icons/search.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QPushButton" name="btCentrerAdresse">
+               <property name="toolTip">
+                <string>Centrer sur la/les parcelle(s)</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/centrer.png</normaloff>:/plugins/cadastre/icons/centrer.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btZoomerAdresse">
+               <property name="toolTip">
+                <string>Zoomer sur la/les parcelle(s)</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/zoom.png</normaloff>:/plugins/cadastre/icons/zoom.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btSelectionnerAdresse">
+               <property name="toolTip">
+                <string>Sélectionner la/les parcelle(s)</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/select.png</normaloff>:/plugins/cadastre/icons/select.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btExportParcelleAdresse">
+               <property name="toolTip">
+                <string>Exporter le relevé parcellaire</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="grpProprietaire">
           <property name="title">
            <string>Recherche de propriétaire</string>
           </property>
