@@ -736,7 +736,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
             },
             'edigeoDirection': {
                 'widget': self.inEdigeoDirection,
-                'wType': 'text',
+                'wType': 'spinbox',
                 'property': self.edigeoDirection
             },
             'edigeoLot': {
@@ -903,7 +903,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         s.setValue("cadastre/majicSourceDir", str(self.majicSourceDir))
         s.setValue("cadastre/edigeoSourceDir", str(self.edigeoSourceDir))
         s.setValue("cadastre/edigeoDepartement", str(self.edigeoDepartement))
-        s.setValue("cadastre/edigeoDirection", str(self.edigeoDirection))
+        s.setValue("cadastre/edigeoDirection", int(self.edigeoDirection))
         s.setValue("cadastre/edigeoLot", str(self.edigeoLot))
         s.setValue("cadastre/edigeoSourceProj", str(self.edigeoSourceProj))
         s.setValue("cadastre/edigeoTargetProj", str(self.edigeoTargetProj))

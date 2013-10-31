@@ -283,12 +283,9 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="inEdigeoDirection">
-              <property name="inputMask">
-               <string/>
-              </property>
-              <property name="maxLength">
-               <number>32767</number>
+             <widget class="QSpinBox" name="inEdigeoDirection">
+              <property name="maximum">
+               <number>5</number>
               </property>
              </widget>
             </item>

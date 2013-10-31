@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_import_form.ui'
 #
-# Created: Thu Oct 31 11:31:23 2013
+# Created: Thu Oct 31 17:23:15 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -157,9 +157,8 @@ class Ui_cadastre_import_form(object):
         self.label_5 = QtGui.QLabel(self.groupBox_5)
         self.label_5.setObjectName(_fromUtf8("label_5"))
         self.horizontalLayout_10.addWidget(self.label_5)
-        self.inEdigeoDirection = QtGui.QLineEdit(self.groupBox_5)
-        self.inEdigeoDirection.setInputMask(_fromUtf8(""))
-        self.inEdigeoDirection.setMaxLength(32767)
+        self.inEdigeoDirection = QtGui.QSpinBox(self.groupBox_5)
+        self.inEdigeoDirection.setMaximum(5)
         self.inEdigeoDirection.setObjectName(_fromUtf8("inEdigeoDirection"))
         self.horizontalLayout_10.addWidget(self.inEdigeoDirection)
         self.verticalLayout_13.addLayout(self.horizontalLayout_10)
