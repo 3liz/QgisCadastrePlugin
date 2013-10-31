@@ -442,7 +442,8 @@ class cadastreImport(QObject):
                 {
                     'title' : u'Suppression des contraintes',
                     'script' : '%s' % os.path.join(self.scriptDir, 'COMMUN/suppression_constraintes.sql'),
-                    'constraints': False
+                    'constraints': False,
+                    'divide' : True
                 }
             )
 
