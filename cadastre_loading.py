@@ -47,6 +47,8 @@ class cadastreLoading(QObject):
 
         # common cadastre methods
         self.qc = self.dialog.qc
+        self.defaultThemeDir = 'classique'
+        self.themeDir = None
 
         # List of database layers to load inQGIS
         self.qgisCadastreLayerList = [
@@ -89,6 +91,25 @@ class cadastreLoading(QObject):
         '''
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
+
+        # default style to apply for Cadastre layers
+        self.themeDir = unicode(self.dialog.liTheme.currentText())
+        if not os.path.exists(os.path.join(
+            self.qc.plugin_dir,
+            "styles/%s" % self.themeDir
+        )):
+            self.themeDir = self.defaultThemeDir
+
+        # set Cadastre SVG path if not set
+        cadastreSvgPath = os.path.join(
+            self.qc.plugin_dir,
+            "styles/%s/svg" % self.themeDir
+        )
+        s = QSettings()
+        qgisSvgPaths = s.value("svg/searchPathsForSVG", 10, type=str)
+        if not cadastreSvgPath in qgisSvgPaths:
+            s.setValue("svg/searchPathsForSVG", cadastreSvgPath)
+            self.qc.updateLog(u"* Le chemin contenant les SVG du plugin Cadastre a été ajouté dans les options de QGIS")
 
         # Get selected options
         providerName = self.dialog.dbpluginclass.providerName()
@@ -161,7 +182,7 @@ class cadastreLoading(QObject):
                 # apply style
                 qmlPath = os.path.join(
                     self.qc.plugin_dir,
-                    "styles/%s/%s.qml" % (self.dialog.themeDir, item['name'])
+                    "styles/%s/%s.qml" % (self.themeDir, item['name'])
                 )
                 if os.path.exists(qmlPath):
                     vlayer.loadNamedStyle(qmlPath)

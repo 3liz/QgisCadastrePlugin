@@ -961,31 +961,29 @@ class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
         self.schemaList = None
         self.hasStructure = None
 
-        # default style to apply for Cadastre layers
-        self.themeDir = unicode(self.liTheme.currentText())
-        if not os.path.exists(os.path.join(
-            self.qc.plugin_dir,
-            "styles/%s" % self.themeDir
-        )):
-            self.themeDir = 'classique'
-
-        # set Cadastre SVG path if not set
-        cadastreSvgPath = os.path.join(
-            self.qc.plugin_dir,
-            "styles/%s/svg" % self.themeDir
-        )
-        s = QSettings()
-        qgisSvgPaths = s.value("svg/searchPathsForSVG", 10, type=str)
-        if not cadastreSvgPath in qgisSvgPaths:
-            s.setValue("svg/searchPathsForSVG", cadastreSvgPath)
-            self.qc.updateLog(u"* Le chemin contenant les SVG du plugin Cadastre a été ajouté dans les options de QGIS")
-
+        # Get style list
+        self.getStyleList()
 
         # Signals/Slot Connections
         self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
         self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
         self.btProcessLoading.clicked.connect(self.onProcessLoadingClicked)
         self.ql.cadastreLoadingFinished.connect(self.onLoadingEnd)
+
+    def getStyleList(self):
+        '''
+        Get the list of style directories
+        inside the plugin dir
+        and add combobox item
+        '''
+        spath = os.path.join(self.qc.plugin_dir, "styles/")
+        dirs = os.listdir(spath)
+        dirs = [a for a in dirs if os.path.isdir(os.path.join(spath, a))]
+        dirs.sort()
+        cb = self.liTheme
+        cb.clear()
+        for d in dirs:
+            cb.addItem('%s' % d, d)
 
     def onProcessLoadingClicked(self):
         '''
