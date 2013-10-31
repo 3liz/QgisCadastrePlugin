@@ -122,6 +122,10 @@ class cadastre_common():
                     self.dialog.databaseSpecificOptions.setCurrentIndex(0)
                 else:
                     self.dialog.databaseSpecificOptions.setCurrentIndex(1)
+        else:
+            if hasattr(self.dialog, "inDbCreateSchema"):
+                self.dialog.databaseSpecificOptions.setTabEnabled(0, False)
+                self.dialog.databaseSpecificOptions.setTabEnabled(1, False)
 
         QApplication.restoreOverrideCursor()
 
@@ -131,9 +135,13 @@ class cadastre_common():
         Toggle Schema list and inputs
         '''
         self.dialog.liDbSchema.setEnabled(t)
+
         if hasattr(self.dialog, "inDbCreateSchema"):
             self.dialog.inDbCreateSchema.setEnabled(t)
             self.dialog.btDbCreateSchema.setEnabled(t)
+            self.dialog.databaseSpecificOptions.setTabEnabled(0, t)
+            self.dialog.databaseSpecificOptions.setTabEnabled(1, not t)
+            self.dialog.btCreateNewSpatialiteDb.setEnabled(not t)
 
 
     def updateSchemaList(self):
@@ -177,6 +185,8 @@ class cadastre_common():
                 for s in db.schemas():
                     self.dialog.liDbSchema.addItem( unicode(s.name))
                     self.dialog.schemaList.append(unicode(s.name))
+            else:
+                self.toggleSchemaList(False)
 
         QApplication.restoreOverrideCursor()
 
@@ -603,10 +613,15 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         # common cadastre methods
         self.qc = cadastre_common(self)
 
+        # first disable database specifi tabs
+        self.databaseSpecificOptions.setTabEnabled(0, False)
+        self.databaseSpecificOptions.setTabEnabled(1, False)
+
         # spatialite support
         self.hasSpatialiteSupport = self.qc.hasSpatialiteSupport()
         if not self.hasSpatialiteSupport:
             self.liDbType.removeItem(2)
+            self.databaseSpecificOptions.setTabEnabled(1, False)
             self.btCreateNewSpatialiteDb.setEnabled(False)
 
 

@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>489</width>
-        <height>686</height>
+        <height>653</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -88,23 +88,15 @@
            </layout>
           </item>
           <item>
-           <widget class="QToolBox" name="databaseSpecificOptions">
+           <widget class="QTabWidget" name="databaseSpecificOptions">
             <property name="currentIndex">
              <number>0</number>
             </property>
-            <widget class="QWidget" name="tabPostgis">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>445</width>
-               <height>73</height>
-              </rect>
-             </property>
-             <attribute name="label">
+            <widget class="QWidget" name="tab">
+             <attribute name="title">
               <string>PostGIS</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_4">
+             <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
@@ -154,19 +146,11 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tabSpatialite">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>445</width>
-               <height>73</height>
-              </rect>
-             </property>
-             <attribute name="label">
+            <widget class="QWidget" name="tab_2">
+             <attribute name="title">
               <string>Spatialite</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
+             <layout class="QVBoxLayout" name="verticalLayout_5">
               <item>
                <widget class="QLabel" name="label_7">
                 <property name="text">
