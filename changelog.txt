@@ -1,4 +1,12 @@
 CHANGELOG
+  Version 0.9.1
+  * Chargement - ajout du style Orthophoto
+  * Import - modification interface du choix du type de bdd
+  * Import - les fichiers EDIGEO non zip/tar.bz2 sont bien pris en compte
+  * Import - Ajout d'un bouton pour créer une base de données Spatialite vide
+  * Toolbar - Ajout import/charger/recherche/about + modification icône
+  * Styles - Classique : amélioration tsurf
+
   Version 0.9.0
   * Correction de régression de 0.8.9 : indentification parcelle et recherche propriétaire
 
