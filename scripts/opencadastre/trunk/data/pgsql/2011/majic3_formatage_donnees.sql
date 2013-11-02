@@ -31,10 +31,10 @@ SELECT
   CASE WHEN SUBSTRING(tmp,64,1) IS NULL THEN ' ' ELSE SUBSTRING(tmp,64,1) END AS gurbpa,
   SUBSTRING(tmp,65,4) AS dparpi,
   CASE WHEN SUBSTRING(tmp,69,1) IS NULL THEN ' ' ELSE SUBSTRING(tmp,69,1) END AS ccoarp,
-  CASE WHEN (SUBSTRING(tmp,70,1) IS NULL OR SUBSTRING(tmp,70,1)<>'1') THEN '0' ELSE SUBSTRING(tmp,70,1) END AS gparnf,
-  CASE WHEN (SUBSTRING(tmp,71,1) IS NULL OR SUBSTRING(tmp,71,1)<>'1') THEN '0' ELSE SUBSTRING(tmp,71,1) END AS gparbat,
+  CASE WHEN (SUBSTRING(tmp,70,1) IS NULL OR SUBSTRING(tmp,70,1) != '1') THEN '0' ELSE SUBSTRING(tmp,70,1) END AS gparnf,
+  CASE WHEN (SUBSTRING(tmp,71,1) IS NULL OR SUBSTRING(tmp,71,1) != '1') THEN '0' ELSE SUBSTRING(tmp,71,1) END AS gparbat,
   SUBSTRING(tmp,72,12) AS parrev,
-  CASE WHEN SUBSTRING(tmp,84,01) IS NULL THEN '0' WHEN SUBSTRING(tmp,84,01) <> '1' THEN '0' ELSE SUBSTRING(tmp,84,01) END AS gpardp,
+  CASE WHEN SUBSTRING(tmp,84,01) IS NULL THEN '0' WHEN SUBSTRING(tmp,84,01)  !=  '1' THEN '0' ELSE SUBSTRING(tmp,84,01) END AS gpardp,
   SUBSTRING(tmp,85,01) AS fviti,
   SUBSTRING(tmp,86,4) AS dnvoiri,
   SUBSTRING(tmp,90,1) AS dindic,
@@ -694,7 +694,7 @@ SELECT
   SUBSTRING(tmp,109,1) AS typvoi,
   SUBSTRING(tmp,110,1) AS indldnbat,
   SUBSTRING(tmp,113,8) AS motclas
-FROM [PREFIXE]fanr WHERE SUBSTRING(tmp,4,3) <>' ' AND trim(SUBSTRING(tmp,7,4))='';
+FROM [PREFIXE]fanr WHERE SUBSTRING(tmp,4,3)  != ' ' AND trim(SUBSTRING(tmp,7,4))='';
 -- traitement: voie;
 INSERT INTO [PREFIXE]voie
 (
@@ -728,7 +728,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,110,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,110,1)) END AS indldnbat,
   SUBSTRING(tmp,113,8) AS motclas,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6),' ', '-') AS commune
-FROM [PREFIXE]fanr WHERE trim(SUBSTRING(tmp,4,3)) <>'' AND trim(SUBSTRING(tmp,7,4)) <>'';
+FROM [PREFIXE]fanr WHERE trim(SUBSTRING(tmp,4,3))  != '' AND trim(SUBSTRING(tmp,7,4))  != '';
 -- purge des doublons : voie;
 DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHERE annee='[ANNEE]' GROUP BY codvoi HAVING COUNT(*) > 1) AND annee='[ANNEE]';
 -- ajout données manquantes : comptecommunal à partir de lots;

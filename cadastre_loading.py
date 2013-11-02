@@ -138,7 +138,7 @@ class cadastreLoading(QObject):
         for item in self.qgisCadastreLayerList:
 
             # update progress bar
-            self.qc.updateLog(u'* Couche "%s"' % item['label'])
+            self.qc.updateLog(u'* %s' % item['label'])
             self.dialog.step+=1
             self.qc.updateProgressBar()
 
@@ -230,5 +230,6 @@ class cadastreLoading(QObject):
             u"Les données ont bien été chargées dans QGIS"
         )
         self.dialog.pbProcess.setValue(0)
+
 
         QApplication.restoreOverrideCursor()

@@ -50,9 +50,10 @@ CREATE TABLE parcelle (
     dnuplam character varying(4),
     parcellefiliation character varying(19),
     type_filiation character varying(1),
-    geo_parcelle character varying(16)
-
+    geo_parcelle character varying(16),
+    lot character varying
 );
+
 CREATE TABLE suf (
     suf character varying(21),
     annee character varying (4),
@@ -86,7 +87,8 @@ CREATE TABLE suf (
     gnidom character varying (1),
     topja character varying (1),
     datja date,
-    postel character varying (1)
+    postel character varying (1),
+    lot character varying
 );
 
 CREATE TABLE sufexoneration (
@@ -111,7 +113,8 @@ CREATE TABLE sufexoneration (
     fcexna character varying (10),
     rcexna character varying (10),
     rcexnba numeric(10,2),
-    mpexnba character varying (10)
+    mpexnba character varying (10),
+    lot character varying
 );
 
 CREATE TABLE suftaxation (
@@ -133,7 +136,8 @@ CREATE TABLE suftaxation (
     c3bisufad numeric(10,2),
     c4majposa numeric(10,2),
     c4bisufad numeric(10,2),
-    cntmajtc integer
+    cntmajtc integer,
+    lot character varying
 );
 
 CREATE TABLE local00 (
@@ -159,7 +163,8 @@ CREATE TABLE local00 (
     ccocif character varying (4),
     dvoilib character varying (30),
     cleinvar character varying (1),
-    locinc character varying (1)
+    locinc character varying (1),
+    lot character varying
 );
 
 CREATE TABLE local10 (
@@ -217,7 +222,8 @@ CREATE TABLE local10 (
     jdtabt character varying (4),
     jrtabt character varying (4),
     jacloc character varying (4),
-    cconac character varying (5)
+    cconac character varying (5),
+    lot character varying
 );
 
 CREATE TABLE pev (
@@ -256,7 +262,8 @@ CREATE TABLE pev (
     dcsglca character varying (5),
     dcralca character varying (5),
     topcn integer,
-    tpevtieom integer
+    tpevtieom integer,
+    lot character varying
 );
 
 CREATE TABLE pevexoneration (
@@ -284,7 +291,8 @@ CREATE TABLE pevexoneration (
     dvldif2a integer,
     fcexb2 integer,
     fcexba2 integer,
-    rcexba2 integer
+    rcexba2 integer,
+    lot character varying
 );
 
 CREATE TABLE pevtaxation (
@@ -315,7 +323,8 @@ CREATE TABLE pevtaxation (
     tse_vlbaia integer,
     tse_bipevla integer,
     mvltieomx integer,
-    pvltieom bigint
+    pvltieom bigint,
+    lot character varying
 );
 
 CREATE TABLE pevprincipale (
@@ -366,7 +375,8 @@ CREATE TABLE pevprincipale (
     dmatto character varying (2),
     jannat character varying (4),
     detent character varying (1),
-    dnbniv character varying (2)
+    dnbniv character varying (2),
+    lot character varying
 );
 
 CREATE TABLE pevprofessionnelle (
@@ -385,7 +395,8 @@ CREATE TABLE pevprofessionnelle (
     vsurz3 character varying (9),
     vsurzt integer,
     vsurb1 character varying (9),
-    vsurb2 character varying (9)
+    vsurb2 character varying (9),
+    lot character varying
 );
 
 CREATE TABLE pevdependances (
@@ -415,7 +426,8 @@ CREATE TABLE pevdependances (
     dcimlc numeric(2,1),
     dcetde numeric(3,2),
     dcspde character varying (3),
-    dcspdea character varying (6)
+    dcspdea character varying (6),
+    lot character varying
 );
 
 CREATE TABLE proprietaire (
@@ -486,7 +498,8 @@ CREATE TABLE proprietaire (
     jandge character varying (4),
     jantfc character varying (4),
     jantbc character varying (4),
-    dformjur character varying (4)
+    dformjur character varying (4),
+    lot character varying
 );
 
 CREATE TABLE comptecommunal (
@@ -496,7 +509,8 @@ CREATE TABLE comptecommunal (
     ccodir character varying (1),
     ccocom character varying (3),
     dnupro character varying (6),
-    ajoutcoherence character varying(1)
+    ajoutcoherence character varying(1),
+    lot character varying
 );
 
 
@@ -517,7 +531,8 @@ CREATE TABLE pdl (
     gprmut character varying (1),
     dnupro character varying (6),
     comptecommunal character varying (15),
-    ccocif character varying (4)
+    ccocif character varying (4),
+    lot character varying
 );
 
 CREATE TABLE parcellecomposante(
@@ -536,7 +551,8 @@ CREATE TABLE parcellecomposante(
     ccoseca character varying (2),
     dnuplaa character varying (4),
     parcellea character varying(19),
-    ccocif character varying (4)
+    ccocif character varying (4),
+    lot character varying
 );
 
 CREATE TABLE lots (
@@ -561,7 +577,8 @@ CREATE TABLE lots (
     dnuprol character varying (6),
     comptecommunal character varying (15),
     dreflf character varying (5),
-    ccocif character varying (4)
+    ccocif character varying (4),
+    lot character varying
 );
 
 CREATE TABLE lotslocaux (
@@ -584,7 +601,8 @@ CREATE TABLE lotslocaux (
     local00 character varying (14),
     local10 character varying (14),
     dnumql character varying (7),
-    ddenql character varying (7)
+    ddenql character varying (7),
+    lot character varying
 );
 
 CREATE TABLE commune (
@@ -609,7 +627,8 @@ CREATE TABLE commune (
     typvoi character varying (1),
     indldnbat character varying (1),
     motclas character varying (8),
-    geo_commune character varying(7)
+    geo_commune character varying(7),
+    lot character varying
 );
 
 CREATE TABLE voie (
@@ -637,7 +656,8 @@ CREATE TABLE voie (
     codvoi character varying (5),
     typvoi character varying (1),
     indldnbat character varying (1),
-    motclas character varying (8)
+    motclas character varying (8),
+    lot character varying
 );
 
 
@@ -689,7 +709,7 @@ CREATE TABLE geo_commune
   creat_date date,
   update_dat date,
   commune character varying(10),
-  lot character(3),
+  lot character varying,
   ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_commune', 'geom', 2154 , 'MULTIPOLYGON', 2 );
@@ -706,7 +726,7 @@ CREATE TABLE geo_section
   geo_commune character varying(7) NOT NULL,
   creat_date date,
   update_dat date,
-  lot character(3),
+  lot character varying,
   ogc_fid serial NOT NULL
 )
 ;
@@ -734,7 +754,7 @@ CREATE TABLE geo_subdsect
   dred date,
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_subdsect', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -759,7 +779,7 @@ CREATE TABLE geo_parcelle
   creat_date date,
   update_dat date,
   parcelle character varying(19),
-  lot character(3),
+  lot character varying,
   comptecommunal character varying(15),
   voie text,
   ogc_fid serial NOT NULL
@@ -776,7 +796,7 @@ CREATE TABLE geo_subdfisc
   tex character varying,
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_subdfisc', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -797,7 +817,7 @@ CREATE TABLE geo_voiep
   tex character varying(80),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_voiep', 'geom', 2154 , 'POINT', 2 );
 
@@ -810,7 +830,7 @@ CREATE TABLE geo_numvoie
   tex character varying(15),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_numvoie', 'geom', 2154 , 'POINT', 2 );
 
@@ -831,7 +851,7 @@ CREATE TABLE geo_lieudit
   tex character varying(80),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_lieudit', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -848,7 +868,7 @@ CREATE TABLE geo_batiment
   tex character varying(80),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_batiment', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -869,7 +889,7 @@ CREATE TABLE geo_zoncommuni
   tex character varying(255),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_zoncommuni', 'geom', 2154 , 'MULTILINESTRING', 2 );
 
@@ -882,7 +902,7 @@ CREATE TABLE geo_tronfluv
   tex character varying(255),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tronfluv', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -911,7 +931,7 @@ CREATE TABLE geo_ptcanv
   geo_sym character varying(2),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_ptcanv', 'geom', 2154 , 'POINT', 2 );
 
@@ -923,7 +943,7 @@ CREATE TABLE geo_borne
   object_rid character varying(80),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_borne', 'geom', 2154 , 'POINT', 2 );
 
@@ -943,7 +963,7 @@ CREATE TABLE geo_croix
   object_rid character varying(80),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_croix', 'geom', 2154 , 'POINT', 2 );
 
@@ -965,7 +985,7 @@ CREATE TABLE geo_symblim
   geo_sym  character varying(2),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_symblim', 'geom', 2154 , 'POINT', 2 );
 
@@ -988,7 +1008,7 @@ CREATE TABLE geo_tpoint
   geo_sym  character varying(2),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tpoint', 'geom', 2154 , 'POINT', 2 );
 
@@ -1010,7 +1030,7 @@ CREATE TABLE geo_tline
   geo_sym  character varying(2),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tline', 'geom', 2154 , 'MULTILINESTRING', 2 );
 
@@ -1032,7 +1052,7 @@ CREATE TABLE geo_tsurf
   geo_sym  character varying(2),
   creat_date date,
   update_dat date,
-  lot character(3)
+  lot character varying
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tsurf', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 

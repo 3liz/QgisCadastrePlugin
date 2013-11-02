@@ -33,3 +33,17 @@ DROP INDEX IF EXISTS proprietaire_ddenom_idx;
 DROP INDEX IF EXISTS parcelle_dnupro_idx;
 DROP INDEX IF EXISTS suf_parcelle_idx;
 DROP INDEX IF EXISTS sufexoneration_suf_idx;
+
+DROP INDEX IF EXISTS idx_proprietaire_ccocom;
+DROP INDEX IF EXISTS idx_commune_ccocom;
+DROP INDEX IF EXISTS idx_proprietaire_ccodro;
+DROP INDEX IF EXISTS idx_proprietaire_comptecommunal;
+DROP INDEX IF EXISTS idx_local00_parcelle;
+DROP INDEX IF EXISTS idx_local00_voie;
+DROP INDEX IF EXISTS idx_local10_local00;
+DROP INDEX IF EXISTS idx_local10_comptecommunal;
+DROP INDEX IF EXISTS idx_pevexoneration_pev;
+DROP INDEX IF EXISTS idx_pevtaxation_pev;
+DROP INDEX IF EXISTS idx_parcelle_voie;
+DROP INDEX IF EXISTS idx_parcelle_comptecommunal;
+DROP INDEX IF EXISTS idx_parcelle_geo_parcelle;

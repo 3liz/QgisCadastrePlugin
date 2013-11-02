@@ -66,8 +66,9 @@ class cadastreImport(QObject):
         self.majicDir = tempfile.mkdtemp('', 'cad_majic_source_', tempDir)
         os.chmod(self.majicDir, 0o755)
         self.replaceDict = {
-            '[VERSION]': self.dialog.dataVersion,
-            '[ANNEE]': self.dialog.dataYear
+            '[VERSION]' : self.dialog.dataVersion,
+            '[ANNEE]' : self.dialog.dataYear,
+            '[LOT]' : self.dialog.edigeoLot
         }
         self.maxInsertRows = s.value("cadastre/maxInsertRows", 50000, type=int)
 
@@ -176,25 +177,27 @@ class cadastreImport(QObject):
                 'script': '%s' % os.path.join(self.scriptDir, 'insert_nomenclatures.sql')
             }
         ]
-        if not self.dialog.dbType == 'spatialite':
-            scriptList.append(
-                {
-                    'title' : u'Ajout des contraintes',
-                    'script': '%s' % os.path.normpath(os.path.join(self.scriptDir,
-                    'COMMUN/creation_contraintes.sql')),
-                    'constraints': True
-                }
-            )
+
+        #~ scriptList.append(
+            #~ {
+                #~ 'title' : u'Ajout des contraintes',
+                #~ 'script': '%s' % os.path.normpath(os.path.join(self.scriptDir,
+                #~ 'COMMUN/creation_contraintes.sql')),
+                #~ 'constraints': True,
+                #~ 'divide': True
+            #~ }
+        #~ )
 
         for item in scriptList:
-            s = item['script']
-            self.dialog.subStepLabel.setText(item['title'])
-            self.qc.updateLog('%s' % item['title'])
-            self.updateProgressBar()
-            self.replaceParametersInScript(s, replaceDict)
-            self.executeSqlScript(s)
-            if item.has_key('constraints'):
-                self.hasConstraints = item['constraints']
+            if self.go:
+                s = item['script']
+                self.dialog.subStepLabel.setText(item['title'])
+                self.qc.updateLog('%s' % item['title'])
+                self.updateProgressBar()
+                self.replaceParametersInScript(s, replaceDict)
+                self.executeSqlScript(s, item.has_key('constraints'))
+                if item.has_key('constraints'):
+                    self.hasConstraints = item['constraints']
             self.updateProgressBar()
 
         self.updateTimer()
@@ -239,19 +242,17 @@ class cadastreImport(QObject):
         replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
 
         scriptList = []
-        if self.hasConstraints and not self.dialog.dbType == 'spatialite':
-            scriptList.append(
-                {
-                'title' : u'Suppression des contraintes',
-                'script' : 'COMMUN/suppression_constraintes.sql',
-                'constraints': False
-                }
-            )
+        scriptList.append(
+            {
+            'title' : u'Suppression des contraintes',
+            'script' : 'COMMUN/suppression_constraintes.sql',
+            'constraints': False,
+            'divide': True
+            }
+        )
 
         # Remove previous data
         if self.dialog.hasData:
-            replaceDict['[CCODEP]'] = '%s' % self.dialog.edigeoDepartement
-            replaceDict['[CCOCOM]'] = '%s' % self.dialog.edigeoLot
             scriptList.append(
                 {
                 'title' : u'Purge des données MAJIC',
@@ -296,40 +297,56 @@ class cadastreImport(QObject):
                 }
             )
 
+        # If MAJIC but no EDIGEO afterward
+        # run SQL script to update link between EDI/MAJ
+        if not self.dialog.doEdigeoImport:
+            replaceDict['[DEPDIR]'] = '%s%s' % (self.dialog.edigeoDepartement, self.dialog.edigeoDirection)
+            shutil.copy2(
+                '%s/edigeo_update_majic_link.sql' % os.path.join(self.qc.plugin_dir,"scripts/"),
+                os.path.join(self.scriptDir, 'edigeo_update_majic_link.sql')
+            )
+            scriptList.append(
+                {
+                    'title' : u'Mise à jour des liens EDIGEO',
+                    'script' : 'edigeo_update_majic_link.sql',
+                    'divide': True
+                }
+            )
+
         # Add constraints : only if no EDIGEO import afterwards
-        if not self.hasConstraints \
-        and not self.dialog.doEdigeoImport \
-        and not self.dialog.dbType == 'spatialite':
+        if not self.dialog.doEdigeoImport :
             scriptList.append(
                 {
                     'title' : u'Ajout des contraintes',
                     'script' : 'COMMUN/creation_contraintes.sql',
-                    'constraints': True
+                    'constraints': True,
+                    'divide': True
                 }
             )
 
         # Run previously defined SQL queries
         for item in scriptList:
-            self.dialog.subStepLabel.setText(item['title'])
-            self.qc.updateLog('%s' % item['title'])
-            if item.has_key('script'):
-                s = item['script']
-                scriptPath = os.path.join(self.scriptDir, s)
-                self.replaceParametersInScript(scriptPath, replaceDict)
-                self.updateProgressBar()
-                if item.has_key('divide'):
-                    self.executeSqlScript(scriptPath, True)
+            if self.go:
+                self.dialog.subStepLabel.setText(item['title'])
+                self.qc.updateLog('%s' % item['title'])
+                if item.has_key('script'):
+                    s = item['script']
+                    scriptPath = os.path.join(self.scriptDir, s)
+                    self.replaceParametersInScript(scriptPath, replaceDict)
+                    self.updateProgressBar()
+                    if item.has_key('divide'):
+                        self.executeSqlScript(scriptPath, True, item.has_key('constraints'))
+                    else:
+                        self.executeSqlScript(scriptPath, False, item.has_key('constraints'))
                 else:
-                    self.executeSqlScript(scriptPath)
-            else:
-                self.updateProgressBar()
-                item['method']()
+                    self.updateProgressBar()
+                    item['method']()
 
-            if item.has_key('constraints') \
-            and not self.dialog.dbType == 'spatialite':
-                self.hasConstraints = item['constraints']
+                if item.has_key('constraints') \
+                and not self.dialog.dbType == 'spatialite':
+                    self.hasConstraints = item['constraints']
 
-            self.updateTimer()
+                self.updateTimer()
             self.updateProgressBar()
 
         return None
@@ -415,18 +432,20 @@ class cadastreImport(QObject):
         )
         self.updateProgressBar()
 
-        # copy files in temp dir
-        self.dialog.subStepLabel.setText('Copie des fichiers')
-        self.updateProgressBar()
-        self.copyFilesToTemp(self.dialog.edigeoSourceDir, self.edigeoDir)
-        self.updateTimer()
+        if self.go:
+            # copy files in temp dir
+            self.dialog.subStepLabel.setText('Copie des fichiers')
+            self.updateProgressBar()
+            self.copyFilesToTemp(self.dialog.edigeoSourceDir, self.edigeoDir)
+            self.updateTimer()
         self.updateProgressBar()
 
-        # unzip edigeo files in temp dir
-        self.dialog.subStepLabel.setText('Extraction des fichiers')
-        self.updateProgressBar()
-        self.unzipFolderContent(self.edigeoDir)
-        self.updateTimer()
+        if self.go:
+            # unzip edigeo files in temp dir
+            self.dialog.subStepLabel.setText('Extraction des fichiers')
+            self.updateProgressBar()
+            self.unzipFolderContent(self.edigeoDir)
+            self.updateTimer()
         self.updateProgressBar()
 
         # Copy eventual plain edigeo files in edigeoPlainDir
@@ -435,17 +454,14 @@ class cadastreImport(QObject):
         scriptList = []
 
         # Drop constraints if needed
-        if self.hasConstraints \
-        and not self.dialog.dbType == 'spatialite':
-            self.totalSteps+=4
-            scriptList.append(
-                {
-                    'title' : u'Suppression des contraintes',
-                    'script' : '%s' % os.path.join(self.scriptDir, 'COMMUN/suppression_constraintes.sql'),
-                    'constraints': False,
-                    'divide' : True
-                }
-            )
+        scriptList.append(
+            {
+                'title' : u'Suppression des contraintes',
+                'script' : '%s' % os.path.join(self.scriptDir, 'COMMUN/suppression_constraintes.sql'),
+                'constraints': False,
+                'divide' : True
+            }
+        )
 
         # Suppression et recréation des tables edigeo pour import
         if self.dialog.hasData:
@@ -477,25 +493,25 @@ class cadastreImport(QObject):
                 scriptPath = item['script']
                 self.replaceParametersInScript(scriptPath, replaceDict)
                 self.updateProgressBar()
-                self.executeSqlScript(scriptPath, item.has_key('divide'))
+                self.executeSqlScript(scriptPath, item.has_key('divide'), item.has_key('constraints'))
                 if item.has_key('constraints'):
                     self.hasConstraints = item['constraints']
                 self.updateTimer()
-                self.updateProgressBar()
+            self.updateProgressBar()
 
 
 
         # import edigeo *.thf and *.vec files into database
-        self.dialog.subStepLabel.setText('Import des fichiers')
-        self.updateProgressBar()
-        self.importAllEdigeoToDatabase()
-        self.updateTimer()
+        if self.go:
+            self.dialog.subStepLabel.setText('Import des fichiers')
+            self.updateProgressBar()
+            self.importAllEdigeoToDatabase()
+            self.updateTimer()
         self.updateProgressBar()
 
         # Format edigeo data
         replaceDict = self.replaceDict.copy()
         replaceDict['[DEPDIR]'] = '%s%s' % (self.dialog.edigeoDepartement, self.dialog.edigeoDirection)
-        replaceDict['[LOT]'] = self.dialog.edigeoLot
 
         scriptList = []
 
@@ -537,18 +553,18 @@ class cadastreImport(QObject):
             }
         )
 
-        if not self.hasConstraints \
-        and not self.dialog.dbType == 'spatialite':
-            scriptList.append(
-                {
-                    'title' : u'Ajout des contraintes',
-                    'script' : '%s' % os.path.join(
-                        self.scriptDir,
-                        'COMMUN/creation_contraintes.sql'
-                    ),
-                    'constraints': True
-                }
-            )
+
+        scriptList.append(
+            {
+                'title' : u'Ajout des contraintes',
+                'script' : '%s' % os.path.join(
+                    self.scriptDir,
+                    'COMMUN/creation_contraintes.sql'
+                ),
+                'constraints': True,
+                'divide': True
+            }
+        )
 
         for item in scriptList:
             if self.go:
@@ -557,7 +573,7 @@ class cadastreImport(QObject):
                 scriptPath = item['script']
                 self.replaceParametersInScript(scriptPath, replaceDict)
                 self.updateProgressBar()
-                self.executeSqlScript(scriptPath, item.has_key('divide'))
+                self.executeSqlScript(scriptPath, item.has_key('divide'), item.has_key('constraints'))
                 if item.has_key('constraints'):
                     self.hasConstraints = item['constraints']
 
@@ -601,7 +617,7 @@ class cadastreImport(QObject):
         try:
             for rep in tempFolderList:
                 if os.path.exists(rep):
-                    shutil.rmtree(rep)
+                    print "hop"#shutil.rmtree(rep)
         except IOError, e:
             msg = u"Erreur lors de la suppresion des répertoires temporaires: %s" % e
             self.go = False
@@ -615,7 +631,10 @@ class cadastreImport(QObject):
         self.updateProgressBar()
         self.updateTimer()
         QMessageBox.information(self.dialog, "Cadastre", msg)
+
+
         return None
+
 
     #
     # TOOLS
@@ -706,7 +725,6 @@ class cadastreImport(QObject):
                         t.close()
                     os.remove(z)
 
-
             except IOError, e:
                 msg = u"Erreur lors de l'extraction des fichiers EDIGEO: %s" % e
                 self.go = False
@@ -723,7 +741,10 @@ class cadastreImport(QObject):
         '''
 
         def replfunc(match):
-            return replaceDict[match.group(0)]
+            if replaceDict.has_key(match.group(0)):
+                return replaceDict[match.group(0)]
+            else:
+                return None
 
         regex = re.compile('|'.join(re.escape(x) for x in replaceDict), re.IGNORECASE)
         string = regex.sub(replfunc, string)
@@ -763,7 +784,7 @@ class cadastreImport(QObject):
         return None
 
 
-    def executeSqlScript(self, scriptPath, divide=False):
+    def executeSqlScript(self, scriptPath, divide=False, ignoreError=False):
         '''
         Execute an SQL script file
         from opencadastre
@@ -787,32 +808,33 @@ class cadastreImport(QObject):
             #~ self.qc.updateLog('|%s|' % sql)
             # Execute query
             if not divide:
-                self.executeSqlQuery(sql)
+                self.executeSqlQuery(sql, ignoreError)
             else:
                 statements = sql.split(';')
-                self.totalSteps = len(statements)
+                self.totalSteps+= len(statements)
                 self.updateProgressBar()
                 r = re.compile(r'select |insert |update |delete |alter |create |drop |truncate |comment |copy |vacuum |analyse ', re.IGNORECASE|re.MULTILINE)
                 for sqla in statements:
-                    cr = re.compile(r'-- (.+)', re.IGNORECASE|re.MULTILINE)
-                    ut = False
-                    for comment in cr.findall(sqla):
-                        self.qc.updateLog('  - %s' % comment.strip(' \n\r\t'))
-                        ut = True
-                    if r.search(sqla) and len(sqla.split('~')) == 1:
-                        sql = 'BEGIN;%s;COMMIT;' % sqla
-                        #~ self.qc.updateLog('$$%s@@' % sql)
-                        self.updateProgressBar()
-                        self.executeSqlQuery(sql)
-                        if ut:
-                            self.updateTimer()
-                        self.updateProgressBar()
+                    if self.go:
+                        cr = re.compile(r'-- (.+)', re.IGNORECASE|re.MULTILINE)
+                        ut = False
+                        for comment in cr.findall(sqla):
+                            self.qc.updateLog('  - %s' % comment.strip(' \n\r\t'))
+                            ut = True
+                        if r.search(sqla) and len(sqla.split('~')) == 1:
+                            sql = 'BEGIN;%s;COMMIT;' % sqla
+                            #~ self.qc.updateLog('$$%s@@' % sql)
+                            self.updateProgressBar()
+                            self.executeSqlQuery(sql, ignoreError)
+                            if ut:
+                                self.updateTimer()
+                            self.updateProgressBar()
             QApplication.restoreOverrideCursor()
 
         return None
 
 
-    def executeSqlQuery(self, sql):
+    def executeSqlQuery(self, sql, ignoreError=False):
         '''
         Execute a SQL string query
         And commit
@@ -821,28 +843,45 @@ class cadastreImport(QObject):
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
             c = None
-            try:
-                if self.dialog.dbType == 'postgis':
+
+            if self.dialog.dbType == 'postgis':
+                try:
                     c = self.connector._execute_and_commit(sql)
-                if self.dialog.dbType == 'spatialite':
+                except BaseError as e:
+                    if not ignoreError and not re.search('ADD COLUMN tempo_import', sql, re.IGNORECASE):
+                        DlgDbError.showError(e, self.dialog)
+                        self.go = False
+                    self.qc.updateLog(e.msg)
+                finally:
+                    QApplication.restoreOverrideCursor()
+                    if c:
+                        try:
+                            c.close()
+                            del c
+                        except:
+                            self.qc.updateLog("issue closing connection")
+                            print "issue closing connection"
+                            pass
+
+            if self.dialog.dbType == 'spatialite':
+                r = re.compile('ADD COLUMN tempo_import text', re.IGNORECASE)
+                try:
                     c = self.connector._get_cursor()
                     c.executescript(sql)
-
-            except BaseError as e:
-                DlgDbError.showError(e, self.dialog)
-                self.go = False
-                self.qc.updateLog(e.msg)
-                return
-
-            finally:
-                QApplication.restoreOverrideCursor()
-                if c:
-                    try:
-                        c.close()
-                        del c
-                    except:
-                        print "issue closing connection"
-                        pass
+                except:
+                    if not ignoreError and not re.search('ADD COLUMN tempo_import', sql, re.IGNORECASE):
+                        self.go = False
+                    self.qc.updateLog(u"Erreur rencontrées pour la requête: <p>%s</p>" % sql)
+                finally:
+                    QApplication.restoreOverrideCursor()
+                    if c:
+                        try:
+                            c.close()
+                            del c
+                        except:
+                            self.qc.updateLog("issue closing connection")
+                            print "issue closing connection"
+                            pass
 
 
     def importAllEdigeoToDatabase(self):

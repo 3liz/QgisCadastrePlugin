@@ -149,12 +149,20 @@ class cadastre_menu:
             "Infos parcelle",
             self.iface.mainWindow()
         )
+
+
         self.identifyParcelleAction.setCheckable(True)
         self.identyParcelleTool = IdentifyParcelle(self.mapCanvas)
         self.identyParcelleTool.geomIdentified.connect(self.getParcelleInfo)
         self.identyParcelleTool.setAction(self.identifyParcelleAction)
         self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
         self.toolbar.addAction(self.identifyParcelleAction)
+
+
+        # refresh identify tool when new data loaded
+        from cadastre_loading import cadastreLoading
+        self.ql = cadastreLoading(self)
+        self.ql.cadastreLoadingFinished.connect(self.refreshIndentifyParcelleTool)
 
 
     def open_import_dialog(self):
@@ -203,6 +211,17 @@ class cadastre_menu:
         dialog = cadastre_about_dialog(self.iface)
         dialog.exec_()
 
+    def refreshIndentifyParcelleTool(self):
+        self.identyParcelleTool = IdentifyParcelle(self.mapCanvas)
+        layer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
+        if not layer:
+            QMessageBox.critical(
+                self.cadastre_search_dialog,
+                "Cadastre",
+                u"La couche des parcelles n'a pas été trouvée !"
+            )
+            return
+        self.iface.setActiveLayer(layer)
 
     def setIndentifyParcelleTool(self):
         '''
@@ -242,9 +261,9 @@ class cadastre_menu:
         if self.cadastre_menu != None:
             self.iface.mainWindow().menuBar().removeAction(self.cadastre_menu.menuAction())
             self.cadastre_menu.deleteLater()
+            self.iface.mainWindow().removeToolBar(self.toolbar)
         else:
             self.iface.removePluginMenu("&cadastre", self.cadastre_menu.menuAction())
-            self.iface.removeToolBar(self.toolbar)
             self.cadastre_menu.deleteLater()
 
         if self.cadastre_load_dialog:

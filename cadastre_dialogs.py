@@ -450,7 +450,10 @@ class cadastre_common():
             # delete
             {'in': r'with\(oids=.+\)', 'out': ''},
             {'in': r'comment on [^;]+;', 'out': ''},
-            {'in': r'alter table [^;]+add primary key[^;]+;', 'out': ''},
+            {'in': r'alter table ([^;]+) add primary key( )+\(([^;]+)\);',
+            'out': r'create index idx_\1_\2 on \1 (\2);'},
+            {'in': r'alter table ([^;]+) add constraint [^;]+ primary key( )+\(([^;]+)\);',
+            'out': r'create index idx_\1_\2 on \1 (\2);'},
             {'in': r'alter table [^;]+drop column[^;]+;', 'out': ''},
             {'in': r'alter table [^;]+drop constraint[^;]+;', 'out': ''},
             {'in': r'^analyse [^;]+;', 'out': ''},
@@ -799,6 +802,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         '''
         Close dialog
         '''
+        self.db.connector.__del__()
         self.close()
 
 
@@ -1018,7 +1022,7 @@ class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
         self.cadastre_search_dialog.checkMajicContent()
         self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
         self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
-
+        #~ self.liDbType.setCurrentIndex(0)
 
 
 # ---------------------------------------------------------
@@ -1267,17 +1271,17 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             # Get Connection params
             connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
             connector = self.qc.getConnectorFromUri(connectionParams)
-            self.connector = connector
-
             if connector:
                 # Get data from table proprietaire
                 sql = 'SELECT * FROM "proprietaire" LIMIT 1'
                 if connectionParams['dbType'] == 'postgis':
                     sql = self.qc.setSearchPath(sql, connectionParams['schema'])
-                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
+                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
 
                 if rowCount >= 1:
                     self.hasMajicData = True
+
+                connector.__del__()
 
         self.grpAdresse.setEnabled(self.hasMajicData)
         self.grpProprietaire.setEnabled(self.hasMajicData)
@@ -1388,7 +1392,6 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # Use db_manager tool to run the query
         connector = self.qc.getConnectorFromUri(connectionParams)
-        self.connector = connector
 
         # SQL
         sql = ' SELECT %s' % ', '.join(attributes)
@@ -1411,6 +1414,8 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             request = QgsFeatureRequest().setSubsetOfAttributes(attributes, layer.pendingFields()).setFilterFid(int(line[0]))
             for feat in layer.getFeatures(request):
                 features.append(feat)
+
+        connector.__del__()
 
         QApplication.restoreOverrideCursor()
         return features
@@ -1767,8 +1772,8 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         '''
         feat = self.searchComboBoxes['proprietaire']['chosenFeature']
         if feat and self.connector:
-            qe = cadastreExport(self, 'proprietaire', feat)
-            qe.exportAsPDF()
+            qex = cadastreExport(self, 'proprietaire', feat)
+            qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucun propriétaire sélectionné !')
 
@@ -1781,8 +1786,8 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         '''
         feat = self.searchComboBoxes[key]['chosenFeature']
         if feat and self.connector:
-            qe = cadastreExport(self, 'parcelle', feat)
-            qe.exportAsPDF()
+            qex = cadastreExport(self, 'parcelle', feat)
+            qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')
 
@@ -1990,7 +1995,6 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         # Select parcelle from proprietaire action
         self.btParcellesProprietaire.clicked.connect(self.selectParcellesProprietaire)
 
-
         # Check majic content
         self.hasMajicData = False
         self.checkMajicContent()
@@ -1998,7 +2002,6 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         # Set dialog content
         self.setParcelleContent()
         self.setProprietairesContent()
-
 
     def checkMajicContent(self):
         '''
@@ -2209,5 +2212,6 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         Run some actions when
         the user closes the dialog
         '''
+        self.connector.__del__()
         self.close()
 
