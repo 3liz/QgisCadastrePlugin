@@ -158,6 +158,13 @@ class cadastre_menu:
         self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
         self.toolbar.addAction(self.identifyParcelleAction)
 
+        # Display About window on first use
+        s = QSettings()
+        firstUse = s.value("cadastre/isFirstUse" , 1, type=int)
+        if firstUse == 1:
+            s.setValue("cadastre/isFirstUse", 0)
+            self.open_about_dialog()
+
 
         # refresh identify tool when new data loaded
         from cadastre_loading import cadastreLoading
