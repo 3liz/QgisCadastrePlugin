@@ -802,7 +802,8 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         '''
         Close dialog
         '''
-        self.db.connector.__del__()
+        if self.db:
+            self.db.connector.__del__()
         self.close()
 
 
@@ -828,7 +829,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         QApplication.setOverrideCursor(Qt.WaitCursor)
         try:
             if self.db == None:
-                QMessageBox.information(
+                QMessageBox.warning(
                     self,
                     QApplication.translate("DBManagerPlugin", "Sorry"),
                     QApplication.translate("DBManagerPlugin", "No database selected or you are not connected to it.")
@@ -1825,6 +1826,21 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         self.buttonBox.rejected.connect(self.onReject)
         self.buttonBox.accepted.connect(self.onAccept)
 
+        # interface change buttons
+        self.interfaceSelectors = {
+            "Cadastre" : {
+                "button" : self.btInterfaceCadastre
+            },
+            "QGIS" : {
+                "button" : self.btInterfaceQgis
+            }
+        }
+        from functools import partial
+        for key, item in self.interfaceSelectors.items():
+            control = item['button']
+            slot = partial(self.applyInterface, key)
+            control.clicked.connect(slot)
+
         # path buttons selectors
         # paths needed to be chosen by user
         self.pathSelectors = {
@@ -1841,7 +1857,6 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
 
         # Set initial widget values
         self.getValuesFromSettings()
-
 
 
     def getValuesFromSettings(self):
@@ -1874,6 +1889,34 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         maxInsertRows = s.value("cadastre/maxInsertRows", 100000, type=int)
         if maxInsertRows:
             self.inMaxInsertRows.setValue(maxInsertRows)
+
+
+    def applyInterface(self, key):
+        '''
+        Help the user to select
+        and apply personalized interface
+        '''
+
+        item = self.interfaceSelectors[key]
+        iniPath = os.path.join(
+            self.qc.plugin_dir,
+            'interface/'
+        )
+        interfaceInfo = u'''
+        Pour appliquer l'interface <b>%s</b>
+        <ul>
+            <li>Menu Préférences > Personnalisation</li>
+            <li>Bouton <b>Charger depuis le fichier</b> (icône dossier ouvert)</li>
+            <li>Sélectionner le fichier <b>%s.ini</b> situé dans le dossier : <b>%s</b></li>
+            <li>Appliquer et fermer la fenêtre</li>
+            <li>Redémarer QGIS</li>
+        </ul>
+        ''' % (key, key.lower(), iniPath)
+        QMessageBox.information(
+            self,
+            u"Cadastre - Personnalisation",
+            interfaceInfo
+        )
 
 
     def onAccept(self):
