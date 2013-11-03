@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>666</width>
-    <height>593</height>
+    <width>692</width>
+    <height>652</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,9 +23,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>646</width>
-        <height>540</height>
+        <y>-49</y>
+        <width>656</width>
+        <height>648</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -284,6 +284,42 @@
              <widget class="QLabel" name="label_16">
               <property name="text">
                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;/&gt;&lt;img src=&quot;:/plugins/cadastre/images/logo_gnu3.png&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="title">
+          <string>Ressources</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>Les scripts d'import pour PostGreSQL proviennent de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciement aux contributeurs.</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>&lt;a href=&quot;https://adullact.net/scm/viewvc.php/trunk/data/pgsql/?root=opencadastre&quot;  style=&quot;color:#7BA11A;text-decoration:none;&quot;&gt;Dépôt OpenCadastre&lt;/a&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>

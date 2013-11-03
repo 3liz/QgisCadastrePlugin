@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'cadastre_about_form.ui'
+# Form implementation generated from reading ui file 'forms/cadastre_about_form.ui'
 #
-# Created: Fri Oct 11 18:46:38 2013
+# Created: Sun Nov  3 12:27:32 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_about_form(object):
     def setupUi(self, cadastre_about_form):
         cadastre_about_form.setObjectName(_fromUtf8("cadastre_about_form"))
-        cadastre_about_form.resize(666, 593)
+        cadastre_about_form.resize(692, 652)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_about_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_about_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 646, 540))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -49, 656, 648))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -146,6 +146,23 @@ class Ui_cadastre_about_form(object):
         self.gridLayout_3.addWidget(self.label_16, 0, 1, 1, 1)
         self.verticalLayout_6.addLayout(self.gridLayout_3)
         self.verticalLayout_2.addWidget(self.groupBox_4)
+        self.groupBox_5 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.groupBox_5.setObjectName(_fromUtf8("groupBox_5"))
+        self.verticalLayout_7 = QtGui.QVBoxLayout(self.groupBox_5)
+        self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
+        self.horizontalLayout_2 = QtGui.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.label_17 = QtGui.QLabel(self.groupBox_5)
+        self.label_17.setWordWrap(True)
+        self.label_17.setObjectName(_fromUtf8("label_17"))
+        self.horizontalLayout_2.addWidget(self.label_17)
+        self.label_18 = QtGui.QLabel(self.groupBox_5)
+        self.label_18.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_18.setOpenExternalLinks(True)
+        self.label_18.setObjectName(_fromUtf8("label_18"))
+        self.horizontalLayout_2.addWidget(self.label_18)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_2)
+        self.verticalLayout_2.addWidget(self.groupBox_5)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
         self.buttonBox = QtGui.QDialogButtonBox(cadastre_about_form)
@@ -178,5 +195,8 @@ class Ui_cadastre_about_form(object):
         self.groupBox_4.setTitle(_translate("cadastre_about_form", "Licence", None))
         self.label_15.setText(_translate("cadastre_about_form", "Licence GPL Version 3", None))
         self.label_16.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.gnu.org/licenses/gpl.html\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_gnu3.png\"/></a></p></body></html>", None))
+        self.groupBox_5.setTitle(_translate("cadastre_about_form", "Ressources", None))
+        self.label_17.setText(_translate("cadastre_about_form", "Les scripts d\'import pour PostGreSQL proviennent de l\'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciement aux contributeurs.", None))
+        self.label_18.setText(_translate("cadastre_about_form", "<a href=\"https://adullact.net/scm/viewvc.php/trunk/data/pgsql/?root=opencadastre\"  style=\"color:#7BA11A;text-decoration:none;\">Dépôt OpenCadastre</a>", None))
 
 import resource_rc
