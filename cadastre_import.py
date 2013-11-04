@@ -305,6 +305,16 @@ class cadastreImport(QObject):
         if not self.dialog.doEdigeoImport:
             replaceDict['[DEPDIR]'] = '%s%s' % (self.dialog.edigeoDepartement, self.dialog.edigeoDirection)
             shutil.copy2(
+                '%s/edigeo_drop_indexes.sql' % os.path.join(self.qc.plugin_dir,"scripts/"),
+                os.path.join(self.scriptDir, 'edigeo_drop_indexes.sql')
+            )
+            scriptList.append(
+                {
+                'title' : u'Suppression des indexes',
+                'script' : 'edigeo_drop_indexes.sql'
+                }
+            )
+            shutil.copy2(
                 '%s/edigeo_update_majic_link.sql' % os.path.join(self.qc.plugin_dir,"scripts/"),
                 os.path.join(self.scriptDir, 'edigeo_update_majic_link.sql')
             )
@@ -315,6 +325,17 @@ class cadastreImport(QObject):
                     'divide': True
                 }
             )
+            shutil.copy2(
+                '%s/edigeo_create_indexes.sql' % os.path.join(self.qc.plugin_dir,"scripts/"),
+                os.path.join(self.scriptDir, 'edigeo_create_indexes.sql')
+            )
+            scriptList.append(
+                {
+                    'title' : u'Création des indexes spatiaux',
+                    'script' : 'edigeo_create_indexes.sql'
+                }
+            )
+
 
         # Add constraints : only if no EDIGEO import afterwards
         if not self.dialog.doEdigeoImport :
