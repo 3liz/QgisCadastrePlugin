@@ -437,7 +437,7 @@ class cadastre_common():
         return s.encode('ascii','ignore')
 
 
-    def postgisToSpatialite(self, sql):
+    def postgisToSpatialite(self, sql, targetSrid='2154'):
         '''
         Convert postgis SQL statement
         into spatialite compatible
@@ -451,12 +451,12 @@ class cadastre_common():
             {'in': r'with\(oids=.+\)', 'out': ''},
             {'in': r'comment on [^;]+;', 'out': ''},
             {'in': r'alter table ([^;]+) add primary key( )+\(([^;]+)\);',
-            'out': r'create index idx_\1_\2 on \1 (\2);'},
+            'out': r'create index idx_\1_\3 on \1 (\3);'},
             {'in': r'alter table ([^;]+) add constraint [^;]+ primary key( )+\(([^;]+)\);',
-            'out': r'create index idx_\1_\2 on \1 (\2);'},
+            'out': r'create index idx_\1_\3 on \1 (\3);'},
             {'in': r'alter table [^;]+drop column[^;]+;', 'out': ''},
             {'in': r'alter table [^;]+drop constraint[^;]+;', 'out': ''},
-            {'in': r'^analyse [^;]+;', 'out': ''},
+            #~ {'in': r'^analyse [^;]+;', 'out': ''},
             # replace
             {'in': r'truncate (bati|fanr|lloc|nbat|pdll|prop)',
             'out': r'drop table \1;create table \1 (tmp text)'},
@@ -483,7 +483,7 @@ class cadastre_common():
 
         # index spatiaux
         r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
-        sql = r.sub(r'SELECT createSpatialIndex("\2", "\5");', sql)
+        sql = r.sub(r"SELECT createSpatialIndex('\2', '\5');", sql)
 
         # update from : geo_parcelle -> parcelle
         r = re.compile(r'update parcelle SET geo_parcelle=g.geo_parcelle[^;]+;', re.IGNORECASE|re.MULTILINE)
@@ -491,15 +491,19 @@ class cadastre_common():
         replaceBy = ''
         for statement in res:
             replaceBy = '''
+            DROP INDEX IF EXISTS idx_geo_parcelle_parcelle;
             CREATE INDEX idx_geo_parcelle_parcelle ON geo_parcelle (parcelle);
+            DROP INDEX IF EXISTS idx_parcelle_parcelle;
             CREATE INDEX idx_parcelle_parcelle ON parcelle (parcelle);
+            DROP TABLE IF EXISTS parcelle_temp;
             CREATE TABLE parcelle_temp AS
-            SELECT p.parcelle, p.annee, p.ccodep, p.ccodir, p.ccocom, p.ccopre, p.ccosec, p.dnupla, p.dcntpa, p.dsrpar, p.dnupro, p.comptecommunal, p.jdatat, p.dreflf, p.gpdl, p.cprsecr, p.ccosecr, p.dnuplar, p.dnupdl, p.pdl, p.gurbpa, p.dparpi, p.ccoarp, p.gparnf, p.gparbat, p.parrev, p.gpardp, p.fviti, p.dnvoiri, p.dindic, p.ccovoi, p.ccoriv, p.voie, p.ccocif, p.gpafpd, p.ajoutcoherence, p.cconvo, p.dvoilib, p.ccocomm, p.ccoprem, p.ccosecm, p.dnuplam, p.parcellefiliation, p.type_filiation, gp.geo_parcelle
+            SELECT p.parcelle, p.annee, p.ccodep, p.ccodir, p.ccocom, p.ccopre, p.ccosec, p.dnupla, p.dcntpa, p.dsrpar, p.dnupro, p.comptecommunal, p.jdatat, p.dreflf, p.gpdl, p.cprsecr, p.ccosecr, p.dnuplar, p.dnupdl, p.pdl, p.gurbpa, p.dparpi, p.ccoarp, p.gparnf, p.gparbat, p.parrev, p.gpardp, p.fviti, p.dnvoiri, p.dindic, p.ccovoi, p.ccoriv, p.voie, p.ccocif, p.gpafpd, p.ajoutcoherence, p.cconvo, p.dvoilib, p.ccocomm, p.ccoprem, p.ccosecm, p.dnuplam, p.parcellefiliation, p.type_filiation, gp.geo_parcelle, p.lot
             FROM parcelle p
             LEFT JOIN geo_parcelle gp ON gp.parcelle = p.parcelle AND gp.annee='?';
-            DROP TABLE parcelle;
+            DROP TABLE IF EXISTS parcelle;
             ALTER TABLE parcelle_temp RENAME TO parcelle;
-            DROP INDEX idx_geo_parcelle_parcelle;
+            DROP INDEX IF EXISTS idx_geo_parcelle_parcelle;
+            DROP INDEX IF EXISTS idx_parcelle_parcelle;
             '''
             replaceBy = replaceBy.replace('?', self.dialog.dataYear)
             sql = sql.replace(statement, replaceBy)
@@ -514,19 +518,65 @@ class cadastre_common():
         replaceBy = ''
         for statement in res:
             replaceBy = '''
-            ALTER TABLE geo_parcelle ADD COLUMN temp_import text;
-            UPDATE geo_parcelle SET temp_import = SUBSTR(geo_parcelle,1,4) || '@' || SUBSTR(geo_parcelle,5,3) || replace(SUBSTR(geo_parcelle,8,5),'0','-') || SUBSTR(geo_parcelle,13,4) ;
-            CREATE INDEX idx_parcelle_temp_import ON geo_parcelle ( temp_import);
+            ALTER TABLE geo_parcelle ADD COLUMN tempo_import text;
+            SELECT DiscardGeometryColumn('geo_parcelle', 'geom');
+            SELECT DiscardGeometryColumn('geo_parcelle', 'geom_uf');
+            UPDATE geo_parcelle SET tempo_import = SUBSTR(geo_parcelle,1,4) || '@' || SUBSTR(geo_parcelle,5,3) || replace(SUBSTR(geo_parcelle,8,5),'0','-') || SUBSTR(geo_parcelle,13,4) ;
+            DROP INDEX IF EXISTS idx_parcelle_tempo_import;
+            CREATE INDEX idx_parcelle_tempo_import ON geo_parcelle ( tempo_import);
             DROP TABLE IF EXISTS geo_parcelle_temp;
-            CREATE TABLE geo_parcelle_temp AS
-            SELECT geo_parcelle.geo_parcelle, geo_parcelle.annee, geo_parcelle.object_rid, geo_parcelle.idu, geo_parcelle.geo_section, geo_parcelle.geo_subdsect, geo_parcelle.supf, geo_parcelle.geo_indp, geo_parcelle.coar, geo_parcelle.tex, geo_parcelle.tex2, geo_parcelle.codm, geo_parcelle.creat_date, geo_parcelle.update_dat, p.parcelle, geo_parcelle.lot, p.comptecommunal, p.voie, geo_parcelle.ogc_fid, geo_parcelle.geom, geo_parcelle.geom_uf
+
+            CREATE TABLE geo_parcelle_temp
+            (
+              geo_parcelle character varying(16) NOT NULL,
+              annee character varying(4) NOT NULL,
+              object_rid character varying(80),
+              idu character varying(12),
+              geo_section character varying(12) NOT NULL,
+              geo_subdsect character varying(14),
+              supf numeric(10,3),
+              geo_indp character varying(2),
+              coar character varying(2),
+              tex character varying(4),
+              tex2 character varying(80),
+              codm character varying(80),
+              creat_date date,
+              update_dat date,
+              parcelle character varying(19),
+              lot character varying,
+              comptecommunal character varying(15),
+              voie text,
+              ogc_fid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+              geom MULTIPOLYGON,
+              geom_uf MULTIPOLYGON
+            );
+            INSERT INTO geo_parcelle_temp (
+            geo_parcelle, annee, object_rid, idu, geo_section, geo_subdsect, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, parcelle, lot, comptecommunal, voie, geom, geom_uf
+            )
+            SELECT geo_parcelle.geo_parcelle, geo_parcelle.annee, geo_parcelle.object_rid, geo_parcelle.idu, geo_parcelle.geo_section, geo_parcelle.geo_subdsect, geo_parcelle.supf, geo_parcelle.geo_indp, geo_parcelle.coar, geo_parcelle.tex, geo_parcelle.tex2, geo_parcelle.codm, geo_parcelle.creat_date, geo_parcelle.update_dat, p.parcelle, geo_parcelle.lot, p.comptecommunal, p.voie, geo_parcelle.geom, geo_parcelle.geom_uf
             FROM geo_parcelle
-            LEFT JOIN parcelle p ON p.parcelle=geo_parcelle.temp_import AND p.annee='?' AND geo_parcelle.annee='?'
+            LEFT JOIN parcelle p ON p.parcelle=geo_parcelle.tempo_import AND p.annee='?' AND geo_parcelle.annee='?'
             ;
-            DROP TABLE geo_parcelle;
+            SELECT DiscardGeometryColumn('geo_parcelle', 'geom');
+            SELECT DiscardGeometryColumn('geo_parcelle', 'geom_uf');
+            DROP TABLE IF EXISTS geo_parcelle;
             ALTER TABLE geo_parcelle_temp RENAME TO geo_parcelle;
+            SELECT RecoverGeometryColumn('geo_parcelle', 'geom', $, 'MULTIPOLYGON', 2);
+            SELECT RecoverGeometryColumn('geo_parcelle', 'geom_uf', $, 'MULTIPOLYGON', 2);
+            DROP TABLE IF EXISTS geo_parcelle_temp;
+            DROP INDEX IF EXISTS idx_parcelle_tempo_import;
+            SELECT CreateSpatialIndex('geo_parcelle', 'geom');
+            SELECT CreateSpatialIndex('geo_parcelle', 'geom_uf');
+            DROP INDEX IF EXISTS geo_parcelle_annee_idx; CREATE INDEX geo_parcelle_annee_idx ON geo_parcelle (annee,object_rid );
+            DROP INDEX IF EXISTS geo_parcelle_idu_idx; CREATE INDEX geo_parcelle_idu_idx ON geo_parcelle (idu);
+            DROP INDEX IF EXISTS geo_parcelle_geo_section_idx; CREATE INDEX geo_parcelle_geo_section_idx ON geo_parcelle (geo_section);
+            DROP INDEX IF EXISTS geo_parcelle_comptecommunal_idx ; CREATE INDEX geo_parcelle_comptecommunal_idx ON geo_parcelle (comptecommunal);
+            DROP INDEX IF EXISTS geo_parcelle_voie_idx; CREATE INDEX geo_parcelle_voie_idx ON geo_parcelle (voie);
+            DROP INDEX IF EXISTS geo_parcelle_geo_parcelle; CREATE INDEX geo_parcelle_geo_parcelle ON geo_parcelle (geo_parcelle);
+
             '''
             replaceBy = replaceBy.replace('?', self.dialog.dataYear)
+            replaceBy = replaceBy.replace('$', targetSrid)
             replaceBy = replaceBy.replace('@', '%s%s' % (self.dialog.edigeoDepartement, self.dialog.edigeoDirection))
             sql = sql.replace(statement, replaceBy)
 
@@ -586,7 +636,7 @@ class cadastre_common():
             self.updateLog(u"Aucune base de données créée (annulation)")
             return None
 
-        # Delete file if exists (check already done above)
+        # Delete file if exists (question already asked above)
         if os.path.exists(unicode(ipath)):
             os.remove(unicode(ipath))
 

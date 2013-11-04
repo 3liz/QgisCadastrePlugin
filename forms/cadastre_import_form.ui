@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>642</height>
+    <width>526</width>
+    <height>709</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>489</width>
-        <height>653</height>
+        <width>506</width>
+        <height>656</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -399,7 +399,7 @@
             <item>
              <widget class="QLineEdit" name="inEdigeoLot">
               <property name="maxLength">
-               <number>3</number>
+               <number>10</number>
               </property>
              </widget>
             </item>

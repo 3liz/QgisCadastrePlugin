@@ -72,6 +72,9 @@ class cadastreImport(QObject):
         }
         self.maxInsertRows = s.value("cadastre/maxInsertRows", 50000, type=int)
 
+        self.geoTableList = ['geo_zoncommuni', 'geo_ptcanv', 'geo_commune', 'geo_parcelle', 'geo_symblim', 'geo_tronfluv', 'geo_label', 'geo_subdsect', 'geo_batiment', 'geo_borne', 'geo_croix', 'geo_tpoint', 'geo_lieudit', 'geo_section', 'geo_subdfisc', 'geo_tsurf', 'geo_tline']
+
+
         if self.dialog.dbType == 'postgis':
             self.replaceDict['[PREFIXE]'] = '"%s".' % self.dialog.schema
         else:
@@ -320,7 +323,7 @@ class cadastreImport(QObject):
                     'title' : u'Ajout des contraintes',
                     'script' : 'COMMUN/creation_contraintes.sql',
                     'constraints': True,
-                    'divide': True
+                    #~ 'divide': True
                 }
             )
 
@@ -549,7 +552,8 @@ class cadastreImport(QObject):
                 'script' : '%s/edigeo_create_indexes.sql' % os.path.join(
                     self.qc.plugin_dir,
                     "scripts/"
-                )
+                ),
+                'divide': True
             }
         )
 
@@ -617,11 +621,19 @@ class cadastreImport(QObject):
         try:
             for rep in tempFolderList:
                 if os.path.exists(rep):
-                    print "hop"#shutil.rmtree(rep)
+                    shutil.rmtree(rep)
         except IOError, e:
             msg = u"Erreur lors de la suppresion des répertoires temporaires: %s" % e
             self.go = False
             return msg
+
+        # Refresh spatialite layer statistics
+        if self.dialog.dbType == 'spatialite':
+            sql = ''
+            for layer in self.geoTableList:
+                sql+= "SELECT UpdateLayerStatistics('%s', 'geom');" % layer
+            sql+= "SELECT UpdateLayerStatistics('geo_parcelle', 'geom_uf');"
+            self.executeSqlQuery(sql)
 
         if self.go:
             msg = u"Import terminé"
@@ -803,7 +815,7 @@ class cadastreImport(QObject):
                 sql = self.qc.setSearchPath(sql, self.dialog.schema)
             # Convert SQL into spatialite syntax
             if self.dialog.dbType == 'spatialite':
-                sql = self.qc.postgisToSpatialite(sql)
+                sql = self.qc.postgisToSpatialite(sql, self.targetSrid)
 
             #~ self.qc.updateLog('|%s|' % sql)
             # Execute query
@@ -813,7 +825,7 @@ class cadastreImport(QObject):
                 statements = sql.split(';')
                 self.totalSteps+= len(statements)
                 self.updateProgressBar()
-                r = re.compile(r'select |insert |update |delete |alter |create |drop |truncate |comment |copy |vacuum |analyse ', re.IGNORECASE|re.MULTILINE)
+                r = re.compile(r'select |insert |update |delete |alter |create |drop |truncate |comment |copy |vacuum |analyze ', re.IGNORECASE|re.MULTILINE)
                 for sqla in statements:
                     if self.go:
                         cr = re.compile(r'-- (.+)', re.IGNORECASE|re.MULTILINE)
@@ -848,10 +860,12 @@ class cadastreImport(QObject):
                 try:
                     c = self.connector._execute_and_commit(sql)
                 except BaseError as e:
-                    if not ignoreError and not re.search('ADD COLUMN tempo_import', sql, re.IGNORECASE):
+                    if not ignoreError \
+                    and not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
+                    and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                         DlgDbError.showError(e, self.dialog)
                         self.go = False
-                    self.qc.updateLog(e.msg)
+                        self.qc.updateLog(e.msg)
                 finally:
                     QApplication.restoreOverrideCursor()
                     if c:
@@ -864,14 +878,17 @@ class cadastreImport(QObject):
                             pass
 
             if self.dialog.dbType == 'spatialite':
-                r = re.compile('ADD COLUMN tempo_import text', re.IGNORECASE)
                 try:
                     c = self.connector._get_cursor()
+                    #~ self.qc.updateLog(sql)
                     c.executescript(sql)
                 except:
-                    if not ignoreError and not re.search('ADD COLUMN tempo_import', sql, re.IGNORECASE):
+                    if not ignoreError \
+                    and not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
+                    and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE) \
+                    and not re.search(r'createspatialindex', sql, re.IGNORECASE):
                         self.go = False
-                    self.qc.updateLog(u"Erreur rencontrées pour la requête: <p>%s</p>" % sql)
+                        self.qc.updateLog(u"Erreurs rencontrées pour la requête: <p>%s</p>" % sql)
                 finally:
                     QApplication.restoreOverrideCursor()
                     if c:
@@ -998,7 +1015,7 @@ class cadastreImport(QObject):
 
         if self.go:
             # DROP edigeo import tables
-            edigeoTables = [
+            edigeoImportTables = [
                 'batiment_id',
                 'borne_id',
                 'boulon_id',
@@ -1023,7 +1040,7 @@ class cadastreImport(QObject):
                 #~ 'edigeo_rel',
             ]
             sql = ''
-            for table in edigeoTables:
+            for table in edigeoImportTables:
                 sql+= 'DROP TABLE IF EXISTS "%s";' % table
             if self.dialog.dbType == 'postgis':
                 sql = self.qc.setSearchPath(sql, self.dialog.schema)

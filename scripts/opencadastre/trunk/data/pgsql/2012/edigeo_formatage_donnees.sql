@@ -20,8 +20,11 @@ DELETE FROM [PREFIXE]geo_commune WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_section WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_subdsect WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_parcelle WHERE lot='[LOT]';
+--~ DELETE FROM [PREFIXE]geo_label WHERE lot='[LOT]';
 
 -- index pour optimisation
+DROP INDEX IF EXISTS idx_edigeorel_vers;
+DROP INDEX IF EXISTS idx_edigeorel_de;
 CREATE INDEX idx_edigeorel_vers ON [PREFIXE]edigeo_rel (vers);
 CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
 
@@ -43,7 +46,7 @@ INSERT INTO [PREFIXE]geo_section
 ( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot)
 SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union((geom))), '[LOT]'--, ogc_fid
 FROM [PREFIXE]section_id
-GROUP BY object_rid, idu, tex, creat_date, update_date, ogc_fid;
+GROUP BY object_rid, idu, tex, creat_date, update_date;
 
 -- geo_subdsect
 INSERT INTO [PREFIXE]geo_subdsect
@@ -211,34 +214,34 @@ DROP INDEX [PREFIXE]idx_edigeorel_de;
 TRUNCATE [PREFIXE]edigeo_rel;
 
 -- analyses
-ANALYSE [PREFIXE]geo_commune;
-ANALYSE [PREFIXE]geo_section;
-ANALYSE [PREFIXE]geo_subdsect;
-ANALYSE [PREFIXE]geo_parcelle;
-ANALYSE [PREFIXE]geo_subdfisc;
-ANALYSE [PREFIXE]geo_subdfisc_parcelle;
-ANALYSE [PREFIXE]geo_voiep;
-ANALYSE [PREFIXE]geo_numvoie;
-ANALYSE [PREFIXE]geo_numvoie_parcelle;
-ANALYSE [PREFIXE]geo_lieudit;
-ANALYSE [PREFIXE]geo_batiment;
-ANALYSE [PREFIXE]geo_batiment_parcelle;
-ANALYSE [PREFIXE]geo_zoncommuni;
-ANALYSE [PREFIXE]geo_tronfluv;
-ANALYSE [PREFIXE]geo_sym;
-ANALYSE [PREFIXE]geo_ptcanv;
-ANALYSE [PREFIXE]geo_borne;
-ANALYSE [PREFIXE]geo_borne_parcelle;
-ANALYSE [PREFIXE]geo_croix;
-ANALYSE [PREFIXE]geo_croix_parcelle;
-ANALYSE [PREFIXE]geo_symblim;
-ANALYSE [PREFIXE]geo_symblim_parcelle;
-ANALYSE [PREFIXE]geo_tpoint;
-ANALYSE [PREFIXE]geo_tpoint_commune;
-ANALYSE [PREFIXE]geo_tline;
-ANALYSE [PREFIXE]geo_tline_commune;
-ANALYSE [PREFIXE]geo_tsurf;
-ANALYSE [PREFIXE]geo_tsurf_commune;
+ANALYZE [PREFIXE]geo_commune;
+ANALYZE [PREFIXE]geo_section;
+ANALYZE [PREFIXE]geo_subdsect;
+ANALYZE [PREFIXE]geo_parcelle;
+ANALYZE [PREFIXE]geo_subdfisc;
+ANALYZE [PREFIXE]geo_subdfisc_parcelle;
+ANALYZE [PREFIXE]geo_voiep;
+ANALYZE [PREFIXE]geo_numvoie;
+ANALYZE [PREFIXE]geo_numvoie_parcelle;
+ANALYZE [PREFIXE]geo_lieudit;
+ANALYZE [PREFIXE]geo_batiment;
+ANALYZE [PREFIXE]geo_batiment_parcelle;
+ANALYZE [PREFIXE]geo_zoncommuni;
+ANALYZE [PREFIXE]geo_tronfluv;
+ANALYZE [PREFIXE]geo_sym;
+ANALYZE [PREFIXE]geo_ptcanv;
+ANALYZE [PREFIXE]geo_borne;
+ANALYZE [PREFIXE]geo_borne_parcelle;
+ANALYZE [PREFIXE]geo_croix;
+ANALYZE [PREFIXE]geo_croix_parcelle;
+ANALYZE [PREFIXE]geo_symblim;
+ANALYZE [PREFIXE]geo_symblim_parcelle;
+ANALYZE [PREFIXE]geo_tpoint;
+ANALYZE [PREFIXE]geo_tpoint_commune;
+ANALYZE [PREFIXE]geo_tline;
+ANALYZE [PREFIXE]geo_tline_commune;
+ANALYZE [PREFIXE]geo_tsurf;
+ANALYZE [PREFIXE]geo_tsurf_commune;
 COMMIT;
 -- FORMATAGE DONNEES : FIN
 

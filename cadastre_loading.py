@@ -169,7 +169,7 @@ class cadastreLoading(QObject):
             # Create vector layer
             if table and load:
                 tableName = table.name
-                uniqueCol = table.getValidQGisUniqueFields(True) if table.isView else None
+                uniqueCol = table.getValidQGisUniqueFields(True) #if table.isView else None
                 layerUri.setDataSource(
                     self.dialog.schema,
                     tableName,

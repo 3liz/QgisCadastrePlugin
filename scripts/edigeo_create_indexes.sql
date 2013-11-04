@@ -18,7 +18,6 @@ CREATE INDEX geo_tpoint_annee_idx ON geo_tpoint (annee,object_rid );
 CREATE INDEX geo_tline_annee_idx ON geo_tline (annee,object_rid );
 CREATE INDEX geo_tsurf_annee_idx ON geo_tsurf (annee,object_rid );
 
--- geometries
 CREATE INDEX geo_commune_geom_idx ON geo_commune USING gist (geom);
 CREATE INDEX geo_section_geom_idx ON geo_section USING gist (geom);
 CREATE INDEX geo_subdsect_geom_idx ON geo_subdsect USING gist (geom);

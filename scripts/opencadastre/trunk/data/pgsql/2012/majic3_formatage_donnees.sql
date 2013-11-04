@@ -272,31 +272,31 @@ CREATE INDEX idx_local00_invar ON [PREFIXE]local00 (invar);
 --~ FROM [PREFIXE]local00
 --~ WHERE local00.invar = local10.invar AND local00.annee='[ANNEE]' AND local10.annee='[ANNEE]';
 
-            CREATE TABLE ll AS
-            SELECT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
-            FROM local00 l
-            INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
-            WHERE l10.annee='[ANNEE]';
-            CREATE INDEX  idx_ll_invar ON ll (invar);
-            UPDATE local10 SET ccopre = (SELECT ll.ccopre FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            UPDATE local10 SET ccosec = (SELECT ll.ccosec FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            UPDATE local10 SET dnupla = (SELECT ll.dnupla FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            UPDATE local10 SET ccoriv = (SELECT ll.ccoriv FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            UPDATE local10 SET ccovoi = (SELECT ll.ccovoi FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            UPDATE local10 SET dnvoiri = (SELECT ll.dnvoiri FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            UPDATE local10 SET local00 = (SELECT ll.local00 FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            UPDATE local10 SET parcelle = (SELECT ll.parcelle FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            UPDATE local10 SET voie = (SELECT ll.voie FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '[ANNEE]';
-            DROP TABLE ll;
+CREATE TABLE ll AS
+SELECT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
+FROM local00 l
+INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
+WHERE l10.annee='[ANNEE]';
+CREATE INDEX  idx_ll_invar ON ll (invar);
+UPDATE local10 SET ccopre = (SELECT ll.ccopre FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+UPDATE local10 SET ccosec = (SELECT ll.ccosec FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+UPDATE local10 SET dnupla = (SELECT ll.dnupla FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+UPDATE local10 SET ccoriv = (SELECT ll.ccoriv FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+UPDATE local10 SET ccovoi = (SELECT ll.ccovoi FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+UPDATE local10 SET dnvoiri = (SELECT ll.dnvoiri FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+UPDATE local10 SET local00 = (SELECT ll.local00 FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+UPDATE local10 SET parcelle = (SELECT ll.parcelle FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+UPDATE local10 SET voie = (SELECT ll.voie FROM ll WHERE ll.invar = local10.invar)
+WHERE local10.annee = '[ANNEE]';
+DROP TABLE ll;
 
 -- Traitement: pev
 INSERT INTO [PREFIXE]pev
@@ -939,25 +939,25 @@ CREATE INDEX idx_parcelle_geo_parcelle ON parcelle (geo_parcelle);
 
 
 -- ANALYSES;
-ANALYSE [PREFIXE]parcelle;
-ANALYSE [PREFIXE]suf;
-ANALYSE [PREFIXE]sufexoneration;
-ANALYSE [PREFIXE]suftaxation;
-ANALYSE [PREFIXE]local00;
-ANALYSE [PREFIXE]local10;
-ANALYSE [PREFIXE]pev;
-ANALYSE [PREFIXE]pevexoneration;
-ANALYSE [PREFIXE]pevtaxation;
-ANALYSE [PREFIXE]pevprincipale;
-ANALYSE [PREFIXE]pevprofessionnelle;
-ANALYSE [PREFIXE]pevdependances;
-ANALYSE [PREFIXE]proprietaire;
-ANALYSE [PREFIXE]comptecommunal;
-ANALYSE [PREFIXE]pdl;
-ANALYSE [PREFIXE]parcellecomposante;
-ANALYSE [PREFIXE]lots;
-ANALYSE [PREFIXE]lotslocaux;
-ANALYSE [PREFIXE]commune;
-ANALYSE [PREFIXE]voie;
+ANALYZE [PREFIXE]parcelle;
+ANALYZE [PREFIXE]suf;
+ANALYZE [PREFIXE]sufexoneration;
+ANALYZE [PREFIXE]suftaxation;
+ANALYZE [PREFIXE]local00;
+ANALYZE [PREFIXE]local10;
+ANALYZE [PREFIXE]pev;
+ANALYZE [PREFIXE]pevexoneration;
+ANALYZE [PREFIXE]pevtaxation;
+ANALYZE [PREFIXE]pevprincipale;
+ANALYZE [PREFIXE]pevprofessionnelle;
+ANALYZE [PREFIXE]pevdependances;
+ANALYZE [PREFIXE]proprietaire;
+ANALYZE [PREFIXE]comptecommunal;
+ANALYZE [PREFIXE]pdl;
+ANALYZE [PREFIXE]parcellecomposante;
+ANALYZE [PREFIXE]lots;
+ANALYZE [PREFIXE]lotslocaux;
+ANALYZE [PREFIXE]commune;
+ANALYZE [PREFIXE]voie;
 COMMIT;
 -- FORMATAGE DONNEES : FIN;

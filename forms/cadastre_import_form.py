@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_import_form.ui'
 #
-# Created: Thu Oct 31 17:23:15 2013
+# Created: Mon Nov  4 16:13:03 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_import_form(object):
     def setupUi(self, cadastre_import_form):
         cadastre_import_form.setObjectName(_fromUtf8("cadastre_import_form"))
-        cadastre_import_form.resize(525, 642)
+        cadastre_import_form.resize(526, 709)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_import_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_import_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 489, 653))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 506, 656))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -213,7 +213,7 @@ class Ui_cadastre_import_form(object):
         self.label_6.setObjectName(_fromUtf8("label_6"))
         self.horizontalLayout_12.addWidget(self.label_6)
         self.inEdigeoLot = QtGui.QLineEdit(self.groupBox_7)
-        self.inEdigeoLot.setMaxLength(3)
+        self.inEdigeoLot.setMaxLength(10)
         self.inEdigeoLot.setObjectName(_fromUtf8("inEdigeoLot"))
         self.horizontalLayout_12.addWidget(self.inEdigeoLot)
         self.verticalLayout_15.addLayout(self.horizontalLayout_12)
