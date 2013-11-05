@@ -247,6 +247,8 @@ class cadastre_common():
         for l in layers:
             if not l.type() == QgsMapLayer.VectorLayer:
                 pass
+            if not hasattr(l, 'providerType'):
+                pass
             if not l.providerType() in (u'postgres', u'spatialite'):
                 pass
             connectionParams = self.getConnectionParameterFromDbLayer(l)
@@ -1166,6 +1168,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 'attributes': ['comptecommunal','idu','dnupro','geom'],
                 'orderBy': ['ddenom'],
                 'features': None,
+                'id': None,
                 'chosenFeature': None,
                 'connector': None,
                 'search': {
@@ -1497,6 +1500,10 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         Query database to get item (adresse, proprietaire)
         corresponding to given name
         '''
+
+        # TODO : utiliser la recherche plein texte pour postgis et spatialite
+        # pour la recherche des propriétaires -> plus efficace et permissif
+
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get value
@@ -1555,12 +1562,12 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             sql+= ' ORDER BY c.libcom, v.natvoi, v.libvoi'
 
         if key == 'proprietaire':
-            sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper, c.ccocom"
+            sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper" #, c.ccocom"
             sql+= ' FROM proprietaire p'
-            sql+= ' INNER JOIN commune c ON c.ccocom = p.ccocom'
+            #~ sql+= ' INNER JOIN commune c ON c.ccocom = p.ccocom'
             sql+= " WHERE ddenom LIKE '%s%%'" % sqlSearchValue
-            sql+= ' GROUP BY dnuper, ddenom, dlign4, c.ccocom'
-            sql+= ' ORDER BY ddenom, c.ccocom'
+            sql+= ' GROUP BY dnuper, ddenom, dlign4' #, c.ccocom'
+            sql+= ' ORDER BY ddenom' #, c.ccocom'
         self.dbType = connectionParams['dbType']
         if self.dbType == 'postgis':
             sql = self.qc.setSearchPath(sql, connectionParams['schema'])
@@ -1587,7 +1594,8 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 val = {'voie' : line[0]}
 
             if key == 'proprietaire':
-                label = '%s - %s | %s' % (line[3], line[2], line[0].strip())
+                #~ label = '%s - %s | %s' % (line[3], line[2], line[0].strip())
+                label = '%s | %s' % (line[2], line[0].strip())
                 val = {
                     'cc' : ["'%s'" % a for a in line[1].split(',')],
                     'dnuper' : line[2]
@@ -1634,6 +1642,10 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.searchComboBoxes[key]['layer'] = layer
         self.searchComboBoxes[key]['features'] = features
         self.searchComboBoxes[key]['chosenFeature'] = features
+
+        # Set proprietaire id
+        if key == 'proprietaire':
+            self.searchComboBoxes[key]['id'] = value['cc']
 
         self.qc.updateLog(
             u"%s parcelle(s) trouvée(s) pour '%s'" % (
@@ -1821,12 +1833,16 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         as PDF using the template composer
         filled with appropriate data
         '''
-        feat = self.searchComboBoxes['proprietaire']['chosenFeature']
-        if feat and self.connector:
-            qex = cadastreExport(self, 'proprietaire', feat)
+        if not self.connector:
+            return
+
+        # Search proprietaire by dnuper
+        cc = self.searchComboBoxes['proprietaire']['id']
+        if cc:
+            qex = cadastreExport(self, 'proprietaire', cc)
             qex.exportAsPDF()
         else:
-            self.qc.updateLog(u'Aucun propriétaire sélectionné !')
+            self.qc.updateLog(u'Aucune donnée trouvée pour ce propriétaire !')
 
 
     def exportParcelle(self, key):
@@ -1835,9 +1851,12 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         as PDF using the template composer
         filled with appropriate data
         '''
+        if not self.connector:
+            return
+
         feat = self.searchComboBoxes[key]['chosenFeature']
-        if feat and self.connector:
-            qex = cadastreExport(self, 'parcelle', feat)
+        if feat:
+            qex = cadastreExport(self, 'parcelle', feat['comptecommunal'], feat['geo_parcelle'])
             qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')
@@ -2204,12 +2223,20 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         Export the parcelle or proprietaire
         information as a PDF file
         '''
+        if not self.connector:
+            return
+
         if not self.hasMajicData:
             self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
             return
 
-        if self.feature and self.connector:
-            qe = cadastreExport(self, key, self.feature)
+        if self.feature:
+            qe = cadastreExport(
+                self,
+                key,
+                self.feature['comptecommunal'],
+                self.feature['geo_parcelle']
+            )
             qe.exportAsPDF()
 
     def centerToParcelle(self):

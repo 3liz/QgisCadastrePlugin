@@ -22,10 +22,15 @@
  ***************************************************************************/
 """
 
+# TODO
+# * Utiliser une seule requête et non plusieurs requêtes avec des offset -> long si nb parcelle grand
+
+
 import csv, sys
 import subprocess
 import os.path
 import operator
+import tempfile
 import re
 import tempfile
 from PyQt4.QtCore import *
@@ -35,11 +40,22 @@ from qgis.core import *
 
 class cadastreExport(QObject):
 
-    def __init__(self, dialog, etype='proprietaire', feat=None):
+    def __init__(self, dialog, etype, comptecommunal, geo_parcelle=None):
         self.dialog = dialog
 
         self.etype = etype
-        self.feat = feat
+        self.geo_parcelle = geo_parcelle
+
+        self.ccFilter = None
+        if isinstance(comptecommunal, list):
+            self.isMulti = True
+            if len(comptecommunal) == 1:
+                self.isMulti = False
+                comptecommunal = comptecommunal[0].strip(" '")
+        else:
+            self.isMulti = False
+
+        self.comptecommunal = comptecommunal
 
         self.maxLineNumber = 15 # max number of line per main table
         self.numPages = 1
@@ -47,15 +63,24 @@ class cadastreExport(QObject):
         self.pageWidth = 297
         self.printResolution = 300
 
-        # if many features passed (selected parcelles for proprietaire)
-        if isinstance(self.feat, list):
-            self.feat = feat[0]
+        # target directory for saving
+        s = QSettings()
+        tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
 
         # label for header2
         if self.etype == 'proprietaire':
             self.typeLabel = u'DE PROPRIÉTÉ'
         else:
             self.typeLabel = u'PARCELLAIRE'
+
+        # common cadastre methods
+        self.qc = self.dialog.qc
+
+    def setComposerTemplates(self, comptecommunal):
+        '''
+        Set parameters for given comptecommunal
+        '''
 
         # List of templates
         self.composerTemplates = {
@@ -66,8 +91,8 @@ class cadastreExport(QObject):
                 'type': 'sql',
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND comptecommunal = '%s'" % self.feat['comptecommunal'],
-                    'parcelle': u" AND comptecommunal = '%s'" % self.feat['comptecommunal']
+                    'proprietaire': u" AND comptecommunal = '%s'" % comptecommunal,
+                    'parcelle': u" AND comptecommunal = '%s'" % comptecommunal
                 },
             },
             'header2' : {
@@ -82,7 +107,7 @@ class cadastreExport(QObject):
                 'position': [218.5, 2.5, 75, 7.5], 'align': [ 128, 2],
                 'keepContent' : True,
                 'type': 'properties',
-                'source': [self.feat['comptecommunal'][6:]]
+                'source': [comptecommunal[6:]]
             },
             'proprietaires' : {
                 'names': ['lines'],
@@ -105,8 +130,8 @@ class cadastreExport(QObject):
                 'keepContent' : True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND l10.comptecommunal = '%s'" % self.feat['comptecommunal'],
-                    'parcelle': u" AND p.geo_parcelle = '%s'" % self.feat['geo_parcelle']
+                    'proprietaire': u" AND l10.comptecommunal = '%s'" % comptecommunal,
+                    'parcelle': u" AND p.geo_parcelle = '%s'" % self.geo_parcelle
                 }
             },
             'proprietes_non_baties' : {
@@ -123,8 +148,8 @@ class cadastreExport(QObject):
                 'keepContent' : True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND p.comptecommunal = '%s'" % self.feat['comptecommunal'],
-                    'parcelle': u" AND geo_parcelle = '%s'" % self.feat['geo_parcelle']
+                    'proprietaire': u" AND p.comptecommunal = '%s'" % comptecommunal,
+                    'parcelle': u" AND geo_parcelle = '%s'" % self.geo_parcelle
                 }
             }
         }
@@ -135,8 +160,8 @@ class cadastreExport(QObject):
                 'keepContent': True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND comptecommunal = '%s'" % self.feat['comptecommunal'],
-                    'parcelle': u" AND comptecommunal = '%s'" % self.feat['comptecommunal']
+                    'proprietaire': u" AND comptecommunal = '%s'" % comptecommunal,
+                    'parcelle': u" AND comptecommunal = '%s'" % comptecommunal
                 }
             },
             'proprietes_baties_line' : {
@@ -144,16 +169,16 @@ class cadastreExport(QObject):
                 'type': 'sql',
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND l10.comptecommunal = '%s'" % self.feat['comptecommunal'],
-                    'parcelle': u" AND p.geo_parcelle = '%s'" % self.feat['geo_parcelle']
+                    'proprietaire': u" AND l10.comptecommunal = '%s'" % comptecommunal,
+                    'parcelle': u" AND p.geo_parcelle = '%s'" % self.geo_parcelle
                 }
             },
             'proprietes_non_baties_line' : {
                 'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'nparcprim', 'fpdp', 'star', 'suf', 'grssgr', 'cl', 'natcult', 'contenance', 'revenucadastral', 'coll', 'natexo', 'anret', 'fractionrcexo', 'pourcentageexo', 'tc', 'lff'],
                 'type': 'sql',
                 'and': {
-                    'proprietaire': u" AND p.comptecommunal = '%s'" % self.feat['comptecommunal'],
-                    'parcelle': u" AND geo_parcelle = '%s'" % self.feat['geo_parcelle']
+                    'proprietaire': u" AND p.comptecommunal = '%s'" % comptecommunal,
+                    'parcelle': u" AND geo_parcelle = '%s'" % self.geo_parcelle
                 }
             }
 
@@ -174,10 +199,6 @@ class cadastreExport(QObject):
         for key, item in self.mainTables.items():
             if item.has_key('keepContent') and item['keepContent']:
                 self.contentKeeped[key] = ''
-
-        # common cadastre methods
-        self.qc = self.dialog.qc
-
 
     def getContentForGivenItem(self, key, item, page=None):
         '''
@@ -364,9 +385,31 @@ class cadastreExport(QObject):
 
     def exportAsPDF(self):
         '''
-        Export as PDF using the template composer
+        Export one or several PDF files using the template composer
         filled with appropriate data
         '''
+
+        # Export as many pdf as compte communal
+        if self.isMulti:
+            for comptecommunal in self.comptecommunal:
+                comptecommunal = comptecommunal.strip(" '")
+                self.exportItemAsPdf(comptecommunal)
+            info = u"Les relevés ont été enregistrés dans le répertoire : %s" % self.targetDir
+            QMessageBox.information(
+                self.dialog,
+                u"Cadastre - Export",
+                info
+            )
+        else:
+            self.exportItemAsPdf(self.comptecommunal)
+
+
+
+
+    def exportItemAsPdf(self, comptecommunal):
+
+        # Set configuration
+        self.setComposerTemplates(comptecommunal)
 
         # Load the composer from template
         composition = self.createComposition()
@@ -378,10 +421,13 @@ class cadastreExport(QObject):
         # Export as pdf
         if composition:
             from time import time
-            temp = "releve_%s.%.7f.pdf" % (self.etype, time())
-            temppath = os.path.join(tempfile.gettempdir(), temp)
+            temp = "releve_%s_%s.pdf" % (self.etype, comptecommunal)
+            temppath = os.path.join(self.targetDir, temp)
             composition.exportAsPDF(temppath)
-            if sys.platform == 'linux2':
-                subprocess.call(["xdg-open", temppath])
-            else:
-                os.startfile(temppath)
+
+            # Open file if only one
+            if not self.isMulti:
+                if sys.platform == 'linux2':
+                    subprocess.call(["xdg-open", temppath])
+                else:
+                    os.startfile(temppath)

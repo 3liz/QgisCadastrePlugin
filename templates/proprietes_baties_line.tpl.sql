@@ -1,5 +1,5 @@
 
-SELECT --p.parcelle, p.geo_parcelle,
+SELECT
 l.ccosec AS section, l.dnupla AS ndeplan,
 l.dnvoiri || l.dindic AS ndevoirie,
 v.natvoi || v.libvoi AS adresse,
