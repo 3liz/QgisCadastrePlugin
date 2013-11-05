@@ -18,18 +18,18 @@ Installation
 
 Le plugin Cadastre est dans les dépôts officiels du projet QGIS. Pour l'installer, il faut :
 
-* Lancer QGIS
-* Menu Extension > Installer/Gérer les extensions
-* Onglet Paramètres > Vérfier que la case "Afficher les extensions expérimentales" est bien cochée
-* Onglet "En obtenir plus" > Chercher le plugin "cadastre" , le sélectionner et cliquer sur installer
+* **Lancer QGIS**
+* Menu **Extension > Installer/Gérer les extensions**
+* Onglet **Paramètres** > Vérfier que la case *Afficher les extensions expérimentales* est bien cochée
+* Onglet **En obtenir plus** : chercher le plugin **cadastre**, le sélectionner et cliquer sur installer
 
 Une fois le plugin installé, un nouveau menu **Cadastre** apparaît dans la barre de menu de QGIS. Il comporte les sous-menus suivants :
 
-* Importer des données
-* Charger des données
-* Outils de recherche
-* Configurer le plugin
-* À propos
+* **Importer des données**
+* **Charger des données**
+* **Outils de recherche**
+* **Configurer le plugin**
+* **À propos**
 
 Ces sous-menus sont détaillés dans les chapitres suivants.
 
@@ -38,7 +38,7 @@ Configurer le plugin
 
 Avant d'importer les premières données cadastrales dans la base de données, il faut au préalable configurer le plugin :
 
-* Menu Cadastre > Configurer le plugin
+* Menu **Cadastre > Configurer le plugin** ou **icône outils** de la barre d'outil Cadastre
 
 Interface
 -----------
@@ -67,29 +67,33 @@ Ce répertoire est aussi celui dans lequel les **relevés parcellaires** et les 
 Importer des données
 ===========================================
 
-Cette boite de dialogue permet de réaliser un import de données EDIGEO et MAJIC.
+Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MAJIC**.
 
 Principe
 ------------
 
-Le plugin permet l'import de données MAJIC 2012 et 2013, et des données EDIGEO (selon les possibilités de la librairie ogr2ogr ). Il est possible d'importer des données de manière incrémentale, étape par étape, ou bien d'importer en une seule fois.
+Le plugin permet l'import de données **MAJIC 2012 et 2013, et des données EDIGEO** . Il est possible d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
-Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un ensemble de données cohérent pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de caractères de longueur 10 maximum.
+Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum.
 
 Vous pouvez par exemple importer les données dans cette ordre :
 
-* données EDIGEO de la commune A, lot "001"
-* données EDIGEO de la commune B, lot "002"
-* données MAJIC de la commune A, lot "001"
-* données EDIGEO de la commune A, lot "001" (réimport et écrasement des données précédentes)
-* données EDIGEO de la commune C, lot "003"
+* données EDIGEO de la commune A, lot "com_a"
+* données EDIGEO de la commune B, lot "com_b"
+* données MAJIC de la commune A, lot "com_a"
+* données EDIGEO de la commune A, lot "com_a" (réimport et écrasement des données précédentes)
+* données EDIGEO de la commune C, lot "com_c"
 
-Il est donc important de conserver une liste des lots définis pendant les imports successifs. Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données.
+Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données.
+
+Note::
+
+   Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
 
 Bases de données
 -----------------
 
-Deux SGBD (Systèmes de Gestion de Bases de Données) sont supportés par le plugin Cadastre :
+Deux **Systèmes de Gestion de Bases de Données** (SGBD) sont supportés par le plugin Cadastre :
 
 * **PostGreSQL** et son extension spatiale **PostGIS**
 * **Sqlite** et son extension spatiale **Spatialite**
@@ -106,15 +110,15 @@ Pour les bases de données **Spatialite**, l'interface d'import permet de créer
 Les étapes d'importation
 ------------------------
 
-Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu *Configurer le plugin*. Ensuite, on ouvre la boite de dialogue
+Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu **Configurer le plugin**. Ensuite, on ouvre la boite de dialogue
 
 * via la **barre d'outil Cadastre** , icône base de données
 * via le menu **Cadastre > Importer des données**
 
 On configure ensuite les options :
 
-* Choisir le type de Base de données : PostGIS ou Spatialite
-* Choisir la connexion
+* Choisir **le type de base de données** : PostGIS ou Spatialite
+* Choisir **la connexion**
 
  - Pour Postgis, on peut ensuite **choisir un schema**, ou en **créer un nouveau**
  - Pour Spatialite, on peut **créer une nouvelle base de données**
@@ -162,7 +166,7 @@ Charger des données
 * Si PostGIS, choisir **le schéma** contenant les données
 * Chosir **le thème** à appliquer
 
-    - *classique* : un thème proche du rendu de cadastre.gouv.fr
+    - *Classique* : un thème proche du rendu de cadastre.gouv.fr
     - *Orthophoto* : un thème adapté à un affichage par dessus un fond orthophoto.
 
 * Option **Remplacement des couches ?** : Cette option permet de choisir le comportement du chargement des données en fonction des couches déjà existantes dans le projet QGIS
@@ -178,82 +182,136 @@ La barre d'outil Cadastre
 
 La barre d'outil peut s'afficher ou se masquer à partir :
 
-* du menu Vue > Barres d'outils > Cadastre
-* d'un clic droit à côté d'une des barres d'outils de QGIS, et sélectionner "Cadastre"
+* du menu **Vue > Barres d'outils > Cadastre**
+* d'un clic droit à côté d'une des barres d'outils de QGIS, et sélectionner **Cadastre**
 
 Elle contient :
 
-* Un bouton pour identifier une parcelle sur la carte
+* Un outil pour **identifier une parcelle** sur la carte
 * Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Configurer, A propos
+
+Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir apparaître une bulle d'information.
+
 
 Indentifier une parcelle
 --------------------------
 
-Cette fonctionnalité fonctionne mal si les données majic ne sont pas présentes dans la base
+Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC dans la base de données. Sinon, seules les informations principales seront affichées et certains boutons d'action sont désactivés.
 
-* Zoomer sur la carte pour arriver jusqu'à une échelle qui permet de voir les parcelles
-* Activer l'outil d'identification en cliquant sur le bouton dans la barre d'outil Cadastre
-* Cliquer sur une des parcelles : une fenêtre s'ouvre avec les informations résumées de la parcelles et des boutons :
+Pour faire apparaître la fiche d'information d'une parcelle, il faut
 
-    - Exporter le relevé parcellaire ou le relevé de propriété
-    - Centrer, Zoomer, Sélectionner la parcelle
-    - Sélectionner toutes les parcelles du propriétaire
+* activer l'outil **Identifier une parcelle** de la barre d'outil
+* **Zoomer à une échelle** pour laquelle les parcelles sont visibles (à partir de 1/20 000).
+* **Cliquer sur une des parcelles** de la carte.
+
+La fenêtre d'identification s'affiche alors, et présente
+
+* un bloc avec les **informations générales de la parcelle**
+* un bloc avec les **propriétaires** de la parcelle
+* une zone contenant des **boutons d'action**
+
+ - 2 boutons pour **exporter** le **relevé parcellaire** et le **relevé de propriété** au format PDF
+ - 3 boutons pour **interargir avec l'objet géométrique** lié à la parcelle : centrer la carte sur la parcelle, zoomer sur la parcelle, ou sélectionner l'objet dans la couche
+ - Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
 
 
 Le panneau de recherche
 ===========================================
 
-* Menu Cadastre > Outils de recherche
-* Passer la souris au dessus des boutons permet d'afficher une info-bulle décrivant la fonction
+Principe
+----------
+
+Le panneau de recherche propose des outils pour rechercher des parcelles via 3 entrées principales
+
+* une recherche par **objet géographque** : commune et section
+* une recherche par **adresse**
+* une recherche par **propriétaire**
+
+Les différentes recherches seront détaillées dans les sous-chapitres suivants.
+
+Pour afficher le panneau de recherche:
+
+* Utiliser le menu **Cadastre > Outils de recherche** ou cliquer sur l'**icône loupe** de la barre d'outils
+
+Une bulle d'information affiche la fonction des boutons au survol de la souris.
+
+Note::
+
+   Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.
 
 
 Recherche de lieux
 --------------------
 
-* Les 3 listes déroulantes Commune, Section et Parcelle permettent d'affiner progressivement la recherche
-* On peut taper le début du texte recherché dans une des listes, et un menu d'auto-complétion s'affiche
-* En face de chaque liste, le bouton "Croix rouge" permet de supprimer la sélection et de revenir en mode non sélectionné
-* Les boutons Centrer, Zoomer et Sélectionner agissent sur la dernière liste qui contient une sélection.
+L'outil présente 3 listes déroulantes :
 
-    - Par exemple, si on a sélectionné une section, mais pas de parcelle, le bouton Zoomer fait un zoom sur toute la section
-    - Si on a ensuite choisi une parcelle, on zoome sur cette parcelle en cliquant sur Zoomer
-    - Si on clique ensuite sur la croix rouge en face de la liste parcelle, on supprime la sélection, et le bouton "Zoom" permet alors de rezoomer sur la section
+* **Commune**
+* **Section**
+* **Parcelles**
+
+Il est possible de **sélectionner une entité**:
+
+* soit *à la souris* en cliquant sur la flèche pour ouvrir la liste déroulante puis sélectionner un item.
+* soit en *tapant les premières lettres* et en sélectionnant l'item choisi dans la liste d'autocomplétion qui s'affiche alors.
+
+Les listes déroulantes sont **hiérarchiques** :
+
+* Lorsqu'on choisit une commune, la liste des sections est raffraîchie et ne montre que les sections de la commune choisie.
+* lorsqu'on choisit une section, la liste des parcelles est raffraîchie.
+
+Des **boutons d'actions** sont positionnés sous les 3 listes déroulantes et permettent de lancer l'action choisie sur le dernier objet sélectionné dans les 3 listes :
+
+* *Centrer sur l'objet* : la carte est déplacée vers l'objet sélectionné, mais l'échelle est conservée
+* *Zoomer sur l'objet* : la carte est déplacée et mise à l'échelle pour afficher l'objet sélectionné
+* *Sélectionner l'objet* : l'objet est sélectionné dans la couche de données correspondante ( Communes, Sections ou Parcelles)
+
+A côté des 3 listes, un bouton **croix rouge** permet de remettre la liste à son état initial, c'est-à-dire sans objet sélectionné. Par exemple, si on avait sélectionné une commune dans la premier liste et une section dans la seconde, on peut cliquer sur la croix rouge à côté de la section pour désélectionner la section dans la liste. Ainsi si on utilise le bouton de Zoom, on zoomera sur la commune et non sur la section qui était précédemment sélectionnée
+
+Si une parcelle a été sélectionnée dans la liste **Parcelles**, il est possible d'**exporter le relevé parcellaire** en cliquant sur le bouton *icône PDF* situé en bas à droite du bloc de recherche de lieux. Le **PDF est généré et ouvert** avec le lecteur PDF par défaut du système.
 
 
 Recherche d'adresse
 --------------------
 
-Pour l'instant, ne fonctionne que si des données MAJIC sont dans la base
+Note::
 
-* Entrer la fin du nom de l'adresse cherchée, sans la mention de rue, boulevard, chemin, etc. : par exemple "du cange" pour "Boulevard du Cange"
+   Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base
 
-    - la version 1 gérera mieux la recherche d'adresse
+Pour lancer une **recherche de parcelles par adresse**, il suffit:
 
-* Si des résultats ont été trouvés, on peut ensuite
+* d'*entrer l'adresse cherchée*, sans le numéro de rue dans la liste **Adresse**.
+* de cliquer sur le **bouton loupe** situé à côté de la liste, ou d'appuyer sur la **touche entrée**
 
-    - Sélectionner une adresse dans la liste déroulante
-    - cliquer sur les boutons de centrage, zoom et sélection pour sélectionner toutes les parcelles correspondantes à l'adresse sélectionnée
-    - Sélectionner une des parcelles de cette adresse via la liste déroulante "Parcelle", puis utiliser de nouveau les outils de zoom, centrage et sélection sur cette parcelle sélectionnée
-    - Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d'exporter le relevé parcellaire pour cette parcelle
+La recherche est effectuée et la liste déroulante où vous avez tapé l'adresse à chercher est maintenant raffraîchie et contient l'ensemble des résultats trouvés.
+
+Si des résultats ont été trouvés, on peut ensuite :
+
+* **Sélectionner une adresse** dans la liste déroulante via la souris. Cela **raffraîchit la liste des parcelles** située en dessous.
+* cliquer sur les boutons de **centrage, zoom et sélection** . Chaque action est lancée sur **l'ensemble des parcelles correspondantes** à l'adresse choisie
+* Sélectionner une des parcelles dans la liste déroulante **Parcelles** et réutiliser les boutons d'action.
+* Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d'**exporter le relevé parcellaire** pour cette parcelle
 
 Recherche de propriétaires
 ---------------------------
 
-Ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
+Note::
 
-* On écrit les premières lettres du propriétaire recherché dans le champ "Nom"
-* Si des résultats ont été trouvé, on peut choisir un des propriétaires dans la liste déroulante (le champ nom est éditable, mais est aussi une liste déroulante)
-* On peut utiliser les boutons de Zoom, Centrage et sélection comme pour la recherche de lieux ou d'adresse
-* On peut exporter le relevé de propriété via le bouton PDF situé à droite de la liste "Nom"
-* On peut ensuite sélectionner une parcelle, et réutiliser les boutons Centrer, Zoomer, Sélectionner, ou bien exporter le relevé parcellaire via le bouton PDF situé à droite de la parcelle sélectionnée
+   Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
+
+Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences suivantes :
+
+* Un bouton est ajouté à côté de la liste des propriétaire pour **exporter le relevé de propriété** du propriétaire sélectionné dans la liste
+* Le bouton d'**export du relevé parcellaire** est placé à côté de la liste *Parcelles*
+
+Il est possible d'exporter le relevé de propriété pour les personnes qui ne possèdent pas de propriété non bâtie.
 
 
-A propos
+À propos
 ===========================================
 
-* Menu Cadastre > A propos
+Le menu **Cadastre > A propos** ouvre une fenêtre d'information sur le plugin Cadastre : financeurs, auteur, licence, dépôt de sources, etc.
 
-Cette boite de dialogue fournit des informations sur le plugin : financeurs, développeurs, licence
+Cette fenêtre est automatiquement affichée lors de la première utilisation du plugin, mais pas les fois suivantes.
 
 
 Vidéos de démonstration

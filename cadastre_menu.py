@@ -86,12 +86,19 @@ class cadastre_menu:
         self.about_action = QAction(icon, u"À propos", self.iface.mainWindow())
         QObject.connect(self.about_action, SIGNAL("triggered()"), self.open_about_dialog)
 
+        # Help Submenu
+        icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
+        self.help_action = QAction(icon, u"Aide", self.iface.mainWindow())
+        QObject.connect(self.help_action, SIGNAL("triggered()"), self.open_help)
+
+
         # Add actions to Cadastre menu
         self.cadastre_menu.addAction(self.import_action)
         self.cadastre_menu.addAction(self.load_action)
         self.cadastre_menu.addAction(self.search_action)
         self.cadastre_menu.addAction(self.option_action)
         self.cadastre_menu.addAction(self.about_action)
+        self.cadastre_menu.addAction(self.help_action)
 
         # Add cadastre toolbar
         self.toolbar = self.iface.addToolBar(u'Cadastre');
@@ -262,6 +269,12 @@ class cadastre_menu:
             self.cadastre_search_dialog
         )
         parcelleDialog.show()
+
+    def open_help(self):
+        '''Opens the html help file content with default browser'''
+        #~ localHelpUrl = "https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/index.rst"
+        localHelpUrl = os.path.dirname(__file__) + "/doc/index.html"
+        QDesktopServices.openUrl( QUrl(localHelpUrl) )
 
 
     def unload(self):

@@ -1,0 +1,3676 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+% 'BasicFonts': class PDFDictionary 
+1 0 obj
+% The standard fonts dictionary
+<< /F1 2 0 R
+ /F2 3 0 R
+ /F3 5 0 R
+ /F4 6 0 R
+ /F5 8 0 R >>
+endobj
+% 'F1': class PDFType1Font 
+2 0 obj
+% Font Helvetica
+<< /BaseFont /Helvetica
+ /Encoding /WinAnsiEncoding
+ /Name /F1
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F2': class PDFType1Font 
+3 0 obj
+% Font Helvetica-Bold
+<< /BaseFont /Helvetica-Bold
+ /Encoding /WinAnsiEncoding
+ /Name /F2
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'Annot.NUMBER1': class PDFDictionary 
+4 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (mailto:info@3liz.com) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 153.7323
+ 674.7736
+ 526.5827
+ 686.7736 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'F3': class PDFType1Font 
+5 0 obj
+% Font Helvetica-BoldOblique
+<< /BaseFont /Helvetica-BoldOblique
+ /Encoding /WinAnsiEncoding
+ /Name /F3
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F4': class PDFType1Font 
+6 0 obj
+% Font Helvetica-Oblique
+<< /BaseFont /Helvetica-Oblique
+ /Encoding /WinAnsiEncoding
+ /Name /F4
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'Page1': class PDFPage 
+7 0 obj
+% Page dictionary
+<< /Annots [ 4 0 R ]
+ /Contents 39 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 38 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'F5': class PDFType1Font 
+8 0 obj
+% Font Courier
+<< /BaseFont /Courier
+ /Encoding /WinAnsiEncoding
+ /Name /F5
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'Page2': class PDFPage 
+9 0 obj
+% Page dictionary
+<< /Contents 40 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 38 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Page3': class PDFPage 
+10 0 obj
+% Page dictionary
+<< /Contents 41 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 38 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Page4': class PDFPage 
+11 0 obj
+% Page dictionary
+<< /Contents 42 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 38 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Page5': class PDFPage 
+12 0 obj
+% Page dictionary
+<< /Contents 43 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 38 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Annot.NUMBER2': class PDFDictionary 
+13 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (https://vimeo.com/75004889) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 189.0729
+ 133.6953
+ 314.6929
+ 145.6953 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'Annot.NUMBER3': class PDFDictionary 
+14 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (https://vimeo.com/74807532) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 142.3829
+ 115.6953
+ 268.0029
+ 127.6953 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'Page6': class PDFPage 
+15 0 obj
+% Page dictionary
+<< /Annots [ 13 0 R
+ 14 0 R ]
+ /Contents 44 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 38 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'R16': class PDFCatalog 
+16 0 obj
+% Document Root
+<< /Outlines 18 0 R
+ /PageLabels 45 0 R
+ /PageMode /UseNone
+ /Pages 38 0 R
+ /Type /Catalog >>
+endobj
+% 'R17': class PDFInfo 
+17 0 obj
+<< /Author (Micha\353l DOUCHIN - 3liz)
+ /CreationDate (D:20131105222420-01'00')
+ /Creator (\(unspecified\))
+ /Keywords ()
+ /Producer (ReportLab PDF Library - www.reportlab.com)
+ /Subject (\(unspecified\))
+ /Title (Plugin Cadastre - Documentation utilisateur) >>
+endobj
+% 'R18': class PDFOutlines 
+18 0 obj
+<< /Count 23
+ /First 19 0 R
+ /Last 37 0 R
+ /Type /Outlines >>
+endobj
+% 'Outline.0': class OutlineEntryObject 
+19 0 obj
+<< /Dest [ 7 0 R
+ /XYZ
+ 62.69291
+ 599.0236
+ 0 ]
+ /Next 20 0 R
+ /Parent 18 0 R
+ /Title (Installation) >>
+endobj
+% 'Outline.1': class OutlineEntryObject 
+20 0 obj
+<< /Count 3
+ /Dest [ 7 0 R
+ /XYZ
+ 62.69291
+ 338.0236
+ 0 ]
+ /First 21 0 R
+ /Last 23 0 R
+ /Next 24 0 R
+ /Parent 18 0 R
+ /Prev 19 0 R
+ /Title (Configurer le plugin) >>
+endobj
+% 'Outline.20.0': class OutlineEntryObject 
+21 0 obj
+<< /Dest [ 7 0 R
+ /XYZ
+ 62.69291
+ 257.0236
+ 0 ]
+ /Next 22 0 R
+ /Parent 20 0 R
+ /Title (Interface) >>
+endobj
+% 'Outline.20.1': class OutlineEntryObject 
+22 0 obj
+<< /Dest [ 7 0 R
+ /XYZ
+ 62.69291
+ 155.0236
+ 0 ]
+ /Next 23 0 R
+ /Parent 20 0 R
+ /Prev 21 0 R
+ /Title (Nom des fichiers MAJIC) >>
+endobj
+% 'Outline.20.2': class OutlineEntryObject 
+23 0 obj
+<< /Dest [ 9 0 R
+ /XYZ
+ 62.69291
+ 710.1288
+ 0 ]
+ /Parent 20 0 R
+ /Prev 22 0 R
+ /Title (R\351pertoire temporaire) >>
+endobj
+% 'Outline.2': class OutlineEntryObject 
+24 0 obj
+<< /Count 3
+ /Dest [ 9 0 R
+ /XYZ
+ 62.69291
+ 608.1288
+ 0 ]
+ /First 25 0 R
+ /Last 27 0 R
+ /Next 28 0 R
+ /Parent 18 0 R
+ /Prev 20 0 R
+ /Title (Importer des donn\351es) >>
+endobj
+% 'Outline.21.0': class OutlineEntryObject 
+25 0 obj
+<< /Dest [ 9 0 R
+ /XYZ
+ 62.69291
+ 557.1288
+ 0 ]
+ /Next 26 0 R
+ /Parent 24 0 R
+ /Title (Principe) >>
+endobj
+% 'Outline.21.1': class OutlineEntryObject 
+26 0 obj
+<< /Dest [ 9 0 R
+ /XYZ
+ 62.69291
+ 279.3253
+ 0 ]
+ /Next 27 0 R
+ /Parent 24 0 R
+ /Prev 25 0 R
+ /Title (Bases de donn\351es) >>
+endobj
+% 'Outline.21.2': class OutlineEntryObject 
+27 0 obj
+<< /Dest [ 10 0 R
+ /XYZ
+ 62.69291
+ 729.0236
+ 0 ]
+ /Parent 24 0 R
+ /Prev 26 0 R
+ /Title (Les \351tapes d'importation) >>
+endobj
+% 'Outline.3': class OutlineEntryObject 
+28 0 obj
+<< /Dest [ 10 0 R
+ /XYZ
+ 62.69291
+ 204.4693
+ 0 ]
+ /Next 29 0 R
+ /Parent 18 0 R
+ /Prev 24 0 R
+ /Title (Charger des donn\351es) >>
+endobj
+% 'Outline.4': class OutlineEntryObject 
+29 0 obj
+<< /Count 1
+ /Dest [ 11 0 R
+ /XYZ
+ 62.69291
+ 592.4204
+ 0 ]
+ /First 30 0 R
+ /Last 30 0 R
+ /Next 31 0 R
+ /Parent 18 0 R
+ /Prev 28 0 R
+ /Title (La barre d'outil Cadastre) >>
+endobj
+% 'Outline.22.0': class OutlineEntryObject 
+30 0 obj
+<< /Dest [ 11 0 R
+ /XYZ
+ 62.69291
+ 409.4204
+ 0 ]
+ /Parent 29 0 R
+ /Title (Indentifier une parcelle) >>
+endobj
+% 'Outline.5': class OutlineEntryObject 
+31 0 obj
+<< /Count 4
+ /Dest [ 12 0 R
+ /XYZ
+ 62.69291
+ 765.0236
+ 0 ]
+ /First 32 0 R
+ /Last 35 0 R
+ /Next 36 0 R
+ /Parent 18 0 R
+ /Prev 29 0 R
+ /Title (Le panneau de recherche) >>
+endobj
+% 'Outline.23.0': class OutlineEntryObject 
+32 0 obj
+<< /Dest [ 12 0 R
+ /XYZ
+ 62.69291
+ 732.0236
+ 0 ]
+ /Next 33 0 R
+ /Parent 31 0 R
+ /Title (Principe) >>
+endobj
+% 'Outline.23.1': class OutlineEntryObject 
+33 0 obj
+<< /Dest [ 12 0 R
+ /XYZ
+ 62.69291
+ 517.4265
+ 0 ]
+ /Next 34 0 R
+ /Parent 31 0 R
+ /Prev 32 0 R
+ /Title (Recherche de lieux) >>
+endobj
+% 'Outline.23.2': class OutlineEntryObject 
+34 0 obj
+<< /Dest [ 15 0 R
+ /XYZ
+ 62.69291
+ 765.0236
+ 0 ]
+ /Next 35 0 R
+ /Parent 31 0 R
+ /Prev 33 0 R
+ /Title (Recherche d'adresse) >>
+endobj
+% 'Outline.23.3': class OutlineEntryObject 
+35 0 obj
+<< /Dest [ 15 0 R
+ /XYZ
+ 62.69291
+ 473.5849
+ 0 ]
+ /Parent 31 0 R
+ /Prev 34 0 R
+ /Title (Recherche de propri\351taires) >>
+endobj
+% 'Outline.6': class OutlineEntryObject 
+36 0 obj
+<< /Dest [ 15 0 R
+ /XYZ
+ 62.69291
+ 285.9453
+ 0 ]
+ /Next 37 0 R
+ /Parent 18 0 R
+ /Prev 31 0 R
+ /Title (\300 propos) >>
+endobj
+% 'Outline.7': class OutlineEntryObject 
+37 0 obj
+<< /Dest [ 15 0 R
+ /XYZ
+ 62.69291
+ 192.9453
+ 0 ]
+ /Parent 18 0 R
+ /Prev 36 0 R
+ /Title (Vid\351os de d\351monstration) >>
+endobj
+% 'R38': class PDFPages 
+38 0 obj
+% page tree
+<< /Count 6
+ /Kids [ 7 0 R
+ 9 0 R
+ 10 0 R
+ 11 0 R
+ 12 0 R
+ 15 0 R ]
+ /Type /Pages >>
+endobj
+% 'R39': class PDFStream 
+39 0 obj
+% page stream
+<< /Length 8647 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 741.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4 Tm /F2 20 Tf 24 TL 26.57488 0 Td (Plugin Cadastre - Documentation utilisateur) Tj T* -26.57488 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 716.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL 36.93937 0 Td (Author:) Tj T* -36.93937 0 Td ET
+Q
+Q
+q
+1 0 0 1 91.03937 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Micha\353l DOUCHIN - 3liz) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 701.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL 48.03937 0 Td (Date:) Tj T* -48.03937 0 Td ET
+Q
+Q
+q
+1 0 0 1 91.03937 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (2013) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 686.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL 22.48937 0 Td (Copyright:) Tj T* -22.48937 0 Td ET
+Q
+Q
+q
+1 0 0 1 91.03937 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (CC-BY-SA) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 671.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL 32.48937 0 Td (Contact:) Tj T* -32.48937 0 Td ET
+Q
+Q
+q
+1 0 0 1 91.03937 3 cm
+q
+0 0 .501961 rg
+0 0 .501961 RG
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (info@3liz.com) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 656.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL 8.58937 0 Td (Organization:) Tj T* -8.58937 0 Td ET
+Q
+Q
+q
+1 0 0 1 91.03937 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (3liz) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 629.0236 cm
+q
+BT 1 0 0 1 0 2.5 Tm 15 TL /F3 12.5 Tf 0 0 0 rg (Abstract) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 611.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 578.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Installation) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 560.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Le plugin Cadastre est dans les d\351p\364ts officiels du projet QGIS. Pour l'installer, il faut :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 554.0236 cm
+Q
+q
+1 0 0 1 62.69291 554.0236 cm
+Q
+q
+1 0 0 1 62.69291 542.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (Lancer QGIS) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 536.0236 cm
+Q
+q
+1 0 0 1 62.69291 524.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Menu ) Tj /F2 10 Tf (Extension > Installer/G\351rer les extensions) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 518.0236 cm
+Q
+q
+1 0 0 1 62.69291 506.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Onglet ) Tj /F2 10 Tf (Param\350tres) Tj /F1 10 Tf ( > V\351rfier que la case ) Tj /F4 10 Tf (Afficher les extensions exp\351rimentales ) Tj /F1 10 Tf (est bien coch\351e) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 500.0236 cm
+Q
+q
+1 0 0 1 62.69291 488.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Onglet ) Tj /F2 10 Tf (En obtenir plus ) Tj /F1 10 Tf (: chercher le plugin ) Tj /F2 10 Tf (cadastre) Tj /F1 10 Tf (, le s\351lectionner et cliquer sur installer) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 488.0236 cm
+Q
+q
+1 0 0 1 62.69291 458.0236 cm
+q
+BT 1 0 0 1 0 14 Tm 1.974104 Tw 12 TL /F1 10 Tf 0 0 0 rg (Une fois le plugin install\351, un nouveau menu ) Tj /F2 10 Tf (Cadastre ) Tj /F1 10 Tf (appara\356t dans la barre de menu de QGIS. Il) Tj T* 0 Tw (comporte les sous-menus suivants :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 452.0236 cm
+Q
+q
+1 0 0 1 62.69291 452.0236 cm
+Q
+q
+1 0 0 1 62.69291 440.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (Importer des donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 434.0236 cm
+Q
+q
+1 0 0 1 62.69291 422.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (Charger des donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 416.0236 cm
+Q
+q
+1 0 0 1 62.69291 404.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (Outils de recherche) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 398.0236 cm
+Q
+q
+1 0 0 1 62.69291 386.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (Configurer le plugin) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 380.0236 cm
+Q
+q
+1 0 0 1 62.69291 368.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (\300 propos) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 368.0236 cm
+Q
+q
+1 0 0 1 62.69291 350.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Ces sous-menus sont d\351taill\351s dans les chapitres suivants.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 317.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Configurer le plugin) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 287.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 2.69784 Tw (Avant d'importer les premi\350res donn\351es cadastrales dans la base de donn\351es, il faut au pr\351alable) Tj T* 0 Tw (configurer le plugin :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 281.0236 cm
+Q
+q
+1 0 0 1 62.69291 281.0236 cm
+Q
+q
+1 0 0 1 62.69291 269.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Menu ) Tj /F2 10 Tf (Cadastre > Configurer le plugin ) Tj /F1 10 Tf (ou ) Tj /F2 10 Tf (ic\364ne outils ) Tj /F1 10 Tf (de la barre d'outil Cadastre) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 269.0236 cm
+Q
+q
+1 0 0 1 62.69291 239.0236 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Interface) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 209.0236 cm
+q
+BT 1 0 0 1 0 14 Tm 1.864269 Tw 12 TL /F1 10 Tf 0 0 0 rg (Les 2 boutons ) Tj /F2 10 Tf (Interface Cadatre ) Tj /F1 10 Tf (et ) Tj /F2 10 Tf (Interface QGIS ) Tj /F1 10 Tf (permettent d'ouvrir une aide pour appliquer une) Tj T* 0 Tw (interface simplifi\351e adapt\351e \340 une utilisation de consultation du Cadastre.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 167.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 26 Tm /F1 10 Tf 12 TL .667318 Tw (A ce jour, QGIS ne permet pas de modifier dynamiquement l'interface via un plugin. Nous incorporerons) Tj T* 0 Tw 1.643555 Tw (cette fonctionnalit\351 lorsque ce sera possible. En attendant, il faut donc le faire manuellement, comme) Tj T* 0 Tw (expliqu\351 dans la fen\352tre d'aide.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 137.0236 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Nom des fichiers MAJIC) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 83.02362 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 38 Tm /F1 10 Tf 12 TL .884985 Tw (Cette partie permet de sp\351cifier comment sont appel\351s les fichiers MAJIC sur votre poste de travail. En) Tj T* 0 Tw .773555 Tw (effet, les conventions de nommage peuvent changer d'un d\351partement \340 l'autre. Souvent, les fichiers se) Tj T* 0 Tw .743735 Tw (terminent par une extension relative au d\351partement et \340 la direction, par exemple .800 pour les fichiers) Tj T* 0 Tw (du d\351partement de la Somme.) Tj T* ET
+Q
+Q
+ 
+endstream
+endobj
+% 'R40': class PDFStream 
+40 0 obj
+% page stream
+<< /Length 8354 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 753.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 722.1288 cm
+q
+q
+.908526 0 0 .908526 0 0 cm
+q
+1 0 0 1 6.6 7.264512 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 516 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL (Il est important de bien configurer ces noms de fichiers avant votre premier import.) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 692.1288 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (R\351pertoire temporaire) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 650.1288 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 26 Tm /F1 10 Tf 12 TL 1.884983 Tw (Vous pouvez choisir le r\351pertoire dans lequel les scripts seront copi\351s, et les fichiers d\351compress\351s.) Tj T* 0 Tw 1.249269 Tw (Choisisez un r\351pertoire contenant assez de place pour stocker les fichiers temporaires, surtout si vous) Tj T* 0 Tw (souhaitez charger des donn\351es volumineuses.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 620.1288 cm
+q
+BT 1 0 0 1 0 14 Tm 1.719318 Tw 12 TL /F1 10 Tf 0 0 0 rg (Ce r\351pertoire est aussi celui dans lequel les ) Tj /F2 10 Tf (relev\351s parcellaires ) Tj /F1 10 Tf (et les ) Tj /F2 10 Tf (relev\351s de propri\351t\351 ) Tj /F1 10 Tf (seront) Tj T* 0 Tw (export\351s.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 587.1288 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Importer des donn\351es) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 569.1288 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Cette boite de dialogue permet de r\351aliser un ) Tj /F2 10 Tf (import de donn\351es EDIGEO et MAJIC) Tj /F1 10 Tf (.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 539.1288 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Principe) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 509.1288 cm
+q
+BT 1 0 0 1 0 14 Tm 1.242339 Tw 12 TL /F1 10 Tf 0 0 0 rg (Le plugin permet l'import de donn\351es ) Tj /F2 10 Tf (MAJIC 2012 et 2013, et des donn\351es EDIGEO ) Tj /F1 10 Tf (. Il est possible) Tj T* 0 Tw (d'importer des donn\351es de mani\350re incr\351mentale, ) Tj /F2 10 Tf (\351tape par \351tape) Tj /F1 10 Tf (, ou bien d'importer ) Tj /F2 10 Tf (en une seule fois) Tj /F1 10 Tf (.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 467.1288 cm
+q
+BT 1 0 0 1 0 26 Tm 1.419986 Tw 12 TL /F1 10 Tf 0 0 0 rg (Le plugin utilise pour cela la notion de ) Tj /F2 10 Tf (lot) Tj /F1 10 Tf (. Un lot regroupe un ) Tj /F2 10 Tf (ensemble de donn\351es coh\351rent ) Tj /F1 10 Tf (pour) Tj T* 0 Tw .596651 Tw (votre utilisation. Par exemple, le lot peut \352tre le code d'une commune, ou l'acronyme d'une communaut\351) Tj T* 0 Tw (de commune. C'est une cha\356ne de 10 caract\350res maximum.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 449.1288 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Vous pouvez par exemple importer les donn\351es dans cette ordre :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 443.1288 cm
+Q
+q
+1 0 0 1 62.69291 443.1288 cm
+Q
+q
+1 0 0 1 62.69291 431.1288 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (donn\351es EDIGEO de la commune A, lot "com_a") Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 425.1288 cm
+Q
+q
+1 0 0 1 62.69291 413.1288 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (donn\351es EDIGEO de la commune B, lot "com_b") Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 407.1288 cm
+Q
+q
+1 0 0 1 62.69291 395.1288 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (donn\351es MAJIC de la commune A, lot "com_a") Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 389.1288 cm
+Q
+q
+1 0 0 1 62.69291 377.1288 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (donn\351es EDIGEO de la commune A, lot "com_a" \(r\351import et \351crasement des donn\351es pr\351c\351dentes\)) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 371.1288 cm
+Q
+q
+1 0 0 1 62.69291 359.1288 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (donn\351es EDIGEO de la commune C, lot "com_c") Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 359.1288 cm
+Q
+q
+1 0 0 1 62.69291 329.1288 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.02311 Tw (Il est donc important de conserver une liste des lots d\351finis pendant les imports successifs, pour savoir) Tj T* 0 Tw (ensuite quel lot utiliser si on souhaite \351craser des donn\351es.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 311.1288 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 291.3253 cm
+q
+q
+.468391 0 0 .468391 0 0 cm
+q
+1 0 0 1 6.6 14.09079 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 1002 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL (Une version prochaine du plugin pourra int\351grer un tableau r\351capitulatif des imports effectu\351s dans une base de donn\351es pour faciliter le suivi des imports r\351alis\351s.) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 261.3253 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Bases de donn\351es) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 243.3253 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Deux ) Tj /F2 10 Tf (Syst\350mes de Gestion de Bases de Donn\351es ) Tj /F1 10 Tf (\(SGBD\) sont support\351s par le plugin Cadastre :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 237.3253 cm
+Q
+q
+1 0 0 1 62.69291 237.3253 cm
+Q
+q
+1 0 0 1 62.69291 225.3253 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (PostGreSQL ) Tj /F1 10 Tf (et son extension spatiale ) Tj /F2 10 Tf (PostGIS) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 219.3253 cm
+Q
+q
+1 0 0 1 62.69291 207.3253 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (Sqlite ) Tj /F1 10 Tf (et son extension spatiale ) Tj /F2 10 Tf (Spatialite) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 207.3253 cm
+Q
+q
+1 0 0 1 62.69291 177.3253 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 3.42748 Tw (Nous conseillons d'utiliser PostGreSQL pour des donn\351es volumineuses et pour g\351rer des acc\350s) Tj T* 0 Tw (multiples \340 la base de donn\351es.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 159.3253 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Pour les bases de donn\351es ) Tj /F2 10 Tf (PostGIS) Tj /F1 10 Tf (, il faut :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 153.3253 cm
+Q
+q
+1 0 0 1 62.69291 153.3253 cm
+Q
+q
+1 0 0 1 62.69291 129.3253 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 2.10686 Tw 12 TL /F1 10 Tf 0 0 0 rg (avoir cr\351\351 ) Tj /F2 10 Tf (une base de donn\351es ) Tj /F1 10 Tf (sur laquelle on a les droits en \351criture, et activer l'extension) Tj T* 0 Tw (PostGIS.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 123.3253 cm
+Q
+q
+1 0 0 1 62.69291 99.32531 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 2.883555 Tw 12 TL /F1 10 Tf 0 0 0 rg (avoir cr\351\351 au pr\351alable ) Tj /F2 10 Tf (une connexion QGIS ) Tj /F1 10 Tf (via le menu ) Tj /F2 10 Tf (Couches > Ajouter une couche) Tj T* 0 Tw (PostGIS ) Tj /F1 10 Tf (vers cette base de donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 99.32531 cm
+Q
+ 
+endstream
+endobj
+% 'R41': class PDFStream 
+41 0 obj
+% page stream
+<< /Length 12745 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 741.0236 cm
+q
+BT 1 0 0 1 0 14 Tm .016457 Tw 12 TL /F1 10 Tf 0 0 0 rg (Pour les bases de donn\351es ) Tj /F2 10 Tf (Spatialite) Tj /F1 10 Tf (, l'interface d'import permet de cr\351er une base de donn\351es vide et la) Tj T* 0 Tw (connexion QGIS li\351e si n\351cessaire.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 711.0236 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Les \351tapes d'importation) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 681.0236 cm
+q
+BT 1 0 0 1 0 14 Tm .132339 Tw 12 TL /F1 10 Tf 0 0 0 rg (Pour lancer l'importation, il faut bien avoir au pr\351alable configur\351 les noms des fichiers MAJIC via le menu) Tj T* 0 Tw /F2 10 Tf (Configurer le plugin) Tj /F1 10 Tf (. Ensuite, on ouvre la boite de dialogue) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 675.0236 cm
+Q
+q
+1 0 0 1 62.69291 675.0236 cm
+Q
+q
+1 0 0 1 62.69291 663.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (via la ) Tj /F2 10 Tf (barre d'outil Cadastre ) Tj /F1 10 Tf (, ic\364ne base de donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 657.0236 cm
+Q
+q
+1 0 0 1 62.69291 645.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (via le menu ) Tj /F2 10 Tf (Cadastre > Importer des donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 645.0236 cm
+Q
+q
+1 0 0 1 62.69291 627.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (On configure ensuite les options :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 621.0236 cm
+Q
+q
+1 0 0 1 62.69291 621.0236 cm
+Q
+q
+1 0 0 1 62.69291 609.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir ) Tj /F2 10 Tf (le type de base de donn\351es ) Tj /F1 10 Tf (: PostGIS ou Spatialite) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 603.0236 cm
+Q
+q
+1 0 0 1 62.69291 591.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir ) Tj /F2 10 Tf (la connexion) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 591.0236 cm
+Q
+q
+1 0 0 1 62.69291 585.0236 cm
+Q
+q
+1 0 0 1 62.69291 549.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 0 2 Tm  T* ET
+q
+1 0 0 1 20 30 cm
+Q
+q
+1 0 0 1 20 30 cm
+Q
+q
+1 0 0 1 20 18 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Pour Postgis, on peut ensuite ) Tj /F2 10 Tf (choisir un schema) Tj /F1 10 Tf (, ou en ) Tj /F2 10 Tf (cr\351er un nouveau) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 12 cm
+Q
+q
+1 0 0 1 20 0 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Pour Spatialite, on peut ) Tj /F2 10 Tf (cr\351er une nouvelle base de donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 0 cm
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 549.0236 cm
+Q
+q
+1 0 0 1 62.69291 543.0236 cm
+Q
+q
+1 0 0 1 62.69291 543.0236 cm
+Q
+q
+1 0 0 1 62.69291 531.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir le r\351pertoire contenant les ) Tj /F2 10 Tf (fichiers EDIGEO ) Tj /F1 10 Tf (:) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 531.0236 cm
+Q
+q
+1 0 0 1 62.69291 525.0236 cm
+Q
+q
+1 0 0 1 62.69291 477.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 0 2 Tm  T* ET
+q
+1 0 0 1 20 42 cm
+Q
+q
+1 0 0 1 20 42 cm
+Q
+q
+1 0 0 1 20 18 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm .494147 Tw 12 TL /F1 10 Tf 0 0 0 rg (On peut s\351lectionner le ) Tj /F2 10 Tf (r\351pertoire parent ) Tj /F1 10 Tf (qui contient l'ensemble des sous-r\351pertoires vers les) Tj T* 0 Tw (communes : le plugin ira chercher les fichiers de mani\350re r\351cursive.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 12 cm
+Q
+q
+1 0 0 1 20 0 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (seuls les fichiers ) Tj /F2 10 Tf (zip ) Tj /F1 10 Tf (et ) Tj /F2 10 Tf (tar.bz2 ) Tj /F1 10 Tf (sont pour l'instant g\351r\351s) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 0 cm
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 477.0236 cm
+Q
+q
+1 0 0 1 62.69291 471.0236 cm
+Q
+q
+1 0 0 1 62.69291 471.0236 cm
+Q
+q
+1 0 0 1 62.69291 459.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir la ) Tj /F2 10 Tf (projection source ) Tj /F1 10 Tf (des fichiers EDIGEO et la ) Tj /F2 10 Tf (projection cible ) Tj /F1 10 Tf (d\351sir\351e) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 453.0236 cm
+Q
+q
+1 0 0 1 62.69291 441.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir le ) Tj /F2 10 Tf (num\351ro du D\351partement) Tj /F1 10 Tf (, par exemple : 80 pour la Somme) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 435.0236 cm
+Q
+q
+1 0 0 1 62.69291 423.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir le ) Tj /F2 10 Tf (num\351ro de la Direction) Tj /F1 10 Tf (, par exemple: 0) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 417.0236 cm
+Q
+q
+1 0 0 1 62.69291 405.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir le r\351pertoire contenant ) Tj /F2 10 Tf (les fichiers MAJIC) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 405.0236 cm
+Q
+q
+1 0 0 1 62.69291 399.0236 cm
+Q
+q
+1 0 0 1 62.69291 369.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 0 2 Tm  T* ET
+q
+1 0 0 1 20 24 cm
+Q
+q
+1 0 0 1 20 24 cm
+Q
+q
+1 0 0 1 20 0 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 4.75152 Tw (Comme pour EDIGEO, le plugin ira chercher les fichiers dans les r\351pertoires et les) Tj T* 0 Tw (sous-r\351pertoires et importera l'ensemble des donn\351es.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 0 cm
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 369.0236 cm
+Q
+q
+1 0 0 1 62.69291 363.0236 cm
+Q
+q
+1 0 0 1 62.69291 363.0236 cm
+Q
+q
+1 0 0 1 62.69291 351.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir la ) Tj /F2 10 Tf (version du format ) Tj /F1 10 Tf (en utilisant les fl\350ches haut et bas) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 351.0236 cm
+Q
+q
+1 0 0 1 62.69291 345.0236 cm
+Q
+q
+1 0 0 1 62.69291 327.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 0 2 Tm  T* ET
+q
+1 0 0 1 20 12 cm
+Q
+q
+1 0 0 1 20 12 cm
+Q
+q
+1 0 0 1 20 0 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Dans cette version beta, seul les formats 2012 et 2013 sont pris en compte) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 0 cm
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 327.0236 cm
+Q
+q
+1 0 0 1 62.69291 321.0236 cm
+Q
+q
+1 0 0 1 62.69291 321.0236 cm
+Q
+q
+1 0 0 1 62.69291 309.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir le ) Tj /F2 10 Tf (mill\351sime des donn\351es) Tj /F1 10 Tf (, par exemple 2012) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 303.0236 cm
+Q
+q
+1 0 0 1 62.69291 291.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir le ) Tj /F2 10 Tf (Lot ) Tj /F1 10 Tf (: utilisez par exemple le code INSEE de la commune.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 285.0236 cm
+Q
+q
+1 0 0 1 62.69291 273.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Lancer l'import en cliquant sur le bouton ) Tj /F2 10 Tf (Lancer l'import) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 273.0236 cm
+Q
+q
+1 0 0 1 62.69291 255.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Le d\351roulement de l'import est \351crit dans le bloc texte situ\351 en bas de la fen\352tre.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 237.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 216.4693 cm
+q
+q
+.498187 0 0 .498187 0 0 cm
+q
+1 0 0 1 6.6 13.24804 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 942 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL (Pendant l'import, il est conseill\351 de ne pas d\351placer ou cliquer dans la fen\352tre. Pour l'instant, le plugin n'int\350gre pas de bouton pour annuler un import.) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 183.4693 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Charger des donn\351es) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 171.4693 cm
+Q
+q
+1 0 0 1 62.69291 171.4693 cm
+Q
+q
+1 0 0 1 62.69291 159.4693 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Menu ) Tj /F2 10 Tf (Cadastre > Charger des donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 153.4693 cm
+Q
+q
+1 0 0 1 62.69291 141.4693 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir le ) Tj /F2 10 Tf (type de base ) Tj /F1 10 Tf (de donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 135.4693 cm
+Q
+q
+1 0 0 1 62.69291 123.4693 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Choisir ensuite ) Tj /F2 10 Tf (la connexion ) Tj /F1 10 Tf (vers la base de donn\351e dans lequel l'import a \351t\351 fait) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 117.4693 cm
+Q
+q
+1 0 0 1 62.69291 105.4693 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Si PostGIS, choisir ) Tj /F2 10 Tf (le sch\351ma ) Tj /F1 10 Tf (contenant les donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 99.46932 cm
+Q
+q
+1 0 0 1 62.69291 81.46932 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Chosir ) Tj /F2 10 Tf (le th\350me ) Tj /F1 10 Tf (\340 appliquer) Tj T* ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+Q
+q
+Q
+Q
+ 
+endstream
+endobj
+% 'R42': class PDFStream 
+42 0 obj
+% page stream
+<< /Length 10823 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 742.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 6 9.603174 Tm  T* ET
+q
+1 0 0 1 23 -3 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 0 2 Tm  T* ET
+q
+1 0 0 1 20 30 cm
+Q
+q
+1 0 0 1 20 30 cm
+Q
+q
+1 0 0 1 20 18 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F4 10 Tf 0 0 0 rg (Classique ) Tj /F1 10 Tf (: un th\350me proche du rendu de cadastre.gouv.fr) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 12 cm
+Q
+q
+1 0 0 1 20 0 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F4 10 Tf 0 0 0 rg (Orthophoto ) Tj /F1 10 Tf (: un th\350me adapt\351 \340 un affichage par dessus un fond orthophoto.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 0 cm
+Q
+q
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 736.4204 cm
+Q
+q
+1 0 0 1 62.69291 712.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 2.953059 Tw 12 TL /F1 10 Tf 0 0 0 rg (Option ) Tj /F2 10 Tf (Remplacement des couches ? ) Tj /F1 10 Tf (: Cette option permet de choisir le comportement du) Tj T* 0 Tw (chargement des donn\351es en fonction des couches d\351j\340 existantes dans le projet QGIS) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 712.4204 cm
+Q
+q
+1 0 0 1 62.69291 706.4204 cm
+Q
+q
+1 0 0 1 62.69291 646.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 0 2 Tm  T* ET
+q
+1 0 0 1 20 54 cm
+Q
+q
+1 0 0 1 20 54 cm
+Q
+q
+1 0 0 1 20 30 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm .911318 Tw 12 TL /F4 10 Tf 0 0 0 rg (Conserver ) Tj /F1 10 Tf (: signifie qu'on ne remplace pas la couche d\351j\340 pr\351sente dans QGIS par la couche) Tj T* 0 Tw (correspondante trouv\351e dans la base de donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 24 cm
+Q
+q
+1 0 0 1 20 0 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 1.137126 Tw 12 TL /F4 10 Tf 0 0 0 rg (Remplacer ) Tj /F1 10 Tf (: signifie qu'on supprime la couche d\351j\340 pr\351sente pour la remplacer par la couche) Tj T* 0 Tw (correspondante dans la base de donn\351es) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 0 cm
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 646.4204 cm
+Q
+q
+1 0 0 1 62.69291 640.4204 cm
+Q
+q
+1 0 0 1 62.69291 640.4204 cm
+Q
+q
+1 0 0 1 62.69291 604.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 21 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 26 Tm 1.409985 Tw 12 TL /F2 10 Tf 0 0 0 rg (Charger les donn\351es ) Tj /F1 10 Tf (en cliquant sur le bouton : une fois les donn\351es charg\351es, l'emprise de la) Tj T* 0 Tw 2.04748 Tw (carte est raffra\356chie pour afficher l'ensemble des donn\351es \(zoom sur l'ensemble des communes) Tj T* 0 Tw (trouv\351es\)) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 604.4204 cm
+Q
+q
+1 0 0 1 62.69291 571.4204 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (La barre d'outil Cadastre) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 553.4204 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (La barre d'outil peut s'afficher ou se masquer \340 partir :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 547.4204 cm
+Q
+q
+1 0 0 1 62.69291 547.4204 cm
+Q
+q
+1 0 0 1 62.69291 535.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (du menu ) Tj /F2 10 Tf (Vue > Barres d'outils > Cadastre) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 529.4204 cm
+Q
+q
+1 0 0 1 62.69291 517.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (d'un clic droit \340 c\364t\351 d'une des barres d'outils de QGIS, et s\351lectionner ) Tj /F2 10 Tf (Cadastre) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 517.4204 cm
+Q
+q
+1 0 0 1 62.69291 499.4204 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Elle contient :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 493.4204 cm
+Q
+q
+1 0 0 1 62.69291 493.4204 cm
+Q
+q
+1 0 0 1 62.69291 481.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Un outil pour ) Tj /F2 10 Tf (identifier une parcelle ) Tj /F1 10 Tf (sur la carte) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 475.4204 cm
+Q
+q
+1 0 0 1 62.69291 451.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .651647 Tw (Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Configurer,) Tj T* 0 Tw (A propos) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 451.4204 cm
+Q
+q
+1 0 0 1 62.69291 421.4204 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.89561 Tw (Pour conna\356tre l'action d'une des ic\364nes, il suffit de laisser la souris un moment au-dessus pour voir) Tj T* 0 Tw (appara\356tre une bulle d'information.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 391.4204 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Indentifier une parcelle) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 349.4204 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 26 Tm /F1 10 Tf 12 TL 1.201984 Tw (Pour avoir des informations compl\350tes sur une parcelle, il faut avoir au pr\351alable import\351 des donn\351es) Tj T* 0 Tw 1.009269 Tw (MAJIC dans la base de donn\351es. Sinon, seules les informations principales seront affich\351es et certains) Tj T* 0 Tw (boutons d'action sont d\351sactiv\351s.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 331.4204 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Pour faire appara\356tre la fiche d'information d'une parcelle, il faut) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 325.4204 cm
+Q
+q
+1 0 0 1 62.69291 325.4204 cm
+Q
+q
+1 0 0 1 62.69291 313.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (activer l'outil ) Tj /F2 10 Tf (Identifier une parcelle ) Tj /F1 10 Tf (de la barre d'outil) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 307.4204 cm
+Q
+q
+1 0 0 1 62.69291 295.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (Zoomer \340 une \351chelle ) Tj /F1 10 Tf (pour laquelle les parcelles sont visibles \(\340 partir de 1/20 000\).) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 289.4204 cm
+Q
+q
+1 0 0 1 62.69291 277.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (Cliquer sur une des parcelles ) Tj /F1 10 Tf (de la carte.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 277.4204 cm
+Q
+q
+1 0 0 1 62.69291 259.4204 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (La fen\352tre d'identification s'affiche alors, et pr\351sente) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 253.4204 cm
+Q
+q
+1 0 0 1 62.69291 253.4204 cm
+Q
+q
+1 0 0 1 62.69291 241.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (un bloc avec les ) Tj /F2 10 Tf (informations g\351n\351rales de la parcelle) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 235.4204 cm
+Q
+q
+1 0 0 1 62.69291 223.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (un bloc avec les ) Tj /F2 10 Tf (propri\351taires ) Tj /F1 10 Tf (de la parcelle) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 217.4204 cm
+Q
+q
+1 0 0 1 62.69291 205.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (une zone contenant des ) Tj /F2 10 Tf (boutons d'action) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 205.4204 cm
+Q
+q
+1 0 0 1 62.69291 199.4204 cm
+Q
+q
+1 0 0 1 62.69291 133.4204 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 0 2 Tm  T* ET
+q
+1 0 0 1 20 60 cm
+Q
+q
+1 0 0 1 20 60 cm
+Q
+q
+1 0 0 1 20 48 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (2 boutons pour ) Tj /F2 10 Tf (exporter ) Tj /F1 10 Tf (le ) Tj /F2 10 Tf (relev\351 parcellaire ) Tj /F1 10 Tf (et le ) Tj /F2 10 Tf (relev\351 de propri\351t\351 ) Tj /F1 10 Tf (au format PDF) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 42 cm
+Q
+q
+1 0 0 1 20 18 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 1.38311 Tw 12 TL /F1 10 Tf 0 0 0 rg (3 boutons pour ) Tj /F2 10 Tf (interargir avec l'objet g\351om\351trique ) Tj /F1 10 Tf (li\351 \340 la parcelle : centrer la carte sur la) Tj T* 0 Tw (parcelle, zoomer sur la parcelle, ou s\351lectionner l'objet dans la couche) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 12 cm
+Q
+q
+1 0 0 1 20 0 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Un dernier bouton pour ) Tj /F2 10 Tf (s\351lectionner dans la couche toutes les parcelles du propri\351taire) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 20 0 cm
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 133.4204 cm
+Q
+ 
+endstream
+endobj
+% 'R43': class PDFStream 
+43 0 obj
+% page stream
+<< /Length 9859 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 744.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Le panneau de recherche) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 714.0236 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Principe) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 696.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Le panneau de recherche propose des outils pour rechercher des parcelles via 3 entr\351es principales) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 690.0236 cm
+Q
+q
+1 0 0 1 62.69291 690.0236 cm
+Q
+q
+1 0 0 1 62.69291 678.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (une recherche par ) Tj /F2 10 Tf (objet g\351ographque ) Tj /F1 10 Tf (: commune et section) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 672.0236 cm
+Q
+q
+1 0 0 1 62.69291 660.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (une recherche par ) Tj /F2 10 Tf (adresse) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 654.0236 cm
+Q
+q
+1 0 0 1 62.69291 642.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (une recherche par ) Tj /F2 10 Tf (propri\351taire) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 642.0236 cm
+Q
+q
+1 0 0 1 62.69291 624.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Les diff\351rentes recherches seront d\351taill\351es dans les sous-chapitres suivants.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 606.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Pour afficher le panneau de recherche:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 600.0236 cm
+Q
+q
+1 0 0 1 62.69291 600.0236 cm
+Q
+q
+1 0 0 1 62.69291 588.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Utiliser le menu ) Tj /F2 10 Tf (Cadastre > Outils de recherche ) Tj /F1 10 Tf (ou cliquer sur l') Tj /F2 10 Tf (ic\364ne loupe ) Tj /F1 10 Tf (de la barre d'outils) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 588.0236 cm
+Q
+q
+1 0 0 1 62.69291 570.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Une bulle d'information affiche la fonction des boutons au survol de la souris.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 552.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 529.4265 cm
+q
+q
+.579253 0 0 .579253 0 0 cm
+q
+1 0 0 1 6.6 11.39399 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 810 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL (Si la base de donn\351es ne contient aucune donn\351e MAJIC, alors les outils de recherche par adresse et par propri\351taire sont d\351sactiv\351s.) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 499.4265 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Recherche de lieux) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 481.4265 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (L'outil pr\351sente 3 listes d\351roulantes :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 475.4265 cm
+Q
+q
+1 0 0 1 62.69291 475.4265 cm
+Q
+q
+1 0 0 1 62.69291 463.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (Commune) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 457.4265 cm
+Q
+q
+1 0 0 1 62.69291 445.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (Section) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 439.4265 cm
+Q
+q
+1 0 0 1 62.69291 427.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F2 10 Tf 12 TL (Parcelles) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 427.4265 cm
+Q
+q
+1 0 0 1 62.69291 409.4265 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Il est possible de ) Tj /F2 10 Tf (s\351lectionner une entit\351) Tj /F1 10 Tf (:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 403.4265 cm
+Q
+q
+1 0 0 1 62.69291 403.4265 cm
+Q
+q
+1 0 0 1 62.69291 391.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (soit ) Tj /F4 10 Tf (\340 la souris ) Tj /F1 10 Tf (en cliquant sur la fl\350che pour ouvrir la liste d\351roulante puis s\351lectionner un item.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 385.4265 cm
+Q
+q
+1 0 0 1 62.69291 361.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm .228651 Tw 12 TL /F1 10 Tf 0 0 0 rg (soit en ) Tj /F4 10 Tf (tapant les premi\350res lettres ) Tj /F1 10 Tf (et en s\351lectionnant l'item choisi dans la liste d'autocompl\351tion qui) Tj T* 0 Tw (s'affiche alors.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 361.4265 cm
+Q
+q
+1 0 0 1 62.69291 343.4265 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Les listes d\351roulantes sont ) Tj /F2 10 Tf (hi\351rarchiques ) Tj /F1 10 Tf (:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 337.4265 cm
+Q
+q
+1 0 0 1 62.69291 337.4265 cm
+Q
+q
+1 0 0 1 62.69291 313.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .19436 Tw (Lorsqu'on choisit une commune, la liste des sections est raffra\356chie et ne montre que les sections de) Tj T* 0 Tw (la commune choisie.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 307.4265 cm
+Q
+q
+1 0 0 1 62.69291 295.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (lorsqu'on choisit une section, la liste des parcelles est raffra\356chie.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 295.4265 cm
+Q
+q
+1 0 0 1 62.69291 265.4265 cm
+q
+BT 1 0 0 1 0 14 Tm 1.498555 Tw 12 TL /F1 10 Tf 0 0 0 rg (Des ) Tj /F2 10 Tf (boutons d'actions ) Tj /F1 10 Tf (sont positionn\351s sous les 3 listes d\351roulantes et permettent de lancer l'action) Tj T* 0 Tw (choisie sur le dernier objet s\351lectionn\351 dans les 3 listes :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 259.4265 cm
+Q
+q
+1 0 0 1 62.69291 259.4265 cm
+Q
+q
+1 0 0 1 62.69291 247.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F4 10 Tf 0 0 0 rg (Centrer sur l'objet ) Tj /F1 10 Tf (: la carte est d\351plac\351e vers l'objet s\351lectionn\351, mais l'\351chelle est conserv\351e) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 241.4265 cm
+Q
+q
+1 0 0 1 62.69291 229.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F4 10 Tf 0 0 0 rg (Zoomer sur l'objet ) Tj /F1 10 Tf (: la carte est d\351plac\351e et mise \340 l'\351chelle pour afficher l'objet s\351lectionn\351) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 223.4265 cm
+Q
+q
+1 0 0 1 62.69291 199.4265 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 4.636647 Tw 12 TL /F4 10 Tf 0 0 0 rg (S\351lectionner l'objet ) Tj /F1 10 Tf (: l'objet est s\351lectionn\351 dans la couche de donn\351es correspondante \() Tj T* 0 Tw (Communes, Sections ou Parcelles\)) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 199.4265 cm
+Q
+q
+1 0 0 1 62.69291 133.4265 cm
+q
+BT 1 0 0 1 0 50 Tm .614198 Tw 12 TL /F1 10 Tf 0 0 0 rg (A c\364t\351 des 3 listes, un bouton ) Tj /F2 10 Tf (croix rouge ) Tj /F1 10 Tf (permet de remettre la liste \340 son \351tat initial, c'est-\340-dire sans) Tj T* 0 Tw .36186 Tw (objet s\351lectionn\351. Par exemple, si on avait s\351lectionn\351 une commune dans la premier liste et une section) Tj T* 0 Tw 1.216098 Tw (dans la seconde, on peut cliquer sur la croix rouge \340 c\364t\351 de la section pour d\351s\351lectionner la section) Tj T* 0 Tw .514274 Tw (dans la liste. Ainsi si on utilise le bouton de Zoom, on zoomera sur la commune et non sur la section qui) Tj T* 0 Tw (\351tait pr\351c\351demment s\351lectionn\351e) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 91.42645 cm
+q
+BT 1 0 0 1 0 26 Tm .37936 Tw 12 TL /F1 10 Tf 0 0 0 rg (Si une parcelle a \351t\351 s\351lectionn\351e dans la liste ) Tj /F2 10 Tf (Parcelles) Tj /F1 10 Tf (, il est possible d') Tj /F2 10 Tf (exporter le relev\351 parcellaire) Tj T* 0 Tw 1.427988 Tw /F1 10 Tf (en cliquant sur le bouton ) Tj /F4 10 Tf (ic\364ne PDF ) Tj /F1 10 Tf (situ\351 en bas \340 droite du bloc de recherche de lieux. Le ) Tj /F2 10 Tf (PDF est) Tj T* 0 Tw (g\351n\351r\351 et ouvert ) Tj /F1 10 Tf (avec le lecteur PDF par d\351faut du syst\350me.) Tj T* ET
+Q
+Q
+ 
+endstream
+endobj
+% 'R44': class PDFStream 
+44 0 obj
+% page stream
+<< /Length 8272 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 747.0236 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Recherche d'adresse) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 729.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 697.5849 cm
+q
+q
+.930106 0 0 .930106 0 0 cm
+q
+1 0 0 1 6.6 7.095962 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 504 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL (Pour l'instant, cet outil ne fonctionne que si des donn\351es MAJIC sont dans la base) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 677.5849 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Pour lancer une ) Tj /F2 10 Tf (recherche de parcelles par adresse) Tj /F1 10 Tf (, il suffit:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 671.5849 cm
+Q
+q
+1 0 0 1 62.69291 671.5849 cm
+Q
+q
+1 0 0 1 62.69291 659.5849 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (d') Tj /F4 10 Tf (entrer l'adresse cherch\351e) Tj /F1 10 Tf (, sans le num\351ro de rue dans la liste ) Tj /F2 10 Tf (Adresse) Tj /F1 10 Tf (.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 653.5849 cm
+Q
+q
+1 0 0 1 62.69291 641.5849 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (de cliquer sur le ) Tj /F2 10 Tf (bouton loupe ) Tj /F1 10 Tf (situ\351 \340 c\364t\351 de la liste, ou d'appuyer sur la ) Tj /F2 10 Tf (touche entr\351e) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 641.5849 cm
+Q
+q
+1 0 0 1 62.69291 611.5849 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .90061 Tw (La recherche est effectu\351e et la liste d\351roulante o\371 vous avez tap\351 l'adresse \340 chercher est maintenant) Tj T* 0 Tw (raffra\356chie et contient l'ensemble des r\351sultats trouv\351s.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 593.5849 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Si des r\351sultats ont \351t\351 trouv\351s, on peut ensuite :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 587.5849 cm
+Q
+q
+1 0 0 1 62.69291 587.5849 cm
+Q
+q
+1 0 0 1 62.69291 563.5849 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 2.543555 Tw 12 TL /F2 10 Tf 0 0 0 rg (S\351lectionner une adresse ) Tj /F1 10 Tf (dans la liste d\351roulante via la souris. Cela ) Tj /F2 10 Tf (raffra\356chit la liste des) Tj T* 0 Tw (parcelles ) Tj /F1 10 Tf (situ\351e en dessous.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 557.5849 cm
+Q
+q
+1 0 0 1 62.69291 533.5849 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm .473318 Tw 12 TL /F1 10 Tf 0 0 0 rg (cliquer sur les boutons de ) Tj /F2 10 Tf (centrage, zoom et s\351lection ) Tj /F1 10 Tf (. Chaque action est lanc\351e sur ) Tj /F2 10 Tf (l'ensemble) Tj T* 0 Tw (des parcelles correspondantes ) Tj /F1 10 Tf (\340 l'adresse choisie) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 527.5849 cm
+Q
+q
+1 0 0 1 62.69291 515.5849 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (S\351lectionner une des parcelles dans la liste d\351roulante ) Tj /F2 10 Tf (Parcelles ) Tj /F1 10 Tf (et r\351utiliser les boutons d'action.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 509.5849 cm
+Q
+q
+1 0 0 1 62.69291 485.5849 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 2.801412 Tw 12 TL /F1 10 Tf 0 0 0 rg (Si une parcelle est s\351lectionn\351e, le bouton avec une ic\364ne PDF permet d') Tj /F2 10 Tf (exporter le relev\351) Tj T* 0 Tw (parcellaire ) Tj /F1 10 Tf (pour cette parcelle) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 485.5849 cm
+Q
+q
+1 0 0 1 62.69291 455.5849 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Recherche de propri\351taires) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 437.5849 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 407.9453 cm
+q
+q
+.858717 0 0 .858717 0 0 cm
+q
+1 0 0 1 6.6 7.685888 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 546 24 re B*
+Q
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL (Ce bloc de recherche ne fonctionne pas si aucune donn\351e MAJIC n'est pr\351sente dans la base) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+q
+1 0 0 1 62.69291 375.9453 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.33436 Tw (Le principe et le fonctionnement est le m\352me que pour la recherche par adresse, avec les diff\351rences) Tj T* 0 Tw (suivantes :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 369.9453 cm
+Q
+q
+1 0 0 1 62.69291 369.9453 cm
+Q
+q
+1 0 0 1 62.69291 345.9453 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 1.43881 Tw 12 TL /F1 10 Tf 0 0 0 rg (Un bouton est ajout\351 \340 c\364t\351 de la liste des propri\351taire pour ) Tj /F2 10 Tf (exporter le relev\351 de propri\351t\351 ) Tj /F1 10 Tf (du) Tj T* 0 Tw (propri\351taire s\351lectionn\351 dans la liste) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 339.9453 cm
+Q
+q
+1 0 0 1 62.69291 327.9453 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Le bouton d') Tj /F2 10 Tf (export du relev\351 parcellaire ) Tj /F1 10 Tf (est plac\351 \340 c\364t\351 de la liste ) Tj /F4 10 Tf (Parcelles) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 327.9453 cm
+Q
+q
+1 0 0 1 62.69291 297.9453 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .259398 Tw (Il est possible d'exporter le relev\351 de propri\351t\351 pour les personnes qui ne poss\350dent pas de propri\351t\351 non) Tj T* 0 Tw (b\342tie.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 264.9453 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (\300 propos) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 234.9453 cm
+q
+BT 1 0 0 1 0 14 Tm 2.130651 Tw 12 TL /F1 10 Tf 0 0 0 rg (Le menu ) Tj /F2 10 Tf (Cadastre > A propos ) Tj /F1 10 Tf (ouvre une fen\352tre d'information sur le plugin Cadastre : financeurs,) Tj T* 0 Tw (auteur, licence, d\351p\364t de sources, etc.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 204.9453 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.683318 Tw (Cette fen\352tre est automatiquement affich\351e lors de la premi\350re utilisation du plugin, mais pas les fois) Tj T* 0 Tw (suivantes.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 171.9453 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Vid\351os de d\351monstration) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 153.9453 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Pour faciliter la prise en main, vous pouvez consulter les vid\351os en ligne :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 147.9453 cm
+Q
+q
+1 0 0 1 62.69291 147.9453 cm
+Q
+q
+1 0 0 1 62.69291 135.9453 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Import et chargement : ) Tj 0 0 .501961 rg (https://vimeo.com/75004889) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 129.9453 cm
+Q
+q
+1 0 0 1 62.69291 117.9453 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Recherche : ) Tj 0 0 .501961 rg (https://vimeo.com/74807532) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 117.9453 cm
+Q
+ 
+endstream
+endobj
+% 'R45': class PDFPageLabels 
+45 0 obj
+% Document Root
+<< /Nums [ 0
+ 46 0 R
+ 1
+ 47 0 R
+ 2
+ 48 0 R
+ 3
+ 49 0 R
+ 4
+ 50 0 R
+ 5
+ 51 0 R ] >>
+endobj
+% 'R46': class PDFPageLabel 
+46 0 obj
+% None
+<< /S /D
+ /St 1 >>
+endobj
+% 'R47': class PDFPageLabel 
+47 0 obj
+% None
+<< /S /D
+ /St 2 >>
+endobj
+% 'R48': class PDFPageLabel 
+48 0 obj
+% None
+<< /S /D
+ /St 3 >>
+endobj
+% 'R49': class PDFPageLabel 
+49 0 obj
+% None
+<< /S /D
+ /St 4 >>
+endobj
+% 'R50': class PDFPageLabel 
+50 0 obj
+% None
+<< /S /D
+ /St 5 >>
+endobj
+% 'R51': class PDFPageLabel 
+51 0 obj
+% None
+<< /S /D
+ /St 6 >>
+endobj
+xref
+0 52
+0000000000 65535 f
+0000000113 00000 n
+0000000257 00000 n
+0000000422 00000 n
+0000000609 00000 n
+0000000835 00000 n
+0000001024 00000 n
+0000001203 00000 n
+0000001504 00000 n
+0000001663 00000 n
+0000001942 00000 n
+0000002222 00000 n
+0000002502 00000 n
+0000002796 00000 n
+0000003041 00000 n
+0000003272 00000 n
+0000003583 00000 n
+0000003742 00000 n
+0000004058 00000 n
+0000004184 00000 n
+0000004356 00000 n
+0000004596 00000 n
+0000004768 00000 n
+0000004968 00000 n
+0000005152 00000 n
+0000005395 00000 n
+0000005566 00000 n
+0000005763 00000 n
+0000005951 00000 n
+0000006149 00000 n
+0000006395 00000 n
+0000006565 00000 n
+0000006809 00000 n
+0000006981 00000 n
+0000007178 00000 n
+0000007376 00000 n
+0000007566 00000 n
+0000007753 00000 n
+0000007927 00000 n
+0000008078 00000 n
+0000016824 00000 n
+0000025277 00000 n
+0000038122 00000 n
+0000049045 00000 n
+0000059003 00000 n
+0000067378 00000 n
+0000067536 00000 n
+0000067613 00000 n
+0000067690 00000 n
+0000067767 00000 n
+0000067844 00000 n
+0000067921 00000 n
+trailer
+<< /ID 
+ % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
+ [(\355\315\271h\320\304\215\340\233\302\251\276\256&;\366) (\355\315\271h\320\304\215\340\233\302\251\276\256&;\366)] 
+
+ /Info 17 0 R
+ /Root 16 0 R
+ /Size 52 >>
+startxref
+67968
+%%EOF
