@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Plugin Cadastre - Documentation utilisateur</title>
+<meta name="author" content="Michaël DOUCHIN - 3liz" />
+<meta name="date" content="2013" />
+<meta name="copyright" content="CC-BY-SA" />
+<meta name="organization" content="3liz" />
+<meta content="documentation, QGIS, plugin, cadastre, 3liz" name="keywords" />
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7514 2012-09-14 14:27:12Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="plugin-cadastre-documentation-utilisateur">
+<h1 class="title">Plugin Cadastre - Documentation utilisateur</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td>Michaël DOUCHIN - 3liz</td></tr>
+<tr><th class="docinfo-name">Date:</th>
+<td>2013</td></tr>
+<tr><th class="docinfo-name">Copyright:</th>
+<td>CC-BY-SA</td></tr>
+<tr><th class="docinfo-name">Contact:</th>
+<td><a class="first last reference external" href="mailto:info&#64;3liz.com">info&#64;3liz.com</a></td></tr>
+<tr><th class="docinfo-name">Organization:</th>
+<td>3liz</td></tr>
+</tbody>
+</table>
+<div class="abstract topic">
+<p class="topic-title first">Abstract</p>
+<p>Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.</p>
+</div>
+<div class="section" id="installation">
+<h1>Installation</h1>
+<p>Le plugin Cadastre est dans les dépôts officiels du projet QGIS. Pour l'installer, il faut :</p>
+<ul class="simple">
+<li>Lancer QGIS</li>
+<li>Menu Extension &gt; Installer/Gérer les extensions</li>
+<li>Onglet Paramètres &gt; Vérfier que la case &quot;Afficher les extensions expérimentales&quot; est bien cochée</li>
+<li>Onglet &quot;En obtenir plus&quot; &gt; Chercher le plugin &quot;cadastre&quot; , le sélectionner et cliquer sur installer</li>
+</ul>
+<p>Une fois le plugin installé, un nouveau menu <strong>Cadastre</strong> apparaît dans la barre de menu de QGIS. Il comporte les sous-menus suivants :</p>
+<ul class="simple">
+<li>Importer des données</li>
+<li>Charger des données</li>
+<li>Outils de recherche</li>
+<li>Configurer le plugin</li>
+<li>À propos</li>
+</ul>
+<p>Ces sous-menus sont détaillés dans les chapitres suivants.</p>
+</div>
+<div class="section" id="configurer-le-plugin">
+<h1>Configurer le plugin</h1>
+<p>Avant d'importer les premières données cadastrales dans la base de données, il faut au préalable configurer le plugin :</p>
+<ul class="simple">
+<li>Menu Cadastre &gt; Configurer le plugin</li>
+</ul>
+<div class="section" id="interface">
+<h2>Interface</h2>
+<p>Les 2 boutons <strong>Interface Cadatre</strong> et <strong>Interface QGIS</strong> permettent d'ouvrir une aide pour appliquer une interface simplifiée adaptée à une utilisation de consultation du Cadastre.</p>
+<p>A ce jour, QGIS ne permet pas de modifier dynamiquement l'interface via un plugin. Nous incorporerons cette fonctionnalité lorsque ce sera possible. En attendant, il faut donc le faire manuellement, comme expliqué dans la fenêtre d'aide.</p>
+</div>
+<div class="section" id="nom-des-fichiers-majic">
+<h2>Nom des fichiers MAJIC</h2>
+<p>Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail. En effet, les conventions de nommage peuvent changer d'un département à l'autre. Souvent, les fichiers se terminent par une extension relative au département et à la direction, par exemple .800 pour les fichiers du département de la Somme.</p>
+<p>Note:</p>
+<pre class="literal-block">
+Il est important de bien configurer ces noms de fichiers avant votre premier import.
+</pre>
+</div>
+<div class="section" id="repertoire-temporaire">
+<h2>Répertoire temporaire</h2>
+<p>Vous pouvez choisir le répertoire dans lequel les scripts seront copiés, et les fichiers décompressés. Choisisez un répertoire contenant assez de place pour stocker les fichiers temporaires, surtout si vous souhaitez charger des données volumineuses.</p>
+<p>Ce répertoire est aussi celui dans lequel les <strong>relevés parcellaires</strong> et les <strong>relevés de propriété</strong> seront exportés.</p>
+</div>
+</div>
+<div class="section" id="importer-des-donnees">
+<h1>Importer des données</h1>
+<p>Cette boite de dialogue permet de réaliser un import de données EDIGEO et MAJIC.</p>
+<div class="section" id="principe">
+<h2>Principe</h2>
+<p>Le plugin permet l'import de données MAJIC 2012 et 2013, et des données EDIGEO (selon les possibilités de la librairie ogr2ogr ). Il est possible d'importer des données de manière incrémentale, étape par étape, ou bien d'importer en une seule fois.</p>
+<p>Le plugin utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un ensemble de données cohérent pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de caractères de longueur 10 maximum.</p>
+<p>Vous pouvez par exemple importer les données dans cette ordre :</p>
+<ul class="simple">
+<li>données EDIGEO de la commune A, lot &quot;001&quot;</li>
+<li>données EDIGEO de la commune B, lot &quot;002&quot;</li>
+<li>données MAJIC de la commune A, lot &quot;001&quot;</li>
+<li>données EDIGEO de la commune A, lot &quot;001&quot; (réimport et écrasement des données précédentes)</li>
+<li>données EDIGEO de la commune C, lot &quot;003&quot;</li>
+</ul>
+<p>Il est donc important de conserver une liste des lots définis pendant les imports successifs. Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données.</p>
+</div>
+<div class="section" id="bases-de-donnees">
+<h2>Bases de données</h2>
+<p>Deux SGBD (Systèmes de Gestion de Bases de Données) sont supportés par le plugin Cadastre :</p>
+<ul class="simple">
+<li><strong>PostGreSQL</strong> et son extension spatiale <strong>PostGIS</strong></li>
+<li><strong>Sqlite</strong> et son extension spatiale <strong>Spatialite</strong></li>
+</ul>
+<p>Nous conseillons d'utiliser PostGreSQL pour des données volumineuses et pour gérer des accès multiples à la base de données.</p>
+<p>Pour les bases de données <strong>PostGIS</strong>, il faut :</p>
+<ul class="simple">
+<li>avoir créé <strong>une base de données</strong> sur laquelle on a les droits en écriture, et activer l'extension PostGIS.</li>
+<li>avoir créé au préalable <strong>une connexion QGIS</strong> via le menu <strong>Couches &gt; Ajouter une couche PostGIS</strong> vers cette base de données</li>
+</ul>
+<p>Pour les bases de données <strong>Spatialite</strong>, l'interface d'import permet de créer une base de données vide et la connexion QGIS liée si nécessaire.</p>
+</div>
+<div class="section" id="les-etapes-d-importation">
+<h2>Les étapes d'importation</h2>
+<p>Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu <em>Configurer le plugin</em>. Ensuite, on ouvre la boite de dialogue</p>
+<ul class="simple">
+<li>via la <strong>barre d'outil Cadastre</strong> , icône base de données</li>
+<li>via le menu <strong>Cadastre &gt; Importer des données</strong></li>
+</ul>
+<p>On configure ensuite les options :</p>
+<ul class="simple">
+<li>Choisir le type de Base de données : PostGIS ou Spatialite</li>
+<li>Choisir la connexion</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>Pour Postgis, on peut ensuite <strong>choisir un schema</strong>, ou en <strong>créer un nouveau</strong></li>
+<li>Pour Spatialite, on peut <strong>créer une nouvelle base de données</strong></li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li>Choisir le répertoire contenant les <strong>fichiers EDIGEO</strong> :</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>On peut sélectionner le <strong>répertoire parent</strong> qui contient l'ensemble des sous-répertoires vers les communes : le plugin ira chercher les fichiers de manière récursive.</li>
+<li>seuls les fichiers <strong>zip</strong> et <strong>tar.bz2</strong> sont pour l'instant gérés</li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li>Choisir la <strong>projection source</strong> des fichiers EDIGEO et la <strong>projection cible</strong> désirée</li>
+<li>Choisir le <strong>numéro du Département</strong>, par exemple : 80 pour la Somme</li>
+<li>Choisir le <strong>numéro de la Direction</strong>, par exemple: 0</li>
+<li>Choisir le répertoire contenant <strong>les fichiers MAJIC</strong></li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et importera l'ensemble des données.</li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li>Choisir la <strong>version du format</strong> en utilisant les flèches haut et bas</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>Dans cette version beta, seul les formats 2012 et 2013 sont pris en compte</li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li>Choisir le <strong>millésime des données</strong>, par exemple 2012</li>
+<li>Choisir le <strong>Lot</strong> : utilisez par exemple le code INSEE de la commune.</li>
+<li>Lancer l'import en cliquant sur le bouton <strong>Lancer l'import</strong></li>
+</ul>
+<p>Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fenêtre.</p>
+<p>Note:</p>
+<pre class="literal-block">
+Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import.
+</pre>
+</div>
+</div>
+<div class="section" id="charger-des-donnees">
+<h1>Charger des données</h1>
+<ul>
+<li><p class="first">Menu <strong>Cadastre &gt; Charger des données</strong></p>
+</li>
+<li><p class="first">Choisir le <strong>type de base</strong> de données</p>
+</li>
+<li><p class="first">Choisir ensuite <strong>la connexion</strong> vers la base de donnée dans lequel l'import a été fait</p>
+</li>
+<li><p class="first">Si PostGIS, choisir <strong>le schéma</strong> contenant les données</p>
+</li>
+<li><p class="first">Chosir <strong>le thème</strong> à appliquer</p>
+<blockquote>
+<ul class="simple">
+<li><em>classique</em> : un thème proche du rendu de cadastre.gouv.fr</li>
+<li><em>Orthophoto</em> : un thème adapté à un affichage par dessus un fond orthophoto.</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">Option <strong>Remplacement des couches ?</strong> : Cette option permet de choisir le comportement du chargement des données en fonction des couches déjà existantes dans le projet QGIS</p>
+</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li><em>Conserver</em> : signifie qu'on ne remplace pas la couche déjà présente dans QGIS par la couche correspondante trouvée dans la base de données</li>
+<li><em>Remplacer</em> : signifie qu'on supprime la couche déjà présente pour la remplacer par la couche correspondante dans la base de données</li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li><strong>Charger les données</strong> en cliquant sur le bouton : une fois les données chargées, l'emprise de la carte est raffraîchie pour afficher l'ensemble des données (zoom sur l'ensemble des communes trouvées)</li>
+</ul>
+</div>
+<div class="section" id="la-barre-d-outil-cadastre">
+<h1>La barre d'outil Cadastre</h1>
+<p>La barre d'outil peut s'afficher ou se masquer à partir :</p>
+<ul class="simple">
+<li>du menu Vue &gt; Barres d'outils &gt; Cadastre</li>
+<li>d'un clic droit à côté d'une des barres d'outils de QGIS, et sélectionner &quot;Cadastre&quot;</li>
+</ul>
+<p>Elle contient :</p>
+<ul class="simple">
+<li>Un bouton pour identifier une parcelle sur la carte</li>
+<li>Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Configurer, A propos</li>
+</ul>
+<div class="section" id="indentifier-une-parcelle">
+<h2>Indentifier une parcelle</h2>
+<p>Cette fonctionnalité fonctionne mal si les données majic ne sont pas présentes dans la base</p>
+<ul>
+<li><p class="first">Zoomer sur la carte pour arriver jusqu'à une échelle qui permet de voir les parcelles</p>
+</li>
+<li><p class="first">Activer l'outil d'identification en cliquant sur le bouton dans la barre d'outil Cadastre</p>
+</li>
+<li><p class="first">Cliquer sur une des parcelles : une fenêtre s'ouvre avec les informations résumées de la parcelles et des boutons :</p>
+<blockquote>
+<ul class="simple">
+<li>Exporter le relevé parcellaire ou le relevé de propriété</li>
+<li>Centrer, Zoomer, Sélectionner la parcelle</li>
+<li>Sélectionner toutes les parcelles du propriétaire</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="le-panneau-de-recherche">
+<h1>Le panneau de recherche</h1>
+<ul class="simple">
+<li>Menu Cadastre &gt; Outils de recherche</li>
+<li>Passer la souris au dessus des boutons permet d'afficher une info-bulle décrivant la fonction</li>
+</ul>
+<div class="section" id="recherche-de-lieux">
+<h2>Recherche de lieux</h2>
+<ul>
+<li><p class="first">Les 3 listes déroulantes Commune, Section et Parcelle permettent d'affiner progressivement la recherche</p>
+</li>
+<li><p class="first">On peut taper le début du texte recherché dans une des listes, et un menu d'auto-complétion s'affiche</p>
+</li>
+<li><p class="first">En face de chaque liste, le bouton &quot;Croix rouge&quot; permet de supprimer la sélection et de revenir en mode non sélectionné</p>
+</li>
+<li><p class="first">Les boutons Centrer, Zoomer et Sélectionner agissent sur la dernière liste qui contient une sélection.</p>
+<blockquote>
+<ul class="simple">
+<li>Par exemple, si on a sélectionné une section, mais pas de parcelle, le bouton Zoomer fait un zoom sur toute la section</li>
+<li>Si on a ensuite choisi une parcelle, on zoome sur cette parcelle en cliquant sur Zoomer</li>
+<li>Si on clique ensuite sur la croix rouge en face de la liste parcelle, on supprime la sélection, et le bouton &quot;Zoom&quot; permet alors de rezoomer sur la section</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="recherche-d-adresse">
+<h2>Recherche d'adresse</h2>
+<p>Pour l'instant, ne fonctionne que si des données MAJIC sont dans la base</p>
+<ul>
+<li><p class="first">Entrer la fin du nom de l'adresse cherchée, sans la mention de rue, boulevard, chemin, etc. : par exemple &quot;du cange&quot; pour &quot;Boulevard du Cange&quot;</p>
+<blockquote>
+<ul class="simple">
+<li>la version 1 gérera mieux la recherche d'adresse</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">Si des résultats ont été trouvés, on peut ensuite</p>
+<blockquote>
+<ul class="simple">
+<li>Sélectionner une adresse dans la liste déroulante</li>
+<li>cliquer sur les boutons de centrage, zoom et sélection pour sélectionner toutes les parcelles correspondantes à l'adresse sélectionnée</li>
+<li>Sélectionner une des parcelles de cette adresse via la liste déroulante &quot;Parcelle&quot;, puis utiliser de nouveau les outils de zoom, centrage et sélection sur cette parcelle sélectionnée</li>
+<li>Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d'exporter le relevé parcellaire pour cette parcelle</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="recherche-de-proprietaires">
+<h2>Recherche de propriétaires</h2>
+<p>Ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base</p>
+<ul class="simple">
+<li>On écrit les premières lettres du propriétaire recherché dans le champ &quot;Nom&quot;</li>
+<li>Si des résultats ont été trouvé, on peut choisir un des propriétaires dans la liste déroulante (le champ nom est éditable, mais est aussi une liste déroulante)</li>
+<li>On peut utiliser les boutons de Zoom, Centrage et sélection comme pour la recherche de lieux ou d'adresse</li>
+<li>On peut exporter le relevé de propriété via le bouton PDF situé à droite de la liste &quot;Nom&quot;</li>
+<li>On peut ensuite sélectionner une parcelle, et réutiliser les boutons Centrer, Zoomer, Sélectionner, ou bien exporter le relevé parcellaire via le bouton PDF situé à droite de la parcelle sélectionnée</li>
+</ul>
+</div>
+</div>
+<div class="section" id="a-propos">
+<h1>A propos</h1>
+<ul class="simple">
+<li>Menu Cadastre &gt; A propos</li>
+</ul>
+<p>Cette boite de dialogue fournit des informations sur le plugin : financeurs, développeurs, licence</p>
+</div>
+<div class="section" id="videos-de-demonstration">
+<h1>Vidéos de démonstration</h1>
+<p>Pour faciliter la prise en main, vous pouvez consulter les vidéos en ligne :</p>
+<ul class="simple">
+<li>Import et chargement : <a class="reference external" href="https://vimeo.com/75004889">https://vimeo.com/75004889</a></li>
+<li>Recherche : <a class="reference external" href="https://vimeo.com/74807532">https://vimeo.com/74807532</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
