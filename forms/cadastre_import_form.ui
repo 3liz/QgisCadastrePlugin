@@ -356,7 +356,7 @@
             <item>
              <widget class="QSpinBox" name="inDataVersion">
               <property name="minimum">
-               <number>2011</number>
+               <number>2012</number>
               </property>
               <property name="maximum">
                <number>2013</number>
@@ -379,7 +379,7 @@
                <bool>true</bool>
               </property>
               <property name="minimum">
-               <number>2010</number>
+               <number>2012</number>
               </property>
               <property name="maximum">
                <number>2020</number>
