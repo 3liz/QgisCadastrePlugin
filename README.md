@@ -30,8 +30,13 @@ Auteurs
 =======
 
 Michaël DOUCHIN
-email: mdouchin@3liz.com
-twitter : @kimaidou
+e-mail: info@3liz.com
+twitter : https://twitter.com/kimaidou
+
+Sources
+=======
+
+GitHub : https://github.com/3liz/QgisCadastrePlugin
 
 Licence
 =======
