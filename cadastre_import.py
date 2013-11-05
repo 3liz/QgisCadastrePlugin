@@ -210,39 +210,39 @@ class cadastreImport(QObject):
 
         # Log
         jobTitle = u'MAJIC'
-        self.beginJobLog(14, jobTitle)
+        self.beginJobLog(12, jobTitle)
 
-        # copy files in temp dir
-        self.dialog.subStepLabel.setText('Copie des fichiers')
-        self.updateProgressBar()
-        self.copyFilesToTemp(self.dialog.majicSourceDir, self.majicDir)
-        self.updateTimer()
-        self.updateProgressBar()
+        #~ # copy files in temp dir
+        #~ self.dialog.subStepLabel.setText('Copie des fichiers')
+        #~ self.updateProgressBar()
+        #~ self.copyFilesToTemp(self.dialog.majicSourceDir, self.majicDir)
+        #~ self.updateTimer()
+        #~ self.updateProgressBar()
 
         # dict for parameters replacement
         replaceDict = self.replaceDict.copy()
         mandatoryFilesKeys =  ['[FICHIER_BATI]', '[FICHIER_FANTOIR]', '[FICHIER_NBATI]', '[FICHIER_PROP]']
         missingMajicFiles = False
-        for item in self.dialog.majicSourceFileNames:
-            replaceDict[item['key']] = item['value']
-            fpath = os.path.join(os.path.realpath(self.majicDir) + '/' , item['value'])
-            # create file if not there
-            if not os.path.exists(fpath):
-                if item['key'] in mandatoryFilesKeys:
-                    self.go = False
-                    self.qc.updateLog( u"Il manque des fichiers MAJIC ! L'import est annulé.")
-                    return
-                else:
-                    # create empty file
-                    fout = open(fpath, 'w')
-                    data = ''
-                    fout.write(data)
-                    fout.close()
+        #~ for item in self.dialog.majicSourceFileNames:
+            #~ replaceDict[item['key']] = item['value']
+            #~ fpath = os.path.join(os.path.realpath(self.majicDir) + '/' , item['value'])
+            #~ # create file if not there
+            #~ if not os.path.exists(fpath):
+                #~ if item['key'] in mandatoryFilesKeys:
+                    #~ self.go = False
+                    #~ self.qc.updateLog( u"Il manque des fichiers MAJIC ! L'import est annulé.")
+                    #~ return
+                #~ else:
+                    #~ # create empty file
+                    #~ fout = open(fpath, 'w')
+                    #~ data = ''
+                    #~ fout.write(data)
+                    #~ fout.close()
 
-            # chmod file to give access to postgresql for COPY FROM query
-            os.chmod(fpath, 0o755)
+            #~ # chmod file to give access to postgresql for COPY FROM query
+            #~ os.chmod(fpath, 0o755)
 
-        replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
+        #~ replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
 
         scriptList = []
         scriptList.append(
@@ -398,34 +398,43 @@ class cadastreImport(QObject):
 
         # Loop through all majic files
         for item in self.dialog.majicSourceFileNames:
-            # Get majic file path
-            fpath = os.path.join(os.path.realpath(self.majicDir) + '/' , item['value'])
-            table = item['table']
+            # Get majic files for item
+            majList = []
+            for root, dirs, files in os.walk(self.dialog.majicSourceDir):
+                for i in files:
+                    if os.path.split(i)[1] == item['value']:
+                        majList.append(os.path.join(root, i))
 
-            # read file content
-            with open(fpath) as fin:
-                # Divide file into chuncks
-                for a in self.chunk(fin, self.maxInsertRows):
-                    # Build sql INSERT query depending on database
-                    if self.dialog.dbType == 'postgis':
-                        sql = "BEGIN;"
-                        sql = self.qc.setSearchPath(sql, self.dialog.schema)
-                        sql+= '\n'.join(
-                            [
-                            "INSERT INTO \"%s\" VALUES (%s);" % (
-                                table,
-                                self.connector.quoteString( r.sub(' ', x.strip('\r\n')) )
-                            ) for x in a if x
-                            ]
-                        )
-                        sql+= "COMMIT;"
-                        self.executeSqlQuery(sql)
-                    else:
-                        c = self.connector._get_cursor()
-                        c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x.strip('\r\n')) ,) for x in a if x] )
-                        self.connector._commit()
-                        c.close()
-                        del c
+            table = item['table']
+            self.totalSteps+= len(majList)
+
+            for fpath in majList:
+
+                # read file content
+                with open(fpath) as fin:
+                    # Divide file into chuncks
+                    for a in self.chunk(fin, self.maxInsertRows):
+                        # Build sql INSERT query depending on database
+                        if self.dialog.dbType == 'postgis':
+                            sql = "BEGIN;"
+                            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+                            sql+= '\n'.join(
+                                [
+                                "INSERT INTO \"%s\" VALUES (%s);" % (
+                                    table,
+                                    self.connector.quoteString( r.sub(' ', x.strip('\r\n')) )
+                                ) for x in a if x
+                                ]
+                            )
+                            sql+= "COMMIT;"
+                            self.qc.updateLog(sql)
+                            self.executeSqlQuery(sql)
+                        else:
+                            c = self.connector._get_cursor()
+                            c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x.strip('\r\n')) ,) for x in a if x] )
+                            self.connector._commit()
+                            c.close()
+                            del c
 
 
     def importEdigeo(self):
