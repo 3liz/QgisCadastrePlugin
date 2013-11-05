@@ -201,7 +201,7 @@
           <item>
            <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>Le plugin 3liz a été conçu et développé par la Société 3LIZ</string>
+             <string>Le plugin Cadastre a été conçu et développé par la Société 3liz</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>

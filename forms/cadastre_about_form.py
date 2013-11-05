@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_about_form.ui'
 #
-# Created: Tue Nov  5 10:32:24 2013
+# Created: Tue Nov  5 16:39:48 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -205,7 +205,7 @@ class Ui_cadastre_about_form(object):
         self.label_7.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.picardie.fr/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_picardie.png\"/></a></p></body></html>", None))
         self.label_2.setText(_translate("cadastre_about_form", "<a href=\"http://www.picardie.fr/\" style=\"color:#434343;text-decoration:none;\">Le Conseil Régional de Picardie</a>", None))
         self.groupBox_2.setTitle(_translate("cadastre_about_form", "Conception", None))
-        self.label_10.setText(_translate("cadastre_about_form", "Le plugin 3liz a été conçu et développé par la Société 3LIZ", None))
+        self.label_10.setText(_translate("cadastre_about_form", "Le plugin Cadastre a été conçu et développé par la Société 3liz", None))
         self.label_12.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.3liz.com/\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_3liz.png\"/></a></p></body></html>", None))
         self.label_11.setText(_translate("cadastre_about_form", "<a href=\"http://www.3liz.com\" style=\"color:#7BA11A;text-decoration:none;\">Libérez vos SIG !</a>", None))
         self.groupBox_3.setTitle(_translate("cadastre_about_form", "Auteurs", None))
