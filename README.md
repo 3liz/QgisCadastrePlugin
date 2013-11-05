@@ -15,10 +15,10 @@ Financeurs
 
 La réalisation du plugin Cadastre a été financée par :
 
-* L'Agence de Développement et  d'Urbanisme du Grand Amiénois ( http://www.aduga.org )
-* Le Conseil Régional de Picardie ( http://www.picardie.fr )
 * L'Union Européenne ( http://europa.eu/index_fr.htm )
 * Le  Fonds Européen de Développement Régional de Picardie ( http://www.picardie-europe.eu )
+* Le Conseil Régional de Picardie ( http://www.picardie.fr )
+* L'Agence de Développement et  d'Urbanisme du Grand Amiénois ( http://www.aduga.org )
 
 Conception
 ==========
