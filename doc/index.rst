@@ -13,6 +13,7 @@ Plugin Cadastre - Documentation utilisateur
   :keywords: documentation, QGIS, plugin, cadastre, 3liz
 
 
+
 Installation
 ===========================================
 
@@ -39,6 +40,10 @@ Configurer le plugin
 Avant d'importer les premières données cadastrales dans la base de données, il faut au préalable configurer le plugin :
 
 * Menu **Cadastre > Configurer le plugin** ou **icône outils** de la barre d'outil Cadastre
+
+.. image:: MEDIA/cadastre_option_dialog.png
+   :align: center
+
 
 Interface
 -----------
@@ -78,6 +83,10 @@ Importer des données
 ===========================================
 
 Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MAJIC**.
+
+.. image:: MEDIA/cadastre_import_dialog.png
+   :align: center
+
 
 Principe
 ------------
@@ -168,6 +177,8 @@ Note::
 Charger des données
 ===========================================
 
+.. image:: MEDIA/cadastre_load_dialog.png
+   :align: center
 
 
 * Menu **Cadastre > Charger des données**
@@ -227,6 +238,10 @@ La fenêtre d'identification s'affiche alors, et présente
 
 Le panneau de recherche
 ===========================================
+
+.. image:: MEDIA/cadastre_search_dialog.png
+   :align: center
+
 
 Principe
 ----------
