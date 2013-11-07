@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'cadastre_load_form.ui'
+# Form implementation generated from reading ui file 'forms/cadastre_load_form.ui'
 #
-# Created: Mon Oct 21 16:50:38 2013
+# Created: Thu Nov  7 15:47:51 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,20 +26,18 @@ except AttributeError:
 class Ui_cadastre_load_form(object):
     def setupUi(self, cadastre_load_form):
         cadastre_load_form.setObjectName(_fromUtf8("cadastre_load_form"))
-        cadastre_load_form.resize(281, 625)
-        self.dockWidgetContents = QtGui.QWidget()
-        self.dockWidgetContents.setObjectName(_fromUtf8("dockWidgetContents"))
-        self.verticalLayout = QtGui.QVBoxLayout(self.dockWidgetContents)
+        cadastre_load_form.resize(352, 580)
+        self.verticalLayout = QtGui.QVBoxLayout(cadastre_load_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.scrollArea_3 = QtGui.QScrollArea(self.dockWidgetContents)
-        self.scrollArea_3.setWidgetResizable(True)
-        self.scrollArea_3.setObjectName(_fromUtf8("scrollArea_3"))
-        self.scrollAreaWidgetContents_3 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_3.setGeometry(QtCore.QRect(0, 0, 261, 580))
-        self.scrollAreaWidgetContents_3.setObjectName(_fromUtf8("scrollAreaWidgetContents_3"))
-        self.verticalLayout_13 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents_3)
-        self.verticalLayout_13.setObjectName(_fromUtf8("verticalLayout_13"))
-        self.groupBox = QtGui.QGroupBox(self.scrollAreaWidgetContents_3)
+        self.scrollArea = QtGui.QScrollArea(cadastre_load_form)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
+        self.scrollAreaWidgetContents = QtGui.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 332, 527))
+        self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
+        self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.groupBox = QtGui.QGroupBox(self.scrollAreaWidgetContents)
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.groupBox)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -67,8 +65,8 @@ class Ui_cadastre_load_form(object):
         self.liDbType.addItem(_fromUtf8(""))
         self.gridLayout.addWidget(self.liDbType, 0, 1, 1, 1)
         self.verticalLayout_6.addLayout(self.gridLayout)
-        self.verticalLayout_13.addWidget(self.groupBox)
-        self.groupBox_5 = QtGui.QGroupBox(self.scrollAreaWidgetContents_3)
+        self.verticalLayout_2.addWidget(self.groupBox)
+        self.groupBox_5 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
         self.groupBox_5.setObjectName(_fromUtf8("groupBox_5"))
         self.verticalLayout_14 = QtGui.QVBoxLayout(self.groupBox_5)
         self.verticalLayout_14.setObjectName(_fromUtf8("verticalLayout_14"))
@@ -83,8 +81,8 @@ class Ui_cadastre_load_form(object):
         self.liTheme.addItem(_fromUtf8(""))
         self.horizontalLayout_8.addWidget(self.liTheme)
         self.verticalLayout_14.addLayout(self.horizontalLayout_8)
-        self.verticalLayout_13.addWidget(self.groupBox_5)
-        self.groupBox_6 = QtGui.QGroupBox(self.scrollAreaWidgetContents_3)
+        self.verticalLayout_2.addWidget(self.groupBox_5)
+        self.groupBox_6 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
         self.groupBox_6.setObjectName(_fromUtf8("groupBox_6"))
         self.verticalLayout_15 = QtGui.QVBoxLayout(self.groupBox_6)
         self.verticalLayout_15.setObjectName(_fromUtf8("verticalLayout_15"))
@@ -93,28 +91,31 @@ class Ui_cadastre_load_form(object):
         self.liOverrideLayer.addItem(_fromUtf8(""))
         self.liOverrideLayer.addItem(_fromUtf8(""))
         self.verticalLayout_15.addWidget(self.liOverrideLayer)
-        self.verticalLayout_13.addWidget(self.groupBox_6)
-        self.btProcessLoading = QtGui.QPushButton(self.scrollAreaWidgetContents_3)
+        self.verticalLayout_2.addWidget(self.groupBox_6)
+        self.btProcessLoading = QtGui.QPushButton(self.scrollAreaWidgetContents)
         self.btProcessLoading.setObjectName(_fromUtf8("btProcessLoading"))
-        self.verticalLayout_13.addWidget(self.btProcessLoading)
-        self.pbProcess = QtGui.QProgressBar(self.scrollAreaWidgetContents_3)
+        self.verticalLayout_2.addWidget(self.btProcessLoading)
+        self.pbProcess = QtGui.QProgressBar(self.scrollAreaWidgetContents)
         self.pbProcess.setProperty("value", 0)
         self.pbProcess.setObjectName(_fromUtf8("pbProcess"))
-        self.verticalLayout_13.addWidget(self.pbProcess)
-        self.txtLog = QtGui.QTextEdit(self.scrollAreaWidgetContents_3)
+        self.verticalLayout_2.addWidget(self.pbProcess)
+        self.txtLog = QtGui.QTextEdit(self.scrollAreaWidgetContents)
         self.txtLog.setObjectName(_fromUtf8("txtLog"))
-        self.verticalLayout_13.addWidget(self.txtLog)
+        self.verticalLayout_2.addWidget(self.txtLog)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_13.addItem(spacerItem)
-        self.scrollArea_3.setWidget(self.scrollAreaWidgetContents_3)
-        self.verticalLayout.addWidget(self.scrollArea_3)
-        cadastre_load_form.setWidget(self.dockWidgetContents)
+        self.verticalLayout_2.addItem(spacerItem)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.verticalLayout.addWidget(self.scrollArea)
+        self.buttonBox = QtGui.QDialogButtonBox(cadastre_load_form)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close)
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
+        self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(cadastre_load_form)
         QtCore.QMetaObject.connectSlotsByName(cadastre_load_form)
 
     def retranslateUi(self, cadastre_load_form):
-        cadastre_load_form.setWindowTitle(_translate("cadastre_load_form", "Cadastre - Charger les données", None))
+        cadastre_load_form.setWindowTitle(_translate("cadastre_load_form", "Cadastre", None))
         self.groupBox.setTitle(_translate("cadastre_load_form", "Base de données de travail", None))
         self.label_2.setText(_translate("cadastre_load_form", "Connexions", None))
         self.label_3.setText(_translate("cadastre_load_form", "Schéma", None))
@@ -136,3 +137,4 @@ class Ui_cadastre_load_form(object):
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
 
+import resource_rc

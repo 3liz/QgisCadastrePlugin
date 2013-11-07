@@ -35,7 +35,7 @@ class cadastre_menu:
         self.iface = iface
         self.mapCanvas = iface.mapCanvas()
         self.cadastre_menu = None
-        self.cadastre_load_dialog = None
+
         self.cadastre_search_dialog = None
         self.qc = None
 
@@ -68,13 +68,7 @@ class cadastre_menu:
         # Load Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/output.png")
         self.load_action = QAction(icon, u"Charger des données", self.iface.mainWindow())
-        QObject.connect(self.load_action, SIGNAL("triggered()"), self.toggle_load_dialog)
-        if not self.cadastre_load_dialog:
-            dialog = cadastre_load_dialog(
-                self.iface,
-                self.cadastre_search_dialog
-            )
-            self.cadastre_load_dialog = dialog
+        QObject.connect(self.load_action, SIGNAL("triggered()"), self.open_load_dialog)
 
         # Options Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/config.png")
@@ -118,8 +112,7 @@ class cadastre_menu:
             u"Charger des données",
             self.iface.mainWindow()
         )
-        self.openLoadAction.triggered.connect(self.toggle_load_dialog)
-        #~ self.openLoadAction.setCheckable(True)
+        self.openLoadAction.triggered.connect(self.open_load_dialog)
         self.toolbar.addAction(self.openLoadAction)
 
         # open search dialog
@@ -186,17 +179,15 @@ class cadastre_menu:
         dialog = cadastre_import_dialog(self.iface)
         dialog.exec_()
 
-    def toggle_load_dialog(self):
+    def open_load_dialog(self):
         '''
-        Load dock widget
+        Load dialog
         '''
-        if self.cadastre_load_dialog.isVisible():
-            self.cadastre_load_dialog.hide()
-        else:
-            self.cadastre_load_dialog.show()
-
-            # hide search dialog if necessary
-            self.cadastre_search_dialog.hide()
+        dialog = cadastre_load_dialog(
+            self.iface,
+            self.cadastre_search_dialog
+        )
+        dialog.exec_()
 
     def toggle_search_dialog(self):
         '''
@@ -206,9 +197,6 @@ class cadastre_menu:
             self.cadastre_search_dialog.hide()
         else:
             self.cadastre_search_dialog.show()
-
-            # hide load dialog if necessary
-            self.cadastre_load_dialog.hide()
 
     def open_option_dialog(self):
         '''
@@ -285,9 +273,6 @@ class cadastre_menu:
         else:
             self.iface.removePluginMenu("&cadastre", self.cadastre_menu.menuAction())
             self.cadastre_menu.deleteLater()
-
-        if self.cadastre_load_dialog:
-            self.iface.removeDockWidget(self.cadastre_load_dialog)
 
         if self.cadastre_search_dialog:
             self.iface.removeDockWidget(self.cadastre_search_dialog)

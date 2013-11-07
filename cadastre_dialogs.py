@@ -999,12 +999,11 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
 from cadastre_load_form import *
 from cadastre_loading import *
 
-class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
+class cadastre_load_dialog(QDialog, Ui_cadastre_load_form):
     def __init__(self, iface, cadastre_search_dialog):
-        QDockWidget.__init__(self)
+        QDialog.__init__(self)
         self.iface = iface
         self.setupUi(self)
-        self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
         self.mc = self.iface.mapCanvas()
 
         self.cadastre_search_dialog = cadastre_search_dialog
@@ -1039,6 +1038,16 @@ class cadastre_load_dialog(QDockWidget, Ui_cadastre_load_form):
         self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
         self.btProcessLoading.clicked.connect(self.onProcessLoadingClicked)
         self.ql.cadastreLoadingFinished.connect(self.onLoadingEnd)
+        self.rejected.connect(self.onClose)
+        self.buttonBox.rejected.connect(self.onClose)
+
+    def onClose(self):
+        '''
+        Close dialog
+        '''
+        if self.db:
+            self.db.connector.__del__()
+        self.close()
 
 
     def getStyleList(self):

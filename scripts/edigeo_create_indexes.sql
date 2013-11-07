@@ -27,6 +27,7 @@ DROP INDEX IF EXISTS geo_parcelle_idu_idx;
 CREATE INDEX geo_parcelle_idu_idx ON geo_parcelle (idu);
 DROP INDEX IF EXISTS geo_parcelle_geo_parcelle;
 CREATE INDEX parcelle_geo_parcelle_idx ON parcelle (geo_parcelle);
+DROP INDEX IF EXISTS geo_section_geo_commune_idx;
 CREATE INDEX geo_section_geo_commune_idx ON geo_section (geo_commune);
 DROP INDEX IF EXISTS geo_parcelle_geo_section_idx;
 CREATE INDEX geo_parcelle_geo_section_idx ON geo_parcelle (geo_section);
