@@ -1,4 +1,19 @@
 CHANGELOG
+  Version 0.9.3
+  * Documentation - ajout d'une documentation (avec copies d'écran)
+  * Chargement - remplacement du panneau par une fenêtre
+  * Configurer - ajout d'un option pour le type de stockage temporaire de Spatialite
+  * Import - spatialite : remove disablespatialindex
+  * Import - Amélioration des imports consécutifs (indexes, erreurs spatialites, etc.)
+  * Majic - import récursif
+  * Général - ajout d'un menu d'aide et rédaction de l'aide
+  * Import - restriction des imports à 2012 et 2013
+  * Export - amélioration des calculs des sommes
+  * A propos - correction coquille
+  * Recherche/Export - gestion des propriétaires sur plusieurs communes
+  * About - ajout du lien vers le dépôt Github
+  * A propos - modification de l'ordre des financeurs
+
   Version 0.9.2
   * Import - suppression des indexes avant ajout Majic incrémental
   * Général - rédaction du README et metadata

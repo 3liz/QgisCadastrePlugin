@@ -7,7 +7,7 @@ description=
 
     This plugins helps users to use french land registry data ("cadastre") in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Européen de Développement Régional de Picardie, Connseil Régional de Picardie, Agence de Développement et  d'Urbanisme du Grand Amiénois (ADUGA).
 
-version=0.9.2
+version=0.9.3
 author=3liz
 email=info@3liz.com
 
@@ -17,17 +17,20 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.9.2
-  * Import - suppression des indexes avant ajout Majic incrémental
-  * Général - rédaction du README et metadata
-  * Import - amélioration de l'import Spatialite
-  * A propos - ajout du remerciement aux auteurs d'OpenCadastre
-  * Général - affichage de la fenêtre 'A propos' à la 1ère utilisation
-  * Option - ajout de l'aide pour changer d'interface
-  * Import - amélioration des scripts
-  * Import - La Direction est bloquée : entier entre 0 et 5
-  * Chargement - renommage des couches && fermeture des légendes
-  * Recherche/Identification - désactivation des outils nécessitant MAJIC si pas de données
+  Version 0.9.3
+  * Documentation - ajout d'une documentation (avec copies d'écran)
+  * Chargement - remplacement du panneau par une fenêtre
+  * Configurer - ajout d'un option pour le type de stockage temporaire de Spatialite
+  * Import - spatialite : remove disablespatialindex
+  * Import - Amélioration des imports consécutifs (indexes, erreurs spatialites, etc.)
+  * Majic - import récursif
+  * Général - ajout d'un menu d'aide et rédaction de l'aide
+  * Import - restriction des imports à 2012 et 2013
+  * Export - amélioration des calculs des sommes
+  * A propos - correction coquille
+  * Recherche/Export - gestion des propriétaires sur plusieurs communes
+  * About - ajout du lien vers le dépôt Github
+  * A propos - modification de l'ordre des financeurs
 
 
 
