@@ -487,9 +487,6 @@ class cadastre_common():
         r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
         sql = r.sub(r"SELECT createSpatialIndex('\2', '\5');", sql)
 
-        #~ r = re.compile(r'drop index if exists (geo_[a-z]+)_(geom[a-z_]*)_idx;',  re.IGNORECASE|re.MULTILINE)
-        #~ sql = r.sub(r"SELECT disableSpatialIndex('\1', '\2');", sql)
-
         # update from : geo_parcelle -> parcelle
         r = re.compile(r'update parcelle SET geo_parcelle=g.geo_parcelle[^;]+;', re.IGNORECASE|re.MULTILINE)
         res = r.findall(sql)
