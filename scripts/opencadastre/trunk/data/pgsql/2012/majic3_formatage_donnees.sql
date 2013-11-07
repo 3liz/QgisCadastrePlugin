@@ -259,44 +259,18 @@ CREATE INDEX idxan_local00 ON local00 (annee);
 CREATE INDEX idxan_local10 ON local10 (annee);
 CREATE INDEX idx_local10_invar ON [PREFIXE]local10 (invar);
 CREATE INDEX idx_local00_invar ON [PREFIXE]local00 (invar);
---~ UPDATE [PREFIXE]local10 SET
-  --~ ccopre = local00.ccopre,
-  --~ ccosec = local00.ccosec,
-  --~ dnupla = local00.dnupla,
-  --~ ccoriv = local00.ccoriv,
-  --~ ccovoi = local00.ccovoi,
-  --~ dnvoiri = local00.dnvoiri,
-  --~ local00 = local10.annee||local10.invar,
-  --~ parcelle = REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '-'),
-  --~ voie= REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi||local00.ccoriv,' ', '-')
---~ FROM [PREFIXE]local00
---~ WHERE local00.invar = local10.invar AND local00.annee='[ANNEE]' AND local10.annee='[ANNEE]';
-
-CREATE TABLE ll AS
-SELECT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
-FROM local00 l
-INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
-WHERE l10.annee='[ANNEE]';
-CREATE INDEX  idx_ll_invar ON ll (invar);
-UPDATE local10 SET ccopre = (SELECT DISTINCT ll.ccopre FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-UPDATE local10 SET ccosec = (SELECT DISTINCT ll.ccosec FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-UPDATE local10 SET dnupla = (SELECT DISTINCT ll.dnupla FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-UPDATE local10 SET ccoriv = (SELECT DISTINCT ll.ccoriv FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-UPDATE local10 SET ccovoi = (SELECT DISTINCT ll.ccovoi FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-UPDATE local10 SET dnvoiri = (SELECT DISTINCT ll.dnvoiri FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-UPDATE local10 SET local00 = (SELECT DISTINCT ll.local00 FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-UPDATE local10 SET parcelle = (SELECT DISTINCT ll.parcelle FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-UPDATE local10 SET voie = (SELECT DISTINCT ll.voie FROM ll WHERE ll.invar = local10.invar)
-WHERE local10.annee = '[ANNEE]';
-DROP TABLE ll;
+UPDATE [PREFIXE]local10 SET
+  ccopre = local00.ccopre,
+  ccosec = local00.ccosec,
+  dnupla = local00.dnupla,
+  ccoriv = local00.ccoriv,
+  ccovoi = local00.ccovoi,
+  dnvoiri = local00.dnvoiri,
+  local00 = local10.annee||local10.invar,
+  parcelle = REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '-'),
+  voie= REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi||local00.ccoriv,' ', '-')
+FROM [PREFIXE]local00
+WHERE local00.invar = local10.invar AND local00.annee='[ANNEE]' AND local10.annee='[ANNEE]';
 
 -- Traitement: pev
 INSERT INTO [PREFIXE]pev

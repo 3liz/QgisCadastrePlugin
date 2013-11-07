@@ -487,6 +487,9 @@ class cadastre_common():
         r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
         sql = r.sub(r"SELECT createSpatialIndex('\2', '\5');", sql)
 
+        #~ r = re.compile(r'drop index if exists (geo_[a-z]+)_(geom[a-z_]*)_idx;',  re.IGNORECASE|re.MULTILINE)
+        #~ sql = r.sub(r"SELECT disableSpatialIndex('\1', '\2');", sql)
+
         # update from : geo_parcelle -> parcelle
         r = re.compile(r'update parcelle SET geo_parcelle=g.geo_parcelle[^;]+;', re.IGNORECASE|re.MULTILINE)
         res = r.findall(sql)
@@ -589,7 +592,7 @@ class cadastre_common():
         for statement in res:
             replaceBy = '''
             CREATE TABLE ll AS
-            SELECT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
+            SELECT DISTINCT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
             FROM local00 l
             INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
             WHERE l10.annee='?';

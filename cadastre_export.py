@@ -382,6 +382,19 @@ class cadastreExport(QObject):
             cl.setFrameEnabled(False)
             composition.addItem(cl)
 
+        # Add watershed
+        w = QgsComposerPicture(composition)
+        w.setItemPosition(50, (page - 1) * (self.pageHeight + 10), 150, 100)
+        w.setFrameEnabled(False)
+        pictureFile = os.path.join(
+            self.qc.plugin_dir,
+            "templates/experimental.svg"
+        )
+        w.setPictureFile(pictureFile)
+        w.setBackgroundEnabled(False)
+        w.setTransparency(60)
+        composition.addItem(w)
+
 
     def exportAsPDF(self):
         '''

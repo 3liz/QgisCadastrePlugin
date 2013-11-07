@@ -212,13 +212,6 @@ class cadastreImport(QObject):
         jobTitle = u'MAJIC'
         self.beginJobLog(12, jobTitle)
 
-        #~ # copy files in temp dir
-        #~ self.dialog.subStepLabel.setText('Copie des fichiers')
-        #~ self.updateProgressBar()
-        #~ self.copyFilesToTemp(self.dialog.majicSourceDir, self.majicDir)
-        #~ self.updateTimer()
-        #~ self.updateProgressBar()
-
         # dict for parameters replacement
         replaceDict = self.replaceDict.copy()
         mandatoryFilesKeys =  ['[FICHIER_BATI]', '[FICHIER_FANTOIR]', '[FICHIER_NBATI]', '[FICHIER_PROP]']
@@ -232,17 +225,7 @@ class cadastreImport(QObject):
                     #~ self.go = False
                     #~ self.qc.updateLog( u"Il manque des fichiers MAJIC ! L'import est annulé.")
                     #~ return
-                #~ else:
-                    #~ # create empty file
-                    #~ fout = open(fpath, 'w')
-                    #~ data = ''
-                    #~ fout.write(data)
-                    #~ fout.close()
 
-            #~ # chmod file to give access to postgresql for COPY FROM query
-            #~ os.chmod(fpath, 0o755)
-
-        #~ replaceDict['[CHEMIN]'] = os.path.realpath(self.majicDir) + '/'
 
         scriptList = []
         scriptList.append(
@@ -260,6 +243,12 @@ class cadastreImport(QObject):
                 {
                 'title' : u'Purge des données MAJIC',
                 'script' : 'COMMUN/majic3_purge_donnees.sql'
+                }
+            )
+            scriptList.append(
+                {
+                'title' : u'Purge des données brutes',
+                'script' : 'COMMUN/majic3_purge_donnees_brutes.sql'
                 }
             )
 
@@ -332,7 +321,8 @@ class cadastreImport(QObject):
             scriptList.append(
                 {
                     'title' : u'Création des indexes spatiaux',
-                    'script' : 'edigeo_create_indexes.sql'
+                    'script' : 'edigeo_create_indexes.sql',
+                    'divide': True
                 }
             )
 
@@ -344,7 +334,7 @@ class cadastreImport(QObject):
                     'title' : u'Ajout des contraintes',
                     'script' : 'COMMUN/creation_contraintes.sql',
                     'constraints': True,
-                    #~ 'divide': True
+                    'divide': True
                 }
             )
 
@@ -409,6 +399,7 @@ class cadastreImport(QObject):
             self.totalSteps+= len(majList)
 
             for fpath in majList:
+                self.qc.updateLog(fpath)
 
                 # read file content
                 with open(fpath) as fin:
@@ -427,7 +418,6 @@ class cadastreImport(QObject):
                                 ]
                             )
                             sql+= "COMMIT;"
-                            self.qc.updateLog(sql)
                             self.executeSqlQuery(sql)
                         else:
                             c = self.connector._get_cursor()
@@ -857,20 +847,33 @@ class cadastreImport(QObject):
                 self.updateProgressBar()
                 r = re.compile(r'select |insert |update |delete |alter |create |drop |truncate |comment |copy |vacuum |analyze ', re.IGNORECASE|re.MULTILINE)
                 for sqla in statements:
-                    if self.go:
-                        cr = re.compile(r'-- (.+)', re.IGNORECASE|re.MULTILINE)
-                        ut = False
-                        for comment in cr.findall(sqla):
-                            self.qc.updateLog('  - %s' % comment.strip(' \n\r\t'))
-                            ut = True
-                        if r.search(sqla) and len(sqla.split('~')) == 1:
-                            sql = 'BEGIN;%s;COMMIT;' % sqla
-                            #~ self.qc.updateLog('$$%s@@' % sql)
-                            self.updateProgressBar()
+                    if not self.go:
+                        break
+
+                    cr = re.compile(r'-- (.+)', re.IGNORECASE|re.MULTILINE)
+                    ut = False
+                    for comment in cr.findall(sqla):
+                        self.qc.updateLog('  - %s' % comment.strip(' \n\r\t'))
+                        ut = True
+                    # Do nothing if sql is only comment
+                    if not r.search(sqla) or not len(sqla.split('~')) == 1:
+                        continue
+
+                    sql = '%s' % sqla
+                    #~ self.qc.updateLog('@@%s$$' % sql)
+                    self.updateProgressBar()
+                    # Avoid adding 2 times the same column for spatialite
+                    if  self.dialog.dbType == 'spatialite' \
+                    and re.search(r'ADD COLUMN tempo_import', sqla, re.IGNORECASE):
+                        try:
                             self.executeSqlQuery(sql, ignoreError)
-                            if ut:
-                                self.updateTimer()
-                            self.updateProgressBar()
+                        except:
+                            pass
+                    else:
+                        self.executeSqlQuery(sql, ignoreError)
+                    if ut:
+                        self.updateTimer()
+                    self.updateProgressBar()
             QApplication.restoreOverrideCursor()
 
         return None
@@ -908,15 +911,13 @@ class cadastreImport(QObject):
                             pass
 
             if self.dialog.dbType == 'spatialite':
+                #~ self.qc.updateLog(sql)
                 try:
                     c = self.connector._get_cursor()
-                    #~ self.qc.updateLog(sql)
                     c.executescript(sql)
-                except:
-                    if not ignoreError \
-                    and not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
-                    and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE) \
-                    and not re.search(r'createspatialindex', sql, re.IGNORECASE):
+                except BaseError as e:
+                    if not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
+                    and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                         self.go = False
                         self.qc.updateLog(u"Erreurs rencontrées pour la requête: <p>%s</p>" % sql)
                 finally:

@@ -861,7 +861,7 @@ ALTER TABLE geo_dur ADD PRIMARY KEY (geo_dur);
 
 CREATE TABLE geo_batiment
 (
-  geo_batiment character varying(14) NOT NULL,
+  geo_batiment character varying NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   geo_dur character varying(2),
@@ -877,7 +877,7 @@ CREATE TABLE geo_batiment_parcelle
 (
   geo_batiment_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
-  geo_batiment character varying(14) NOT NULL,
+  geo_batiment character varying NOT NULL,
   geo_parcelle character varying(16) NOT NULL
 );
 
