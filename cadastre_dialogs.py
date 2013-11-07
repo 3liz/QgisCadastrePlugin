@@ -1958,6 +1958,13 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         maxInsertRows = s.value("cadastre/maxInsertRows", 100000, type=int)
         if maxInsertRows:
             self.inMaxInsertRows.setValue(maxInsertRows)
+        spatialiteTempStore = s.value("cadastre/spatialiteTempStore", 'MEMORY', type=str)
+        if spatialiteTempStore and hasattr(self, 'inSpatialiteTempStore'):
+            if spatialiteTempStore == 'MEMORY':
+                self.inSpatialiteTempStore.setCurrentIndex(0)
+            else:
+                self.inSpatialiteTempStore.setCurrentIndex(1)
+
 
 
     def applyInterface(self, key):
@@ -2005,8 +2012,9 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         # Save temp dir
         s.setValue("cadastre/tempDir", self.inTempDir.text().strip(' \t\n\r'))
 
-        # Save maxInsertRows
+        # Save performance tuning
         s.setValue("cadastre/maxInsertRows", int(self.inMaxInsertRows.value()))
+        s.setValue("cadastre/spatialiteTempStore", self.inSpatialiteTempStore.currentText().upper())
 
         self.accept()
 

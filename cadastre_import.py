@@ -71,6 +71,7 @@ class cadastreImport(QObject):
             '[LOT]' : self.dialog.edigeoLot
         }
         self.maxInsertRows = s.value("cadastre/maxInsertRows", 50000, type=int)
+        self.spatialiteTempStore = s.value("cadastre/spatialiteTempStore", 'MEMORY', type=str)
 
         self.geoTableList = ['geo_zoncommuni', 'geo_ptcanv', 'geo_commune', 'geo_parcelle', 'geo_symblim', 'geo_tronfluv', 'geo_label', 'geo_subdsect', 'geo_batiment', 'geo_borne', 'geo_croix', 'geo_tpoint', 'geo_lieudit', 'geo_section', 'geo_subdfisc', 'geo_tsurf', 'geo_tline']
 
@@ -136,7 +137,7 @@ class cadastreImport(QObject):
             sql = "SET LOCAL synchronous_commit TO off;"
 
         if self.dialog.dbType == 'spatialite':
-            sql = 'PRAGMA synchronous = OFF;PRAGMA journal_mode = MEMORY;PRAGMA temp_store = MEMORY;PRAGMA cache_size = 500000'
+            sql = 'PRAGMA synchronous = OFF;PRAGMA journal_mode = MEMORY;PRAGMA temp_store = %s;PRAGMA cache_size = 500000' % self.spatialiteTempStore
 
         self.executeSqlQuery(sql)
 

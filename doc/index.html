@@ -393,6 +393,14 @@ Il est important de bien configurer ces noms de fichiers avant votre premier imp
 <p>Vous pouvez choisir le répertoire dans lequel les scripts seront copiés, et les fichiers décompressés. Choisisez un répertoire contenant assez de place pour stocker les fichiers temporaires, surtout si vous souhaitez charger des données volumineuses.</p>
 <p>Ce répertoire est aussi celui dans lequel les <strong>relevés parcellaires</strong> et les <strong>relevés de propriété</strong> seront exportés.</p>
 </div>
+<div class="section" id="performances">
+<h2>Performances</h2>
+<p>Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de votre matériel :</p>
+<ul class="simple">
+<li><strong>Taille maximum des requêtes INSERT</strong> : Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du temps.</li>
+<li><strong>Stockage temporaire</strong> : Le mode <em>MEMORY</em> est plus rapide, mais nécessite assez de mémoire vive pour stocker les données à traiter. Le mode <em>DEFAULT</em> est plus lent et adapté à des ordinateurs avec peu de mémoire vive.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="importer-des-donnees">
 <h1>Importer des données</h1>

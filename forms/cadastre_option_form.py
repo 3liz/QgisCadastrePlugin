@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_option_form.ui'
 #
-# Created: Fri Oct 25 16:45:10 2013
+# Created: Thu Nov  7 15:28:21 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_option_form(object):
     def setupUi(self, cadastre_option_form):
         cadastre_option_form.setObjectName(_fromUtf8("cadastre_option_form"))
-        cadastre_option_form.resize(534, 589)
+        cadastre_option_form.resize(543, 639)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_option_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_option_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 514, 569))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 523, 619))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -119,18 +119,26 @@ class Ui_cadastre_option_form(object):
         self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.groupBox_3)
         self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
-        self.horizontalLayout_2 = QtGui.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.gridLayout_2 = QtGui.QGridLayout()
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.label_7 = QtGui.QLabel(self.groupBox_3)
         self.label_7.setObjectName(_fromUtf8("label_7"))
-        self.horizontalLayout_2.addWidget(self.label_7)
+        self.gridLayout_2.addWidget(self.label_7, 0, 0, 1, 1)
         self.inMaxInsertRows = QtGui.QSpinBox(self.groupBox_3)
         self.inMaxInsertRows.setMinimum(1000)
         self.inMaxInsertRows.setMaximum(1000000)
         self.inMaxInsertRows.setProperty("value", 50000)
         self.inMaxInsertRows.setObjectName(_fromUtf8("inMaxInsertRows"))
-        self.horizontalLayout_2.addWidget(self.inMaxInsertRows)
-        self.verticalLayout_5.addLayout(self.horizontalLayout_2)
+        self.gridLayout_2.addWidget(self.inMaxInsertRows, 0, 1, 1, 1)
+        self.label_8 = QtGui.QLabel(self.groupBox_3)
+        self.label_8.setObjectName(_fromUtf8("label_8"))
+        self.gridLayout_2.addWidget(self.label_8, 1, 0, 1, 1)
+        self.inSpatialiteTempStore = QtGui.QComboBox(self.groupBox_3)
+        self.inSpatialiteTempStore.setObjectName(_fromUtf8("inSpatialiteTempStore"))
+        self.inSpatialiteTempStore.addItem(_fromUtf8(""))
+        self.inSpatialiteTempStore.addItem(_fromUtf8(""))
+        self.gridLayout_2.addWidget(self.inSpatialiteTempStore, 1, 1, 1, 1)
+        self.verticalLayout_5.addLayout(self.gridLayout_2)
         self.verticalLayout_2.addWidget(self.groupBox_3)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
@@ -172,5 +180,8 @@ class Ui_cadastre_option_form(object):
         self.btTempDir.setText(_translate("cadastre_option_form", "...", None))
         self.groupBox_3.setTitle(_translate("cadastre_option_form", "Performances", None))
         self.label_7.setText(_translate("cadastre_option_form", "Taille maximum des requêtes INSERT", None))
+        self.label_8.setText(_translate("cadastre_option_form", "Spatialite - stockage temporaire", None))
+        self.inSpatialiteTempStore.setItemText(0, _translate("cadastre_option_form", "MEMORY", None))
+        self.inSpatialiteTempStore.setItemText(1, _translate("cadastre_option_form", "DEFAULT", None))
 
 import resource_rc

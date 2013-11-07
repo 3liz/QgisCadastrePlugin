@@ -64,6 +64,16 @@ Vous pouvez choisir le répertoire dans lequel les scripts seront copiés, et le
 Ce répertoire est aussi celui dans lequel les **relevés parcellaires** et les **relevés de propriété** seront exportés.
 
 
+Performances
+-------------
+
+Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de votre matériel :
+
+* **Taille maximum des requêtes INSERT** : Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du temps.
+
+* **Stockage temporaire** : Le mode *MEMORY* est plus rapide, mais nécessite assez de mémoire vive pour stocker les données à traiter. Le mode *DEFAULT* est plus lent et adapté à des ordinateurs avec peu de mémoire vive.
+
+
 Importer des données
 ===========================================
 

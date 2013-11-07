@@ -64,12 +64,12 @@ endobj
 7 0 obj
 % Page dictionary
 << /Annots [ 4 0 R ]
- /Contents 39 0 R
+ /Contents 41 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 38 0 R
+ /Parent 40 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -92,12 +92,12 @@ endobj
 % 'Page2': class PDFPage 
 9 0 obj
 % Page dictionary
-<< /Contents 40 0 R
+<< /Contents 42 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 38 0 R
+ /Parent 40 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -111,12 +111,12 @@ endobj
 % 'Page3': class PDFPage 
 10 0 obj
 % Page dictionary
-<< /Contents 41 0 R
+<< /Contents 43 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 38 0 R
+ /Parent 40 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -130,12 +130,12 @@ endobj
 % 'Page4': class PDFPage 
 11 0 obj
 % Page dictionary
-<< /Contents 42 0 R
+<< /Contents 44 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 38 0 R
+ /Parent 40 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -149,12 +149,31 @@ endobj
 % 'Page5': class PDFPage 
 12 0 obj
 % Page dictionary
-<< /Contents 43 0 R
+<< /Contents 45 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 38 0 R
+ /Parent 40 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'Page6': class PDFPage 
+13 0 obj
+% Page dictionary
+<< /Contents 46 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 40 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -166,7 +185,7 @@ endobj
  /Type /Page >>
 endobj
 % 'Annot.NUMBER2': class PDFDictionary 
-13 0 obj
+14 0 obj
 << /A << /S /URI
  /Type /Action
  /URI (https://vimeo.com/75004889) >>
@@ -174,14 +193,14 @@ endobj
  0
  0 ]
  /Rect [ 189.0729
- 133.6953
+ 705.7736
  314.6929
- 145.6953 ]
+ 717.7736 ]
  /Subtype /Link
  /Type /Annot >>
 endobj
 % 'Annot.NUMBER3': class PDFDictionary 
-14 0 obj
+15 0 obj
 << /A << /S /URI
  /Type /Action
  /URI (https://vimeo.com/74807532) >>
@@ -189,23 +208,23 @@ endobj
  0
  0 ]
  /Rect [ 142.3829
- 115.6953
+ 687.7736
  268.0029
- 127.6953 ]
+ 699.7736 ]
  /Subtype /Link
  /Type /Annot >>
 endobj
-% 'Page6': class PDFPage 
-15 0 obj
+% 'Page7': class PDFPage 
+16 0 obj
 % Page dictionary
-<< /Annots [ 13 0 R
- 14 0 R ]
- /Contents 44 0 R
+<< /Annots [ 14 0 R
+ 15 0 R ]
+ /Contents 47 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 38 0 R
+ /Parent 40 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -216,276 +235,289 @@ endobj
  /Trans <<  >>
  /Type /Page >>
 endobj
-% 'R16': class PDFCatalog 
-16 0 obj
+% 'R17': class PDFCatalog 
+17 0 obj
 % Document Root
-<< /Outlines 18 0 R
- /PageLabels 45 0 R
+<< /Outlines 19 0 R
+ /PageLabels 48 0 R
  /PageMode /UseNone
- /Pages 38 0 R
+ /Pages 40 0 R
  /Type /Catalog >>
 endobj
-% 'R17': class PDFInfo 
-17 0 obj
+% 'R18': class PDFInfo 
+18 0 obj
 << /Author (Micha\353l DOUCHIN - 3liz)
- /CreationDate (D:20131105222420-01'00')
+ /CreationDate (D:20131107152201-01'00')
  /Creator (\(unspecified\))
  /Keywords ()
  /Producer (ReportLab PDF Library - www.reportlab.com)
  /Subject (\(unspecified\))
  /Title (Plugin Cadastre - Documentation utilisateur) >>
 endobj
-% 'R18': class PDFOutlines 
-18 0 obj
-<< /Count 23
- /First 19 0 R
- /Last 37 0 R
+% 'R19': class PDFOutlines 
+19 0 obj
+<< /Count 24
+ /First 20 0 R
+ /Last 39 0 R
  /Type /Outlines >>
 endobj
 % 'Outline.0': class OutlineEntryObject 
-19 0 obj
+20 0 obj
 << /Dest [ 7 0 R
  /XYZ
  62.69291
  599.0236
  0 ]
- /Next 20 0 R
- /Parent 18 0 R
+ /Next 21 0 R
+ /Parent 19 0 R
  /Title (Installation) >>
 endobj
 % 'Outline.1': class OutlineEntryObject 
-20 0 obj
-<< /Count 3
+21 0 obj
+<< /Count 4
  /Dest [ 7 0 R
  /XYZ
  62.69291
  338.0236
  0 ]
- /First 21 0 R
- /Last 23 0 R
- /Next 24 0 R
- /Parent 18 0 R
- /Prev 19 0 R
+ /First 22 0 R
+ /Last 25 0 R
+ /Next 26 0 R
+ /Parent 19 0 R
+ /Prev 20 0 R
  /Title (Configurer le plugin) >>
 endobj
-% 'Outline.20.0': class OutlineEntryObject 
-21 0 obj
+% 'Outline.21.0': class OutlineEntryObject 
+22 0 obj
 << /Dest [ 7 0 R
  /XYZ
  62.69291
  257.0236
  0 ]
- /Next 22 0 R
- /Parent 20 0 R
+ /Next 23 0 R
+ /Parent 21 0 R
  /Title (Interface) >>
 endobj
-% 'Outline.20.1': class OutlineEntryObject 
-22 0 obj
+% 'Outline.21.1': class OutlineEntryObject 
+23 0 obj
 << /Dest [ 7 0 R
  /XYZ
  62.69291
  155.0236
  0 ]
- /Next 23 0 R
- /Parent 20 0 R
- /Prev 21 0 R
+ /Next 24 0 R
+ /Parent 21 0 R
+ /Prev 22 0 R
  /Title (Nom des fichiers MAJIC) >>
 endobj
-% 'Outline.20.2': class OutlineEntryObject 
-23 0 obj
+% 'Outline.21.2': class OutlineEntryObject 
+24 0 obj
 << /Dest [ 9 0 R
  /XYZ
  62.69291
  710.1288
  0 ]
- /Parent 20 0 R
- /Prev 22 0 R
+ /Next 25 0 R
+ /Parent 21 0 R
+ /Prev 23 0 R
  /Title (R\351pertoire temporaire) >>
 endobj
-% 'Outline.2': class OutlineEntryObject 
-24 0 obj
-<< /Count 3
- /Dest [ 9 0 R
- /XYZ
- 62.69291
- 608.1288
- 0 ]
- /First 25 0 R
- /Last 27 0 R
- /Next 28 0 R
- /Parent 18 0 R
- /Prev 20 0 R
- /Title (Importer des donn\351es) >>
-endobj
-% 'Outline.21.0': class OutlineEntryObject 
+% 'Outline.21.3': class OutlineEntryObject 
 25 0 obj
 << /Dest [ 9 0 R
  /XYZ
  62.69291
- 557.1288
+ 608.1288
  0 ]
- /Next 26 0 R
- /Parent 24 0 R
- /Title (Principe) >>
+ /Parent 21 0 R
+ /Prev 24 0 R
+ /Title (Performances) >>
 endobj
-% 'Outline.21.1': class OutlineEntryObject 
+% 'Outline.2': class OutlineEntryObject 
 26 0 obj
+<< /Count 3
+ /Dest [ 9 0 R
+ /XYZ
+ 62.69291
+ 464.1288
+ 0 ]
+ /First 27 0 R
+ /Last 29 0 R
+ /Next 30 0 R
+ /Parent 19 0 R
+ /Prev 21 0 R
+ /Title (Importer des donn\351es) >>
+endobj
+% 'Outline.22.0': class OutlineEntryObject 
+27 0 obj
 << /Dest [ 9 0 R
  /XYZ
  62.69291
- 279.3253
+ 413.1288
  0 ]
- /Next 27 0 R
- /Parent 24 0 R
- /Prev 25 0 R
+ /Next 28 0 R
+ /Parent 26 0 R
+ /Title (Principe) >>
+endobj
+% 'Outline.22.1': class OutlineEntryObject 
+28 0 obj
+<< /Dest [ 9 0 R
+ /XYZ
+ 62.69291
+ 135.3253
+ 0 ]
+ /Next 29 0 R
+ /Parent 26 0 R
+ /Prev 27 0 R
  /Title (Bases de donn\351es) >>
 endobj
-% 'Outline.21.2': class OutlineEntryObject 
-27 0 obj
+% 'Outline.22.2': class OutlineEntryObject 
+29 0 obj
 << /Dest [ 10 0 R
  /XYZ
  62.69291
- 729.0236
+ 603.0236
  0 ]
- /Parent 24 0 R
- /Prev 26 0 R
+ /Parent 26 0 R
+ /Prev 28 0 R
  /Title (Les \351tapes d'importation) >>
 endobj
 % 'Outline.3': class OutlineEntryObject 
-28 0 obj
-<< /Dest [ 10 0 R
- /XYZ
- 62.69291
- 204.4693
- 0 ]
- /Next 29 0 R
- /Parent 18 0 R
- /Prev 24 0 R
- /Title (Charger des donn\351es) >>
-endobj
-% 'Outline.4': class OutlineEntryObject 
-29 0 obj
-<< /Count 1
- /Dest [ 11 0 R
- /XYZ
- 62.69291
- 592.4204
- 0 ]
- /First 30 0 R
- /Last 30 0 R
- /Next 31 0 R
- /Parent 18 0 R
- /Prev 28 0 R
- /Title (La barre d'outil Cadastre) >>
-endobj
-% 'Outline.22.0': class OutlineEntryObject 
 30 0 obj
 << /Dest [ 11 0 R
  /XYZ
  62.69291
- 409.4204
+ 765.0236
  0 ]
- /Parent 29 0 R
+ /Next 31 0 R
+ /Parent 19 0 R
+ /Prev 26 0 R
+ /Title (Charger des donn\351es) >>
+endobj
+% 'Outline.4': class OutlineEntryObject 
+31 0 obj
+<< /Count 1
+ /Dest [ 11 0 R
+ /XYZ
+ 62.69291
+ 456.0236
+ 0 ]
+ /First 32 0 R
+ /Last 32 0 R
+ /Next 33 0 R
+ /Parent 19 0 R
+ /Prev 30 0 R
+ /Title (La barre d'outil Cadastre) >>
+endobj
+% 'Outline.23.0': class OutlineEntryObject 
+32 0 obj
+<< /Dest [ 11 0 R
+ /XYZ
+ 62.69291
+ 273.0236
+ 0 ]
+ /Parent 31 0 R
  /Title (Indentifier une parcelle) >>
 endobj
 % 'Outline.5': class OutlineEntryObject 
-31 0 obj
+33 0 obj
 << /Count 4
  /Dest [ 12 0 R
  /XYZ
  62.69291
- 765.0236
+ 669.0236
  0 ]
- /First 32 0 R
- /Last 35 0 R
- /Next 36 0 R
- /Parent 18 0 R
- /Prev 29 0 R
+ /First 34 0 R
+ /Last 37 0 R
+ /Next 38 0 R
+ /Parent 19 0 R
+ /Prev 31 0 R
  /Title (Le panneau de recherche) >>
 endobj
-% 'Outline.23.0': class OutlineEntryObject 
-32 0 obj
-<< /Dest [ 12 0 R
- /XYZ
- 62.69291
- 732.0236
- 0 ]
- /Next 33 0 R
- /Parent 31 0 R
- /Title (Principe) >>
-endobj
-% 'Outline.23.1': class OutlineEntryObject 
-33 0 obj
-<< /Dest [ 12 0 R
- /XYZ
- 62.69291
- 517.4265
- 0 ]
- /Next 34 0 R
- /Parent 31 0 R
- /Prev 32 0 R
- /Title (Recherche de lieux) >>
-endobj
-% 'Outline.23.2': class OutlineEntryObject 
+% 'Outline.24.0': class OutlineEntryObject 
 34 0 obj
-<< /Dest [ 15 0 R
+<< /Dest [ 12 0 R
  /XYZ
  62.69291
- 765.0236
+ 636.0236
  0 ]
  /Next 35 0 R
- /Parent 31 0 R
- /Prev 33 0 R
- /Title (Recherche d'adresse) >>
+ /Parent 33 0 R
+ /Title (Principe) >>
 endobj
-% 'Outline.23.3': class OutlineEntryObject 
+% 'Outline.24.1': class OutlineEntryObject 
 35 0 obj
-<< /Dest [ 15 0 R
+<< /Dest [ 12 0 R
  /XYZ
  62.69291
- 473.5849
+ 421.4265
  0 ]
- /Parent 31 0 R
+ /Next 36 0 R
+ /Parent 33 0 R
  /Prev 34 0 R
+ /Title (Recherche de lieux) >>
+endobj
+% 'Outline.24.2': class OutlineEntryObject 
+36 0 obj
+<< /Dest [ 13 0 R
+ /XYZ
+ 62.69291
+ 651.0236
+ 0 ]
+ /Next 37 0 R
+ /Parent 33 0 R
+ /Prev 35 0 R
+ /Title (Recherche d'adresse) >>
+endobj
+% 'Outline.24.3': class OutlineEntryObject 
+37 0 obj
+<< /Dest [ 13 0 R
+ /XYZ
+ 62.69291
+ 359.5849
+ 0 ]
+ /Parent 33 0 R
+ /Prev 36 0 R
  /Title (Recherche de propri\351taires) >>
 endobj
 % 'Outline.6': class OutlineEntryObject 
-36 0 obj
-<< /Dest [ 15 0 R
+38 0 obj
+<< /Dest [ 13 0 R
  /XYZ
  62.69291
- 285.9453
+ 171.9453
  0 ]
- /Next 37 0 R
- /Parent 18 0 R
- /Prev 31 0 R
+ /Next 39 0 R
+ /Parent 19 0 R
+ /Prev 33 0 R
  /Title (\300 propos) >>
 endobj
 % 'Outline.7': class OutlineEntryObject 
-37 0 obj
-<< /Dest [ 15 0 R
+39 0 obj
+<< /Dest [ 16 0 R
  /XYZ
  62.69291
- 192.9453
+ 765.0236
  0 ]
- /Parent 18 0 R
- /Prev 36 0 R
+ /Parent 19 0 R
+ /Prev 38 0 R
  /Title (Vid\351os de d\351monstration) >>
 endobj
-% 'R38': class PDFPages 
-38 0 obj
+% 'R40': class PDFPages 
+40 0 obj
 % page tree
-<< /Count 6
+<< /Count 7
  /Kids [ 7 0 R
  9 0 R
  10 0 R
  11 0 R
  12 0 R
- 15 0 R ]
+ 13 0 R
+ 16 0 R ]
  /Type /Pages >>
 endobj
-% 'R39': class PDFStream 
-39 0 obj
+% 'R41': class PDFStream 
+41 0 obj
 % page stream
 << /Length 8647 >>
 stream
@@ -944,10 +976,10 @@ Q
  
 endstream
 endobj
-% 'R40': class PDFStream 
-40 0 obj
+% 'R42': class PDFStream 
+42 0 obj
 % page stream
-<< /Length 8354 >>
+<< /Length 8161 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
@@ -998,50 +1030,115 @@ BT 1 0 0 1 0 14 Tm 1.719318 Tw 12 TL /F1 10 Tf 0 0 0 rg (Ce r\351pertoire est au
 Q
 Q
 q
-1 0 0 1 62.69291 587.1288 cm
+1 0 0 1 62.69291 590.1288 cm
+q
+BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Performances) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 560.1288 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .681318 Tw (Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de) Tj T* 0 Tw (votre mat\351riel :) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 554.1288 cm
+Q
+q
+1 0 0 1 62.69291 554.1288 cm
+Q
+q
+1 0 0 1 62.69291 518.1288 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 21 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 26 Tm .245318 Tw 12 TL /F2 10 Tf 0 0 0 rg (Taille maximum des requ\352tes INSERT ) Tj /F1 10 Tf (: Vous pouvez baisser le chiffre jusqu'\340 10000 si vous avez) Tj T* 0 Tw .869986 Tw (une machine l\351g\350re et un gros volume de donn\351es \340 importer. Plus le chiffre est bas, plus l'import) Tj T* 0 Tw (initial peut prendre du temps.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 512.1288 cm
+Q
+q
+1 0 0 1 62.69291 476.1288 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 21 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 26 Tm .600697 Tw 12 TL /F2 10 Tf 0 0 0 rg (Stockage temporaire ) Tj /F1 10 Tf (: Le mode ) Tj /F4 10 Tf (MEMORY ) Tj /F1 10 Tf (est plus rapide, mais n\351cessite assez de m\351moire vive) Tj T* 0 Tw .065868 Tw (pour stocker les donn\351es \340 traiter. Le mode ) Tj /F4 10 Tf (DEFAULT ) Tj /F1 10 Tf (est plus lent et adapt\351 \340 des ordinateurs avec) Tj T* 0 Tw (peu de m\351moire vive.) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 476.1288 cm
+Q
+q
+1 0 0 1 62.69291 443.1288 cm
 q
 BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Importer des donn\351es) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 569.1288 cm
+1 0 0 1 62.69291 425.1288 cm
 q
 BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Cette boite de dialogue permet de r\351aliser un ) Tj /F2 10 Tf (import de donn\351es EDIGEO et MAJIC) Tj /F1 10 Tf (.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 539.1288 cm
+1 0 0 1 62.69291 395.1288 cm
 q
 BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Principe) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 509.1288 cm
+1 0 0 1 62.69291 365.1288 cm
 q
 BT 1 0 0 1 0 14 Tm 1.242339 Tw 12 TL /F1 10 Tf 0 0 0 rg (Le plugin permet l'import de donn\351es ) Tj /F2 10 Tf (MAJIC 2012 et 2013, et des donn\351es EDIGEO ) Tj /F1 10 Tf (. Il est possible) Tj T* 0 Tw (d'importer des donn\351es de mani\350re incr\351mentale, ) Tj /F2 10 Tf (\351tape par \351tape) Tj /F1 10 Tf (, ou bien d'importer ) Tj /F2 10 Tf (en une seule fois) Tj /F1 10 Tf (.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 467.1288 cm
+1 0 0 1 62.69291 323.1288 cm
 q
 BT 1 0 0 1 0 26 Tm 1.419986 Tw 12 TL /F1 10 Tf 0 0 0 rg (Le plugin utilise pour cela la notion de ) Tj /F2 10 Tf (lot) Tj /F1 10 Tf (. Un lot regroupe un ) Tj /F2 10 Tf (ensemble de donn\351es coh\351rent ) Tj /F1 10 Tf (pour) Tj T* 0 Tw .596651 Tw (votre utilisation. Par exemple, le lot peut \352tre le code d'une commune, ou l'acronyme d'une communaut\351) Tj T* 0 Tw (de commune. C'est une cha\356ne de 10 caract\350res maximum.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 449.1288 cm
+1 0 0 1 62.69291 305.1288 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Vous pouvez par exemple importer les donn\351es dans cette ordre :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 443.1288 cm
+1 0 0 1 62.69291 299.1288 cm
 Q
 q
-1 0 0 1 62.69291 443.1288 cm
+1 0 0 1 62.69291 299.1288 cm
 Q
 q
-1 0 0 1 62.69291 431.1288 cm
+1 0 0 1 62.69291 287.1288 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1062,10 +1159,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 425.1288 cm
+1 0 0 1 62.69291 281.1288 cm
 Q
 q
-1 0 0 1 62.69291 413.1288 cm
+1 0 0 1 62.69291 269.1288 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1086,10 +1183,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 407.1288 cm
+1 0 0 1 62.69291 263.1288 cm
 Q
 q
-1 0 0 1 62.69291 395.1288 cm
+1 0 0 1 62.69291 251.1288 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1110,10 +1207,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 389.1288 cm
+1 0 0 1 62.69291 245.1288 cm
 Q
 q
-1 0 0 1 62.69291 377.1288 cm
+1 0 0 1 62.69291 233.1288 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1134,10 +1231,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 371.1288 cm
+1 0 0 1 62.69291 227.1288 cm
 Q
 q
-1 0 0 1 62.69291 359.1288 cm
+1 0 0 1 62.69291 215.1288 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1158,24 +1255,24 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 359.1288 cm
+1 0 0 1 62.69291 215.1288 cm
 Q
 q
-1 0 0 1 62.69291 329.1288 cm
+1 0 0 1 62.69291 185.1288 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.02311 Tw (Il est donc important de conserver une liste des lots d\351finis pendant les imports successifs, pour savoir) Tj T* 0 Tw (ensuite quel lot utiliser si on souhaite \351craser des donn\351es.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 311.1288 cm
+1 0 0 1 62.69291 167.1288 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 291.3253 cm
+1 0 0 1 62.69291 147.3253 cm
 q
 q
 .468391 0 0 .468391 0 0 cm
@@ -1196,25 +1293,25 @@ Q
 Q
 Q
 q
-1 0 0 1 62.69291 261.3253 cm
+1 0 0 1 62.69291 117.3253 cm
 q
 BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Bases de donn\351es) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 243.3253 cm
+1 0 0 1 62.69291 99.32531 cm
 q
 BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Deux ) Tj /F2 10 Tf (Syst\350mes de Gestion de Bases de Donn\351es ) Tj /F1 10 Tf (\(SGBD\) sont support\351s par le plugin Cadastre :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 237.3253 cm
+1 0 0 1 62.69291 93.32531 cm
 Q
 q
-1 0 0 1 62.69291 237.3253 cm
+1 0 0 1 62.69291 93.32531 cm
 Q
 q
-1 0 0 1 62.69291 225.3253 cm
+1 0 0 1 62.69291 81.32531 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1234,10 +1331,19 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 219.3253 cm
+1 0 0 1 62.69291 76.86614 cm
 Q
+ 
+endstream
+endobj
+% 'R43': class PDFStream 
+43 0 obj
+% page stream
+<< /Length 12524 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
-1 0 0 1 62.69291 207.3253 cm
+1 0 0 1 62.69291 753.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1257,29 +1363,29 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 207.3253 cm
+1 0 0 1 62.69291 753.0236 cm
 Q
 q
-1 0 0 1 62.69291 177.3253 cm
+1 0 0 1 62.69291 723.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 3.42748 Tw (Nous conseillons d'utiliser PostGreSQL pour des donn\351es volumineuses et pour g\351rer des acc\350s) Tj T* 0 Tw (multiples \340 la base de donn\351es.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 159.3253 cm
+1 0 0 1 62.69291 705.0236 cm
 q
 BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Pour les bases de donn\351es ) Tj /F2 10 Tf (PostGIS) Tj /F1 10 Tf (, il faut :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 153.3253 cm
+1 0 0 1 62.69291 699.0236 cm
 Q
 q
-1 0 0 1 62.69291 153.3253 cm
+1 0 0 1 62.69291 699.0236 cm
 Q
 q
-1 0 0 1 62.69291 129.3253 cm
+1 0 0 1 62.69291 675.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1299,10 +1405,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 123.3253 cm
+1 0 0 1 62.69291 669.0236 cm
 Q
 q
-1 0 0 1 62.69291 99.32531 cm
+1 0 0 1 62.69291 645.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1322,43 +1428,34 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 99.32531 cm
+1 0 0 1 62.69291 645.0236 cm
 Q
- 
-endstream
-endobj
-% 'R41': class PDFStream 
-41 0 obj
-% page stream
-<< /Length 12745 >>
-stream
-1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
-1 0 0 1 62.69291 741.0236 cm
+1 0 0 1 62.69291 615.0236 cm
 q
 BT 1 0 0 1 0 14 Tm .016457 Tw 12 TL /F1 10 Tf 0 0 0 rg (Pour les bases de donn\351es ) Tj /F2 10 Tf (Spatialite) Tj /F1 10 Tf (, l'interface d'import permet de cr\351er une base de donn\351es vide et la) Tj T* 0 Tw (connexion QGIS li\351e si n\351cessaire.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 711.0236 cm
+1 0 0 1 62.69291 585.0236 cm
 q
 BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Les \351tapes d'importation) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 681.0236 cm
+1 0 0 1 62.69291 555.0236 cm
 q
 BT 1 0 0 1 0 14 Tm .132339 Tw 12 TL /F1 10 Tf 0 0 0 rg (Pour lancer l'importation, il faut bien avoir au pr\351alable configur\351 les noms des fichiers MAJIC via le menu) Tj T* 0 Tw /F2 10 Tf (Configurer le plugin) Tj /F1 10 Tf (. Ensuite, on ouvre la boite de dialogue) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 675.0236 cm
+1 0 0 1 62.69291 549.0236 cm
 Q
 q
-1 0 0 1 62.69291 675.0236 cm
+1 0 0 1 62.69291 549.0236 cm
 Q
 q
-1 0 0 1 62.69291 663.0236 cm
+1 0 0 1 62.69291 537.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1378,10 +1475,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 657.0236 cm
+1 0 0 1 62.69291 531.0236 cm
 Q
 q
-1 0 0 1 62.69291 645.0236 cm
+1 0 0 1 62.69291 519.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1401,23 +1498,23 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 645.0236 cm
+1 0 0 1 62.69291 519.0236 cm
 Q
 q
-1 0 0 1 62.69291 627.0236 cm
+1 0 0 1 62.69291 501.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (On configure ensuite les options :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 621.0236 cm
+1 0 0 1 62.69291 495.0236 cm
 Q
 q
-1 0 0 1 62.69291 621.0236 cm
+1 0 0 1 62.69291 495.0236 cm
 Q
 q
-1 0 0 1 62.69291 609.0236 cm
+1 0 0 1 62.69291 483.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1437,10 +1534,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 603.0236 cm
+1 0 0 1 62.69291 477.0236 cm
 Q
 q
-1 0 0 1 62.69291 591.0236 cm
+1 0 0 1 62.69291 465.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1460,13 +1557,13 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 591.0236 cm
+1 0 0 1 62.69291 465.0236 cm
 Q
 q
-1 0 0 1 62.69291 585.0236 cm
+1 0 0 1 62.69291 459.0236 cm
 Q
 q
-1 0 0 1 62.69291 549.0236 cm
+1 0 0 1 62.69291 423.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 BT 1 0 0 1 0 2 Tm  T* ET
@@ -1526,16 +1623,16 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 549.0236 cm
+1 0 0 1 62.69291 423.0236 cm
 Q
 q
-1 0 0 1 62.69291 543.0236 cm
+1 0 0 1 62.69291 417.0236 cm
 Q
 q
-1 0 0 1 62.69291 543.0236 cm
+1 0 0 1 62.69291 417.0236 cm
 Q
 q
-1 0 0 1 62.69291 531.0236 cm
+1 0 0 1 62.69291 405.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1555,13 +1652,13 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 531.0236 cm
+1 0 0 1 62.69291 405.0236 cm
 Q
 q
-1 0 0 1 62.69291 525.0236 cm
+1 0 0 1 62.69291 399.0236 cm
 Q
 q
-1 0 0 1 62.69291 477.0236 cm
+1 0 0 1 62.69291 351.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 BT 1 0 0 1 0 2 Tm  T* ET
@@ -1621,16 +1718,16 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 477.0236 cm
+1 0 0 1 62.69291 351.0236 cm
 Q
 q
-1 0 0 1 62.69291 471.0236 cm
+1 0 0 1 62.69291 345.0236 cm
 Q
 q
-1 0 0 1 62.69291 471.0236 cm
+1 0 0 1 62.69291 345.0236 cm
 Q
 q
-1 0 0 1 62.69291 459.0236 cm
+1 0 0 1 62.69291 333.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1650,10 +1747,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 453.0236 cm
+1 0 0 1 62.69291 327.0236 cm
 Q
 q
-1 0 0 1 62.69291 441.0236 cm
+1 0 0 1 62.69291 315.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1673,10 +1770,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 435.0236 cm
+1 0 0 1 62.69291 309.0236 cm
 Q
 q
-1 0 0 1 62.69291 423.0236 cm
+1 0 0 1 62.69291 297.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1696,10 +1793,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 417.0236 cm
+1 0 0 1 62.69291 291.0236 cm
 Q
 q
-1 0 0 1 62.69291 405.0236 cm
+1 0 0 1 62.69291 279.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1719,13 +1816,13 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 405.0236 cm
+1 0 0 1 62.69291 279.0236 cm
 Q
 q
-1 0 0 1 62.69291 399.0236 cm
+1 0 0 1 62.69291 273.0236 cm
 Q
 q
-1 0 0 1 62.69291 369.0236 cm
+1 0 0 1 62.69291 243.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 BT 1 0 0 1 0 2 Tm  T* ET
@@ -1763,16 +1860,16 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 369.0236 cm
+1 0 0 1 62.69291 243.0236 cm
 Q
 q
-1 0 0 1 62.69291 363.0236 cm
+1 0 0 1 62.69291 237.0236 cm
 Q
 q
-1 0 0 1 62.69291 363.0236 cm
+1 0 0 1 62.69291 237.0236 cm
 Q
 q
-1 0 0 1 62.69291 351.0236 cm
+1 0 0 1 62.69291 225.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1792,13 +1889,13 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 351.0236 cm
+1 0 0 1 62.69291 225.0236 cm
 Q
 q
-1 0 0 1 62.69291 345.0236 cm
+1 0 0 1 62.69291 219.0236 cm
 Q
 q
-1 0 0 1 62.69291 327.0236 cm
+1 0 0 1 62.69291 201.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 BT 1 0 0 1 0 2 Tm  T* ET
@@ -1836,16 +1933,16 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 327.0236 cm
+1 0 0 1 62.69291 201.0236 cm
 Q
 q
-1 0 0 1 62.69291 321.0236 cm
+1 0 0 1 62.69291 195.0236 cm
 Q
 q
-1 0 0 1 62.69291 321.0236 cm
+1 0 0 1 62.69291 195.0236 cm
 Q
 q
-1 0 0 1 62.69291 309.0236 cm
+1 0 0 1 62.69291 183.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1865,10 +1962,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 303.0236 cm
+1 0 0 1 62.69291 177.0236 cm
 Q
 q
-1 0 0 1 62.69291 291.0236 cm
+1 0 0 1 62.69291 165.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1888,10 +1985,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 285.0236 cm
+1 0 0 1 62.69291 159.0236 cm
 Q
 q
-1 0 0 1 62.69291 273.0236 cm
+1 0 0 1 62.69291 147.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1911,24 +2008,24 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 273.0236 cm
+1 0 0 1 62.69291 147.0236 cm
 Q
 q
-1 0 0 1 62.69291 255.0236 cm
+1 0 0 1 62.69291 129.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Le d\351roulement de l'import est \351crit dans le bloc texte situ\351 en bas de la fen\352tre.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 237.0236 cm
+1 0 0 1 62.69291 111.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 216.4693 cm
+1 0 0 1 62.69291 90.46932 cm
 q
 q
 .498187 0 0 .498187 0 0 cm
@@ -1948,20 +2045,29 @@ Q
 Q
 Q
 Q
+ 
+endstream
+endobj
+% 'R44': class PDFStream 
+44 0 obj
+% page stream
+<< /Length 10866 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
-1 0 0 1 62.69291 183.4693 cm
+1 0 0 1 62.69291 744.0236 cm
 q
 BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Charger des donn\351es) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 171.4693 cm
+1 0 0 1 62.69291 732.0236 cm
 Q
 q
-1 0 0 1 62.69291 171.4693 cm
+1 0 0 1 62.69291 732.0236 cm
 Q
 q
-1 0 0 1 62.69291 159.4693 cm
+1 0 0 1 62.69291 720.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -1981,10 +2087,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 153.4693 cm
+1 0 0 1 62.69291 714.0236 cm
 Q
 q
-1 0 0 1 62.69291 141.4693 cm
+1 0 0 1 62.69291 702.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2004,10 +2110,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 135.4693 cm
+1 0 0 1 62.69291 696.0236 cm
 Q
 q
-1 0 0 1 62.69291 123.4693 cm
+1 0 0 1 62.69291 684.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2027,10 +2133,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 117.4693 cm
+1 0 0 1 62.69291 678.0236 cm
 Q
 q
-1 0 0 1 62.69291 105.4693 cm
+1 0 0 1 62.69291 666.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2050,45 +2156,28 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 99.46932 cm
+1 0 0 1 62.69291 660.0236 cm
 Q
 q
-1 0 0 1 62.69291 81.46932 cm
+1 0 0 1 62.69291 606.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
-1 0 0 1 6 3 cm
+1 0 0 1 6 39 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
 Q
 Q
 q
-1 0 0 1 23 3 cm
+1 0 0 1 23 39 cm
 q
 BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Chosir ) Tj /F2 10 Tf (le th\350me ) Tj /F1 10 Tf (\340 appliquer) Tj T* ET
 Q
 Q
 q
-1 0 0 1 23 -3 cm
+1 0 0 1 23 33 cm
 Q
-q
-Q
-Q
- 
-endstream
-endobj
-% 'R42': class PDFStream 
-42 0 obj
-% page stream
-<< /Length 10823 >>
-stream
-1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
-q
-1 0 0 1 62.69291 742.4204 cm
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-BT 1 0 0 1 6 9.603174 Tm  T* ET
 q
 1 0 0 1 23 -3 cm
 0 0 0 rg
@@ -2156,10 +2245,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 736.4204 cm
+1 0 0 1 62.69291 600.0236 cm
 Q
 q
-1 0 0 1 62.69291 712.4204 cm
+1 0 0 1 62.69291 576.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2179,13 +2268,13 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 712.4204 cm
+1 0 0 1 62.69291 576.0236 cm
 Q
 q
-1 0 0 1 62.69291 706.4204 cm
+1 0 0 1 62.69291 570.0236 cm
 Q
 q
-1 0 0 1 62.69291 646.4204 cm
+1 0 0 1 62.69291 510.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 BT 1 0 0 1 0 2 Tm  T* ET
@@ -2245,16 +2334,16 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 646.4204 cm
+1 0 0 1 62.69291 510.0236 cm
 Q
 q
-1 0 0 1 62.69291 640.4204 cm
+1 0 0 1 62.69291 504.0236 cm
 Q
 q
-1 0 0 1 62.69291 640.4204 cm
+1 0 0 1 62.69291 504.0236 cm
 Q
 q
-1 0 0 1 62.69291 604.4204 cm
+1 0 0 1 62.69291 468.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2274,29 +2363,29 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 604.4204 cm
+1 0 0 1 62.69291 468.0236 cm
 Q
 q
-1 0 0 1 62.69291 571.4204 cm
+1 0 0 1 62.69291 435.0236 cm
 q
 BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (La barre d'outil Cadastre) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 553.4204 cm
+1 0 0 1 62.69291 417.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (La barre d'outil peut s'afficher ou se masquer \340 partir :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 547.4204 cm
+1 0 0 1 62.69291 411.0236 cm
 Q
 q
-1 0 0 1 62.69291 547.4204 cm
+1 0 0 1 62.69291 411.0236 cm
 Q
 q
-1 0 0 1 62.69291 535.4204 cm
+1 0 0 1 62.69291 399.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2316,10 +2405,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 529.4204 cm
+1 0 0 1 62.69291 393.0236 cm
 Q
 q
-1 0 0 1 62.69291 517.4204 cm
+1 0 0 1 62.69291 381.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2339,23 +2428,23 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 517.4204 cm
+1 0 0 1 62.69291 381.0236 cm
 Q
 q
-1 0 0 1 62.69291 499.4204 cm
+1 0 0 1 62.69291 363.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Elle contient :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 493.4204 cm
+1 0 0 1 62.69291 357.0236 cm
 Q
 q
-1 0 0 1 62.69291 493.4204 cm
+1 0 0 1 62.69291 357.0236 cm
 Q
 q
-1 0 0 1 62.69291 481.4204 cm
+1 0 0 1 62.69291 345.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2375,10 +2464,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 475.4204 cm
+1 0 0 1 62.69291 339.0236 cm
 Q
 q
-1 0 0 1 62.69291 451.4204 cm
+1 0 0 1 62.69291 315.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2399,43 +2488,43 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 451.4204 cm
+1 0 0 1 62.69291 315.0236 cm
 Q
 q
-1 0 0 1 62.69291 421.4204 cm
+1 0 0 1 62.69291 285.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.89561 Tw (Pour conna\356tre l'action d'une des ic\364nes, il suffit de laisser la souris un moment au-dessus pour voir) Tj T* 0 Tw (appara\356tre une bulle d'information.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 391.4204 cm
+1 0 0 1 62.69291 255.0236 cm
 q
 BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Indentifier une parcelle) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 349.4204 cm
+1 0 0 1 62.69291 213.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 26 Tm /F1 10 Tf 12 TL 1.201984 Tw (Pour avoir des informations compl\350tes sur une parcelle, il faut avoir au pr\351alable import\351 des donn\351es) Tj T* 0 Tw 1.009269 Tw (MAJIC dans la base de donn\351es. Sinon, seules les informations principales seront affich\351es et certains) Tj T* 0 Tw (boutons d'action sont d\351sactiv\351s.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 331.4204 cm
+1 0 0 1 62.69291 195.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Pour faire appara\356tre la fiche d'information d'une parcelle, il faut) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 325.4204 cm
+1 0 0 1 62.69291 189.0236 cm
 Q
 q
-1 0 0 1 62.69291 325.4204 cm
+1 0 0 1 62.69291 189.0236 cm
 Q
 q
-1 0 0 1 62.69291 313.4204 cm
+1 0 0 1 62.69291 177.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2455,10 +2544,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 307.4204 cm
+1 0 0 1 62.69291 171.0236 cm
 Q
 q
-1 0 0 1 62.69291 295.4204 cm
+1 0 0 1 62.69291 159.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2478,10 +2567,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 289.4204 cm
+1 0 0 1 62.69291 153.0236 cm
 Q
 q
-1 0 0 1 62.69291 277.4204 cm
+1 0 0 1 62.69291 141.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2501,23 +2590,23 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 277.4204 cm
+1 0 0 1 62.69291 141.0236 cm
 Q
 q
-1 0 0 1 62.69291 259.4204 cm
+1 0 0 1 62.69291 123.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (La fen\352tre d'identification s'affiche alors, et pr\351sente) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 253.4204 cm
+1 0 0 1 62.69291 117.0236 cm
 Q
 q
-1 0 0 1 62.69291 253.4204 cm
+1 0 0 1 62.69291 117.0236 cm
 Q
 q
-1 0 0 1 62.69291 241.4204 cm
+1 0 0 1 62.69291 105.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2537,10 +2626,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 235.4204 cm
+1 0 0 1 62.69291 99.02362 cm
 Q
 q
-1 0 0 1 62.69291 223.4204 cm
+1 0 0 1 62.69291 87.02362 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2560,10 +2649,19 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 217.4204 cm
+1 0 0 1 62.69291 81.02362 cm
 Q
+ 
+endstream
+endobj
+% 'R45': class PDFStream 
+45 0 obj
+% page stream
+<< /Length 10518 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
-1 0 0 1 62.69291 205.4204 cm
+1 0 0 1 62.69291 753.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2583,13 +2681,13 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 205.4204 cm
+1 0 0 1 62.69291 753.0236 cm
 Q
 q
-1 0 0 1 62.69291 199.4204 cm
+1 0 0 1 62.69291 747.0236 cm
 Q
 q
-1 0 0 1 62.69291 133.4204 cm
+1 0 0 1 62.69291 681.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 BT 1 0 0 1 0 2 Tm  T* ET
@@ -2672,44 +2770,35 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 133.4204 cm
+1 0 0 1 62.69291 681.0236 cm
 Q
- 
-endstream
-endobj
-% 'R43': class PDFStream 
-43 0 obj
-% page stream
-<< /Length 9859 >>
-stream
-1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
-1 0 0 1 62.69291 744.0236 cm
+1 0 0 1 62.69291 648.0236 cm
 q
 BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Le panneau de recherche) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 714.0236 cm
+1 0 0 1 62.69291 618.0236 cm
 q
 BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Principe) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 696.0236 cm
+1 0 0 1 62.69291 600.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Le panneau de recherche propose des outils pour rechercher des parcelles via 3 entr\351es principales) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 690.0236 cm
+1 0 0 1 62.69291 594.0236 cm
 Q
 q
-1 0 0 1 62.69291 690.0236 cm
+1 0 0 1 62.69291 594.0236 cm
 Q
 q
-1 0 0 1 62.69291 678.0236 cm
+1 0 0 1 62.69291 582.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2729,10 +2818,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 672.0236 cm
+1 0 0 1 62.69291 576.0236 cm
 Q
 q
-1 0 0 1 62.69291 660.0236 cm
+1 0 0 1 62.69291 564.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2752,10 +2841,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 654.0236 cm
+1 0 0 1 62.69291 558.0236 cm
 Q
 q
-1 0 0 1 62.69291 642.0236 cm
+1 0 0 1 62.69291 546.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2775,30 +2864,30 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 642.0236 cm
+1 0 0 1 62.69291 546.0236 cm
 Q
 q
-1 0 0 1 62.69291 624.0236 cm
+1 0 0 1 62.69291 528.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Les diff\351rentes recherches seront d\351taill\351es dans les sous-chapitres suivants.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 606.0236 cm
+1 0 0 1 62.69291 510.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Pour afficher le panneau de recherche:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 600.0236 cm
+1 0 0 1 62.69291 504.0236 cm
 Q
 q
-1 0 0 1 62.69291 600.0236 cm
+1 0 0 1 62.69291 504.0236 cm
 Q
 q
-1 0 0 1 62.69291 588.0236 cm
+1 0 0 1 62.69291 492.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2818,24 +2907,24 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 588.0236 cm
+1 0 0 1 62.69291 492.0236 cm
 Q
 q
-1 0 0 1 62.69291 570.0236 cm
+1 0 0 1 62.69291 474.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Une bulle d'information affiche la fonction des boutons au survol de la souris.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 552.0236 cm
+1 0 0 1 62.69291 456.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 529.4265 cm
+1 0 0 1 62.69291 433.4265 cm
 q
 q
 .579253 0 0 .579253 0 0 cm
@@ -2856,26 +2945,26 @@ Q
 Q
 Q
 q
-1 0 0 1 62.69291 499.4265 cm
+1 0 0 1 62.69291 403.4265 cm
 q
 BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Recherche de lieux) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 481.4265 cm
+1 0 0 1 62.69291 385.4265 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (L'outil pr\351sente 3 listes d\351roulantes :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 475.4265 cm
+1 0 0 1 62.69291 379.4265 cm
 Q
 q
-1 0 0 1 62.69291 475.4265 cm
+1 0 0 1 62.69291 379.4265 cm
 Q
 q
-1 0 0 1 62.69291 463.4265 cm
+1 0 0 1 62.69291 367.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2896,10 +2985,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 457.4265 cm
+1 0 0 1 62.69291 361.4265 cm
 Q
 q
-1 0 0 1 62.69291 445.4265 cm
+1 0 0 1 62.69291 349.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2920,10 +3009,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 439.4265 cm
+1 0 0 1 62.69291 343.4265 cm
 Q
 q
-1 0 0 1 62.69291 427.4265 cm
+1 0 0 1 62.69291 331.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2944,22 +3033,22 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 427.4265 cm
+1 0 0 1 62.69291 331.4265 cm
 Q
 q
-1 0 0 1 62.69291 409.4265 cm
+1 0 0 1 62.69291 313.4265 cm
 q
 BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Il est possible de ) Tj /F2 10 Tf (s\351lectionner une entit\351) Tj /F1 10 Tf (:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 403.4265 cm
+1 0 0 1 62.69291 307.4265 cm
 Q
 q
-1 0 0 1 62.69291 403.4265 cm
+1 0 0 1 62.69291 307.4265 cm
 Q
 q
-1 0 0 1 62.69291 391.4265 cm
+1 0 0 1 62.69291 295.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -2979,10 +3068,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 385.4265 cm
+1 0 0 1 62.69291 289.4265 cm
 Q
 q
-1 0 0 1 62.69291 361.4265 cm
+1 0 0 1 62.69291 265.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3002,22 +3091,22 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 361.4265 cm
+1 0 0 1 62.69291 265.4265 cm
 Q
 q
-1 0 0 1 62.69291 343.4265 cm
+1 0 0 1 62.69291 247.4265 cm
 q
 BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Les listes d\351roulantes sont ) Tj /F2 10 Tf (hi\351rarchiques ) Tj /F1 10 Tf (:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 337.4265 cm
+1 0 0 1 62.69291 241.4265 cm
 Q
 q
-1 0 0 1 62.69291 337.4265 cm
+1 0 0 1 62.69291 241.4265 cm
 Q
 q
-1 0 0 1 62.69291 313.4265 cm
+1 0 0 1 62.69291 217.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3038,10 +3127,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 307.4265 cm
+1 0 0 1 62.69291 211.4265 cm
 Q
 q
-1 0 0 1 62.69291 295.4265 cm
+1 0 0 1 62.69291 199.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3062,22 +3151,22 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 295.4265 cm
+1 0 0 1 62.69291 199.4265 cm
 Q
 q
-1 0 0 1 62.69291 265.4265 cm
+1 0 0 1 62.69291 169.4265 cm
 q
 BT 1 0 0 1 0 14 Tm 1.498555 Tw 12 TL /F1 10 Tf 0 0 0 rg (Des ) Tj /F2 10 Tf (boutons d'actions ) Tj /F1 10 Tf (sont positionn\351s sous les 3 listes d\351roulantes et permettent de lancer l'action) Tj T* 0 Tw (choisie sur le dernier objet s\351lectionn\351 dans les 3 listes :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 259.4265 cm
+1 0 0 1 62.69291 163.4265 cm
 Q
 q
-1 0 0 1 62.69291 259.4265 cm
+1 0 0 1 62.69291 163.4265 cm
 Q
 q
-1 0 0 1 62.69291 247.4265 cm
+1 0 0 1 62.69291 151.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3097,10 +3186,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 241.4265 cm
+1 0 0 1 62.69291 145.4265 cm
 Q
 q
-1 0 0 1 62.69291 229.4265 cm
+1 0 0 1 62.69291 133.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3120,10 +3209,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 223.4265 cm
+1 0 0 1 62.69291 127.4265 cm
 Q
 q
-1 0 0 1 62.69291 199.4265 cm
+1 0 0 1 62.69291 103.4265 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3143,44 +3232,44 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 199.4265 cm
+1 0 0 1 62.69291 103.4265 cm
 Q
+ 
+endstream
+endobj
+% 'R46': class PDFStream 
+46 0 obj
+% page stream
+<< /Length 8461 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
-1 0 0 1 62.69291 133.4265 cm
+1 0 0 1 62.69291 705.0236 cm
 q
 BT 1 0 0 1 0 50 Tm .614198 Tw 12 TL /F1 10 Tf 0 0 0 rg (A c\364t\351 des 3 listes, un bouton ) Tj /F2 10 Tf (croix rouge ) Tj /F1 10 Tf (permet de remettre la liste \340 son \351tat initial, c'est-\340-dire sans) Tj T* 0 Tw .36186 Tw (objet s\351lectionn\351. Par exemple, si on avait s\351lectionn\351 une commune dans la premier liste et une section) Tj T* 0 Tw 1.216098 Tw (dans la seconde, on peut cliquer sur la croix rouge \340 c\364t\351 de la section pour d\351s\351lectionner la section) Tj T* 0 Tw .514274 Tw (dans la liste. Ainsi si on utilise le bouton de Zoom, on zoomera sur la commune et non sur la section qui) Tj T* 0 Tw (\351tait pr\351c\351demment s\351lectionn\351e) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 91.42645 cm
+1 0 0 1 62.69291 663.0236 cm
 q
 BT 1 0 0 1 0 26 Tm .37936 Tw 12 TL /F1 10 Tf 0 0 0 rg (Si une parcelle a \351t\351 s\351lectionn\351e dans la liste ) Tj /F2 10 Tf (Parcelles) Tj /F1 10 Tf (, il est possible d') Tj /F2 10 Tf (exporter le relev\351 parcellaire) Tj T* 0 Tw 1.427988 Tw /F1 10 Tf (en cliquant sur le bouton ) Tj /F4 10 Tf (ic\364ne PDF ) Tj /F1 10 Tf (situ\351 en bas \340 droite du bloc de recherche de lieux. Le ) Tj /F2 10 Tf (PDF est) Tj T* 0 Tw (g\351n\351r\351 et ouvert ) Tj /F1 10 Tf (avec le lecteur PDF par d\351faut du syst\350me.) Tj T* ET
 Q
 Q
- 
-endstream
-endobj
-% 'R44': class PDFStream 
-44 0 obj
-% page stream
-<< /Length 8272 >>
-stream
-1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
-1 0 0 1 62.69291 747.0236 cm
+1 0 0 1 62.69291 633.0236 cm
 q
 BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Recherche d'adresse) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 729.0236 cm
+1 0 0 1 62.69291 615.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 697.5849 cm
+1 0 0 1 62.69291 583.5849 cm
 q
 q
 .930106 0 0 .930106 0 0 cm
@@ -3201,19 +3290,19 @@ Q
 Q
 Q
 q
-1 0 0 1 62.69291 677.5849 cm
+1 0 0 1 62.69291 563.5849 cm
 q
 BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Pour lancer une ) Tj /F2 10 Tf (recherche de parcelles par adresse) Tj /F1 10 Tf (, il suffit:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 671.5849 cm
+1 0 0 1 62.69291 557.5849 cm
 Q
 q
-1 0 0 1 62.69291 671.5849 cm
+1 0 0 1 62.69291 557.5849 cm
 Q
 q
-1 0 0 1 62.69291 659.5849 cm
+1 0 0 1 62.69291 545.5849 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3233,10 +3322,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 653.5849 cm
+1 0 0 1 62.69291 539.5849 cm
 Q
 q
-1 0 0 1 62.69291 641.5849 cm
+1 0 0 1 62.69291 527.5849 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3256,30 +3345,30 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 641.5849 cm
+1 0 0 1 62.69291 527.5849 cm
 Q
 q
-1 0 0 1 62.69291 611.5849 cm
+1 0 0 1 62.69291 497.5849 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .90061 Tw (La recherche est effectu\351e et la liste d\351roulante o\371 vous avez tap\351 l'adresse \340 chercher est maintenant) Tj T* 0 Tw (raffra\356chie et contient l'ensemble des r\351sultats trouv\351s.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 593.5849 cm
+1 0 0 1 62.69291 479.5849 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Si des r\351sultats ont \351t\351 trouv\351s, on peut ensuite :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 587.5849 cm
+1 0 0 1 62.69291 473.5849 cm
 Q
 q
-1 0 0 1 62.69291 587.5849 cm
+1 0 0 1 62.69291 473.5849 cm
 Q
 q
-1 0 0 1 62.69291 563.5849 cm
+1 0 0 1 62.69291 449.5849 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3299,10 +3388,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 557.5849 cm
+1 0 0 1 62.69291 443.5849 cm
 Q
 q
-1 0 0 1 62.69291 533.5849 cm
+1 0 0 1 62.69291 419.5849 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3322,10 +3411,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 527.5849 cm
+1 0 0 1 62.69291 413.5849 cm
 Q
 q
-1 0 0 1 62.69291 515.5849 cm
+1 0 0 1 62.69291 401.5849 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3345,10 +3434,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 509.5849 cm
+1 0 0 1 62.69291 395.5849 cm
 Q
 q
-1 0 0 1 62.69291 485.5849 cm
+1 0 0 1 62.69291 371.5849 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3368,23 +3457,23 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 485.5849 cm
+1 0 0 1 62.69291 371.5849 cm
 Q
 q
-1 0 0 1 62.69291 455.5849 cm
+1 0 0 1 62.69291 341.5849 cm
 q
 BT 1 0 0 1 0 3 Tm 18 TL /F2 15 Tf 0 0 0 rg (Recherche de propri\351taires) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 437.5849 cm
+1 0 0 1 62.69291 323.5849 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Note:) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 407.9453 cm
+1 0 0 1 62.69291 293.9453 cm
 q
 q
 .858717 0 0 .858717 0 0 cm
@@ -3405,20 +3494,20 @@ Q
 Q
 Q
 q
-1 0 0 1 62.69291 375.9453 cm
+1 0 0 1 62.69291 261.9453 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.33436 Tw (Le principe et le fonctionnement est le m\352me que pour la recherche par adresse, avec les diff\351rences) Tj T* 0 Tw (suivantes :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 369.9453 cm
+1 0 0 1 62.69291 255.9453 cm
 Q
 q
-1 0 0 1 62.69291 369.9453 cm
+1 0 0 1 62.69291 255.9453 cm
 Q
 q
-1 0 0 1 62.69291 345.9453 cm
+1 0 0 1 62.69291 231.9453 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3438,10 +3527,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 339.9453 cm
+1 0 0 1 62.69291 225.9453 cm
 Q
 q
-1 0 0 1 62.69291 327.9453 cm
+1 0 0 1 62.69291 213.9453 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3461,55 +3550,64 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 327.9453 cm
+1 0 0 1 62.69291 213.9453 cm
 Q
 q
-1 0 0 1 62.69291 297.9453 cm
+1 0 0 1 62.69291 183.9453 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .259398 Tw (Il est possible d'exporter le relev\351 de propri\351t\351 pour les personnes qui ne poss\350dent pas de propri\351t\351 non) Tj T* 0 Tw (b\342tie.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 264.9453 cm
+1 0 0 1 62.69291 150.9453 cm
 q
 BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (\300 propos) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 234.9453 cm
+1 0 0 1 62.69291 120.9453 cm
 q
 BT 1 0 0 1 0 14 Tm 2.130651 Tw 12 TL /F1 10 Tf 0 0 0 rg (Le menu ) Tj /F2 10 Tf (Cadastre > A propos ) Tj /F1 10 Tf (ouvre une fen\352tre d'information sur le plugin Cadastre : financeurs,) Tj T* 0 Tw (auteur, licence, d\351p\364t de sources, etc.) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 204.9453 cm
+1 0 0 1 62.69291 90.94528 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL 1.683318 Tw (Cette fen\352tre est automatiquement affich\351e lors de la premi\350re utilisation du plugin, mais pas les fois) Tj T* 0 Tw (suivantes.) Tj T* ET
 Q
 Q
+ 
+endstream
+endobj
+% 'R47': class PDFStream 
+47 0 obj
+% page stream
+<< /Length 1170 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
-1 0 0 1 62.69291 171.9453 cm
+1 0 0 1 62.69291 744.0236 cm
 q
 BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Vid\351os de d\351monstration) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 153.9453 cm
+1 0 0 1 62.69291 726.0236 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Pour faciliter la prise en main, vous pouvez consulter les vid\351os en ligne :) Tj T* ET
 Q
 Q
 q
-1 0 0 1 62.69291 147.9453 cm
+1 0 0 1 62.69291 720.0236 cm
 Q
 q
-1 0 0 1 62.69291 147.9453 cm
+1 0 0 1 62.69291 720.0236 cm
 Q
 q
-1 0 0 1 62.69291 135.9453 cm
+1 0 0 1 62.69291 708.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3529,10 +3627,10 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 129.9453 cm
+1 0 0 1 62.69291 702.0236 cm
 Q
 q
-1 0 0 1 62.69291 117.9453 cm
+1 0 0 1 62.69291 690.0236 cm
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
@@ -3552,65 +3650,73 @@ q
 Q
 Q
 q
-1 0 0 1 62.69291 117.9453 cm
+1 0 0 1 62.69291 690.0236 cm
 Q
  
 endstream
 endobj
-% 'R45': class PDFPageLabels 
-45 0 obj
+% 'R48': class PDFPageLabels 
+48 0 obj
 % Document Root
 << /Nums [ 0
- 46 0 R
- 1
- 47 0 R
- 2
- 48 0 R
- 3
  49 0 R
- 4
+ 1
  50 0 R
+ 2
+ 51 0 R
+ 3
+ 52 0 R
+ 4
+ 53 0 R
  5
- 51 0 R ] >>
-endobj
-% 'R46': class PDFPageLabel 
-46 0 obj
-% None
-<< /S /D
- /St 1 >>
-endobj
-% 'R47': class PDFPageLabel 
-47 0 obj
-% None
-<< /S /D
- /St 2 >>
-endobj
-% 'R48': class PDFPageLabel 
-48 0 obj
-% None
-<< /S /D
- /St 3 >>
+ 54 0 R
+ 6
+ 55 0 R ] >>
 endobj
 % 'R49': class PDFPageLabel 
 49 0 obj
 % None
 << /S /D
- /St 4 >>
+ /St 1 >>
 endobj
 % 'R50': class PDFPageLabel 
 50 0 obj
 % None
 << /S /D
- /St 5 >>
+ /St 2 >>
 endobj
 % 'R51': class PDFPageLabel 
 51 0 obj
 % None
 << /S /D
+ /St 3 >>
+endobj
+% 'R52': class PDFPageLabel 
+52 0 obj
+% None
+<< /S /D
+ /St 4 >>
+endobj
+% 'R53': class PDFPageLabel 
+53 0 obj
+% None
+<< /S /D
+ /St 5 >>
+endobj
+% 'R54': class PDFPageLabel 
+54 0 obj
+% None
+<< /S /D
  /St 6 >>
 endobj
+% 'R55': class PDFPageLabel 
+55 0 obj
+% None
+<< /S /D
+ /St 7 >>
+endobj
 xref
-0 52
+0 56
 0000000000 65535 f
 0000000113 00000 n
 0000000257 00000 n
@@ -3624,53 +3730,57 @@ xref
 0000001942 00000 n
 0000002222 00000 n
 0000002502 00000 n
-0000002796 00000 n
-0000003041 00000 n
-0000003272 00000 n
-0000003583 00000 n
-0000003742 00000 n
-0000004058 00000 n
-0000004184 00000 n
-0000004356 00000 n
-0000004596 00000 n
-0000004768 00000 n
-0000004968 00000 n
-0000005152 00000 n
-0000005395 00000 n
-0000005566 00000 n
-0000005763 00000 n
-0000005951 00000 n
-0000006149 00000 n
-0000006395 00000 n
-0000006565 00000 n
-0000006809 00000 n
-0000006981 00000 n
-0000007178 00000 n
-0000007376 00000 n
-0000007566 00000 n
-0000007753 00000 n
-0000007927 00000 n
-0000008078 00000 n
-0000016824 00000 n
-0000025277 00000 n
-0000038122 00000 n
-0000049045 00000 n
-0000059003 00000 n
-0000067378 00000 n
-0000067536 00000 n
-0000067613 00000 n
-0000067690 00000 n
-0000067767 00000 n
-0000067844 00000 n
-0000067921 00000 n
+0000002782 00000 n
+0000003076 00000 n
+0000003321 00000 n
+0000003552 00000 n
+0000003863 00000 n
+0000004022 00000 n
+0000004338 00000 n
+0000004464 00000 n
+0000004636 00000 n
+0000004876 00000 n
+0000005048 00000 n
+0000005248 00000 n
+0000005450 00000 n
+0000005622 00000 n
+0000005865 00000 n
+0000006036 00000 n
+0000006233 00000 n
+0000006421 00000 n
+0000006619 00000 n
+0000006865 00000 n
+0000007035 00000 n
+0000007279 00000 n
+0000007451 00000 n
+0000007648 00000 n
+0000007846 00000 n
+0000008036 00000 n
+0000008223 00000 n
+0000008397 00000 n
+0000008557 00000 n
+0000017303 00000 n
+0000025563 00000 n
+0000038187 00000 n
+0000049153 00000 n
+0000059771 00000 n
+0000068331 00000 n
+0000069604 00000 n
+0000069775 00000 n
+0000069852 00000 n
+0000069929 00000 n
+0000070006 00000 n
+0000070083 00000 n
+0000070160 00000 n
+0000070237 00000 n
 trailer
 << /ID 
  % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
- [(\355\315\271h\320\304\215\340\233\302\251\276\256&;\366) (\355\315\271h\320\304\215\340\233\302\251\276\256&;\366)] 
+ [(\020\207\2728a`\247\004'\027s\370\305\325\255_) (\020\207\2728a`\247\004'\027s\370\305\325\255_)] 
 
- /Info 17 0 R
- /Root 16 0 R
- /Size 52 >>
+ /Info 18 0 R
+ /Root 17 0 R
+ /Size 56 >>
 startxref
-67968
+70284
 %%EOF

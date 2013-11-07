@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>534</width>
-    <height>589</height>
+    <width>543</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>514</width>
-        <height>569</height>
+        <width>523</width>
+        <height>619</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -172,15 +172,15 @@ ou de revenir à l'interface par défaut</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
              <widget class="QLabel" name="label_7">
               <property name="text">
                <string>Taille maximum des requêtes INSERT</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="0" column="1">
              <widget class="QSpinBox" name="inMaxInsertRows">
               <property name="minimum">
                <number>1000</number>
@@ -191,6 +191,27 @@ ou de revenir à l'interface par défaut</string>
               <property name="value">
                <number>50000</number>
               </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>Spatialite - stockage temporaire</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="inSpatialiteTempStore">
+              <item>
+               <property name="text">
+                <string>MEMORY</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>DEFAULT</string>
+               </property>
+              </item>
              </widget>
             </item>
            </layout>
