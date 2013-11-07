@@ -2,17 +2,21 @@
 Plugin Cadastre - Documentation utilisateur
 ===========================================
 
-:Author: Michaël DOUCHIN - 3liz
+:Auteurs: Michaël DOUCHIN - 3liz
 :Date:   2013
 :Copyright: CC-BY-SA
 :Contact: info@3liz.com
-:organization: 3liz
-:abstract: Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.
+:Résumé: Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.
+
+.. image:: MEDIA/logo-qgis.jpg
+   :align: center
+   :width: 100px
 
 .. meta::
   :keywords: documentation, QGIS, plugin, cadastre, 3liz
 
-
+.. image:: MEDIA/cadastre_financeurs.png
+   :align: center
 
 Installation
 ===========================================
@@ -347,3 +351,6 @@ Pour faciliter la prise en main, vous pouvez consulter les vidéos en ligne :
 * Import et chargement : https://vimeo.com/75004889
 * Recherche : https://vimeo.com/74807532
 
+
+.. image:: MEDIA/logo_3liz.png
+   :align: center
