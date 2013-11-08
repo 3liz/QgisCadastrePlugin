@@ -122,6 +122,7 @@ class cadastre_common():
                     self.dialog.databaseSpecificOptions.setCurrentIndex(0)
                 else:
                     self.dialog.databaseSpecificOptions.setCurrentIndex(1)
+                    self.toggleSchemaList(False)
         else:
             if hasattr(self.dialog, "inDbCreateSchema"):
                 self.dialog.databaseSpecificOptions.setTabEnabled(0, False)
@@ -135,7 +136,6 @@ class cadastre_common():
         Toggle Schema list and inputs
         '''
         self.dialog.liDbSchema.setEnabled(t)
-
         if hasattr(self.dialog, "inDbCreateSchema"):
             self.dialog.inDbCreateSchema.setEnabled(t)
             self.dialog.btDbCreateSchema.setEnabled(t)
@@ -187,6 +187,8 @@ class cadastre_common():
                     self.dialog.schemaList.append(unicode(s.name))
             else:
                 self.toggleSchemaList(False)
+        else:
+            self.toggleSchemaList(False)
 
         QApplication.restoreOverrideCursor()
 
