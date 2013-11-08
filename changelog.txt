@@ -1,4 +1,7 @@
 CHANGELOG
+  Version 0.9.4
+  * Import - bouton Créer une base Spatialite grisé si aucune connection dans QGIS
+
   Version 0.9.3
   * Documentation - ajout d'une documentation (avec copies d'écran)
   * Chargement - remplacement du panneau par une fenêtre

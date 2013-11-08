@@ -7,7 +7,7 @@ description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Connseil Regional de Picardie, Agence de Developpement et  d Urbanisme du Grand Amienois.
 
-version=0.9.3
+version=0.9.4
 author=3liz
 email=info@3liz.com
 
@@ -17,22 +17,8 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.9.3
-  * Documentation - ajout d'une documentation (avec copies d'écran)
-  * Chargement - remplacement du panneau par une fenêtre
-  * Configurer - ajout d'un option pour le type de stockage temporaire de Spatialite
-  * Import - spatialite : remove disablespatialindex
-  * Import - Amélioration des imports consécutifs (indexes, erreurs spatialites, etc.)
-  * Majic - import récursif
-  * Général - ajout d'un menu d'aide et rédaction de l'aide
-  * Import - restriction des imports à 2012 et 2013
-  * Export - amélioration des calculs des sommes
-  * A propos - correction coquille
-  * Recherche/Export - gestion des propriétaires sur plusieurs communes
-  * About - ajout du lien vers le dépôt Github
-  * A propos - modification de l'ordre des financeurs
-
-
+  Version 0.9.4
+  * Import - bouton Créer une base Spatialite grisé si aucune connection dans QGIS
 
 
 
