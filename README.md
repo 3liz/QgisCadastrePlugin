@@ -23,7 +23,7 @@ La réalisation du plugin Cadastre a été financée par :
 Conception
 ==========
 
-Le plugin 3liz a été conçu et développé par la Société 3LIZ.
+Le plugin Cadastre a été conçu et développé par la Société 3LIZ.
 Site internet : http://www.3liz.com
 
 Auteurs
@@ -47,12 +47,12 @@ Lien : http://www.gnu.org/licenses/gpl.html
 Ressources
 ==========
 
-Les scripts d'import pour PostGreSQL proviennent de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciement aux contributeurs.
+Les scripts d'import pour PostgreSQL proviennent de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciement aux contributeurs.
 Dépôt de sources :  https://adullact.net/scm/viewvc.php/trunk/data/pgsql/?root=opencadastre
 
 English short description
 ==========================
-This plugins helps users to use french land registry data ("cadastre") in QGIS. It is only usefull in France for people having access to Cadastre data.
+This plugin helps users to use french land registry data ("cadastre") in QGIS. It is only useful in France for people having access to Cadastre data.
 It is divided into modules :
 
 * import data into database,
