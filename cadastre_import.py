@@ -737,7 +737,10 @@ class cadastreImport(QObject):
                 for z in zipFileList:
                     with zipfile.ZipFile(z) as azip:
                         azip.extractall(self.edigeoPlainDir)
-                    os.remove(z)
+                    try:
+                        os.remove(z)
+                    except OSError, e:
+                        pass # in Windows, sometime file is not unlocked
 
                 inner_zips_pattern = os.path.join(self.edigeoPlainDir, "*.zip")
                 i=0
@@ -746,20 +749,25 @@ class cadastreImport(QObject):
 
                     with zipfile.ZipFile(filename) as myzip:
                         myzip.extractall(inner_folder)
-                    os.remove(filename)
+                    try:
+                        os.remove(filename)
+                    except OSError, e:
+                        pass # in Windows, sometime file is not unlocked
                     i+=1
                 i=0
-
                 # untar all tar.bz2 and all children
                 for z in tarFileList:
                     with tarfile.open(z) as t:
                         tar = t.extractall(os.path.join(self.edigeoPlainDir, '_%s' % i))
                         i+=1
                         t.close()
-                    os.remove(z)
+                    try:
+                        os.remove(z)
+                    except OSError, e:
+                        pass # in Windows, sometime file is not unlocked
 
             except IOError, e:
-                msg = u"Erreur lors de l'extraction des fichiers EDIGEO: %s" % e
+                msg = u"Erreur lors de l'extraction des fichiers EDIGEO"
                 self.go = False
                 self.qc.updateLog(msg)
                 return msg
