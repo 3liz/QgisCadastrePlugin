@@ -10,7 +10,7 @@ INSERT INTO [PREFIXE]parcelle
  comptecommunal, pdl, voie
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ','-') AS parcelle,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ','0') AS parcelle,
   '[ANNEE]' AS annee,
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -43,9 +43,9 @@ SELECT
   SUBSTRING(tmp,100,4) AS ccocif,
   SUBSTRING(tmp,104,1) AS gpafpd,
   'N',
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,32,6),' ', '-'),'+','¤') AS comptecommunal,
-  CASE WHEN trim(SUBSTRING(tmp,61,3))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,52,9)||SUBSTRING(tmp,61,3),' ', '-') END AS pdl,
-  CASE WHEN trim(SUBSTRING(tmp,91,5))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,91,5),' ', '-') END AS voie
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,32,6),' ', '0'),'+','¤') AS comptecommunal,
+  CASE WHEN trim(SUBSTRING(tmp,61,3))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,52,9)||SUBSTRING(tmp,61,3),' ', '0') END AS pdl,
+  CASE WHEN trim(SUBSTRING(tmp,91,5))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,91,5),' ', '0') END AS voie
 FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='10';
 -- traitement: suf;
 INSERT INTO [PREFIXE]suf
@@ -55,7 +55,7 @@ INSERT INTO [PREFIXE]suf
  parcelle, comptecommunal, pdl
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ','-') AS suf,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ','0') AS suf,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -85,9 +85,9 @@ SELECT
   SUBSTRING(tmp,138,1) AS topja,
   CASE WHEN trim(SUBSTRING(tmp,139,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,139,8),'DDMMYYYY') END AS datja,
   SUBSTRING(tmp,147,1) AS postel,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '-') AS parcelle,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,31,6),' ', '-'),'+','¤') AS comptecommunal,
-  CASE WHEN  trim(SUBSTRING(tmp,81,3))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,72,9)||SUBSTRING(tmp,81,3),' ', '-') END AS pdl
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,31,6),' ', '0'),'+','¤') AS comptecommunal,
+  CASE WHEN  trim(SUBSTRING(tmp,81,3))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,72,9)||SUBSTRING(tmp,81,3),' ', '0') END AS pdl
 FROM [PREFIXE]nbat WHERE
  SUBSTRING(tmp,20,2) ='21';
 -- traitement: sufexoneration;
@@ -97,7 +97,7 @@ INSERT INTO [PREFIXE]sufexoneration
  rcexnba, mpexnba, suf
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END||SUBSTRING(tmp,18,2),' ','-') AS sufexoneration,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END||SUBSTRING(tmp,18,2),' ','0') AS sufexoneration,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -118,7 +118,7 @@ SELECT
   SUBSTRING(tmp,69,10) AS rcexna,
   CASE WHEN trim(SUBSTRING(tmp,79,10))='' THEN NULL ELSE to_number(SUBSTRING(tmp,79,10),'9999999999')/100 END AS rcexnba,
   SUBSTRING(tmp,90,10) AS mpexnba,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ', '-') AS suf
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ', '0') AS suf
 FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='30';
 -- traitement: suftaxation;
 INSERT INTO [PREFIXE]suftaxation
@@ -127,7 +127,7 @@ INSERT INTO [PREFIXE]suftaxation
  suf
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ','-') AS suftaxation,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ','0') AS suftaxation,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -145,7 +145,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,89,10))='' THEN NULL ELSE to_number(SUBSTRING(tmp,89,10),'9999999999')/100 END AS c4majposa,
   CASE WHEN trim(SUBSTRING(tmp,100,10))='' THEN NULL ELSE to_number(SUBSTRING(tmp,100,10),'9999999999')/100 END  AS c4bisufad,
   CASE WHEN trim(SUBSTRING(tmp,110,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,110,9),'999999999') END cntmajtc,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ', '-') AS suf
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ', '0') AS suf
 FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='36';
 -- traitement: local00;
 INSERT INTO [PREFIXE]local00
@@ -154,7 +154,7 @@ INSERT INTO [PREFIXE]local00
  locinc, parcelle, voie
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10),' ','-') AS local00,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10),' ','0') AS local00,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -175,8 +175,8 @@ SELECT
   SUBSTRING(tmp,76,30) AS dvoilib,
   SUBSTRING(tmp,106,1) AS cleinvar,
   SUBSTRING(tmp,107,1) AS locinc,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,36,9),' ', '-') AS parcelle,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,62,5),' ', '-') AS voie
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,36,9),' ', '0') AS parcelle,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,62,5),' ', '0') AS voie
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='00';
 -- traitement: local10;
 INSERT INTO [PREFIXE]local10
@@ -187,7 +187,7 @@ INSERT INTO [PREFIXE]local10
  comptecommunal
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10),' ','-') AS local10,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10),' ','0') AS local10,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -231,7 +231,7 @@ SELECT
   SUBSTRING(tmp,152,4) AS jdtabt,
   SUBSTRING(tmp,156,4) AS jrtabt,
   SUBSTRING(tmp,160,4) AS jacloc,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,38,6),' ', '-'),'+','¤') AS comptecommunal
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,38,6),' ', '0'),'+','¤') AS comptecommunal
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='10';
 UPDATE [PREFIXE]local10 SET
   ccopre = local00.ccopre,
@@ -241,8 +241,8 @@ UPDATE [PREFIXE]local10 SET
   ccovoi = local00.ccovoi,
   dnvoiri = local00.dnvoiri,
   local00=local10.annee||local10.invar,
-  parcelle = REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '-'),
-  voie= REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi,' ', '-')
+  parcelle = REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '0'),
+  voie= REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi,' ', '0')
 FROM [PREFIXE]local00
 WHERE local00.invar = local10.invar AND local00.annee='[ANNEE]' AND local10.annee='[ANNEE]';
 -- traitement: pev;
@@ -253,7 +253,7 @@ INSERT INTO [PREFIXE]pev
  local10
  )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ','-') AS pev,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ','0') AS pev,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -293,7 +293,7 @@ INSERT INTO [PREFIXE]pevexoneration
  pev
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3)||CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END, ' ','-') AS pevexoneration,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3)||CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END, ' ','0') AS pevexoneration,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -317,7 +317,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,123,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,123,9),'999999999') END AS fcexb2,
   CASE WHEN trim(SUBSTRING(tmp,133,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,133,9),'999999999') END AS fcexba2,
   CASE WHEN trim(SUBSTRING(tmp,143,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,143,9),'999999999') END AS rcexba2,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '-') AS pev
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='30';
 -- traitement: pevtaxation;
 INSERT INTO [PREFIXE]pevtaxation
@@ -327,7 +327,7 @@ INSERT INTO [PREFIXE]pevtaxation
  pev
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3), ' ', '-') AS pevtaxation,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3), ' ', '0') AS pevtaxation,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -349,7 +349,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,146,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,146,9),'999999999') END  AS gp_bipevla,
   CASE WHEN trim(SUBSTRING(tmp,156,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,156,9),'999999999') END  AS bateom,
   CASE WHEN trim(SUBSTRING(tmp,166,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,166,9),'999999999') END  AS baomec,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '-') AS pev
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='36';
 -- traitement: pevprincipale;
 INSERT INTO [PREFIXE]pevprincipale
@@ -360,7 +360,7 @@ INSERT INTO [PREFIXE]pevprincipale
  pev
  )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||CASE WHEN SUBSTRING(tmp,33,3) IS NOT NULL THEN trim(SUBSTRING(tmp,33,3)) ELSE SUBSTRING(tmp,33,3) END,' ','-') AS pevprincipale,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||CASE WHEN SUBSTRING(tmp,33,3) IS NOT NULL THEN trim(SUBSTRING(tmp,33,3)) ELSE SUBSTRING(tmp,33,3) END,' ','0') AS pevprincipale,
   '[ANNEE]' as annee,
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -407,7 +407,7 @@ SELECT
   SUBSTRING(tmp,121,4) AS jannat,
   SUBSTRING(tmp,125,1) AS detent,
   SUBSTRING(tmp,126,2) AS dnbniv,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '-') AS pev
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='40';
 -- traitement: pevprofessionnelle;
 INSERT INTO [PREFIXE]pevprofessionnelle
@@ -416,7 +416,7 @@ INSERT INTO [PREFIXE]pevprofessionnelle
  pev
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3), ' ', '-') AS pevprofessionnelle,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3), ' ', '0') AS pevprofessionnelle,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -431,7 +431,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,72,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,72,9),'999999999') END AS vsurzt,
   SUBSTRING(tmp,82,9) AS vsurb1,
   SUBSTRING(tmp,91,9) AS vsurb2,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '-') AS pev
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='50';
 -- traitement: pevdependances;
 INSERT INTO [PREFIXE]pevdependances
@@ -441,7 +441,7 @@ INSERT INTO [PREFIXE]pevdependances
  pev
 )
 select
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3), ' ', '-') AS pevdependances,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3), ' ', '0') AS pevdependances,
   '[ANNEE]' AS annee,
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -466,7 +466,7 @@ select
   CASE WHEN trim(SUBSTRING(tmp,69,2))='' THEN NULL ELSE to_number(SUBSTRING(tmp,69,2),'99')/10 END AS dcimlc,
   CASE WHEN trim(SUBSTRING(tmp,71,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,71,3),'999')/100 END AS dcetde,
   SUBSTRING(tmp,74,3) AS dcspde,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '-') AS pev
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='60';
 -- traitement: proprietaire;
 INSERT INTO [PREFIXE]proprietaire
@@ -478,7 +478,7 @@ INSERT INTO [PREFIXE]proprietaire
  comptecommunal
 )
 SELECT
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,7,6)||SUBSTRING(tmp,13,2)||SUBSTRING(tmp,19,6), ' ', '-'),'+','¤') AS proprietaire,
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,7,6)||SUBSTRING(tmp,13,2)||SUBSTRING(tmp,19,6), ' ', '0'),'+','¤') AS proprietaire,
   '[ANNEE]' AS annee,
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -544,13 +544,13 @@ SELECT
   SUBSTRING(tmp,500,4) AS jandge,
   SUBSTRING(tmp,504,4) AS jantfc,
   SUBSTRING(tmp,508,4) AS jantbc,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,7,6),' ', '-'),'+','¤') AS comptecommunal
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,7,6),' ', '0'),'+','¤') AS comptecommunal
 FROM [PREFIXE]prop;
 -- création: comptecommunal à partir de proprietaire;
 INSERT INTO [PREFIXE]comptecommunal
   (comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
 SELECT
-  REPLACE(REPLACE('[ANNEE]'||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal,
+  REPLACE(REPLACE('[ANNEE]'||ccodep||dnupro,' ', '0'),'+','¤') AS comptecommunal,
   '[ANNEE]',
   ccodep,
   ccodir,
@@ -566,7 +566,7 @@ INSERT INTO [PREFIXE]pdl
  parcelle, comptecommunal
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18),' ', '-') AS pdl,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18),' ', '0') AS pdl,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -581,8 +581,8 @@ SELECT
   SUBSTRING(tmp,82,1) AS gprmut,
   SUBSTRING(tmp,83,6) AS dnupro,
   SUBSTRING(tmp,94,4) AS ccocif,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '-') AS parcelle,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,83,6),' ', '-'),'+','¤') AS comptecommunal
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,83,6),' ', '0'),'+','¤') AS comptecommunal
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='10';
 -- traitement: parcellecomposante;
 INSERT INTO [PREFIXE]parcellecomposante
@@ -591,7 +591,7 @@ INSERT INTO [PREFIXE]parcellecomposante
  pdl, parcelle,parcellea
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18)||SUBSTRING(tmp,28,9),' ', '-') AS parcellecomposante,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18)||SUBSTRING(tmp,28,9),' ', '0') AS parcellecomposante,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -604,9 +604,9 @@ SELECT
   SUBSTRING(tmp,31,2) AS ccoseca,
   SUBSTRING(tmp,33,4) AS dnuplaa,
   SUBSTRING(tmp,94,4) AS ccocif,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18),' ', '-') AS pdl,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '-') AS parcelle,
-  CASE WHEN trim(SUBSTRING(tmp,33,4)) ='' THEN null ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,28,9),' ', '-') END parcellea
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18),' ', '0') AS pdl,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
+  CASE WHEN trim(SUBSTRING(tmp,33,4)) ='' THEN null ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,28,9),' ', '0') END parcellea
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='20';
 -- traitement: lots;
 INSERT INTO [PREFIXE]lots
@@ -615,7 +615,7 @@ INSERT INTO [PREFIXE]lots
  pdl, comptecommunal, parcelle
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,25),' ', '-') AS lots,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,25),' ', '0') AS lots,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -634,9 +634,9 @@ SELECT
   SUBSTRING(tmp,83,6) AS dnuprol,
   SUBSTRING(tmp,89,5) AS dreflf,
   SUBSTRING(tmp,94,4) AS ccocif,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18),' ', '-') AS pdl,
-  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,83,6),' ', '-'),'+','¤') AS comptecommunal,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '-') AS parcelle
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,18),' ', '0') AS pdl,
+  REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,83,6),' ', '0'),'+','¤') AS comptecommunal,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,15),' ', '0') AS parcelle
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='30';
 -- traitement: lotslocaux;
 INSERT INTO [PREFIXE]lotslocaux
@@ -645,7 +645,7 @@ INSERT INTO [PREFIXE]lotslocaux
  lots, local00, local10
 )
 SELECT DISTINCT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,25)||SUBSTRING(tmp,37,10),' ', '-') AS lotslocaux,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,25)||SUBSTRING(tmp,37,10),' ', '0') AS lotslocaux,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodepl,
   SUBSTRING(tmp,3,1) AS ccodirl,
@@ -662,9 +662,9 @@ SELECT DISTINCT
   SUBSTRING(tmp,37,10) AS invloc,
   SUBSTRING(tmp,47,7) AS dnumql,
   SUBSTRING(tmp,54,7) AS ddenql,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,25),' ', '-') AS lots,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,37,10),' ', '-') AS local00,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,37,10),' ', '-') AS local10
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,25),' ', '0') AS lots,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,37,10),' ', '0') AS local00,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,37,10),' ', '0') AS local10
 FROM [PREFIXE]lloc;
 -- traitement: commune;
 INSERT INTO [PREFIXE]commune
@@ -673,7 +673,7 @@ INSERT INTO [PREFIXE]commune
  typvoi, indldnbat, motclas
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6),' ', '-') AS commune,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6),' ', '0') AS commune,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -703,7 +703,7 @@ INSERT INTO [PREFIXE]voie
  commune
 )
 SELECT
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,104,5),' ', '-') AS voie,
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,104,5),' ', '0') AS voie,
   '[ANNEE]',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
@@ -727,14 +727,14 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,109,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,109,1)) END AS typvoi,
   CASE WHEN trim(SUBSTRING(tmp,110,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,110,1)) END AS indldnbat,
   SUBSTRING(tmp,113,8) AS motclas,
-  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6),' ', '-') AS commune
+  REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6),' ', '0') AS commune
 FROM [PREFIXE]fanr WHERE trim(SUBSTRING(tmp,4,3))  != '' AND trim(SUBSTRING(tmp,7,4))  != '';
 -- purge des doublons : voie;
 DELETE FROM [PREFIXE]voie WHERE codvoi IN (SELECT codvoi FROM [PREFIXE]voie WHERE annee='[ANNEE]' GROUP BY codvoi HAVING COUNT(*) > 1) AND annee='[ANNEE]';
 -- ajout données manquantes : comptecommunal à partir de lots;
 INSERT INTO [PREFIXE]comptecommunal
  ( comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
-SELECT REPLACE(REPLACE(annee||ccodep||dnuprol,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, ccocom, dnuprol,'O'
+SELECT REPLACE(REPLACE(annee||ccodep||dnuprol,' ', '0'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, ccocom, dnuprol,'O'
 FROM [PREFIXE]lots
 WHERE   '-'||annee||'-'||ccodep||'-'||ccodir||'-'||ccocom||'-'||dnuprol||'-' NOT IN
     (
@@ -747,7 +747,7 @@ GROUP BY annee, ccodep, ccodir, ccocom, dnuprol;
 INSERT INTO [PREFIXE]parcelle
  ( parcelle, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ajoutcoherence, comptecommunal,voie)
 SELECT
-  REPLACE(annee||ccodep||ccodir||ccocom||ccopre||ccosec||dnupla,' ','-') as parcelle,
+  REPLACE(annee||ccodep||ccodir||ccocom||ccopre||ccosec||dnupla,' ','0') as parcelle,
   annee,
   ccodep,
   ccodir,
@@ -756,8 +756,8 @@ SELECT
   ccosec,
   dnupla,
   'O' ,
-  REPLACE(annee||ccodep||dnupro,' ', '-'),
-  REPLACE(annee||ccodep||ccodir||ccocom||ccovoi,' ', '-')
+  REPLACE(annee||ccodep||dnupro,' ', '0'),
+  REPLACE(annee||ccodep||ccodir||ccocom||ccovoi,' ', '0')
 FROM [PREFIXE]local10
 WHERE invar not IN
     (
@@ -771,7 +771,7 @@ GROUP BY annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, dnupro, ccovoi;
 -- ajout données manquantes : comptecommunal à partir de parcelles;
 INSERT INTO [PREFIXE]comptecommunal
  ( comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
-SELECT REPLACE(REPLACE(annee||ccodep||dnupro,' ', '-'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, ccocom, dnupro,'O'
+SELECT REPLACE(REPLACE(annee||ccodep||dnupro,' ', '0'),'+','¤') AS comptecommunal, annee, ccodep, ccodir, ccocom, dnupro,'O'
 FROM [PREFIXE]parcelle
 WHERE   '-'||annee||'-'||ccodep||'-'||ccodir||'-'||ccocom||'-'||dnupro||'-' NOT IN
     (

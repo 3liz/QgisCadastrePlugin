@@ -40,7 +40,7 @@ INSERT INTO [PREFIXE]geo_section
 SELECT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
 FROM [PREFIXE]impedigeo_section_id;
 -- geo_subdsect;
-INSERT INTO [PREFIXE]geo_subdsect 
+INSERT INTO [PREFIXE]geo_subdsect
 (geo_subdsect, annee, object_rid, idu, geo_section, geo_qupl, geo_copl, eor, dedi, icl, dis, geo_inp, dred, creat_date, update_dat, geom)
 SELECT '[ANNEE]'||SUBSTRING(idu,1,10), '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), qupl, copl, to_number(eor,'0000000000'), to_date(dedi, 'DD/MM/YYYYY'), floor(icl), to_date(dis, 'DD/MM/YYYYY'), inp, to_date(dred,'DD/MM/YYYY'), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
 FROM [PREFIXE]impedigeo_subdsect_id;
@@ -49,9 +49,9 @@ INSERT INTO [PREFIXE]geo_parcelle
 (geo_parcelle, annee, object_rid, idu, geo_section, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom)
 SELECT '[ANNEE]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), supf, indp, coar, tex, tex2, codm, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
 FROM [PREFIXE]impedigeo_parcelle_id;
-UPDATE [PREFIXE]geo_parcelle set geo_subdsect=s.geo_subdsect FROM [PREFIXE]geo_subdsect s, [PREFIXE]edigeo_rel r 
+UPDATE [PREFIXE]geo_parcelle set geo_subdsect=s.geo_subdsect FROM [PREFIXE]geo_subdsect s, [PREFIXE]edigeo_rel r
 WHERE s.annee=geo_parcelle.annee AND geo_parcelle.annee='[ANNEE]' AND r.nom='Rel_PARCELLE_SUBDSECT' AND r.de=geo_parcelle.object_rid AND vers=s.object_rid;
-UPDATE [PREFIXE]geo_parcelle set parcelle= p.parcelle FROM [PREFIXE]parcelle p WHERE p.annee='[ANNEE]' AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,3)||replace(SUBSTRING(geo_parcelle.geo_parcelle,8,5),'0','-')||SUBSTRING(geo_parcelle.geo_parcelle,13,4) AND geo_parcelle.annee='[ANNEE]';
+UPDATE [PREFIXE]geo_parcelle set parcelle= p.parcelle FROM [PREFIXE]parcelle p WHERE p.annee='[ANNEE]' AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,12) AND geo_parcelle.annee='[ANNEE]';
 UPDATE [PREFIXE]parcelle SET geo_parcelle=g.geo_parcelle FROM [PREFIXE]geo_parcelle g WHERE g.parcelle=parcelle.parcelle AND g.annee='[ANNEE]';
 -- geo_subdfisc;
 INSERT INTO [PREFIXE]geo_subdfisc (geo_subdfisc, annee, object_rid, tex, creat_date, update_dat, geom)
@@ -161,84 +161,84 @@ SELECT s.annee, s.geo_tsurf, p.geo_commune
 FROM [PREFIXE]geo_tsurf s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND s.object_rid=r.de AND p.object_rid=r.vers;
 -- geo_label;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_parcelle)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_parcelle 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_parcelle
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_parcelle p
 WHERE i.ogr_obj__1='PARCELLE_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_section)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_section 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_section
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_section p
 WHERE i.ogr_obj__1='SECTION_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_voiep)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_voiep 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_voiep
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_voiep p
 WHERE i.ogr_obj__1='VOIEP_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_tsurf)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_tsurf 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_tsurf
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_tsurf p
 WHERE i.ogr_obj__1='TSURF_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_numvoie)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_numvoie 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_numvoie
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_numvoie p
 WHERE i.ogr_obj__1='NUMVOIE_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_lieudit)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_lieudit 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_lieudit
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_lieudit p
 WHERE i.ogr_obj__1='LIEUDIT_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_zoncommuni)
 SELECT distinct '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_zoncommuni 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_zoncommuni
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_zoncommuni p
 WHERE i.ogr_obj__1='ZONCOMMUNI_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_tpoint)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_tpoint 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_tpoint
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_tpoint p
 WHERE i.ogr_obj__1='TPOINT_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_subdfisc)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_subdfisc 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_subdfisc
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_subdfisc p
 WHERE i.ogr_obj__1='SUBDFISC_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_tline)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_tline 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_tline
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_tline p
 WHERE i.ogr_obj__1='TLINE_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, creat_date, update_dat, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s, geo_tronfluv)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, p.creat_date, p.update_dat, i.geom,
-i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_tronfluv 
+i.fon, i.hei, i.tyu, i.cef, i.csp, i.di1, i.di2, i.di3, i.di4, i.tpa, i.hta, i.vta, i.atr, i.ogr_obj_ln, i.ogr_obj__1, i.ogr_atr_va, i.ogr_angle, i.ogr_font_s, p.geo_tronfluv
 FROM [PREFIXE]impedigeo_id_s_obj_z_1_2_2 i, [PREFIXE]geo_tronfluv p
 WHERE i.ogr_obj__1='TRONFLUV_id' AND p.annee='[ANNEE]' AND p.object_rid=i.ogr_obj_ln;
-INSERT INTO [PREFIXE]geo_label( 
+INSERT INTO [PREFIXE]geo_label(
  geo_label, annee, ogc_fid, object_rid, geom, fon, hei, tyu, cef, csp, di1, di2,
  di3, di4, tpa, hta, vta, atr, ogr_obj_ln, ogr_obj__1, ogr_atr_va, ogr_angle, ogr_font_s)
 SELECT '[ANNEE]'||replace(to_char(nextval('[PREFIXE]geo_label_seq'),'0000000000'),' ',''), '[ANNEE]', i.gid, i.object_rid, i.geom,

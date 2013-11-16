@@ -525,7 +525,7 @@ class cadastre_common():
             ALTER TABLE geo_parcelle ADD COLUMN tempo_import text;
             SELECT DiscardGeometryColumn('geo_parcelle', 'geom');
             SELECT DiscardGeometryColumn('geo_parcelle', 'geom_uf');
-            UPDATE geo_parcelle SET tempo_import = SUBSTR(geo_parcelle,1,4) || '@' || SUBSTR(geo_parcelle,5,3) || replace(SUBSTR(geo_parcelle,8,5),'0','-') || SUBSTR(geo_parcelle,13,4) ;
+            UPDATE geo_parcelle SET tempo_import = SUBSTR(geo_parcelle,1,4) || '@' || SUBSTR(geo_parcelle,5,12);
             DROP INDEX IF EXISTS idx_parcelle_tempo_import;
             CREATE INDEX idx_parcelle_tempo_import ON geo_parcelle ( tempo_import);
             DROP TABLE IF EXISTS geo_parcelle_temp;
@@ -591,7 +591,7 @@ class cadastre_common():
         for statement in res:
             replaceBy = '''
             CREATE TABLE ll AS
-            SELECT DISTINCT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '-') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '-') AS voie
+            SELECT DISTINCT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.invar AS local00, REPLACE(l10.annee||l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '0') AS parcelle, REPLACE(l10.annee || l10.ccodep ||  l10.ccodir || l10.ccocom || l.ccovoi,' ', '0') AS voie
             FROM local00 l
             INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
             WHERE l10.annee='?';
