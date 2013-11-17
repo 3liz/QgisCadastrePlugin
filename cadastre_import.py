@@ -1037,15 +1037,24 @@ class cadastreImport(QObject):
                 l = [ a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
 
                 # Create a sql script to insert all items
-                sql="BEGIN;"
-                for item in l:
-                    sql+= "INSERT INTO edigeo_rel ( nom, de, vers) values ( '%s', '%s', '%s');" % (item[0], item[1], item[2] )
-                sql+="COMMIT;"
-
-                # Execute query
                 if self.dialog.dbType == 'postgis':
+                    sql="BEGIN;"
+                    for item in l:
+                        sql+= "INSERT INTO edigeo_rel ( nom, de, vers) VALUES ( '%s', '%s', '%s');" % (item[0], item[1], item[2] )
+                    sql+="COMMIT;"
                     sql = self.qc.setSearchPath(sql, self.dialog.schema)
-                self.executeSqlQuery(sql)
+                    self.executeSqlQuery(sql)
+                if self.dialog.dbType == 'spatialite':
+                    c = self.connector._get_cursor()
+                    query = 'INSERT INTO edigeo_rel (nom, de, vers) VALUES (?, ?, ?)'
+                    try:
+                        c.executemany(query, [ (item[0], item[1], item[2]) for item in l] )
+                        self.connector._commit()
+                    except:
+                        self.qc.updateLog('Erreurs pendant la requête : %s' % sql)
+                    finally:
+                        c.close()
+                        del c
 
 
     def dropEdigeoRawData(self):
