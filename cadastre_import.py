@@ -740,6 +740,7 @@ class cadastreImport(QObject):
                     try:
                         os.remove(z)
                     except OSError, e:
+                        self.qc.updateLog( "Erreur lors de la suppression de %s" % str(z))
                         pass # in Windows, sometime file is not unlocked
 
                 inner_zips_pattern = os.path.join(self.edigeoPlainDir, "*.zip")
@@ -752,9 +753,11 @@ class cadastreImport(QObject):
                     try:
                         os.remove(filename)
                     except OSError, e:
+                        self.qc.updateLog( "Erreur lors de la suppression de %s" % str(filename))
                         pass # in Windows, sometime file is not unlocked
                     i+=1
                 i=0
+
                 # untar all tar.bz2 and all children
                 for z in tarFileList:
                     with tarfile.open(z) as t:
@@ -764,6 +767,7 @@ class cadastreImport(QObject):
                     try:
                         os.remove(z)
                     except OSError, e:
+                        self.qc.updateLog( "Erreur lors de la suppression de %s" % str(z))
                         pass # in Windows, sometime file is not unlocked
 
             except IOError, e:

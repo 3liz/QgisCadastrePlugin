@@ -1147,7 +1147,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','geo_commune','geo_section','geom'],
-                'orderBy': ['tex'],
+                'orderBy': ['geo_section'],
                 'features': None,
                 'chosenFeature': None,
                 'resetWidget': self.btResetSection,
