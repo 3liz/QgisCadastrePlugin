@@ -1,4 +1,12 @@
 CHANGELOG
+  Version 0.9.5
+  * Chargement - bug #8: pas d'erreur si présence de couches plugin OpenLayers
+  * Recherche/Identification - réactivation des outils sur chargement d'un projet Cadastre - #9
+  * Recherche - Lieux : Liste des sections ordonnées par code
+  * Import - correction bug Spatialite import relations (*.vec) - bug #7
+  * Import - Gestion des erreurs de suppression de fichier après extraction - bug #5
+  * Import - modifications des scripts pour gestion arrondissements (ex: Marseille)
+
   Version 0.9.4
   * Import - bouton Créer une base Spatialite grisé si aucune connection dans QGIS
 
