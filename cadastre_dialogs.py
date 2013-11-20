@@ -248,11 +248,11 @@ class cadastre_common():
         layers = self.dialog.iface.legendInterface().layers()
         for l in layers:
             if not l.type() == QgsMapLayer.VectorLayer:
-                pass
+                continue
             if not hasattr(l, 'providerType'):
-                pass
+                continue
             if not l.providerType() in (u'postgres', u'spatialite'):
-                pass
+                continue
             connectionParams = self.getConnectionParameterFromDbLayer(l)
             if connectionParams and \
                 connectionParams['table'] == tableName and \
