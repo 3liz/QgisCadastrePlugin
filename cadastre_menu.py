@@ -105,6 +105,7 @@ class cadastre_menu:
         )
         self.openImportAction.triggered.connect(self.open_import_dialog)
         self.toolbar.addAction(self.openImportAction)
+        self.toolbar.setObjectName("cadastreToolbar");
 
         # open load dialog
         self.openLoadAction = QAction(
@@ -150,13 +151,8 @@ class cadastre_menu:
             self.iface.mainWindow()
         )
 
-
         self.identifyParcelleAction.setCheckable(True)
-        self.identyParcelleTool = IdentifyParcelle(self.mapCanvas)
-        self.identyParcelleTool.geomIdentified.connect(self.getParcelleInfo)
-        self.identyParcelleTool.setAction(self.identifyParcelleAction)
-        self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
-        self.toolbar.addAction(self.identifyParcelleAction)
+        self.initializeIdentifyParcelleTool()
 
         # Display About window on first use
         s = QSettings()
@@ -167,9 +163,14 @@ class cadastre_menu:
 
 
         # refresh identify tool when new data loaded
+        # data loaded with plugin tool
         from cadastre_loading import cadastreLoading
         self.ql = cadastreLoading(self)
         self.ql.cadastreLoadingFinished.connect(self.refreshIndentifyParcelleTool)
+
+        # new layers loaded in project: refresh search and identify tool
+        self.iface.projectRead.connect(self.onProjectRead)
+        self.iface.newProjectCreated.connect(self.onNewProjectCreated)
 
 
     def open_import_dialog(self):
@@ -213,17 +214,22 @@ class cadastre_menu:
         dialog = cadastre_about_dialog(self.iface)
         dialog.exec_()
 
-    def refreshIndentifyParcelleTool(self):
+    def initializeIdentifyParcelleTool(self):
+        '''
+        Initialize the identify tool for parcelles
+        '''
         self.identyParcelleTool = IdentifyParcelle(self.mapCanvas)
-        layer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
-        if not layer:
-            QMessageBox.critical(
-                self.cadastre_search_dialog,
-                "Cadastre",
-                u"La couche des parcelles n'a pas été trouvée !"
-            )
-            return
-        self.iface.setActiveLayer(layer)
+        self.identyParcelleTool.geomIdentified.connect(self.getParcelleInfo)
+        self.identyParcelleTool.setAction(self.identifyParcelleAction)
+        self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
+        self.toolbar.addAction(self.identifyParcelleAction)
+
+
+    def refreshIndentifyParcelleTool(self):
+        self.toolbar.removeAction(self.identifyParcelleAction)
+        self.initializeIdentifyParcelleTool()
+        self.setIndentifyParcelleTool()
+
 
     def setIndentifyParcelleTool(self):
         '''
@@ -233,14 +239,10 @@ class cadastre_menu:
         # First set Parcelle as active layer
         layer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
         if not layer:
-            QMessageBox.critical(
-                self.cadastre_search_dialog,
-                "Cadastre",
-                u"La couche des parcelles n'a pas été trouvée !"
-            )
+            #~ print u"Cadastre - La couche des parcelles n'a pas été trouvée"
             return
+        # Set active layer -> geo_parcelle
         self.iface.setActiveLayer(layer)
-
         # The activate identify tool
         self.mapCanvas.setMapTool(self.identyParcelleTool)
 
@@ -257,6 +259,27 @@ class cadastre_menu:
             self.cadastre_search_dialog
         )
         parcelleDialog.show()
+
+
+    def onProjectRead(self):
+        '''
+        Refresh search dialog when new data has been loaded
+        '''
+        if self.cadastre_search_dialog:
+            self.cadastre_search_dialog.checkMajicContent()
+            self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
+            self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
+            self.refreshIndentifyParcelleTool()
+
+    def onNewProjectCreated(self):
+        '''
+        Refresh search dialog when new data has been loaded
+        '''
+        if self.cadastre_search_dialog:
+            self.cadastre_search_dialog.checkMajicContent()
+            self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
+            self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
+
 
     def open_help(self):
         '''Opens the html help file content with default browser'''
