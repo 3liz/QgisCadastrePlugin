@@ -425,7 +425,7 @@ class cadastre_common():
 
 
 
-    def unaccent(self, s):
+    def normalizeString(self, s):
         '''
         Removes all accents from
         the given string and
@@ -436,9 +436,15 @@ class cadastre_common():
 
         if isinstance(s,str):
             s = unicode(s,"utf8","replace")
-        s=unicodedata.normalize('NFD',s)
 
-        return s.encode('ascii','ignore')
+        s=unicodedata.normalize('NFD',s)
+        s = s.encode('ascii','ignore')
+        s = s.upper().strip(' \t\n')
+        r = re.compile(r"[^ -~]")
+        s = r.sub(' ', s)
+        s = s.replace("'", " ")
+
+        return s
 
 
     def postgisToSpatialite(self, sql, targetSrid='2154'):
@@ -1523,7 +1529,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # Abort if searchValue length too small
         minlen = self.searchComboBoxes[key]['search']['minlen']
-        if len(searchValue) < minlen:
+        if len(self.qc.normalizeString(searchValue)) < minlen:
             self.qc.updateLog(u"%s caractères minimum requis pour la recherche !" % minlen)
             QApplication.restoreOverrideCursor()
             return None
@@ -1551,32 +1557,36 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # get rid of double spaces
         r = re.compile(r'[ ,]+', re.IGNORECASE)
-        searchValue = r.sub(' ', searchValue)
+        searchValue = r.sub(' ', searchValue).strip(' \t\n')
 
         if key == 'adresse':
             # get rid of stopwords
-            stopwords = ['allee', 'aqueduc', 'arceaux', 'avenue', 'avenues', 'boulevard', 'carrefour', 'carrer', 'chemin', 'chemins', 'chemin rural', 'clos', 'cour', 'cours', 'descente', 'enclos', 'escalier', 'espace', 'esplanade', 'grand rue', 'impasse', 'mail', 'montee', 'parvis', 'passage', 'passerelle', 'place', 'plan', 'pont', 'quai', 'rond-point', 'route', 'rue', 'ruisseau', 'sente', 'sentier', 'square', 'terrasse', 'traboule', 'traverse', 'traversee', 'traversier', 'tunnel', 'voie', 'voie communale', 'viaduc', 'zone',
-            'ach', 'all', 'angl', 'art', 'av', 'ave', 'bd', 'bv', 'camp', 'car', 'cc', 'cd', 'ch', 'che', 'chem', 'chs ', 'chv', 'cite', 'clos', 'cote', 'cour', 'cpg', 'cr', 'crs', 'crx', 'd', 'dig', 'dom', 'ecl', 'esc', 'esp', 'fg', 'fos', 'frm', 'gare', 'gpl', 'gr', 'ham', 'hle', 'hlm ', 'imp', 'jte ', 'lot', 'mail', 'mais', 'n', 'parc', 'pas', 'pch', 'pl', 'ple ', 'pont', 'port', 'prom', 'prv', 'pta', 'pte', 'ptr', 'ptte', 'qua', 'quai', 'rem', 'res', 'rive', 'rle', 'roc', 'rpe ', 'rpt ', 'rte ', 'rue', 'rult', 'sen', 'sq', 'tour', 'tsse', 'val', 'vc', 'ven', 'vla', 'voie', 'voir', 'voy', 'zone'
+            stopwords = ['ALLEE', 'AQUEDUC', 'ARCEAUX', 'AVENUE', 'AVENUES', 'BOULEVARD', 'CARREFOUR', 'CARRER', 'CHEMIN', 'CHEMINS', 'CHEMIN RURAL', 'CLOS', 'COUR', 'COURS', 'DESCENTE', 'ENCLOS', 'ESCALIER', 'ESPACE', 'ESPLANADE', 'GRAND RUE', 'IMPASSE', 'MAIL', 'MONTEE', 'PARVIS', 'PASSAGE', 'PASSERELLE', 'PLACE', 'PLAN', 'PONT', 'QUAI', 'ROND-POINT', 'ROUTE', 'RUE', 'RUISSEAU', 'SENTE', 'SENTIER', 'SQUARE', 'TERRASSE', 'TRABOULE', 'TRAVERSE', 'TRAVERSEE', 'TRAVERSIER', 'TUNNEL', 'VOIE', 'VOIE COMMUNALE', 'VIADUC', 'ZONE',
+            'ACH', 'ALL', 'ANGL', 'ART', 'AV', 'AVE', 'BD', 'BV', 'CAMP', 'CAR', 'CC', 'CD', 'CH', 'CHE', 'CHEM', 'CHS ', 'CHV', 'CITE', 'CLOS', 'COTE', 'COUR', 'CPG', 'CR', 'CRS', 'CRX', 'D', 'DIG', 'DOM', 'ECL', 'ESC', 'ESP', 'FG', 'FOS', 'FRM', 'GARE', 'GPL', 'GR', 'HAM', 'HLE', 'HLM ', 'IMP', 'JTE ', 'LOT', 'MAIL', 'MAIS', 'N', 'PARC', 'PAS', 'PCH', 'PL', 'PLE ', 'PONT', 'PORT', 'PROM', 'PRV', 'PTA', 'PTE', 'PTR', 'PTTE', 'QUA', 'QUAI', 'REM', 'RES', 'RIVE', 'RLE', 'ROC', 'RPE ', 'RPT ', 'RTE ', 'RUE', 'RULT', 'SEN', 'SQ', 'TOUR', 'TSSE', 'VAL', 'VC', 'VEN', 'VLA', 'VOIE', 'VOIR', 'VOY', 'ZONE'
             ]
             sp = searchValue.split(' ')
-            if len(sp)>0 and self.qc.unaccent(sp[0]).lower() in stopwords:
+            if len(sp)>0 and self.qc.normalizeString(sp[0]) in stopwords:
                 searchValue = ' '.join(sp[1:])
+                if len(self.qc.normalizeString(searchValue)) < minlen:
+                    self.qc.updateLog(u"%s caractères minimum requis pour la recherche !" % minlen)
+                    QApplication.restoreOverrideCursor()
+                    return None
 
-        sqlSearchValue = self.qc.unaccent(searchValue.strip(' \t\n')).upper()
+        sqlSearchValue = self.qc.normalizeString(searchValue)
 
         # Build SQL query
         if key == 'adresse':
             sql = ' SELECT DISTINCT v.voie, c.libcom, v.natvoi, v.libvoi'
             sql+= ' FROM voie v'
             sql+= ' INNER JOIN commune c ON c.ccodep = v.ccodep AND c.ccocom = v.ccocom'
-            sql+= " WHERE libvoi LIKE '%%%s%%'" % sqlSearchValue
+            sql+= " WHERE libvoi LIKE %s" % self.connector.quoteString('%'+sqlSearchValue+'%')
             sql+= ' ORDER BY c.libcom, v.natvoi, v.libvoi'
 
         if key == 'proprietaire':
             sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper" #, c.ccocom"
             sql+= ' FROM proprietaire p'
             #~ sql+= ' INNER JOIN commune c ON c.ccocom = p.ccocom'
-            sql+= " WHERE ddenom LIKE '%s%%'" % sqlSearchValue
+            sql+= " WHERE ddenom LIKE %s" % self.connector.quoteString(sqlSearchValue+'%')
             sql+= ' GROUP BY dnuper, ddenom, dlign4' #, c.ccocom'
             sql+= ' ORDER BY ddenom' #, c.ccocom'
         self.dbType = connectionParams['dbType']
