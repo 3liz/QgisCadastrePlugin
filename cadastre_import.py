@@ -166,6 +166,10 @@ class cadastreImport(QObject):
         b = os.path.join(self.scriptDir, 'edigeo_create_import_tables.sql')
         shutil.copy2(a, b)
 
+        # Suppression des éventuelles tables edigeo import
+        # laissées suite à bug par exemple
+        self.dropEdigeoRawData()
+
         # install opencadastre structure
         scriptList = [
             {
@@ -476,6 +480,7 @@ class cadastreImport(QObject):
         shutil.copytree(self.edigeoDir, os.path.join(self.edigeoPlainDir, 'plain'))
 
         scriptList = []
+        replaceDict = self.replaceDict.copy()
 
         # Drop constraints if needed
         scriptList.append(
@@ -489,11 +494,16 @@ class cadastreImport(QObject):
 
         # Suppression et recréation des tables edigeo pour import
         if self.dialog.hasData:
+            replaceDict['2154'] = self.targetSrid
+            # copy edige_create_import_tables in scriptDir
+            a = os.path.join(self.qc.plugin_dir, 'scripts/edigeo_create_import_tables.sql')
+            b = os.path.join(self.scriptDir, 'edigeo_create_import_tables.sql')
+            shutil.copy2(a, b)
             self.dropEdigeoRawData()
             scriptList.append(
                 {
                     'title': u'Création des tables edigeo',
-                    'script': '%s' % os.path.join(self.qc.plugin_dir, 'scripts/edigeo_create_import_tables.sql')
+                    'script': '%s' % b
                 }
             )
         # Suppression des indexes
@@ -509,7 +519,6 @@ class cadastreImport(QObject):
             )
 
 
-        replaceDict = self.replaceDict.copy()
         for item in scriptList:
             if self.go:
                 self.dialog.subStepLabel.setText(item['title'])
@@ -1074,6 +1083,7 @@ class cadastreImport(QObject):
                 'boulon_id',
                 'commune_id',
                 'croix_id',
+                'id_s_obj_z_1_2_2',
                 'lieudit_id',
                 'numvoie_id',
                 'parcelle_id',
@@ -1088,8 +1098,7 @@ class cadastreImport(QObject):
                 'tronroute_id',
                 'tsurf_id',
                 'voiep_id',
-                'zoncommuni_id',
-                'id_s_obj_z_1_2_2'
+                'zoncommuni_id'
                 #~ 'edigeo_rel',
             ]
             sql = ''

@@ -1,5 +1,5 @@
 -- Creation des tables EDIGEO
-CREATE TABLE IF NOT EXISTS batiment_id (
+CREATE TABLE batiment_id (
     ogc_fid serial,
     object_rid character varying,
     dur character varying,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS batiment_id (
 );
 SELECT AddGeometryColumn('batiment_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS borne_id (
+CREATE TABLE borne_id (
     ogc_fid serial,
     object_rid character varying,
     creat_date integer,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS borne_id (
 );
 SELECT AddGeometryColumn('borne_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS commune_id (
+CREATE TABLE commune_id (
     ogc_fid serial,
     object_rid character varying,
     idu character varying,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS commune_id (
 );
 SELECT AddGeometryColumn('commune_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS croix_id (
+CREATE TABLE croix_id (
     ogc_fid serial,
     object_rid character varying,
     creat_date integer,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS croix_id (
 );
 SELECT AddGeometryColumn('croix_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS id_s_obj_z_1_2_2 (
+CREATE TABLE id_s_obj_z_1_2_2 (
     ogc_fid serial,
     object_rid character varying,
     fon character varying,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS id_s_obj_z_1_2_2 (
 );
 SELECT AddGeometryColumn('id_s_obj_z_1_2_2', 'geom', 2154, 'POINT', 2);
 
-CREATE TABLE IF NOT EXISTS lieudit_id (
+CREATE TABLE lieudit_id (
     ogc_fid serial,
     object_rid character varying,
     tex10 character varying,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS lieudit_id (
 );
 SELECT AddGeometryColumn('lieudit_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS numvoie_id (
+CREATE TABLE numvoie_id (
     ogc_fid serial,
     object_rid character varying,
     tex character varying,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS numvoie_id (
 );
 SELECT AddGeometryColumn('numvoie_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS parcelle_id (
+CREATE TABLE parcelle_id (
     ogc_fid serial,
     object_rid character varying,
     coar character varying,
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS parcelle_id (
 );
 SELECT AddGeometryColumn('parcelle_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS ptcanv_id (
+CREATE TABLE ptcanv_id (
     ogc_fid serial,
     object_rid character varying,
     can character varying,
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS ptcanv_id (
 );
 SELECT AddGeometryColumn('ptcanv_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS section_id (
+CREATE TABLE section_id (
     ogc_fid serial,
     object_rid character varying,
     idu character varying,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS section_id (
 );
 SELECT AddGeometryColumn('section_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS subdfisc_id (
+CREATE TABLE subdfisc_id (
     ogc_fid serial,
     object_rid character varying,
     tex character varying,
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS subdfisc_id (
 );
 SELECT AddGeometryColumn('subdfisc_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS subdsect_id (
+CREATE TABLE subdsect_id (
     ogc_fid serial,
     object_rid character varying,
     copl character varying,
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS subdsect_id (
 );
 SELECT AddGeometryColumn('subdsect_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS symblim_id (
+CREATE TABLE symblim_id (
     ogc_fid serial,
     object_rid character varying,
     ori double precision,
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS symblim_id (
 );
 SELECT AddGeometryColumn('symblim_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS tline_id (
+CREATE TABLE tline_id (
     ogc_fid serial,
     object_rid character varying,
     sym character varying,
@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS tline_id (
 );
 SELECT AddGeometryColumn('tline_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS tpoint_id (
+CREATE TABLE tpoint_id (
     ogc_fid serial,
     object_rid character varying,
     ori double precision,
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS tpoint_id (
 );
 SELECT AddGeometryColumn('tpoint_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS tronfluv_id (
+CREATE TABLE tronfluv_id (
     ogc_fid serial,
     object_rid character varying,
     tex10 character varying,
@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS tronfluv_id (
 );
 SELECT AddGeometryColumn('tronfluv_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS tronroute_id (
+CREATE TABLE tronroute_id (
     ogc_fid serial,
     object_rid character varying,
     rcad character varying,
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS tronroute_id (
 );
 SELECT AddGeometryColumn('tronroute_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS tsurf_id (
+CREATE TABLE tsurf_id (
     ogc_fid serial,
     object_rid character varying,
     sym character varying,
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS tsurf_id (
 );
 SELECT AddGeometryColumn('tsurf_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS voiep_id (
+CREATE TABLE voiep_id (
     ogc_fid serial,
     object_rid character varying,
     tex character varying,
@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS voiep_id (
 );
 SELECT AddGeometryColumn('voiep_id', 'geom', 2154, 'GEOMETRY', 2);
 
-CREATE TABLE IF NOT EXISTS zoncommuni_id (
+CREATE TABLE zoncommuni_id (
     ogc_fid serial,
     object_rid character varying,
     tex10 character varying,
