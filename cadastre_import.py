@@ -221,16 +221,6 @@ class cadastreImport(QObject):
         replaceDict = self.replaceDict.copy()
         mandatoryFilesKeys =  ['[FICHIER_BATI]', '[FICHIER_FANTOIR]', '[FICHIER_NBATI]', '[FICHIER_PROP]']
         missingMajicFiles = False
-        #~ for item in self.dialog.majicSourceFileNames:
-            #~ replaceDict[item['key']] = item['value']
-            #~ fpath = os.path.join(os.path.realpath(self.majicDir) + '/' , item['value'])
-            #~ # create file if not there
-            #~ if not os.path.exists(fpath):
-                #~ if item['key'] in mandatoryFilesKeys:
-                    #~ self.go = False
-                    #~ self.qc.updateLog( u"Il manque des fichiers MAJIC ! L'import est annulé.")
-                    #~ return
-
 
         scriptList = []
         scriptList.append(

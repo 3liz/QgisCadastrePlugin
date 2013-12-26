@@ -267,6 +267,7 @@ class cadastre_menu:
         '''
         if self.cadastre_search_dialog:
             self.cadastre_search_dialog.checkMajicContent()
+            self.cadastre_search_dialog.clearComboboxes()
             self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
             self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
             self.refreshIndentifyParcelleTool()
@@ -277,8 +278,7 @@ class cadastre_menu:
         '''
         if self.cadastre_search_dialog:
             self.cadastre_search_dialog.checkMajicContent()
-            self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
-            self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
+            self.cadastre_search_dialog.clearComboboxes()
 
 
     def open_help(self):

@@ -271,7 +271,7 @@ class cadastre_common():
 
         # Get params via regex
         uri = layer.dataProvider().dataSourceUri()
-        reg = "dbname='([^ ]+)' (?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
+        reg = "dbname='([^']+)' (?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
         result = re.findall(r'%s' % reg, uri)
         if not result:
             return None
@@ -1331,11 +1331,22 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.checkMajicContent()
 
 
+    def clearComboboxes(self):
+        '''
+        Clear comboboxes content
+        '''
+        self.txtLog.clear()
+        for key, item in self.searchComboBoxes.items():
+            # manual search widgets
+            if item.has_key('widget'):
+                item['widget'].clear()
+
     def checkMajicContent(self):
         '''
         Check if database contains
         any MAJIC data
         '''
+        self.hasMajicData = False
         # Get geo_commune layer
         layer = self.qc.getLayerFromLegendByTableProps('geo_commune')
         if layer:
@@ -1668,12 +1679,13 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         if key == 'proprietaire':
             self.searchComboBoxes[key]['id'] = value['cc']
 
-        self.qc.updateLog(
-            u"%s parcelle(s) trouvée(s) pour '%s'" % (
-                len(features),
-                combo.currentText()
+        if features:
+            self.qc.updateLog(
+                u"%s parcelle(s) trouvée(s) pour '%s'" % (
+                    len(features),
+                    combo.currentText()
+                )
             )
-        )
 
         QApplication.restoreOverrideCursor()
 
