@@ -161,14 +161,7 @@ class cadastre_menu:
             s.setValue("cadastre/isFirstUse", 0)
             self.open_about_dialog()
 
-
-        # refresh identify tool when new data loaded
-        # data loaded with plugin tool
-        from cadastre_loading import cadastreLoading
-        self.ql = cadastreLoading(self)
-        self.ql.cadastreLoadingFinished.connect(self.refreshIndentifyParcelleTool)
-
-        # new layers loaded in project: refresh search and identify tool
+        # Project load or create : refresh search and identify tool
         self.iface.projectRead.connect(self.onProjectRead)
         self.iface.newProjectCreated.connect(self.onNewProjectCreated)
 
@@ -188,6 +181,10 @@ class cadastre_menu:
             self.iface,
             self.cadastre_search_dialog
         )
+
+        # refresh identify tool when new data loaded
+        # data loaded with plugin tool
+        dialog.ql.cadastreLoadingFinished.connect(self.refreshIdentifyParcelleTool)
         dialog.exec_()
 
     def toggle_search_dialog(self):
@@ -225,7 +222,10 @@ class cadastre_menu:
         self.toolbar.addAction(self.identifyParcelleAction)
 
 
-    def refreshIndentifyParcelleTool(self):
+    def refreshIdentifyParcelleTool(self):
+        '''
+        Reinit identify parcelle tool
+        '''
         self.toolbar.removeAction(self.identifyParcelleAction)
         self.initializeIdentifyParcelleTool()
         self.setIndentifyParcelleTool()
@@ -270,7 +270,7 @@ class cadastre_menu:
             self.cadastre_search_dialog.clearComboboxes()
             self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
             self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
-            self.refreshIndentifyParcelleTool()
+            self.refreshIdentifyParcelleTool()
 
     def onNewProjectCreated(self):
         '''

@@ -1090,9 +1090,10 @@ class cadastre_load_dialog(QDialog, Ui_cadastre_load_form):
         have been loaded
         '''
         self.cadastre_search_dialog.checkMajicContent()
+        self.cadastre_search_dialog.clearComboboxes()
         self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
         self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
-        #~ self.liDbType.setCurrentIndex(0)
+
 
 
 # ---------------------------------------------------------
@@ -2161,7 +2162,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         Check if database contains
         any MAJIC data
         '''
-
+        self.hasMajicData = False
         sql = 'SELECT * FROM "proprietaire" LIMIT 1'
         if self.connectionParams['dbType'] == 'postgis':
             sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
