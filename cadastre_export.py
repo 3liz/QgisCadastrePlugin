@@ -186,8 +186,8 @@ class cadastreExport(QObject):
 
         # items for which to count number of lines
         self.lineCount = {
-            'proprietes_baties_line': 0,
-            'proprietes_non_baties_line': 0
+            'proprietes_baties_line': {'count' : 0, 'data' : None},
+            'proprietes_non_baties_line': {'count' : 0, 'data' : None}
         }
 
         # items for which not the run a query for each page
@@ -221,33 +221,47 @@ class cadastreExport(QObject):
 
         # Build replace dict depending on source type
         if item['type'] == 'sql':
+            data = None
+
             # Load SQL query and get data
             # Get sql file
             sqlFile = tplPath + '.sql'
             fin = open(sqlFile)
             sql = fin.read().decode('utf-8')
             fin.close()
+
             # Add schema to search_path if postgis
             if self.dialog.dbType == 'postgis':
                 sql = self.qc.setSearchPath(sql, self.dialog.schema)
             # Add where clause depending on etype
             sql = sql.replace('$and', item['and'][self.etype] )
+
             # Limit results if asked
             if page and key in self.mainTables.keys() \
             and key in self.lineCount.keys():
-                sql+= " LIMIT %s" % self.maxLineNumber
                 offset = int((page- 1) * self.maxLineNumber)
-                sql+= " OFFSET %s" % offset
+                #~ sql+= " LIMIT %s" % self.maxLineNumber
+                #~ sql+= " OFFSET %s" % offset
+                # Get data from previous fetched full data
+                data = self.lineCount[key]['data'][offset:self.maxLineNumber+offset]
 
             # Run SQL
             #~ self.qc.updateLog(sql)
             if self.dialog.dbType == 'spatialite':
                 sql = self.qc.postgisToSpatialite(sql)
-            [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
-            # Add data length to lineCount object if appropriate
+            # Run SQL only if data has not already been defined
+            if data is None:
+                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
+
+
+            # Page no defined = means the query is here to
+            # get line count and whole data for proprietes_baties & proprietes_non_baties
             if not page:
                 if key in self.lineCount.keys():
-                    self.lineCount[key] = rowCount
+                    # line count
+                    self.lineCount[key]['count'] = rowCount
+                    # keep data
+                    self.lineCount[key]['data'] = data
 
             if page:
                 # Get content for each line of data
@@ -346,8 +360,8 @@ class cadastreExport(QObject):
             self.getContentForGivenItem(key, self.mainTables[key])
         self.numPages = max(
             [
-            1 + int(self.lineCount['proprietes_baties_line'] / self.maxLineNumber),
-            1 + int(self.lineCount['proprietes_non_baties_line'] / self.maxLineNumber)
+            1 + int(self.lineCount['proprietes_baties_line']['count'] / self.maxLineNumber),
+            1 + int(self.lineCount['proprietes_non_baties_line']['count'] / self.maxLineNumber)
             ]
         )
 
@@ -428,8 +442,8 @@ class cadastreExport(QObject):
         composition = self.createComposition()
 
         # Populate composition
-        for i in range(self.numPages + 1):
-            self.addPageContent(composition, i)
+        for i in range(self.numPages):
+            self.addPageContent(composition, i+1)
 
         # Export as pdf
         if composition:
