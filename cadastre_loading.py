@@ -83,6 +83,18 @@ class cadastreLoading(QObject):
             {'label': u'Unités foncières (étiquettes)', 'name': 'geo_label_parcelle_uf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\''}
         ]
 
+    def getGroupIndex(self, groupName):
+        '''
+        Get a legend group index by its name
+        '''
+        relationList = self.dialog.iface.legendInterface().groupLayerRelationship()
+        i = 0
+        for item in relationList:
+            if item[0]:
+                if item[0] == groupName:
+                    return i
+                i = i + 1
+        return 0
 
     def processLoading(self):
         '''
@@ -200,7 +212,14 @@ class cadastreLoading(QObject):
 
         # Create a group "Cadastre" and move all layers into it
         li = self.dialog.iface.legendInterface()
-        g1 = li.addGroup("Cadastre")
+        groups = []
+        for group in li.groupLayerRelationship():
+            if group[0]:
+                groups.append(group[0])
+        if u"Cadastre" in groups:
+            g1 = self.getGroupIndex(u"Cadastre")
+        else:
+            g1 = li.addGroup("Cadastre")
         for layer in qgisCadastreLayers:
             li.moveLayer(layer, g1)
             li.setLayerExpanded(layer, False)
