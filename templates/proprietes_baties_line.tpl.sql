@@ -2,7 +2,7 @@
 SELECT
 l.ccosec AS section, l.dnupla AS ndeplan,
 l.dnvoiri || l.dindic AS ndevoirie,
-v.natvoi || v.libvoi AS adresse,
+CASE WHEN v.libvoi IS NOT NULL THEN v.natvoi || v.libvoi ELSE p.cconvo || p.dvoilib END AS adresse,
 l.ccoriv AS coderivoli,
 l.dnubat AS bat, l.descr AS ent, l.dniv AS niv, l.dpor AS ndeporte, l.invar || ' ' || l.cleinvar AS numeroinvar,
 pev.ccostb AS star, l10.ccoeva AS meval, pev.ccoaff AS af, l10.cconlc AS natloc, pev.dcapec AS cat,
@@ -19,7 +19,7 @@ parcelle p
 INNER JOIN local00 l ON l.parcelle = p.parcelle
 INNER JOIN local10 l10 ON l10.local00 = l.local00
 INNER JOIN pev ON pev.local10 = l10.local10
-INNER JOIN voie v ON v.voie = l.voie
+LEFT OUTER JOIN voie v ON v.voie = l.voie
 LEFT JOIN pevexoneration px ON px.pev = pev.pev
 LEFT JOIN pevtaxation pt ON pt.pev = pev.pev
 WHERE 2>1

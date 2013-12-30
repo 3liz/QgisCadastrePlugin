@@ -2182,15 +2182,18 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             sql = '''
             SELECT
             c.libcom AS nomcommune, c.ccocom AS codecommune, p.dcntpa AS contenance,
-            trim(p.dnvoiri || ' ' || trim(v.natvoi) || ' ' || v.libvoi) AS adresse,
+            CASE
+                    WHEN v.libvoi IS NOT NULL THEN trim(p.dnvoiri || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
+                    ELSE p.cconvo || p.dvoilib
+            END AS adresse,
             CASE
                     WHEN p.gurbpa = 'U' THEN 'Oui'
                     ELSE 'Non'
             END  AS urbain,
             ccosec || dnupla
             FROM parcelle p
-            INNER JOIN commune c ON p.ccocom = c.ccocom
-            INNER JOIN voie v ON v.voie = p.voie
+            LEFT OUTER JOIN commune c ON p.ccocom = c.ccocom
+            LEFT OUTER JOIN voie v ON v.voie = p.voie
             WHERE 2>1
             AND geo_parcelle = '%s'
             LIMIT 1
@@ -2203,7 +2206,8 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             '' AS adresse,
             '' AS urbain,
             p.idu
-            FROM geo_parcelle p INNER JOIN geo_commune c
+            FROM geo_parcelle p
+            INNER JOIN geo_commune c
             ON ST_Intersects(p.geom, c.geom)
             WHERE geo_parcelle = '%s'
             ''' % self.feature['geo_parcelle']
@@ -2215,7 +2219,11 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         html = ''
         for line in data:
             html+= u'<h3>%s</h3>' % line[5]
-            html+= u'<b>Commune :</b> %s (%s)<br/>' % (line[0], line[1])
+            html+= u'<b>Commune :</b>'
+            if line[0] and line[1]:
+                html+= ' %s (%s)<br/>' % (line[0], line[1])
+            else:
+                html+=  u' <i>Pas de données Fantoir dans la base !</i><br/>'
             html+= u'<b>Surface géographique :</b> %s m²<br/>' % int(self.feature.geometry().area())
             html+= u'<b>Contenance :</b> %s m²<br/>' % line[2]
             html+= u'<b>Adresse :</b> %s<br/>' % line[3]

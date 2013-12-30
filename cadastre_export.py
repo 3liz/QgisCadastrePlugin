@@ -247,12 +247,12 @@ class cadastreExport(QObject):
                 data = self.lineCount[key]['data'][offset:self.maxLineNumber+offset]
 
             # Run SQL
-            #~ self.qc.updateLog(sql)
             if self.dialog.dbType == 'spatialite':
                 sql = self.qc.postgisToSpatialite(sql)
             # Run SQL only if data has not already been defined
             if data is None:
                 [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
+                #~ self.qc.updateLog(sql)
 
 
             # Page no defined = means the query is here to
