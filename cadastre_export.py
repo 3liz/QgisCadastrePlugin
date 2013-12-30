@@ -77,6 +77,7 @@ class cadastreExport(QObject):
         # common cadastre methods
         self.qc = self.dialog.qc
 
+
     def setComposerTemplates(self, comptecommunal):
         '''
         Set parameters for given comptecommunal
@@ -410,30 +411,13 @@ class cadastreExport(QObject):
         composition.addItem(w)
 
 
-    def exportAsPDF(self):
-        '''
-        Export one or several PDF files using the template composer
-        filled with appropriate data
-        '''
-
-        # Export as many pdf as compte communal
-        if self.isMulti:
-            for comptecommunal in self.comptecommunal:
-                comptecommunal = comptecommunal.strip(" '")
-                self.exportItemAsPdf(comptecommunal)
-            info = u"Les relevés ont été enregistrés dans le répertoire : %s" % self.targetDir
-            QMessageBox.information(
-                self.dialog,
-                u"Cadastre - Export",
-                info
-            )
-        else:
-            self.exportItemAsPdf(self.comptecommunal)
-
-
-
 
     def exportItemAsPdf(self, comptecommunal):
+        '''
+        Export one PDF file using the template composer
+        filled with appropriate data
+        for one "compte communal"
+        '''
 
         # Set configuration
         self.setComposerTemplates(comptecommunal)
@@ -441,7 +425,7 @@ class cadastreExport(QObject):
         # Load the composer from template
         composition = self.createComposition()
 
-        # Populate composition
+        # Populate composition for all pages
         for i in range(self.numPages):
             self.addPageContent(composition, i+1)
 
@@ -452,9 +436,66 @@ class cadastreExport(QObject):
             temppath = os.path.join(self.targetDir, temp)
             composition.exportAsPDF(temppath)
 
-            # Open file if only one
+            # Opens PDF in default application
             if not self.isMulti:
                 if sys.platform == 'linux2':
                     subprocess.call(["xdg-open", temppath])
                 else:
                     os.startfile(temppath)
+
+
+    def exportAsPDF(self):
+        '''
+        Run the PDF export
+        '''
+
+        # Export as many pdf as compte communal
+        if self.isMulti:
+            # Show print progress dialog
+            self.setupPrintProgressDialog()
+            nb = len(self.comptecommunal)
+            # Export PDF for each compte
+            for comptecommunal in self.comptecommunal:
+                # export as PDF
+                comptecommunal = comptecommunal.strip(" '")
+                self.exportItemAsPdf(comptecommunal)
+
+                # update progress bar
+                self.printStep+=1
+                self.printProgress.pbPrint.setValue(int(self.printStep * 100 / nb))
+
+            info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir
+            openFolderOk = QMessageBox.question(
+                self.dialog,
+                u"Cadastre - Export",
+                info,
+                QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
+            )
+            if openFolderOk == QMessageBox.Yes:
+                openFolder = QDesktopServices()
+                openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
+
+        else:
+            self.exportItemAsPdf(self.comptecommunal)
+
+
+    def setupPrintProgressDialog(self):
+        '''
+        Opens print progress dialog
+        '''
+        # Show progress dialog
+        self.printProgress = cadastrePrintProgress()
+        # Set progress bar
+        self.printStep = 0
+        self.printProgress.pbPrint.setValue(0)
+        # Show dialog
+        self.printProgress.show()
+
+
+from cadastre_print_form import *
+
+class cadastrePrintProgress(QDialog, Ui_cadastre_print_form):
+    def __init__(self):
+        QDialog.__init__(self)
+        # Set up the user interface
+        self.setupUi(self)
