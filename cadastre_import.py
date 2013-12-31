@@ -638,14 +638,16 @@ class cadastreImport(QObject):
             self.edigeoPlainDir,
             self.majicDir
         ]
+        delmsg = ""
         try:
             for rep in tempFolderList:
                 if os.path.exists(rep):
                     shutil.rmtree(rep)
+                    rmt = 1
         except IOError, e:
-            msg = u"Erreur lors de la suppresion des répertoires temporaires: %s" % e
+            delmsg = u"Erreur lors de la suppression des répertoires temporaires: %s" % e
+            self.qc.updateLog(delmsg)
             self.go = False
-            return msg
 
         # Refresh spatialite layer statistics
         if self.dialog.dbType == 'spatialite':
@@ -726,13 +728,12 @@ class cadastreImport(QObject):
 
             # get all the zip files
             zipFileList = self.listFilesInDirectory(path, 'zip')
-            tarFileList = self.listFilesInDirectory(path, 'bz2')
 
             # unzip all files
             import zipfile
             import tarfile
             try:
-                # unzip all zip and child zip
+                # unzip all zip in self.edigeoDir
                 for z in zipFileList:
                     with zipfile.ZipFile(z) as azip:
                         azip.extractall(self.edigeoPlainDir)
@@ -742,6 +743,7 @@ class cadastreImport(QObject):
                         self.qc.updateLog( "Erreur lors de la suppression de %s" % str(z))
                         pass # in Windows, sometime file is not unlocked
 
+                # unzip all zip in edigeoPlainDir
                 inner_zips_pattern = os.path.join(self.edigeoPlainDir, "*.zip")
                 i=0
                 for filename in glob.glob(inner_zips_pattern):
@@ -757,10 +759,13 @@ class cadastreImport(QObject):
                     i+=1
                 i=0
 
-                # untar all tar.bz2 and all children
+                # untar all tar.bz2 in self.edigeoPlainDir
+                tarFileListA = self.listFilesInDirectory(path, 'bz2')
+                tarFileListB = self.listFilesInDirectory(self.edigeoPlainDir, 'bz2')
+                tarFileList = list(set(tarFileListA) | set(tarFileListB))
                 for z in tarFileList:
                     with tarfile.open(z) as t:
-                        tar = t.extractall(os.path.join(self.edigeoPlainDir, '_%s' % i))
+                        tar = t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
                         i+=1
                         t.close()
                     try:
