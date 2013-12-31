@@ -61,9 +61,8 @@ Nom des fichiers MAJIC
 
 Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail. En effet, les conventions de nommage peuvent changer d'un département à l'autre. Souvent, les fichiers se terminent par une extension relative au département et à la direction, par exemple .800 pour les fichiers du département de la Somme.
 
-Note::
+.. note::  Il est important de bien configurer ces noms de fichiers avant votre premier import.
 
-   Il est important de bien configurer ces noms de fichiers avant votre premier import.
 
 Répertoire temporaire
 ----------------------
@@ -97,7 +96,7 @@ Principe
 
 Le plugin permet l'import de données **MAJIC 2012 et 2013, et des données EDIGEO** . Il est possible d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
-Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum.
+Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.
 
 Vous pouvez par exemple importer les données dans cette ordre :
 
@@ -109,9 +108,7 @@ Vous pouvez par exemple importer les données dans cette ordre :
 
 Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données.
 
-Note::
-
-   Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
+.. note::  Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
 
 Bases de données
 -----------------
@@ -159,6 +156,7 @@ On configure ensuite les options :
 * Choisir le répertoire contenant **les fichiers MAJIC**
 
  - Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et importera l'ensemble des données.
+ - Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement de les télécharger et de configurer le plugin pour donner le bon nom au fichier fantoir : http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
@@ -173,9 +171,7 @@ On configure ensuite les options :
 
 Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fenêtre.
 
-Note::
-
-   Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import.
+.. note::  Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import.
 
 
 Charger des données
@@ -239,6 +235,7 @@ La fenêtre d'identification s'affiche alors, et présente
  - 3 boutons pour **interargir avec l'objet géométrique** lié à la parcelle : centrer la carte sur la parcelle, zoomer sur la parcelle, ou sélectionner l'objet dans la couche
  - Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
 
+.. note::  Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)
 
 Le panneau de recherche
 ===========================================
@@ -264,9 +261,7 @@ Pour afficher le panneau de recherche:
 
 Une bulle d'information affiche la fonction des boutons au survol de la souris.
 
-Note::
-
-   Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.
+.. note::  Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.
 
 
 Recherche de lieux
@@ -302,9 +297,7 @@ Si une parcelle a été sélectionnée dans la liste **Parcelles**, il est possi
 Recherche d'adresse
 --------------------
 
-Note::
-
-   Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base
+.. note::  Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l'import Majic): http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
 
 Pour lancer une **recherche de parcelles par adresse**, il suffit:
 
@@ -320,12 +313,11 @@ Si des résultats ont été trouvés, on peut ensuite :
 * Sélectionner une des parcelles dans la liste déroulante **Parcelles** et réutiliser les boutons d'action.
 * Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d'**exporter le relevé parcellaire** pour cette parcelle
 
+
 Recherche de propriétaires
 ---------------------------
 
-Note::
-
-   Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
+.. note::  Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
 
 Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences suivantes :
 

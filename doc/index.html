@@ -380,10 +380,10 @@ ul.auto-toc {
 <div class="section" id="nom-des-fichiers-majic">
 <h2>Nom des fichiers MAJIC</h2>
 <p>Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail. En effet, les conventions de nommage peuvent changer d'un département à l'autre. Souvent, les fichiers se terminent par une extension relative au département et à la direction, par exemple .800 pour les fichiers du département de la Somme.</p>
-<p>Note:</p>
-<pre class="literal-block">
-Il est important de bien configurer ces noms de fichiers avant votre premier import.
-</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Il est important de bien configurer ces noms de fichiers avant votre premier import.</p>
+</div>
 </div>
 <div class="section" id="repertoire-temporaire">
 <h2>Répertoire temporaire</h2>
@@ -406,7 +406,7 @@ Il est important de bien configurer ces noms de fichiers avant votre premier imp
 <div class="section" id="principe">
 <h2>Principe</h2>
 <p>Le plugin permet l'import de données <strong>MAJIC 2012 et 2013, et des données EDIGEO</strong> . Il est possible d'importer des données de manière incrémentale, <strong>étape par étape</strong>, ou bien d'importer <strong>en une seule fois</strong>.</p>
-<p>Le plugin utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un <strong>ensemble de données cohérent</strong> pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum.</p>
+<p>Le plugin utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un <strong>ensemble de données cohérent</strong> pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.</p>
 <p>Vous pouvez par exemple importer les données dans cette ordre :</p>
 <ul class="simple">
 <li>données EDIGEO de la commune A, lot &quot;com_a&quot;</li>
@@ -416,10 +416,10 @@ Il est important de bien configurer ces noms de fichiers avant votre premier imp
 <li>données EDIGEO de la commune C, lot &quot;com_c&quot;</li>
 </ul>
 <p>Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données.</p>
-<p>Note:</p>
-<pre class="literal-block">
-Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
-</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.</p>
+</div>
 </div>
 <div class="section" id="bases-de-donnees">
 <h2>Bases de données</h2>
@@ -472,6 +472,7 @@ Une version prochaine du plugin pourra intégrer un tableau récapitulatif des i
 <blockquote>
 <ul class="simple">
 <li>Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et importera l'ensemble des données.</li>
+<li>Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement de les télécharger et de configurer le plugin pour donner le bon nom au fichier fantoir : <a class="reference external" href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits">http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits</a></li>
 </ul>
 </blockquote>
 <ul class="simple">
@@ -488,10 +489,10 @@ Une version prochaine du plugin pourra intégrer un tableau récapitulatif des i
 <li>Lancer l'import en cliquant sur le bouton <strong>Lancer l'import</strong></li>
 </ul>
 <p>Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fenêtre.</p>
-<p>Note:</p>
-<pre class="literal-block">
-Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import.
-</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import.</p>
+</div>
 </div>
 </div>
 <div class="section" id="charger-des-donnees">
@@ -562,6 +563,10 @@ Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenê
 <li>Un dernier bouton pour <strong>sélectionner dans la couche toutes les parcelles du propriétaire</strong></li>
 </ul>
 </blockquote>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)</p>
+</div>
 </div>
 </div>
 <div class="section" id="le-panneau-de-recherche">
@@ -581,10 +586,10 @@ Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenê
 <li>Utiliser le menu <strong>Cadastre &gt; Outils de recherche</strong> ou cliquer sur l'<strong>icône loupe</strong> de la barre d'outils</li>
 </ul>
 <p>Une bulle d'information affiche la fonction des boutons au survol de la souris.</p>
-<p>Note:</p>
-<pre class="literal-block">
-Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.
-</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.</p>
+</div>
 </div>
 <div class="section" id="recherche-de-lieux">
 <h2>Recherche de lieux</h2>
@@ -615,10 +620,10 @@ Si la base de données ne contient aucune donnée MAJIC, alors les outils de rec
 </div>
 <div class="section" id="recherche-d-adresse">
 <h2>Recherche d'adresse</h2>
-<p>Note:</p>
-<pre class="literal-block">
-Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base
-</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l'import Majic): <a class="reference external" href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits">http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits</a></p>
+</div>
 <p>Pour lancer une <strong>recherche de parcelles par adresse</strong>, il suffit:</p>
 <ul class="simple">
 <li>d'<em>entrer l'adresse cherchée</em>, sans le numéro de rue dans la liste <strong>Adresse</strong>.</li>
@@ -635,10 +640,10 @@ Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la b
 </div>
 <div class="section" id="recherche-de-proprietaires">
 <h2>Recherche de propriétaires</h2>
-<p>Note:</p>
-<pre class="literal-block">
-Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
-</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base</p>
+</div>
 <p>Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences suivantes :</p>
 <ul class="simple">
 <li>Un bouton est ajouté à côté de la liste des propriétaire pour <strong>exporter le relevé de propriété</strong> du propriétaire sélectionné dans la liste</li>
