@@ -7,7 +7,7 @@ description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Connseil Regional de Picardie, Agence de Developpement et  d Urbanisme du Grand Amienois.
 
-version=0.9.5
+version=0.9.6
 author=3liz
 email=info@3liz.com
 
@@ -17,14 +17,19 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.9.5
-  * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.4...0.9.5
-  * Chargement - bug #8: pas d'erreur si présence de couches plugin OpenLayers
-  * Recherche/Identification - réactivation des outils sur chargement d'un projet Cadastre - #9
-  * Recherche - Lieux : Liste des sections ordonnées par code
-  * Import - correction bug Spatialite import relations (*.vec) - bug #7
-  * Import - Gestion des erreurs de suppression de fichier après extraction - bug #5
-  * Import - modifications des scripts pour gestion arrondissements (ex: Marseille)
+  Version 0.9.6
+  * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.5...0.9.6
+  * Import - actualisation liste des tar.bz2 après décompression de zip
+  * Documentation - mise à jour
+  * Recherche/export - meilleurs résultats si fantoir non importé - bug #18
+  * Export multiple - barre de progression et ouverture du dossier contenant
+  * Export - optimisation - bug #2
+  * Chargement - réutilisation du groupe Cadastre si présent - bug #14
+  * Identification - réinitialisation de l'outil identifier au chargement
+  * Spatialite - debogage base de données si chemin contient des espaces - bug #17
+  * Recherche - adresse/propriétaire : gestion des apostrophes - bug #12
+  * Import - remplacement CREATE TABLE IF NOT EXISTS - bug #13
+  * Meilleur comportement des outils de recherche sur ouverture d'un (nouveau) projet
 
 
 
