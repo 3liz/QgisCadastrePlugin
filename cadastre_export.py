@@ -438,10 +438,18 @@ class cadastreExport(QObject):
 
             # Opens PDF in default application
             if not self.isMulti:
-                if sys.platform == 'linux2':
-                    subprocess.call(["xdg-open", temppath])
-                else:
-                    os.startfile(temppath)
+                self.openFile(temppath)
+
+
+    def openFile(self, filename):
+        '''
+        Opens a file with default system app
+        '''
+        if sys.platform == "win32":
+            os.startfile(filename)
+        else:
+            opener ="open" if sys.platform == "darwin" else "xdg-open"
+            subprocess.call([opener, filename])
 
 
     def exportAsPDF(self):
