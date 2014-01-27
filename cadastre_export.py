@@ -84,6 +84,7 @@ class cadastreExport(QObject):
         '''
 
         # List of templates
+        comptecommunalAbrev = comptecommunal[9:]
         self.composerTemplates = {
             'header1' : {
                 'names': ['annee', 'ccodep', 'ccodir', 'ccocom', 'libcom'],
@@ -108,7 +109,7 @@ class cadastreExport(QObject):
                 'position': [218.5, 2.5, 75, 7.5], 'align': [ 128, 2],
                 'keepContent' : True,
                 'type': 'properties',
-                'source': [comptecommunal[6:]]
+                'source': [comptecommunalAbrev]
             },
             'proprietaires' : {
                 'names': ['lines'],
@@ -252,7 +253,7 @@ class cadastreExport(QObject):
             # Run SQL only if data has not already been defined
             if data is None:
                 [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
-                #~ self.qc.updateLog(sql)
+                #~ print sql
 
 
             # Page no defined = means the query is here to
@@ -465,7 +466,7 @@ class cadastreExport(QObject):
             # Export PDF for each compte
             for comptecommunal in self.comptecommunal:
                 # export as PDF
-                comptecommunal = comptecommunal.strip(" '")
+                comptecommunal = comptecommunal.strip("' ")
                 self.exportItemAsPdf(comptecommunal)
 
                 # update progress bar

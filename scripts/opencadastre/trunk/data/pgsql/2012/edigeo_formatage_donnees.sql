@@ -128,12 +128,12 @@ WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_BATIMENT_PARCELLE' AN
 
 -- geo_zoncommuni
 INSERT INTO [PREFIXE]geo_zoncommuni( annee, object_rid, tex, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]', object_rid, COALESCE(tex,'')||COALESCE(' '||tex2,'')||COALESCE(' '||tex3,'')||COALESCE(' '||tex4,'')||COALESCE(' '||tex5,'')||COALESCE(' '||tex6,'')||COALESCE(' '||tex7,'')||COALESCE(' '||tex8,'')||COALESCE(' '||tex9,'')||COALESCE(' '||tex10,'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
+SELECT '[ANNEE]', object_rid, COALESCE(trim(tex),'')||COALESCE(' '||trim(tex2),'')||COALESCE(' '||trim(tex3),'')||COALESCE(' '||trim(tex4),'')||COALESCE(' '||trim(tex5),'')||COALESCE(' '||trim(tex6),'')||COALESCE(' '||trim(tex7),'')||COALESCE(' '||trim(tex8),'')||COALESCE(' '||trim(tex9),'')||COALESCE(' '||trim(tex10),'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
 FROM [PREFIXE]zoncommuni_id;
 
 -- geo_tronfluv
 INSERT INTO [PREFIXE]geo_tronfluv( annee, object_rid, tex, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]', object_rid, COALESCE(tex,'')||COALESCE(' '||tex2,'')||COALESCE(' '||tex3,'')||COALESCE(' '||tex4,'')||COALESCE(' '||tex5,'')||COALESCE(' '||tex6,'')||COALESCE(' '||tex7,'')||COALESCE(' '||tex8,'')||COALESCE(' '||tex9,'')||COALESCE(' '||tex10,'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
+SELECT '[ANNEE]', object_rid, COALESCE(trim(tex),'')||COALESCE(' '||trim(tex2),'')||COALESCE(' '||trim(tex3),'')||COALESCE(' '||trim(tex4),'')||COALESCE(' '||trim(tex5),'')||COALESCE(' '||trim(tex6),'')||COALESCE(' '||trim(tex7),'')||COALESCE(' '||trim(tex8),'')||COALESCE(' '||trim(tex9),'')||COALESCE(' '||trim(tex10),'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(geom), '[LOT]'
 FROM [PREFIXE]tronfluv_id;
 
 -- geo_sym

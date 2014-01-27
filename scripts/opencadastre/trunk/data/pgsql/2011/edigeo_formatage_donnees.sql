@@ -93,11 +93,11 @@ FROM [PREFIXE]geo_batiment s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_BATIMENT_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
 -- geo_zoncommuni;
 INSERT INTO [PREFIXE]geo_zoncommuni( geo_zoncommuni, annee, object_rid, tex, creat_date, update_dat, geom)
-SELECT '[ANNEE]'||replace(to_char(gid,'0000000000'),' ',''), '[ANNEE]', object_rid, COALESCE(tex,'')||COALESCE(' '||tex2,'')||COALESCE(' '||tex3,'')||COALESCE(' '||tex4,'')||COALESCE(' '||tex5,'')||COALESCE(' '||tex6,'')||COALESCE(' '||tex7,'')||COALESCE(' '||tex8,'')||COALESCE(' '||tex9,'')||COALESCE(' '||tex10,'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
+SELECT '[ANNEE]'||replace(to_char(gid,'0000000000'),' ',''), '[ANNEE]', object_rid, COALESCE(trim(tex),'')||COALESCE(' '||trim(tex2),'')||COALESCE(' '||trim(tex3),'')||COALESCE(' '||trim(tex4),'')||COALESCE(' '||trim(tex5),'')||COALESCE(' '||trim(tex6),'')||COALESCE(' '||trim(tex7),'')||COALESCE(' '||trim(tex8),'')||COALESCE(' '||trim(tex9),'')||COALESCE(' '||trim(tex10),'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
 FROM [PREFIXE]impedigeo_zoncommuni_id;
 -- geo_tronfluv;
 INSERT INTO [PREFIXE]geo_tronfluv( geo_tronfluv, annee, object_rid, tex, creat_date, update_dat, geom)
-SELECT '[ANNEE]'||replace(to_char(gid,'0000000000'),' ',''), '[ANNEE]', object_rid, COALESCE(tex,'')||COALESCE(' '||tex2,'')||COALESCE(' '||tex3,'')||COALESCE(' '||tex4,'')||COALESCE(' '||tex5,'')||COALESCE(' '||tex6,'')||COALESCE(' '||tex7,'')||COALESCE(' '||tex8,'')||COALESCE(' '||tex9,'')||COALESCE(' '||tex10,'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
+SELECT '[ANNEE]'||replace(to_char(gid,'0000000000'),' ',''), '[ANNEE]', object_rid, COALESCE(trim(tex),'')||COALESCE(' '||trim(tex2),'')||COALESCE(' '||trim(tex3),'')||COALESCE(' '||trim(tex4),'')||COALESCE(' '||trim(tex5),'')||COALESCE(' '||trim(tex6),'')||COALESCE(' '||trim(tex7),'')||COALESCE(' '||trim(tex8),'')||COALESCE(' '||trim(tex9),'')||COALESCE(' '||trim(tex10),'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
 FROM [PREFIXE]impedigeo_tronfluv_id;
 -- geo_sym;
 INSERT INTO [PREFIXE]geo_sym SELECT DISTINCT sym, 'Inconnu '||sym  FROM [PREFIXE]impedigeo_ptcanv_id WHERE sym NOT IN (SELECT geo_sym FROM [PREFIXE]geo_sym);
