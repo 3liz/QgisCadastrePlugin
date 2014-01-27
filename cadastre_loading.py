@@ -155,7 +155,11 @@ class cadastreLoading(QObject):
             self.qc.updateProgressBar()
 
             # Get db_manager table instance
-            table = [a for a in dbTables if a.name == item['table']][0]
+            tableList = [a for a in dbTables if a.name == item['table']]
+            if len(tableList) == 0:
+                self.qc.updateLog(u'  - Aucune table trouvée pour %s' % item['label'])
+                continue
+            table = tableList[0]
             sql = ""
             if item.has_key('sql'):
                 sql = item['sql']
