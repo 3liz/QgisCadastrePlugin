@@ -66,15 +66,35 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QComboBox" name="liCommune"/>
+              <widget class="QComboBox" name="liCommune">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="liSection"/>
+              <widget class="QComboBox" name="liSection">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
              </item>
              <item row="2" column="1">
               <layout class="QHBoxLayout" name="horizontalLayout_4">
                <item>
                 <widget class="QComboBox" name="liParcelle">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="editable">
                   <bool>true</bool>
                  </property>
@@ -199,6 +219,12 @@
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="1">
               <widget class="QComboBox" name="liAdresse">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="editable">
                 <bool>true</bool>
                </property>
@@ -226,6 +252,12 @@
              </item>
              <item row="1" column="1">
               <widget class="QComboBox" name="liParcelleAdresse">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="editable">
                 <bool>true</bool>
                </property>
@@ -334,6 +366,12 @@
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="1">
               <widget class="QComboBox" name="liProprietaire">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="editable">
                 <bool>true</bool>
                </property>
@@ -354,6 +392,12 @@
              </item>
              <item row="1" column="1">
               <widget class="QComboBox" name="liParcelleProprietaire">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="editable">
                 <bool>true</bool>
                </property>

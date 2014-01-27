@@ -1311,6 +1311,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 control.clicked.connect(slot)
 
 
+
         # export buttons
         self.btExportProprietaire.clicked.connect(self.exportProprietaire)
         self.exportParcelleButtons = {
@@ -1427,6 +1428,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             else:
                 emptyLabel = ''
             cb.addItem('%s' % emptyLabel, '')
+
             for feat in features:
                 keep = True
                 if qe:
@@ -1435,6 +1437,11 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 if keep:
                     itemList.append(feat[labelAttribute])
                     cb.addItem(feat[labelAttribute], feat)
+
+
+            # style cb to adjust list width to max length content
+            pView = cb.view()
+            pView.setMinimumWidth(pView.sizeHintForColumn(0))
 
             # Activate autocompletion
             completer = QCompleter(itemList, self)
@@ -1635,6 +1642,9 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 }
 
             cb.addItem(label, val)
+
+        pView = cb.view()
+        pView.setMinimumWidth(pView.sizeHintForColumn(0))
 
         # Restore cursor
         QApplication.restoreOverrideCursor()
