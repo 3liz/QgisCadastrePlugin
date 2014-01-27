@@ -435,6 +435,8 @@ class cadastreExport(QObject):
             from time import time
             temp = "releve_%s_%s.pdf" % (self.etype, comptecommunal)
             temppath = os.path.join(self.targetDir, temp)
+            temppath = os.path.normpath(temppath)
+            temppath = re.sub(r'[\?\*\+<>]', '-', temppath)
             composition.exportAsPDF(temppath)
 
             # Opens PDF in default application
