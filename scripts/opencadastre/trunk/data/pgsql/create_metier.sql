@@ -770,7 +770,7 @@ CREATE TABLE geo_parcelle
   idu character varying(12),
   geo_section character varying(12) NOT NULL,
   geo_subdsect character varying(14),
-  supf numeric(10,3),
+  supf numeric,
   geo_indp character varying(2),
   coar character varying(2),
   tex character varying,
