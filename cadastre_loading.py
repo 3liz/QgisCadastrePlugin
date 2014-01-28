@@ -120,7 +120,11 @@ class cadastreLoading(QObject):
         s = QSettings()
         qgisSvgPaths = s.value("svg/searchPathsForSVG", 10, type=str)
         if not cadastreSvgPath in qgisSvgPaths:
-            s.setValue("svg/searchPathsForSVG", cadastreSvgPath)
+            if qgisSvgPaths:
+                qgisSvgPaths = u"%s|%s" % (qgisSvgPaths, cadastreSvgPath)
+            else:
+                qgisSvgPaths = u"%s" % cadastreSvgPath
+            s.setValue("svg/searchPathsForSVG", qgisSvgPaths)
             self.qc.updateLog(u"* Le chemin contenant les SVG du plugin Cadastre a été ajouté dans les options de QGIS")
 
         # Get selected options
