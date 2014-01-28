@@ -150,7 +150,6 @@ class cadastre_menu:
             "Infos parcelle",
             self.iface.mainWindow()
         )
-
         self.identifyParcelleAction.setCheckable(True)
         self.initializeIdentifyParcelleTool()
 
@@ -217,6 +216,7 @@ class cadastre_menu:
         '''
         self.identyParcelleTool = IdentifyParcelle(self.mapCanvas)
         self.identyParcelleTool.geomIdentified.connect(self.getParcelleInfo)
+        self.identyParcelleTool.geomUnidentified.connect(self.setParcelleAsActiveLayer)
         self.identyParcelleTool.setAction(self.identifyParcelleAction)
         self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
         self.toolbar.addAction(self.identifyParcelleAction)
@@ -237,20 +237,43 @@ class cadastre_menu:
         for the layer geo_parcelle
         '''
         # First set Parcelle as active layer
+        self.setParcelleAsActiveLayer()
+        # The activate identify tool
+        self.mapCanvas.setMapTool(self.identyParcelleTool)
+
+    def setParcelleAsActiveLayer(self):
+        '''
+        Search among layers
+        and set Parcelles layer as
+        the current active layer
+        '''
+        # First set Parcelle as active layer
         layer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
         if not layer:
-            #~ print u"Cadastre - La couche des parcelles n'a pas été trouvée"
             return
         # Set active layer -> geo_parcelle
         self.iface.setActiveLayer(layer)
-        # The activate identify tool
-        self.mapCanvas.setMapTool(self.identyParcelleTool)
 
     def getParcelleInfo(self, layer, feature):
         '''
         Return information of the identified
         parcelle
         '''
+        # Find parcelle layer
+        parcelleLayer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
+        if not parcelleLayer:
+            return
+        # Check if current active layer is parcelle layer
+        if parcelleLayer.id() != layer.id():
+            setActiveQuestion = QMessageBox.question(
+                self.cadastre_search_dialog,
+                u"Cadastre",
+                u'"Parcelles" doit être la couche active dans QGIS pour utiliser cet outil. Activer la couche ?',
+                QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
+            )
+            if setActiveQuestion == QMessageBox.Yes:
+                self.iface.setActiveLayer(parcelleLayer)
+            return
         # show parcelle form
         parcelleDialog = cadastre_parcelle_dialog(
             self.iface,
@@ -259,7 +282,6 @@ class cadastre_menu:
             self.cadastre_search_dialog
         )
         parcelleDialog.show()
-
 
     def onProjectRead(self):
         '''

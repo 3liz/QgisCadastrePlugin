@@ -36,6 +36,7 @@ from cadastre_cursor import Cursor
 
 class IdentifyParcelle(QgsMapToolIdentify):
     geomIdentified = pyqtSignal(QgsVectorLayer, QgsFeature)
+    geomUnidentified = pyqtSignal()
 
     def __init__(self, canvas):
         self.canvas = canvas
@@ -46,4 +47,5 @@ class IdentifyParcelle(QgsMapToolIdentify):
         results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
         if len(results) > 0:
             self.geomIdentified.emit(results[0].mLayer, QgsFeature(results[0].mFeature))
-
+        else:
+            self.geomUnidentified.emit()
