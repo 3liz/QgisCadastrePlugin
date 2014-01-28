@@ -52,10 +52,11 @@ class cadastreImport(QObject):
         self.scriptSourceDir = os.path.join(self.qc.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
 
         # projections
-        self.sourceSridFull = self.dialog.edigeoSourceProj
-        self.targetSridFull = self.dialog.edigeoTargetProj
-        self.sourceSrid = self.sourceSridFull.split(":")[1]
-        self.targetSrid = self.targetSridFull.split(":")[1]
+        if self.dialog.doEdigeoImport:
+            self.sourceSridFull = self.dialog.edigeoSourceProj
+            self.targetSridFull = self.dialog.edigeoTargetProj
+            self.sourceSrid = self.sourceSridFull.split(":")[1]
+            self.targetSrid = self.targetSridFull.split(":")[1]
 
         # create temporary directories
         s = QSettings()

@@ -941,25 +941,58 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         else:
             return
 
-    def processImport(self):
+    def checkImportInputData(self):
         '''
-        Lancement du processus d'import
+        Check the user defined inpu data
         '''
-        if not self.db:
-            msg = u'Veuillez sélectionner une base de données'
-            QMessageBox.critical(self, u"Cadastre", self.tr(msg))
-            return None
 
         self.dataVersion = unicode(self.inDataVersion.text())
         self.dataYear = unicode(self.inDataYear.text())
         self.schema = unicode(self.liDbSchema.currentText())
         self.majicSourceDir = str(self.inMajicSourceDir.text().encode('utf-8')).strip(' \t')
         self.edigeoSourceDir = str(self.inEdigeoSourceDir.text().encode('utf-8')).strip(' \t')
-        self.edigeoDepartement = unicode(self.inEdigeoDepartement.text())
-        self.edigeoDirection = unicode(self.inEdigeoDirection.text())
-        self.edigeoLot = unicode(self.inEdigeoLot.text())
+        self.edigeoDepartement = unicode(self.inEdigeoDepartement.text()).strip(' \t')
+        self.edigeoDirection = unicode(self.inEdigeoDirection.text()).strip(' \t')
+        self.edigeoLot = unicode(self.inEdigeoLot.text()).strip(' \t')
         self.edigeoSourceProj = unicode(self.inEdigeoSourceProj.text().split( " - " )[ 0 ])
         self.edigeoTargetProj = unicode(self.inEdigeoTargetProj.text().split( " - " )[ 0 ])
+
+        # defined properties
+        if os.path.exists(self.majicSourceDir):
+            self.doMajicImport = True
+        if os.path.exists(self.edigeoSourceDir):
+            self.doEdigeoImport = True
+
+        msg = ''
+        if not self.db:
+            msg+= u'Veuillez sélectionner une base de données\n'
+
+        if not self.doMajicImport and not self.doEdigeoImport:
+            msg+= u'Veuillez sélectionner le chemin vers les fichiers à importer !\n'
+
+        if self.doEdigeoImport and not self.edigeoSourceProj:
+            msg+= u'La projection source doit être renseignée !\n'
+        if self.doEdigeoImport and not self.edigeoTargetProj:
+            msg+= u'La projection cible doit être renseignée !\n'
+        if len(self.edigeoDepartement) != 2 :
+            msg+= u'Le département ne doit pas être vide !\n'
+        if not self.edigeoDirection:
+            msg+= u'La direction doit être un entier (0 par défaut) !\n'
+        if not self.edigeoLot:
+            msg+= u'Merci de renseigner un lot pour cet import (code commune, date d\'import, etc.)\n'
+
+        self.qc.updateLog(msg)
+        return msg
+
+    def processImport(self):
+        '''
+        Lancement du processus d'import
+        '''
+
+        msg = self.checkImportInputData()
+        if msg:
+            QMessageBox.critical(self, u"Cadastre", msg)
+            return
 
         # store chosen data in QGIS settings
         s = QSettings()
@@ -984,18 +1017,12 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         if not self.hasStructure:
             qi.installOpencadastreStructure()
 
-        # defined properties
-        if os.path.exists(self.majicSourceDir):
-            self.doMajicImport = True
-        if os.path.exists(self.edigeoSourceDir):
-            self.doEdigeoImport = True
-
         # Run MAJIC import
-        if os.path.exists(self.majicSourceDir):
+        if self.doMajicImport:
             qi.importMajic()
 
         # Run Edigeo import
-        if os.path.exists(self.edigeoSourceDir):
+        if self.doEdigeoImport:
             qi.importEdigeo()
 
         qi.endImport()
