@@ -2229,7 +2229,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             END  AS urbain,
             ccosec || dnupla
             FROM parcelle p
-            LEFT OUTER JOIN commune c ON p.ccocom = c.ccocom
+            LEFT OUTER JOIN commune c ON p.ccocom = c.ccocom AND c.ccodep = p.ccodep
             LEFT OUTER JOIN voie v ON v.voie = p.voie
             WHERE 2>1
             AND geo_parcelle = '%s'
