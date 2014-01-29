@@ -44,6 +44,17 @@ Licence
 GPL V3
 Lien : http://www.gnu.org/licenses/gpl.html
 
+Documentation
+==============
+
+Base de données
+----------------
+
+* **Documentation détaillée** : http://demo.3liz.com/plugin_cadastre/SchemaSpyGUI/index.html
+* **Image du modèle** : http://demo.3liz.com/plugin_cadastre/schema_cadastre.png
+* **Liste simplifiée des tables** : http://demo.3liz.com/plugin_cadastre/schema_cadastre_postgresql_autodoc.html
+
+
 Ressources
 ==========
 

@@ -1,4 +1,19 @@
 CHANGELOG
+  Version 0.9.7
+  * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.6...0.9.7
+  * Documentation - ajout des liens vers la documentation en ligne - bug #3
+  * Export - recupération infos parcelles : ajout du filtre par département - bug #27
+  * Export - correction du pourcentage exoneration pour les propriétés non baties - bug #26
+  * Import - validation préalable des entrées du formulaire d'import - bug #25
+  * Chargement - ajout des chemins SVG cadastre sans écraser les précédents - bug #19
+  * Identification - debogage outil si Parcelles n'est pas la couche active
+  * Export - nettoyage du nom du PDF exporté pour compatibilité Windows - bug #23
+  * Import - sup contrainte de type sur surface des parcelles - bug #20
+  * Import - suppression de la contrainte de longueur de champ pour l'attribut tex
+  * Chargement - gestion d'erreur si pas de table trouvée dans la bdd
+  * Recherche - correction largeur listes déroulantes (windows) - bug #22
+  * Export - ouverture des PDF compatible freeBSD - bug #21
+
   Version 0.9.6
   * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.5...0.9.6
   * Import - actualisation liste des tar.bz2 après décompression de zip
