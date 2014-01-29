@@ -344,5 +344,17 @@ Pour faciliter la prise en main, vous pouvez consulter les vidéos en ligne :
 * Recherche : https://vimeo.com/74807532
 
 
+
+Modèle de données
+===================
+
+Les liens suivant permettent de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.)
+
+* **Documentation détaillée** : http://demo.3liz.com/plugin_cadastre/SchemaSpyGUI/index.html
+* **Image du modèle** : http://demo.3liz.com/plugin_cadastre/schema_cadastre.png
+* **Liste simplifiée des tables** : http://demo.3liz.com/plugin_cadastre/schema_cadastre_postgresql_autodoc.html
+
+
+
 .. image:: MEDIA/logo_3liz.png
    :align: center

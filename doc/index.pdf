@@ -96,12 +96,12 @@ endobj
 9 0 obj
 % Page dictionary
 << /Annots [ 4 0 R ]
- /Contents 52 0 R
+ /Contents 56 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -127,12 +127,12 @@ endobj
 % 'Page2': class PDFPage 
 11 0 obj
 % Page dictionary
-<< /Contents 53 0 R
+<< /Contents 57 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -160,12 +160,12 @@ endobj
 % 'Page3': class PDFPage 
 13 0 obj
 % Page dictionary
-<< /Contents 54 0 R
+<< /Contents 58 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -196,12 +196,12 @@ endobj
 15 0 obj
 % Page dictionary
 << /Annots [ 14 0 R ]
- /Contents 55 0 R
+ /Contents 59 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -229,12 +229,12 @@ endobj
 % 'Page5': class PDFPage 
 17 0 obj
 % Page dictionary
-<< /Contents 56 0 R
+<< /Contents 60 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -263,12 +263,12 @@ endobj
 % 'Page6': class PDFPage 
 19 0 obj
 % Page dictionary
-<< /Contents 57 0 R
+<< /Contents 61 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -283,12 +283,12 @@ endobj
 % 'Page7': class PDFPage 
 20 0 obj
 % Page dictionary
-<< /Contents 58 0 R
+<< /Contents 62 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -318,12 +318,12 @@ endobj
 22 0 obj
 % Page dictionary
 << /Annots [ 21 0 R ]
- /Contents 59 0 R
+ /Contents 63 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
@@ -364,15 +364,60 @@ endobj
  /Subtype /Link
  /Type /Annot >>
 endobj
-% 'FormXob.362dcfa9652a6fee5acfc77c2d21716e': class PDFImageXObject 
+% 'Annot.NUMBER6': class PDFDictionary 
 25 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (http://demo.3liz.com/plugin_cadastre/SchemaSpyGUI/index.html) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 209.6129
+ 606.7736
+ 495.2829
+ 618.7736 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'Annot.NUMBER7': class PDFDictionary 
+26 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (http://demo.3liz.com/plugin_cadastre/schema_cadastre.png) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 175.7229
+ 588.7736
+ 439.7329
+ 600.7736 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'Annot.NUMBER8': class PDFDictionary 
+27 0 obj
+<< /A << /S /URI
+ /Type /Action
+ /URI (http://demo.3liz.com/plugin_cadastre/schema_cadastre_postgresql_autodoc.html) >>
+ /Border [ 0
+ 0
+ 0 ]
+ /Rect [ 85.69291
+ 558.7736
+ 444.7429
+ 570.7736 ]
+ /Subtype /Link
+ /Type /Annot >>
+endobj
+% 'FormXob.362dcfa9652a6fee5acfc77c2d21716e': class PDFImageXObject 
+28 0 obj
 << /BitsPerComponent 8
  /ColorSpace /DeviceRGB
  /Filter [ /ASCII85Decode
  /FlateDecode ]
  /Height 80
  /Length 1897
- /SMask 26 0 R
+ /SMask 29 0 R
  /Subtype /Image
  /Type /XObject
  /Width 87 >>
@@ -380,7 +425,7 @@ stream
 Gb!l!>AiIZ'\*\N"EEG+A<6JH%:fPAo!7?&I!$J/lUT]?,!,mO$i-?fBRu!TVn^n`8rF$NnT"B%jd?Lr:aG>sgnX`h.4%Oo.G(?jb@dJ"efuDn7?Ih,l;qAo_58?N-miq-YSLc$KDDWM9%Y8(J.K6/an"3%QgK0i4Db=t!s'E<C>!lS4BCK]k0n0J2'X</MiD+'aNr/WnpKI+H(NW@7!4I_GF-+37mR;a-)2+Y^q\@_1s^(a]0s1>o!mp-k*7d:i!r2,XDUlI:$1amL]^2ri8(_a34]XF6QI^d$(7hD^)%mLj^A>KKsJPjq0@BB\\>dI#P^4`"3i(fS2a4FfQR:p@"88#j8l)I`Y0sW0)V1<l`pQ\otM)ha1DEZKi^SJ8$WS]U1Rn65^a2o&lcjQhA$-udI7(Vn0MWBc-8ts&T>'trg`P0bFLE8!9<YArMoBc-6+#sAGJ>%!o>p>NGoOGL'JnT49T5'\P1B0&[g<9)P@)V+4U@``u,LI'GouZ76,F0&Z.t=-4+iX4FO:gcn*UN/T^L/mqE%3]EF$e)_);`Q^@L"1f$$0WqOp3Z;NqD@G,2DE*l%t#;"?'ENKp/i1(-J@G?Vi`9@,lY6RP_dFHu7=lpg,9`Y1dQ`cO"=Uk.G:JXdV!Ld3XAB9P[=!+IaIF<+9J7b8n#pUKLFk,,98r5kkHb?r$9'V*75*/-@7kEcf=a)f4/7n[A1Ws\=I1fY9Q!i_S9H,[@ZZc[`";5<G"tmI9AANm1#s;gD#%T"'X!'?X^tBcFbnhP\3Wg"VJIrHVIS"L&*`F,I9<sNnJK&jf5uNdefhli=iF+V)SH2ds@?!OYpGr;p;Q0:`bGta@#-S'[Hj^_u^]/YTLR([C%<(l"AbkI\_W#..e!WD+I.Qqb72KfX0.HGP4P=:'[%9-LW.]/IH$b;rn`0o9b:q>*no\`[UWL.S,D,iV=`hm!^^GG<derF#"Sr9>hBHjPZH6g-R=!sJ0VdK42WIgB[qgj0("o6tqJaV[7g:eod7OAWpCmhu,/T.DW[,/tpQP\;R\p4>aW=qF>paBIk(aN3UfZ.B)\O$sE.J!tY(hDC+lSrb]oJK<(_ke;\Tm`ShNnL>^i/YfYme2!43,F>kmL9RSmRZl?"Dm:f,od!7$V\%kEg)l57@Wc'GA8%i@58igY5q[^*kT]'59F>PMj#J*_5QZ!ACVMh#W>Idgs56_#-:-Pu2bDc4fu"pX'"t\<,(KID)!0@t@5@^3&b>W'%or7(n5I/8+0Eq0-@G;<>u9]5<#s$rql"^g`2Ho)'jX6!`1[U-6LKaDdO;bu@8MelPGfS5h_e,^9@Y9+T^u<n\tf1E6lA$sBH^d4#\@m>i5FBs[)gJ$Y*ASSnKI>pI2;d'=E$r2rRE@R,Z_hap(.m`r][h:S'M_LIZEI3;B82=)=iUX:`6lAJ+u?(9KDdjN=bE1\ucU]]Q9"T#9O0p(W>1FEJ,<iLc:@jeND_3b@cJPUhfkkFu1,_;"`=V>d$+\guC7T0qADRUqncmH+P-4-oL";hg]DC@>.JG5dN0G)iX$R@J]JANq#E--3_OT?=:dZA\VmmU$<AUYKsnApj_QA";YA)WF:bf<7rgaj!C=XM3SRda.&YQ1>Ja6"AU%oZ0(7M1EFnePfPq@]P.*=`8Rl,/!eI%]*WWB1u\&4%T;b(]r&?<6c1ndg-T"fB8cY`N6/?Bt;9el!)\2')i_)uW+OW*lu`d8ndi5/R6[0a]2o[*_?t7`Y/P$4U!*'n/3!LPIVnW4pIIaKg]D."IG47d3)Tc,T(ClT<Pr?1J9U&NlgYB?+=W'c)*1&=S9jAtrAbGYA7VN=U<%V*H:;j>s<\P16HkMGf\A&sS%[%-#6NROU/`)k6>u'ldC*cL.GW2d-_%%YT7pNPY3NLl_Br~>endstream
 endobj
 % 'FormXob.ff23ec3570c6ebdc8be57757ee0c687a': class PDFImageXObject 
-26 0 obj
+29 0 obj
 << /BitsPerComponent 8
  /ColorSpace /DeviceGray
  /Decode [ 0
@@ -396,297 +441,312 @@ stream
 Gatn'I:uY](r2cWH`(q&9q/49@>L&6(&3On@g")ER#6J^,0iCS(&KBT-Q&/+(*X$@<`C4**srT`DjDr;;Xu%Ek(JS>]Sas9WS%&VTC.+gkFQb_3VT-:S9s_:pDJ>H3R>b755.&ZpB)O0hAnm.+3%!A)!mP0[,a/_rN7\`^WdI5<B:Nh']E.@Af\i);U&I$fmg9oV$rW&nO'kJ!WL`2J@1$6B'o:Kcmg,TDqJNjZOm\b_d.bgToSuJggQgkpAh;\q^('GGfg73QVQqf8W`t3,u>t:eG\+i7A77$n7*E%k/%d<.cLGieCKHAmjd;mIfXn)7ZN/Q+O1-'lc=WM4t+@5(N*7eeE:AI;GpN3&$h93LQ5<D/eOe$;H)-@G49Td&6m't1,K)5:%8^MFEge3:i"@HE=PTKT#H_b_hI8Zk2>_h2.0\g,IqX#hW(1%R3d!IO%PX'>1PV7P[^M*\3ZJ(P4#&\9_c,V4=+mUY8rE5l#_PgDK2"iiUSm"i4j6%mR!E]iBAUdC=kFmcVX)J(4L4?>rA>-G^'iOm/^o^f*XV4&f4kIP=A.:fl(0/LeQ*OM&Sq^N&e0H(,kn6iYJad\;m"[&_lWjY%I]`$I,V0<%N;Q>ki#(4lKUO#]ZUI)Q([sULpg]>sS_/mH#Bt(:G,>_-<Y+_o83XMt)`s[a8KulqVe@0\q]#c4k[,S'daM9$T6[(WKVQ@g)V;&W*$n+abC,IG@hZd/?G\bBoE.C;qj@T7@oeYR3&gCeEJT0b8rM_7KqdlpBk7CN+d\iSP+hLq98ZAR`4NH(OX>NGXXY2&QQCZ$0O\g=&UZ\Tehcq:L<_N,m)YJW9@YEg@i4D'NR'392@SSbo0(AFS-6<3HF%#^(IVgg'r\_"POo%EDHCnd83QnPmQK$;cqkAPiW>(?"]u-[&:2<#E!JbtU6!-7'&#-gn<P;]W8GgqV$f]!62e1#"4P#CE<F9)>cq<#Bsf25aK6\qXX[.I><:@7t9/J;Rd[3I`tLQ<6"l7>74N4cMTM,V=1*7#0d04a/@E4e3S\di4i<m,p079DGMl/EI`'CF4tY\5WZZ+ca7'.6Jd0f@M("UcW;W9K`PW@)!:_[NF&e:;aD15K<u,kru1s7AkBO=L<pG=39-!fK6aR#^tA!m+A&3F^pc9W,2t?:5!@lo`WI9`bOaq`4E0Kqn`[<8u]5U<>9T&S!@3]^2Gtp]SqR/2J'kQVL5r<cdbt"@3:Z4Ag`m9_jHJS@b]-Ml.J@"R@H-:cOeamQRVV*enKD5almW+f/X7I4-aBUpL)HJ5HtW(g\'`h"qRaXILj!Q5$b;U/HY]**3rjFk0#l[/OI-E>m,>s#?X2C1B$&dSDO0onm/-b9;96]luSpJs%ioB'l5t7%[tYNa**n%l?8CIL_"5l=T6)U&`]"d[q$D3<cME15(aXjqgbk>&!+=eG@PA=HUX7S&%&>JaNC_o];JKPqOlMDY[ed+rt!qc0qA~>endstream
 endobj
 % 'Page9': class PDFPage 
-27 0 obj
+30 0 obj
 % Page dictionary
 << /Annots [ 23 0 R
- 24 0 R ]
- /Contents 60 0 R
+ 24 0 R
+ 25 0 R
+ 26 0 R
+ 27 0 R ]
+ /Contents 64 0 R
  /MediaBox [ 0
  0
  595.2756
  841.8898 ]
- /Parent 51 0 R
+ /Parent 55 0 R
  /Resources << /Font 1 0 R
  /ProcSet [ /PDF
  /Text
  /ImageB
  /ImageC
  /ImageI ]
- /XObject << /FormXob.362dcfa9652a6fee5acfc77c2d21716e 25 0 R >> >>
+ /XObject << /FormXob.362dcfa9652a6fee5acfc77c2d21716e 28 0 R >> >>
  /Rotate 0
  /Trans <<  >>
  /Type /Page >>
 endobj
-% 'R28': class PDFCatalog 
-28 0 obj
+% 'R31': class PDFCatalog 
+31 0 obj
 % Document Root
-<< /Outlines 30 0 R
- /PageLabels 61 0 R
+<< /Outlines 33 0 R
+ /PageLabels 65 0 R
  /PageMode /UseNone
- /Pages 51 0 R
+ /Pages 55 0 R
  /Type /Catalog >>
 endobj
-% 'R29': class PDFInfo 
-29 0 obj
+% 'R32': class PDFInfo 
+32 0 obj
 << /Author ()
- /CreationDate (D:20131231105318-01'00')
+ /CreationDate (D:20140129124207-01'00')
  /Creator (\(unspecified\))
  /Keywords ()
  /Producer (ReportLab PDF Library - www.reportlab.com)
  /Subject (\(unspecified\))
  /Title (Plugin Cadastre - Documentation utilisateur) >>
 endobj
-% 'R30': class PDFOutlines 
-30 0 obj
-<< /Count 24
- /First 31 0 R
- /Last 50 0 R
+% 'R33': class PDFOutlines 
+33 0 obj
+<< /Count 25
+ /First 34 0 R
+ /Last 54 0 R
  /Type /Outlines >>
 endobj
 % 'Outline.0': class OutlineEntryObject 
-31 0 obj
+34 0 obj
 << /Dest [ 9 0 R
  /XYZ
  62.69291
  572.5246
  0 ]
- /Next 32 0 R
- /Parent 30 0 R
+ /Next 35 0 R
+ /Parent 33 0 R
  /Title (Installation) >>
 endobj
 % 'Outline.1': class OutlineEntryObject 
-32 0 obj
+35 0 obj
 << /Count 4
  /Dest [ 9 0 R
  /XYZ
  62.69291
  311.5246
  0 ]
- /First 33 0 R
- /Last 36 0 R
- /Next 37 0 R
- /Parent 30 0 R
- /Prev 31 0 R
+ /First 36 0 R
+ /Last 39 0 R
+ /Next 40 0 R
+ /Parent 33 0 R
+ /Prev 34 0 R
  /Title (Configurer le plugin) >>
 endobj
-% 'Outline.21.0': class OutlineEntryObject 
-33 0 obj
+% 'Outline.22.0': class OutlineEntryObject 
+36 0 obj
 << /Dest [ 11 0 R
  /XYZ
  62.69291
  765.0236
  0 ]
- /Next 34 0 R
- /Parent 32 0 R
+ /Next 37 0 R
+ /Parent 35 0 R
  /Title (Interface) >>
 endobj
-% 'Outline.21.1': class OutlineEntryObject 
-34 0 obj
+% 'Outline.22.1': class OutlineEntryObject 
+37 0 obj
 << /Dest [ 11 0 R
  /XYZ
  62.69291
  663.0236
  0 ]
- /Next 35 0 R
- /Parent 32 0 R
- /Prev 33 0 R
+ /Next 38 0 R
+ /Parent 35 0 R
+ /Prev 36 0 R
  /Title (Nom des fichiers MAJIC) >>
 endobj
-% 'Outline.21.2': class OutlineEntryObject 
-35 0 obj
+% 'Outline.22.2': class OutlineEntryObject 
+38 0 obj
 << /Dest [ 11 0 R
  /XYZ
  62.69291
  490.0236
  0 ]
- /Next 36 0 R
- /Parent 32 0 R
- /Prev 34 0 R
+ /Next 39 0 R
+ /Parent 35 0 R
+ /Prev 37 0 R
  /Title (R\351pertoire temporaire) >>
 endobj
-% 'Outline.21.3': class OutlineEntryObject 
-36 0 obj
+% 'Outline.22.3': class OutlineEntryObject 
+39 0 obj
 << /Dest [ 11 0 R
  /XYZ
  62.69291
  388.0236
  0 ]
- /Parent 32 0 R
- /Prev 35 0 R
+ /Parent 35 0 R
+ /Prev 38 0 R
  /Title (Performances) >>
 endobj
 % 'Outline.2': class OutlineEntryObject 
-37 0 obj
+40 0 obj
 << /Count 3
  /Dest [ 11 0 R
  /XYZ
  62.69291
  244.0236
  0 ]
- /First 38 0 R
- /Last 40 0 R
- /Next 41 0 R
- /Parent 30 0 R
- /Prev 32 0 R
+ /First 41 0 R
+ /Last 43 0 R
+ /Next 44 0 R
+ /Parent 33 0 R
+ /Prev 35 0 R
  /Title (Importer des donn\351es) >>
 endobj
-% 'Outline.22.0': class OutlineEntryObject 
-38 0 obj
+% 'Outline.23.0': class OutlineEntryObject 
+41 0 obj
 << /Dest [ 13 0 R
  /XYZ
  62.69291
  575.9036
  0 ]
- /Next 39 0 R
- /Parent 37 0 R
+ /Next 42 0 R
+ /Parent 40 0 R
  /Title (Principe) >>
 endobj
-% 'Outline.22.1': class OutlineEntryObject 
-39 0 obj
+% 'Outline.23.1': class OutlineEntryObject 
+42 0 obj
 << /Dest [ 13 0 R
  /XYZ
  62.69291
  222.9036
  0 ]
- /Next 40 0 R
- /Parent 37 0 R
- /Prev 38 0 R
+ /Next 43 0 R
+ /Parent 40 0 R
+ /Prev 41 0 R
  /Title (Bases de donn\351es) >>
 endobj
-% 'Outline.22.2': class OutlineEntryObject 
-40 0 obj
+% 'Outline.23.2': class OutlineEntryObject 
+43 0 obj
 << /Dest [ 15 0 R
  /XYZ
  62.69291
  669.0236
  0 ]
- /Parent 37 0 R
- /Prev 39 0 R
+ /Parent 40 0 R
+ /Prev 42 0 R
  /Title (Les \351tapes d'importation) >>
 endobj
 % 'Outline.3': class OutlineEntryObject 
-41 0 obj
+44 0 obj
 << /Dest [ 17 0 R
  /XYZ
  62.69291
  664.0236
  0 ]
- /Next 42 0 R
- /Parent 30 0 R
- /Prev 37 0 R
+ /Next 45 0 R
+ /Parent 33 0 R
+ /Prev 40 0 R
  /Title (Charger des donn\351es) >>
 endobj
 % 'Outline.4': class OutlineEntryObject 
-42 0 obj
+45 0 obj
 << /Count 1
  /Dest [ 17 0 R
  /XYZ
  62.69291
  208.8636
  0 ]
- /First 43 0 R
- /Last 43 0 R
- /Next 44 0 R
- /Parent 30 0 R
- /Prev 41 0 R
+ /First 46 0 R
+ /Last 46 0 R
+ /Next 47 0 R
+ /Parent 33 0 R
+ /Prev 44 0 R
  /Title (La barre d'outil Cadastre) >>
 endobj
-% 'Outline.23.0': class OutlineEntryObject 
-43 0 obj
+% 'Outline.24.0': class OutlineEntryObject 
+46 0 obj
 << /Dest [ 19 0 R
  /XYZ
  62.69291
  699.0236
  0 ]
- /Parent 42 0 R
+ /Parent 45 0 R
  /Title (Indentifier une parcelle) >>
 endobj
 % 'Outline.5': class OutlineEntryObject 
-44 0 obj
+47 0 obj
 << /Count 4
  /Dest [ 19 0 R
  /XYZ
  62.69291
  310.0236
  0 ]
- /First 45 0 R
- /Last 48 0 R
- /Next 49 0 R
- /Parent 30 0 R
- /Prev 42 0 R
+ /First 48 0 R
+ /Last 51 0 R
+ /Next 52 0 R
+ /Parent 33 0 R
+ /Prev 45 0 R
  /Title (Le panneau de recherche) >>
 endobj
-% 'Outline.24.0': class OutlineEntryObject 
-45 0 obj
+% 'Outline.25.0': class OutlineEntryObject 
+48 0 obj
 << /Dest [ 19 0 R
  /XYZ
  62.69291
  124.6236
  0 ]
- /Next 46 0 R
- /Parent 44 0 R
+ /Next 49 0 R
+ /Parent 47 0 R
  /Title (Principe) >>
 endobj
-% 'Outline.24.1': class OutlineEntryObject 
-46 0 obj
+% 'Outline.25.1': class OutlineEntryObject 
+49 0 obj
 << /Dest [ 20 0 R
  /XYZ
  62.69291
  532.0236
  0 ]
- /Next 47 0 R
- /Parent 44 0 R
- /Prev 45 0 R
+ /Next 50 0 R
+ /Parent 47 0 R
+ /Prev 48 0 R
  /Title (Recherche de lieux) >>
 endobj
-% 'Outline.24.2': class OutlineEntryObject 
-47 0 obj
+% 'Outline.25.2': class OutlineEntryObject 
+50 0 obj
 << /Dest [ 22 0 R
  /XYZ
  62.69291
  765.0236
  0 ]
- /Next 48 0 R
- /Parent 44 0 R
- /Prev 46 0 R
+ /Next 51 0 R
+ /Parent 47 0 R
+ /Prev 49 0 R
  /Title (Recherche d'adresse) >>
 endobj
-% 'Outline.24.3': class OutlineEntryObject 
-48 0 obj
+% 'Outline.25.3': class OutlineEntryObject 
+51 0 obj
 << /Dest [ 22 0 R
  /XYZ
  62.69291
  394.0236
  0 ]
- /Parent 44 0 R
- /Prev 47 0 R
+ /Parent 47 0 R
+ /Prev 50 0 R
  /Title (Recherche de propri\351taires) >>
 endobj
 % 'Outline.6': class OutlineEntryObject 
-49 0 obj
+52 0 obj
 << /Dest [ 22 0 R
  /XYZ
  62.69291
  161.0236
  0 ]
- /Next 50 0 R
- /Parent 30 0 R
- /Prev 44 0 R
+ /Next 53 0 R
+ /Parent 33 0 R
+ /Prev 47 0 R
  /Title (\300 propos) >>
 endobj
 % 'Outline.7': class OutlineEntryObject 
-50 0 obj
-<< /Dest [ 27 0 R
+53 0 obj
+<< /Dest [ 30 0 R
  /XYZ
  62.69291
  765.0236
  0 ]
- /Parent 30 0 R
- /Prev 49 0 R
+ /Next 54 0 R
+ /Parent 33 0 R
+ /Prev 52 0 R
  /Title (Vid\351os de d\351monstration) >>
 endobj
-% 'R51': class PDFPages 
-51 0 obj
+% 'Outline.8': class OutlineEntryObject 
+54 0 obj
+<< /Dest [ 30 0 R
+ /XYZ
+ 62.69291
+ 678.0236
+ 0 ]
+ /Parent 33 0 R
+ /Prev 53 0 R
+ /Title (Mod\350le de donn\351es) >>
+endobj
+% 'R55': class PDFPages 
+55 0 obj
 % page tree
 << /Count 9
  /Kids [ 9 0 R
@@ -697,11 +757,11 @@ endobj
  19 0 R
  20 0 R
  22 0 R
- 27 0 R ]
+ 30 0 R ]
  /Type /Pages >>
 endobj
-% 'R52': class PDFStream 
-52 0 obj
+% 'R56': class PDFStream 
+56 0 obj
 % page stream
 << /Length 7250 >>
 stream
@@ -1135,8 +1195,8 @@ Q
  
 endstream
 endobj
-% 'R53': class PDFStream 
-53 0 obj
+% 'R57': class PDFStream 
+57 0 obj
 % page stream
 << /Length 5115 >>
 stream
@@ -1310,8 +1370,8 @@ Q
  
 endstream
 endobj
-% 'R54': class PDFStream 
-54 0 obj
+% 'R58': class PDFStream 
+58 0 obj
 % page stream
 << /Length 6105 >>
 stream
@@ -1605,8 +1665,8 @@ Q
  
 endstream
 endobj
-% 'R55': class PDFStream 
-55 0 obj
+% 'R59': class PDFStream 
+59 0 obj
 % page stream
 << /Length 11816 >>
 stream
@@ -2273,8 +2333,8 @@ Q
  
 endstream
 endobj
-% 'R56': class PDFStream 
-56 0 obj
+% 'R60': class PDFStream 
+60 0 obj
 % page stream
 << /Length 8013 >>
 stream
@@ -2736,8 +2796,8 @@ Q
  
 endstream
 endobj
-% 'R57': class PDFStream 
-57 0 obj
+% 'R61': class PDFStream 
+61 0 obj
 % page stream
 << /Length 7097 >>
 stream
@@ -3112,8 +3172,8 @@ Q
  
 endstream
 endobj
-% 'R58': class PDFStream 
-58 0 obj
+% 'R62': class PDFStream 
+62 0 obj
 % page stream
 << /Length 9573 >>
 stream
@@ -3580,8 +3640,8 @@ Q
  
 endstream
 endobj
-% 'R59': class PDFStream 
-59 0 obj
+% 'R63': class PDFStream 
+63 0 obj
 % page stream
 << /Length 7946 >>
 stream
@@ -3931,10 +3991,10 @@ Q
  
 endstream
 endobj
-% 'R60': class PDFStream 
-60 0 obj
+% 'R64': class PDFStream 
+64 0 obj
 % page stream
-<< /Length 1281 >>
+<< /Length 3081 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
 q
@@ -4003,7 +4063,95 @@ q
 1 0 0 1 62.69291 690.0236 cm
 Q
 q
-1 0 0 1 287.1978 670.8236 cm
+1 0 0 1 62.69291 657.0236 cm
+q
+BT 1 0 0 1 0 3.5 Tm 21 TL /F2 17.5 Tf 0 0 0 rg (Mod\350le de donn\351es) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 627.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .755984 Tw (Les liens suivant permettent de voir comment sont organis\351es les donn\351es cadastrales dans la base de) Tj T* 0 Tw (donn\351es \(tables, contraintes, etc.\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 621.0236 cm
+Q
+q
+1 0 0 1 62.69291 621.0236 cm
+Q
+q
+1 0 0 1 62.69291 609.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (Documentation d\351taill\351e ) Tj /F1 10 Tf (: ) Tj 0 0 .501961 rg (http://demo.3liz.com/plugin_cadastre/SchemaSpyGUI/index.html) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 603.0236 cm
+Q
+q
+1 0 0 1 62.69291 591.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 -3 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F2 10 Tf 0 0 0 rg (Image du mod\350le ) Tj /F1 10 Tf (: ) Tj 0 0 .501961 rg (http://demo.3liz.com/plugin_cadastre/schema_cadastre.png) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 585.0236 cm
+Q
+q
+1 0 0 1 62.69291 561.0236 cm
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+q
+1 0 0 1 6 9 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL 10.5 0 Td (\177) Tj T* -10.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 23 -3 cm
+q
+BT 1 0 0 1 0 14 Tm 79.34744 Tw 12 TL /F2 10 Tf 0 0 0 rg (Liste simplifi\351e des tables ) Tj /F1 10 Tf (:) Tj T* 0 Tw 0 0 .501961 rg (http://demo.3liz.com/plugin_cadastre/schema_cadastre_postgresql_autodoc.html) Tj T* ET
+Q
+Q
+q
+Q
+Q
+q
+1 0 0 1 62.69291 561.0236 cm
+Q
+q
+1 0 0 1 287.1978 541.8236 cm
 q
 20.88 0 0 19.2 0 0 cm
 /FormXob.362dcfa9652a6fee5acfc77c2d21716e Do
@@ -4012,84 +4160,84 @@ Q
  
 endstream
 endobj
-% 'R61': class PDFPageLabels 
-61 0 obj
+% 'R65': class PDFPageLabels 
+65 0 obj
 % Document Root
 << /Nums [ 0
- 62 0 R
- 1
- 63 0 R
- 2
- 64 0 R
- 3
- 65 0 R
- 4
  66 0 R
- 5
+ 1
  67 0 R
- 6
+ 2
  68 0 R
- 7
+ 3
  69 0 R
+ 4
+ 70 0 R
+ 5
+ 71 0 R
+ 6
+ 72 0 R
+ 7
+ 73 0 R
  8
- 70 0 R ] >>
-endobj
-% 'R62': class PDFPageLabel 
-62 0 obj
-% None
-<< /S /D
- /St 1 >>
-endobj
-% 'R63': class PDFPageLabel 
-63 0 obj
-% None
-<< /S /D
- /St 2 >>
-endobj
-% 'R64': class PDFPageLabel 
-64 0 obj
-% None
-<< /S /D
- /St 3 >>
-endobj
-% 'R65': class PDFPageLabel 
-65 0 obj
-% None
-<< /S /D
- /St 4 >>
+ 74 0 R ] >>
 endobj
 % 'R66': class PDFPageLabel 
 66 0 obj
 % None
 << /S /D
- /St 5 >>
+ /St 1 >>
 endobj
 % 'R67': class PDFPageLabel 
 67 0 obj
 % None
 << /S /D
- /St 6 >>
+ /St 2 >>
 endobj
 % 'R68': class PDFPageLabel 
 68 0 obj
 % None
 << /S /D
- /St 7 >>
+ /St 3 >>
 endobj
 % 'R69': class PDFPageLabel 
 69 0 obj
 % None
 << /S /D
- /St 8 >>
+ /St 4 >>
 endobj
 % 'R70': class PDFPageLabel 
 70 0 obj
 % None
 << /S /D
+ /St 5 >>
+endobj
+% 'R71': class PDFPageLabel 
+71 0 obj
+% None
+<< /S /D
+ /St 6 >>
+endobj
+% 'R72': class PDFPageLabel 
+72 0 obj
+% None
+<< /S /D
+ /St 7 >>
+endobj
+% 'R73': class PDFPageLabel 
+73 0 obj
+% None
+<< /S /D
+ /St 8 >>
+endobj
+% 'R74': class PDFPageLabel 
+74 0 obj
+% None
+<< /S /D
  /St 9 >>
 endobj
 xref
-0 71
+0 75
 0000000000 65535 f
 0000000113 00000 n
 0000000246 00000 n
@@ -4115,60 +4263,64 @@ xref
 0000309166 00000 n
 0000309481 00000 n
 0000309726 00000 n
-0000310000 00000 n
-0000312191 00000 n
-0000313922 00000 n
-0000314299 00000 n
-0000314458 00000 n
-0000314749 00000 n
-0000314875 00000 n
-0000315047 00000 n
-0000315287 00000 n
-0000315460 00000 n
-0000315661 00000 n
-0000315864 00000 n
-0000316037 00000 n
-0000316281 00000 n
-0000316453 00000 n
-0000316651 00000 n
-0000316839 00000 n
-0000317037 00000 n
-0000317283 00000 n
-0000317453 00000 n
-0000317697 00000 n
-0000317869 00000 n
-0000318066 00000 n
-0000318264 00000 n
-0000318454 00000 n
-0000318641 00000 n
-0000318815 00000 n
-0000318994 00000 n
-0000326343 00000 n
-0000331557 00000 n
-0000337761 00000 n
-0000349677 00000 n
-0000357789 00000 n
-0000364985 00000 n
-0000374657 00000 n
-0000382702 00000 n
-0000384086 00000 n
-0000384283 00000 n
-0000384360 00000 n
-0000384437 00000 n
-0000384514 00000 n
-0000384591 00000 n
-0000384668 00000 n
-0000384745 00000 n
-0000384822 00000 n
-0000384899 00000 n
+0000309971 00000 n
+0000310250 00000 n
+0000310525 00000 n
+0000310849 00000 n
+0000313040 00000 n
+0000314771 00000 n
+0000315175 00000 n
+0000315334 00000 n
+0000315625 00000 n
+0000315751 00000 n
+0000315923 00000 n
+0000316163 00000 n
+0000316336 00000 n
+0000316537 00000 n
+0000316740 00000 n
+0000316913 00000 n
+0000317157 00000 n
+0000317329 00000 n
+0000317527 00000 n
+0000317715 00000 n
+0000317913 00000 n
+0000318159 00000 n
+0000318329 00000 n
+0000318573 00000 n
+0000318745 00000 n
+0000318942 00000 n
+0000319140 00000 n
+0000319330 00000 n
+0000319517 00000 n
+0000319722 00000 n
+0000319890 00000 n
+0000320069 00000 n
+0000327418 00000 n
+0000332632 00000 n
+0000338836 00000 n
+0000350752 00000 n
+0000358864 00000 n
+0000366060 00000 n
+0000375732 00000 n
+0000383777 00000 n
+0000386961 00000 n
+0000387158 00000 n
+0000387235 00000 n
+0000387312 00000 n
+0000387389 00000 n
+0000387466 00000 n
+0000387543 00000 n
+0000387620 00000 n
+0000387697 00000 n
+0000387774 00000 n
 trailer
 << /ID 
  % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
- [(\207\300\351T\177\023\351\254\265^p\316*;\355W) (\207\300\351T\177\023\351\254\265^p\316*;\355W)] 
+ [(\371\201\317&\267H:\014\032\236eC\226E~\271) (\371\201\317&\267H:\014\032\236eC\226E~\271)] 
 
- /Info 29 0 R
- /Root 28 0 R
- /Size 71 >>
+ /Info 32 0 R
+ /Root 31 0 R
+ /Size 75 >>
 startxref
-384946
+387821
 %%EOF
