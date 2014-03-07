@@ -766,6 +766,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.edigeoLot = None
         self.majicSourceDir = None
         self.edigeoSourceDir = None
+        self.onlyUpdateMultiPolygon = False
 
         # set input values from settings
         self.sList = {
@@ -864,6 +865,12 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         '''
         if self.db:
             self.db.connector.__del__()
+
+        # Store settings
+        msg = self.checkImportInputData()
+        if not msg:
+            self.storeSettings()
+
         self.close()
 
 
@@ -963,6 +970,10 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         if os.path.exists(self.edigeoSourceDir):
             self.doEdigeoImport = True
 
+        # only update multipolygon ?
+        if self.cbUpdateMultiPolygon.isChecked():
+            self.onlyUpdateMultiPolygon = True
+
         msg = ''
         if not self.db:
             msg+= u'Veuillez sélectionner une base de données\n'
@@ -994,18 +1005,8 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
             QMessageBox.critical(self, u"Cadastre", msg)
             return
 
-        # store chosen data in QGIS settings
-        s = QSettings()
-        s.setValue("cadastre/dataVersion", str(self.dataVersion))
-        s.setValue("cadastre/dataYear", int(self.dataYear))
-        s.setValue("cadastre/majicSourceDir", str(self.majicSourceDir))
-        s.setValue("cadastre/edigeoSourceDir", str(self.edigeoSourceDir))
-        s.setValue("cadastre/edigeoDepartement", str(self.edigeoDepartement))
-        s.setValue("cadastre/edigeoDirection", int(self.edigeoDirection))
-        s.setValue("cadastre/edigeoLot", str(self.edigeoLot))
-        s.setValue("cadastre/edigeoSourceProj", str(self.edigeoSourceProj))
-        s.setValue("cadastre/edigeoTargetProj", str(self.edigeoTargetProj))
-
+        # Store settings
+        self.storeSettings()
 
         # cadastreImport instance
         qi = cadastreImport(self)
@@ -1023,9 +1024,29 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
 
         # Run Edigeo import
         if self.doEdigeoImport:
-            qi.importEdigeo()
+            if self.onlyUpdateMultiPolygon:
+                qi.onlyUpdateMultiPolygon()
+            else:
+                qi.importEdigeo()
 
         qi.endImport()
+
+
+    def storeSettings(self):
+        '''
+        Store cadastre settings in QGIS
+        '''
+        # store chosen data in QGIS settings
+        s = QSettings()
+        s.setValue("cadastre/dataVersion", str(self.dataVersion))
+        s.setValue("cadastre/dataYear", int(self.dataYear))
+        s.setValue("cadastre/majicSourceDir", str(self.majicSourceDir))
+        s.setValue("cadastre/edigeoSourceDir", str(self.edigeoSourceDir))
+        s.setValue("cadastre/edigeoDepartement", str(self.edigeoDepartement))
+        s.setValue("cadastre/edigeoDirection", int(self.edigeoDirection))
+        s.setValue("cadastre/edigeoLot", str(self.edigeoLot))
+        s.setValue("cadastre/edigeoSourceProj", str(self.edigeoSourceProj))
+        s.setValue("cadastre/edigeoTargetProj", str(self.edigeoTargetProj))
 
 # --------------------------------------------------------
 #        load - Load data from database

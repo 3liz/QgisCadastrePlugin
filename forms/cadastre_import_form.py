@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_import_form.ui'
 #
-# Created: Tue Nov  5 18:55:28 2013
+# Created: Fri Mar  7 15:25:36 2014
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_import_form(object):
     def setupUi(self, cadastre_import_form):
         cadastre_import_form.setObjectName(_fromUtf8("cadastre_import_form"))
-        cadastre_import_form.resize(526, 709)
+        cadastre_import_form.resize(523, 753)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_import_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_import_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 506, 656))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 503, 700))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -221,6 +221,9 @@ class Ui_cadastre_import_form(object):
         self.btProcessImport = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
         self.btProcessImport.setObjectName(_fromUtf8("btProcessImport"))
         self.verticalLayout_6.addWidget(self.btProcessImport)
+        self.cbUpdateMultiPolygon = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
+        self.cbUpdateMultiPolygon.setObjectName(_fromUtf8("cbUpdateMultiPolygon"))
+        self.verticalLayout_6.addWidget(self.cbUpdateMultiPolygon)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.stepLabel = QtGui.QLabel(self.scrollAreaWidgetContents_2)
@@ -283,6 +286,7 @@ class Ui_cadastre_import_form(object):
         self.label_16.setText(_translate("cadastre_import_form", "Année", None))
         self.label_6.setText(_translate("cadastre_import_form", "Lot", None))
         self.btProcessImport.setText(_translate("cadastre_import_form", "Lancer l\'import", None))
+        self.cbUpdateMultiPolygon.setText(_translate("cadastre_import_form", "Seulement corriger les multi-polygones de données déjà importées", None))
         self.txtLog.setHtml(_translate("cadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

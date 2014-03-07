@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>526</width>
-    <height>709</height>
+    <width>523</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>506</width>
-        <height>656</height>
+        <width>503</width>
+        <height>700</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -412,6 +412,13 @@
         <widget class="QPushButton" name="btProcessImport">
          <property name="text">
           <string>Lancer l'import</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cbUpdateMultiPolygon">
+         <property name="text">
+          <string>Seulement corriger les multi-polygones de données déjà importées</string>
          </property>
         </widget>
        </item>

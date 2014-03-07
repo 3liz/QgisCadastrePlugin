@@ -86,6 +86,8 @@ class cadastreImport(QObject):
         self.step = 0
         self.totalSteps = 0
 
+        self.multiPolygonUpdated = 0
+
         self.qc.checkDatabaseForExistingStructure()
         self.hasConstraints = False
         if self.dialog.hasStructure:
@@ -614,7 +616,58 @@ class cadastreImport(QObject):
         return None
 
 
+    def onlyUpdateMultiPolygon(self):
+        '''
+        Only run the SQL Update queries
+        built from VEC files
+        To repair multipolygons
+        '''
 
+        # Log : Print connection parameters to database
+        jobTitle = u'EDIGEO'
+        self.beginJobLog(14, jobTitle)
+        self.qc.updateLog(u'Type de base : %s, Connexion: %s, Schéma: %s' % (
+                self.dialog.dbType,
+                self.dialog.connectionName,
+                self.dialog.schema
+            )
+        )
+        self.updateProgressBar()
+
+        if self.go:
+            # copy files in temp dir
+            self.dialog.subStepLabel.setText('Copie des fichiers')
+            self.updateProgressBar()
+            self.copyFilesToTemp(self.dialog.edigeoSourceDir, self.edigeoDir)
+            self.updateTimer()
+        self.updateProgressBar()
+
+        if self.go:
+            # unzip edigeo files in temp dir
+            self.dialog.subStepLabel.setText('Extraction des fichiers')
+            self.updateProgressBar()
+            self.unzipFolderContent(self.edigeoDir)
+            self.updateTimer()
+        self.updateProgressBar()
+
+        # Copy eventual plain edigeo files in edigeoPlainDir
+        shutil.copytree(self.edigeoDir, os.path.join(self.edigeoPlainDir, 'plain'))
+
+        # Get MULTIPOLYGON from VEC files and update concerned layers and objects
+        if self.go:
+            self.dialog.subStepLabel.setText('Correction des MULTI-POLYGONES')
+            self.updateProgressBar()
+
+            vecList = self.listFilesInDirectory(self.edigeoPlainDir, 'vec')
+            self.step = 0
+            self.totalSteps = len(vecList)
+            for vec in vecList:
+                # update mission multipolygons (ogr2ogr driver does not handle them yet)
+                self.updateMultipolygonFromVec(vec, 'cadastre')
+                self.updateProgressBar()
+            self.qc.updateLog(u'  - %s multipolygones mis à jours dans la base de données' % self.multiPolygonUpdated)
+
+            self.updateTimer()
 
 
     def endImport(self):
@@ -980,8 +1033,12 @@ class cadastreImport(QObject):
             self.step = 0
             self.totalSteps = len(vecList)
             for vec in vecList:
+                # import via ogr2ogr
                 self.importEdigeoVecToDatabase(vec)
+                # update mission multipolygons (ogr2ogr driver does not handle them yet)
+                self.updateMultipolygonFromVec(vec)
                 self.updateProgressBar()
+            self.qc.updateLog(u'  - %s multipolygones mis à jours dans la base de données' % self.multiPolygonUpdated)
 
             # Reinit progress var
             self.step = initialStep
@@ -1064,6 +1121,91 @@ class cadastreImport(QObject):
                     finally:
                         c.close()
                         del c
+
+
+    def updateMultipolygonFromVec(self, path, layerType='edigeo'):
+        '''
+        Run the update multipolygon query
+        for each VEC files on the given layer type
+        (edigeo = import tables, cadastre = cadastre geo_* tables)
+        '''
+        # Get SQL update queries
+        sqlList = self.getUpdateMultipolygonFromVecQuery(path, layerType)
+
+        # Run each query
+        for sql in sqlList:
+            if self.dialog.dbType == 'postgis':
+                sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            self.executeSqlQuery(sql)
+
+
+    def getUpdateMultipolygonFromVecQuery(self, path, layerType='edigeo'):
+        '''
+        EDIGEO ogr driver does not import multipolygon.
+        This method is a patch : it parses the vec file
+        and get WKT.
+        Then the method build an SQL update query
+        adapted on the given layer type
+        (edigeo = import tables, cadastre = cadastre geo_* tables)
+        '''
+        sqlList = []
+
+        # Class wich get multipolygons
+        from getmultipolygonfromvec import GetMultiPolygonFromVec
+        getMultiPolygon = GetMultiPolygonFromVec()
+
+        # Relations between edigeo import tables and geo_* cadastre table
+        impCadRel = {
+            'batiment_id' : 'geo_batiment',
+            'commune_id': 'geo_commune',
+            'lieudit_id': 'geo_lieudit',
+            'parcelle_id': 'geo_parcelle',
+            'section_id': 'geo_section',
+            'subdfisc_id': 'geo_subdfisc',
+            'subdsect_id': 'geo_subdsect',
+            'tronfluv_id': 'geo_tronfluv',
+            'tsurf_id': 'geo_tsurf'
+        }
+
+        # Get dictionnary
+        dic = getMultiPolygon( path )
+        if dic:
+            # Loop for each layer found in VEC with multi-polygon to update
+            for layer, item in dic.items():
+                table = layer.lower()
+
+                # do the changes only for polygon layers
+                if table not in impCadRel:
+                    continue
+
+                # Replace table name if the update is not done on edigeo import table
+                # but on the cadastre geo_* layers instead
+                if layerType == 'cadastre':
+                    table = impCadRel[table]
+
+                # Build SQL
+                sql = ''
+                for obj, wkt in item.items():
+                    self.multiPolygonUpdated+=1
+                    sql+= " UPDATE %s SET geom = ST_Transform(ST_GeomFromText('%s', %s), %s)" % (
+                        table,
+                        wkt,
+                        self.sourceSrid,
+                        self.targetSrid
+                    )
+                    # only for given object id
+                    sql+= " WHERE object_rid = '%s' " % str(obj)
+                    # only if the 2 geometries are indeed different. To be debbuged : geom <> geom : operator is not unique
+                    #~ sql+= " AND geom != ST_Transform(ST_GeomFromText('%s', %s), %s) " % (wkt, self.sourceSrid, self.targetSrid)
+                    # only if the 2 geometries are related (object_rid is not unique)
+                    if self.dialog.dbType == 'postgis':
+                        sql+= " AND geom @ ST_Transform(ST_GeomFromText('%s', %s), %s) ; " % (wkt, self.sourceSrid, self.targetSrid)
+                    else:
+                        sql+= " AND ST_Within(geom, ST_Transform(ST_GeomFromText('%s', %s), %s) ); " % (wkt, self.sourceSrid, self.targetSrid)
+                sqlList.append(sql)
+
+        return sqlList
+
 
 
     def dropEdigeoRawData(self):
