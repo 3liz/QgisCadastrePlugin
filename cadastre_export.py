@@ -263,7 +263,7 @@ class cadastreExport(QObject):
                 sql = self.qc.postgisToSpatialite(sql)
             # Run SQL only if data has not already been defined
             if data is None:
-                print sql
+                #~ print sql
                 [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
 
 
@@ -338,7 +338,7 @@ class cadastreExport(QObject):
         except IOError, e:
             msg = u"Erreur lors de l'export: %s" % e
             self.go = False
-            print msg
+            print "%s" % msg
             #~ self.qc.updateLog(msg)
             return msg
 
