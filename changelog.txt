@@ -1,5 +1,8 @@
 CHANGELOG
 
+  Version 0.9.8.1
+  * Export - debug : suppression des 'print' dans le code
+
   Version 0.9.8
   * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.7...0.9.8
   * Export des relevés - améliorations de mises en forme des données

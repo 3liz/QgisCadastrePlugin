@@ -7,7 +7,7 @@ description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Connseil Regional de Picardie, Agence de Developpement et  d Urbanisme du Grand Amienois.
 
-version=0.9.8
+version=0.9.8.1
 author=3liz
 email=info@3liz.com
 
@@ -17,7 +17,9 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.9.8
+  Version 0.9.8.1
+  * Export - debug : suppression des 'print' dans le code
+  * Ci-dessous, changements de la 0.9.8
   * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.7...0.9.8
   * Export des relevés - améliorations de mises en forme des données
   * Export - propriétaires : ajout de l'époux pour les femmes mariées EX: MME DURAND/Sophie Yvette EP DUPONT Jean
