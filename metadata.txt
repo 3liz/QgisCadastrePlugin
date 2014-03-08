@@ -7,7 +7,7 @@ description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Connseil Regional de Picardie, Agence de Developpement et  d Urbanisme du Grand Amienois.
 
-version=0.9.7
+version=0.9.8
 author=3liz
 email=info@3liz.com
 
@@ -17,20 +17,20 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.9.7
-  * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.6...0.9.7
-  * Documentation - ajout des liens vers la documentation en ligne - bug#3
-  * Export - recupération infos parcelles : ajout du filtre par département - bug #27
-  * Export - correction du pourcentage exoneration pour les propriétés non baties - bug #26
-  * Import - validation préalable des entrées du formulaire d'import - bug #25
-  * Chargement - ajout des chemins SVG cadastre sans écraser les précédents - bug #19
-  * Identification - debogage outil si Parcelles n'est pas la couche active
-  * Export - nettoyage du nom du PDF exporté pour compatibilité Windows - bug #23
-  * Import - sup contrainte de type sur surface des parcelles - bug #20
-  * Import - suppression de la contrainte de longueur de champ pour l'attribut tex
-  * Chargement - gestion d'erreur si pas de table trouvée dans la bdd
-  * Recherche - correction largeur listes déroulantes (windows) - bug #22
-  * Export - ouverture des PDF compatible freeBSD - bug #21
+  Version 0.9.8
+  * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.7...0.9.8
+  * Export des relevés - améliorations de mises en forme des données
+  * Export - propriétaires : ajout de l'époux pour les femmes mariées EX: MME DURAND/Sophie Yvette EP DUPONT Jean
+  * Export - propriétaires : déplacement des dates et lieu de naissance à droite
+  * Export - Suppression des zéros au début du numéro de plan et de voirie
+  * Export - prop. baties : Suppression du code commune au début du numéro INVAR
+  * Export - Sommes prop. baties : Ajout de zéros si valeurs nulles (au lieu de cases vides)
+  * Export - prop. non baties : Séparation des HA A CA pour la contenance
+  * Export - prop. non baties : Calcul de la fraction exo si applicable
+  * Export - Sommes prop. non baties : Ajout de la somme des contenances
+  * Export - Pied de page : Ajout de la mention "Ce document est donné à titre indicatif..."
+  * Export - Suppression de la mention "Expérimental"
+  * Import - Import des MULTI-POLYGONES et correction de données existantes - bug #29
 
 
 
