@@ -371,7 +371,10 @@ class cadastre_common():
 
             DlgDbError.showError(e, self.dialog)
             self.dialog.go = False
-            self.updateLog(e.msg)
+            try:
+                self.updateLog(e.msg)
+            except:
+                print e.msg
             return
 
         finally:
@@ -2241,8 +2244,8 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             SELECT
             c.libcom AS nomcommune, c.ccocom AS codecommune, p.dcntpa AS contenance,
             CASE
-                    WHEN v.libvoi IS NOT NULL THEN trim(p.dnvoiri || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
-                    ELSE p.cconvo || p.dvoilib
+                    WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
+                    ELSE ltrim(p.cconvo, '0') || p.dvoilib
             END AS adresse,
             CASE
                     WHEN p.gurbpa = 'U' THEN 'Oui'
@@ -2302,7 +2305,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
 
         # Get proprietaire info
         sql = u'''
-        SELECT coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || ' - ' ||trim(coalesce(p.dlign3, '')) || ' / ' || trim(coalesce(p.dlign4, '')) || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, '')) ||
+        SELECT coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || ' - ' ||trim(coalesce(p.dlign3, '')) || ' / ' || ltrim(trim(coalesce(p.dlign4, '')), '0') || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, '')) ||
         CASE
           WHEN jdatnss IS NOT NULL
           THEN ' - Né(e) le ' || coalesce(to_char(jdatnss, 'dd/mm/YYYY'), '') || ' à ' || coalesce(p.dldnss, '')

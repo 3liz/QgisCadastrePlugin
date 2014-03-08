@@ -144,20 +144,31 @@ class cadastreExport(QObject):
                 'source': 'proprietes_non_baties_line'
             },
             'proprietes_non_baties_sum' : {
-                'names': ['drcsuba'],
-                'position': [3.5, 195, 290, 15], 'align': [ 32, 1],
+                'names': ['sum_ha_contenance', 'sum_a_contenance', 'sum_ca_contenance', 'sum_drcsuba'],
+                'position': [3.5, 195, 290, 13], 'align': [ 32, 1],
                 'type': 'sql',
                 'keepContent' : True,
                 'filter': 'comptecommunal',
                 'and': {
                     'proprietaire': u" AND p.comptecommunal = '%s'" % comptecommunal,
                     'parcelle': u" AND geo_parcelle = '%s'" % self.geo_parcelle
-                }
+                },
+                'bgcolor': Qt.transparent
+            },
+            'footer' : {
+                'names': ['foot'],
+                'position': [3.5, 208, 290, 2], 'align': [ 128, 4],
+                'keepContent' : True,
+                'type': 'properties',
+                'source': [u"Ce document est donné à titre indicatif - Il n'a pas de valeur légale"],
+                'bgcolor' : Qt.white,
+                'htmlState' : 0,
+                'font': QFont('sans-serif', 4, 1, True)
             }
         }
         self.mainTables = {
             'proprietaires_line' : {
-                'names': ['proprietaire'],
+                'names': ['mainprop', 'epousede', 'adrprop','nele'],
                 'type': 'sql',
                 'keepContent': True,
                 'filter': 'comptecommunal',
@@ -176,7 +187,7 @@ class cadastreExport(QObject):
                 }
             },
             'proprietes_non_baties_line' : {
-                'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'nparcprim', 'fpdp', 'star', 'suf', 'grssgr', 'cl', 'natcult', 'contenance', 'revenucadastral', 'coll', 'natexo', 'anret', 'fractionrcexo', 'pourcentageexo', 'tc', 'lff'],
+                'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'nparcprim', 'fpdp', 'star', 'suf', 'grssgr', 'cl', 'natcult', 'ha_contenance', 'a_contenance', 'ca_contenance', 'revenucadastral', 'coll', 'natexo', 'anret', 'fractionrcexo', 'pourcentageexo', 'tc', 'lff'],
                 'type': 'sql',
                 'and': {
                     'proprietaire': u" AND p.comptecommunal = '%s'" % comptecommunal,
@@ -252,8 +263,8 @@ class cadastreExport(QObject):
                 sql = self.qc.postgisToSpatialite(sql)
             # Run SQL only if data has not already been defined
             if data is None:
+                print sql
                 [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
-                #~ print sql
 
 
             # Page no defined = means the query is here to
@@ -327,7 +338,8 @@ class cadastreExport(QObject):
         except IOError, e:
             msg = u"Erreur lors de l'export: %s" % e
             self.go = False
-            self.qc.updateLog(msg)
+            print msg
+            #~ self.qc.updateLog(msg)
             return msg
 
         finally:
@@ -396,6 +408,12 @@ class cadastreExport(QObject):
             cl.setHtmlState(2)
             cl.setText(content)
             cl.setFrameEnabled(False)
+            if 'bgcolor' in item:
+                cl.setBackgroundColor(item['bgcolor'])
+            if 'htmlState' in item:
+                cl.setHtmlState(item['htmlState'])
+            if 'font' in item:
+                cl.setFont(item['font'])
             composition.addItem(cl)
 
         # Add watershed
@@ -409,7 +427,7 @@ class cadastreExport(QObject):
         w.setPictureFile(pictureFile)
         w.setBackgroundEnabled(False)
         w.setTransparency(60)
-        composition.addItem(w)
+        #~composition.addItem(w)
 
 
 

@@ -9,8 +9,10 @@
     <table cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td>Revenu total</td>
-                <td>$drcsuba</td>
+                <td>CONTENANCE HA A CA</td>
+                <td>$sum_ha_contenance&nbsp;$sum_a_contenance&nbsp;$sum_ca_contenance</td>
+                <td>REV IMPOSABLE</td>
+                <td>$sum_drcsuba</td>
             </tr>
         </tbody>
     </table>

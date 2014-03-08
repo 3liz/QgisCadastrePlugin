@@ -29,7 +29,7 @@
       <td style="text-align: center;">GR/ SSGR</td>
       <td style="text-align: center;">CL</td>
       <td style="text-align: center;">NAT CULT</td>
-      <td style="text-align: center;">CONTENANCE</td>
+      <td style="text-align: center;">CONTENANCE</br>HA A CA</td>
       <td style="text-align: center;">REVENU CADASTRAL</td>
       <td style="text-align: center;">COLL</td>
       <td style="text-align: center;">NAT EXO</td>
