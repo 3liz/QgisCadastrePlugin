@@ -1201,7 +1201,7 @@ class cadastreImport(QObject):
                     if self.dialog.dbType == 'postgis':
                         sql+= " AND geom @ ST_Transform(ST_GeomFromText('%s', %s), %s) ; " % (wkt, self.sourceSrid, self.targetSrid)
                     else:
-                        sql+= " AND ST_Within(geom, ST_Transform(ST_GeomFromText('%s', %s), %s) ); " % (wkt, self.sourceSrid, self.targetSrid)
+                        sql+= " AND ST_Intersects(geom, ST_Transform(ST_GeomFromText('%s', %s), %s) ); " % (wkt, self.sourceSrid, self.targetSrid)
                 sqlList.append(sql)
 
         return sqlList

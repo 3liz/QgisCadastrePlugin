@@ -39,7 +39,10 @@ class GetMultiPolygonFromVec(object):
     for ly,feas in self.mapLyFea.items() :
       mapLyFeaMulti[ ly ] ={}
       for fea in feas :
-        mapLyFeaMulti[ ly ][ fea ] = 'MULTIPOLYGON ('+','.join(['(('+'),('.join([','.join([str(x)+' '+str(y) for x,y in ring ]) for ring in mapPfePoly[ pfe ]])+'))' for pfe in self.mapFeaPfe[ fea ] ])+')'
+        multipolygon = []
+        for pfe in self.mapFeaPfe[ fea ] :
+          multipolygon += mapPfePoly[ pfe ]
+        mapLyFeaMulti[ ly ][ fea ] = 'MULTIPOLYGON('+', '.join(['('+', '.join(['('+'),('.join([','.join([str(x)+' '+str(y) for x,y in ring ])])+')' for ring in poly])+')' for poly in multipolygon])+')'
     return mapLyFeaMulti
 
   def __features__( self ) :
@@ -269,7 +272,7 @@ class GetMultiPolygonFromVec(object):
       arcs = self.mapPfePar[ face ][:]
       rings = self.__getRings__( arcs )
       if len( rings ) == 1 :
-        mapPfePoly[ face ] = rings
+        mapPfePoly[ face ] = [rings]
       elif len( rings ) > 1 :
         bboxes = []
         bboxRing = {}
@@ -294,20 +297,29 @@ class GetMultiPolygonFromVec(object):
           bboxRing[(minx, miny, maxx, maxy)] = ring
         bboxes.sort()
         bbox = bboxes.pop(0)
-        extBbox = bbox
-        intBboxes = []
+        bboxPolygons = [[bbox]]
         while bboxes :
           bbox = bboxes.pop(0)
-          if bbox[0] >= extBbox[0] and bbox[1] >= extBbox[1] and bbox[2] <= extBbox[2] and bbox[3] <= extBbox[3] :
-            intBboxes.append( bbox )
-          else :
-            intBboxes.append( extBbox )
-            extBbox = bbox
-        bboxes = [extBbox] + intBboxes
-        polygon = []
-        for bbox in bboxes :
-          polygon.append( bboxRing[bbox] )
-        mapPfePoly[ face ] = polygon
+          inserted = False
+          for p in bboxPolygons :
+            extBbox = p[0]
+            if bbox[0] >= extBbox[0] and bbox[1] >= extBbox[1] and bbox[2] <= extBbox[2] and bbox[3] <= extBbox[3] :
+              p.append( bbox )
+              inserted = True
+              break
+            elif extBbox[0] >= bbox[0] and extBbox[1] >= bbox[1] and extBbox[2] <= bbox[2] and extBbox[3] <= bbox[3] :
+              p.insert(0, bbox)
+              inserted = True
+              break
+          if not inserted :
+            bboxPolygons.append( [bbox] )
+        polygons = []
+        for bboxes in bboxPolygons :
+          polygon = []
+          for bbox in bboxes :
+            polygon.append( bboxRing[bbox] )
+          polygons.append( polygon )
+        mapPfePoly[ face ] = polygons
     return mapPfePoly
 
   def __concatArc__( self, arc, ring ) :
@@ -359,7 +371,7 @@ class GetMultiPolygonFromVec(object):
       rings.append( ring )
     return rings
 
-#from getmultipolygonfromvec import GetMultiPolygonFromVec
+#import glob
 #getMultiPolygon = GetMultiPolygonFromVec()
-#for path in glob.glob('*/*.VEC') :
-#  dic = getMultiPolygon( path )
+#for path in glob.glob('*/*/*.VEC') :
+#  getMultiPolygon( path )
