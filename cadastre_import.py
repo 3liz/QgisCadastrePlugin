@@ -22,7 +22,9 @@
  ***************************************************************************/
 """
 
-import sys, os, glob
+import os, glob
+import StringIO
+import string, sys
 import re
 import time
 import tempfile
@@ -32,6 +34,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 from datetime import datetime
+from processing.algs.gdal.pyogr.ogr2ogr import main as ogr2ogr
 
 # db_manager scripts
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
@@ -1025,6 +1028,10 @@ class cadastreImport(QObject):
             for thf in thfList:
                 self.importEdigeoThfToDatabase(thf)
                 self.updateProgressBar()
+                if not self.go:
+                    break
+
+        if self.go:
 
             # VEC - import relations between objects
             self.dialog.subStepLabel.setText(u'Import des relations (*.vec)')
@@ -1038,12 +1045,15 @@ class cadastreImport(QObject):
                 # update mission multipolygons (ogr2ogr driver does not handle them yet)
                 self.updateMultipolygonFromVec(vec)
                 self.updateProgressBar()
-            self.qc.updateLog(u'  - %s multipolygones mis à jours dans la base de données' % self.multiPolygonUpdated)
+                if not self.go:
+                    break
+            if self.go:
+                self.qc.updateLog(u'  - %s multipolygones mis à jours dans la base de données' % self.multiPolygonUpdated)
 
-            # Reinit progress var
-            self.step = initialStep
-            self.totalSteps = initialTotalSteps
-            QApplication.restoreOverrideCursor()
+        # Reinit progress var
+        self.step = initialStep
+        self.totalSteps = initialTotalSteps
+        QApplication.restoreOverrideCursor()
 
 
     def importEdigeoThfToDatabase(self, filename):
@@ -1070,24 +1080,71 @@ class cadastreImport(QObject):
                 settingsList = ["service", "host", "port", "database", "username", "password"]
                 service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
 
-                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "PostgreSQL" PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s" "%s" -lco GEOMETRY_NAME=geom -lco PG_USE_COPY=YES -nlt GEOMETRY -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO' % (self.sourceSridFull, targetSridOption, self.targetSridFull, host, port, database, self.dialog.schema, username, password, filename)
+                cmdArgs = [
+                    '',
+                    '-s_srs', self.sourceSridFull,
+                    targetSridOption, self.targetSridFull,
+                    '-append',
+                    '-f', 'PostgreSQL',
+                    'PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s"' % (
+                        host,
+                        port,
+                        database,
+                        self.dialog.schema,
+                        username,
+                        password
+                    ),
+                    filename,
+                    '-lco', 'GEOMETRY_NAME=geom',
+                    '-lco', 'PG_USE_COPY=YES',
+                    '-nlt', 'GEOMETRY',
+                    '-gt', '50000',
+                    '--config', 'OGR_EDIGEO_CREATE_LABEL_LAYERS', 'NO'
+                ]
 
             if self.dialog.dbType == 'spatialite':
                 if not settings.contains( "sqlitepath" ): # non-existent entry?
+                    self.go = False
                     raise InvalidDataException( u'there is no defined database connection "%s".' % conn_name )
 
                 database = settings.value("sqlitepath")
 
-                ogrCommand = 'ogr2ogr -s_srs "%s" %s "%s" -append -f "SQLite" "%s" "%s" -lco GEOMETRY_NAME=geom -nlt GEOMETRY  -dsco SPATIALITE=YES -gt 50000 --config OGR_EDIGEO_CREATE_LABEL_LAYERS NO --config OGR_SQLITE_SYNCHRONOUS OFF --config OGR_SQLITE_CACHE 512' % (self.sourceSridFull, targetSridOption, self.targetSridFull, database, filename)
-            #~ self.qc.updateLog(ogrCommand)
+                cmdArgs = [
+                    '',
+                    '-s_srs', self.sourceSridFull,
+                    targetSridOption, self.targetSridFull,
+                    '-append',
+                    '-f', 'SQLite',
+                    database,
+                    filename,
+                    '-lco', 'GEOMETRY_NAME=geom',
+                    '-nlt', 'GEOMETRY',
+                    '-dsco', 'SPATIALITE=YES',
+                    '-gt', '50000',
+                    '--config', 'OGR_EDIGEO_CREATE_LABEL_LAYERS', 'NO',
+                    '--config', 'OGR_SQLITE_SYNCHRONOUS', 'OFF',
+                    '--config', 'OGR_SQLITE_CACHE', '512'
+                ]
+            # Workaround to get ogr2ogr error messages
+            #as ogr2ogr.py does not return exceptions nor error messages
+            # but only prints the error before returning False
+            stdout = sys.stdout
+            try:
+                sys.stdout = file = StringIO.StringIO()
+                self.go = ogr2ogr(cmdArgs)
+                printedString = file.getvalue()
+            finally:
+                sys.stdout = stdout
 
-            # Run command
-            proc = QProcess()
-            proc.start(ogrCommand)
-            proc.waitForFinished()
+            if not self.go:
+                self.qc.updateLog(
+                    u"L'import des données via OGR2OGR a échoué:\n\n%s\n\n%s" % (
+                        printedString,
+                        cmdArgs
+                    )
+                )
 
         return None
-
 
 
     def importEdigeoVecToDatabase(self, path):
