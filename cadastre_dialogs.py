@@ -78,7 +78,9 @@ class cadastre_common():
         '''
         t = self.dialog.txtLog
         t.ensureCursorVisible()
-        t.append(msg)
+        prefix = '<span style="font-weight:normal;">'
+        suffix = '</span>'
+        t.append( '%s %s %s' % (prefix, msg, suffix) )
         c = t.textCursor()
         c.movePosition(QTextCursor.End, QTextCursor.MoveAnchor)
         t.setTextCursor(c)

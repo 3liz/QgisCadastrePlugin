@@ -114,7 +114,7 @@ class cadastreImport(QObject):
         self.totalSteps = stepNumber
         self.step = 0
         self.dialog.stepLabel.setText('<b>%s</b>' % title)
-        self.qc.updateLog('<b>%s</b>' % title)
+        self.qc.updateLog('<h3>%s</h3>' % title)
 
 
     def updateProgressBar(self):
@@ -389,7 +389,7 @@ class cadastreImport(QObject):
         '''
         Method wich read each majic file
         and bulk import data intp temp tables
-        - Specific for sqlite cause to COPY statement
+        Returns False if no file processed
         '''
 
         # Regex to remove all chars not in the range in ASCII table from space to ~
@@ -436,12 +436,13 @@ class cadastreImport(QObject):
                             c.close()
                             del c
 
-
     def importEdigeo(self):
         '''
         Import EDIGEO data
         into database
         '''
+        if not self.go:
+            return False
 
         # Log : Print connection parameters to database
         jobTitle = u'EDIGEO'
@@ -700,7 +701,7 @@ class cadastreImport(QObject):
                     shutil.rmtree(rep)
                     rmt = 1
         except IOError, e:
-            delmsg = u"Erreur lors de la suppression des répertoires temporaires: %s" % e
+            delmsg = u"<b>Erreur lors de la suppression des répertoires temporaires: %s</b>" % e
             self.qc.updateLog(delmsg)
             self.go = False
 
@@ -746,7 +747,7 @@ class cadastreImport(QObject):
                 dir_util.copy_tree(source, target)
                 os.chmod(target, 0777)
             except IOError, e:
-                msg = u"Erreur lors de la copie des scripts d'import: %s" % e
+                msg = u"<b>Erreur lors de la copie des scripts d'import: %s</b>" % e
                 QMessageBox.information(self.dialog,
                 "Cadastre", msg)
                 self.go = False
@@ -795,7 +796,7 @@ class cadastreImport(QObject):
                     try:
                         os.remove(z)
                     except OSError, e:
-                        self.qc.updateLog( "Erreur lors de la suppression de %s" % str(z))
+                        self.qc.updateLog( "<b>Erreur lors de la suppression de %s</b>" % str(z))
                         pass # in Windows, sometime file is not unlocked
 
                 # unzip all zip in edigeoPlainDir
@@ -809,7 +810,7 @@ class cadastreImport(QObject):
                     try:
                         os.remove(filename)
                     except OSError, e:
-                        self.qc.updateLog( "Erreur lors de la suppression de %s" % str(filename))
+                        self.qc.updateLog( "<b>Erreur lors de la suppression de %s</b>" % str(filename))
                         pass # in Windows, sometime file is not unlocked
                     i+=1
                 i=0
@@ -826,11 +827,11 @@ class cadastreImport(QObject):
                     try:
                         os.remove(z)
                     except OSError, e:
-                        self.qc.updateLog( "Erreur lors de la suppression de %s" % str(z))
+                        self.qc.updateLog( "<b>Erreur lors de la suppression de %s</b>" % str(z))
                         pass # in Windows, sometime file is not unlocked
 
             except IOError, e:
-                msg = u"Erreur lors de l'extraction des fichiers EDIGEO"
+                msg = u"<b>Erreur lors de l'extraction des fichiers EDIGEO</b>"
                 self.go = False
                 self.qc.updateLog(msg)
                 return msg
@@ -876,7 +877,7 @@ class cadastreImport(QObject):
                 fout.close()
 
             except IOError, e:
-                msg = u"Erreur lors du paramétrage des scripts d'import: %s" % e
+                msg = u"<b>Erreur lors du paramétrage des scripts d'import: %s</b>" % e
                 self.go = False
                 self.qc.updateLog(msg)
                 return msg
@@ -991,7 +992,7 @@ class cadastreImport(QObject):
                     if not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
                     and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                         self.go = False
-                        self.qc.updateLog(u"Erreurs rencontrées pour la requête: <p>%s</p>" % sql)
+                        self.qc.updateLog(u"<b>Erreurs rencontrées pour la requête:</b> <p>%s</p>" % sql)
                 finally:
                     QApplication.restoreOverrideCursor()
                     if c:
@@ -1139,7 +1140,7 @@ class cadastreImport(QObject):
 
                 if not self.go:
                     self.qc.updateLog(
-                        u"Erreur - L'import des données via OGR2OGR a échoué:\n\n%s\n\n%s" % (
+                        u"<b>Erreur - L'import des données via OGR2OGR a échoué:</b>\n\n%s\n\n%s" % (
                             printedString,
                             cmdArgs
                         )
@@ -1175,7 +1176,7 @@ class cadastreImport(QObject):
                         c.executemany(query, [ (item[0], item[1], item[2]) for item in l] )
                         self.connector._commit()
                     except:
-                        self.qc.updateLog('Erreurs pendant la requête : %s' % sql)
+                        self.qc.updateLog('<b>Erreurs pendant la requête :</b> %s' % sql)
                     finally:
                         c.close()
                         del c
