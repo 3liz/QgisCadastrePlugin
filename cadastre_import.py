@@ -34,13 +34,24 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 from datetime import datetime
-from processing.algs.gdal.pyogr.ogr2ogr import main as ogr2ogr
 
 # db_manager scripts
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
 from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
 
+# Import ogr2ogr.py from Processing plugin : path depends on Processing plugin version
+hasOgr2ogr = True
+try:
+    from processing.algs.gdal.pyogr.ogr2ogr import main as ogr2ogr
+    hasOgr2ogr = True
+except ImportError:
+    hasOgr2ogr = False
+try:
+    from processing.gdal.pyogr.ogr2ogr import main as ogr2ogr
+    hasOgr2ogr = True
+except ImportError:
+    hasOgr2ogr = False
 
 class cadastreImport(QObject):
 
@@ -106,7 +117,7 @@ class cadastreImport(QObject):
         self.totalSteps = stepNumber
         self.step = 0
         self.dialog.stepLabel.setText('<b>%s</b>' % title)
-        self.qc.updateLog('<h3>%s</h3>' % title)
+        self.qc.updateLog('<b>%s</b>' % title)
 
 
     def updateProgressBar(self):
@@ -132,7 +143,6 @@ class cadastreImport(QObject):
         '''
         Process to run before importing data
         '''
-
         # Log
         jobTitle = u'INITIALISATION'
         self.beginJobLog(2, jobTitle)
@@ -158,7 +168,9 @@ class cadastreImport(QObject):
         '''
         Create the empty db structure
         '''
-
+        if not self.go:
+            return False
+            
         # Log
         jobTitle = u'STRUCTURATION BDD'
         self.beginJobLog(6, jobTitle)
@@ -434,15 +446,9 @@ class cadastreImport(QObject):
         into database
         '''
         # Check if ogr2ogr is found in system
-        try:
-            from osgeo import gdal, ogr, osr
-            gdalAvailable = True
-        except:
-            msg = u"Erreur : la librairie GDAL n'est pas accessible"
+        if not hasOgr2ogr:
+            self.qc.updateLog("Le fichier ogr2ogr.py n'a pas été trouvé")
             self.go = False
-            return msg
-
-        if not self.go:
             return
 
         # Log : Print connection parameters to database
