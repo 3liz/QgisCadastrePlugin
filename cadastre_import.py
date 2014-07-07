@@ -40,18 +40,15 @@ from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
 from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
 
-# Import ogr2ogr.py from Processing plugin : path depends on Processing plugin version
-hasOgr2ogr = True
+# Import ogr2ogr.py from processing plugin
 try:
     from processing.algs.gdal.pyogr.ogr2ogr import main as ogr2ogr
-    hasOgr2ogr = True
 except ImportError:
-    hasOgr2ogr = False
+    pass
 try:
     from processing.gdal.pyogr.ogr2ogr import main as ogr2ogr
-    hasOgr2ogr = True
 except ImportError:
-    hasOgr2ogr = False
+    pass
 
 class cadastreImport(QObject):
 
@@ -170,7 +167,7 @@ class cadastreImport(QObject):
         '''
         if not self.go:
             return False
-            
+
         # Log
         jobTitle = u'STRUCTURATION BDD'
         self.beginJobLog(6, jobTitle)
@@ -445,11 +442,6 @@ class cadastreImport(QObject):
         Import EDIGEO data
         into database
         '''
-        # Check if ogr2ogr is found in system
-        if not hasOgr2ogr:
-            self.qc.updateLog("Le fichier ogr2ogr.py n'a pas été trouvé")
-            self.go = False
-            return
 
         # Log : Print connection parameters to database
         jobTitle = u'EDIGEO'
@@ -1131,24 +1123,27 @@ class cadastreImport(QObject):
                     '--config', 'OGR_SQLITE_SYNCHRONOUS', 'OFF',
                     '--config', 'OGR_SQLITE_CACHE', '512'
                 ]
-            # Workaround to get ogr2ogr error messages
-            #as ogr2ogr.py does not return exceptions nor error messages
-            # but only prints the error before returning False
-            stdout = sys.stdout
-            try:
-                sys.stdout = file = StringIO.StringIO()
-                self.go = ogr2ogr(cmdArgs)
-                printedString = file.getvalue()
-            finally:
-                sys.stdout = stdout
 
-            if not self.go:
-                self.qc.updateLog(
-                    u"L'import des données via OGR2OGR a échoué:\n\n%s\n\n%s" % (
-                        printedString,
-                        cmdArgs
+            # Run only if ogr2ogr found
+            if self.go:
+                # Workaround to get ogr2ogr error messages via stdout
+                # as ogr2ogr.py does not return exceptions nor error messages
+                # but only prints the error before returning False
+                stdout = sys.stdout
+                try:
+                    sys.stdout = file = StringIO.StringIO()
+                    self.go = ogr2ogr(cmdArgs)
+                    printedString = file.getvalue()
+                finally:
+                    sys.stdout = stdout
+
+                if not self.go:
+                    self.qc.updateLog(
+                        u"Erreur - L'import des données via OGR2OGR a échoué:\n\n%s\n\n%s" % (
+                            printedString,
+                            cmdArgs
+                        )
                     )
-                )
 
         return None
 
