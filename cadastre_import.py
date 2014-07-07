@@ -391,6 +391,8 @@ class cadastreImport(QObject):
         and bulk import data intp temp tables
         Returns False if no file processed
         '''
+        processedFilesCount = 0
+        majicFilesKey = []
 
         # Regex to remove all chars not in the range in ASCII table from space to ~
         # http://www.catonmat.net/blog/my-favorite-regex/
@@ -398,6 +400,7 @@ class cadastreImport(QObject):
 
         # Loop through all majic files
         for item in self.dialog.majicSourceFileNames:
+            majicFilesKey.append( item['value'] )
             # Get majic files for item
             majList = []
             for root, dirs, files in os.walk(self.dialog.majicSourceDir):
@@ -407,6 +410,7 @@ class cadastreImport(QObject):
 
             table = item['table']
             self.totalSteps+= len(majList)
+            processedFilesCount+=len(majList)
 
             for fpath in majList:
                 self.qc.updateLog(fpath)
@@ -435,6 +439,16 @@ class cadastreImport(QObject):
                             self.connector._commit()
                             c.close()
                             del c
+
+        if not processedFilesCount:
+            self.qc.updateLog(
+                u"<b>ERREUR : MAJIC - aucun fichier trouvé. Vérifier les noms de fichiers dans les paramètres du plugin et que le répertoire </b>'%s' <b>contient bien des fichiers qui correspondent</b>\n : %s" % (
+                    self.dialog.majicSourceDir,
+                    ', '.join( majicFilesKey )
+                )
+            )
+            self.go = False
+
 
     def importEdigeo(self):
         '''
