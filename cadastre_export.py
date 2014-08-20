@@ -43,10 +43,25 @@ class cadastreExport(QObject):
     def __init__(self, dialog, etype, comptecommunal, geo_parcelle=None):
         self.dialog = dialog
 
+        # Store an instance of QgsComposition
+        self.currentComposition = None
+
+        # Store an instance of QgsMapRenderer or QgsMapSettings
+        # to avoid a nasty bug with 2.4 :
+        # https://github.com/3liz/QgisCadastrePlugin/issues/36
+        if QGis.QGIS_VERSION_INT < 20400:
+            self.mInstance = QgsMapRenderer()
+        else:
+            self.mInstance = QgsMapSettings()
+
+        # type of export : proprietaire or parcelle
         self.etype = etype
+
+        # id of the parcelle
         self.geo_parcelle = geo_parcelle
 
         self.ccFilter = None
+
         if isinstance(comptecommunal, list):
             self.isMulti = True
             if len(comptecommunal) == 1:
@@ -62,6 +77,7 @@ class cadastreExport(QObject):
         self.pageHeight = 210
         self.pageWidth = 297
         self.printResolution = 300
+        self.addExperimentalWatershed = False
 
         # target directory for saving
         s = QSettings()
@@ -350,18 +366,21 @@ class cadastreExport(QObject):
         '''
         Create a composition
         '''
-        c = QgsComposition(QgsMapRenderer())
+        # Create composition
+        c = QgsComposition(self.mInstance)
+
+        # Set main properties
         c.setPaperSize(self.pageWidth, self.pageHeight)
         c.setPrintResolution(self.printResolution)
         c.setSnapGridOffsetX(3.5)
         c.setSnapGridOffsetY(0)
         c.setSnapGridResolution(2.5)
 
-        # set page number
+        # Set page number
         self.getPageNumberNeeded()
         c.setNumPages(self.numPages)
 
-        return c
+        self.currentComposition = c
 
 
     def getPageNumberNeeded(self):
@@ -380,7 +399,7 @@ class cadastreExport(QObject):
         )
 
 
-    def addPageContent(self, composition, page):
+    def addPageContent(self, page):
         '''
         Add all needed item for a single page
         '''
@@ -394,7 +413,7 @@ class cadastreExport(QObject):
 
         # Then get content for displayed items
         for key, item in self.composerTemplates.items():
-            cl = QgsComposerLabel(composition)
+            cl = QgsComposerLabel(self.currentComposition)
             cl.setItemPosition(
                 item['position'][0],
                 item['position'][1] + (page - 1) * (self.pageHeight + 10),
@@ -414,20 +433,21 @@ class cadastreExport(QObject):
                 cl.setHtmlState(item['htmlState'])
             if 'font' in item:
                 cl.setFont(item['font'])
-            composition.addItem(cl)
+            self.currentComposition.addItem(cl)
 
         # Add watershed
-        w = QgsComposerPicture(composition)
-        w.setItemPosition(50, (page - 1) * (self.pageHeight + 10), 150, 100)
-        w.setFrameEnabled(False)
-        pictureFile = os.path.join(
-            self.qc.plugin_dir,
-            "templates/experimental.svg"
-        )
-        w.setPictureFile(pictureFile)
-        w.setBackgroundEnabled(False)
-        w.setTransparency(60)
-        #~composition.addItem(w)
+        if self.addExperimentalWatershed:
+            w = QgsComposerPicture(self.currentComposition)
+            w.setItemPosition(50, (page - 1) * (self.pageHeight + 10), 150, 100)
+            w.setFrameEnabled(False)
+            pictureFile = os.path.join(
+                self.qc.plugin_dir,
+                "templates/experimental.svg"
+            )
+            w.setPictureFile(pictureFile)
+            w.setBackgroundEnabled(False)
+            w.setTransparency(60)
+            self.currentComposition.addItem(w)
 
 
 
@@ -441,21 +461,23 @@ class cadastreExport(QObject):
         # Set configuration
         self.setComposerTemplates(comptecommunal)
 
-        # Load the composer from template
-        composition = self.createComposition()
+        # Create the composition
+        self.createComposition()
 
-        # Populate composition for all pages
-        for i in range(self.numPages):
-            self.addPageContent(composition, i+1)
+        if self.currentComposition:
+            # Populate composition for all pages
+            for i in range(self.numPages):
+                self.addPageContent(i+1)
 
-        # Export as pdf
-        if composition:
+            # Create the pdf output path
             from time import time
             temp = "releve_%s_%s.pdf" % (self.etype, comptecommunal)
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
             temppath = re.sub(r'[\?\*\+<>]', '-', temppath)
-            composition.exportAsPDF(temppath)
+
+            # Export as pdf
+            self.currentComposition.exportAsPDF(temppath)
 
             # Opens PDF in default application
             if not self.isMulti:
