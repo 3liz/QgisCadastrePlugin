@@ -658,13 +658,31 @@ class cadastre_common():
         # Create the spatialite database
         try:
             from pyspatialite import dbapi2 as db
+
+            # Create a connection (which will create the file automatically)
             conn=db.connect(unicode(ipath))
             c=conn.cursor()
-            sql = "select initspatialmetadata(1)"
+
+            # Get spatialite version
+            cursor = conn.execute('SELECT spatialite_version()')
+            rep = cursor.fetchall()
+            v = [int(a) for a in rep[0][0].split('.')]
+            vv = v[0] * 100000 + v[1] * 1000 + v[2] * 10
+
+            # Add spatialite support
+            if vv >= 401000:
+                # 4.1 and above
+                sql = "SELECT initspatialmetadata(1)"
+            else:
+                # Under 4.1
+                sql = "SELECT initspatialmetadata()"
             c.execute(sql)
         except:
             self.updateLog(u"Échec lors de la création du fichier Spatialite !")
             return None
+        finally:
+            conn.close()
+            del conn
 
         # Create QGIS connexion
         baseKey = "/SpatiaLite/connections/"
