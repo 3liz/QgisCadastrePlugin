@@ -68,6 +68,8 @@ class cadastreImport(QObject):
             self.targetSridFull = self.dialog.edigeoTargetProj
             self.sourceSrid = self.sourceSridFull.split(":")[1]
             self.targetSrid = self.targetSridFull.split(":")[1]
+        else:
+            self.targetSrid = '2154'
 
         # create temporary directories
         s = QSettings()
@@ -752,7 +754,7 @@ class cadastreImport(QObject):
         '''
         if self.go:
 
-            self.qc.updateLog(u'* Copie du répertoire %s' % source.decode('UTF-8'))
+            self.qc.updateLog(u'* Copie du répertoire %s' % source)
 
             QApplication.setOverrideCursor(Qt.WaitCursor)
 

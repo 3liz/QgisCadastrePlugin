@@ -907,7 +907,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
             value = s.value("cadastre/%s" % k, '', type=str)
             if value and value != 'None' and v['widget']:
                 if v['wType'] == 'text':
-                    v['widget'].setText(str(value.encode('utf-8')))
+                    v['widget'].setText(value)
                 if v['wType'] == 'spinbox':
                     v['widget'].setValue(int(value))
                 if v['wType'] == 'combobox':
@@ -979,8 +979,8 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.dataVersion = unicode(self.inDataVersion.text())
         self.dataYear = unicode(self.inDataYear.text())
         self.schema = unicode(self.liDbSchema.currentText())
-        self.majicSourceDir = str(self.inMajicSourceDir.text().encode('utf-8')).strip(' \t')
-        self.edigeoSourceDir = str(self.inEdigeoSourceDir.text().encode('utf-8')).strip(' \t')
+        self.majicSourceDir = unicode(self.inMajicSourceDir.text()).strip(' \t')
+        self.edigeoSourceDir = unicode(self.inEdigeoSourceDir.text()).strip(' \t')
         self.edigeoDepartement = unicode(self.inEdigeoDepartement.text()).strip(' \t')
         self.edigeoDirection = unicode(self.inEdigeoDirection.text()).strip(' \t')
         self.edigeoLot = unicode(self.inEdigeoLot.text()).strip(' \t')
@@ -988,10 +988,8 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.edigeoTargetProj = unicode(self.inEdigeoTargetProj.text().split( " - " )[ 0 ])
 
         # defined properties
-        if os.path.exists(self.majicSourceDir):
-            self.doMajicImport = True
-        if os.path.exists(self.edigeoSourceDir):
-            self.doEdigeoImport = True
+        self.doMajicImport = os.path.exists(self.majicSourceDir)
+        self.doEdigeoImport =  os.path.exists(self.edigeoSourceDir)
 
         # only update multipolygon ?
         if self.cbUpdateMultiPolygon.isChecked():
@@ -1004,6 +1002,12 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         if not self.doMajicImport and not self.doEdigeoImport:
             msg+= u'Veuillez sélectionner le chemin vers les fichiers à importer !\n'
 
+        if self.edigeoSourceDir and not self.doEdigeoImport:
+            msg+= u"Le chemin spécifié pour les fichiers EDIGEO n'existe pas\n"
+
+        if self.majicSourceDir and not self.doMajicImport:
+            msg+= u"Le chemin spécifié pour les fichiers MAJIC n'existe pas\n"
+
         if self.doEdigeoImport and not self.edigeoSourceProj:
             msg+= u'La projection source doit être renseignée !\n'
         if self.doEdigeoImport and not self.edigeoTargetProj:
@@ -1015,7 +1019,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         if not self.edigeoLot:
             msg+= u'Merci de renseigner un lot pour cet import (code commune, date d\'import, etc.)\n'
 
-        self.qc.updateLog(msg)
+        self.qc.updateLog(msg.replace('\n','<br/>'))
         return msg
 
     def processImport(self):
@@ -1063,8 +1067,8 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         s = QSettings()
         s.setValue("cadastre/dataVersion", str(self.dataVersion))
         s.setValue("cadastre/dataYear", int(self.dataYear))
-        s.setValue("cadastre/majicSourceDir", str(self.majicSourceDir))
-        s.setValue("cadastre/edigeoSourceDir", str(self.edigeoSourceDir))
+        s.setValue("cadastre/majicSourceDir", self.majicSourceDir)
+        s.setValue("cadastre/edigeoSourceDir", self.edigeoSourceDir)
         s.setValue("cadastre/edigeoDepartement", str(self.edigeoDepartement))
         s.setValue("cadastre/edigeoDirection", int(self.edigeoDirection))
         s.setValue("cadastre/edigeoLot", str(self.edigeoLot))
