@@ -250,7 +250,7 @@ class cadastreImport(QObject):
         )
 
         # Remove previous data
-        if self.dialog.hasData:
+        if self.dialog.hasMajicData:
             scriptList.append(
                 {
                 'title' : u'Purge des données MAJIC',
@@ -395,26 +395,93 @@ class cadastreImport(QObject):
         '''
         processedFilesCount = 0
         majicFilesKey = []
+        majicFilesFound = {}
 
         # Regex to remove all chars not in the range in ASCII table from space to ~
         # http://www.catonmat.net/blog/my-favorite-regex/
         r = re.compile(r"[^ -~]")
 
         # Loop through all majic files
+
+        # 1st path to build the complet liste for each majic source type (nbat, bati, lloc, etc.)
+        # and read 1st line to get departement and direction to compare to inputs
+        depdirs = {}
         for item in self.dialog.majicSourceFileNames:
-            majicFilesKey.append( item['value'] )
+            table = item['table']
+            value = item['value']
             # Get majic files for item
             majList = []
             for root, dirs, files in os.walk(self.dialog.majicSourceDir):
                 for i in files:
-                    if os.path.split(i)[1] == item['value']:
-                        majList.append(os.path.join(root, i))
+                    if os.path.split(i)[1] == value:
+                        fpath = os.path.join(root, i)
+                        # Add file path to the list
+                        majList.append(fpath)
+                        # Read 3 first letters
+                        with open(fpath) as fin:
+                            # Divide file into chuncks
+                            for a in fin:
+                                depdir = a[0:3]
+                                break
+                            depdirs[depdir] = True
 
+            majicFilesFound[table] = majList
+
+        # Check if departement and direction are the same for every file
+        if len(depdirs.keys()) > 1:
+            self.go = False
+            lst = ",<br/> ".join( u"département : %s et direction : %s" % (a[0:2], a[2:3]) for a in depdirs)
+            self.qc.updateLog(
+                u"<b>ERREUR : MAJIC - Les données concernent des départements et codes direction différents :</b>\n<br/> %s" %  lst
+            )
+            self.qc.updateLog(u"<b>Veuillez réaliser l'import en %s fois.</b>" % len( depdirs.keys() ) )
+            return False
+
+        # Check if departement and direction are different from those given by the user in dialog
+        fDep = depdirs.keys()[0][0:2]
+        fDir = depdirs.keys()[0][2:3]
+        if self.dialog.edigeoDepartement != fDep or self.dialog.edigeoDirection != fDir:
+            msg = u"<b>ERREUR : MAJIC - Les numéros de département et de direction trouvés dans les fichiers ne correspondent pas à ceux renseignés dans les options du dialogue d'import:<b>\n<br/>* fichiers : %s et %s <br/>* options : %s et %s" % (
+                fDep,
+                fDir,
+                self.dialog.edigeoDepartement,
+                self.dialog.edigeoDirection
+            )
+            useFileDepDir = QMessageBox.question(
+                self.dialog,
+                u'Cadastre',
+                msg + '\n\n' + u"<br/><br/>Voulez-vous continuer l'import avec les numéros trouvés dans les fichiers ?",
+                QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            )
+            if useFileDepDir == QMessageBox.Yes:
+                self.dialog.edigeoDepartement = fDep
+                self.dialog.inEdigeoDepartement.setText(fDep)
+                self.dialog.edigeoDirection = fDir
+                self.dialog.inEdigeoDirection.setValue(int(fDir))
+            else:
+                self.go = False
+                self.qc.updateLog(msg)
+                return False
+
+        # Check if some important majic files are missing
+        fKeys = [ a for a in majicFilesFound if majicFilesFound[a] ]
+        rKeys = [ a['table'] for a in self.dialog.majicSourceFileNames if a['required'] ]
+        mKeys = [ a for a in rKeys if a not in fKeys ]
+        if mKeys:
+            self.go = False
+            self.qc.updateLog(
+                u"<b>ERREUR : MAJIC - Des fichiers MAJIC requis sont manquants: %s </b>" % ', '.join(mKeys)
+            )
+            return False
+
+
+        # 2nd path to insert data
+        for item in self.dialog.majicSourceFileNames:
             table = item['table']
             self.totalSteps+= len(majList)
             processedFilesCount+=len(majList)
 
-            for fpath in majList:
+            for fpath in majicFilesFound[table]:
                 self.qc.updateLog(fpath)
 
                 # read file content
