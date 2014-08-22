@@ -18,7 +18,7 @@ La réalisation du plugin Cadastre a été financée par :
 * L'Union Européenne ( http://europa.eu/index_fr.htm )
 * Le  Fonds Européen de Développement Régional de Picardie ( http://www.picardie-europe.eu )
 * Le Conseil Régional de Picardie ( http://www.picardie.fr )
-* L'Agence de Développement et  d'Urbanisme du Grand Amiénois ( http://www.aduga.org )
+* L'Agence de Développement et d'Urbanisme du Grand Amiénois ( http://www.aduga.org )
 
 Conception
 ==========
@@ -63,7 +63,9 @@ Dépôt de sources :  https://adullact.net/scm/viewvc.php/trunk/data/pgsql/?root
 
 English short description
 ==========================
+
 This plugin helps users to use french land registry data ("cadastre") in QGIS. It is only useful in France for people having access to Cadastre data.
+
 It is divided into modules :
 
 * import data into database,

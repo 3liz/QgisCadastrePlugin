@@ -1,6 +1,19 @@
 CHANGELOG
 
-  Version 0.9.9  
+  Version 1.0.0
+  * Import - débogage import PostGreSQL sous Windows
+  * Recherche - Meilleure gestion de la désactivation des modules de recherche
+  * Import - MAJIC : possibilité de lancer l'import même si fichiers MAJIC manquants
+  * Import - Vérifications sur les données MAJIC avant import - bug #37
+  * Import - Meilleure gestion des chemins des fichiers sources
+  * Import - Création de bdd spatialite différente selon la version de spatialite - bug #30
+  * Export - Débogage de l'export PDF pour QGIS 2.4 - bug #36
+  * Import : MAJIC - arrêt de l'import si aucun fichier trouvé
+  * Import - Modifications mineures d'interface
+  * Import - meilleure gestion des imports EDIGEO via ogr2ogr.py au lieu de ogr2ogr.exe (compatibilité MAC + détection des erreurs)
+
+
+  Version 0.9.9
   * Import - correction de certaines erreurs d'import des MULTIPOLYGONES (PostGreSQL et Spatialite)
 
   Version 0.9.8.1

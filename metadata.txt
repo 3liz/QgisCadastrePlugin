@@ -5,9 +5,9 @@ qgisMinimumVersion=2.0.0
 qgisMaximumVersion=2.99.0
 description=
 
-    This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Connseil Regional de Picardie, Agence de Developpement et  d Urbanisme du Grand Amienois.
+    This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
-version=0.9.9
+version=1.0.0
 author=3liz
 email=info@3liz.com
 
@@ -17,8 +17,18 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 0.9.9
-  * Import - correction de certaines erreurs d'import des MULTIPOLYGONES (PostGreSQL et Spatialite)
+  Version 1.0.0
+  * Import - débogage import PostGreSQL sous Windows
+  * Recherche - Meilleure gestion de la désactivation des modules de recherche
+  * Import - MAJIC : possibilité de lancer l'import même si fichiers MAJIC manquants
+  * Import - Vérifications sur les données MAJIC avant import - bug #37
+  * Import - Meilleure gestion des chemins des fichiers sources
+  * Import - Création de bdd spatialite différente selon la version de spatialite - bug #30
+  * Export - Débogage de l'export PDF pour QGIS 2.4 - bug #36
+  * Import : MAJIC - arrêt de l'import si aucun fichier trouvé
+  * Import - Modifications mineures d'interface
+  * Import - meilleure gestion des imports EDIGEO via ogr2ogr.py au lieu de ogr2ogr.exe (compatibilité MAC + détection des erreurs)
+
 
 
 
