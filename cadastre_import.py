@@ -427,6 +427,27 @@ class cadastreImport(QObject):
 
             majicFilesFound[table] = majList
 
+        # Check if some important majic files are missing
+        fKeys = [ a for a in majicFilesFound if majicFilesFound[a] ]
+        rKeys = [ a['table'] for a in self.dialog.majicSourceFileNames if a['required'] ]
+        mKeys = [ a for a in rKeys if a not in fKeys ]
+        if mKeys:
+            msg = u"<b>ERREUR : MAJIC - Des fichiers MAJIC importants sont manquants: %s </b><br/>Vérifier le chemin des fichiers MAJIC:<br/>%s <br/>ainsi que les noms des fichiers attendus dans la configuration du plugin Cadastre:<br/>%s<br/><br/>" % (
+                ', '.join(mKeys),
+                self.dialog.majicSourceDir,
+                ', '.join([a['value'].upper() for a in self.dialog.majicSourceFileNames])
+            )
+            missingMajicIgnore = QMessageBox.question(
+                self.dialog,
+                u'Cadastre',
+                msg + '\n\n' + u"Voulez-vous néanmoins continuer l'import ?",
+                QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            )
+            if missingMajicIgnore != QMessageBox.Yes:
+                self.go = False
+                self.qc.updateLog(msg)
+                return False
+
         # Check if departement and direction are the same for every file
         if len(depdirs.keys()) > 1:
             self.go = False
@@ -463,23 +484,12 @@ class cadastreImport(QObject):
                 self.qc.updateLog(msg)
                 return False
 
-        # Check if some important majic files are missing
-        fKeys = [ a for a in majicFilesFound if majicFilesFound[a] ]
-        rKeys = [ a['table'] for a in self.dialog.majicSourceFileNames if a['required'] ]
-        mKeys = [ a for a in rKeys if a not in fKeys ]
-        if mKeys:
-            self.go = False
-            self.qc.updateLog(
-                u"<b>ERREUR : MAJIC - Des fichiers MAJIC requis sont manquants: %s </b>" % ', '.join(mKeys)
-            )
-            return False
-
 
         # 2nd path to insert data
         for item in self.dialog.majicSourceFileNames:
             table = item['table']
-            self.totalSteps+= len(majList)
-            processedFilesCount+=len(majList)
+            self.totalSteps+= len(majicFilesFound[table])
+            processedFilesCount+=len(majicFilesFound[table])
 
             for fpath in majicFilesFound[table]:
                 self.qc.updateLog(fpath)
