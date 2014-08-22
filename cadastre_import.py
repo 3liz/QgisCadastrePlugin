@@ -1178,7 +1178,7 @@ class cadastreImport(QObject):
                     targetSridOption, self.targetSridFull,
                     '-append',
                     '-f', 'PostgreSQL',
-                    'PG:"host=%s port=%s dbname=%s active_schema=%s user=%s password=%s"' % (
+                    'PG:host=%s port=%s dbname=%s active_schema=%s user=%s password=%s' % (
                         host,
                         port,
                         database,
