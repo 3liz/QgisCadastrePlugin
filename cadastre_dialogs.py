@@ -204,9 +204,14 @@ class cadastre_common():
         hasStructure = False
         hasData = False
         hasMajicData = False
+        hasMajicDataProp = False
+        hasMajicDataParcelle = False
+        hasMajicDataVoie = False
 
         searchTable = u'geo_commune'
-        majicTable = u'proprietaire'
+        majicTableParcelle = u'parcelle'
+        majicTableProp = u'proprietaire'
+        majicTableVoie = u'voie'
         if self.dialog.db:
             if self.dialog.dbType == 'postgis':
                 schemaSearch = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
@@ -226,17 +231,39 @@ class cadastre_common():
                     hasData = True
 
                 # Check for Majic data in it
-                sql = 'SELECT * FROM "%s" LIMIT 1' % majicTable
+                sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableParcelle
                 if self.dialog.dbType == 'postgis':
                     sql = self.setSearchPath(sql, self.dialog.schema)
                 [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if rowCount >= 1:
                     hasMajicData = True
+                    hasMajicDataParcelle = True
+
+                # Check for Majic data in it
+                sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableProp
+                if self.dialog.dbType == 'postgis':
+                    sql = self.setSearchPath(sql, self.dialog.schema)
+                [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if rowCount >= 1:
+                    hasMajicData = True
+                    hasMajicDataProp = True
+
+                # Check for Majic data in it
+                sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableVoie
+                if self.dialog.dbType == 'postgis':
+                    sql = self.setSearchPath(sql, self.dialog.schema)
+                [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if rowCount >= 1:
+                    hasMajicData = True
+                    hasMajicDataVoie = True
 
         # Set global properties
         self.dialog.hasStructure = hasStructure
         self.dialog.hasData = hasData
         self.dialog.hasMajicData = hasMajicData
+        self.dialog.hasMajicDataParcelle = hasMajicDataParcelle
+        self.dialog.hasMajicDataProp = hasMajicDataProp
+        self.dialog.hasMajicData = hasMajicDataVoie
 
 
     def getLayerFromLegendByTableProps(self, tableName, geomCol='geom', sql=''):
@@ -782,6 +809,9 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.hasStructure = None
         self.hasData = None
         self.hasMajicData = None
+        self.hasMajicDataParcelle = None
+        self.hasMajicDataVoie = None
+        self.hasMajicDataProp = None
         self.edigeoSourceProj = None
         self.edigeoTargetProj = None
         self.edigeoDepartement = None
@@ -1410,7 +1440,9 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.setupSearchCombobox('section', None, 'sql')
 
         # Check majic content
-        self.hasMajicData = False
+        self.hasMajicDataProp = False
+        self.hasMajicDataVoie = False
+        self.hasMajicDataParcelle = False
         self.checkMajicContent()
 
 
@@ -1429,7 +1461,9 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         Check if database contains
         any MAJIC data
         '''
-        self.hasMajicData = False
+        self.hasMajicDataProp = False
+        self.hasMajicDataVoie = False
+        self.hasMajicDataParcelle = False
         # Get geo_commune layer
         layer = self.qc.getLayerFromLegendByTableProps('geo_commune')
         if layer:
@@ -1442,15 +1476,35 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 if connectionParams['dbType'] == 'postgis':
                     sql = self.qc.setSearchPath(sql, connectionParams['schema'])
                 [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
-
                 if rowCount >= 1:
-                    self.hasMajicData = True
+                    self.hasMajicDataProp = True
+
+                # Get data from table voie
+                sql = 'SELECT * FROM "voie" LIMIT 1'
+                if connectionParams['dbType'] == 'postgis':
+                    sql = self.qc.setSearchPath(sql, connectionParams['schema'])
+                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
+                if rowCount >= 1:
+                    self.hasMajicDataVoie = True
+
+                # Get data from table parcelle
+                sql = 'SELECT * FROM "parcelle" LIMIT 1'
+                if connectionParams['dbType'] == 'postgis':
+                    sql = self.qc.setSearchPath(sql, connectionParams['schema'])
+                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
+                if rowCount >= 1:
+                    self.hasMajicDataParcelle = True
 
                 connector.__del__()
 
-        self.grpAdresse.setEnabled(self.hasMajicData)
-        self.grpProprietaire.setEnabled(self.hasMajicData)
-        self.btExportParcelle.setEnabled(self.hasMajicData)
+        self.grpAdresse.setEnabled(self.hasMajicDataVoie and self.hasMajicDataParcelle)
+        self.grpProprietaire.setEnabled(self.hasMajicDataProp)
+        self.btExportParcelle.setEnabled(self.hasMajicDataProp)
+
+        if not self.hasMajicDataParcelle or not self.hasMajicDataVoie:
+            self.qc.updateLog(u"<b>Pas de données MAJIC non bâties et/ou fantoir</b> -> désactivation de la recherche d'adresse")
+        if not self.hasMajicDataProp:
+            self.qc.updateLog(u"<b>Pas de données MAJIC propriétaires</b> -> désactivation de la recherche de propriétaires")
 
 
     def setupSearchCombobox(self, combo, filterExpression=None, queryMode='qgis'):
@@ -2241,7 +2295,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         self.btParcellesProprietaire.clicked.connect(self.selectParcellesProprietaire)
 
         # Check majic content
-        self.hasMajicData = False
+        self.hasMajicDataProp = False
         self.checkMajicContent()
 
         # Set dialog content
@@ -2253,13 +2307,13 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         Check if database contains
         any MAJIC data
         '''
-        self.hasMajicData = False
+        self.hasMajicDataProp = False
         sql = 'SELECT * FROM "proprietaire" LIMIT 1'
         if self.connectionParams['dbType'] == 'postgis':
             sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
         if rowCount >= 1:
-            self.hasMajicData = True
+            self.hasMajicDataProp = True
 
     def setParcelleContent(self):
         '''
@@ -2268,7 +2322,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         text content
         '''
 
-        if self.hasMajicData:
+        if self.hasMajicDataProp:
             # Get parcelle info
             sql = '''
             SELECT
@@ -2329,8 +2383,8 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         and set the dialog content
         '''
         # Check for MAJIC DATA
-        if not self.hasMajicData:
-            self.proprietairesInfo.setText(u'Les données MAJIC n\'ont pas été trouvées dans la base de données')
+        if not self.hasMajicDataProp:
+            self.proprietairesInfo.setText(u'Les données MAJIC de propriétaires n\'ont pas été trouvées dans la base de données')
             return
 
         # Get proprietaire info
@@ -2367,7 +2421,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         if not self.connector:
             return
 
-        if not self.hasMajicData:
+        if not self.hasMajicDataProp:
             self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
             return
 
@@ -2435,7 +2489,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         Use search class tools.
         Needs refactoring
         '''
-        if not self.hasMajicData:
+        if not self.hasMajicDataProp:
             self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
             return
 
