@@ -17,6 +17,15 @@ CREATE TABLE borne_id (
 );
 SELECT AddGeometryColumn('borne_id', 'geom', 2154, 'GEOMETRY', 2);
 
+CREATE TABLE boulon_id (
+    ogc_fid serial,
+    object_rid character varying,
+    ori double precision,
+    creat_date integer,
+    update_date integer
+);
+SELECT AddGeometryColumn('boulon_id', 'geom', 2154, 'GEOMETRY', 2);
+
 CREATE TABLE commune_id (
     ogc_fid serial,
     object_rid character varying,
