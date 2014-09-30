@@ -130,7 +130,6 @@ class cadastreLoading(QObject):
         # Get selected options
         providerName = self.dialog.dbpluginclass.providerName()
         qgisCadastreLayers = []
-        communeLayer = None
         self.dialog.schema = unicode(self.dialog.liDbSchema.currentText())
         self.dialog.totalSteps = len(self.qgisCadastreLayerList)
 
@@ -210,10 +209,6 @@ class cadastreLoading(QObject):
                 # append vector layer to the list
                 qgisCadastreLayers.append(vlayer)
 
-                # keep commune layer to later zoom to extent
-                if item['name'] == 'geo_commune':
-                    communeLayer = vlayer
-
 
         # Add all layers to QGIS registry
         QgsMapLayerRegistry.instance().addMapLayers(qgisCadastreLayers)
@@ -233,13 +228,10 @@ class cadastreLoading(QObject):
             li.setLayerExpanded(layer, False)
         li.setGroupExpanded(g1, False) # broken ?
 
-        # Zoom to layer commune
-        if communeLayer:
-            self.dialog.iface.setActiveLayer(communeLayer)
-            activeLayer = self.dialog.iface.activeLayer()
-            if activeLayer:
-                self.dialog.iface.zoomToActiveLayer()
-
+        # Zoom to full extent
+        from qgis.utils import iface
+        canvas = iface.mapCanvas()
+        canvas.zoomToFullExtent()
 
         # progress bar
         self.qc.updateLog(u'Chargement des couches dans QGIS')
