@@ -5,5 +5,6 @@ UPDATE [PREFIXE]commune SET geo_commune=g.geo_commune FROM [PREFIXE]geo_commune 
 -- Lien parcelle <--> geo_parcelle
 UPDATE [PREFIXE]geo_parcelle SET (parcelle, voie, comptecommunal) = (p.parcelle, p.voie, p.comptecommunal)
 FROM [PREFIXE]parcelle p
-WHERE p.annee='[ANNEE]' AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,3)||replace(SUBSTRING(geo_parcelle.geo_parcelle,8,5),'0','-')||SUBSTRING(geo_parcelle.geo_parcelle,13,4) AND geo_parcelle.annee='[ANNEE]';
+WHERE p.annee='[ANNEE]' AND geo_parcelle.annee='[ANNEE]'
+AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,12);
 UPDATE [PREFIXE]parcelle SET geo_parcelle=g.geo_parcelle FROM [PREFIXE]geo_parcelle g WHERE g.parcelle=parcelle.parcelle AND g.annee='[ANNEE]';
