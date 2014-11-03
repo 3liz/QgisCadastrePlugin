@@ -234,7 +234,9 @@ INSERT INTO ccoeva VALUES ('B', 'Evaluation d’après le bail');
 INSERT INTO ccoeva VALUES ('C', 'Evaluation par comparaison');
 INSERT INTO ccoeva VALUES ('D', 'Evaluation par voie d’appréciation directe');
 INSERT INTO ccoeva VALUES ('E', 'Evaluation spécifique aux transformateurs électriques et appareils à gaz');
-INSERT INTO ccoeva VALUES ('T', 'Evaluation tarifaire (futur code)');
+INSERT INTO ccoeva VALUES ('T', 'Evaluation par barème (locaux commerciaux et assimilés)');
+
+
 -- nomenclature dteloc (local10)
 INSERT INTO dteloc VALUES ('1', 'Maison');
 INSERT INTO dteloc VALUES ('2', 'Appartement');
@@ -333,6 +335,7 @@ INSERT INTO gnextl VALUES ('AX', 'Longue durée (10 ans) - addition de construct
 INSERT INTO gnextl VALUES ('AY', 'Exo de 15 ans pour logements sociaux (AC)');
 INSERT INTO gnextl VALUES ('AZ', 'Exonération de 30 ans pour les logements sociaux respectant certains critères de qualité environnementale (addition de construction).');
 INSERT INTO gnextl VALUES ('BE', 'Local situé dans un bassin d''emploi à redynamiser. Article 1383 H du CGI.');
+INSERT INTO gnextl VALUES ('CE', 'Abattement de 5 ans pour cession relevant de l’article 1388 sexies du CGI (Mayotte)');
 INSERT INTO gnextl VALUES ('DF', 'Exonération pour bâtiment déshydratation des fourrages.');
 INSERT INTO gnextl VALUES ('EA', 'Economiquement faible - type A');
 INSERT INTO gnextl VALUES ('EB', 'Economiquement faible - type B');
@@ -379,6 +382,7 @@ INSERT INTO gnextl VALUES ('P1', 'Abattement 1ère année sur outillages, équip
 INSERT INTO gnextl VALUES ('P2', 'Abattement 2ème année sur outillages, équipements et installations spécifiques de manutention portuaires (100 %)');
 INSERT INTO gnextl VALUES ('P3', 'Abattement 3ème, 4ème et 5ème années sur outillages, équipements et installations spécifiques de manutention');
 INSERT INTO gnextl VALUES ('LE', 'Exonération de 15 ans pour les logements acquis avec l’aide de l’aide de l’Etat en vue de leur location');
+INSERT INTO gnextl VALUES ('LI', 'Exonération de 15 ans pour les logements sociaux acquis d’un organisme mentionné à l’article L 411.5 du Code de la construction et de l’habitation.');
 
 -- nomenclature cconad (pevprincipale, pevdependances)
 INSERT INTO cconad VALUES ('CV', 'Cave');
@@ -739,6 +743,7 @@ INSERT INTO dformjur VALUES ('5306', 'SCOM', 'Société en commandite simple');
 INSERT INTO dformjur VALUES ('5307', 'SCOM', 'Société en commandite simple coopérative');
 INSERT INTO dformjur VALUES ('5308', 'SCOM', 'Société en commandite par actions');
 INSERT INTO dformjur VALUES ('5309', 'SCOM', 'Société en commandite par actions coopérative');
+INSERT INTO dformjur VALUES ('5370', 'SCOM', 'Société de participations financières de profession libérale société en commandite par action');
 INSERT INTO dformjur VALUES ('5385', 'SCOM', 'Société d''exercice libéral en commandite par actions');
 INSERT INTO dformjur VALUES ('5410', 'SARL', 'SARL nationale');
 INSERT INTO dformjur VALUES ('5415', 'SARL', 'SARL d''économie mixte');
@@ -756,6 +761,7 @@ INSERT INTO dformjur VALUES ('5455', 'SARL', 'SARL coopérative de transport');
 INSERT INTO dformjur VALUES ('5458', 'SARL', 'SARL coopérative ouvrière de production et de crédit (SCOP)');
 INSERT INTO dformjur VALUES ('5459', 'SARL', 'SARL union de sociétés coopératives');
 INSERT INTO dformjur VALUES ('5460', 'SARL', 'Autre SARL coopérative');
+INSERT INTO dformjur VALUES ('5470', 'SARL', 'Société de participations financières de profession libérale société à responsabilité limitée');
 INSERT INTO dformjur VALUES ('5485', 'SLRL', 'Société d''exercice libéral à responsabilité limitée');
 INSERT INTO dformjur VALUES ('5498', 'EURL', 'SARL unipersonnelle');
 INSERT INTO dformjur VALUES ('5499', 'SARL', 'Société à responsabilité limitée (sans autre indication)');
@@ -781,6 +787,7 @@ INSERT INTO dformjur VALUES ('5555', 'SA', 'SA coopérative de transport à cons
 INSERT INTO dformjur VALUES ('5558', 'SCOP', 'SA coopérative ouvrière de production et de crédit (SCOP) à conseil d''administration');
 INSERT INTO dformjur VALUES ('5559', 'SA', 'SA union de sociétés coopératives à conseil d''administration');
 INSERT INTO dformjur VALUES ('5560', 'SA', 'Autre SA coopérative à conseil d''administration');
+INSERT INTO dformjur VALUES ('5570', 'SA', 'Société de participations financières de profession libérale société anonyme à conseil d’administration');
 INSERT INTO dformjur VALUES ('5585', 'STE', 'Société d''exercice libéral à forme anonyme à conseil d''administration');
 INSERT INTO dformjur VALUES ('5599', 'SA', 'SA à conseil d''administration (s.a.i.)');
 INSERT INTO dformjur VALUES ('5605', 'SA', 'SA à participation ouvrière à directoire');
@@ -805,10 +812,12 @@ INSERT INTO dformjur VALUES ('5655', 'SA', 'SA coopérative de transport à dire
 INSERT INTO dformjur VALUES ('5658', 'SCOP', 'SA coopérative ouvrière de production et de crédit (SCOP) à directoire');
 INSERT INTO dformjur VALUES ('5659', 'SA', 'SA union de sociétés coopératives à directoire');
 INSERT INTO dformjur VALUES ('5660', 'SA', 'Autre SA coopérative à directoire');
+INSERT INTO dformjur VALUES ('5670', 'SA', 'Société de participations financières de profession libérale société anonyme à directoire');
 INSERT INTO dformjur VALUES ('5685', 'SA', 'Société d''exercice libéral à forme anonyme à directoire');
 INSERT INTO dformjur VALUES ('5699', 'SA', 'SA à directoire (s.a.i.)');
 INSERT INTO dformjur VALUES ('5710', 'SAS', 'SAS, société par actions simplifiée');
 INSERT INTO dformjur VALUES ('5720', 'SAS', 'Société par actions simplifiée à associé unique ou société par actions simplifiée unipersonnelle');
+INSERT INTO dformjur VALUES ('5770', 'SAS', 'Société de participations financières de profession libérale société par actions simplifiée');
 INSERT INTO dformjur VALUES ('5785', 'SAS', 'Société d''exercice libéral par action simplifiée');
 INSERT INTO dformjur VALUES ('5800', 'SE', 'Société européenne');
 INSERT INTO dformjur VALUES ('6100', 'CEP', 'Caisse d''Épargne et de Prévoyance');
@@ -821,6 +830,7 @@ INSERT INTO dformjur VALUES ('6411', 'SAM', 'Société d''assurance à forme mut
 INSERT INTO dformjur VALUES ('6412', 'SAM', 'Société mutuelle d''assurance');
 INSERT INTO dformjur VALUES ('6413', 'SAM', 'Union de sociétés mutuelles d''assurances');
 INSERT INTO dformjur VALUES ('6414', 'SAM', 'Autre société non commerciale d''assurance');
+INSERT INTO dformjur VALUES ('6511', 'STE', 'Société interprofessionnelle de soins ambulatoires');
 INSERT INTO dformjur VALUES ('6521', 'SCPI', 'Société civile de placement collectif immobilier (SCPI)');
 INSERT INTO dformjur VALUES ('6532', 'SICA', 'Société civile d''intérêt collectif agricole (SICA)');
 INSERT INTO dformjur VALUES ('6533', 'GAEC', 'Groupement agricole d''exploitation en commun (GAEC)');
@@ -877,7 +887,7 @@ INSERT INTO dformjur VALUES ('7179', 'ETAT', '(Autre) Service déconcentré de l
 INSERT INTO dformjur VALUES ('7190', Null, 'Ecole nationale non dotée de la personnalité morale');
 INSERT INTO dformjur VALUES ('7210', 'COM', 'Commune et commune nouvelle');
 INSERT INTO dformjur VALUES ('7220', 'DEPT', 'Département');
-INSERT INTO dformjur VALUES ('7225', 'TOM', 'Territoire d''Outre-mer');
+INSERT INTO dformjur VALUES ('7225', 'CTOM', 'Territoire d''Outre-mer');
 INSERT INTO dformjur VALUES ('7229', 'COLL', '(Autre) Collectivité territoriale');
 INSERT INTO dformjur VALUES ('7230', 'COLL', 'Région');
 INSERT INTO dformjur VALUES ('7312', Null, 'Commune associée et commune déléguée');
@@ -964,4 +974,3 @@ INSERT INTO dformjur VALUES ('9970', 'GCS', 'Groupement de coopération sanitair
 INSERT INTO dformjur VALUES ('F001', Null, 'Les copropriétaires');
 INSERT INTO dformjur VALUES ('F002', Null, 'Les associés de sci');
 INSERT INTO dformjur VALUES ('F003', Null, 'Professionnels très pauvres du foncier');
-

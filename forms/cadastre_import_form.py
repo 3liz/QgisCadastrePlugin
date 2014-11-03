@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_import_form.ui'
 #
-# Created: Mon Jul  7 16:50:39 2014
-#      by: PyQt4 UI code generator 4.10.3
+# Created: Mon Nov  3 17:13:48 2014
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -195,8 +195,8 @@ class Ui_cadastre_import_form(object):
         self.horizontalLayout_12.addWidget(self.label_15)
         self.inDataVersion = QtGui.QSpinBox(self.groupBox_7)
         self.inDataVersion.setMinimum(2012)
-        self.inDataVersion.setMaximum(2013)
-        self.inDataVersion.setProperty("value", 2013)
+        self.inDataVersion.setMaximum(2014)
+        self.inDataVersion.setProperty("value", 2014)
         self.inDataVersion.setObjectName(_fromUtf8("inDataVersion"))
         self.horizontalLayout_12.addWidget(self.inDataVersion)
         self.label_16 = QtGui.QLabel(self.groupBox_7)
@@ -206,7 +206,7 @@ class Ui_cadastre_import_form(object):
         self.inDataYear.setEnabled(True)
         self.inDataYear.setMinimum(2012)
         self.inDataYear.setMaximum(2020)
-        self.inDataYear.setProperty("value", 2013)
+        self.inDataYear.setProperty("value", 2014)
         self.inDataYear.setObjectName(_fromUtf8("inDataYear"))
         self.horizontalLayout_12.addWidget(self.inDataYear)
         self.label_6 = QtGui.QLabel(self.groupBox_7)

@@ -137,6 +137,7 @@ CREATE TABLE suftaxation (
     c4majposa numeric(10,2),
     c4bisufad numeric(10,2),
     cntmajtc integer,
+    majposca numeric(10,2),
     lot character varying
 );
 
@@ -1099,8 +1100,6 @@ ALTER TABLE edigeo_rel ADD PRIMARY KEY (edigeo_rel );
 
 
 
-
-
 -- COMMENTS
 
 COMMENT ON TABLE parcelle IS 'Article descriptif de parcelle';
@@ -1211,6 +1210,7 @@ COMMENT ON COLUMN suftaxation.c3bisufad IS 'c3 - Base d’imposition de la suf e
 COMMENT ON COLUMN suftaxation.c4majposa IS 'c4 - Montant de la majoration terrain constructible. Servi pour la part communale. Toujours à zéro pour autres collectivités. - exprimé en Euros';
 COMMENT ON COLUMN suftaxation.c4bisufad IS 'c4 - Base d’imposition de la suf en valeur de l’année - exprimé en Euros';
 COMMENT ON COLUMN suftaxation.cntmajtc IS 'Nouvelle contenance suf pour calcul majorationn TC';
+COMMENT ON COLUMN suftaxation.majposca IS 'Majoration TC pour les chambres d’agriculture, exprimé en centimes d’Euros (à partir de 2014)';
 COMMENT ON TABLE local00 IS 'Article identifiant du local';
 COMMENT ON COLUMN local00.ccodep IS 'code département - ';
 COMMENT ON COLUMN local00.ccodir IS 'code direction - ';
@@ -1357,7 +1357,7 @@ COMMENT ON COLUMN pevtaxation.tse_vlbai IS 'TSE (à partir de 2012) - Part de VL
 COMMENT ON COLUMN pevtaxation.tse_vlbaia IS 'TSE (à partir de 2012) - Part de VL imposée (valeur de l’année) - ';
 COMMENT ON COLUMN pevtaxation.tse_bipevla IS 'TSE (à partir de 2012) - Base d’imposition de la pev(valeur de l’année) - ';
 COMMENT ON COLUMN pevtaxation.mvltieomx IS 'Montant TIEOM (depuis 2013)';
-COMMENT ON COLUMN pevtaxation.pvltieom IS 'Ratio VL n-1 de la PEV / VL n-1 collectivité - 9v999999999999999 (Depuis 2013)';
+COMMENT ON COLUMN pevtaxation.pvltieom IS 'Ratio VL n-1 de la PEV / VL n-1 collectivité - 9v999999999999999 (Depuis 2013 mais supprimée en 2014)';
 
 COMMENT ON TABLE pevprincipale IS 'Article descriptif partie principale habitation';
 COMMENT ON COLUMN pevprincipale.ccodep IS 'Code département - ';

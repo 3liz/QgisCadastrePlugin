@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
 <title>Plugin Cadastre - Documentation utilisateur</title>
 <meta name="date" content="2013" />
 <meta name="copyright" content="CC-BY-SA" />
@@ -12,7 +12,7 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 7514 2012-09-14 14:27:12Z milde $
+:Id: $Id: html4css1.css 7614 2013-02-21 15:55:51Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
@@ -316,6 +316,21 @@ table.docutils th.field-name, table.docinfo th.docinfo-name {
   white-space: nowrap ;
   padding-left: 0 }
 
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
 h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
 h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
   font-size: 100% }
@@ -405,7 +420,7 @@ ul.auto-toc {
 <img alt="MEDIA/cadastre_import_dialog.png" class="align-center" src="MEDIA/cadastre_import_dialog.png" />
 <div class="section" id="principe">
 <h2>Principe</h2>
-<p>Le plugin permet l'import de données <strong>MAJIC 2012 et 2013, et des données EDIGEO</strong> . Il est possible d'importer des données de manière incrémentale, <strong>étape par étape</strong>, ou bien d'importer <strong>en une seule fois</strong>.</p>
+<p>Le plugin permet l'import de données <strong>MAJIC 2012, 2013 et 2014, et des données EDIGEO</strong> . Il est possible d'importer des données de manière incrémentale, <strong>étape par étape</strong>, ou bien d'importer <strong>en une seule fois</strong>.</p>
 <p>Le plugin utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un <strong>ensemble de données cohérent</strong> pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.</p>
 <p>Vous pouvez par exemple importer les données dans cette ordre :</p>
 <ul class="simple">
@@ -480,7 +495,7 @@ ul.auto-toc {
 </ul>
 <blockquote>
 <ul class="simple">
-<li>Dans cette version beta, seul les formats 2012 et 2013 sont pris en compte</li>
+<li>Seuls les formats 2012, 2013 et 2014 sont pris en compte</li>
 </ul>
 </blockquote>
 <ul class="simple">
