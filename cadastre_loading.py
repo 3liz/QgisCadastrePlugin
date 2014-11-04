@@ -30,6 +30,7 @@ import shutil
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
+from datetime import datetime
 
 # db_manager scripts
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
@@ -44,6 +45,8 @@ class cadastreLoading(QObject):
     def __init__(self, dialog):
         QObject.__init__(self)
         self.dialog = dialog
+
+        self.startTime = datetime.now()
 
         # common cadastre methods
         self.qc = self.dialog.qc
@@ -82,6 +85,11 @@ class cadastreLoading(QObject):
             {'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': ''}
         ]
 
+    def updateTimer(self):
+        b = datetime.now()
+        diff = b - self.startTime
+        self.qc.updateLog(u'%s s' % diff.seconds)
+
     def getGroupIndex(self, groupName):
         '''
         Get a legend group index by its name
@@ -100,7 +108,7 @@ class cadastreLoading(QObject):
         Load all the layers in QGIS
         and apply corresponding style
         '''
-
+        self.startTime = datetime.now()
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # default style to apply for Cadastre layers
@@ -133,6 +141,7 @@ class cadastreLoading(QObject):
         self.dialog.totalSteps = len(self.qgisCadastreLayerList)
 
         # Run the loading
+        self.updateTimer()
         self.qc.updateLog(u'Chargement des tables :')
 
         # Get database list of tables
@@ -150,11 +159,6 @@ class cadastreLoading(QObject):
 
         # Loop throuhg qgisQastreLayerList and load each corresponding table
         for item in self.qgisCadastreLayerList:
-
-            # update progress bar
-            self.qc.updateLog(u'* %s' % item['label'])
-            self.dialog.step+=1
-            self.qc.updateProgressBar()
 
             # Get db_manager table instance
             tableList = [a for a in dbTables if a.name == item['table']]
@@ -208,11 +212,20 @@ class cadastreLoading(QObject):
                 # append vector layer to the list
                 qgisCadastreLayers.append(vlayer)
 
+            # update progress bar
+            self.qc.updateLog(u'* %s' % item['label'])
+            self.dialog.step+=1
+            self.qc.updateProgressBar()
+
+        self.updateTimer()
 
         # Add all layers to QGIS registry
+        self.qc.updateLog(u'Ajout des couches dans le registre de QGIS')
         QgsMapLayerRegistry.instance().addMapLayers(qgisCadastreLayers)
+        self.updateTimer()
 
         # Create a group "Cadastre" and move all layers into it
+        self.qc.updateLog(u'Ajout des couches dans le groupe Cadastre')
         li = self.dialog.iface.legendInterface()
         groups = []
         for group in li.groupLayerRelationship():
@@ -225,20 +238,28 @@ class cadastreLoading(QObject):
         for layer in qgisCadastreLayers:
             li.moveLayer(layer, g1)
             li.setLayerExpanded(layer, False)
+            #~ layer.updateExtents()
         li.setGroupExpanded(g1, False) # broken ?
+        self.updateTimer()
+
+
+
 
         # Zoom to full extent
+        self.qc.updateLog(u'Zoom sur les couches')
         from qgis.utils import iface
         canvas = iface.mapCanvas()
         canvas.zoomToFullExtent()
+        self.updateTimer()
 
         # progress bar
-        self.qc.updateLog(u'Chargement des couches dans QGIS')
         self.dialog.step+=1
         self.qc.updateProgressBar()
 
         # Emit signal
+        self.qc.updateLog(u'Mise à jour des outils cadastre')
         self.cadastreLoadingFinished.emit()
+        self.updateTimer()
 
         # Final message
         QApplication.restoreOverrideCursor()
@@ -248,6 +269,7 @@ class cadastreLoading(QObject):
             u"Les données ont bien été chargées dans QGIS"
         )
         self.dialog.pbProcess.setValue(0)
+        self.updateTimer()
 
 
         QApplication.restoreOverrideCursor()

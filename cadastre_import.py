@@ -631,6 +631,7 @@ class cadastreImport(QObject):
                     'script' : os.path.join( self.pScriptDir, 'edigeo_unites_foncieres_%s.sql' % self.dialog.dbType)
                 }
             )
+
         scriptList.append(
             {
                 'title' : u'Placement des étiquettes',
@@ -765,6 +766,15 @@ class cadastreImport(QObject):
             delmsg = u"<b>Erreur lors de la suppression des répertoires temporaires: %s</b>" % e
             self.qc.updateLog(delmsg)
             self.go = False
+
+        # Delete labels outside commune bbox
+        if self.dialog.dbType == 'spatialite':
+            sql = 'DELETE FROM geo_label WHERE NOT MbrWithin(geom, ( SELECT ST_Buffer(ST_Envelope(Collect(geom)), 100 ) AS geom FROM geo_commune ));'
+        else:
+            sql = 'DELETE FROM geo_label WHERE NOT ST_Within(geom, ( SELECT ST_Buffer(ST_Envelope(ST_Collect(geom)), 100 ) AS geom FROM geo_commune ));'
+            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+        self.executeSqlQuery(sql)
+
 
         # Refresh spatialite layer statistics
         if self.dialog.dbType == 'spatialite':
