@@ -57,7 +57,7 @@ class cadastreLoading(QObject):
         self.qgisCadastreLayerList = [
             {'label': u'Commune', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': ''},
             {'label': u'Voies, routes et chemins', 'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': ''},
-            {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'ZONCOMMUNI_id\''},
+            {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" IN ( \'ZONCOMMUNI_id\', \'TRONROUTE_ID\') '},
             {'label': u'Secteurs', 'name': 'geo_subdsect', 'table': 'geo_subdsect', 'geom': 'geom', 'sql': ''},
             {'label': u'Subdivisions fiscales', 'name': 'geo_subdfisc', 'table': 'geo_subdfisc', 'geom': 'geom', 'sql': ''},
             {'label': u'Subdivisions fiscales (étiquette)', 'name': 'geo_label_subdfisc', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SUBDFISC_id\''},
