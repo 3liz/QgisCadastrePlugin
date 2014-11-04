@@ -20,6 +20,7 @@ DELETE FROM [PREFIXE]geo_commune WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_section WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_subdsect WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_parcelle WHERE lot='[LOT]';
+DELETE FROM [PREFIXE]geo_unite_fonciere WHERE lot='[LOT]';
 
 -- index pour optimisation
 DROP INDEX IF EXISTS idx_edigeorel_vers;

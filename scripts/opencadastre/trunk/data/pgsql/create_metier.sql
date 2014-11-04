@@ -786,7 +786,6 @@ CREATE TABLE geo_parcelle
   ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
-SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom_uf', 2154 , 'MULTIPOLYGON', 2 );
 
 
 CREATE TABLE geo_subdfisc
@@ -1098,6 +1097,15 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_label', 'geom', 2154 , 'PO
 CREATE TABLE edigeo_rel ( edigeo_rel serial,nom character varying(30),de character varying(80),vers character varying(80));
 ALTER TABLE edigeo_rel ADD PRIMARY KEY (edigeo_rel );
 
+
+CREATE TABLE geo_unite_fonciere
+(
+  id serial NOT NULL,
+  comptecommunal character varying,
+  annee character varying(4) NOT NULL,
+  lot character varying
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_unite_fonciere', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
 
 -- COMMENTS
@@ -1726,6 +1734,7 @@ COMMENT ON COLUMN geo_tronfluv.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_tronfluv.tex IS 'Nom du cours d''eau';
 COMMENT ON COLUMN geo_tronfluv.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_tronfluv.update_dat IS 'Date de dernière modification';
+
 COMMENT ON TABLE geo_ptcanv IS 'Objet ponctuel servant d''appui aux opérations de lever des plans..';
 COMMENT ON COLUMN geo_ptcanv.geo_ptcanv IS 'Identifiant';
 COMMENT ON COLUMN geo_ptcanv.annee IS 'Année';
@@ -1738,6 +1747,7 @@ COMMENT ON COLUMN geo_ptcanv.geo_map IS 'Stabilité de matérialisation du suppo
 COMMENT ON COLUMN geo_ptcanv.geo_sym IS 'Genre du point';
 COMMENT ON COLUMN geo_ptcanv.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_ptcanv.update_dat IS 'Date de dernière modification';
+
 COMMENT ON TABLE geo_borne IS 'Borne située en limite de propriété et représentée par un symbole ponctuel.';
 COMMENT ON COLUMN geo_borne.geo_borne IS 'Identifiant';
 COMMENT ON COLUMN geo_borne.annee IS 'Année';
@@ -1749,6 +1759,7 @@ COMMENT ON COLUMN geo_borne_parcelle.geo_borne_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_borne_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_borne_parcelle.geo_borne IS 'borne';
 COMMENT ON COLUMN geo_borne_parcelle.geo_parcelle IS 'Parcelle';
+
 COMMENT ON TABLE geo_croix IS 'Borne située en limite de propriété et représentée par un symbole ponctuel.';
 COMMENT ON COLUMN geo_croix.geo_croix IS 'Identifiant';
 COMMENT ON COLUMN geo_croix.annee IS 'Année';
@@ -1760,6 +1771,7 @@ COMMENT ON COLUMN geo_croix_parcelle.geo_croix_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_croix_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_croix_parcelle.geo_croix IS 'Croix';
 COMMENT ON COLUMN geo_croix_parcelle.geo_parcelle IS 'Parcelle';
+
 COMMENT ON TABLE geo_symblim IS 'Symbole de limite de propriété représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_symblim.geo_symblim IS 'Identifiant';
 COMMENT ON COLUMN geo_symblim.annee IS 'Année';
@@ -1773,6 +1785,7 @@ COMMENT ON COLUMN geo_symblim_parcelle.geo_symblim_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_symblim_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_symblim_parcelle.geo_symblim IS 'symblim';
 COMMENT ON COLUMN geo_symblim_parcelle.geo_parcelle IS 'Parcelle';
+
 COMMENT ON TABLE geo_tpoint IS 'Détail topographique ponctuel représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_tpoint.geo_tpoint IS 'Identifiant';
 COMMENT ON COLUMN geo_tpoint.annee IS 'Année';
@@ -1787,6 +1800,7 @@ COMMENT ON COLUMN geo_tpoint_commune.geo_tpoint_commune IS 'Identifiant';
 COMMENT ON COLUMN geo_tpoint_commune.annee IS 'Année';
 COMMENT ON COLUMN geo_tpoint_commune.geo_tpoint IS 'tpoint';
 COMMENT ON COLUMN geo_tpoint_commune.geo_commune IS 'commune';
+
 COMMENT ON TABLE geo_tline IS 'Détail topographique linéaire représenté par un signe conventionnel de type linéaire permettant de documenter le plan cadastral et d''en améliorer la lisibilité.';
 COMMENT ON COLUMN geo_tline.geo_tline IS 'Identifiant';
 COMMENT ON COLUMN geo_tline.annee IS 'Année';
@@ -1800,6 +1814,7 @@ COMMENT ON COLUMN geo_tline_commune.geo_tline_commune IS 'Identifiant';
 COMMENT ON COLUMN geo_tline_commune.annee IS 'Année';
 COMMENT ON COLUMN geo_tline_commune.geo_tline IS 'tline';
 COMMENT ON COLUMN geo_tline_commune.geo_commune IS 'commune';
+
 COMMENT ON TABLE geo_tsurf IS 'Détail topographique surfacique représenté par un signe conventionnel de type surfacique permettant de documenter le plan cadastral et d''en améliorer la lisibilité';
 COMMENT ON COLUMN geo_tsurf.geo_tsurf IS 'Identifiant';
 COMMENT ON COLUMN geo_tsurf.annee IS 'Année';
@@ -1813,6 +1828,7 @@ COMMENT ON COLUMN geo_tsurf_commune.geo_tsurf_commune IS 'Identifiant';
 COMMENT ON COLUMN geo_tsurf_commune.annee IS 'Année';
 COMMENT ON COLUMN geo_tsurf_commune.geo_tsurf IS 'tsurf';
 COMMENT ON COLUMN geo_tsurf_commune.geo_commune IS 'commune';
+
 COMMENT ON TABLE geo_label IS 'Libellés';
 COMMENT ON COLUMN geo_label.ogc_fid IS 'Numéro d''enregistrement source';
 COMMENT ON COLUMN geo_label.object_rid IS 'Numéro d''objet';
@@ -1836,3 +1852,8 @@ COMMENT ON COLUMN geo_label.ogr_angle IS 'Ogr angle';
 COMMENT ON COLUMN geo_label.ogr_font_size IS 'Ogr taille fonte';
 COMMENT ON COLUMN geo_label.x_label IS 'Longitude';
 COMMENT ON COLUMN geo_label.y_label IS 'Latitude';
+
+COMMENT ON TABLE geo_unite_fonciere IS 'Regroupe les unités foncières, c est a dire la fusion de parcelles adjacentes d un même propriétaire';
+COMMENT ON COLUMN geo_unite_fonciere.id IS 'Identifiant des unités foncières';
+COMMENT ON COLUMN geo_unite_fonciere.comptecommunal IS 'Compte communal des parcelles composant l unité foncière';
+COMMENT ON COLUMN geo_unite_fonciere.annee IS 'Année';

@@ -1,17 +1,17 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.0.1-Dufour" minimumScale="-4.65661e-10" maximumScale="1100" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="1" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.0.0-Dufour" minimumScale="-4.65661e-10" maximumScale="10100" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="1" scaleBasedLabelVisibilityFlag="0">
   <renderer-v2 symbollevels="0" type="singleSymbol">
     <symbols>
       <symbol alpha="1" type="fill" name="0">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_unit" v="MM"/>
           <prop k="color" v="162,162,162,255"/>
-          <prop k="color_border" v="236,236,236,255"/>
+          <prop k="color_border" v="130,130,130,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="offset_unit" v="MM"/>
           <prop k="style" v="no"/>
           <prop k="style_border" v="dash"/>
-          <prop k="width_border" v="0.7"/>
+          <prop k="width_border" v="0.5"/>
         </layer>
       </symbol>
     </symbols>
@@ -43,8 +43,8 @@
     <property key="labeling/fieldName" value=""/>
     <property key="labeling/fontBold" value="true"/>
     <property key="labeling/fontCapitals" value="0"/>
-    <property key="labeling/fontFamily" value="Cantarell"/>
-    <property key="labeling/fontItalic" value="false"/>
+    <property key="labeling/fontFamily" value="Ubuntu"/>
+    <property key="labeling/fontItalic" value="true"/>
     <property key="labeling/fontLetterSpacing" value="0"/>
     <property key="labeling/fontLimitPixelSize" value="false"/>
     <property key="labeling/fontMaxPixelSize" value="10000"/>
@@ -68,7 +68,7 @@
     <property key="labeling/minFeatureSize" value="0"/>
     <property key="labeling/multilineAlign" value="0"/>
     <property key="labeling/multilineHeight" value="1"/>
-    <property key="labeling/namedStyle" value="Bold"/>
+    <property key="labeling/namedStyle" value="Bold Italic"/>
     <property key="labeling/obstacle" value="true"/>
     <property key="labeling/placeDirectionSymbol" value="0"/>
     <property key="labeling/placement" value="0"/>
@@ -165,24 +165,20 @@
     <edittype labelontop="0" editable="1" type="0" name="annee"/>
     <edittype labelontop="0" editable="1" type="0" name="coar"/>
     <edittype labelontop="0" editable="1" type="0" name="codm"/>
-    <edittype labelontop="0" editable="1" type="0" name="comptecommunal"/>
     <edittype labelontop="0" editable="1" type="0" name="creat_date"/>
     <edittype labelontop="0" editable="1" type="0" name="geo_indp"/>
     <edittype labelontop="0" editable="1" type="0" name="geo_parcelle"/>
     <edittype labelontop="0" editable="1" type="0" name="geo_section"/>
     <edittype labelontop="0" editable="1" type="0" name="geo_subdsect"/>
     <edittype labelontop="0" editable="1" type="0" name="geom"/>
-    <edittype labelontop="0" editable="1" type="0" name="geom_uf"/>
     <edittype labelontop="0" editable="1" type="0" name="idu"/>
     <edittype labelontop="0" editable="1" type="0" name="lot"/>
     <edittype labelontop="0" editable="1" type="0" name="object_rid"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogc_fid"/>
     <edittype labelontop="0" editable="1" type="0" name="parcelle"/>
     <edittype labelontop="0" editable="1" type="0" name="supf"/>
     <edittype labelontop="0" editable="1" type="0" name="tex"/>
     <edittype labelontop="0" editable="1" type="0" name="tex2"/>
     <edittype labelontop="0" editable="1" type="0" name="update_dat"/>
-    <edittype labelontop="0" editable="1" type="0" name="voie"/>
   </edittypes>
   <editform>.</editform>
   <editforminit></editforminit>

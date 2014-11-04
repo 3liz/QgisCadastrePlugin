@@ -48,6 +48,8 @@ ALTER TABLE [PREFIXE]geo_tline ADD CONSTRAINT geo_tline_pk PRIMARY KEY (geo_tlin
 ALTER TABLE [PREFIXE]geo_tline_commune ADD CONSTRAINT geo_tline_commune_pk PRIMARY KEY (geo_tline_commune );
 ALTER TABLE [PREFIXE]geo_tsurf ADD CONSTRAINT geo_tsurf_pk PRIMARY KEY (geo_tsurf );
 ALTER TABLE [PREFIXE]geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_pk PRIMARY KEY (geo_tsurf_commune );
+ALTER TABLE [PREFIXE]geo_unite_fonciere ADD CONSTRAINT geo_unite_fonciere_pk PRIMARY KEY (id);
+
 --~ -- création clé étrangère;
 --~ ALTER TABLE [PREFIXE]commune ADD CONSTRAINT commune_geo_commune_fk FOREIGN KEY (geo_commune) REFERENCES [PREFIXE]geo_commune (geo_commune) ON DELETE SET NULL;
 --~ ALTER TABLE [PREFIXE]parcelle ADD CONSTRAINT parcelle_comptecommunal_fk FOREIGN KEY (comptecommunal) REFERENCES [PREFIXE]comptecommunal (comptecommunal) ON DELETE CASCADE;

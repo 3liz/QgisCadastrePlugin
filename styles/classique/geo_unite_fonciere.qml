@@ -1,20 +1,17 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.0.1-Dufour" minimumScale="0" maximumScale="1800" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="1" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.0.0-Dufour" minimumScale="-4.65661e-10" maximumScale="10100" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="1" scaleBasedLabelVisibilityFlag="0">
   <renderer-v2 symbollevels="0" type="singleSymbol">
     <symbols>
-      <symbol alpha="1" type="marker" name="0">
-        <layer pass="0" class="SimpleMarker" locked="0">
-          <prop k="angle" v="0"/>
-          <prop k="color" v="152,93,229,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
-          <prop k="name" v="circle"/>
+      <symbol alpha="1" type="fill" name="0">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="border_width_unit" v="MM"/>
+          <prop k="color" v="162,162,162,255"/>
+          <prop k="color_border" v="130,130,130,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="offset_unit" v="MM"/>
-          <prop k="outline_width" v="0"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="scale_method" v="area"/>
-          <prop k="size" v="0"/>
-          <prop k="size_unit" v="MM"/>
+          <prop k="style" v="no"/>
+          <prop k="style_border" v="dash"/>
+          <prop k="width_border" v="0.5"/>
         </layer>
       </symbol>
     </symbols>
@@ -38,30 +35,25 @@
     <property key="labeling/bufferSizeInMapUnits" value="false"/>
     <property key="labeling/bufferTransp" value="0"/>
     <property key="labeling/centroidWhole" value="false"/>
-    <property key="labeling/dataDefined/Family" value="1~~0~~~~fon"/>
-    <property key="labeling/dataDefined/PositionX" value="1~~0~~~~x_label"/>
-    <property key="labeling/dataDefined/PositionY" value="1~~0~~~~y_label"/>
-    <property key="labeling/dataDefined/Rotation" value="1~~0~~~~ogr_angle"/>
-    <property key="labeling/dataDefined/Size" value="1~~0~~~~hei"/>
     <property key="labeling/decimals" value="3"/>
     <property key="labeling/displayAll" value="false"/>
     <property key="labeling/dist" value="0"/>
     <property key="labeling/distInMapUnits" value="false"/>
-    <property key="labeling/enabled" value="true"/>
-    <property key="labeling/fieldName" value="ogr_atr_val"/>
-    <property key="labeling/fontBold" value="false"/>
+    <property key="labeling/enabled" value="false"/>
+    <property key="labeling/fieldName" value=""/>
+    <property key="labeling/fontBold" value="true"/>
     <property key="labeling/fontCapitals" value="0"/>
-    <property key="labeling/fontFamily" value="Times New Roman"/>
-    <property key="labeling/fontItalic" value="false"/>
+    <property key="labeling/fontFamily" value="Ubuntu"/>
+    <property key="labeling/fontItalic" value="true"/>
     <property key="labeling/fontLetterSpacing" value="0"/>
     <property key="labeling/fontLimitPixelSize" value="false"/>
     <property key="labeling/fontMaxPixelSize" value="10000"/>
     <property key="labeling/fontMinPixelSize" value="3"/>
     <property key="labeling/fontSize" value="11"/>
-    <property key="labeling/fontSizeInMapUnits" value="true"/>
+    <property key="labeling/fontSizeInMapUnits" value="false"/>
     <property key="labeling/fontStrikeout" value="false"/>
     <property key="labeling/fontUnderline" value="false"/>
-    <property key="labeling/fontWeight" value="50"/>
+    <property key="labeling/fontWeight" value="75"/>
     <property key="labeling/fontWordSpacing" value="0"/>
     <property key="labeling/formatNumbers" value="false"/>
     <property key="labeling/isExpression" value="false"/>
@@ -76,7 +68,7 @@
     <property key="labeling/minFeatureSize" value="0"/>
     <property key="labeling/multilineAlign" value="0"/>
     <property key="labeling/multilineHeight" value="1"/>
-    <property key="labeling/namedStyle" value="Regular"/>
+    <property key="labeling/namedStyle" value="Bold Italic"/>
     <property key="labeling/obstacle" value="true"/>
     <property key="labeling/placeDirectionSymbol" value="0"/>
     <property key="labeling/placement" value="0"/>
@@ -147,13 +139,12 @@
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
   <layerTransparency>0</layerTransparency>
-  <displayfield>ogc_fid</displayfield>
+  <displayfield>object_rid</displayfield>
   <label>0</label>
-  <labelfield>ogr_atr_val</labelfield>
   <labelattributes>
-    <label fieldname="ogr_atr_val" text="Étiquette"/>
-    <family fieldname="fon" name="MS Shell Dlg 2"/>
-    <size fieldname="hei" units="mu" value="4"/>
+    <label fieldname="" text="Étiquette"/>
+    <family fieldname="" name="MS Shell Dlg 2"/>
+    <size fieldname="" units="pt" value="12"/>
     <bold fieldname="" on="0"/>
     <italic fieldname="" on="0"/>
     <underline fieldname="" on="0"/>
@@ -162,55 +153,32 @@
     <x fieldname=""/>
     <y fieldname=""/>
     <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
-    <angle fieldname="ogr_angle" value="0" auto="0"/>
-    <alignment fieldname="" value="aboveright"/>
-    <buffercolor fieldname="" red="166" blue="166" green="166"/>
-    <buffersize fieldname="" units="mu" value="0.9"/>
-    <bufferenabled fieldname="" on="1"/>
+    <angle fieldname="" value="0" auto="0"/>
+    <alignment fieldname="" value="center"/>
+    <buffercolor fieldname="" red="255" blue="255" green="255"/>
+    <buffersize fieldname="" units="pt" value="1"/>
+    <bufferenabled fieldname="" on=""/>
     <multilineenabled fieldname="" on=""/>
     <selectedonly on=""/>
   </labelattributes>
   <edittypes>
     <edittype labelontop="0" editable="1" type="0" name="annee"/>
-    <edittype labelontop="0" editable="1" type="0" name="atr"/>
-    <edittype labelontop="0" editable="1" type="0" name="cef"/>
+    <edittype labelontop="0" editable="1" type="0" name="coar"/>
+    <edittype labelontop="0" editable="1" type="0" name="codm"/>
     <edittype labelontop="0" editable="1" type="0" name="creat_date"/>
-    <edittype labelontop="0" editable="1" type="0" name="csp"/>
-    <edittype labelontop="0" editable="1" type="0" name="di1"/>
-    <edittype labelontop="0" editable="1" type="0" name="di2"/>
-    <edittype labelontop="0" editable="1" type="0" name="di3"/>
-    <edittype labelontop="0" editable="1" type="0" name="di4"/>
-    <edittype labelontop="0" editable="1" type="0" name="fon"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_label"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_lieudit"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_numvoie"/>
+    <edittype labelontop="0" editable="1" type="0" name="geo_indp"/>
     <edittype labelontop="0" editable="1" type="0" name="geo_parcelle"/>
     <edittype labelontop="0" editable="1" type="0" name="geo_section"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_subdfisc"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_tline"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_tpoint"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_tronfluv"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_tsurf"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_voiep"/>
-    <edittype labelontop="0" editable="1" type="0" name="geo_zoncommuni"/>
-    <edittype labelontop="0" editable="1" type="0" name="hei"/>
-    <edittype labelontop="0" editable="1" type="0" name="hta"/>
+    <edittype labelontop="0" editable="1" type="0" name="geo_subdsect"/>
+    <edittype labelontop="0" editable="1" type="0" name="geom"/>
+    <edittype labelontop="0" editable="1" type="0" name="idu"/>
+    <edittype labelontop="0" editable="1" type="0" name="lot"/>
     <edittype labelontop="0" editable="1" type="0" name="object_rid"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogc_fid"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogr_angle"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogr_atr_va"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogr_atr_val"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogr_font_s"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogr_font_size"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogr_obj_ln"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogr_obj_lnk"/>
-    <edittype labelontop="0" editable="1" type="0" name="ogr_obj_lnk_layer"/>
-    <edittype labelontop="0" editable="1" type="0" name="tpa"/>
-    <edittype labelontop="0" editable="1" type="0" name="tyu"/>
+    <edittype labelontop="0" editable="1" type="0" name="parcelle"/>
+    <edittype labelontop="0" editable="1" type="0" name="supf"/>
+    <edittype labelontop="0" editable="1" type="0" name="tex"/>
+    <edittype labelontop="0" editable="1" type="0" name="tex2"/>
     <edittype labelontop="0" editable="1" type="0" name="update_dat"/>
-    <edittype labelontop="0" editable="1" type="0" name="vta"/>
-    <edittype labelontop="0" editable="1" type="0" name="x_label"/>
-    <edittype labelontop="0" editable="1" type="0" name="y_label"/>
   </edittypes>
   <editform>.</editform>
   <editforminit></editforminit>
@@ -219,6 +187,6 @@
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <attributeactions>
-    <actionsetting action="qgis.utils.plugins['postgres91plusauditor'].audit('geo_label20130224133927339',[% $id %])" capture="0" type="1" name="History audit"/>
+    <actionsetting action="qgis.utils.plugins['postgres91plusauditor'].audit('geo_parcelle20130224133632437',[% $id %])" capture="0" type="1" name="History audit"/>
   </attributeactions>
 </qgis>

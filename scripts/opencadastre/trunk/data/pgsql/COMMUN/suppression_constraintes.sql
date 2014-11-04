@@ -163,6 +163,7 @@ ALTER TABLE [PREFIXE]suftaxation DROP CONSTRAINT suftaxation_pk;
 ALTER TABLE [PREFIXE]sufexoneration DROP CONSTRAINT sufexoneration_pk;
 ALTER TABLE [PREFIXE]suf DROP CONSTRAINT suf_pk;
 ALTER TABLE [PREFIXE]parcelle DROP CONSTRAINT parcelle_pk;
+ALTER TABLE [PREFIXE]geo_unite_fonciere DROP CONSTRAINT geo_unite_fonciere_pk;
 --~ -- suppression not null sur clefs primaires;
 --~ ALTER TABLE [PREFIXE]geo_tsurf_commune ALTER COLUMN geo_tsurf_commune DROP NOT NULL;
 --~ ALTER TABLE [PREFIXE]geo_tsurf ALTER COLUMN geo_tsurf DROP NOT NULL;

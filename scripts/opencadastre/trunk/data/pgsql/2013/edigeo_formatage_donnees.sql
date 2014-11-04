@@ -20,7 +20,7 @@ DELETE FROM [PREFIXE]geo_commune WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_section WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_subdsect WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_parcelle WHERE lot='[LOT]';
---~ DELETE FROM [PREFIXE]geo_label WHERE lot='[LOT]';
+DELETE FROM [PREFIXE]geo_unite_fonciere WHERE lot='[LOT]';
 
 -- index pour optimisation
 DROP INDEX IF EXISTS idx_edigeorel_vers;
@@ -244,6 +244,7 @@ ANALYZE [PREFIXE]geo_tline;
 ANALYZE [PREFIXE]geo_tline_commune;
 ANALYZE [PREFIXE]geo_tsurf;
 ANALYZE [PREFIXE]geo_tsurf_commune;
+ANALYSE [PREFIXE]geo_unite_fonciere;
 COMMIT;
 -- FORMATAGE DONNEES : FIN
 

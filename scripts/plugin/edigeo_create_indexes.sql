@@ -2,7 +2,6 @@ CREATE INDEX geo_commune_geom_idx ON geo_commune USING gist (geom);
 CREATE INDEX geo_section_geom_idx ON geo_section USING gist (geom);
 CREATE INDEX geo_subdsect_geom_idx ON geo_subdsect USING gist (geom);
 CREATE INDEX geo_parcelle_geom_idx ON geo_parcelle USING gist (geom);
-CREATE INDEX geo_parcelle_geomuf_idx ON geo_parcelle USING gist (geom_uf);
 CREATE INDEX geo_subdfisc_geom_idx ON geo_subdfisc USING gist (geom);
 CREATE INDEX geo_voiep_geom_idx ON geo_voiep USING gist (geom);
 CREATE INDEX geo_numvoie_geom_idx ON geo_numvoie USING gist (geom);
@@ -18,6 +17,8 @@ CREATE INDEX geo_tpoint_geom_idx ON geo_tpoint USING gist (geom);
 CREATE INDEX geo_tline_geom_idx ON geo_tline USING gist (geom);
 CREATE INDEX geo_tsurf_geom_idx ON geo_tsurf USING gist (geom);
 CREATE INDEX geo_label_geom_idx ON geo_label USING gist (geom);
+CREATE INDEX geo_unite_fonciere_geom_idx ON geo_unite_fonciere USING gist (geom);
+
 -- attributes
 DROP INDEX IF EXISTS geo_commune_tex2_idx;
 CREATE INDEX geo_commune_tex2_idx ON geo_commune (tex2);
@@ -33,6 +34,8 @@ DROP INDEX IF EXISTS geo_parcelle_geo_section_idx;
 CREATE INDEX geo_parcelle_geo_section_idx ON geo_parcelle (geo_section);
 DROP INDEX IF EXISTS geo_parcelle_comptecommunal_idx;
 CREATE INDEX geo_parcelle_comptecommunal_idx ON geo_parcelle (comptecommunal);
+DROP INDEX IF EXISTS geo_unite_fonciere_comptecommunal_idx;
+CREATE INDEX geo_unite_fonciere_comptecommunal_idx ON geo_unite_fonciere (comptecommunal);
 DROP INDEX IF EXISTS geo_parcelle_voie_idx;
 CREATE INDEX geo_parcelle_voie_idx ON geo_parcelle (voie);
 DROP INDEX IF EXISTS geo_label_x_label_idx;
@@ -67,3 +70,4 @@ DROP INDEX IF EXISTS idx_parcelle_comptecommunal;
 CREATE INDEX idx_parcelle_comptecommunal ON parcelle (comptecommunal);
 DROP INDEX IF EXISTS idx_parcelle_geo_parcelle;
 CREATE INDEX idx_parcelle_geo_parcelle ON parcelle (geo_parcelle);
+

@@ -79,8 +79,7 @@ class cadastreLoading(QObject):
             {'label': u'Objets linéaires (étiquettes)', 'name': 'geo_label_tline', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TLINE_id\''},
             {'label': u'Numéros de voie', 'name': 'geo_label_num_voie', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'NUMVOIE_id\''},
             {'label': u'Établissements publics', 'name': 'geo_label_voiep', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'VOIEP_id\''},
-            {'label': u'Unités foncières', 'name': 'geo_parcelle_uf', 'table': 'geo_parcelle', 'geom':'geom_uf', 'sql': ''},
-            {'label': u'Unités foncières (étiquettes)', 'name': 'geo_label_parcelle_uf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\''}
+            {'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': ''}
         ]
 
     def getGroupIndex(self, groupName):

@@ -186,7 +186,6 @@
     <edittype labelontop="0" editable="1" type="0" name="geo_parcelle"/>
     <edittype labelontop="0" editable="1" type="0" name="geo_section"/>
     <edittype labelontop="0" editable="1" type="0" name="geo_subdsect"/>
-    <edittype labelontop="0" editable="1" type="0" name="geom_uf"/>
     <edittype labelontop="0" editable="1" type="0" name="idu"/>
     <edittype labelontop="0" editable="1" type="0" name="lot"/>
     <edittype labelontop="0" editable="1" type="0" name="object_rid"/>

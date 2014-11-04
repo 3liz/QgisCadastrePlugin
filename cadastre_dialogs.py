@@ -72,6 +72,7 @@ class cadastre_common():
             return False
             pass
 
+
     def updateLog(self, msg):
         '''
         Update the log
@@ -264,6 +265,29 @@ class cadastre_common():
         self.dialog.hasMajicDataParcelle = hasMajicDataParcelle
         self.dialog.hasMajicDataProp = hasMajicDataProp
         self.dialog.hasMajicData = hasMajicDataVoie
+
+
+    def checkDatabaseForExistingTable(self, tableName, schemaName=''):
+        '''
+        Check if the given table
+        exists in the database
+        '''
+        tableExists = False
+
+        if not self.dialog.db:
+            return False
+
+        if self.dialog.dbType == 'postgis':
+            sql = "SELECT * FROM information_schema.tables WHERE table_schema = '%s' AND table_name = '%s'" % (schemaName, tableName)
+
+        if self.dialog.dbType == 'spatialite':
+            sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='%s'" % tableName
+
+        [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+        if rowCount >= 1:
+            tableExists = True
+
+        return tableExists
 
 
     def getLayerFromLegendByTableProps(self, tableName, geomCol='geom', sql=''):
@@ -517,11 +541,14 @@ class cadastre_common():
             'out': r"date(substr(\2, 1, 4) || '-' || substr(\2, 5, 2) || '-' || substr(\2, 7, 2))"},
             {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",
             'out': r"strftime('%d/%m/%Y', \2)"},
+            {'in': r"ST_Multi\(\(St_Dump\(St_Union\(a.geom\)\)\).geom\)",
+            'out': r"ST_Multi((st_unaryunion(st_collect(a.geom)))"},
         ]
 
         for a in replaceDict:
             r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
             sql = r.sub(a['out'], sql)
+            #~ self.updateLog(sql)
 
         # index spatiaux
         r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
@@ -562,7 +589,6 @@ class cadastre_common():
             replaceBy = '''
             ALTER TABLE geo_parcelle ADD COLUMN tempo_import text;
             SELECT DiscardGeometryColumn('geo_parcelle', 'geom');
-            SELECT DiscardGeometryColumn('geo_parcelle', 'geom_uf');
             UPDATE geo_parcelle SET tempo_import = SUBSTR(geo_parcelle,1,4) || '@' || SUBSTR(geo_parcelle,5,12);
             DROP INDEX IF EXISTS idx_parcelle_tempo_import;
             CREATE INDEX idx_parcelle_tempo_import ON geo_parcelle ( tempo_import);
@@ -589,26 +615,22 @@ class cadastre_common():
               comptecommunal character varying(15),
               voie text,
               ogc_fid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-              geom MULTIPOLYGON,
-              geom_uf MULTIPOLYGON
+              geom MULTIPOLYGON
             );
             INSERT INTO geo_parcelle_temp (
-            geo_parcelle, annee, object_rid, idu, geo_section, geo_subdsect, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, parcelle, lot, comptecommunal, voie, geom, geom_uf
+            geo_parcelle, annee, object_rid, idu, geo_section, geo_subdsect, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, parcelle, lot, comptecommunal, voie, geom
             )
-            SELECT geo_parcelle.geo_parcelle, geo_parcelle.annee, geo_parcelle.object_rid, geo_parcelle.idu, geo_parcelle.geo_section, geo_parcelle.geo_subdsect, geo_parcelle.supf, geo_parcelle.geo_indp, geo_parcelle.coar, geo_parcelle.tex, geo_parcelle.tex2, geo_parcelle.codm, geo_parcelle.creat_date, geo_parcelle.update_dat, p.parcelle, geo_parcelle.lot, p.comptecommunal, p.voie, geo_parcelle.geom, geo_parcelle.geom_uf
+            SELECT geo_parcelle.geo_parcelle, geo_parcelle.annee, geo_parcelle.object_rid, geo_parcelle.idu, geo_parcelle.geo_section, geo_parcelle.geo_subdsect, geo_parcelle.supf, geo_parcelle.geo_indp, geo_parcelle.coar, geo_parcelle.tex, geo_parcelle.tex2, geo_parcelle.codm, geo_parcelle.creat_date, geo_parcelle.update_dat, p.parcelle, geo_parcelle.lot, p.comptecommunal, p.voie, geo_parcelle.geom
             FROM geo_parcelle
             LEFT JOIN parcelle p ON p.parcelle=geo_parcelle.tempo_import AND p.annee='?' AND geo_parcelle.annee='?'
             ;
             SELECT DiscardGeometryColumn('geo_parcelle', 'geom');
-            SELECT DiscardGeometryColumn('geo_parcelle', 'geom_uf');
             DROP TABLE IF EXISTS geo_parcelle;
             ALTER TABLE geo_parcelle_temp RENAME TO geo_parcelle;
             SELECT RecoverGeometryColumn('geo_parcelle', 'geom', $, 'MULTIPOLYGON', 2);
-            SELECT RecoverGeometryColumn('geo_parcelle', 'geom_uf', $, 'MULTIPOLYGON', 2);
             DROP TABLE IF EXISTS geo_parcelle_temp;
             DROP INDEX IF EXISTS idx_parcelle_tempo_import;
             SELECT CreateSpatialIndex('geo_parcelle', 'geom');
-            SELECT CreateSpatialIndex('geo_parcelle', 'geom_uf');
             DROP INDEX IF EXISTS geo_parcelle_annee_idx; CREATE INDEX geo_parcelle_annee_idx ON geo_parcelle (annee,object_rid );
             DROP INDEX IF EXISTS geo_parcelle_idu_idx; CREATE INDEX geo_parcelle_idu_idx ON geo_parcelle (idu);
             DROP INDEX IF EXISTS geo_parcelle_geo_section_idx; CREATE INDEX geo_parcelle_geo_section_idx ON geo_parcelle (geo_section);
@@ -873,15 +895,6 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
             }
         }
         self.getValuesFromSettings()
-
-        self.cadastreImportOptions = {
-            'dataVersion' : '2012',
-            'dataYear' : '2011',
-            'edigeoSourceDir' : None,
-            'edigeoSourceProj' : None,
-            'edigeoTargetProj' : None,
-            'majicSourceDir' : None
-        }
 
         s = QSettings()
         self.majicSourceFileNames = [

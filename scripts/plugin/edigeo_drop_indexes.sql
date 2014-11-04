@@ -39,6 +39,8 @@ DROP INDEX IF EXISTS geo_tpoint_geom_idx;
 DROP INDEX IF EXISTS geo_tline_geom_idx;
 DROP INDEX IF EXISTS geo_tsurf_geom_idx;
 DROP INDEX IF EXISTS geo_label_geom_idx;
+DROP INDEX IF EXISTS geo_unite_fonciere_geom_idx;
+
 -- attributes
 DROP INDEX IF EXISTS geo_commune_tex2_idx;
 DROP INDEX IF EXISTS geo_section_idu_idx;
@@ -51,6 +53,7 @@ DROP INDEX IF EXISTS geo_parcelle_voie_idx;
 DROP INDEX IF EXISTS geo_label_x_label_idx ;
 DROP INDEX IF EXISTS geo_label_y_label_idx ;
 DROP INDEX IF EXISTS geo_label_ogr_obj_lnk_layer_idx;
+DROP INDEX IF EXISTS geo_unite_fonciere_comptecommunal_idx;
 
 -- indexes created as substitute of sqlite primary column
 DROP INDEX IF EXISTS idx_parcelle_parcelle;
@@ -114,3 +117,4 @@ DROP INDEX IF EXISTS idx_pevtaxation_pev;
 DROP INDEX IF EXISTS idx_parcelle_voie;
 DROP INDEX IF EXISTS idx_parcelle_comptecommunal;
 DROP INDEX IF EXISTS idx_parcelle_geo_parcelle;
+DROP INDEX IF EXISTS idx_geo_unite_fonciere_id;

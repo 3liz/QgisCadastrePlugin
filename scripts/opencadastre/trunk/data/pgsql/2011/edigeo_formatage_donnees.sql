@@ -27,6 +27,8 @@ DELETE FROM [PREFIXE]geo_parcelle WHERE annee='[ANNEE]';
 DELETE FROM [PREFIXE]geo_subdsect WHERE annee='[ANNEE]';
 DELETE FROM [PREFIXE]geo_section WHERE annee='[ANNEE]';
 DELETE FROM [PREFIXE]geo_commune WHERE annee='[ANNEE]';
+DELETE FROM [PREFIXE]geo_unite_fonciere WHERE annee='[ANNEE]';
+
 -- geo_commune;
 INSERT INTO [PREFIXE]geo_commune
 ( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, geom)
