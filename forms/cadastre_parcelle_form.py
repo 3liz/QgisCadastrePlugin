@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_parcelle_form.ui'
 #
-# Created: Fri Oct 25 16:02:02 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Tue Nov  4 18:09:16 2014
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -70,11 +70,17 @@ class Ui_cadastre_parcelle_form(object):
         self.btExportParcelle.setIcon(icon)
         self.btExportParcelle.setObjectName(_fromUtf8("btExportParcelle"))
         self.horizontalLayout.addWidget(self.btExportParcelle)
+        self.verticalLayout_5.addLayout(self.horizontalLayout)
+        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
         self.btExportProprietaire = QtGui.QPushButton(self.groupBox_3)
         self.btExportProprietaire.setIcon(icon)
         self.btExportProprietaire.setObjectName(_fromUtf8("btExportProprietaire"))
-        self.horizontalLayout.addWidget(self.btExportProprietaire)
-        self.verticalLayout_5.addLayout(self.horizontalLayout)
+        self.horizontalLayout_4.addWidget(self.btExportProprietaire)
+        self.cbExportAllCities = QtGui.QCheckBox(self.groupBox_3)
+        self.cbExportAllCities.setObjectName(_fromUtf8("cbExportAllCities"))
+        self.horizontalLayout_4.addWidget(self.cbExportAllCities)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.btCentrer = QtGui.QPushButton(self.groupBox_3)
@@ -116,8 +122,7 @@ class Ui_cadastre_parcelle_form(object):
         cadastre_parcelle_form.setTabOrder(self.scrollArea, self.parcelleInfo)
         cadastre_parcelle_form.setTabOrder(self.parcelleInfo, self.proprietairesInfo)
         cadastre_parcelle_form.setTabOrder(self.proprietairesInfo, self.btExportParcelle)
-        cadastre_parcelle_form.setTabOrder(self.btExportParcelle, self.btExportProprietaire)
-        cadastre_parcelle_form.setTabOrder(self.btExportProprietaire, self.btCentrer)
+        cadastre_parcelle_form.setTabOrder(self.btExportParcelle, self.btCentrer)
         cadastre_parcelle_form.setTabOrder(self.btCentrer, self.btZoomer)
         cadastre_parcelle_form.setTabOrder(self.btZoomer, self.btSelectionner)
         cadastre_parcelle_form.setTabOrder(self.btSelectionner, self.buttonBox)
@@ -129,6 +134,7 @@ class Ui_cadastre_parcelle_form(object):
         self.groupBox_3.setTitle(_translate("cadastre_parcelle_form", "Actions", None))
         self.btExportParcelle.setText(_translate("cadastre_parcelle_form", "Relevé parcellaire", None))
         self.btExportProprietaire.setText(_translate("cadastre_parcelle_form", "Relevé de propriété", None))
+        self.cbExportAllCities.setText(_translate("cadastre_parcelle_form", "Exporter pour toutes les communes", None))
         self.btCentrer.setText(_translate("cadastre_parcelle_form", "Centrer", None))
         self.btZoomer.setText(_translate("cadastre_parcelle_form", "Zoomer", None))
         self.btSelectionner.setText(_translate("cadastre_parcelle_form", "Sélect.", None))

@@ -89,6 +89,10 @@
               </property>
              </widget>
             </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
              <widget class="QPushButton" name="btExportProprietaire">
               <property name="text">
@@ -97,6 +101,13 @@
               <property name="icon">
                <iconset resource="resource.qrc">
                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbExportAllCities">
+              <property name="text">
+               <string>Exporter pour toutes les communes</string>
               </property>
              </widget>
             </item>
@@ -175,7 +186,6 @@
   <tabstop>parcelleInfo</tabstop>
   <tabstop>proprietairesInfo</tabstop>
   <tabstop>btExportParcelle</tabstop>
-  <tabstop>btExportProprietaire</tabstop>
   <tabstop>btCentrer</tabstop>
   <tabstop>btZoomer</tabstop>
   <tabstop>btSelectionner</tabstop>

@@ -2426,6 +2426,33 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         self.proprietairesInfo.setText('%s' % html)
 
 
+    def getProprietaireComptesCommunaux(self, comptecommunal):
+        '''
+        Get the list of "comptecommunal" for all cities
+        for a owner given one single comptecommunal
+        '''
+        cc = comptecommunal
+
+        sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"
+        sql+= " FROM proprietaire p"
+        sql+= " WHERE 2>1"
+        sql+= " AND ddenom IN (SELECT ddenom FROM proprietaire WHERE comptecommunal = %s)" % self.connector.quoteString( comptecommunal )
+        sql+= " GROUP BY dnuper, ddenom, dlign4"
+        sql+= " ORDER BY ddenom"
+
+        if self.connectionParams['dbType'] == 'postgis':
+            sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+            sql = sql.replace('MyStringAgg', 'string_agg')
+        if self.connectionParams['dbType'] == 'spatialite':
+            sql = sql.replace('MyStringAgg', 'group_concat')
+
+        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector,sql)
+        for line in data:
+            cc = line[1].split(',')
+
+        return cc
+
+
     def exportAsPDF(self, key):
         '''
         Export the parcelle or proprietaire
@@ -2439,10 +2466,13 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             return
 
         if self.feature:
+            comptecommunal = self.feature['comptecommunal']
+            if key == 'proprietaire' and self.cbExportAllCities.isChecked():
+                comptecommunal = self.getProprietaireComptesCommunaux( comptecommunal )
             qe = cadastreExport(
                 self,
                 key,
-                self.feature['comptecommunal'],
+                comptecommunal,
                 self.feature['geo_parcelle']
             )
             qe.exportAsPDF()
