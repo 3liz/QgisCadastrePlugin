@@ -27,7 +27,7 @@ class GetMultiPolygonFromVec(object):
     self.mapParCor = {}
     self.mapParPno = {}
     self.mapPnoPar = {}
-    self.path = path
+    self.path = os.path.abspath(path)
     if not self.__features__(): return {}
     if not self.__layers__(): return {}
     if not self.__arcs__(): return {}
@@ -60,10 +60,11 @@ class GetMultiPolygonFromVec(object):
     lnkStartName = ''
     lnkFaces = []
     for line in f :
+      line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
         continue;
       if line[:5] == 'RTYSA':
-        osRTY = line[8:-2]
+        osRTY = line[8:]
         osRID = ''
         osSCP = ''
         lnkNb = 0
@@ -71,13 +72,13 @@ class GetMultiPolygonFromVec(object):
         lnkStartName = ''
         lnkFaces = []
       elif osRTY == 'LNK' and line[:5] == 'RIDSA':
-        osRID = line[8:-2]
+        osRID = line[8:]
       elif osRTY == 'LNK' and line[:5] == 'SCPCP':
-        osSCP = line[8:-2]
+        osSCP = line[8:]
       elif osRTY == 'LNK' and line[:5] == 'FTCSN':
-        lnkNb = int( line[8:-2] )
+        lnkNb = int( line[8:] )
       elif osRTY == 'LNK' and lnkNb > 2 and line[:5] == 'FTPCP':
-        lnkArray = line[8:-2].split(';')
+        lnkArray = line[8:].split(';')
         if not lnkStartType:
           lnkStartType = lnkArray[2]
           lnkStartName = lnkArray[3]
@@ -102,15 +103,16 @@ class GetMultiPolygonFromVec(object):
     osRTY = ''
     osRID = ''
     for line in f :
+      line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
         continue;
       if line[:5] == 'RTYSA':
-        osRTY = line[8:-2]
+        osRTY = line[8:]
         osRID = ''
       elif osRTY == 'FEA' and line[:5] == 'RIDSA':
-        osRID = line[8:-2]
+        osRID = line[8:]
       elif osRTY == 'FEA' and line[:5] == 'SCPCP':
-        osSCP = line[8:-2]
+        osSCP = line[8:]
       elif osRTY == 'FEA' and osRID in self.listFea and osSCP :
         scpArray = osSCP.split(';')
         ly = scpArray[3]
@@ -137,6 +139,7 @@ class GetMultiPolygonFromVec(object):
     lnkEndType = ''
     lnkEndName = ''
     for line in f :
+      line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
         continue;
       if lnkStartType == 'PAR' and lnkEndType == 'PFE' and lnkEndName in self.listPfe :
@@ -151,7 +154,7 @@ class GetMultiPolygonFromVec(object):
         lnkEndType = ''
         lnkEndName = ''
       if line[:5] == 'RTYSA':
-        osRTY = line[8:-2]
+        osRTY = line[8:]
         osRID = ''
         osSCP = ''
         lnkStartType = ''
@@ -159,11 +162,11 @@ class GetMultiPolygonFromVec(object):
         lnkEndType = ''
         lnkEndName = ''
       elif osRTY == 'LNK' and line[:5] == 'RIDSA':
-        osRID = line[8:-2]
+        osRID = line[8:]
       elif osRTY == 'LNK' and line[:5] == 'SCPCP':
-        osSCP = line[8:-2]
+        osSCP = line[8:]
       elif osRTY == 'LNK' and line[:5] == 'FTPCP':
-        lnkArray = line[8:-2].split(';')
+        lnkArray = line[8:].split(';')
         if not lnkStartType:
           lnkStartType = lnkArray[2]
           lnkStartName = lnkArray[3]
@@ -183,15 +186,16 @@ class GetMultiPolygonFromVec(object):
     osRTY = ''
     osRID = ''
     for line in f :
+      line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
         continue;
       if line[:5] == 'RTYSA':
-        osRTY = line[8:-2]
+        osRTY = line[8:]
         osRID = ''
       elif osRTY == 'PAR' and line[:5] == 'RIDSA':
-        osRID = line[8:-2]
+        osRID = line[8:]
       elif osRTY == 'PAR' and osRID in self.listPar and line[:5] == 'CORCC':
-        pts = line[8:-2].split(';')
+        pts = line[8:].split(';')
         if osRID in self.mapParCor :
           self.mapParCor[ osRID ].append([float(pts[0]), float(pts[1])])
         else :
@@ -214,6 +218,7 @@ class GetMultiPolygonFromVec(object):
     lnkEndType = ''
     lnkEndName = ''
     for line in f :
+      line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
         continue;
       if osRTY == 'LNK' and lnkStartType == 'PAR' and lnkStartName in self.listPar and lnkEndType == 'PNO' :
@@ -243,7 +248,7 @@ class GetMultiPolygonFromVec(object):
         lnkEndType = ''
         lnkEndName = ''
       if line[:5] == 'RTYSA':
-        osRTY = line[8:-2]
+        osRTY = line[8:]
         osRID = ''
         osSCP = ''
         lnkStartType = ''
@@ -251,11 +256,11 @@ class GetMultiPolygonFromVec(object):
         lnkEndType = ''
         lnkEndName = ''
       elif osRTY == 'LNK' and line[:5] == 'RIDSA':
-        osRID = line[8:-2]
+        osRID = line[8:]
       elif osRTY == 'LNK' and line[:5] == 'SCPCP':
-        osSCP = line[8:-2]
+        osSCP = line[8:]
       elif osRTY == 'LNK' and line[:5] == 'FTPCP':
-        lnkArray = line[8:-2].split(';')
+        lnkArray = line[8:].split(';')
         if not lnkStartType:
           lnkStartType = lnkArray[2]
           lnkStartName = lnkArray[3]
