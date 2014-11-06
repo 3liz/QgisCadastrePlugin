@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_option_form.ui'
 #
-# Created: Thu Nov  7 15:28:21 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Thu Nov  6 09:44:33 2014
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -42,6 +42,7 @@ class Ui_cadastre_option_form(object):
         self.verticalLayout_9 = QtGui.QVBoxLayout(self.groupBox_7)
         self.verticalLayout_9.setObjectName(_fromUtf8("verticalLayout_9"))
         self.label_13 = QtGui.QLabel(self.groupBox_7)
+        self.label_13.setWordWrap(True)
         self.label_13.setObjectName(_fromUtf8("label_13"))
         self.verticalLayout_9.addWidget(self.label_13)
         self.horizontalLayout_9 = QtGui.QHBoxLayout()
@@ -164,9 +165,7 @@ class Ui_cadastre_option_form(object):
     def retranslateUi(self, cadastre_option_form):
         cadastre_option_form.setWindowTitle(_translate("cadastre_option_form", "Cadastre", None))
         self.groupBox_7.setTitle(_translate("cadastre_option_form", "Interface QGIS", None))
-        self.label_13.setText(_translate("cadastre_option_form", "Vous pouvez choisir d\'appliquer une interface\n"
-"simplifiée de QGIS pour consulter le cadastre\n"
-"ou de revenir à l\'interface par défaut", None))
+        self.label_13.setText(_translate("cadastre_option_form", "Vous pouvez choisir d\'appliquer une interface simplifiée de QGIS pour consulter le cadastre ou de revenir à l\'interface par défaut", None))
         self.btInterfaceCadastre.setText(_translate("cadastre_option_form", "Interface Cadastre", None))
         self.btInterfaceQgis.setText(_translate("cadastre_option_form", "Interface QGIS", None))
         self.groupBox.setTitle(_translate("cadastre_option_form", "Nom des fichiers MAJIC", None))

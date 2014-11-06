@@ -38,9 +38,10 @@
           <item>
            <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>Vous pouvez choisir d'appliquer une interface
-simplifiée de QGIS pour consulter le cadastre
-ou de revenir à l'interface par défaut</string>
+             <string>Vous pouvez choisir d'appliquer une interface simplifiée de QGIS pour consulter le cadastre ou de revenir à l'interface par défaut</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

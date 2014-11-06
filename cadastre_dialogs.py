@@ -541,8 +541,8 @@ class cadastre_common():
             'out': r"date(substr(\2, 1, 4) || '-' || substr(\2, 5, 2) || '-' || substr(\2, 7, 2))"},
             {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",
             'out': r"strftime('%d/%m/%Y', \2)"},
-            {'in': r"ST_Multi\(\(St_Dump\(St_Union\(a.geom\)\)\).geom\)",
-            'out': r"ST_Multi((st_unaryunion(st_collect(a.geom)))"},
+            {'in': r"ST_MakeValid\(geom\)",
+             'out': r"CASE WHEN ST_IsValid(geom) THEN geom ELSE ST_Buffer(geom,0) END"}
         ]
 
         for a in replaceDict:
