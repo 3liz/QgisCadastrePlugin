@@ -128,7 +128,7 @@ WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_CROIX_PARCELLE' AND s
 INSERT INTO [PREFIXE]geo_symblim( geo_symblim, annee, object_rid, ori, geo_sym, creat_date, update_dat, geom)
 SELECT '[ANNEE]'||replace(to_char(gid,'0000000000'),' ',''), '[ANNEE]', object_rid,  ori, sym, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
 FROM [PREFIXE]impedigeo_symblim_id;
-UPDATE [PREFIXE]geo_symblim set ori=360-ori WHERE annee='[ANNEE]';
+UPDATE [PREFIXE]geo_symblim set ori=360-ori WHERE annee='[ANNEE]' AND lot='[LOT]';
 -- geo_symblim_parcelle;
 INSERT INTO [PREFIXE]geo_symblim_parcelle (annee, geo_symblim, geo_parcelle)
 SELECT s.annee, s.geo_symblim, p.geo_parcelle
@@ -138,7 +138,7 @@ WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_SYMBLIM_PARCELLE' AND
 INSERT INTO [PREFIXE]geo_tpoint( geo_tpoint, annee, object_rid, ori,tex, geo_sym, creat_date, update_dat, geom)
 SELECT '[ANNEE]'||replace(to_char(gid,'0000000000'),' ',''), '[ANNEE]', object_rid,  ori, tex, sym, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_dat,'00000000'), 'YYYYMMDD'), geom
 FROM [PREFIXE]impedigeo_tpoint_id;
-UPDATE [PREFIXE]geo_tpoint SET ori=360-ori WHERE annee='[ANNEE]' AND ori IS NOT NULL;
+UPDATE [PREFIXE]geo_tpoint SET ori=360-ori WHERE annee='[ANNEE]' AND lot='[LOT]' AND ori IS NOT NULL;
 -- geo_tpoint_commune;
 INSERT INTO [PREFIXE]geo_tpoint_commune (annee, geo_tpoint, geo_commune)
 SELECT s.annee, s.geo_tpoint, p.geo_commune
