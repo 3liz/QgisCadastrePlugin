@@ -557,7 +557,19 @@ class cadastreImport(QObject):
         scriptList = []
         replaceDict = self.replaceDict.copy()
 
-        # Drop constraints if needed
+
+        # Add geo_unite_foncieres if needed
+        if not self.qc.checkDatabaseForExistingTable('geo_unite_fonciere', self.dialog.schema):
+            scriptList.append(
+                {
+                    'title' : u'Ajout de la table geo_unite_foncieres',
+                    'script' : '%s' % os.path.join(self.pScriptDir, 'edigeo_create_table_unite_fonciere.sql'),
+                    'constraints': False
+                }
+            )
+
+
+        # Drop constraints
         scriptList.append(
             {
                 'title' : u'Suppression des contraintes',
