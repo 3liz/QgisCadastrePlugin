@@ -527,7 +527,7 @@ INSERT INTO [PREFIXE]proprietaire
  topja, datja, anospi, cblpmo, gtodge, gpctf, gpctsb, jmodge, jandge, jantfc, jantbc,
  comptecommunal, lot
 )
-SELECT DISTINCT ON (ccodep,dnupro,dnulp,dnuper)
+SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
   REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,7,6)||SUBSTRING(tmp,13,2)||SUBSTRING(tmp,19,6), ' ', '0'),'+','¤') AS proprietaire,
   '[ANNEE]' AS annee,
   SUBSTRING(tmp,1,2) AS ccodep,
@@ -597,7 +597,7 @@ SELECT DISTINCT ON (ccodep,dnupro,dnulp,dnuper)
   REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,7,6),' ', '0'),'+','¤') AS comptecommunal,
   '[LOT]' as lot
 FROM [PREFIXE]prop
-ORDER BY ccodep,dnupro,dnulp,dnuper;
+ORDER BY ccodep,ccocom,dnupro,dnulp,dnuper;
 
 -- création: comptecommunal à partir de proprietaire
 CREATE INDEX idxan_proprietaire ON proprietaire (annee);

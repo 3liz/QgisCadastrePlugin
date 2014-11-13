@@ -108,6 +108,9 @@ class cadastreImport(QObject):
         if self.dialog.hasStructure:
             self.hasConstraints = True
 
+        # Remove MAJIC from tables bati|fanr|lloc|nbat|pdll|prop
+        self.removeMajicRawData = True
+
         self.beginImport()
 
 
@@ -288,8 +291,7 @@ class cadastreImport(QObject):
         )
 
         # Remove MAJIC raw data
-        removeRawData = True
-        if removeRawData:
+        if self.removeMajicRawData:
             scriptList.append(
                 {
                 'title' : u'Purge des données brutes',
