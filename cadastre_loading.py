@@ -62,7 +62,7 @@ class cadastreLoading(QObject):
             {'label': u'Subdivisions fiscales', 'name': 'geo_subdfisc', 'table': 'geo_subdfisc', 'geom': 'geom', 'sql': ''},
             {'label': u'Subdivisions fiscales (étiquette)', 'name': 'geo_label_subdfisc', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SUBDFISC_id\''},
             {'label': u'Bâti', 'name': 'geo_batiment', 'table': 'geo_batiment', 'geom': 'geom', 'sql': ''},
-            {'label': u'Parcelles', 'name': 'geo_parcelle', 'table': 'geo_parcelle', 'geom': 'geom', 'sql': ''},
+            {'label': u'Parcelles', 'name': 'geo_parcelle', 'table': 'geo_parcelle', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid'},
             {'label': u'Parcelles (étiquettes)', 'name': 'geo_label_parcelle', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\''},
             {'label': u'Lieux-dits', 'name': 'geo_lieudit', 'table': 'geo_lieudit', 'geom': 'geom', 'sql': ''},
             {'label': u'Lieux-dits  (étiquettes)', 'name': 'geo_label_lieudit', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'LIEUDIT_id\''},
@@ -82,7 +82,7 @@ class cadastreLoading(QObject):
             {'label': u'Objets linéaires (étiquettes)', 'name': 'geo_label_tline', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TLINE_id\''},
             {'label': u'Numéros de voie', 'name': 'geo_label_num_voie', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'NUMVOIE_id\''},
             {'label': u'Établissements publics', 'name': 'geo_label_voiep', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'VOIEP_id\''},
-            {'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': ''}
+            {'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': '', 'dbType': 'postgis'}
         ]
 
     def updateTimer(self):
@@ -153,64 +153,62 @@ class cadastreLoading(QObject):
         if self.dialog.dbType == 'spatialite':
             dbTables = self.dialog.db.tables()
 
-
-        # Get status of override combobox
-        override = unicode(self.dialog.liOverrideLayer.currentText())
-
         # Loop throuhg qgisQastreLayerList and load each corresponding table
         for item in self.qgisCadastreLayerList:
 
-            # Get db_manager table instance
+            if item.has_key('dbType') and item['dbType'] != self.dialog.dbType:
+                continue
+
+            # Tables - Get db_manager table instance
             tableList = [a for a in dbTables if a.name == item['table']]
-            if len(tableList) == 0:
+            if len(tableList) == 0 and not item.has_key('isView'):
                 self.qc.updateLog(u'  - Aucune table trouvée pour %s' % item['label'])
                 continue
-            table = tableList[0]
-            sql = ""
-            if item.has_key('sql'):
-                sql = item['sql']
-            geomCol = ""
-            if item.has_key('geom'):
-                geomCol = item['geom']
 
-            # Check if the layer is already in QGIS
-            load = True
-            cLayer = self.qc.getLayerFromLegendByTableProps(
-                item['table'],
-                geomCol,
-                sql
-            )
-            if cLayer:
-                if override == 'Remplacer':
-                    self.qc.updateLog(u'  - Remplacement de la couche %s' % item['label'])
-                    QgsMapLayerRegistry.instance().removeMapLayer(cLayer.id())
+            if tableList:
+                table = tableList[0]
+                source = table.name
+                uniqueField = table.getValidQGisUniqueFields(True)
+                if uniqueField:
+                    uniqueCol = uniqueField.name
                 else:
-                    self.qc.updateLog(u'  - La couche %s a été conservée' % item['label'])
-                    load = False
+                    uniqueCol = 'ogc_fid'
+
+            schema = self.dialog.schema
+
+            # View
+            if item.has_key('isView'):
+                if self.dialog.dbType == 'spatialite':
+                    schemaReplace = ''
+                else:
+                    schemaReplace = '"%s".' % self.dialog.schema
+                source = item['table'].replace('schema.', schemaReplace)
+                uniqueCol = item['key']
+                schema = None
+
+            sql = item['sql']
+            geomCol = item['geom']
 
             # Create vector layer
-            if table and load:
-                tableName = table.name
-                uniqueCol = table.getValidQGisUniqueFields(True) #if table.isView else None
-                layerUri.setDataSource(
-                    self.dialog.schema,
-                    tableName,
-                    geomCol,
-                    sql,
-                    uniqueCol.name if uniqueCol else ""
-                )
-                vlayer = QgsVectorLayer(layerUri.uri(), item['label'], providerName)
+            layerUri.setDataSource(
+                schema,
+                source,
+                geomCol,
+                sql,
+                uniqueCol
+            )
+            vlayer = QgsVectorLayer(layerUri.uri(), item['label'], providerName)
 
-                # apply style
-                qmlPath = os.path.join(
-                    self.qc.plugin_dir,
-                    "styles/%s/%s.qml" % (self.themeDir, item['name'])
-                )
-                if os.path.exists(qmlPath):
-                    vlayer.loadNamedStyle(qmlPath)
+            # apply style
+            qmlPath = os.path.join(
+                self.qc.plugin_dir,
+                "styles/%s/%s.qml" % (self.themeDir, item['name'])
+            )
+            if os.path.exists(qmlPath):
+                vlayer.loadNamedStyle(qmlPath)
 
-                # append vector layer to the list
-                qgisCadastreLayers.append(vlayer)
+            # append vector layer to the list
+            qgisCadastreLayers.append(vlayer)
 
             # update progress bar
             self.qc.updateLog(u'* %s' % item['label'])
@@ -269,7 +267,6 @@ class cadastreLoading(QObject):
             u"Les données ont bien été chargées dans QGIS"
         )
         self.dialog.pbProcess.setValue(0)
-        self.updateTimer()
 
 
         QApplication.restoreOverrideCursor()

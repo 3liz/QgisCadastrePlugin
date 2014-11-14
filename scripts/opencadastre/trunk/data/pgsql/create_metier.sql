@@ -50,7 +50,6 @@ CREATE TABLE parcelle (
     dnuplam character varying(4),
     parcellefiliation character varying(19),
     type_filiation character varying(1),
-    geo_parcelle character varying(16),
     lot character varying
 );
 
@@ -765,7 +764,7 @@ ALTER TABLE geo_indp ADD PRIMARY KEY (geo_indp);
 
 CREATE TABLE geo_parcelle
 (
-  geo_parcelle character varying(16) NOT NULL,
+  geo_parcelle character varying(19) NOT NULL,
   annee character varying(4) NOT NULL,
   object_rid character varying(80),
   idu character varying(12),
@@ -779,14 +778,15 @@ CREATE TABLE geo_parcelle
   codm character varying(80),
   creat_date date,
   update_dat date,
-  parcelle character varying(19),
   lot character varying,
-  comptecommunal character varying(15),
-  voie text,
   ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
+CREATE VIEW v_geo_parcelle AS
+SELECT g.*, p.comptecommunal, p.voie
+FROM geo_parcelle g
+LEFT OUTER JOIN parcelle p ON g.geo_parcelle = p.parcelle;
 
 CREATE TABLE geo_subdfisc
 (
@@ -806,7 +806,7 @@ CREATE TABLE geo_subdfisc_parcelle
   geo_subdfisc_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
   geo_subdfisc integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
+  geo_parcelle character varying(19) NOT NULL
 );
 
 CREATE TABLE geo_voiep
@@ -840,7 +840,7 @@ CREATE TABLE geo_numvoie_parcelle
   geo_numvoie_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
   geo_numvoie integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
+  geo_parcelle character varying(19) NOT NULL
 );
 
 CREATE TABLE geo_lieudit
@@ -878,7 +878,7 @@ CREATE TABLE geo_batiment_parcelle
   geo_batiment_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
   geo_batiment character varying NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
+  geo_parcelle character varying(19) NOT NULL
 );
 
 CREATE TABLE geo_zoncommuni
@@ -953,7 +953,7 @@ CREATE TABLE geo_borne_parcelle
   geo_borne_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
   geo_borne integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
+  geo_parcelle character varying(19) NOT NULL
 );
 
 CREATE TABLE geo_croix
@@ -973,7 +973,7 @@ CREATE TABLE geo_croix_parcelle
   geo_croix_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
   geo_croix integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
+  geo_parcelle character varying(19) NOT NULL
 );
 
 CREATE TABLE geo_symblim
@@ -995,7 +995,7 @@ CREATE TABLE geo_symblim_parcelle
   geo_symblim_parcelle serial NOT NULL,
   annee character varying(4) NOT NULL,
   geo_symblim integer NOT NULL,
-  geo_parcelle character varying(16) NOT NULL
+  geo_parcelle character varying(19) NOT NULL
 );
 
 CREATE TABLE geo_tpoint

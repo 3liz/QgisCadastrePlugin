@@ -24,7 +24,7 @@
       <category symbol="19" value="79" label="Nivellement MRL"/>
       <category symbol="20" value="80" label="Autre repère de nivellement"/>
       <category symbol="21" value="81" label="Borne limite de commune"/>
-      <category symbol="22" value="" label=""/>
+      <category symbol="22" value="" label="Inconnu"/>
     </categories>
     <symbols>
       <symbol alpha="1" type="marker" name="0">
@@ -240,7 +240,7 @@
       <symbol alpha="1" type="marker" name="22">
         <layer pass="0" class="SimpleMarker" locked="0">
           <prop k="angle" v="0"/>
-          <prop k="color" v="255,0,0,255"/>
+          <prop k="color" v="255,255,255,255"/>
           <prop k="color_border" v="0,0,0,255"/>
           <prop k="name" v="circle"/>
           <prop k="offset" v="0,0"/>

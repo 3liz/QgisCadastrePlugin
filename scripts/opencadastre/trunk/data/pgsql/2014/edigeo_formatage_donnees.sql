@@ -25,8 +25,10 @@ DELETE FROM [PREFIXE]geo_unite_fonciere WHERE lot='[LOT]';
 -- index pour optimisation
 DROP INDEX IF EXISTS idx_edigeorel_vers;
 DROP INDEX IF EXISTS idx_edigeorel_de;
+DROP INDEX IF EXISTS idx_edigeorel_nom;
 CREATE INDEX idx_edigeorel_vers ON [PREFIXE]edigeo_rel (vers);
 CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
+CREATE INDEX idx_edigeorel_nom ON [PREFIXE]edigeo_rel (nom);
 
 -- geo_commune: utilisation de max et non distinct on pour compatibilite sqlite
 INSERT INTO [PREFIXE]geo_commune
@@ -44,7 +46,7 @@ UPDATE [PREFIXE]commune SET geo_commune=g.geo_commune FROM [PREFIXE]geo_commune 
 -- geo_section
 INSERT INTO [PREFIXE]geo_section
 ( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot)
-SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union((ST_CollectionExtract(ST_MakeValid(geom),3)))), '[LOT]'--, ogc_fid
+SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))), '[LOT]'--, ogc_fid
 FROM [PREFIXE]section_id
 GROUP BY object_rid, idu, tex, creat_date, update_date;
 
@@ -57,28 +59,21 @@ FROM [PREFIXE]subdsect_id;
 -- geo_parcelle
 INSERT INTO [PREFIXE]geo_parcelle
 (geo_parcelle, annee, object_rid, idu, geo_section, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), supf, indp, coar, tex, tex2, codm, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
+SELECT '[ANNEE]'||'[DEPDIR]'||idu, '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), supf, indp, coar, tex, tex2, codm, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
 FROM [PREFIXE]parcelle_id;
 
--- ajout des subdsect à geo_parcelle
+-- Indexes sur geo_parcelle et geo_commune pour optimisation
 DROP INDEX IF EXISTS [PREFIXE]geo_parcelle_annee_idx;
-DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 CREATE INDEX geo_parcelle_annee_idx ON [PREFIXE]geo_parcelle (annee, object_rid );
+DROP INDEX IF EXISTS [PREFIXE]geo_commune_annee_idx;
+CREATE INDEX geo_commune_annee_idx ON [PREFIXE]geo_commune (annee, object_rid );
+
+-- ajout des subdsect à geo_parcelle
+DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 CREATE INDEX geo_subdsect_annee_idx ON [PREFIXE]geo_subdsect (annee, object_rid);
 UPDATE [PREFIXE]geo_parcelle set geo_subdsect=s.geo_subdsect FROM [PREFIXE]geo_subdsect s, [PREFIXE]edigeo_rel r
 WHERE s.annee=geo_parcelle.annee AND geo_parcelle.annee='[ANNEE]' AND r.nom='Rel_PARCELLE_SUBDSECT' AND r.de=geo_parcelle.object_rid AND vers=s.object_rid;
-DROP INDEX [PREFIXE]geo_parcelle_annee_idx;
 DROP INDEX [PREFIXE]geo_subdsect_annee_idx;
-
--- ajout de l'identifiant de parcelle dans la table geo_parcelle
-UPDATE [PREFIXE]geo_parcelle SET (parcelle, voie, comptecommunal) = (p.parcelle, p.voie, p.comptecommunal)
-FROM [PREFIXE]parcelle p
-WHERE p.annee='[ANNEE]'
-AND p.parcelle=SUBSTRING(geo_parcelle.geo_parcelle,1,4)||'[DEPDIR]'||SUBSTRING(geo_parcelle.geo_parcelle,5,12)
-AND geo_parcelle.annee='[ANNEE]';
-
--- ajout de l'identifiant de geo_parcelle dans la table parcelle
-UPDATE [PREFIXE]parcelle SET geo_parcelle=g.geo_parcelle FROM [PREFIXE]geo_parcelle g WHERE g.parcelle=parcelle.parcelle AND g.annee='[ANNEE]';
 
 -- geo_subdfisc
 INSERT INTO [PREFIXE]geo_subdfisc (annee, object_rid, tex, creat_date, update_dat, geom, lot)
@@ -86,10 +81,13 @@ SELECT '[ANNEE]', object_rid,  CASE WHEN tex IS NULL THEN '' ELSE tex END, to_da
 FROM [PREFIXE]subdfisc_id;
 
 -- geo_subdfisc_parcelle
+DROP INDEX IF EXISTS [PREFIXE]geo_subdfisc_annee_idx;
+CREATE INDEX geo_subdfisc_annee_idx ON [PREFIXE]geo_subdfisc (annee, object_rid);
 INSERT INTO [PREFIXE]geo_subdfisc_parcelle (annee, geo_subdfisc, geo_parcelle)
 SELECT s.annee, s.geo_subdfisc, p.geo_parcelle
 FROM [PREFIXE]geo_subdfisc s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_SUBDFISC_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_subdfisc_annee_idx;
 
 -- geo_voiep
 INSERT INTO [PREFIXE]geo_voiep
@@ -104,10 +102,13 @@ SELECT '[ANNEE]', object_rid, tex, to_date(to_char(creat_date,'00000000'), 'YYYY
 FROM [PREFIXE]numvoie_id;
 
 -- geo_numvoie_parcelle
+DROP INDEX IF EXISTS [PREFIXE]geo_numvoie_annee_idx;
+CREATE INDEX geo_numvoie_annee_idx ON [PREFIXE]geo_numvoie (annee, object_rid);
 INSERT INTO [PREFIXE]geo_numvoie_parcelle (annee, geo_numvoie, geo_parcelle)
 SELECT s.annee, s.geo_numvoie, p.geo_parcelle
 FROM [PREFIXE]geo_numvoie s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_NUMVOIE_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_numvoie_annee_idx;
 
 -- geo_lieudit
 INSERT INTO [PREFIXE]geo_lieudit
@@ -121,10 +122,13 @@ SELECT '[ANNEE]'||'[LOT]'||replace(to_char(ogc_fid,'0000000'),' ',''), '[ANNEE]'
 FROM [PREFIXE]batiment_id;
 
 -- geo_batiment_parcelle
+DROP INDEX IF EXISTS [PREFIXE]geo_batiment_annee_idx;
+CREATE INDEX geo_batiment_annee_idx ON [PREFIXE]geo_batiment (annee, object_rid);
 INSERT INTO [PREFIXE]geo_batiment_parcelle (annee, geo_batiment, geo_parcelle)
 SELECT s.annee, s.geo_batiment, p.geo_parcelle
 FROM [PREFIXE]geo_batiment s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_BATIMENT_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_batiment_annee_idx;
 
 -- geo_zoncommuni
 INSERT INTO [PREFIXE]geo_zoncommuni( annee, object_rid, tex, creat_date, update_dat, geom, lot)
@@ -150,10 +154,13 @@ SELECT '[ANNEE]', object_rid,  to_date(to_char(creat_date,'00000000'), 'YYYYMMDD
 FROM [PREFIXE]borne_id;
 
 -- geo_borne_parcelle
+DROP INDEX IF EXISTS [PREFIXE]geo_borne_annee_idx;
+CREATE INDEX geo_borne_annee_idx ON [PREFIXE]geo_borne (annee, object_rid);
 INSERT INTO [PREFIXE]geo_borne_parcelle (annee, geo_borne, geo_parcelle)
 SELECT s.annee, s.geo_borne, p.geo_parcelle
 FROM [PREFIXE]geo_borne s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_BORNE_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_borne_annee_idx;
 
 -- geo_croix
 INSERT INTO [PREFIXE]geo_croix( annee, object_rid, creat_date, update_dat, geom, lot)
@@ -161,10 +168,13 @@ SELECT '[ANNEE]', object_rid,  to_date(to_char(creat_date,'00000000'), 'YYYYMMDD
 FROM [PREFIXE]croix_id;
 
 -- geo_croix_parcelle
+DROP INDEX IF EXISTS [PREFIXE]geo_croix_annee_idx;
+CREATE INDEX geo_croix_annee_idx ON [PREFIXE]geo_croix (annee, object_rid);
 INSERT INTO [PREFIXE]geo_croix_parcelle (annee, geo_croix, geo_parcelle)
 SELECT s.annee, s.geo_croix, p.geo_parcelle
 FROM [PREFIXE]geo_croix s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_CROIX_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_croix_annee_idx;
 
 -- geo_symblim
 INSERT INTO [PREFIXE]geo_symblim( annee, object_rid, ori, geo_sym, creat_date, update_dat, geom, lot)
@@ -173,10 +183,13 @@ FROM [PREFIXE]symblim_id;
 UPDATE [PREFIXE]geo_symblim set ori=360-ori WHERE annee='[ANNEE]' AND lot='[LOT]';
 
 -- geo_symblim_parcelle
+DROP INDEX IF EXISTS [PREFIXE]geo_symblim_annee_idx;
+CREATE INDEX geo_symblim_annee_idx ON [PREFIXE]geo_symblim (annee, object_rid);
 INSERT INTO [PREFIXE]geo_symblim_parcelle (annee, geo_symblim, geo_parcelle)
 SELECT s.annee, s.geo_symblim, p.geo_parcelle
 FROM [PREFIXE]geo_symblim s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_SYMBLIM_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_symblim_annee_idx;
 
 -- geo_tpoint
 INSERT INTO [PREFIXE]geo_tpoint( annee, object_rid, ori,tex, geo_sym, creat_date, update_dat, geom, lot)
@@ -215,7 +228,10 @@ WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p
 -- suppression des index temporaires
 DROP INDEX [PREFIXE]idx_edigeorel_vers;
 DROP INDEX [PREFIXE]idx_edigeorel_de;
+DROP INDEX [PREFIXE]idx_edigeorel_nom;
 TRUNCATE [PREFIXE]edigeo_rel;
+DROP INDEX IF EXISTS [PREFIXE]geo_parcelle_annee_idx;
+DROP INDEX IF EXISTS [PREFIXE]geo_commune_annee_idx;
 
 -- analyses
 ANALYZE [PREFIXE]geo_commune;

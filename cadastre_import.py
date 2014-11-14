@@ -559,7 +559,8 @@ class cadastreImport(QObject):
 
 
         # Add geo_unite_foncieres if needed
-        if not self.qc.checkDatabaseForExistingTable('geo_unite_fonciere', self.dialog.schema):
+        if not self.qc.checkDatabaseForExistingTable('geo_unite_fonciere', self.dialog.schema) \
+        and self.dialog.dbType == 'postgis':
             scriptList.append(
                 {
                     'title' : u'Ajout de la table geo_unite_foncieres',
@@ -636,15 +637,6 @@ class cadastreImport(QObject):
                 'divide': True
             }
         )
-        # ajout des unités foncières
-        # seulement si on a des données MAJIC de propriétaire
-        self.qc.checkDatabaseForExistingStructure()
-        if self.dialog.doMajicImport and self.dialog.hasMajicDataProp:
-            scriptList.append(
-                {   'title' : u'Création Unités foncières',
-                    'script' : os.path.join( self.pScriptDir, 'edigeo_unites_foncieres_%s.sql' % self.dialog.dbType)
-                }
-            )
 
         scriptList.append(
             {
@@ -669,6 +661,17 @@ class cadastreImport(QObject):
                 'divide': True
             }
         )
+
+        # ajout des unités foncières
+        # seulement si on a des données MAJIC de propriétaire
+        self.qc.checkDatabaseForExistingStructure()
+        if ( self.dialog.doMajicImport or self.dialog.hasMajicDataProp ) \
+        and self.dialog.dbType == 'postgis':
+            scriptList.append(
+                {   'title' : u'Création Unités foncières',
+                    'script' : os.path.join( self.pScriptDir, 'edigeo_unites_foncieres_%s.sql' % self.dialog.dbType)
+                }
+            )
 
         for item in scriptList:
             if self.go:

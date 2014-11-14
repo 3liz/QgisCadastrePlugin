@@ -149,7 +149,7 @@ class cadastreExport(QObject):
                 'filter': 'comptecommunal',
                 'and': {
                     'proprietaire': u" AND l10.comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND p.geo_parcelle = '%s'" % self.geo_parcelle
+                    'parcelle': u" AND p.parcelle = '%s'" % self.geo_parcelle
                 }
             },
             'proprietes_non_baties' : {
@@ -167,7 +167,7 @@ class cadastreExport(QObject):
                 'filter': 'comptecommunal',
                 'and': {
                     'proprietaire': u" AND p.comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND geo_parcelle = '%s'" % self.geo_parcelle
+                    'parcelle': u" AND p.parcelle = '%s'" % self.geo_parcelle
                 },
                 'bgcolor': Qt.transparent
             },
@@ -199,7 +199,7 @@ class cadastreExport(QObject):
                 'filter': 'comptecommunal',
                 'and': {
                     'proprietaire': u" AND l10.comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND p.geo_parcelle = '%s'" % self.geo_parcelle
+                    'parcelle': u" AND p.parcelle = '%s'" % self.geo_parcelle
                 }
             },
             'proprietes_non_baties_line' : {
@@ -207,7 +207,7 @@ class cadastreExport(QObject):
                 'type': 'sql',
                 'and': {
                     'proprietaire': u" AND p.comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND geo_parcelle = '%s'" % self.geo_parcelle
+                    'parcelle': u" AND p.parcelle = '%s'" % self.geo_parcelle
                 }
             }
 

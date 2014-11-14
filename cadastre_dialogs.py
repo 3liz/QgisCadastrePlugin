@@ -306,9 +306,16 @@ class cadastre_common():
                 continue
             if not l.providerType() in (u'postgres', u'spatialite'):
                 continue
+
             connectionParams = self.getConnectionParameterFromDbLayer(l)
+            import re
+
+            reg = r'(\.| )?(%s)' % tableName
             if connectionParams and \
-                connectionParams['table'] == tableName and \
+                ( \
+                    connectionParams['table'] == tableName or \
+                    ( re.findall(reg, '%s' % connectionParams['table']) and re.findall(reg, '%s' % connectionParams['table'])[0] ) \
+                ) and \
                 connectionParams['geocol'] == geomCol and \
                 connectionParams['sql'] == sql:
                 return l
@@ -348,11 +355,27 @@ class cadastre_common():
         sql = res[12]
 
         schema = ''
-        if re.search('"\."', table):
-            table = '"' + table + '"'
-            sp = table.replace('"', '').split('.')
-            schema = sp[0]
-            table = sp[1]
+
+        if ' FROM ' not in table:
+            if re.search('"\."', table):
+                table = '"' + table + '"'
+                sp = table.replace('"', '').split('.')
+                schema = sp[0]
+                table = sp[1]
+        else:
+            reg = r'\* FROM ([^\)]+)?(\))?'
+            f = re.findall(r'%s' % reg, table)
+
+            if f and f[0]:
+                sp = f[0][0].replace('"', '').split('.')
+                if len(sp) > 1:
+                    schema = sp[0].replace('\\', '')
+                    table = sp[1]
+                else:
+                    table = sp[0]
+            else:
+                return None
+
 
         if layer.providerType() == u'postgres':
             dbType = 'postgis'
@@ -554,95 +577,9 @@ class cadastre_common():
         r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
         sql = r.sub(r"SELECT createSpatialIndex('\2', '\5');", sql)
 
-        # update from : geo_parcelle -> parcelle
-        r = re.compile(r'update parcelle SET geo_parcelle=g.geo_parcelle[^;]+;', re.IGNORECASE|re.MULTILINE)
-        res = r.findall(sql)
-        replaceBy = ''
-        for statement in res:
-            replaceBy = '''
-            DROP INDEX IF EXISTS idx_geo_parcelle_parcelle;
-            CREATE INDEX idx_geo_parcelle_parcelle ON geo_parcelle (parcelle);
-            DROP INDEX IF EXISTS idx_parcelle_parcelle;
-            CREATE INDEX idx_parcelle_parcelle ON parcelle (parcelle);
-            DROP TABLE IF EXISTS parcelle_temp;
-            CREATE TABLE parcelle_temp AS
-            SELECT p.parcelle, p.annee, p.ccodep, p.ccodir, p.ccocom, p.ccopre, p.ccosec, p.dnupla, p.dcntpa, p.dsrpar, p.dnupro, p.comptecommunal, p.jdatat, p.dreflf, p.gpdl, p.cprsecr, p.ccosecr, p.dnuplar, p.dnupdl, p.pdl, p.gurbpa, p.dparpi, p.ccoarp, p.gparnf, p.gparbat, p.parrev, p.gpardp, p.fviti, p.dnvoiri, p.dindic, p.ccovoi, p.ccoriv, p.voie, p.ccocif, p.gpafpd, p.ajoutcoherence, p.cconvo, p.dvoilib, p.ccocomm, p.ccoprem, p.ccosecm, p.dnuplam, p.parcellefiliation, p.type_filiation, gp.geo_parcelle, p.lot
-            FROM parcelle p
-            LEFT JOIN geo_parcelle gp ON gp.parcelle = p.parcelle AND gp.annee='?';
-            DROP TABLE IF EXISTS parcelle;
-            ALTER TABLE parcelle_temp RENAME TO parcelle;
-            DROP INDEX IF EXISTS idx_geo_parcelle_parcelle;
-            DROP INDEX IF EXISTS idx_parcelle_parcelle;
-            '''
-            replaceBy = replaceBy.replace('?', self.dialog.dataYear)
-            sql = sql.replace(statement, replaceBy)
-
         # replace postgresql "update from" statement
         r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE|re.MULTILINE)
         sql = r.sub(r'\1=(SELECT \3);', sql)
-
-        # replace multiple column update for geo_parcelle
-        r = re.compile(r'update [^;]+parcelle, voie, comptecommunal[^;]+;',  re.IGNORECASE|re.MULTILINE)
-        res = r.findall(sql)
-        replaceBy = ''
-        for statement in res:
-            replaceBy = '''
-            ALTER TABLE geo_parcelle ADD COLUMN tempo_import text;
-            SELECT DiscardGeometryColumn('geo_parcelle', 'geom');
-            UPDATE geo_parcelle SET tempo_import = SUBSTR(geo_parcelle,1,4) || '@' || SUBSTR(geo_parcelle,5,12);
-            DROP INDEX IF EXISTS idx_parcelle_tempo_import;
-            CREATE INDEX idx_parcelle_tempo_import ON geo_parcelle ( tempo_import);
-            DROP TABLE IF EXISTS geo_parcelle_temp;
-
-            CREATE TABLE geo_parcelle_temp
-            (
-              geo_parcelle character varying(16) NOT NULL,
-              annee character varying(4) NOT NULL,
-              object_rid character varying(80),
-              idu character varying(12),
-              geo_section character varying(12) NOT NULL,
-              geo_subdsect character varying(14),
-              supf numeric,
-              geo_indp character varying(2),
-              coar character varying(2),
-              tex character varying,
-              tex2 character varying(80),
-              codm character varying(80),
-              creat_date date,
-              update_dat date,
-              parcelle character varying(19),
-              lot character varying,
-              comptecommunal character varying(15),
-              voie text,
-              ogc_fid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-              geom MULTIPOLYGON
-            );
-            INSERT INTO geo_parcelle_temp (
-            geo_parcelle, annee, object_rid, idu, geo_section, geo_subdsect, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, parcelle, lot, comptecommunal, voie, geom
-            )
-            SELECT geo_parcelle.geo_parcelle, geo_parcelle.annee, geo_parcelle.object_rid, geo_parcelle.idu, geo_parcelle.geo_section, geo_parcelle.geo_subdsect, geo_parcelle.supf, geo_parcelle.geo_indp, geo_parcelle.coar, geo_parcelle.tex, geo_parcelle.tex2, geo_parcelle.codm, geo_parcelle.creat_date, geo_parcelle.update_dat, p.parcelle, geo_parcelle.lot, p.comptecommunal, p.voie, geo_parcelle.geom
-            FROM geo_parcelle
-            LEFT JOIN parcelle p ON p.parcelle=geo_parcelle.tempo_import AND p.annee='?' AND geo_parcelle.annee='?'
-            ;
-            SELECT DiscardGeometryColumn('geo_parcelle', 'geom');
-            DROP TABLE IF EXISTS geo_parcelle;
-            ALTER TABLE geo_parcelle_temp RENAME TO geo_parcelle;
-            SELECT RecoverGeometryColumn('geo_parcelle', 'geom', $, 'MULTIPOLYGON', 2);
-            DROP TABLE IF EXISTS geo_parcelle_temp;
-            DROP INDEX IF EXISTS idx_parcelle_tempo_import;
-            SELECT CreateSpatialIndex('geo_parcelle', 'geom');
-            DROP INDEX IF EXISTS geo_parcelle_annee_idx; CREATE INDEX geo_parcelle_annee_idx ON geo_parcelle (annee,object_rid );
-            DROP INDEX IF EXISTS geo_parcelle_idu_idx; CREATE INDEX geo_parcelle_idu_idx ON geo_parcelle (idu);
-            DROP INDEX IF EXISTS geo_parcelle_geo_section_idx; CREATE INDEX geo_parcelle_geo_section_idx ON geo_parcelle (geo_section);
-            DROP INDEX IF EXISTS geo_parcelle_comptecommunal_idx ; CREATE INDEX geo_parcelle_comptecommunal_idx ON geo_parcelle (comptecommunal);
-            DROP INDEX IF EXISTS geo_parcelle_voie_idx; CREATE INDEX geo_parcelle_voie_idx ON geo_parcelle (voie);
-            DROP INDEX IF EXISTS geo_parcelle_geo_parcelle; CREATE INDEX geo_parcelle_geo_parcelle ON geo_parcelle (geo_parcelle);
-
-            '''
-            replaceBy = replaceBy.replace('?', self.dialog.dataYear)
-            replaceBy = replaceBy.replace('$', targetSrid)
-            replaceBy = replaceBy.replace('@', '%s%s' % (self.dialog.edigeoDepartement, self.dialog.edigeoDirection))
-            sql = sql.replace(statement, replaceBy)
 
         # majic formatage : replace multiple column update for loca10
         r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
@@ -745,6 +682,20 @@ class cadastre_common():
         self.updateConnectionList()
         listDic = { self.dialog.connectionDbList[i]:i for i in range(0, len(self.dialog.connectionDbList)) }
         self.dialog.liDbConnection.setCurrentIndex(listDic[myName])
+
+
+    def getCompteCommunalFromParcelleId(self, parcelleId, connectionParams, connector):
+
+        comptecommunal = None
+
+        sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
+        if connectionParams['dbType'] == 'postgis':
+            sql = self.setSearchPath(sql, connectionParams['schema'])
+        [header, data, rowCount] = self.fetchDataFromSqlQuery(connector, sql)
+        for line in data:
+            comptecommunal = line[0]
+
+        return comptecommunal
 
 
 from cadastre_import_form import *
@@ -1238,6 +1189,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.qc = cadastre_common(self)
 
         # database properties
+        self.connectionParams = None
         self.connector = None
         self.dbType = None
         self.schema = None
@@ -1251,6 +1203,11 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.sectionFeatures = None
         self.sectionRequest = None
         self.sectionCommuneFeature = None
+
+        aLayer = self.qc.getLayerFromLegendByTableProps('geo_commune')
+        if aLayer:
+            self.connectionParams = self.qc.getConnectionParameterFromDbLayer(aLayer)
+            self.connector = self.qc.getConnectorFromUri( self.connectionParams )
 
         # signals/slots
         self.searchComboBoxes = {
@@ -1291,7 +1248,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'parcelle': {
                 'widget': self.liParcelle,
                 'labelAttribute': 'idu',
-                'table': 'geo_parcelle', 'geomCol': 'geom', 'sql': '',
+                'table': 'v_geo_parcelle', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','geo_section','geom', 'comptecommunal', 'geo_parcelle'],
@@ -1304,7 +1261,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'proprietaire': {
                 'widget': self.liProprietaire,
                 'labelAttribute': 'idu',
-                'table': 'geo_parcelle',
+                'table': 'v_geo_parcelle',
                 'layer': None,
                 'request': None,
                 'attributes': ['comptecommunal','idu','dnupro','geom'],
@@ -1322,7 +1279,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'parcelle_proprietaire': {
                 'widget': self.liParcelleProprietaire,
                 'labelAttribute': 'idu',
-                'table': 'geo_parcelle', 'geomCol': 'geom', 'sql': '',
+                'table': 'v_geo_parcelle', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','comptecommunal','geom', 'geo_parcelle'],
@@ -1335,7 +1292,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'adresse': {
                 'widget': self.liAdresse,
                 'labelAttribute': 'voie',
-                'table': 'geo_parcelle',
+                'table': 'v_geo_parcelle',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','voie','idu','geom'],
@@ -1352,7 +1309,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'parcelle_adresse': {
                 'widget': self.liParcelleAdresse,
                 'labelAttribute': 'idu',
-                'table': 'geo_parcelle', 'geomCol': 'geom', 'sql': '',
+                'table': 'v_geo_parcelle', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','voie','geom', 'comptecommunal', 'geo_parcelle'],
@@ -1477,33 +1434,37 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.hasMajicDataProp = False
         self.hasMajicDataVoie = False
         self.hasMajicDataParcelle = False
-        # Get geo_commune layer
-        layer = self.qc.getLayerFromLegendByTableProps('geo_commune')
-        if layer:
+
+        aLayer = self.qc.getLayerFromLegendByTableProps('geo_commune')
+        if aLayer:
+            self.connectionParams = self.qc.getConnectionParameterFromDbLayer(aLayer)
+
+        # Get connection parameters
+        if self.connectionParams:
+
             # Get Connection params
-            connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
-            connector = self.qc.getConnectorFromUri(connectionParams)
+            connector = self.qc.getConnectorFromUri(self.connectionParams)
             if connector:
                 # Get data from table proprietaire
                 sql = 'SELECT * FROM "proprietaire" LIMIT 1'
-                if connectionParams['dbType'] == 'postgis':
-                    sql = self.qc.setSearchPath(sql, connectionParams['schema'])
+                if self.connectionParams['dbType'] == 'postgis':
+                    sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
                 [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
                 if rowCount >= 1:
                     self.hasMajicDataProp = True
 
                 # Get data from table voie
                 sql = 'SELECT * FROM "voie" LIMIT 1'
-                if connectionParams['dbType'] == 'postgis':
-                    sql = self.qc.setSearchPath(sql, connectionParams['schema'])
+                if self.connectionParams['dbType'] == 'postgis':
+                    sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
                 [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
                 if rowCount >= 1:
                     self.hasMajicDataVoie = True
 
                 # Get data from table parcelle
                 sql = 'SELECT * FROM "parcelle" LIMIT 1'
-                if connectionParams['dbType'] == 'postgis':
-                    sql = self.qc.setSearchPath(sql, connectionParams['schema'])
+                if self.connectionParams['dbType'] == 'postgis':
+                    sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
                 [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
                 if rowCount >= 1:
                     self.hasMajicDataParcelle = True
@@ -1536,11 +1497,13 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # Get corresponding QGIS layer
         itemList = []
+        table = searchCombo['table'].replace('v_', '') # get data from table not view
         layer = self.qc.getLayerFromLegendByTableProps(
-            searchCombo['table'],
+            table,
             searchCombo['geomCol'],
             searchCombo['sql']
         )
+
         self.searchComboBoxes[combo]['layer'] = layer
         if layer:
 
@@ -1583,8 +1546,9 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                     if not qe.evaluate(feat):
                         keep = False
                 if keep:
-                    itemList.append(feat[labelAttribute])
-                    cb.addItem(feat[labelAttribute], feat)
+                    if feat and feat[labelAttribute]:
+                        itemList.append(feat[labelAttribute])
+                        cb.addItem(feat[labelAttribute], feat)
 
 
             # style cb to adjust list width to max length content
@@ -1633,7 +1597,13 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # SQL
         sql = ' SELECT %s' % ', '.join(attributes)
-        sql+= ' FROM "%s"' % connectionParams['table']
+
+        # Replace geo_parcelle by v_geo_parcelle if necessary
+        table = connectionParams['table']
+        if table == 'geo_parcelle':
+            table = 'v_geo_parcelle'
+        f = '"%s"' % table
+        sql+= ' FROM %s' % f
         sql+= " WHERE 2>1"
         if filterExpression:
             sql+= " AND %s" % filterExpression
@@ -1703,7 +1673,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # Get database connection parameters from a qgis layer
         dbtable = self.searchComboBoxes[key]['table']
-        layer = self.qc.getLayerFromLegendByTableProps(dbtable)
+        layer = self.qc.getLayerFromLegendByTableProps( dbtable.replace('v_', '') )
         if not layer:
             QApplication.restoreOverrideCursor()
             return None
@@ -2048,7 +2018,8 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         feat = self.searchComboBoxes[key]['chosenFeature']
         if feat:
-            qex = cadastreExport(self, 'parcelle', feat['comptecommunal'], feat['geo_parcelle'])
+            comptecommunal = self.qc.getCompteCommunalFromParcelleId( feat['geo_parcelle'], self.connectionParams, self.connector)
+            qex = cadastreExport(self, 'parcelle', comptecommunal, feat['geo_parcelle'])
             qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')
@@ -2353,7 +2324,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             LEFT OUTER JOIN commune c ON p.ccocom = c.ccocom AND c.ccodep = p.ccodep
             LEFT OUTER JOIN voie v ON v.voie = p.voie
             WHERE 2>1
-            AND geo_parcelle = '%s'
+            AND parcelle = '%s'
             LIMIT 1
             ''' % self.feature['geo_parcelle']
         else:
@@ -2411,8 +2382,8 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         FROM proprietaire p
         LEFT JOIN ccodro ON ccodro.ccodro = p.ccodro
         WHERE 2>1
-        AND comptecommunal = '%s'
-        ''' % self.feature['comptecommunal']
+        AND comptecommunal = (SELECT comptecommunal FROM parcelle WHERE parcelle = '%s')
+        ''' % self.feature['geo_parcelle']
         if self.connectionParams['dbType'] == 'postgis':
             sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
         if self.connectionParams['dbType'] == 'spatialite':
@@ -2452,7 +2423,6 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
 
         return cc
 
-
     def exportAsPDF(self, key):
         '''
         Export the parcelle or proprietaire
@@ -2466,16 +2436,17 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             return
 
         if self.feature:
-            comptecommunal = self.feature['comptecommunal']
-            if key == 'proprietaire' and self.cbExportAllCities.isChecked():
-                comptecommunal = self.getProprietaireComptesCommunaux( comptecommunal )
-            qe = cadastreExport(
-                self,
-                key,
-                comptecommunal,
-                self.feature['geo_parcelle']
-            )
-            qe.exportAsPDF()
+            comptecommunal = self.qc.getCompteCommunalFromParcelleId(self.feature['geo_parcelle'], self.connectionParams, self.connector)
+            if comptecommunal:
+                if key == 'proprietaire' and self.cbExportAllCities.isChecked():
+                    comptecommunal = self.getProprietaireComptesCommunaux( comptecommunal )
+                qe = cadastreExport(
+                    self,
+                    key,
+                    comptecommunal,
+                    self.feature['geo_parcelle']
+                )
+                qe.exportAsPDF()
 
     def centerToParcelle(self):
         '''
@@ -2536,10 +2507,13 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
             return
 
-        #~ qs = cadastre_search_dialog(self.iface)
         qs = self.cadastre_search_dialog
         key = 'proprietaire'
-        value = self.feature['comptecommunal']
+
+        comptecommunal = self.qc.getCompteCommunalFromParcelleId( self.feature['geo_parcelle'], self.connectionParams, self.connector )
+        if not comptecommunal:
+            print "Aucune parcelle trouvée pour ce propriétaire"
+        value = comptecommunal
         filterExpression = "comptecommunal IN ('%s')" % value
 
         # Get data for child and fill combobox
