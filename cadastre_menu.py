@@ -27,6 +27,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from cadastre_identify_parcelle import IdentifyParcelle
 from cadastre_dialogs import *
+import ConfigParser
 
 # ---------------------------------------------
 
@@ -85,6 +86,11 @@ class cadastre_menu:
         self.help_action = QAction(icon, u"Aide", self.iface.mainWindow())
         QObject.connect(self.help_action, SIGNAL("triggered()"), self.open_help)
 
+        # version Submenu
+        icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
+        self.version_action = QAction(icon, u"Notes de version", self.iface.mainWindow())
+        QObject.connect(self.version_action, SIGNAL("triggered()"), self.open_message_dialog)
+
 
         # Add actions to Cadastre menu
         self.cadastre_menu.addAction(self.import_action)
@@ -93,6 +99,7 @@ class cadastre_menu:
         self.cadastre_menu.addAction(self.option_action)
         self.cadastre_menu.addAction(self.about_action)
         self.cadastre_menu.addAction(self.help_action)
+        self.cadastre_menu.addAction(self.version_action)
 
         # Add cadastre toolbar
         self.toolbar = self.iface.addToolBar(u'Cadastre');
@@ -159,6 +166,17 @@ class cadastre_menu:
         if firstUse == 1:
             s.setValue("cadastre/isFirstUse", 0)
             self.open_about_dialog()
+
+        # Display some messages depending on version number
+        mConfig = ConfigParser.ConfigParser()
+        metadataFile = os.path.dirname(__file__) + "/metadata.txt"
+        mConfig.read( metadataFile )
+        self.mConfig = mConfig
+        myVersion = mConfig.get('general', 'version').replace('.', '_')
+        myVersionMsg = s.value("cadastre/version_%s" % myVersion , 1, type=int)
+        if myVersionMsg == 1:
+            s.setValue("cadastre/version_%s" % myVersion , 0)
+            self.open_message_dialog()
 
         # Project load or create : refresh search and identify tool
         self.iface.projectRead.connect(self.onProjectRead)
@@ -308,6 +326,49 @@ class cadastre_menu:
         #~ localHelpUrl = "https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/index.rst"
         localHelpUrl = os.path.dirname(__file__) + "/doc/index.html"
         QDesktopServices.openUrl( QUrl(localHelpUrl) )
+
+    def open_message_dialog(self):
+        '''
+        Display a message to the user
+        '''
+        versionMessages = {
+            '1.1.0': [
+                [
+                    u'Lien entre les parcelles EDIGEO et MAJIC',
+                    u'Pour cette nouvelle version du plugin, la structure de la base de données a été légèrement modifiée. Pour pouvoir utiliser les fonctions du plugin Cadastre, vous devez donc impérativement réimporter les données dans votre base'
+                ] ,
+                [
+                    u'Validation des géométries',
+                    u'Certaines données EDIGEO contiennent des géométries invalides (polygones croisés dit "papillons", polygones non fermés, etc.). Cette version utilise une fonction de PostGIS qui tente de corriger ces invalidités. Il faut impérativement utiliser une version récente de PostGIS : 2.0.4 minimum pour la version 2, ou les version ultérieures (2.1 par exemple)'
+                ]
+            ]
+        }
+        mConfig = self.mConfig
+        version = mConfig.get('general', 'version')
+        changelog = mConfig.get('general', 'changelog')
+
+        message = '<h2>Version %s - notes concernant cette version</h2>' % version
+        if version in versionMessages:
+            message+='<ul>'
+            for item in versionMessages[version]:
+                message+='<li><b>%s</b> - %s</li>' % (item[0], item[1])
+            message+='</ul>'
+
+        message+= '<h3>Changelog</h3>'
+        message+= '<p>'
+        i = 0
+        for item in changelog.split('*'):
+            if i == 0:
+                message+= '<b>%s</b><ul>' % item.decode('utf-8')
+            else:
+                message+= '<li>%s</li>' % item.decode('utf-8')
+            i+=1
+        message+='</ul>'
+        message+= '</p>'
+
+        dialog = cadastre_message_dialog(self.iface, message)
+        dialog.exec_()
+
 
 
     def unload(self):

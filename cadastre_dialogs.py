@@ -2547,3 +2547,35 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         self.connector.__del__()
         self.close()
 
+
+# --------------------------------------------------------
+#        Messages - Displays a message to the user
+# --------------------------------------------------------
+
+from cadastre_message_form import *
+
+class cadastre_message_dialog(QDialog, Ui_cadastre_message_form):
+    def __init__(self, iface, message):
+        QDialog.__init__(self)
+        self.iface = iface
+        self.setupUi(self)
+
+        self.teMessage.setText(message)
+
+        # Signals/Slot Connections
+        self.rejected.connect(self.onReject)
+        self.buttonBox.rejected.connect(self.onReject)
+        self.buttonBox.accepted.connect(self.onAccept)
+
+    def onAccept(self):
+        '''
+        Save options when pressing OK button
+        '''
+        self.accept()
+
+    def onReject(self):
+        '''
+        Run some actions when
+        the user closes the dialog
+        '''
+        self.close()
