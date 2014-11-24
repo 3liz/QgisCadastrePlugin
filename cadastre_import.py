@@ -49,6 +49,12 @@ try:
     from processing.gdal.pyogr.ogr2ogr import main as ogr2ogr
 except ImportError:
     pass
+try:
+    from scripts.pyogr.ogr2ogr import main as ogr2ogr
+except ImportError:
+    pass
+
+from scripts.pyogr.ogr2ogr import main as ogr2ogr
 
 class cadastreImport(QObject):
 
