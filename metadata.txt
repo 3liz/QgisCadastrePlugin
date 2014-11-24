@@ -2,12 +2,12 @@
 [general]
 name=cadastre
 qgisMinimumVersion=2.0.0
-qgisMaximumVersion=2.99.0
+qgisMaximumVersion=2.6.99
 description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
-version=1.0.0
+version=1.1.0
 author=3liz
 email=info@3liz.com
 
@@ -17,17 +17,24 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 1.0.0
-  * Import - débogage import PostGreSQL sous Windows
-  * Recherche - Meilleure gestion de la désactivation des modules de recherche
-  * Import - MAJIC : possibilité de lancer l'import même si fichiers MAJIC manquants
-  * Import - Vérifications sur les données MAJIC avant import - bug #37
-  * Import - Meilleure gestion des chemins des fichiers sources
-  * Import - Création de bdd spatialite différente selon la version de spatialite - bug #30
-  * Export - Débogage de l'export PDF pour QGIS 2.4 - bug #36
-  * Import : MAJIC - arrêt de l'import si aucun fichier trouvé
-  * Import - Modifications mineures d'interface
-  * Import - meilleure gestion des imports EDIGEO via ogr2ogr.py au lieu de ogr2ogr.exe (compatibilité MAC + détection des erreurs)
+  Version 1.1.0
+  * Options - Ajout du menu Vue/Décorations dans l'interface Cadastre
+  * Chargement - La couche Unités foncières est décochée par défaut
+  * Import - Ajout des scripts pyogr pour compatibilité QGIS 2.6
+  * Ajout d'une boite de dialogue d'information lors du 1er chargement. Visible via le menu Cadastre > Notes de version
+  * Import/Recherche/Export - Modification du lien entre les parcelles EDIGEO et MAJIC (même identifiant unique pour les 2)
+  * Import - exhaustivité des données de propriétaire MAJIC - fix #47
+  * Import - Conserver l'orientation des symboles lors d'imports successifs - fix #46
+  * Import - Correction des géométries invalides - fix #43
+  * Import - Correction des multipolygones sous Windows - fixes #44
+  * Info parcelle - option de filtre commune pour le relevé de propriété - fix #42
+  * Chargement - Ajout des TRONROUTE_ID pour les étiquettes des noms voies - bug #40
+  * Chargement - Suppression des étiquettes abbérantes - fix #41
+  * Import - Ajout des unités foncières pour PostGIS (refonte de la requête)
+  * Import - MAJIC : ajout de la compatibilité des fichiers 2014
+  * Import - EDIGEO : ajout de la table boulon_id
+  * Chargement - correction du bug #38 : minidump sous Windows
+
 
 
 
