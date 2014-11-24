@@ -334,12 +334,16 @@ class cadastre_menu:
         versionMessages = {
             '1.1.0': [
                 [
+                    u'Compatibilité avec QGIS 2.6',
+                    u'La compatibilité n\'est pas assurée à 100% avec la dernière version 2.6 de QGIS, notamment pour la création d\une base Spatialite vide. Vous pouvez utiliser les outils de QGIS pour le faire.'
+                ] ,
+                [
                     u'Lien entre les parcelles EDIGEO et MAJIC',
-                    u'Pour cette nouvelle version du plugin, la structure de la base de données a été légèrement modifiée. Pour pouvoir utiliser les fonctions du plugin Cadastre, vous devez donc impérativement réimporter les données dans votre base'
+                    u'Pour cette nouvelle version du plugin, la structure de la base de données a été légèrement modifiée. Pour pouvoir utiliser les fonctions du plugin Cadastre, vous devez donc impérativement <b>réimporter les données dans une base vide</b>'
                 ] ,
                 [
                     u'Validation des géométries',
-                    u'Certaines données EDIGEO contiennent des géométries invalides (polygones croisés dit "papillons", polygones non fermés, etc.). Cette version utilise une fonction de PostGIS qui tente de corriger ces invalidités. Il faut impérativement utiliser une version récente de PostGIS : 2.0.4 minimum pour la version 2, ou les version ultérieures (2.1 par exemple)'
+                    u'Certaines données EDIGEO contiennent des géométries invalides (polygones croisés dit "papillons", polygones non fermés, etc.). Cette version utilise une fonction de PostGIS qui tente de corriger ces invalidités. Il faut impérativement <b>utiliser une version récente de PostGIS</b> : 2.0.4 minimum pour la version 2, ou les version ultérieures (2.1 par exemple)'
                 ]
             ]
         }
