@@ -335,7 +335,7 @@ class cadastre_menu:
             '1.1.0': [
                 [
                     u'Compatibilité avec QGIS 2.6',
-                    u'La compatibilité n\'est pas assurée à 100% avec la dernière version 2.6 de QGIS, notamment pour la création d\une base Spatialite vide. Vous pouvez utiliser les outils de QGIS pour le faire.'
+                    u'La compatibilité n\'est pas assurée à 100 % avec la dernière version 2.6 de QGIS, notamment pour la création d\'une base Spatialite vide. Vous pouvez utiliser les outils de QGIS pour le faire.'
                 ] ,
                 [
                     u'Lien entre les parcelles EDIGEO et MAJIC',

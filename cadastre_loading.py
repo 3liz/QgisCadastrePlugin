@@ -237,6 +237,8 @@ class cadastreLoading(QObject):
             li.moveLayer(layer, g1)
             li.setLayerExpanded(layer, False)
             #~ layer.updateExtents()
+            if layer.name() == u'Unités foncières':
+                li.setLayerVisible(layer, False)
         li.setGroupExpanded(g1, False) # broken ?
         self.updateTimer()
 
