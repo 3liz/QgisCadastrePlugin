@@ -1,4 +1,6 @@
 CHANGELOG
+  Version 1.1.1
+  * Ajout de la compatibilité avec QGIS 2.8
 
   Version 1.1.0
   * Options - Ajout du menu Vue/Décorations dans l'interface Cadastre

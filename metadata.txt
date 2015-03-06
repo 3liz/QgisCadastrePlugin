@@ -2,12 +2,12 @@
 [general]
 name=cadastre
 qgisMinimumVersion=2.0.0
-qgisMaximumVersion=2.6.99
+qgisMaximumVersion=2.9.99
 description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
-version=1.1.0
+version=1.1.1
 author=3liz
 email=info@3liz.com
 
@@ -17,6 +17,8 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
+  Version 1.1.1
+  * Ajout de la compatibilité avec QGIS 2.8
   Version 1.1.0
   * Options - Ajout du menu Vue/Décorations dans l'interface Cadastre
   * Chargement - La couche Unités foncières est décochée par défaut
