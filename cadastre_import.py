@@ -414,6 +414,8 @@ class cadastreImport(QObject):
                         with open(fpath) as fin:
                             # Divide file into chuncks
                             for a in fin:
+                                if len( a ) < 4 :
+                                  continue
                                 depdir = a[0:3]
                                 break
                             depdirs[depdir] = True
