@@ -158,7 +158,10 @@ class cadastre_menu:
             self.iface.mainWindow()
         )
         self.identifyParcelleAction.setCheckable(True)
-        self.initializeIdentifyParcelleTool()
+        self.identifyParcelleAction.triggered.connect( self.setIndentifyParcelleTool )
+        self.toolbar.addAction( self.identifyParcelleAction )
+
+        self.setActionsExclusive()
 
         # Display About window on first use
         s = QSettings()
@@ -182,6 +185,10 @@ class cadastre_menu:
         self.iface.projectRead.connect(self.onProjectRead)
         self.iface.newProjectCreated.connect(self.onNewProjectCreated)
 
+        # Delete layers from table when deleted from registry
+        lr = QgsMapLayerRegistry.instance()
+        lr.layersRemoved.connect( self.checkIdentifyParcelleTool )
+
 
     def open_import_dialog(self):
         '''
@@ -200,8 +207,7 @@ class cadastre_menu:
         )
 
         # refresh identify tool when new data loaded
-        # data loaded with plugin tool
-        dialog.ql.cadastreLoadingFinished.connect(self.refreshIdentifyParcelleTool)
+        self.checkIdentifyParcelleTool()
         dialog.exec_()
 
     def toggle_search_dialog(self):
@@ -228,71 +234,70 @@ class cadastre_menu:
         dialog = cadastre_about_dialog(self.iface)
         dialog.exec_()
 
-    def initializeIdentifyParcelleTool(self):
-        '''
-        Initialize the identify tool for parcelles
-        '''
-        self.identyParcelleTool = IdentifyParcelle(self.mapCanvas)
-        self.identyParcelleTool.geomIdentified.connect(self.getParcelleInfo)
-        self.identyParcelleTool.geomUnidentified.connect(self.setParcelleAsActiveLayer)
-        self.identyParcelleTool.setAction(self.identifyParcelleAction)
-        self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
-        self.toolbar.addAction(self.identifyParcelleAction)
 
+    def setActionsExclusive(self):
 
-    def refreshIdentifyParcelleTool(self):
-        '''
-        Reinit identify parcelle tool
-        '''
-        self.toolbar.removeAction(self.identifyParcelleAction)
-        self.initializeIdentifyParcelleTool()
-        self.setIndentifyParcelleTool()
+        # Build an action list from QGIS navigation toolbar
+        actionList = self.iface.mapNavToolToolBar().actions()
 
+        # Add actions from QGIS attributes toolbar (handling QWidgetActions)
+        tmpActionList = self.iface.attributesToolBar().actions()
+        for action in tmpActionList:
+            if isinstance(action, QWidgetAction):
+                actionList.extend( action.defaultWidget().actions() )
+            else:
+                actionList.append( action )
+        # ... add other toolbars' action lists...
+
+        # Build a group with actions from actionList and add your own action
+        group = QActionGroup( self.iface.mainWindow() )
+        group.setExclusive(True)
+        for action in actionList:
+            group.addAction( action )
+        group.addAction( self.identifyParcelleAction )
+
+    def checkIdentifyParcelleTool(self, layerIds=None):
+        '''
+        When layers are removed from the project
+        Check if the layer Parcelle remains
+        If not deactivate Identify parcelle tool
+        '''
+        # Find parcelle layer
+        parcelleLayer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
+        if not parcelleLayer:
+            self.identifyParcelleAction.setChecked(False)
+            self.iface.actionPan().trigger()
+            return
 
     def setIndentifyParcelleTool(self):
         '''
         Activite the identify tool
         for the layer geo_parcelle
         '''
-        # First set Parcelle as active layer
-        self.setParcelleAsActiveLayer()
+
+        # Find parcelle layer
+        parcelleLayer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
+        if not parcelleLayer:
+            QMessageBox.warning(
+                self.cadastre_search_dialog,
+                u"Cadastre",
+                u"La couche de parcelles n'a pas été trouvée dans le projet"
+            )
+            self.identifyParcelleAction.setChecked(False)
+            self.iface.actionPan().trigger()
+            return
+
+        self.identyParcelleTool = IdentifyParcelle( self.mapCanvas, parcelleLayer )
+        self.identyParcelleTool.cadastreGeomIdentified.connect(self.getParcelleInfo)
+
         # The activate identify tool
         self.mapCanvas.setMapTool(self.identyParcelleTool)
-
-    def setParcelleAsActiveLayer(self):
-        '''
-        Search among layers
-        and set Parcelles layer as
-        the current active layer
-        '''
-        # First set Parcelle as active layer
-        layer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
-        if not layer:
-            return
-        # Set active layer -> geo_parcelle
-        self.iface.setActiveLayer(layer)
 
     def getParcelleInfo(self, layer, feature):
         '''
         Return information of the identified
         parcelle
         '''
-        # Find parcelle layer
-        parcelleLayer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
-        if not parcelleLayer:
-            return
-        # Check if current active layer is parcelle layer
-        if parcelleLayer.id() != layer.id():
-            setActiveQuestion = QMessageBox.question(
-                self.cadastre_search_dialog,
-                u"Cadastre",
-                u'"Parcelles" doit être la couche active dans QGIS pour utiliser cet outil. Activer la couche ?',
-                QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
-            )
-            if setActiveQuestion == QMessageBox.Yes:
-                self.iface.setActiveLayer(parcelleLayer)
-            return
-        # show parcelle form
         parcelleDialog = cadastre_parcelle_dialog(
             self.iface,
             layer,
@@ -310,12 +315,13 @@ class cadastre_menu:
             self.cadastre_search_dialog.clearComboboxes()
             self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
             self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
-            self.refreshIdentifyParcelleTool()
+            self.checkIdentifyParcelleTool()
 
     def onNewProjectCreated(self):
         '''
         Refresh search dialog when new data has been loaded
         '''
+        self.checkIdentifyParcelleTool()
         if self.cadastre_search_dialog:
             self.cadastre_search_dialog.checkMajicContent()
             self.cadastre_search_dialog.clearComboboxes()
