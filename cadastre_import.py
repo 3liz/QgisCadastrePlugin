@@ -704,60 +704,6 @@ class cadastreImport(QObject):
         return None
 
 
-    def onlyUpdateMultiPolygon(self):
-        '''
-        Only run the SQL Update queries
-        built from VEC files
-        To repair multipolygons
-        '''
-
-        # Log : Print connection parameters to database
-        jobTitle = u'EDIGEO'
-        self.beginJobLog(14, jobTitle)
-        self.qc.updateLog(u'Type de base : %s, Connexion: %s, Schéma: %s' % (
-                self.dialog.dbType,
-                self.dialog.connectionName,
-                self.dialog.schema
-            )
-        )
-        self.updateProgressBar()
-
-        if self.go:
-            # copy files in temp dir
-            self.dialog.subStepLabel.setText('Copie des fichiers')
-            self.updateProgressBar()
-            self.copyFilesToTemp(self.dialog.edigeoSourceDir, self.edigeoDir)
-            self.updateTimer()
-        self.updateProgressBar()
-
-        if self.go:
-            # unzip edigeo files in temp dir
-            self.dialog.subStepLabel.setText('Extraction des fichiers')
-            self.updateProgressBar()
-            self.unzipFolderContent(self.edigeoDir)
-            self.updateTimer()
-        self.updateProgressBar()
-
-        # Copy eventual plain edigeo files in edigeoPlainDir
-        shutil.copytree(self.edigeoDir, os.path.join(self.edigeoPlainDir, 'plain'))
-
-        # Get MULTIPOLYGON from VEC files and update concerned layers and objects
-        if self.go:
-            self.dialog.subStepLabel.setText('Correction des MULTI-POLYGONES')
-            self.updateProgressBar()
-
-            vecList = self.listFilesInDirectory(self.edigeoPlainDir, 'vec')
-            self.step = 0
-            self.totalSteps = len(vecList)
-            for vec in vecList:
-                # update mission multipolygons (ogr2ogr driver does not handle them yet)
-                self.updateMultipolygonFromVec(vec, 'cadastre')
-                self.updateProgressBar()
-            self.qc.updateLog(u'  - %s multipolygones mis à jours dans la base de données' % self.multiPolygonUpdated)
-
-            self.updateTimer()
-
-
     def endImport(self):
         '''
         Actions done when import has finished

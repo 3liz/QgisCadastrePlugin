@@ -792,7 +792,6 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.edigeoLot = None
         self.majicSourceDir = None
         self.edigeoSourceDir = None
-        self.onlyUpdateMultiPolygon = False
 
         # set input values from settings
         self.sList = {
@@ -991,10 +990,6 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.doMajicImport = os.path.exists(self.majicSourceDir)
         self.doEdigeoImport =  os.path.exists(self.edigeoSourceDir)
 
-        # only update multipolygon ?
-        if self.cbUpdateMultiPolygon.isChecked():
-            self.onlyUpdateMultiPolygon = True
-
         msg = ''
         if not self.db:
             msg+= u'Veuillez sélectionner une base de données\n'
@@ -1051,9 +1046,6 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
 
         # Run Edigeo import
         if self.doEdigeoImport:
-            if self.onlyUpdateMultiPolygon:
-                qi.onlyUpdateMultiPolygon()
-            else:
                 qi.importEdigeo()
 
         qi.endImport()

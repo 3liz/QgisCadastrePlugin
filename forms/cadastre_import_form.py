@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_import_form.ui'
 #
-# Created: Mon Nov  3 17:13:48 2014
+# Created: Fri Apr  3 15:33:05 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_import_form(object):
     def setupUi(self, cadastre_import_form):
         cadastre_import_form.setObjectName(_fromUtf8("cadastre_import_form"))
-        cadastre_import_form.resize(547, 745)
+        cadastre_import_form.resize(594, 694)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_import_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_import_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 527, 692))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 558, 736))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -43,9 +43,6 @@ class Ui_cadastre_import_form(object):
         self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
         self.gridLayout = QtGui.QGridLayout()
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.label = QtGui.QLabel(self.groupBox)
-        self.label.setObjectName(_fromUtf8("label"))
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.liDbType = QtGui.QComboBox(self.groupBox)
         self.liDbType.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.liDbType.setObjectName(_fromUtf8("liDbType"))
@@ -57,6 +54,9 @@ class Ui_cadastre_import_form(object):
         self.label_2.setMaximumSize(QtCore.QSize(100, 16777215))
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.gridLayout.addWidget(self.label_2, 0, 2, 1, 1)
+        self.label = QtGui.QLabel(self.groupBox)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.liDbConnection = QtGui.QComboBox(self.groupBox)
         self.liDbConnection.setObjectName(_fromUtf8("liDbConnection"))
         self.gridLayout.addWidget(self.liDbConnection, 0, 3, 1, 1)
@@ -221,20 +221,6 @@ class Ui_cadastre_import_form(object):
         self.btProcessImport = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
         self.btProcessImport.setObjectName(_fromUtf8("btProcessImport"))
         self.verticalLayout_6.addWidget(self.btProcessImport)
-        self.cbUpdateMultiPolygon = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
-        self.cbUpdateMultiPolygon.setObjectName(_fromUtf8("cbUpdateMultiPolygon"))
-        self.verticalLayout_6.addWidget(self.cbUpdateMultiPolygon)
-        self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.stepLabel = QtGui.QLabel(self.scrollAreaWidgetContents_2)
-        self.stepLabel.setText(_fromUtf8(""))
-        self.stepLabel.setObjectName(_fromUtf8("stepLabel"))
-        self.horizontalLayout.addWidget(self.stepLabel)
-        self.subStepLabel = QtGui.QLabel(self.scrollAreaWidgetContents_2)
-        self.subStepLabel.setText(_fromUtf8(""))
-        self.subStepLabel.setObjectName(_fromUtf8("subStepLabel"))
-        self.horizontalLayout.addWidget(self.subStepLabel)
-        self.verticalLayout_6.addLayout(self.horizontalLayout)
         self.pbProcess = QtGui.QProgressBar(self.scrollAreaWidgetContents_2)
         self.pbProcess.setProperty("value", 0)
         self.pbProcess.setObjectName(_fromUtf8("pbProcess"))
@@ -246,8 +232,6 @@ class Ui_cadastre_import_form(object):
         self.txtLog.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
         self.txtLog.setObjectName(_fromUtf8("txtLog"))
         self.verticalLayout_6.addWidget(self.txtLog)
-        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_6.addItem(spacerItem)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea)
         self.buttonBox = QtGui.QDialogButtonBox(cadastre_import_form)
@@ -256,17 +240,17 @@ class Ui_cadastre_import_form(object):
         self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(cadastre_import_form)
-        self.databaseSpecificOptions.setCurrentIndex(0)
+        self.databaseSpecificOptions.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(cadastre_import_form)
 
     def retranslateUi(self, cadastre_import_form):
         cadastre_import_form.setWindowTitle(_translate("cadastre_import_form", "Cadastre", None))
         self.groupBox.setTitle(_translate("cadastre_import_form", "Base de données de travail", None))
-        self.label.setText(_translate("cadastre_import_form", "Type de base", None))
         self.liDbType.setItemText(0, _translate("cadastre_import_form", "-- Choisir --", None))
         self.liDbType.setItemText(1, _translate("cadastre_import_form", "Postgis", None))
         self.liDbType.setItemText(2, _translate("cadastre_import_form", "Spatialite", None))
         self.label_2.setText(_translate("cadastre_import_form", "Connexions", None))
+        self.label.setText(_translate("cadastre_import_form", "Type de base", None))
         self.label_3.setText(_translate("cadastre_import_form", "Schémas", None))
         self.btDbCreateSchema.setText(_translate("cadastre_import_form", "créer", None))
         self.databaseSpecificOptions.setTabText(self.databaseSpecificOptions.indexOf(self.tab), _translate("cadastre_import_form", "PostGIS", None))
@@ -290,7 +274,6 @@ class Ui_cadastre_import_form(object):
         self.label_16.setText(_translate("cadastre_import_form", "Année", None))
         self.label_6.setText(_translate("cadastre_import_form", "Lot", None))
         self.btProcessImport.setText(_translate("cadastre_import_form", "Lancer l\'import", None))
-        self.cbUpdateMultiPolygon.setText(_translate("cadastre_import_form", "Seulement corriger les multi-polygones de données déjà importées", None))
         self.txtLog.setHtml(_translate("cadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
