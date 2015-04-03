@@ -418,7 +418,9 @@ class cadastreExport(QObject):
                 item['position'][0],
                 item['position'][1] + (page - 1) * (self.pageHeight + 10),
                 item['position'][2],
-                item['position'][3]
+                item['position'][3],
+                False,
+                -1
             )
             cl.setVAlign(item['align'][0])
             cl.setHAlign(item['align'][1])
