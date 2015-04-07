@@ -163,7 +163,7 @@ class cadastreImport(QObject):
             sql = "SET LOCAL synchronous_commit TO off;"
 
         if self.dialog.dbType == 'spatialite':
-            sql = 'PRAGMA synchronous = OFF;PRAGMA journal_mode = MEMORY;PRAGMA temp_store = %s;PRAGMA cache_size = 500000' % self.spatialiteTempStore
+            sql = 'PRAGMA synchronous = OFF;PRAGMA journal_mode = OFF;PRAGMA temp_store = %s;PRAGMA cache_size = 500000' % self.spatialiteTempStore
 
         self.executeSqlQuery(sql)
 
@@ -717,6 +717,10 @@ class cadastreImport(QObject):
         if self.dialog.dbType == 'postgis':
             sql = "SET LOCAL synchronous_commit TO on;"
             self.executeSqlQuery(sql)
+        else:
+            sql = 'PRAGMA journal_mode = MEMORY;'
+            self.executeSqlQuery(sql)
+
 
         # Remove the temp folders
         self.dialog.subStepLabel.setText(u'Suppression des données temporaires')
@@ -953,7 +957,9 @@ class cadastreImport(QObject):
             if not self.dialog.edigeoMakeValid:
                 mvReplaceDic = [
                     {'in': r"ST_CollectionExtract\(ST_MakeValid\(geom\),{2,3}\)",
-                 'out': r"geom"}
+                 'out': r"geom"},
+                    {'in': r"ST_CollectionExtract\(ST_MakeValid\(p\.geom\),{2,3}\)",
+                 'out': r"p.geom"}
                 ]
                 for a in mvReplaceDic:
                     r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)

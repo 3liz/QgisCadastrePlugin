@@ -300,9 +300,9 @@ class cadastre_common():
         layer = None
         layers = self.dialog.iface.legendInterface().layers()
         for l in layers:
-            if not l.type() == QgsMapLayer.VectorLayer:
-                continue
             if not hasattr(l, 'providerType'):
+                continue
+            if not l.type() == QgsMapLayer.VectorLayer:
                 continue
             if not l.providerType() in (u'postgres', u'spatialite'):
                 continue
@@ -565,7 +565,9 @@ class cadastre_common():
             {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",
             'out': r"strftime('%d/%m/%Y', \2)"},
             {'in': r"ST_MakeValid\(geom\)",
-             'out': r"CASE WHEN ST_IsValid(geom) THEN geom ELSE ST_Buffer(geom,0) END"}
+             'out': r"CASE WHEN ST_IsValid(geom) THEN geom ELSE ST_Buffer(geom,0) END"},
+            {'in': r"ST_MakeValid\(p\.geom\)",
+             'out': r"CASE WHEN ST_IsValid(p.geom) THEN p.geom ELSE ST_Buffer(p.geom,0) END"}
         ]
 
         for a in replaceDict:
