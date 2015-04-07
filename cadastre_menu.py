@@ -205,9 +205,6 @@ class cadastre_menu:
             self.iface,
             self.cadastre_search_dialog
         )
-
-        # refresh identify tool when new data loaded
-        self.checkIdentifyParcelleTool()
         dialog.exec_()
 
     def toggle_search_dialog(self):
