@@ -7,7 +7,7 @@ description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
-version=1.1.1
+version=1.2.0
 author=3liz
 email=info@3liz.com
 
@@ -17,25 +17,15 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 1.1.1
-  * Ajout de la compatibilité avec QGIS 2.8
-  Version 1.1.0
-  * Options - Ajout du menu Vue/Décorations dans l'interface Cadastre
-  * Chargement - La couche Unités foncières est décochée par défaut
-  * Import - Ajout des scripts pyogr pour compatibilité QGIS 2.6
-  * Ajout d'une boite de dialogue d'information lors du 1er chargement. Visible via le menu Cadastre > Notes de version
-  * Import/Recherche/Export - Modification du lien entre les parcelles EDIGEO et MAJIC (même identifiant unique pour les 2)
-  * Import - exhaustivité des données de propriétaire MAJIC - fix #47
-  * Import - Conserver l'orientation des symboles lors d'imports successifs - fix #46
-  * Import - Correction des géométries invalides - fix #43
-  * Import - Correction des multipolygones sous Windows - fixes #44
-  * Info parcelle - option de filtre commune pour le relevé de propriété - fix #42
-  * Chargement - Ajout des TRONROUTE_ID pour les étiquettes des noms voies - bug #40
-  * Chargement - Suppression des étiquettes abbérantes - fix #41
-  * Import - Ajout des unités foncières pour PostGIS (refonte de la requête)
-  * Import - MAJIC : ajout de la compatibilité des fichiers 2014
-  * Import - EDIGEO : ajout de la table boulon_id
-  * Chargement - correction du bug #38 : minidump sous Windows
+  Version 1.2.0
+  * Import - Amélioration des performances d'imports pour Spatialite
+  * Import - Ajout d'une option pour activer/désactiver la validation des géométries
+  * Import - Suppression de l'outil de réparation des multipolygones sur une bdd déja importée (phase de transition terminée )
+  * Interface - pour l'interface Cadastre, ajout des boutons WMS/WFS - fixes #53
+  * Export - Debogage des exports PDF vides pour la 2.8 - fixes #60
+  * Identification parcelle - amélioration interne de l'outil (pas visible dans l'interface)
+  * Import - Prise en compte des fichiers MAJIC sans contenus dans les premières lignes
+
 
 
 

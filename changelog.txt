@@ -1,4 +1,13 @@
 CHANGELOG
+  Version 1.2.0
+  * Import - Amélioration des performances d'imports pour Spatialite
+  * Import - Ajout d'une option pour activer/désactiver la validation des géométries
+  * Import - Suppression de l'outil de réparation des multipolygones sur une bdd déja importée (phase de transition terminée )
+  * Interface - pour l'interface Cadastre, ajout des boutons WMS/WFS - fixes #53
+  * Export - Debogage des exports PDF vides pour la 2.8 - fixes #60
+  * Identification parcelle - amélioration interne de l'outil (pas visible dans l'interface)
+  * Import - Prise en compte des fichiers MAJIC sans contenus dans les premières lignes
+
   Version 1.1.1
   * Ajout de la compatibilité avec QGIS 2.8
 
