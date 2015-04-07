@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_import_form.ui'
 #
-# Created: Fri Apr  3 15:33:05 2015
+# Created: Tue Apr  7 09:29:45 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,7 +33,7 @@ class Ui_cadastre_import_form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 558, 736))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 558, 681))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -218,9 +218,24 @@ class Ui_cadastre_import_form(object):
         self.horizontalLayout_12.addWidget(self.inEdigeoLot)
         self.verticalLayout_15.addLayout(self.horizontalLayout_12)
         self.verticalLayout_6.addWidget(self.groupBox_7)
+        self.cbMakeValid = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
+        self.cbMakeValid.setChecked(True)
+        self.cbMakeValid.setObjectName(_fromUtf8("cbMakeValid"))
+        self.verticalLayout_6.addWidget(self.cbMakeValid)
         self.btProcessImport = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
         self.btProcessImport.setObjectName(_fromUtf8("btProcessImport"))
         self.verticalLayout_6.addWidget(self.btProcessImport)
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.stepLabel = QtGui.QLabel(self.scrollAreaWidgetContents_2)
+        self.stepLabel.setText(_fromUtf8(""))
+        self.stepLabel.setObjectName(_fromUtf8("stepLabel"))
+        self.horizontalLayout.addWidget(self.stepLabel)
+        self.subStepLabel = QtGui.QLabel(self.scrollAreaWidgetContents_2)
+        self.subStepLabel.setText(_fromUtf8(""))
+        self.subStepLabel.setObjectName(_fromUtf8("subStepLabel"))
+        self.horizontalLayout.addWidget(self.subStepLabel)
+        self.verticalLayout_6.addLayout(self.horizontalLayout)
         self.pbProcess = QtGui.QProgressBar(self.scrollAreaWidgetContents_2)
         self.pbProcess.setProperty("value", 0)
         self.pbProcess.setObjectName(_fromUtf8("pbProcess"))
@@ -232,6 +247,8 @@ class Ui_cadastre_import_form(object):
         self.txtLog.setTextInteractionFlags(QtCore.Qt.TextEditorInteraction)
         self.txtLog.setObjectName(_fromUtf8("txtLog"))
         self.verticalLayout_6.addWidget(self.txtLog)
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_6.addItem(spacerItem)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea)
         self.buttonBox = QtGui.QDialogButtonBox(cadastre_import_form)
@@ -240,7 +257,7 @@ class Ui_cadastre_import_form(object):
         self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(cadastre_import_form)
-        self.databaseSpecificOptions.setCurrentIndex(1)
+        self.databaseSpecificOptions.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(cadastre_import_form)
 
     def retranslateUi(self, cadastre_import_form):
@@ -273,6 +290,7 @@ class Ui_cadastre_import_form(object):
         self.label_15.setText(_translate("cadastre_import_form", "Version du format", None))
         self.label_16.setText(_translate("cadastre_import_form", "Année", None))
         self.label_6.setText(_translate("cadastre_import_form", "Lot", None))
+        self.cbMakeValid.setText(_translate("cadastre_import_form", "Corriger les géométries invalides", None))
         self.btProcessImport.setText(_translate("cadastre_import_form", "Lancer l\'import", None))
         self.txtLog.setHtml(_translate("cadastre_import_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

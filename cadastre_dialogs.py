@@ -792,6 +792,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.edigeoLot = None
         self.majicSourceDir = None
         self.edigeoSourceDir = None
+        self.edigeoMakeValid = False
 
         # set input values from settings
         self.sList = {
@@ -989,6 +990,9 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         # defined properties
         self.doMajicImport = os.path.exists(self.majicSourceDir)
         self.doEdigeoImport =  os.path.exists(self.edigeoSourceDir)
+
+        if self.cbMakeValid.isChecked():
+            self.edigeoMakeValid = True
 
         msg = ''
         if not self.db:

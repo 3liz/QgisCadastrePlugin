@@ -688,6 +688,7 @@ class cadastreImport(QObject):
                 s = item['script']
                 self.replaceParametersInScript(s, replaceDict)
                 self.updateProgressBar()
+
                 self.executeSqlScript(s, item.has_key('divide'), item.has_key('constraints'))
                 if item.has_key('constraints'):
                     self.hasConstraints = item['constraints']
@@ -947,6 +948,17 @@ class cadastreImport(QObject):
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
                 sql = self.qc.setSearchPath(sql, self.dialog.schema)
+
+            # Remove make valid if asked
+            if not self.dialog.edigeoMakeValid:
+                mvReplaceDic = [
+                    {'in': r"ST_CollectionExtract\(ST_MakeValid\(geom\),{2,3}\)",
+                 'out': r"geom"}
+                ]
+                for a in mvReplaceDic:
+                    r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
+                    sql = r.sub(a['out'], sql)
+
             # Convert SQL into spatialite syntax
             if self.dialog.dbType == 'spatialite':
                 sql = self.qc.postgisToSpatialite(sql, self.targetSrid)
