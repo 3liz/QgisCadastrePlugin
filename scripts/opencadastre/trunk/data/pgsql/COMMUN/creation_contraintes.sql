@@ -35,6 +35,7 @@ ALTER TABLE [PREFIXE]geo_batiment ADD CONSTRAINT geo_batiment_pk PRIMARY KEY (ge
 ALTER TABLE [PREFIXE]geo_batiment_parcelle ADD CONSTRAINT geo_batiment_parcelle_pk PRIMARY KEY (geo_batiment_parcelle );
 ALTER TABLE [PREFIXE]geo_zoncommuni ADD CONSTRAINT geo_zoncommuni_pk PRIMARY KEY (geo_zoncommuni );
 ALTER TABLE [PREFIXE]geo_tronfluv ADD CONSTRAINT geo_tronfluv_pk PRIMARY KEY (geo_tronfluv );
+ALTER TABLE [PREFIXE]geo_tronroute ADD CONSTRAINT geo_tronroute_pk PRIMARY KEY (geo_tronroute );
 ALTER TABLE [PREFIXE]geo_ptcanv ADD CONSTRAINT geo_ptcanv_pk PRIMARY KEY (geo_ptcanv );
 ALTER TABLE [PREFIXE]geo_borne ADD CONSTRAINT geo_borne_pk PRIMARY KEY (geo_borne);
 ALTER TABLE [PREFIXE]geo_borne_parcelle ADD CONSTRAINT geo_borne_parcelle_pk PRIMARY KEY (geo_borne_parcelle );

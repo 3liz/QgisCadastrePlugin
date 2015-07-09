@@ -907,6 +907,19 @@ CREATE TABLE geo_tronfluv
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tronfluv', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
 
+CREATE TABLE geo_tronroute
+(
+  geo_tronroute serial NOT NULL,
+  annee character varying(4) NOT NULL,
+  object_rid character varying(80),
+  tex character varying,
+  creat_date date,
+  update_dat date,
+  lot character varying
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_tronroute', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+
+
 CREATE TABLE geo_can (geo_can character varying(2),geo_can_lib character varying(150));
 ALTER TABLE geo_can ADD PRIMARY KEY (geo_can);
 CREATE TABLE geo_ppln (geo_ppln character varying(2),geo_ppln_lib character varying(150));
@@ -1727,6 +1740,7 @@ COMMENT ON COLUMN geo_zoncommuni.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_zoncommuni.tex IS 'Nom de la voie';
 COMMENT ON COLUMN geo_zoncommuni.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_zoncommuni.update_dat IS 'Date de dernière modification';
+
 COMMENT ON TABLE geo_tronfluv IS 'Élément surfacique (fermé) utilisé pour tous les cours d''eau et les rivages de mers. Un libellé y est associé.';
 COMMENT ON COLUMN geo_tronfluv.geo_tronfluv IS 'Identifiant';
 COMMENT ON COLUMN geo_tronfluv.annee IS 'Année';
@@ -1734,6 +1748,14 @@ COMMENT ON COLUMN geo_tronfluv.object_rid IS 'Numéro d''objet';
 COMMENT ON COLUMN geo_tronfluv.tex IS 'Nom du cours d''eau';
 COMMENT ON COLUMN geo_tronfluv.creat_date IS 'Date de création';
 COMMENT ON COLUMN geo_tronfluv.update_dat IS 'Date de dernière modification';
+
+COMMENT ON TABLE geo_tronroute IS 'Élément surfacique (fermé) utilisé pour tous les tronçons de routes. Un libellé y est associé.';
+COMMENT ON COLUMN geo_tronroute.geo_tronroute IS 'Identifiant';
+COMMENT ON COLUMN geo_tronroute.annee IS 'Année';
+COMMENT ON COLUMN geo_tronroute.object_rid IS 'Numéro d''objet';
+COMMENT ON COLUMN geo_tronroute.tex IS 'Nom du cours d''eau';
+COMMENT ON COLUMN geo_tronroute.creat_date IS 'Date de création';
+COMMENT ON COLUMN geo_tronroute.update_dat IS 'Date de dernière modification';
 
 COMMENT ON TABLE geo_ptcanv IS 'Objet ponctuel servant d''appui aux opérations de lever des plans..';
 COMMENT ON COLUMN geo_ptcanv.geo_ptcanv IS 'Identifiant';

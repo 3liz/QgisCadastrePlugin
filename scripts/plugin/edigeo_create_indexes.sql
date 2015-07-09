@@ -9,6 +9,7 @@ CREATE INDEX geo_lieudit_geom_idx ON geo_lieudit USING gist (geom);
 CREATE INDEX geo_batiment_geom_idx ON geo_batiment USING gist (geom);
 CREATE INDEX geo_zoncommuni_geom_idx ON geo_zoncommuni USING gist (geom);
 CREATE INDEX geo_tronfluv_geom_idx ON geo_tronfluv USING gist (geom);
+CREATE INDEX geo_tronroute_geom_idx ON geo_tronroute USING gist (geom);
 CREATE INDEX geo_ptcanv_geom_idx ON geo_ptcanv USING gist (geom);
 CREATE INDEX geo_borne_geom_idx ON geo_borne USING gist (geom);
 CREATE INDEX geo_croix_geom_idx ON geo_croix USING gist (geom);

@@ -10,6 +10,7 @@ DELETE FROM [PREFIXE]geo_zoncommuni WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_tpoint WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_tline WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_tronfluv WHERE lot='[LOT]';
+DELETE FROM [PREFIXE]geo_tronroute WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_symblim WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_croix WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]geo_borne WHERE lot='[LOT]';
@@ -143,6 +144,11 @@ INSERT INTO [PREFIXE]geo_tronfluv( annee, object_rid, tex, creat_date, update_da
 SELECT '[ANNEE]', object_rid, COALESCE(trim(tex),'')||COALESCE(' '||trim(tex2),'')||COALESCE(' '||trim(tex3),'')||COALESCE(' '||trim(tex4),'')||COALESCE(' '||trim(tex5),'')||COALESCE(' '||trim(tex6),'')||COALESCE(' '||trim(tex7),'')||COALESCE(' '||trim(tex8),'')||COALESCE(' '||trim(tex9),'')||COALESCE(' '||trim(tex10),'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
 FROM [PREFIXE]tronfluv_id;
 
+-- geo_tronroute
+INSERT INTO [PREFIXE]geo_tronroute( annee, object_rid, tex, creat_date, update_dat, geom, lot)
+SELECT '[ANNEE]', object_rid, COALESCE(trim(tex),'')||COALESCE(' '||trim(tex2),'')||COALESCE(' '||trim(tex3),'')||COALESCE(' '||trim(tex4),'')||COALESCE(' '||trim(tex5),'')||COALESCE(' '||trim(tex6),'')||COALESCE(' '||trim(tex7),'')||COALESCE(' '||trim(tex8),'')||COALESCE(' '||trim(tex9),'')||COALESCE(' '||trim(tex10),'') as tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
+FROM [PREFIXE]tronroute_id;
+
 -- geo_sym
 INSERT INTO [PREFIXE]geo_sym SELECT DISTINCT sym, 'Inconnu '||sym  FROM [PREFIXE]ptcanv_id WHERE sym NOT IN (SELECT geo_sym FROM [PREFIXE]geo_sym);
 
@@ -251,6 +257,7 @@ ANALYZE [PREFIXE]geo_batiment;
 ANALYZE [PREFIXE]geo_batiment_parcelle;
 ANALYZE [PREFIXE]geo_zoncommuni;
 ANALYZE [PREFIXE]geo_tronfluv;
+ANALYZE [PREFIXE]geo_tronroute;
 ANALYZE [PREFIXE]geo_sym;
 ANALYZE [PREFIXE]geo_ptcanv;
 ANALYZE [PREFIXE]geo_borne;

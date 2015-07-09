@@ -95,7 +95,7 @@ class cadastreImport(QObject):
         self.maxInsertRows = s.value("cadastre/maxInsertRows", 50000, type=int)
         self.spatialiteTempStore = s.value("cadastre/spatialiteTempStore", 'MEMORY', type=str)
 
-        self.geoTableList = ['geo_zoncommuni', 'geo_ptcanv', 'geo_commune', 'geo_parcelle', 'geo_symblim', 'geo_tronfluv', 'geo_label', 'geo_subdsect', 'geo_batiment', 'geo_borne', 'geo_croix', 'geo_tpoint', 'geo_lieudit', 'geo_section', 'geo_subdfisc', 'geo_tsurf', 'geo_tline', 'geo_unite_fonciere']
+        self.geoTableList = ['geo_zoncommuni', 'geo_ptcanv', 'geo_commune', 'geo_parcelle', 'geo_symblim', 'geo_tronfluv', 'geo_tronroute', 'geo_label', 'geo_subdsect', 'geo_batiment', 'geo_borne', 'geo_croix', 'geo_tpoint', 'geo_lieudit', 'geo_section', 'geo_subdfisc', 'geo_tsurf', 'geo_tline', 'geo_unite_fonciere']
 
 
         if self.dialog.dbType == 'postgis':
@@ -1282,6 +1282,7 @@ class cadastreImport(QObject):
             'subdfisc_id': 'geo_subdfisc',
             'subdsect_id': 'geo_subdsect',
             'tronfluv_id': 'geo_tronfluv',
+            'tronroute_id': 'geo_tronroute',
             'tsurf_id': 'geo_tsurf'
         }
 
