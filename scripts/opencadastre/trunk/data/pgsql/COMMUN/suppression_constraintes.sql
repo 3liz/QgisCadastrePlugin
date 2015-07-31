@@ -146,6 +146,7 @@ ALTER TABLE [PREFIXE]geo_section DROP CONSTRAINT geo_section_pk;
 ALTER TABLE [PREFIXE]geo_commune DROP CONSTRAINT geo_commune_pk;
 ALTER TABLE [PREFIXE]voie DROP CONSTRAINT voie_pk;
 ALTER TABLE [PREFIXE]commune DROP CONSTRAINT commune_pk;
+ALTER TABLE [PREFIXE]commune_majic DROP CONSTRAINT commune_majic_pk;
 ALTER TABLE [PREFIXE]lotslocaux DROP CONSTRAINT loclocaux_pk;
 ALTER TABLE [PREFIXE]lots DROP CONSTRAINT lots_pk;
 ALTER TABLE [PREFIXE]parcellecomposante DROP CONSTRAINT parcellecomposante_pk;

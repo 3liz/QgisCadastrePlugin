@@ -36,6 +36,8 @@ ALTER TABLE lots ADD CONSTRAINT lots_pk PRIMARY KEY  (lots);
 ALTER TABLE lotslocaux ADD CONSTRAINT loclocaux_pk PRIMARY KEY  (lotslocaux);
 -- clé primaire : commune
 ALTER TABLE commune ADD CONSTRAINT commune_pk PRIMARY KEY  (commune);
+-- clé primaire : commune_majic
+ALTER TABLE commune_majic ADD CONSTRAINT commune_majic_pk PRIMARY KEY  (commune);
 -- clé primaire : voie
 ALTER TABLE voie ADD CONSTRAINT voie_pk PRIMARY KEY  (voie);
 -- clé primaire : geo_commune

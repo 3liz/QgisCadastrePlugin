@@ -20,6 +20,7 @@ ALTER TABLE [PREFIXE]parcellecomposante ADD CONSTRAINT parcellecomposante_pk PRI
 ALTER TABLE [PREFIXE]lots ADD CONSTRAINT lots_pk PRIMARY KEY  (lots);
 ALTER TABLE [PREFIXE]lotslocaux ADD CONSTRAINT loclocaux_pk PRIMARY KEY  (lotslocaux);
 ALTER TABLE [PREFIXE]commune ADD CONSTRAINT commune_pk PRIMARY KEY  (commune);
+ALTER TABLE [PREFIXE]commune_majic ADD CONSTRAINT commune_majic_pk PRIMARY KEY  (commune);
 ALTER TABLE [PREFIXE]voie ADD CONSTRAINT voie_pk PRIMARY KEY  (voie);
 ALTER TABLE [PREFIXE]geo_commune ADD CONSTRAINT geo_commune_pk PRIMARY KEY (ogc_fid);
 ALTER TABLE [PREFIXE]geo_section ADD CONSTRAINT geo_section_pk PRIMARY KEY (ogc_fid);

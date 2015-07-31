@@ -233,7 +233,8 @@ class cadastreImport(QObject):
         '''
         # List all the tables which have been created between plugin versions
         newTables = [
-            'geo_tronroute'
+            'geo_tronroute',
+            'commune_majic'
         ]
 
         # Replace dictionnary

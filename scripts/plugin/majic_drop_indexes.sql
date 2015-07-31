@@ -27,6 +27,7 @@ DROP INDEX IF EXISTS idxan_parcellecomposante;
 DROP INDEX IF EXISTS idx_lots_tmp1;
 DROP INDEX IF EXISTS idxan_lotslocaux;
 DROP INDEX IF EXISTS idxan_commune;
+DROP INDEX IF EXISTS idxan_majic_commune;
 DROP INDEX IF EXISTS proprietaire_dnupro_idx;
 DROP INDEX IF EXISTS proprietaire_ddenom_idx;
 DROP INDEX IF EXISTS parcelle_dnupro_idx;
@@ -35,6 +36,7 @@ DROP INDEX IF EXISTS sufexoneration_suf_idx;
 
 DROP INDEX IF EXISTS idx_proprietaire_ccocom;
 DROP INDEX IF EXISTS idx_commune_ccocom;
+DROP INDEX IF EXISTS idx_majic_commune_ccocom;
 DROP INDEX IF EXISTS idx_proprietaire_ccodro;
 DROP INDEX IF EXISTS idx_proprietaire_comptecommunal;
 DROP INDEX IF EXISTS idx_local00_parcelle;

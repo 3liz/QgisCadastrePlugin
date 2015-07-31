@@ -2,6 +2,7 @@
 -- Purge des tables de données;
 DELETE FROM [PREFIXE]voie WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]commune WHERE lot='[LOT]';
+DELETE FROM [PREFIXE]commune_majic WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]lotslocaux WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]lots WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]parcellecomposante WHERE lot='[LOT]';

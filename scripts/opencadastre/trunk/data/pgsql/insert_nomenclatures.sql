@@ -383,6 +383,10 @@ INSERT INTO gnextl VALUES ('P2', 'Abattement 2ème année sur outillages, équip
 INSERT INTO gnextl VALUES ('P3', 'Abattement 3ème, 4ème et 5ème années sur outillages, équipements et installations spécifiques de manutention');
 INSERT INTO gnextl VALUES ('LE', 'Exonération de 15 ans pour les logements acquis avec l’aide de l’aide de l’Etat en vue de leur location');
 INSERT INTO gnextl VALUES ('LI', 'Exonération de 15 ans pour les logements sociaux acquis d’un organisme mentionné à l’article L 411.5 du Code de la construction et de l’habitation.');
+INSERT INTO gnextl VALUES ('AK', 'Exonération de 20 ans pour les logements intermédiaires loués dans les conditions de l’article 279-0 bis A (addition de construction) – art. 1384-0 A du CGI');
+INSERT INTO gnextl VALUES ('NK', 'Exonération de 20 ans pour les logements intermédiaires loués dans les conditions de l’article 279-0 bis A (construction nouvelle) – art. 1384-0 A du CGI');
+INSERT INTO gnextl VALUES ('RT', 'Abattement de 25 % pour les locaux faisant l’objet d’une convention ou d''un contrat de résidence temporaire – art. 1388 quinquies A du CGI');
+INSERT INTO gnextl VALUES ('UM', 'Exonération de 5 ans pour les usines de méthanisation - art. 1387 A du CGI');
 
 -- nomenclature cconad (pevprincipale, pevdependances)
 INSERT INTO cconad VALUES ('CV', 'Cave');

@@ -45,6 +45,8 @@ DROP INDEX IF EXISTS idx_proprietaire_ccocom;
 CREATE INDEX idx_proprietaire_ccocom ON proprietaire (ccocom);
 DROP INDEX IF EXISTS idx_commune_ccocom;
 CREATE INDEX idx_commune_ccocom ON commune (ccocom);
+DROP INDEX IF EXISTS idx_commune_majic_ccocom;
+CREATE INDEX idx_commune_majic_ccocom ON commune_majic (ccocom);
 DROP INDEX IF EXISTS idx_proprietaire_ccodro;
 CREATE INDEX idx_proprietaire_ccodro ON proprietaire (ccodro);
 DROP INDEX IF EXISTS idx_proprietaire_comptecommunal;

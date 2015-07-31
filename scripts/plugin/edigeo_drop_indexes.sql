@@ -74,6 +74,7 @@ DROP INDEX IF EXISTS idx_parcellecomposante_parcellecomposante;
 DROP INDEX IF EXISTS idx_lots_lots;
 DROP INDEX IF EXISTS idx_lotslocaux_lotslocaux;
 DROP INDEX IF EXISTS idx_commune_commune;
+DROP INDEX IF EXISTS idx_commune_majic_commune;
 DROP INDEX IF EXISTS idx_voie_voie;
 DROP INDEX IF EXISTS idx_geo_commune_ogc_fid;
 DROP INDEX IF EXISTS idx_geo_section_ogc_fid;
@@ -106,6 +107,7 @@ DROP INDEX IF EXISTS idx_geo_tsurf_commune_geo_tsurf_commune ;
 
 DROP INDEX IF EXISTS idx_proprietaire_ccocom;
 DROP INDEX IF EXISTS idx_commune_ccocom;
+DROP INDEX IF EXISTS idx_commune_majic_ccocom;
 DROP INDEX IF EXISTS idx_proprietaire_ccodro;
 DROP INDEX IF EXISTS idx_proprietaire_comptecommunal;
 DROP INDEX IF EXISTS idx_local00_parcelle;

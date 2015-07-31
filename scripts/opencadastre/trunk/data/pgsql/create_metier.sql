@@ -3,7 +3,7 @@ CREATE TABLE fanr (tmp character varying(550));
 CREATE TABLE lloc (tmp character varying(550));
 CREATE TABLE nbat (tmp character varying(550));
 CREATE TABLE pdll (tmp character varying(550));
-CREATE TABLE prop (tmp character varying(550));
+CREATE TABLE prop (tmp character varying);
 
 CREATE TABLE parcelle (
     parcelle character varying(19),
@@ -499,6 +499,8 @@ CREATE TABLE proprietaire (
     jantfc character varying (4),
     jantbc character varying (4),
     dformjur character varying (4),
+    dnomus character varying,
+    dprnus character varying,
     lot character varying
 );
 
@@ -602,6 +604,16 @@ CREATE TABLE lotslocaux (
     local10 character varying (14),
     dnumql character varying (7),
     ddenql character varying (7),
+    lot character varying
+);
+
+CREATE TABLE commune_majic(
+    commune character varying (10),
+    annee character varying (4),
+    ccodep character varying (2),
+    ccodir character varying (1),
+    ccocom character varying (3),
+    libcom character varying (50),
     lot character varying
 );
 
@@ -1531,6 +1543,8 @@ COMMENT ON COLUMN proprietaire.jandge IS 'année d’entrée à la DGE - INDISPO
 COMMENT ON COLUMN proprietaire.jantfc IS 'année d’entrée paiement TF - INDISPONIBLE';
 COMMENT ON COLUMN proprietaire.jantbc IS 'année d’entrée paiement TSBCS - INDISPONIBLE';
 COMMENT ON COLUMN proprietaire.dformjur IS 'Forme juridique (Depuis 2013)';
+COMMENT ON COLUMN proprietaire.dnomus IS 'Nom d''usage (Depuis 2015)';
+COMMENT ON COLUMN proprietaire.dprnus IS 'Prénom d''usage (Depuis 2015)';
 COMMENT ON TABLE pdl IS 'Propriétés divisées en lots';
 COMMENT ON COLUMN pdl.ccodep IS 'code département - ';
 COMMENT ON COLUMN pdl.ccodir IS 'code direction - ';
@@ -1611,6 +1625,13 @@ COMMENT ON COLUMN commune.codvoi IS 'Code identifiant la voie dans MAJIC2. - Per
 COMMENT ON COLUMN commune.typvoi IS 'Type de voie - Indicateur de la classe de la voie. - 1 - voie, 2 - ensemble immobilier, 3 - lieu-dit, 4 -  pseudo-voie, 5 - voie provisoire.';
 COMMENT ON COLUMN commune.indldnbat IS 'Indicateur lieu-dit non bâti - Zone servie uniquement pour les lieux-dits.Permet d’indiquer si le lieu-dit comporte ou non un bâtiment dans MAJIC.1 pour lieu-dit non bâti, 0 sinon.';
 COMMENT ON COLUMN commune.motclas IS 'Mot classant - Dernier mot entièrement alphabétique du libellé de voie - Permet de restituer l''ordre alphabétique.';
+
+COMMENT ON TABLE commune_majic IS 'Commune (MAJIC - introduit depuis le millésime 2015). Cet article contient le code INSEE associé au libellé de la commune.';
+COMMENT ON COLUMN commune_majic.ccodep IS 'Code département - Code département INSEE';
+COMMENT ON COLUMN commune_majic.ccodir IS 'Code direction - Code direction dge';
+COMMENT ON COLUMN commune_majic.ccocom IS 'Code commune - 3 caractères';
+COMMENT ON COLUMN commune_majic.libcom IS 'Libellé de la commune';
+
 COMMENT ON TABLE voie IS 'Voie (Fantoir)';
 COMMENT ON COLUMN voie.ccodep IS 'Code département - Code département INSEE';
 COMMENT ON COLUMN voie.ccodir IS 'Code direction - Code direction dge';
