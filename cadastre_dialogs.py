@@ -1042,9 +1042,12 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         # Check if structure already exists in the database/schema
         self.qc.checkDatabaseForExistingStructure()
 
-        #~ # Run Script for creating tables
+        # Run Script for creating tables
         if not self.hasStructure:
             qi.installOpencadastreStructure()
+        else:
+            # Run update script which add some missing tables when needed
+            qi.updateCadastreStructure()
 
         # Run MAJIC import
         if self.doMajicImport:
