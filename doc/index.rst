@@ -34,6 +34,7 @@ Une fois le plugin installé, un nouveau menu **Cadastre** apparaît dans la bar
 * **Charger des données**
 * **Outils de recherche**
 * **Configurer le plugin**
+* **Notes de version**
 * **À propos**
 
 Ces sous-menus sont détaillés dans les chapitres suivants.
@@ -63,6 +64,7 @@ Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur v
 
 .. note::  Il est important de bien configurer ces noms de fichiers avant votre premier import.
 
+Si le plugin ne trouve pas les fichiers MAJIC pendant l'import, alors que vous aviez spécifié le bon répertoire d'import, un message vous avertira et vous proposera d'annuler l'import.
 
 Répertoire temporaire
 ----------------------
@@ -77,7 +79,7 @@ Performances
 
 Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de votre matériel :
 
-* **Taille maximum des requêtes INSERT** : Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du temps.
+* **Taille maximum des requêtes INSERT** : C'est le nombre total de requêtes INSERT lancées dans un groupe de modification ( BEGIN/COMMIT) . Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du temps.
 
 * **Stockage temporaire** : Le mode *MEMORY* est plus rapide, mais nécessite assez de mémoire vive pour stocker les données à traiter. Le mode *DEFAULT* est plus lent et adapté à des ordinateurs avec peu de mémoire vive.
 
@@ -94,7 +96,7 @@ Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MA
 Principe
 ------------
 
-Le plugin permet l'import de données **MAJIC 2012, 2013 et 2014, et des données EDIGEO** . Il est possible d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
+Le plugin permet l'import de données **MAJIC de 2012 à 2015 et des données EDIGEO** . Il est possible d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
 Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.
 
@@ -106,9 +108,10 @@ Vous pouvez par exemple importer les données dans cette ordre :
 * données EDIGEO de la commune A, lot "com_a" (réimport et écrasement des données précédentes)
 * données EDIGEO de la commune C, lot "com_c"
 
-Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données.
+Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données. Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
 
-.. note::  Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
+
+.. note::  Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d'un millésime à l'autre ( ajout de colonnes, modification de longueur de champs, etc.
 
 Bases de données
 -----------------
@@ -126,6 +129,7 @@ Pour les bases de données **PostGIS**, il faut :
 * avoir créé au préalable **une connexion QGIS** via le menu **Couches > Ajouter une couche PostGIS** vers cette base de données
 
 Pour les bases de données **Spatialite**, l'interface d'import permet de créer une base de données vide et la connexion QGIS liée si nécessaire.
+
 
 Les étapes d'importation
 ------------------------
@@ -160,11 +164,15 @@ On configure ensuite les options :
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
- - Seuls les formats 2012, 2013 et 2014 sont pris en compte
+ - Seuls les formats de 2012 à 2015 sont pris en compte
 
 * Choisir le **millésime des données**, par exemple 2012
 
 * Choisir le **Lot** : utilisez par exemple le code INSEE de la commune.
+
+* Activer ou désactiver la case à cocher **Corriger les géométries invalides** selon la qualité de votre jeu de données EDIGEO.
+
+* Utiliser la barre de défilement de la fenêtre pour aller tout en bas et afficher tout le bloc texte de log situé sous la barre de progression.
 
 * Lancer l'import en cliquant sur le bouton **Lancer l'import**
 
@@ -190,16 +198,16 @@ Charger des données
     - *Classique* : un thème proche du rendu de cadastre.gouv.fr
     - *Orthophoto* : un thème adapté à un affichage par dessus un fond orthophoto.
 
-* Option **Remplacement des couches ?** : Cette option permet de choisir le comportement du chargement des données en fonction des couches déjà existantes dans le projet QGIS
-
- - *Conserver* : signifie qu'on ne remplace pas la couche déjà présente dans QGIS par la couche correspondante trouvée dans la base de données
- - *Remplacer* : signifie qu'on supprime la couche déjà présente pour la remplacer par la couche correspondante dans la base de données
+* **Enlever les données cadastrales existantes dans votre projet QGIS** : Le plugin ne sait pas gérer la recherche et l'interrogation de données si on a plus qu'une version des couches parcelles, communes et sections dans le projet QGIS.
 
 * **Charger les données** en cliquant sur le bouton : une fois les données chargées, l'emprise de la carte est raffraîchie pour afficher l'ensemble des données (zoom sur l'ensemble des communes trouvées)
 
 
 La barre d'outil Cadastre
 ===========================================
+
+.. image:: MEDIA/cadastre_toolbar.png
+   :align: center
 
 La barre d'outil peut s'afficher ou se masquer à partir :
 
@@ -217,15 +225,21 @@ Pour connaître l'action d'une des icônes, il suffit de laisser la souris un mo
 Indentifier une parcelle
 --------------------------
 
-Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC dans la base de données. Sinon, seules les informations principales seront affichées et certains boutons d'action sont désactivés.
 
-Pour faire apparaître la fiche d'information d'une parcelle, il faut
+Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC dans la base de données. Sinon, seules les informations principales issues de l'EDIGEO seront affichées et certains boutons d'action sont désactivés.
+
+Pour faire apparaître la fiche d'information d'une parcelle, il faut:
 
 * activer l'outil **Identifier une parcelle** de la barre d'outil
 * **Zoomer à une échelle** pour laquelle les parcelles sont visibles (à partir de 1/20 000).
 * **Cliquer sur une des parcelles** de la carte.
 
-La fenêtre d'identification s'affiche alors, et présente
+La fenêtre d'identification s'affiche alors,
+
+.. image:: MEDIA/cadastre_parcelle_info.png
+   :align: center
+
+Elle présente:
 
 * un bloc avec les **informations générales de la parcelle**
 * un bloc avec les **propriétaires** de la parcelle
@@ -333,6 +347,11 @@ Il est possible d'exporter le relevé de propriété pour les personnes qui ne p
 Le menu **Cadastre > A propos** ouvre une fenêtre d'information sur le plugin Cadastre : financeurs, auteur, licence, dépôt de sources, etc.
 
 Cette fenêtre est automatiquement affichée lors de la première utilisation du plugin, mais pas les fois suivantes.
+
+Notes de version
+==================
+
+Le menu **Cadastre > Notes de version** ouvre une fenêtre qui montre les changements effectués sur le plugin Cadastre entre la version installée et la version précédente. Cette fenêtre est affichée automatiquement une première fois lors de la montée de version.
 
 
 Vidéos de démonstration

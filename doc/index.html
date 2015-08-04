@@ -376,6 +376,7 @@ ul.auto-toc {
 <li><strong>Charger des données</strong></li>
 <li><strong>Outils de recherche</strong></li>
 <li><strong>Configurer le plugin</strong></li>
+<li><strong>Notes de version</strong></li>
 <li><strong>À propos</strong></li>
 </ul>
 <p>Ces sous-menus sont détaillés dans les chapitres suivants.</p>
@@ -399,6 +400,7 @@ ul.auto-toc {
 <p class="first admonition-title">Note</p>
 <p class="last">Il est important de bien configurer ces noms de fichiers avant votre premier import.</p>
 </div>
+<p>Si le plugin ne trouve pas les fichiers MAJIC pendant l'import, alors que vous aviez spécifié le bon répertoire d'import, un message vous avertira et vous proposera d'annuler l'import.</p>
 </div>
 <div class="section" id="repertoire-temporaire">
 <h2>Répertoire temporaire</h2>
@@ -409,7 +411,7 @@ ul.auto-toc {
 <h2>Performances</h2>
 <p>Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de votre matériel :</p>
 <ul class="simple">
-<li><strong>Taille maximum des requêtes INSERT</strong> : Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du temps.</li>
+<li><strong>Taille maximum des requêtes INSERT</strong> : C'est le nombre total de requêtes INSERT lancées dans un groupe de modification ( BEGIN/COMMIT) . Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du temps.</li>
 <li><strong>Stockage temporaire</strong> : Le mode <em>MEMORY</em> est plus rapide, mais nécessite assez de mémoire vive pour stocker les données à traiter. Le mode <em>DEFAULT</em> est plus lent et adapté à des ordinateurs avec peu de mémoire vive.</li>
 </ul>
 </div>
@@ -420,7 +422,7 @@ ul.auto-toc {
 <img alt="MEDIA/cadastre_import_dialog.png" class="align-center" src="MEDIA/cadastre_import_dialog.png" />
 <div class="section" id="principe">
 <h2>Principe</h2>
-<p>Le plugin permet l'import de données <strong>MAJIC 2012, 2013 et 2014, et des données EDIGEO</strong> . Il est possible d'importer des données de manière incrémentale, <strong>étape par étape</strong>, ou bien d'importer <strong>en une seule fois</strong>.</p>
+<p>Le plugin permet l'import de données <strong>MAJIC de 2012 à 2015 et des données EDIGEO</strong> . Il est possible d'importer des données de manière incrémentale, <strong>étape par étape</strong>, ou bien d'importer <strong>en une seule fois</strong>.</p>
 <p>Le plugin utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un <strong>ensemble de données cohérent</strong> pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.</p>
 <p>Vous pouvez par exemple importer les données dans cette ordre :</p>
 <ul class="simple">
@@ -430,10 +432,10 @@ ul.auto-toc {
 <li>données EDIGEO de la commune A, lot &quot;com_a&quot; (réimport et écrasement des données précédentes)</li>
 <li>données EDIGEO de la commune C, lot &quot;com_c&quot;</li>
 </ul>
-<p>Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données.</p>
+<p>Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données. Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.</p>
 <div class="note">
 <p class="first admonition-title">Note</p>
-<p class="last">Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.</p>
+<p class="last">Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d'un millésime à l'autre ( ajout de colonnes, modification de longueur de champs, etc.</p>
 </div>
 </div>
 <div class="section" id="bases-de-donnees">
@@ -495,12 +497,14 @@ ul.auto-toc {
 </ul>
 <blockquote>
 <ul class="simple">
-<li>Seuls les formats 2012, 2013 et 2014 sont pris en compte</li>
+<li>Seuls les formats de 2012 à 2015 sont pris en compte</li>
 </ul>
 </blockquote>
 <ul class="simple">
 <li>Choisir le <strong>millésime des données</strong>, par exemple 2012</li>
 <li>Choisir le <strong>Lot</strong> : utilisez par exemple le code INSEE de la commune.</li>
+<li>Activer ou désactiver la case à cocher <strong>Corriger les géométries invalides</strong> selon la qualité de votre jeu de données EDIGEO.</li>
+<li>Utiliser la barre de défilement de la fenêtre pour aller tout en bas et afficher tout le bloc texte de log situé sous la barre de progression.</li>
 <li>Lancer l'import en cliquant sur le bouton <strong>Lancer l'import</strong></li>
 </ul>
 <p>Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fenêtre.</p>
@@ -530,21 +534,15 @@ ul.auto-toc {
 </ul>
 </blockquote>
 </li>
-<li><p class="first">Option <strong>Remplacement des couches ?</strong> : Cette option permet de choisir le comportement du chargement des données en fonction des couches déjà existantes dans le projet QGIS</p>
+<li><p class="first"><strong>Enlever les données cadastrales existantes dans votre projet QGIS</strong> : Le plugin ne sait pas gérer la recherche et l'interrogation de données si on a plus qu'une version des couches parcelles, communes et sections dans le projet QGIS.</p>
 </li>
-</ul>
-<blockquote>
-<ul class="simple">
-<li><em>Conserver</em> : signifie qu'on ne remplace pas la couche déjà présente dans QGIS par la couche correspondante trouvée dans la base de données</li>
-<li><em>Remplacer</em> : signifie qu'on supprime la couche déjà présente pour la remplacer par la couche correspondante dans la base de données</li>
-</ul>
-</blockquote>
-<ul class="simple">
-<li><strong>Charger les données</strong> en cliquant sur le bouton : une fois les données chargées, l'emprise de la carte est raffraîchie pour afficher l'ensemble des données (zoom sur l'ensemble des communes trouvées)</li>
+<li><p class="first"><strong>Charger les données</strong> en cliquant sur le bouton : une fois les données chargées, l'emprise de la carte est raffraîchie pour afficher l'ensemble des données (zoom sur l'ensemble des communes trouvées)</p>
+</li>
 </ul>
 </div>
 <div class="section" id="la-barre-d-outil-cadastre">
 <h1>La barre d'outil Cadastre</h1>
+<img alt="MEDIA/cadastre_toolbar.png" class="align-center" src="MEDIA/cadastre_toolbar.png" />
 <p>La barre d'outil peut s'afficher ou se masquer à partir :</p>
 <ul class="simple">
 <li>du menu <strong>Vue &gt; Barres d'outils &gt; Cadastre</strong></li>
@@ -558,14 +556,16 @@ ul.auto-toc {
 <p>Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir apparaître une bulle d'information.</p>
 <div class="section" id="indentifier-une-parcelle">
 <h2>Indentifier une parcelle</h2>
-<p>Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC dans la base de données. Sinon, seules les informations principales seront affichées et certains boutons d'action sont désactivés.</p>
-<p>Pour faire apparaître la fiche d'information d'une parcelle, il faut</p>
+<p>Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC dans la base de données. Sinon, seules les informations principales issues de l'EDIGEO seront affichées et certains boutons d'action sont désactivés.</p>
+<p>Pour faire apparaître la fiche d'information d'une parcelle, il faut:</p>
 <ul class="simple">
 <li>activer l'outil <strong>Identifier une parcelle</strong> de la barre d'outil</li>
 <li><strong>Zoomer à une échelle</strong> pour laquelle les parcelles sont visibles (à partir de 1/20 000).</li>
 <li><strong>Cliquer sur une des parcelles</strong> de la carte.</li>
 </ul>
-<p>La fenêtre d'identification s'affiche alors, et présente</p>
+<p>La fenêtre d'identification s'affiche alors,</p>
+<img alt="MEDIA/cadastre_parcelle_info.png" class="align-center" src="MEDIA/cadastre_parcelle_info.png" />
+<p>Elle présente:</p>
 <ul class="simple">
 <li>un bloc avec les <strong>informations générales de la parcelle</strong></li>
 <li>un bloc avec les <strong>propriétaires</strong> de la parcelle</li>
@@ -671,6 +671,10 @@ ul.auto-toc {
 <h1>À propos</h1>
 <p>Le menu <strong>Cadastre &gt; A propos</strong> ouvre une fenêtre d'information sur le plugin Cadastre : financeurs, auteur, licence, dépôt de sources, etc.</p>
 <p>Cette fenêtre est automatiquement affichée lors de la première utilisation du plugin, mais pas les fois suivantes.</p>
+</div>
+<div class="section" id="notes-de-version">
+<h1>Notes de version</h1>
+<p>Le menu <strong>Cadastre &gt; Notes de version</strong> ouvre une fenêtre qui montre les changements effectués sur le plugin Cadastre entre la version installée et la version précédente. Cette fenêtre est affichée automatiquement une première fois lors de la montée de version.</p>
 </div>
 <div class="section" id="videos-de-demonstration">
 <h1>Vidéos de démonstration</h1>
