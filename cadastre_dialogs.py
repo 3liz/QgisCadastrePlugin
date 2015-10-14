@@ -55,7 +55,7 @@ class cadastre_common():
         self.dialog = dialog
 
         # plugin directory path
-        self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/cadastre"
+        self.plugin_dir = os.path.dirname(os.path.abspath(__file__))
 
         # default auth id for layers
         self.defaultAuthId = 'EPSG:2154'
