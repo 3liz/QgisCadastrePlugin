@@ -694,7 +694,7 @@ class cadastreImport(QObject):
         scriptList.append(
             {
                 'title' : u'Mise en forme des données',
-                'script' : os.path.join(self.pScriptDir, 'edigeo_formatage_donnees.sql')
+                'script' : os.path.join(self.pScriptDir, 'edigeo_formatage_donnees.sql'),
                 'divide': True
             }
         )
