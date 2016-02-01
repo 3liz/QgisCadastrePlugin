@@ -1,132 +1,132 @@
-﻿CREATE TABLE bati (tmp character varying(550));
-CREATE TABLE fanr (tmp character varying(550));
-CREATE TABLE lloc (tmp character varying(550));
-CREATE TABLE nbat (tmp character varying(550));
-CREATE TABLE pdll (tmp character varying(550));
-CREATE TABLE prop (tmp character varying);
+﻿CREATE TABLE bati (tmp text);
+CREATE TABLE fanr (tmp text);
+CREATE TABLE lloc (tmp text);
+CREATE TABLE nbat (tmp text);
+CREATE TABLE pdll (tmp text);
+CREATE TABLE prop (tmp text);
 
 CREATE TABLE parcelle (
-    parcelle character varying(19),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
+    parcelle text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
     dcntpa integer,
-    dsrpar character varying (1),
-    dnupro character varying (6),
-    comptecommunal character varying (15),
+    dsrpar text,
+    dnupro text,
+    comptecommunal text,
     jdatat date,
-    dreflf character varying (5),
-    gpdl character varying (1),
-    cprsecr character varying (3),
-    ccosecr character varying (2),
-    dnuplar character varying (4),
-    dnupdl character varying (3),
-    pdl character varying (22),
-    gurbpa character varying (1),
-    dparpi character varying (4),
-    ccoarp character varying (1),
-    gparnf character varying (1),
-    gparbat character varying (1),
-    parrev character varying (12),
-    gpardp character varying (01),
-    fviti character varying (01),
-    dnvoiri character varying (4),
-    dindic character varying (1),
-    ccovoi character varying (5),
-    ccoriv character varying (4),
-    voie character varying (19),
-    ccocif character varying (4),
-    gpafpd character varying (1),
-    ajoutcoherence character varying(1),
-    cconvo character varying(4),
-    dvoilib character varying(26),
-    ccocomm character varying(3),
-    ccoprem character varying(3),
-    ccosecm character varying(2),
-    dnuplam character varying(4),
-    parcellefiliation character varying(19),
-    type_filiation character varying(1),
-    lot character varying
+    dreflf text,
+    gpdl text,
+    cprsecr text,
+    ccosecr text,
+    dnuplar text,
+    dnupdl text,
+    pdl text,
+    gurbpa text,
+    dparpi text,
+    ccoarp text,
+    gparnf text,
+    gparbat text,
+    parrev text,
+    gpardp text,
+    fviti text,
+    dnvoiri text,
+    dindic text,
+    ccovoi text,
+    ccoriv text,
+    voie text,
+    ccocif text,
+    gpafpd text,
+    ajoutcoherence text,
+    cconvo text,
+    dvoilib text,
+    ccocomm text,
+    ccoprem text,
+    ccosecm text,
+    dnuplam text,
+    parcellefiliation text,
+    type_filiation text,
+    lot text
 );
 
 CREATE TABLE suf (
-    suf character varying(21),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
-    parcelle character varying (19),
-    ccosub character varying (2),
+    suf text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
+    parcelle text,
+    ccosub text,
     dcntsf integer,
-    dnupro character varying (6),
-    comptecommunal character varying (15),
-    gnexps character varying (2),
+    dnupro text,
+    comptecommunal text,
+    gnexps text,
     drcsub numeric(10,2),
     drcsuba numeric(10,2),
-    ccostn character varying (1),
-    cgrnum character varying (2),
-    dsgrpf character varying (2),
-    dclssf character varying (2),
-    cnatsp character varying (5),
-    drgpos character varying (1),
-    ccoprel character varying (3),
-    ccosecl character varying (2),
-    dnuplal character varying (4),
-    dnupdl character varying (3),
-    pdl character varying (22),
-    dnulot character varying (7),
-    rclsi character varying (46),
-    gnidom character varying (1),
-    topja character varying (1),
+    ccostn text,
+    cgrnum text,
+    dsgrpf text,
+    dclssf text,
+    cnatsp text,
+    drgpos text,
+    ccoprel text,
+    ccosecl text,
+    dnuplal text,
+    dnupdl text,
+    pdl text,
+    dnulot text,
+    rclsi text,
+    gnidom text,
+    topja text,
     datja date,
-    postel character varying (1),
-    lot character varying
+    postel text,
+    lot text
 );
 
 CREATE TABLE sufexoneration (
-    sufexoneration character varying (23),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
-    ccosub character varying (2),
-    suf character varying(21),
-    rnuexn character varying (2),
+    sufexoneration text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
+    ccosub text,
+    suf text,
+    rnuexn text,
     vecexn numeric(10,2),
-    ccolloc character varying (2),
+    ccolloc text,
     pexn integer,
-    gnexts character varying (2),
-    jandeb character varying (4),
-    jfinex character varying (4),
-    fcexn character varying (10),
-    fcexna character varying (10),
-    rcexna character varying (10),
+    gnexts text,
+    jandeb text,
+    jfinex text,
+    fcexn text,
+    fcexna text,
+    rcexna text,
     rcexnba numeric(10,2),
-    mpexnba character varying (10),
-    lot character varying
+    mpexnba text,
+    lot text
 );
 
 CREATE TABLE suftaxation (
-    suftaxation character varying (21),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
-    ccosub character varying (2),
-    suf character varying(21) ,
+    suftaxation text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
+    ccosub text,
+    suf text ,
     c1majposa numeric(10,2),
     c1bisufad numeric(10,2),
     c2majposa numeric(10,2),
@@ -137,174 +137,174 @@ CREATE TABLE suftaxation (
     c4bisufad numeric(10,2),
     cntmajtc integer,
     majposca numeric(10,2),
-    lot character varying
+    lot text
 );
 
 CREATE TABLE local00 (
-    local00 character varying (14),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    invar character varying (10),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
-    parcelle character varying(19),
-    dnubat character varying (2),
-    descr character varying (2),
-    dniv character varying (2),
-    dpor character varying (5),
-    ccoriv character varying (4),
-    voie character varying (19),
-    ccovoi character varying (5),
-    dnvoiri character varying (4),
-    dindic character varying (1),
-    ccocif character varying (4),
-    dvoilib character varying (30),
-    cleinvar character varying (1),
-    locinc character varying (1),
-    lot character varying
+    local00 text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
+    parcelle text,
+    dnubat text,
+    descr text,
+    dniv text,
+    dpor text,
+    ccoriv text,
+    voie text,
+    ccovoi text,
+    dnvoiri text,
+    dindic text,
+    ccocif text,
+    dvoilib text,
+    cleinvar text,
+    locinc text,
+    lot text
 );
 
 CREATE TABLE local10 (
-    local10 character varying (14),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    invar character varying (10),
-    local00 character varying (14),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
-    parcelle character varying(19),
-    ccoriv character varying (4),
-    voie character varying (19),
-    ccovoi character varying (5),
-    dnvoiri character varying (4),
-    gpdl character varying (1),
-    dsrpar character varying (1),
-    dnupro character varying (6),
-    comptecommunal character varying (15),
+    local10 text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    local00 text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
+    parcelle text,
+    ccoriv text,
+    voie text,
+    ccovoi text,
+    dnvoiri text,
+    gpdl text,
+    dsrpar text,
+    dnupro text,
+    comptecommunal text,
     jdatat date,
-    dnufnl character varying (6),
-    ccoeva character varying (1),
-    ccitlv character varying (1),
-    dteloc character varying (1),
-    gtauom character varying (2),
-    dcomrd character varying (3),
-    ccoplc character varying (1),
-    cconlc character varying (2),
+    dnufnl text,
+    ccoeva text,
+    ccitlv text,
+    dteloc text,
+    gtauom text,
+    dcomrd text,
+    ccoplc text,
+    cconlc text,
     dvltrt integer,
-    ccoape character varying (4),
-    cc48lc character varying (2),
+    ccoape text,
+    cc48lc text,
     dloy48a integer,
-    top48a character varying (1),
-    dnatlc character varying (1),
-    dnupas character varying (8),
-    gnexcf character varying (2),
-    dtaucf character varying (3),
-    cchpr character varying (1),
-    jannat character varying (4),
-    dnbniv character varying (2),
-    hlmsem character varying (1),
-    postel character varying (1),
-    dnatcg character varying (2),
+    top48a text,
+    dnatlc text,
+    dnupas text,
+    gnexcf text,
+    dtaucf text,
+    cchpr text,
+    jannat text,
+    dnbniv text,
+    hlmsem text,
+    postel text,
+    dnatcg text,
     jdatcgl date,
-    dnutbx character varying (6),
-    dvltla character varying (9),
-    janloc character varying (4),
-    ccsloc character varying (2),
+    dnutbx text,
+    dvltla text,
+    janloc text,
+    ccsloc text,
     fburx integer,
-    gimtom character varying (1),
-    cbtabt character varying (2),
-    jdtabt character varying (4),
-    jrtabt character varying (4),
-    jacloc character varying (4),
-    cconac character varying (5),
-    lot character varying
+    gimtom text,
+    cbtabt text,
+    jdtabt text,
+    jrtabt text,
+    jacloc text,
+    cconac text,
+    lot text
 );
 
 CREATE TABLE pev (
-    pev character varying (17),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    invar character varying (10),
-    local10 character varying (14),
-    dnupev character varying (3),
-    ccoaff character varying (1),
-    ccostb character varying (1),
-    dcapec character varying (2),
+    pev text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    local10 text,
+    dnupev text,
+    ccoaff text,
+    ccostb text,
+    dcapec text,
     dcetlc numeric(3,2),
-    dcsplc character varying (3),
+    dcsplc text,
     dsupot integer,
     dvlper integer,
     dvlpera integer,
-    gnexpl character varying (2),
-    libocc character varying (30),
-    ccthp character varying (1),
-    retimp character varying (1),
-    dnuref character varying (3),
-    rclsst character varying (32),
-    gnidom character varying (1),
-    dcsglc character varying (3),
-    ccogrb character varying (1),
-    cocdi character varying (4),
-    cosatp character varying (3),
-    gsatp character varying (1),
-    clocv character varying (1),
+    gnexpl text,
+    libocc text,
+    ccthp text,
+    retimp text,
+    dnuref text,
+    rclsst text,
+    gnidom text,
+    dcsglc text,
+    ccogrb text,
+    cocdi text,
+    cosatp text,
+    gsatp text,
+    clocv text,
     dvltpe integer,
-    dcralc character varying (3),
-    dcsplca character varying (5),
-    dcsglca character varying (5),
-    dcralca character varying (5),
+    dcralc text,
+    dcsplca text,
+    dcsglca text,
+    dcralca text,
     topcn integer,
     tpevtieom integer,
-    lot character varying
+    lot text
 );
 
 CREATE TABLE pevexoneration (
-    pevexoneration character varying (24),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    invar character varying (10),
-    Janbil character varying (4),
-    dnupev character varying (3),
-    pev character varying (17),
-    dnuexb character varying (3),
-    ccolloc character varying (2),
+    pevexoneration text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    Janbil text,
+    dnupev text,
+    pev text,
+    dnuexb text,
+    ccolloc text,
     pexb numeric(5,2),
-    gnextl character varying (2),
-    jandeb character varying (4),
-    janimp character varying (4),
-    vecdif character varying (9),
-    vecdifa character varying (9),
-    fcexb character varying (9),
-    fcexba character varying (9),
-    rcexba character varying (9),
+    gnextl text,
+    jandeb text,
+    janimp text,
+    vecdif text,
+    vecdifa text,
+    fcexb text,
+    fcexba text,
+    rcexba text,
     dvldif2 integer,
     dvldif2a integer,
     fcexb2 integer,
     fcexba2 integer,
     rcexba2 integer,
-    lot character varying
+    lot text
 );
 
 CREATE TABLE pevtaxation (
-    pevtaxation character varying (17),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    invar character varying (10),
-    janbil character varying (4),
-    dnupev character varying (3),
-    pev character varying (17),
+    pevtaxation text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    janbil text,
+    dnupev text,
+    pev text,
     co_vlbai integer,
     co_vlbaia integer,
     co_bipevla integer,
@@ -324,404 +324,404 @@ CREATE TABLE pevtaxation (
     tse_bipevla integer,
     mvltieomx integer,
     pvltieom bigint,
-    lot character varying
+    lot text
 );
 
 CREATE TABLE pevprincipale (
-    pevprincipale character varying (20),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    invar character varying (10),
-    dnupev character varying (3),
-    pev character varying (17),
-    dnudes character varying (3),
-    dep1_cconad character varying (2),
+    pevprincipale text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    dnupev text,
+    pev text,
+    dnudes text,
+    dep1_cconad text,
     dep1_dsueic integer,
     dep1_dcimei numeric(2,1),
-    dep2_cconad character varying (2),
+    dep2_cconad text,
     dep2_dsueic integer,
     dep2_dcimei numeric(2,1),
-    dep3_cconad character varying (2),
+    dep3_cconad text,
     dep3_dsueic integer,
     dep3_dcimei numeric(2,1),
-    dep4_cconad character varying (2),
+    dep4_cconad text,
     dep4_dsueic integer,
     dep4_dcimei numeric(2,1),
-    geaulc character varying (1),
-    gelelc character varying (1),
-    gesclc character varying (1),
-    ggazlc character varying (1),
-    gasclc character varying (1),
-    gchclc character varying (1),
-    gvorlc character varying (1),
-    gteglc character varying (1),
-    dnbbai character varying (2),
-    dnbdou character varying (2),
-    dnblav character varying (2),
-    dnbwc character varying (2),
+    geaulc text,
+    gelelc text,
+    gesclc text,
+    ggazlc text,
+    gasclc text,
+    gchclc text,
+    gvorlc text,
+    gteglc text,
+    dnbbai text,
+    dnbdou text,
+    dnblav text,
+    dnbwc text,
     deqdha integer,
-    dnbppr character varying (2),
-    dnbsam character varying (2),
-    dnbcha character varying (2),
-    dnbcu8 character varying (2),
-    dnbcu9 character varying (2),
-    dnbsea character varying (2),
-    dnbann character varying (2),
-    dnbpdc character varying (2),
+    dnbppr text,
+    dnbsam text,
+    dnbcha text,
+    dnbcu8 text,
+    dnbcu9 text,
+    dnbsea text,
+    dnbann text,
+    dnbpdc text,
     dsupdc integer,
-    dmatgm character varying (2),
-    dmatto character varying (2),
-    jannat character varying (4),
-    detent character varying (1),
-    dnbniv character varying (2),
-    lot character varying
+    dmatgm text,
+    dmatto text,
+    jannat text,
+    detent text,
+    dnbniv text,
+    lot text
 );
 
 CREATE TABLE pevprofessionnelle (
-    pevprofessionnelle character varying (20),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    invar character varying (10),
-    dnupev character varying (3),
-    pev character varying (17),
-    dnudes character varying (3),
-    vsupot character varying (9),
-    vsurz1 character varying (9),
-    vsurz2 character varying (9),
-    vsurz3 character varying (9),
+    pevprofessionnelle text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    dnupev text,
+    pev text,
+    dnudes text,
+    vsupot text,
+    vsurz1 text,
+    vsurz2 text,
+    vsurz3 text,
     vsurzt integer,
-    vsurb1 character varying (9),
-    vsurb2 character varying (9),
-    lot character varying
+    vsurb1 text,
+    vsurb2 text,
+    lot text
 );
 
 CREATE TABLE pevdependances (
-    pevdependances character varying (20),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    invar character varying (10),
-    dnupev character varying (3),
-    pev character varying (17),
-    dnudes character varying (3),
+    pevdependances text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    dnupev text,
+    pev text,
+    dnudes text,
     dsudep integer,
-    cconad character varying (2),
-    asitet character varying (6),
-    dmatgm character varying (2),
-    dmatto character varying (2),
-    detent character varying (1),
-    geaulc character varying (1),
-    gelelc character varying (1),
-    gchclc character varying (1),
-    dnbbai character varying (2),
-    dnbdou character varying (2),
-    dnblav character varying (2),
-    dnbwc character varying (2),
+    cconad text,
+    asitet text,
+    dmatgm text,
+    dmatto text,
+    detent text,
+    geaulc text,
+    gelelc text,
+    gchclc text,
+    dnbbai text,
+    dnbdou text,
+    dnblav text,
+    dnbwc text,
     deqtlc integer,
     dcimlc numeric(2,1),
     dcetde numeric(3,2),
-    dcspde character varying (3),
-    dcspdea character varying (6),
-    lot character varying
+    dcspde text,
+    dcspdea text,
+    lot text
 );
 
 CREATE TABLE proprietaire (
-    proprietaire character varying (20),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    dnupro character varying (6),
-    comptecommunal character varying (15),
-    dnulp character varying (2),
-    ccocif character varying (4),
-    dnuper character varying (6),
-    ccodro character varying (1),
-    ccodem character varying (1),
-    gdesip character varying (1),
-    gtoper character varying (1),
-    ccoqua character varying (1),
-    gnexcf character varying (2),
-    dtaucf character varying (3),
-    dnatpr character varying (3),
-    ccogrm character varying (2),
-    dsglpm character varying (10),
-    dforme character varying (7),
-    ddenom character varying (60),
-    gtyp3 character varying (1),
-    dlign3 character varying (30),
-    gtyp4 character varying (1),
-    dlign4 character varying (36),
-    gtyp5 character varying (1),
-    dlign5 character varying (30),
-    gtyp6 character varying (1),
-    dlign6 character varying (32),
-    ccopay character varying (3),
-    ccodep1a2 character varying (2),
-    ccodira character varying (1),
-    ccocom_adr character varying (3),
-    ccovoi character varying (5),
-    ccoriv character varying (4),
-    dnvoiri character varying (4),
-    dindic character varying (1),
-    ccopos character varying (5),
-    dnirpp character varying (10),
-    dqualp character varying (3),
-    dnomlp character varying (30),
-    dprnlp character varying (15),
+    proprietaire text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    dnupro text,
+    comptecommunal text,
+    dnulp text,
+    ccocif text,
+    dnuper text,
+    ccodro text,
+    ccodem text,
+    gdesip text,
+    gtoper text,
+    ccoqua text,
+    gnexcf text,
+    dtaucf text,
+    dnatpr text,
+    ccogrm text,
+    dsglpm text,
+    dforme text,
+    ddenom text,
+    gtyp3 text,
+    dlign3 text,
+    gtyp4 text,
+    dlign4 text,
+    gtyp5 text,
+    dlign5 text,
+    gtyp6 text,
+    dlign6 text,
+    ccopay text,
+    ccodep1a2 text,
+    ccodira text,
+    ccocom_adr text,
+    ccovoi text,
+    ccoriv text,
+    dnvoiri text,
+    dindic text,
+    ccopos text,
+    dnirpp text,
+    dqualp text,
+    dnomlp text,
+    dprnlp text,
     jdatnss date,
-    dldnss character varying (58),
-    epxnee character varying (3),
-    dnomcp character varying (30),
-    dprncp character varying (15),
-    topcdi character varying (1),
-    oriard character varying (1),
-    fixard character varying (1),
-    datadr character varying (8),
-    topdec character varying (1),
-    datdec character varying (4),
-    dsiren character varying (10),
-    ccmm character varying (1),
-    topja character varying (1),
+    dldnss text,
+    epxnee text,
+    dnomcp text,
+    dprncp text,
+    topcdi text,
+    oriard text,
+    fixard text,
+    datadr text,
+    topdec text,
+    datdec text,
+    dsiren text,
+    ccmm text,
+    topja text,
     datja date,
-    anospi character varying (3),
-    cblpmo character varying (1),
-    gtodge character varying (1),
-    gpctf character varying (1),
-    gpctsb character varying (1),
-    jmodge character varying (2),
-    jandge character varying (4),
-    jantfc character varying (4),
-    jantbc character varying (4),
-    dformjur character varying (4),
-    dnomus character varying,
-    dprnus character varying,
-    lot character varying
+    anospi text,
+    cblpmo text,
+    gtodge text,
+    gpctf text,
+    gpctsb text,
+    jmodge text,
+    jandge text,
+    jantfc text,
+    jantbc text,
+    dformjur text,
+    dnomus text,
+    dprnus text,
+    lot text
 );
 
 CREATE TABLE comptecommunal (
-    comptecommunal character varying (15),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    dnupro character varying (6),
-    ajoutcoherence character varying(1),
-    lot character varying
+    comptecommunal text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    dnupro text,
+    ajoutcoherence text,
+    lot text
 );
 
 
 CREATE TABLE pdl (
-    pdl character varying (22),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
-    parcelle character varying(19),
-    dnupdl character varying (3),
-    dnivim character varying (1),
-    ctpdl character varying (3),
-    dmrpdl character varying (20),
-    gprmut character varying (1),
-    dnupro character varying (6),
-    comptecommunal character varying (15),
-    ccocif character varying (4),
-    lot character varying
+    pdl text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
+    parcelle text,
+    dnupdl text,
+    dnivim text,
+    ctpdl text,
+    dmrpdl text,
+    gprmut text,
+    dnupro text,
+    comptecommunal text,
+    ccocif text,
+    lot text
 );
 
 CREATE TABLE parcellecomposante(
-    parcellecomposante character varying (31),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
-    parcelle character varying(19),
-    dnupdl character varying (3),
-    pdl character varying (22),
-    ccoprea character varying (3),
-    ccoseca character varying (2),
-    dnuplaa character varying (4),
-    parcellea character varying(19),
-    ccocif character varying (4),
-    lot character varying
+    parcellecomposante text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
+    parcelle text,
+    dnupdl text,
+    pdl text,
+    ccoprea text,
+    ccoseca text,
+    dnuplaa text,
+    parcellea text,
+    ccocif text,
+    lot text
 );
 
 CREATE TABLE lots (
-    lots character varying (29),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    ccopre character varying (3),
-    ccosec character varying (2),
-    dnupla character varying (4),
-    parcelle character varying(19),
-    dnupdl character varying (3),
-    pdl character varying (22),
-    dnulot character varying (7),
-    cconlo character varying (1),
+    lots text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    ccopre text,
+    ccosec text,
+    dnupla text,
+    parcelle text,
+    dnupdl text,
+    pdl text,
+    dnulot text,
+    cconlo text,
     dcntlo integer,
     dnumql integer,
     ddenql integer,
-    dfilot character varying (20),
+    dfilot text,
     datact date,
-    dnuprol character varying (6),
-    comptecommunal character varying (15),
-    dreflf character varying (5),
-    ccocif character varying (4),
-    lot character varying
+    dnuprol text,
+    comptecommunal text,
+    dreflf text,
+    ccocif text,
+    lot text
 );
 
 CREATE TABLE lotslocaux (
-    lotslocaux character varying (39),
-    annee character varying (4),
-    ccodepl character varying (2),
-    ccodirl character varying (1),
-    ccocoml character varying (3),
-    ccoprel character varying (3),
-    ccosecl character varying (2),
-    dnuplal character varying (4),
-    dnupdl character varying (3),
-    dnulot character varying (7),
-    lots character varying (29),
-    ccodebpb character varying (2),
-    ccodird character varying (1),
-    ccocomb character varying (3),
-    ccopreb character varying (3),
-    invloc character varying (10),
-    local00 character varying (14),
-    local10 character varying (14),
-    dnumql character varying (7),
-    ddenql character varying (7),
-    lot character varying
+    lotslocaux text,
+    annee text,
+    ccodepl text,
+    ccodirl text,
+    ccocoml text,
+    ccoprel text,
+    ccosecl text,
+    dnuplal text,
+    dnupdl text,
+    dnulot text,
+    lots text,
+    ccodebpb text,
+    ccodird text,
+    ccocomb text,
+    ccopreb text,
+    invloc text,
+    local00 text,
+    local10 text,
+    dnumql text,
+    ddenql text,
+    lot text
 );
 
 CREATE TABLE commune_majic(
-    commune character varying (10),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    libcom character varying (50),
-    lot character varying
+    commune text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    libcom text,
+    lot text
 );
 
 CREATE TABLE commune (
-    commune character varying (10),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    clerivili character varying (1),
-    libcom character varying (30),
-    typcom character varying (1),
-    ruract character varying (1),
-    carvoi character varying (1),
-    indpop character varying (1),
+    commune text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    clerivili text,
+    libcom text,
+    typcom text,
+    ruract text,
+    carvoi text,
+    indpop text,
     poprel integer,
     poppart integer,
     popfict integer,
-    annul character varying (1),
-    dteannul character varying (7),
-    dtecreart character varying (7),
-    codvoi character varying (5),
-    typvoi character varying (1),
-    indldnbat character varying (1),
-    motclas character varying (8),
-    geo_commune character varying(7),
-    lot character varying
+    annul text,
+    dteannul text,
+    dtecreart text,
+    codvoi text,
+    typvoi text,
+    indldnbat text,
+    motclas text,
+    geo_commune text,
+    lot text
 );
 
 CREATE TABLE voie (
-    voie character varying (19),
-    annee character varying (4),
-    ccodep character varying (2),
-    ccodir character varying (1),
-    ccocom character varying (3),
-    commune character varying (10),
-    natvoiriv character varying (1),
-    ccoriv character varying (4),
-    clerivili character varying (1),
-    natvoi character varying (4),
-    libvoi character varying (26),
-    typcom character varying (1),
-    ruract character varying (1),
-    carvoi character varying (1),
-    indpop character varying (1),
-    poprel character varying (7),
+    voie text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    commune text,
+    natvoiriv text,
+    ccoriv text,
+    clerivili text,
+    natvoi text,
+    libvoi text,
+    typcom text,
+    ruract text,
+    carvoi text,
+    indpop text,
+    poprel text,
     poppart integer,
     popfict integer,
-    annul character varying (1),
-    dteannul character varying (7),
-    dtecreart character varying (7),
-    codvoi character varying (5),
-    typvoi character varying (1),
-    indldnbat character varying (1),
-    motclas character varying (8),
-    lot character varying
+    annul text,
+    dteannul text,
+    dtecreart text,
+    codvoi text,
+    typvoi text,
+    indldnbat text,
+    motclas text,
+    lot text
 );
 
 -- Tables de nomenclature
-CREATE TABLE gpdl (gpdl character varying(1) primary key,gpdl_lib character varying);
-CREATE TABLE gnexps (gnexps character varying (2) primary key,gnexps_lib character varying );
-CREATE TABLE cgrnum ( cgrnum character varying (2) primary key,cgrnum_lib character varying );
-CREATE TABLE dsgrpf (dsgrpf character varying(2) primary key, dsgrpf_lib character varying);
-CREATE TABLE cnatsp (cnatsp character varying(5) primary key, cnatsp_lib character varying);
-CREATE TABLE ccolloc (ccolloc character varying(2) primary key, ccolloc_lib character varying);
-CREATE TABLE gnexts (gnexts character varying(2) primary key, gnexts_lib character varying);
-CREATE TABLE ccoeva (ccoeva character varying(1) primary key, ccoeva_lib character varying);
-CREATE TABLE dteloc (dteloc character varying(1) primary key, dteloc_lib character varying);
-CREATE TABLE ccoplc (ccoplc character varying(1) primary key, ccoplc_lib character varying);
-CREATE TABLE cconlc (cconlc character varying(2) primary key, cconlc_lib character varying);
-CREATE TABLE top48a (top48a character varying(1) primary key, top48a_lib character varying);
-CREATE TABLE dnatlc (dnatlc character varying(1) primary key, dnatlc_lib character varying);
-CREATE TABLE hlmsem (hlmsem character varying(1) primary key, hlmsem_lib character varying);
-CREATE TABLE ccoaff (ccoaff character varying(1) primary key, ccoaff_lib character varying);
-CREATE TABLE gnexpl (gnexpl character varying(2) primary key, gnexpl_lib character varying);
-CREATE TABLE gnextl (gnextl character varying(2) primary key, gnextl_lib character varying);
-CREATE TABLE cconad (cconad character varying(2) primary key, cconad_lib character varying);
-CREATE TABLE ctpdl (ctpdl character varying(3) primary key, ctpdl_lib character varying);
-CREATE TABLE cconlo (cconlo character varying(1) primary key, cconlo_lib character varying);
-CREATE TABLE ccodro (ccodro character varying(1) primary key, ccodro_lib character varying);
-CREATE TABLE ccodem (ccodem character varying(1) primary key, ccodem_lib character varying);
-CREATE TABLE gtoper (gtoper character varying(1) primary key, gtoper_lib character varying);
-CREATE TABLE ccoqua (ccoqua character varying(1) primary key, ccoqua_lib character varying);
-CREATE TABLE dnatpr (dnatpr character varying(3) primary key, dnatpr_lib character varying);
-CREATE TABLE ccogrm (ccogrm character varying(2) primary key, ccogrm_lib character varying);
-CREATE TABLE gtyp3 (gtyp3 character varying(1) primary key, gtyp3_lib character varying);
-CREATE TABLE gtyp4 (gtyp4 character varying(1) primary key, gtyp4_lib character varying);
-CREATE TABLE gtyp5 (gtyp5 character varying(1) primary key, gtyp5_lib character varying);
-CREATE TABLE gtyp6 (gtyp6 character varying(1) primary key, gtyp6_lib character varying);
-CREATE TABLE typcom (typcom character varying(1) primary key, typcom_lib character varying);
-CREATE TABLE natvoiriv (natvoiriv character varying(1) primary key, natvoiriv_lib character varying);
-CREATE TABLE carvoi (carvoi character varying(1) primary key, carvoi_lib character varying);
-CREATE TABLE annul (annul character varying(1) primary key, annul_lib character varying);
-CREATE TABLE typvoi (typvoi character varying(1) primary key, typvoi_lib character varying);
-CREATE TABLE indldnbat (indldnbat character varying(1) primary key, indldnbat_lib character varying);
-CREATE TABLE dformjur (dformjur character varying(4) primary key, formjur text, libformjur text);
+CREATE TABLE gpdl (gpdl text primary key,gpdl_lib text);
+CREATE TABLE gnexps (gnexps text primary key,gnexps_lib text );
+CREATE TABLE cgrnum ( cgrnum text primary key,cgrnum_lib text );
+CREATE TABLE dsgrpf (dsgrpf text primary key, dsgrpf_lib text);
+CREATE TABLE cnatsp (cnatsp text primary key, cnatsp_lib text);
+CREATE TABLE ccolloc (ccolloc text primary key, ccolloc_lib text);
+CREATE TABLE gnexts (gnexts text primary key, gnexts_lib text);
+CREATE TABLE ccoeva (ccoeva text primary key, ccoeva_lib text);
+CREATE TABLE dteloc (dteloc text primary key, dteloc_lib text);
+CREATE TABLE ccoplc (ccoplc text primary key, ccoplc_lib text);
+CREATE TABLE cconlc (cconlc text primary key, cconlc_lib text);
+CREATE TABLE top48a (top48a text primary key, top48a_lib text);
+CREATE TABLE dnatlc (dnatlc text primary key, dnatlc_lib text);
+CREATE TABLE hlmsem (hlmsem text primary key, hlmsem_lib text);
+CREATE TABLE ccoaff (ccoaff text primary key, ccoaff_lib text);
+CREATE TABLE gnexpl (gnexpl text primary key, gnexpl_lib text);
+CREATE TABLE gnextl (gnextl text primary key, gnextl_lib text);
+CREATE TABLE cconad (cconad text primary key, cconad_lib text);
+CREATE TABLE ctpdl (ctpdl text primary key, ctpdl_lib text);
+CREATE TABLE cconlo (cconlo text primary key, cconlo_lib text);
+CREATE TABLE ccodro (ccodro text primary key, ccodro_lib text);
+CREATE TABLE ccodem (ccodem text primary key, ccodem_lib text);
+CREATE TABLE gtoper (gtoper text primary key, gtoper_lib text);
+CREATE TABLE ccoqua (ccoqua text primary key, ccoqua_lib text);
+CREATE TABLE dnatpr (dnatpr text primary key, dnatpr_lib text);
+CREATE TABLE ccogrm (ccogrm text primary key, ccogrm_lib text);
+CREATE TABLE gtyp3 (gtyp3 text primary key, gtyp3_lib text);
+CREATE TABLE gtyp4 (gtyp4 text primary key, gtyp4_lib text);
+CREATE TABLE gtyp5 (gtyp5 text primary key, gtyp5_lib text);
+CREATE TABLE gtyp6 (gtyp6 text primary key, gtyp6_lib text);
+CREATE TABLE typcom (typcom text primary key, typcom_lib text);
+CREATE TABLE natvoiriv (natvoiriv text primary key, natvoiriv_lib text);
+CREATE TABLE carvoi (carvoi text primary key, carvoi_lib text);
+CREATE TABLE annul (annul text primary key, annul_lib text);
+CREATE TABLE typvoi (typvoi text primary key, typvoi_lib text);
+CREATE TABLE indldnbat (indldnbat text primary key, indldnbat_lib text);
+CREATE TABLE dformjur (dformjur text primary key, formjur text, libformjur text);
 
 CREATE TABLE geo_commune
 (
-  geo_commune character varying(7) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(3),
-  tex2 character varying(80),
+  geo_commune text NOT NULL,
+  annee text NOT NULL,
+  object_rid text,
+  idu text,
+  tex2 text,
   creat_date date,
   update_dat date,
-  commune character varying(10),
-  lot character varying,
+  commune text,
+  lot text,
   ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_commune', 'geom', 2154 , 'MULTIPOLYGON', 2 );
@@ -730,67 +730,67 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_commune', 'geom', 2154 , '
 
 CREATE TABLE geo_section
 (
-  geo_section character varying(12) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(8),
-  tex character varying,
-  geo_commune character varying(7) NOT NULL,
+  geo_section text NOT NULL,
+  annee text NOT NULL,
+  object_rid text,
+  idu text,
+  tex text,
+  geo_commune text NOT NULL,
   creat_date date,
   update_dat date,
-  lot character varying,
+  lot text,
   ogc_fid serial NOT NULL
 )
 ;
 SELECT AddGeometryColumn ( current_schema::text, 'geo_section', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
 
-CREATE TABLE geo_qupl (geo_qupl character varying(2) PRIMARY KEY,geo_qupl_lib character varying(150));
-CREATE TABLE geo_copl (geo_copl character varying(2) PRIMARY KEY,geo_copl_lib character varying(150));
-CREATE TABLE geo_inp (geo_inp character varying(2) PRIMARY KEY,geo_inp_lib character varying(150));
+CREATE TABLE geo_qupl (geo_qupl text PRIMARY KEY,geo_qupl_lib text);
+CREATE TABLE geo_copl (geo_copl text PRIMARY KEY,geo_copl_lib text);
+CREATE TABLE geo_inp (geo_inp text PRIMARY KEY,geo_inp_lib text);
 
 CREATE TABLE geo_subdsect
 (
-  geo_subdsect character varying(14) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(10),
-  geo_section character varying(12) NOT NULL,
-  geo_qupl character varying(2),
-  geo_copl character varying(2),
+  geo_subdsect text NOT NULL,
+  annee text NOT NULL,
+  object_rid text,
+  idu text,
+  geo_section text NOT NULL,
+  geo_qupl text,
+  geo_copl text,
   eor integer,
   dedi date,
   icl integer,
   dis date,
-  geo_inp character varying(2),
+  geo_inp text,
   dred date,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_subdsect', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
 
-CREATE TABLE geo_indp (geo_indp character varying(2),geo_indp_lib character varying(150));
+CREATE TABLE geo_indp (geo_indp text,geo_indp_lib text);
 ALTER TABLE geo_indp ADD PRIMARY KEY (geo_indp);
 
 CREATE TABLE geo_parcelle
 (
-  geo_parcelle character varying(19) NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(12),
-  geo_section character varying(12) NOT NULL,
-  geo_subdsect character varying(14),
+  geo_parcelle text NOT NULL,
+  annee text NOT NULL,
+  object_rid text,
+  idu text,
+  geo_section text NOT NULL,
+  geo_subdsect text,
   supf numeric,
-  geo_indp character varying(2),
-  coar character varying(2),
-  tex character varying,
-  tex2 character varying(80),
-  codm character varying(80),
+  geo_indp text,
+  coar text,
+  tex text,
+  tex2 text,
+  codm text,
   creat_date date,
   update_dat date,
-  lot character varying,
+  lot text,
   ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_parcelle', 'geom', 2154 , 'MULTIPOLYGON', 2 );
@@ -803,12 +803,12 @@ LEFT OUTER JOIN parcelle p ON g.geo_parcelle = p.parcelle;
 CREATE TABLE geo_subdfisc
 (
   geo_subdfisc serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_subdfisc', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -816,20 +816,20 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_subdfisc', 'geom', 2154 , 
 CREATE TABLE geo_subdfisc_parcelle
 (
   geo_subdfisc_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
+  annee text NOT NULL,
   geo_subdfisc integer NOT NULL,
-  geo_parcelle character varying(19) NOT NULL
+  geo_parcelle text NOT NULL
 );
 
 CREATE TABLE geo_voiep
 (
   geo_voiep serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_voiep', 'geom', 2154 , 'POINT', 2 );
 
@@ -837,12 +837,12 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_voiep', 'geom', 2154 , 'PO
 CREATE TABLE geo_numvoie
 (
   geo_numvoie serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_numvoie', 'geom', 2154 , 'POINT', 2 );
 
@@ -850,37 +850,37 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_numvoie', 'geom', 2154 , '
 CREATE TABLE geo_numvoie_parcelle
 (
   geo_numvoie_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
+  annee text NOT NULL,
   geo_numvoie integer NOT NULL,
-  geo_parcelle character varying(19) NOT NULL
+  geo_parcelle text NOT NULL
 );
 
 CREATE TABLE geo_lieudit
 (
   geo_lieudit serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_lieudit', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
 
-CREATE TABLE geo_dur (geo_dur character varying(2),geo_dur_lib character varying(150));
+CREATE TABLE geo_dur (geo_dur text,geo_dur_lib text);
 ALTER TABLE geo_dur ADD PRIMARY KEY (geo_dur);
 
 CREATE TABLE geo_batiment
 (
-  geo_batiment character varying NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  geo_dur character varying(2),
-  tex character varying,
+  geo_batiment text NOT NULL,
+  annee text NOT NULL,
+  object_rid text,
+  geo_dur text,
+  tex text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_batiment', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -888,20 +888,20 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_batiment', 'geom', 2154 , 
 CREATE TABLE geo_batiment_parcelle
 (
   geo_batiment_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  geo_batiment character varying NOT NULL,
-  geo_parcelle character varying(19) NOT NULL
+  annee text NOT NULL,
+  geo_batiment text NOT NULL,
+  geo_parcelle text NOT NULL
 );
 
 CREATE TABLE geo_zoncommuni
 (
   geo_zoncommuni serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_zoncommuni', 'geom', 2154 , 'MULTILINESTRING', 2 );
 
@@ -909,12 +909,12 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_zoncommuni', 'geom', 2154 
 CREATE TABLE geo_tronfluv
 (
   geo_tronfluv serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tronfluv', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -922,41 +922,41 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_tronfluv', 'geom', 2154 , 
 CREATE TABLE geo_tronroute
 (
   geo_tronroute serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tronroute', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
 
-CREATE TABLE geo_can (geo_can character varying(2),geo_can_lib character varying(150));
+CREATE TABLE geo_can (geo_can text,geo_can_lib text);
 ALTER TABLE geo_can ADD PRIMARY KEY (geo_can);
-CREATE TABLE geo_ppln (geo_ppln character varying(2),geo_ppln_lib character varying(150));
+CREATE TABLE geo_ppln (geo_ppln text,geo_ppln_lib text);
 ALTER TABLE geo_ppln ADD PRIMARY KEY (geo_ppln);
-CREATE TABLE geo_palt (geo_palt character varying(2),geo_palt_lib character varying(150));
+CREATE TABLE geo_palt (geo_palt text,geo_palt_lib text);
 ALTER TABLE geo_palt ADD PRIMARY KEY (geo_palt);
-CREATE TABLE geo_map (geo_map character varying(2),geo_map_lib character varying(150));
+CREATE TABLE geo_map (geo_map text,geo_map_lib text);
 ALTER TABLE geo_map ADD PRIMARY KEY (geo_map);
-CREATE TABLE geo_sym (geo_sym character varying(2),geo_sym_lib character varying(150));
+CREATE TABLE geo_sym (geo_sym text,geo_sym_lib text);
 ALTER TABLE geo_sym ADD PRIMARY KEY (geo_sym);
 
 CREATE TABLE geo_ptcanv
 (
   geo_ptcanv serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  idu character varying(8),
-  geo_can character varying(2),
-  geo_ppln character varying(2),
-  geo_palt character varying(2),
-  geo_map character varying(2),
-  geo_sym character varying(2),
+  annee text NOT NULL,
+  object_rid text,
+  idu text,
+  geo_can text,
+  geo_ppln text,
+  geo_palt text,
+  geo_map text,
+  geo_sym text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_ptcanv', 'geom', 2154 , 'POINT', 2 );
 
@@ -964,11 +964,11 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_ptcanv', 'geom', 2154 , 'P
 CREATE TABLE geo_borne
 (
   geo_borne serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
+  annee text NOT NULL,
+  object_rid text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_borne', 'geom', 2154 , 'POINT', 2 );
 
@@ -976,19 +976,19 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_borne', 'geom', 2154 , 'PO
 CREATE TABLE geo_borne_parcelle
 (
   geo_borne_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
+  annee text NOT NULL,
   geo_borne integer NOT NULL,
-  geo_parcelle character varying(19) NOT NULL
+  geo_parcelle text NOT NULL
 );
 
 CREATE TABLE geo_croix
 (
   geo_croix serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
+  annee text NOT NULL,
+  object_rid text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_croix', 'geom', 2154 , 'POINT', 2 );
 
@@ -996,21 +996,21 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_croix', 'geom', 2154 , 'PO
 CREATE TABLE geo_croix_parcelle
 (
   geo_croix_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
+  annee text NOT NULL,
   geo_croix integer NOT NULL,
-  geo_parcelle character varying(19) NOT NULL
+  geo_parcelle text NOT NULL
 );
 
 CREATE TABLE geo_symblim
 (
   geo_symblim serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
+  annee text NOT NULL,
+  object_rid text,
   ori numeric(12,9),
-  geo_sym  character varying(2),
+  geo_sym  text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_symblim', 'geom', 2154 , 'POINT', 2 );
 
@@ -1018,22 +1018,22 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_symblim', 'geom', 2154 , '
 CREATE TABLE geo_symblim_parcelle
 (
   geo_symblim_parcelle serial NOT NULL,
-  annee character varying(4) NOT NULL,
+  annee text NOT NULL,
   geo_symblim integer NOT NULL,
-  geo_parcelle character varying(19) NOT NULL
+  geo_parcelle text NOT NULL
 );
 
 CREATE TABLE geo_tpoint
 (
   geo_tpoint serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
+  annee text NOT NULL,
+  object_rid text,
   ori numeric(12,9),
-  tex character varying,
-  geo_sym  character varying(2),
+  tex text,
+  geo_sym  text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tpoint', 'geom', 2154 , 'POINT', 2 );
 
@@ -1041,21 +1041,21 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_tpoint', 'geom', 2154 , 'P
 CREATE TABLE geo_tpoint_commune
 (
   geo_tpoint_commune serial NOT NULL,
-  annee character varying(4) NOT NULL,
+  annee text NOT NULL,
   geo_tpoint integer NOT NULL,
-  geo_commune character varying(7) NOT NULL
+  geo_commune text NOT NULL
 );
 
 CREATE TABLE geo_tline
 (
   geo_tline serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
-  geo_sym  character varying(2),
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
+  geo_sym  text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tline', 'geom', 2154 , 'MULTILINESTRING', 2 );
 
@@ -1063,21 +1063,21 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_tline', 'geom', 2154 , 'MU
 CREATE TABLE geo_tline_commune
 (
   geo_tline_commune serial NOT NULL,
-  annee character varying(4) NOT NULL,
+  annee text NOT NULL,
   geo_tline integer NOT NULL,
-  geo_commune character varying(7) NOT NULL
+  geo_commune text NOT NULL
 );
 
 CREATE TABLE geo_tsurf
 (
   geo_tsurf serial NOT NULL,
-  annee character varying(4) NOT NULL,
-  object_rid character varying(80),
-  tex character varying,
-  geo_sym  character varying(2),
+  annee text NOT NULL,
+  object_rid text,
+  tex text,
+  geo_sym  text,
   creat_date date,
   update_dat date,
-  lot character varying
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_tsurf', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -1085,32 +1085,32 @@ SELECT AddGeometryColumn ( current_schema::text, 'geo_tsurf', 'geom', 2154 , 'MU
 CREATE TABLE geo_tsurf_commune
 (
   geo_tsurf_commune serial NOT NULL,
-  annee character varying(4) NOT NULL,
+  annee text NOT NULL,
   geo_tsurf integer NOT NULL,
-  geo_commune character varying(7) NOT NULL
+  geo_commune text NOT NULL
 );
 
 
 CREATE TABLE geo_label
 (
   ogc_fid serial NOT NULL,
-  object_rid character varying(80),
-  fon character varying(80),
+  object_rid text,
+  fon text,
   hei numeric(24,15),
-  tyu character varying(80),
+  tyu text,
   cef numeric(24,15),
   csp numeric(24,15),
   di1 numeric(24,15),
   di2 numeric(24,15),
   di3 numeric(24,15),
   di4 numeric(24,15),
-  tpa character varying(80),
-  hta character varying(80),
-  vta character varying(80),
-  atr character varying(80),
-  ogr_obj_lnk character varying,
-  ogr_obj_lnk_layer character varying,
-  ogr_atr_val character varying,
+  tpa text,
+  hta text,
+  vta text,
+  atr text,
+  ogr_obj_lnk text,
+  ogr_obj_lnk_layer text,
+  ogr_atr_val text,
   ogr_angle double precision,
   ogr_font_size double precision,
   x_label numeric,
@@ -1119,16 +1119,16 @@ CREATE TABLE geo_label
 SELECT AddGeometryColumn ( current_schema::text, 'geo_label', 'geom', 2154 , 'POINT', 2 );
 
 
-CREATE TABLE edigeo_rel ( edigeo_rel serial,nom character varying(30),de character varying(80),vers character varying(80));
+CREATE TABLE edigeo_rel ( edigeo_rel serial,nom text,de text,vers text);
 ALTER TABLE edigeo_rel ADD PRIMARY KEY (edigeo_rel );
 
 
 CREATE TABLE geo_unite_fonciere
 (
   id serial NOT NULL,
-  comptecommunal character varying,
-  annee character varying(4) NOT NULL,
-  lot character varying
+  comptecommunal text,
+  annee text NOT NULL,
+  lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_unite_fonciere', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
