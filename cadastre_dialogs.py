@@ -849,40 +849,6 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         }
         self.getValuesFromSettings()
 
-        s = QSettings()
-        self.majicSourceFileNames = [
-            {'key': '[FICHIER_BATI]',
-                'value': s.value("cadastre/batiFileName", 'REVBATI.800', type=str),
-                'table': 'bati',
-                'required': True
-            },
-            {'key': '[FICHIER_FANTOIR]',
-                'value': s.value("cadastre/fantoirFileName", 'TOPFANR.800', type=str),
-                'table': 'fanr',
-                'required': False
-            },
-            {'key': '[FICHIER_LOTLOCAL]',
-                'value': s.value("cadastre/lotlocalFileName", 'REVD166.800', type=str),
-                'table': 'lloc',
-                'required': False
-            },
-            {'key': '[FICHIER_NBATI]',
-                'value': s.value("cadastre/nbatiFileName", 'REVNBAT.800', type=str),
-                'table': 'nbat',
-                'required': True
-            },
-            {'key': '[FICHIER_PDL]',
-                'value': s.value("cadastre/pdlFileName", 'REVFPDL.800', type=str),
-                'table': 'pdll',
-                'required': False
-            },
-            {'key': '[FICHIER_PROP]',
-                'value': s.value("cadastre/propFileName", 'REVPROP.800', type=str),
-                'table': 'prop',
-                'required': True
-            }
-        ]
-
 
     def onClose(self):
         '''

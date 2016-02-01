@@ -97,6 +97,41 @@ class cadastreImport(QObject):
 
         self.geoTableList = ['geo_zoncommuni', 'geo_ptcanv', 'geo_commune', 'geo_parcelle', 'geo_symblim', 'geo_tronfluv', 'geo_tronroute', 'geo_label', 'geo_subdsect', 'geo_batiment', 'geo_borne', 'geo_croix', 'geo_tpoint', 'geo_lieudit', 'geo_section', 'geo_subdfisc', 'geo_tsurf', 'geo_tline', 'geo_unite_fonciere']
 
+        s = QSettings()
+        self.majicSourceFileNames = [
+            {'key': '[FICHIER_BATI]',
+                'value': s.value("cadastre/batiFileName", 'REVBATI.800', type=str),
+                'table': 'bati',
+                'required': True
+            },
+            {'key': '[FICHIER_FANTOIR]',
+                'value': s.value("cadastre/fantoirFileName", 'TOPFANR.800', type=str),
+                'table': 'fanr',
+                'required': True
+            },
+            {'key': '[FICHIER_LOTLOCAL]',
+                'value': s.value("cadastre/lotlocalFileName", 'REVD166.800', type=str),
+                'table': 'lloc',
+                'required': False
+            },
+            {'key': '[FICHIER_NBATI]',
+                'value': s.value("cadastre/nbatiFileName", 'REVNBAT.800', type=str),
+                'table': 'nbat',
+                'required': True
+            },
+            {'key': '[FICHIER_PDL]',
+                'value': s.value("cadastre/pdlFileName", 'REVFPDL.800', type=str),
+                'table': 'pdll',
+                'required': False
+            },
+            {'key': '[FICHIER_PROP]',
+                'value': s.value("cadastre/propFileName", 'REVPROP.800', type=str),
+                'table': 'prop',
+                'required': True
+            }
+        ]
+
+
 
         if self.dialog.dbType == 'postgis':
             self.replaceDict['[PREFIXE]'] = '"%s".' % self.dialog.schema
@@ -420,7 +455,7 @@ class cadastreImport(QObject):
         # 1st path to build the complet liste for each majic source type (nbat, bati, lloc, etc.)
         # and read 1st line to get departement and direction to compare to inputs
         depdirs = {}
-        for item in self.dialog.majicSourceFileNames:
+        for item in self.majicSourceFileNames:
             table = item['table']
             value = item['value']
             # Get majic files for item
@@ -445,13 +480,13 @@ class cadastreImport(QObject):
 
         # Check if some important majic files are missing
         fKeys = [ a for a in majicFilesFound if majicFilesFound[a] ]
-        rKeys = [ a['table'] for a in self.dialog.majicSourceFileNames if a['required'] ]
+        rKeys = [ a['table'] for a in self.majicSourceFileNames if a['required'] ]
         mKeys = [ a for a in rKeys if a not in fKeys ]
         if mKeys:
-            msg = u"<b>ERREUR : MAJIC - Des fichiers MAJIC importants sont manquants: %s </b><br/>Vérifier le chemin des fichiers MAJIC:<br/>%s <br/>ainsi que les noms des fichiers attendus dans la configuration du plugin Cadastre:<br/>%s<br/><br/>" % (
+            msg = u"<b>Des fichiers MAJIC importants sont manquants: %s </b><br/>Vérifier le chemin des fichiers MAJIC:<br/>%s <br/>ainsi que les noms des fichiers configurés dans les options du plugin Cadastre:<br/>%s<br/><br/>Vous pouvez télécharger les fichiers fantoirs à cette adresse :<br/><a href='http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits'>http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits</a><br/>" % (
                 ', '.join(mKeys),
                 self.dialog.majicSourceDir,
-                ', '.join([a['value'].upper() for a in self.dialog.majicSourceFileNames])
+                ', '.join([a['value'].upper() for a in self.majicSourceFileNames])
             )
             missingMajicIgnore = QMessageBox.question(
                 self.dialog,
@@ -502,7 +537,7 @@ class cadastreImport(QObject):
 
 
         # 2nd path to insert data
-        for item in self.dialog.majicSourceFileNames:
+        for item in self.majicSourceFileNames:
             table = item['table']
             self.totalSteps+= len(majicFilesFound[table])
             processedFilesCount+=len(majicFilesFound[table])
