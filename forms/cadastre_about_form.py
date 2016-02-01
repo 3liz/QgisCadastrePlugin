@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'forms/cadastre_about_form.ui'
 #
-# Created: Tue Nov  5 16:39:48 2013
-#      by: PyQt4 UI code generator 4.10
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -218,7 +217,7 @@ class Ui_cadastre_about_form(object):
         self.label_15.setText(_translate("cadastre_about_form", "Licence GPL Version 3", None))
         self.label_16.setText(_translate("cadastre_about_form", "<html><head/><body><p><a href=\"http://www.gnu.org/licenses/gpl.html\" target=\"_blank\"><span style=\" text-decoration: underline; color:#0000ff;\"/><img src=\":/plugins/cadastre/images/logo_gnu3.png\"/></a></p></body></html>", None))
         self.groupBox_5.setTitle(_translate("cadastre_about_form", "Ressources", None))
-        self.label_17.setText(_translate("cadastre_about_form", "Les scripts d\'import pour PostGreSQL proviennent de l\'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciement aux contributeurs.", None))
+        self.label_17.setText(_translate("cadastre_about_form", "Les scripts d\'import pour PostGreSQL proviennent initialement de l\'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciement aux contributeurs.", None))
         self.label_18.setText(_translate("cadastre_about_form", "<a href=\"https://adullact.net/scm/viewvc.php/trunk/data/pgsql/?root=opencadastre\"  style=\"color:#7BA11A;text-decoration:none;\">Dépôt OpenCadastre</a>", None))
 
 import resource_rc

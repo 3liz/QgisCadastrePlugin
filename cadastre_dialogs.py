@@ -1010,7 +1010,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
 
         # Run Script for creating tables
         if not self.hasStructure:
-            qi.installOpencadastreStructure()
+            qi.installCadastreStructure()
         else:
             # Run update script which add some missing tables when needed
             qi.updateCadastreStructure()

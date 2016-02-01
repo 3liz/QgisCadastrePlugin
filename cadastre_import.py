@@ -66,7 +66,6 @@ class cadastreImport(QObject):
 
         self.db = self.dialog.db
         self.connector = self.db.connector
-        self.ocScriptSourceDir = os.path.join(self.qc.plugin_dir, "scripts/opencadastre/trunk/data/pgsql")
         self.pScriptSourceDir = os.path.join(self.qc.plugin_dir, 'scripts/plugin')
 
         # projections
@@ -81,7 +80,6 @@ class cadastreImport(QObject):
         # create temporary directories
         s = QSettings()
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
-        self.ocScriptDir = tempfile.mkdtemp('', 'cad_oc_script_', tempDir)
         self.pScriptDir = tempfile.mkdtemp('', 'cad_p_script_', tempDir)
         self.edigeoDir = tempfile.mkdtemp('', 'cad_edigeo_source_', tempDir)
         self.edigeoPlainDir = tempfile.mkdtemp('', 'cad_edigeo_plain_', tempDir)
@@ -202,15 +200,14 @@ class cadastreImport(QObject):
 
         self.executeSqlQuery(sql)
 
-        # copy opencadastre script files to temporary dir
+        # copy SQL script files to temporary dir
         self.updateProgressBar()
-        self.copyFilesToTemp(self.ocScriptSourceDir, self.ocScriptDir)
         self.copyFilesToTemp(self.pScriptSourceDir, self.pScriptDir)
         self.updateTimer()
         self.updateProgressBar()
 
 
-    def installOpencadastreStructure(self):
+    def installCadastreStructure(self):
         '''
         Create the empty db structure
         '''
@@ -229,11 +226,11 @@ class cadastreImport(QObject):
         # laissées suite à bug par exemple
         self.dropEdigeoRawData()
 
-        # install opencadastre structure
+        # install cadastre structure
         scriptList = [
             {
                 'title' : u'Création des tables',
-                'script': '%s' % os.path.join(self.ocScriptDir, 'create_metier.sql')
+                'script': '%s' % os.path.join(self.pScriptDir, 'commun_create_metier.sql')
             },
             {
                 'title': u'Création des tables edigeo',
@@ -241,7 +238,7 @@ class cadastreImport(QObject):
             },
             {
                 'title' : u'Ajout de la nomenclature',
-                'script': '%s' % os.path.join(self.ocScriptDir, 'insert_nomenclatures.sql')
+                'script': '%s' % os.path.join(self.pScriptDir, 'commun_insert_nomenclatures.sql')
             }
         ]
 
@@ -306,7 +303,7 @@ class cadastreImport(QObject):
         scriptList.append(
             {
             'title' : u'Suppression des contraintes',
-            'script' : os.path.join(self.ocScriptDir, 'COMMUN/suppression_constraintes.sql'),
+            'script' : os.path.join(self.pScriptDir, 'commun_suppression_contraintes.sql'),
             'constraints': False,
             'divide': True
             }
@@ -317,13 +314,13 @@ class cadastreImport(QObject):
             scriptList.append(
                 {
                 'title' : u'Purge des données MAJIC',
-                'script' : os.path.join(self.ocScriptDir, 'COMMUN/majic3_purge_donnees.sql')
+                'script' : os.path.join(self.pScriptDir, 'majic3_purge_donnees.sql')
                 }
             )
             scriptList.append(
                 {
                 'title' : u'Purge des données brutes',
-                'script' : os.path.join(self.ocScriptDir, 'COMMUN/majic3_purge_donnees_brutes.sql')
+                'script' : os.path.join(self.pScriptDir, 'majic3_purge_donnees_brutes.sql')
                 }
             )
 
@@ -331,7 +328,7 @@ class cadastreImport(QObject):
         scriptList.append(
             {
             'title' : u'Suppression des indexes',
-            'script' : os.path.join(self.pScriptDir, 'majic_drop_indexes.sql')
+            'script' : os.path.join(self.pScriptDir, 'majic3_drop_indexes.sql')
             }
         )
 
@@ -347,7 +344,7 @@ class cadastreImport(QObject):
         scriptList.append(
             {
             'title' : u'Mise en forme des données',
-            'script' : os.path.join(self.ocScriptDir, '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion),
+            'script' : os.path.join(self.pScriptDir, '%s/majic3_formatage_donnees.sql' % self.dialog.dataVersion),
             'divide': True
             }
         )
@@ -357,7 +354,7 @@ class cadastreImport(QObject):
             scriptList.append(
                 {
                 'title' : u'Purge des données brutes',
-                'script' : os.path.join(self.ocScriptDir, 'COMMUN/majic3_purge_donnees_brutes.sql')
+                'script' : os.path.join(self.pScriptDir, 'majic3_purge_donnees_brutes.sql')
                 }
             )
 
@@ -394,7 +391,7 @@ class cadastreImport(QObject):
             scriptList.append(
                 {
                     'title' : u'Ajout des contraintes',
-                    'script' : os.path.join(self.ocScriptDir, 'COMMUN/creation_contraintes.sql'),
+                    'script' : os.path.join(self.pScriptDir, 'commun_creation_contraintes.sql'),
                     'constraints': True,
                     'divide': True
                 }
@@ -638,7 +635,7 @@ class cadastreImport(QObject):
         scriptList.append(
             {
                 'title' : u'Suppression des contraintes',
-                'script' : '%s' % os.path.join(self.ocScriptDir, 'COMMUN/suppression_constraintes.sql'),
+                'script' : '%s' % os.path.join(self.pScriptDir, 'commun_suppression_contraintes.sql'),
                 'constraints': False,
                 'divide' : True
             }
@@ -697,7 +694,7 @@ class cadastreImport(QObject):
         scriptList.append(
             {
                 'title' : u'Mise en forme des données',
-                'script' : os.path.join( self.ocScriptDir, '%s/edigeo_formatage_donnees.sql' % self.dialog.dataVersion),
+                'script' : os.path.join(self.pScriptDir, 'edigeo_formatage_donnees.sql')
                 'divide': True
             }
         )
@@ -720,7 +717,7 @@ class cadastreImport(QObject):
         scriptList.append(
             {
                 'title' : u'Ajout des contraintes',
-                'script' : os.path.join(self.ocScriptDir, 'COMMUN/creation_contraintes.sql' ),
+                'script' : os.path.join(self.pScriptDir, 'commun_creation_contraintes.sql' ),
                 'constraints': True,
                 'divide': True
             }
@@ -782,7 +779,6 @@ class cadastreImport(QObject):
         self.dialog.subStepLabel.setText(u'Suppression des données temporaires')
         self.updateProgressBar()
         tempFolderList = [
-            self.ocScriptDir,
             self.pScriptDir,
             self.edigeoDir,
             self.edigeoPlainDir,
@@ -835,7 +831,7 @@ class cadastreImport(QObject):
 
     def copyFilesToTemp(self, source, target):
         '''
-        Copy opencadastre scripts
+        Copy cadastre scripts
         into a temporary folder
         '''
         if self.go:
@@ -994,7 +990,6 @@ class cadastreImport(QObject):
     def executeSqlScript(self, scriptPath, divide=False, ignoreError=False):
         '''
         Execute an SQL script file
-        from opencadastre
         '''
 
         if self.go:
