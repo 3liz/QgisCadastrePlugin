@@ -61,6 +61,8 @@ FROM [PREFIXE]subdsect_id;
 CREATE INDEX parcelle_id_object_rid ON [PREFIXE]parcelle_id (object_rid);
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 CREATE INDEX geo_subdsect_annee_idx ON [PREFIXE]geo_subdsect (annee);
+DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_lot_idx;
+CREATE INDEX geo_subdsect_lot_idx ON [PREFIXE]geo_subdsect (lot);
 CREATE INDEX geo_subdsect_object_rid_idx ON [PREFIXE]geo_subdsect (object_rid);
 INSERT INTO [PREFIXE]geo_parcelle
 (geo_parcelle, annee, object_rid, idu, geo_section, geo_subdsect, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot)
@@ -73,6 +75,7 @@ AND '[ANNEE]'||SUBSTRING(p.idu,1,8) =  s.geo_section
 ;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_object_rid_idx;
+DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_lot_idx;
 
 -- Indexes sur geo_parcelle et geo_commune pour optimisation
 DROP INDEX IF EXISTS [PREFIXE]geo_parcelle_annee_idx;
