@@ -173,7 +173,16 @@ class cadastre_common():
                 DlgDbError.showError(e, self.dialog)
                 self.dialog.go = False
                 self.updateLog(e.msg)
+                QApplication.restoreOverrideCursor()
                 return
+            except:
+                self.dialog.go = False
+                msg = u"Impossible de récupérer les schémas de la base. Vérifier les informations de connexion."
+                self.updateLog(msg)
+                QApplication.restoreOverrideCursor()
+                return
+            finally:
+                QApplication.restoreOverrideCursor()
 
         if connection:
             self.dialog.connection = connection
