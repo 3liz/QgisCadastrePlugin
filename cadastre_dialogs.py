@@ -305,13 +305,12 @@ class cadastre_common():
         corresponding to a database
         table name (postgis or sqlite)
         '''
-
         layer = None
         layers = self.dialog.iface.legendInterface().layers()
         for l in layers:
             if not hasattr(l, 'providerType'):
                 continue
-            if not l.type() == QgsMapLayer.VectorLayer:
+            if hasattr(l, 'type') and l.type() != 0:
                 continue
             if not l.providerType() in (u'postgres', u'spatialite'):
                 continue
