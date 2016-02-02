@@ -67,7 +67,7 @@ INSERT INTO [PREFIXE]geo_parcelle
 SELECT '[ANNEE]'||'[DEPDIR]'||p.idu, '[ANNEE]', p.object_rid, p.idu, '[ANNEE]'||SUBSTRING(p.idu,1,8), s.geo_subdsect, p.supf, p.indp, p.coar, p.tex, p.tex2, p.codm, to_date(to_char(p.creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(p.update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(p.geom),3)), '[LOT]'
 FROM [PREFIXE]parcelle_id AS p
 LEFT JOIN [PREFIXE]edigeo_rel AS r ON r.nom='Rel_PARCELLE_SUBDSECT' AND r.de = p.object_rid
-LEFT JOIN [PREFIXE]geo_subdsect AS s ON s.annee = '[ANNEE]' AND r.vers = s.object_rid
+LEFT JOIN [PREFIXE]geo_subdsect AS s ON s.annee = '[ANNEE]' AND s.lot ='[LOT]' AND r.vers = s.object_rid
 WHERE p.idu IS NOT NULL
 AND '[ANNEE]'||SUBSTRING(p.idu,1,8) =  s.geo_section
 ;
