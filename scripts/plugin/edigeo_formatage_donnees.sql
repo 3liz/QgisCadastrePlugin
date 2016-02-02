@@ -154,7 +154,10 @@ SELECT '[ANNEE]', object_rid, COALESCE(trim(tex),'')||COALESCE(' '||trim(tex2),'
 FROM [PREFIXE]tronroute_id;
 
 -- geo_sym
-INSERT INTO [PREFIXE]geo_sym SELECT DISTINCT sym, 'Inconnu '||sym  FROM [PREFIXE]ptcanv_id WHERE sym NOT IN (SELECT geo_sym FROM [PREFIXE]geo_sym);
+INSERT INTO [PREFIXE]geo_sym SELECT DISTINCT sym, 'Inconnu '||sym
+FROM [PREFIXE]ptcanv_id
+WHERE sym NOT IN (SELECT geo_sym FROM [PREFIXE]geo_sym)
+AND sym IS NOT NULL;
 
 -- geo_ptcanv
 INSERT INTO [PREFIXE]geo_ptcanv( annee, object_rid, idu, geo_can, geo_ppln, geo_palt, geo_map, geo_sym, creat_date, update_dat, geom, lot)
