@@ -1192,7 +1192,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 'table': 'geo_commune', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
-                'attributes': ['ogc_fid','tex2','idu','geo_commune','geom'],
+                'attributes': ['ogc_fid','tex2','idu','geo_commune','geom', 'lot'],
                 'orderBy': ['tex2'],
                 'features': None,
                 'chosenFeature': None,
@@ -1209,7 +1209,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 'table': 'geo_section', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
-                'attributes': ['ogc_fid','tex','idu','geo_commune','geo_section','geom'],
+                'attributes': ['ogc_fid','tex','idu','geo_commune','geo_section','geom','lot'],
                 'orderBy': ['geo_section'],
                 'features': None,
                 'chosenFeature': None,
@@ -1588,7 +1588,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         if self.dbType == 'postgis':
             sql = self.qc.setSearchPath(sql, connectionParams['schema'])
         # Get data
-        #~ self.qc.updateLog(sql)
+        #self.qc.updateLog(sql)
         [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
 
         # Get features
@@ -1809,7 +1809,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             ckey = item['child']['key']
             fkey = item['child']['fkey']
             if feature:
-                filterExpression = "%s = '%s'" % (fkey, feature[fkey])
+                filterExpression = "%s = '%s' AND lot = '%s'" % (fkey, feature[fkey], feature['lot'])
                 self.setupSearchCombobox(ckey, filterExpression, 'sql')
             else:
                 if item['child']['getIfNoFeature']:
