@@ -55,36 +55,36 @@ class cadastreLoading(QObject):
 
         # List of database layers to load inQGIS
         self.qgisCadastreLayerList = [
-            {'label': u'Commune', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': ''},
-            {'label': u'Voies, routes et chemins', 'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': ''},
-            {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" IN ( \'ZONCOMMUNI_id\') '},
-            {'label': u'Secteurs', 'name': 'geo_subdsect', 'table': 'geo_subdsect', 'geom': 'geom', 'sql': ''},
-            {'label': u'Subdivisions fiscales', 'name': 'geo_subdfisc', 'table': 'geo_subdfisc', 'geom': 'geom', 'sql': ''},
-            {'label': u'Subdivisions fiscales (étiquette)', 'name': 'geo_label_subdfisc', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SUBDFISC_id\''},
-            {'label': u'Bâti', 'name': 'geo_batiment', 'table': 'geo_batiment', 'geom': 'geom', 'sql': ''},
-            {'label': u'Parcelles', 'name': 'geo_parcelle', 'table': 'geo_parcelle', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid'},
-            {'label': u'Parcelles (étiquettes)', 'name': 'geo_label_parcelle', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\''},
-            {'label': u'Lieux-dits', 'name': 'geo_lieudit', 'table': 'geo_lieudit', 'geom': 'geom', 'sql': ''},
-            {'label': u'Lieux-dits  (étiquettes)', 'name': 'geo_label_lieudit', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'LIEUDIT_id\''},
-            {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': ''},
-            {'label': u'Sections (étiquettes)', 'name': 'geo_label_section', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SECTION_id\''},
-            {'label': u'Bornes', 'name': 'geo_borne', 'table': 'geo_borne', 'geom': 'geom', 'sql': ''},
-            {'label': u'Croix', 'name': 'geo_croix', 'table': 'geo_croix', 'geom': 'geom', 'sql': ''},
-            {'label': u'Repères géodésiques', 'name': 'geo_ptcanv', 'table': 'geo_ptcanv', 'geom': 'geom', 'sql': ''},
-            {'label': u'Murs, fossés, clotûres', 'name': 'geo_symblim', 'table': 'geo_symblim', 'geom': 'geom', 'sql': ''},
-            {'label': u'Cours d\'eau', 'name': 'geo_tronfluv', 'table': 'geo_tronfluv', 'geom': 'geom', 'sql': ''},
-            {'label': u'Cours d\'eau (étiquettes)', 'name': 'geo_label_tronfluv', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TRONFLUV_id\''},
-            {'label': u'Tronçons de route', 'name': 'geo_tronroute', 'table': 'geo_tronroute', 'geom': 'geom', 'sql': ''},
-            {'label': u'Tronçons de route (étiquettes)', 'name': 'geo_label_tronroute', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TRONROUTE_id\''},
-            {'label': u'Surfaces', 'name': 'geo_tsurf', 'table': 'geo_tsurf', 'geom': 'geom', 'sql': ''},
-            {'label': u'Surfaces (étiquettes)', 'name': 'geo_label_tsurf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TSURF_id\''},
-            {'label': u'Objets ponctuels', 'name': 'geo_tpoint', 'table': 'geo_tpoint', 'geom': 'geom', 'sql': ''},
-            {'label': u'Objets ponctuels (étiquettes)', 'name': 'geo_label_tpoint', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TPOINT_id\''},
-            {'label': u'Objets linéaires', 'name': 'geo_tline', 'table': 'geo_tline', 'geom': 'geom', 'sql': ''},
-            {'label': u'Objets linéaires (étiquettes)', 'name': 'geo_label_tline', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TLINE_id\''},
-            {'label': u'Numéros de voie', 'name': 'geo_label_num_voie', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'NUMVOIE_id\''},
-            {'label': u'Établissements publics', 'name': 'geo_label_voiep', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'VOIEP_id\''},
-            {'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': '', 'dbType': 'postgis'}
+            {'label': u'Commune', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Voies, routes et chemins', 'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
+            {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" IN ( \'ZONCOMMUNI_id\') ', 'active': True, 'group': 'E'},
+            {'label': u'Secteurs', 'name': 'geo_subdsect', 'table': 'geo_subdsect', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Subdivisions fiscales', 'name': 'geo_subdfisc', 'table': 'geo_subdfisc', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Subdivisions fiscales (étiquette)', 'name': 'geo_label_subdfisc', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SUBDFISC_id\'', 'active': False, 'group': 'E'},
+            {'label': u'Bâti', 'name': 'geo_batiment', 'table': 'geo_batiment', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Parcelles', 'name': 'geo_parcelle', 'table': 'geo_parcelle', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'D'},
+            {'label': u'Parcelles (étiquettes)', 'name': 'geo_label_parcelle', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\'', 'active': True, 'group': 'E'},
+            {'label': u'Lieux-dits', 'name': 'geo_lieudit', 'table': 'geo_lieudit', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Lieux-dits  (étiquettes)', 'name': 'geo_label_lieudit', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'LIEUDIT_id\'', 'active': False, 'group': 'E'},
+            {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Sections (étiquettes)', 'name': 'geo_label_section', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SECTION_id\'', 'active': False, 'group': 'E'},
+            {'label': u'Bornes', 'name': 'geo_borne', 'table': 'geo_borne', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
+            {'label': u'Croix', 'name': 'geo_croix', 'table': 'geo_croix', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
+            {'label': u'Repères géodésiques', 'name': 'geo_ptcanv', 'table': 'geo_ptcanv', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
+            {'label': u'Murs, fossés, clotûres', 'name': 'geo_symblim', 'table': 'geo_symblim', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
+            {'label': u'Cours d\'eau', 'name': 'geo_tronfluv', 'table': 'geo_tronfluv', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Cours d\'eau (étiquettes)', 'name': 'geo_label_tronfluv', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TRONFLUV_id\'', 'active': True, 'group': 'E'},
+            {'label': u'Tronçons de route', 'name': 'geo_tronroute', 'table': 'geo_tronroute', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Tronçons de route (étiquettes)', 'name': 'geo_label_tronroute', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TRONROUTE_id\'', 'active': False, 'group': 'E'},
+            {'label': u'Surfaces', 'name': 'geo_tsurf', 'table': 'geo_tsurf', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Surfaces (étiquettes)', 'name': 'geo_label_tsurf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TSURF_id\'', 'active': False, 'group': 'E'},
+            {'label': u'Objets ponctuels', 'name': 'geo_tpoint', 'table': 'geo_tpoint', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
+            {'label': u'Objets ponctuels (étiquettes)', 'name': 'geo_label_tpoint', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TPOINT_id\'', 'active': False, 'group': 'E'},
+            {'label': u'Objets linéaires', 'name': 'geo_tline', 'table': 'geo_tline', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
+            {'label': u'Objets linéaires (étiquettes)', 'name': 'geo_label_tline', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TLINE_id\'', 'active': False, 'group': 'E'},
+            {'label': u'Numéros de voie', 'name': 'geo_label_num_voie', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'NUMVOIE_id\'', 'active': True, 'group': 'E'},
+            {'label': u'Établissements publics', 'name': 'geo_label_voiep', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'VOIEP_id\'', 'active': True, 'group': 'E'},
+            {'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': '', 'dbType': 'postgis', 'active': False, 'group': 'D'}
         ]
 
     def updateTimer(self):
@@ -219,6 +219,11 @@ class cadastreLoading(QObject):
 
         self.updateTimer()
 
+        # Get canvas and disable rendering
+        from qgis.utils import iface
+        canvas = iface.mapCanvas()
+        canvas.freeze(True)
+
         # Add all layers to QGIS registry
         self.qc.updateLog(u'Ajout des couches dans le registre de QGIS')
         QgsMapLayerRegistry.instance().addMapLayers(qgisCadastreLayers)
@@ -233,25 +238,49 @@ class cadastreLoading(QObject):
                 groups.append(group[0])
         if u"Cadastre" in groups:
             g1 = self.getGroupIndex(u"Cadastre")
+            if not u'Étiquettes cadastre' in groups:
+                ge = li.addGroup(u'Étiquettes cadastre', True, g1)
+            if not u'Données cadastre' in groups:
+                gd = li.addGroup(u'Données cadastre', True, g1)
         else:
             g1 = li.addGroup("Cadastre")
+            ge = li.addGroup(u'Étiquettes cadastre', True, g1)
+            gd = li.addGroup(u'Données cadastre', True, g1)
+
         for layer in qgisCadastreLayers:
-            li.moveLayer(layer, g1)
-            li.setLayerExpanded(layer, False)
             #~ layer.updateExtents()
-            if layer.name() == u'Unités foncières':
-                li.setLayerVisible(layer, False)
-        li.setGroupExpanded(g1, False) # broken ?
+            # Get layer options
+            qlayer = [ a for a in self.qgisCadastreLayerList if a['label'] == layer.name() ]
+            if qlayer:
+                qlayer = qlayer[0]
+
+                # Enable/Disable layer
+                if not qlayer['active']:
+                    li.setLayerVisible(layer, False)
+
+                # Move layer to proper group
+                if qlayer['group'] == 'E':
+                    li.moveLayer(layer, ge)
+                if qlayer['group'] == 'D':
+                    li.moveLayer(layer, gd)
+            else:
+                # Move layer to Cadastre group
+                li.moveLayer(layer, g1)
+
+            # Do not expand layer legend
+            li.setLayerExpanded(layer, False)
+
+        # Close Cadastre group
+        # li.setGroupExpanded(g1, False)
+
         self.updateTimer()
-
-
 
 
         # Zoom to full extent
         self.qc.updateLog(u'Zoom sur les couches')
-        from qgis.utils import iface
-        canvas = iface.mapCanvas()
         canvas.zoomToFullExtent()
+        canvas.freeze(False)
+        canvas.refresh()
         self.updateTimer()
 
         # progress bar

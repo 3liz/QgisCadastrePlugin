@@ -94,7 +94,7 @@
     <property key="labeling/quadOffset" value="4"/>
     <property key="labeling/reverseDirectionSymbol" value="false"/>
     <property key="labeling/rightDirectionSymbol" value=">"/>
-    <property key="labeling/scaleMax" value="1000000"/>
+    <property key="labeling/scaleMax" value="100000"/>
     <property key="labeling/scaleMin" value="10000"/>
     <property key="labeling/scaleVisibility" value="true"/>
     <property key="labeling/shadowBlendMode" value="6"/>
