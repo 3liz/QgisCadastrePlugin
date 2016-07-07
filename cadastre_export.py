@@ -37,11 +37,21 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 
+from cadastre_dialogs import cadastre_common
+
+try:
+    from qgis.utils import iface
+except:
+    iface = None
+    pass
+
 
 class cadastreExport(QObject):
 
-    def __init__(self, dialog, etype, comptecommunal, geo_parcelle=None):
-        self.dialog = dialog
+    def __init__(self, layer, etype, comptecommunal, geo_parcelle=None):
+
+        self.plugin_dir = os.path.dirname(__file__)
+        self.iface = iface
 
         # Store an instance of QgsComposition
         self.currentComposition = None
@@ -90,9 +100,10 @@ class cadastreExport(QObject):
         else:
             self.typeLabel = u'PARCELLAIRE'
 
-        # common cadastre methods
-        self.qc = self.dialog.qc
-
+        self.layer = layer
+        self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(self.layer)
+        self.connector = cadastre_common.getConnectorFromUri(self.connectionParams)
+        self.dbType = self.connectionParams['dbType']
 
     def setComposerTemplates(self, comptecommunal):
         '''
@@ -244,7 +255,7 @@ class cadastreExport(QObject):
         replaceDict = ''
         # Build template file path
         tplPath = os.path.join(
-            self.qc.plugin_dir,
+            self.plugin_dir,
             "templates/%s.tpl" % key
         )
 
@@ -260,8 +271,8 @@ class cadastreExport(QObject):
             fin.close()
 
             # Add schema to search_path if postgis
-            if self.dialog.dbType == 'postgis':
-                sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            if self.dbType == 'postgis':
+                sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
             # Add where clause depending on etype
             sql = sql.replace('$and', item['and'][self.etype] )
 
@@ -275,12 +286,12 @@ class cadastreExport(QObject):
                 data = self.lineCount[key]['data'][offset:self.maxLineNumber+offset]
 
             # Run SQL
-            if self.dialog.dbType == 'spatialite':
-                sql = self.qc.postgisToSpatialite(sql)
+            if self.dbType == 'spatialite':
+                sql = cadastre_common.postgisToSpatialite(sql)
             # Run SQL only if data has not already been defined
             if data is None:
                 #~ print sql
-                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.dialog.connector, sql)
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
 
 
             # Page no defined = means the query is here to
@@ -355,7 +366,6 @@ class cadastreExport(QObject):
             msg = u"Erreur lors de l'export: %s" % e
             self.go = False
             print "%s" % msg
-            #~ self.qc.updateLog(msg)
             return msg
 
         finally:
@@ -443,7 +453,7 @@ class cadastreExport(QObject):
             w.setItemPosition(50, (page - 1) * (self.pageHeight + 10), 150, 100)
             w.setFrameEnabled(False)
             pictureFile = os.path.join(
-                self.qc.plugin_dir,
+                self.plugin_dir,
                 "templates/experimental.svg"
             )
             w.setPictureFile(pictureFile)
@@ -453,12 +463,13 @@ class cadastreExport(QObject):
 
 
 
-    def exportItemAsPdf(self, comptecommunal):
+    def exportItemAsPdf(self, comptecommunal, suffix=None):
         '''
         Export one PDF file using the template composer
         filled with appropriate data
         for one "compte communal"
         '''
+        temppath = None
 
         # Set configuration
         self.setComposerTemplates(comptecommunal)
@@ -473,7 +484,11 @@ class cadastreExport(QObject):
 
             # Create the pdf output path
             from time import time
-            temp = "releve_%s_%s.pdf" % (self.etype, comptecommunal)
+            temp = "releve_%s_%s_%s.pdf" % (
+                self.etype,
+                comptecommunal,
+                int(time()*100)
+            )
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
             temppath = re.sub(r'[\?\*\+<>]', '-', temppath)
@@ -482,8 +497,10 @@ class cadastreExport(QObject):
             self.currentComposition.exportAsPDF(temppath)
 
             # Opens PDF in default application
-            if not self.isMulti:
+            if not self.isMulti and self.iface:
                 self.openFile(temppath)
+
+        return temppath
 
 
     def openFile(self, filename):
@@ -501,41 +518,51 @@ class cadastreExport(QObject):
         '''
         Run the PDF export
         '''
-
+        paths = []
         # Export as many pdf as compte communal
         if self.isMulti:
-            # Show print progress dialog
-            self.setupPrintProgressDialog()
+            if self.iface:
+                # Show print progress dialog
+                self.setupPrintProgressDialog()
             nb = len(self.comptecommunal)
             # Export PDF for each compte
             for comptecommunal in self.comptecommunal:
                 # export as PDF
                 comptecommunal = comptecommunal.strip("' ")
-                self.exportItemAsPdf(comptecommunal)
+                apath = self.exportItemAsPdf(comptecommunal)
+                if apath:
+                    paths.append(apath)
 
                 # update progress bar
-                self.printStep+=1
-                self.printProgress.pbPrint.setValue(int(self.printStep * 100 / nb))
-
-            info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir
-            openFolderOk = QMessageBox.question(
-                self.dialog,
-                u"Cadastre - Export",
-                info,
-                QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
-            )
-            if openFolderOk == QMessageBox.Yes:
-                openFolder = QDesktopServices()
-                openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
+                if self.iface:
+                    self.printStep+=1
+                    self.printProgress.pbPrint.setValue(int(self.printStep * 100 / nb))
+            if self.iface:
+                info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir
+                openFolderOk = QMessageBox.question(
+                    self.dialog,
+                    u"Cadastre - Export",
+                    info,
+                    QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
+                )
+                if openFolderOk == QMessageBox.Yes:
+                    openFolder = QDesktopServices()
+                    openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
 
         else:
-            self.exportItemAsPdf(self.comptecommunal)
+            apath = self.exportItemAsPdf(self.comptecommunal)
+            if apath:
+                paths.append(apath)
+
+        return paths
 
 
     def setupPrintProgressDialog(self):
         '''
         Opens print progress dialog
         '''
+        if not self.iface:
+            return
         # Show progress dialog
         self.printProgress = cadastrePrintProgress()
         # Set progress bar
@@ -544,11 +571,11 @@ class cadastreExport(QObject):
         # Show dialog
         self.printProgress.show()
 
+if iface:
+    from cadastre_print_form import *
 
-from cadastre_print_form import *
-
-class cadastrePrintProgress(QDialog, Ui_cadastre_print_form):
-    def __init__(self):
-        QDialog.__init__(self)
-        # Set up the user interface
-        self.setupUi(self)
+    class cadastrePrintProgress(QDialog, Ui_cadastre_print_form):
+        def __init__(self):
+            QDialog.__init__(self)
+            # Set up the user interface
+            self.setupUi(self)

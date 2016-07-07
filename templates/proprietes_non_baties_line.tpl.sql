@@ -10,7 +10,7 @@ CASE WHEN length(Cast(s.dcntsf AS text)) > 2 THEN substring(Cast(s.dcntsf AS tex
 CASE WHEN length(Cast(s.dcntsf AS text)) > 0 THEN substring(Cast(s.dcntsf AS text), length(Cast(s.dcntsf AS text))-1, 2) ELSE '0' END AS ca_contenance,
 s.drcsuba AS revenucadastral, se.ccolloc AS coll, se.gnexts AS natexo, se.jfinex AS anret,
 --se.fcexn AS fractionrcexo,
-round(s.drcsuba * Cast(se.pexn / 100 AS numeric(10,2)) / 100 , 2) as fractionrcexo,
+round(Cast(s.drcsuba * Cast(se.pexn / 100 AS numeric(10,2)) / 100 AS numeric) , 2) as fractionrcexo,
 Cast(se.pexn / 100 AS numeric(10,2)) AS pourcentageexo, '' AS tc,
 p.dreflf AS lff
 

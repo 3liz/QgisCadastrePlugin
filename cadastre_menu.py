@@ -26,8 +26,9 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 from cadastre_identify_parcelle import IdentifyParcelle
-from cadastre_dialogs import *
+from cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
 import ConfigParser
+import os.path
 
 # ---------------------------------------------
 
@@ -38,7 +39,6 @@ class cadastre_menu:
         self.cadastre_menu = None
 
         self.cadastre_search_dialog = None
-        self.qc = None
 
     def cadastre_add_submenu(self, submenu):
         if self.cadastre_menu != None:
@@ -64,7 +64,6 @@ class cadastre_menu:
         if not self.cadastre_search_dialog:
             dialog = cadastre_search_dialog(self.iface)
             self.cadastre_search_dialog = dialog
-            self.qc = cadastre_common(dialog)
 
         # Load Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/output.png")
@@ -260,7 +259,8 @@ class cadastre_menu:
         If not deactivate Identify parcelle tool
         '''
         # Find parcelle layer
-        parcelleLayer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
+        from cadastre_dialogs import cadastre_common
+        parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('geo_parcelle')
         if not parcelleLayer:
             self.identifyParcelleAction.setChecked(False)
             self.iface.actionPan().trigger()
@@ -273,7 +273,7 @@ class cadastre_menu:
         '''
 
         # Find parcelle layer
-        parcelleLayer = self.qc.getLayerFromLegendByTableProps('geo_parcelle')
+        parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('geo_parcelle')
         if not parcelleLayer:
             QMessageBox.warning(
                 self.cadastre_search_dialog,
@@ -389,3 +389,4 @@ class cadastre_menu:
 
         if self.cadastre_search_dialog:
             self.iface.removeDockWidget(self.cadastre_search_dialog)
+

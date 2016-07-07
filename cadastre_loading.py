@@ -56,6 +56,7 @@ class cadastreLoading(QObject):
         # List of database layers to load inQGIS
         self.qgisCadastreLayerList = [
             {'label': u'Commune', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
+            {'label': u'Tronçons de route', 'name': 'geo_tronroute', 'table': 'geo_tronroute', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Voies, routes et chemins', 'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" IN ( \'ZONCOMMUNI_id\') ', 'active': True, 'group': 'E'},
             {'label': u'Secteurs', 'name': 'geo_subdsect', 'table': 'geo_subdsect', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
@@ -74,7 +75,6 @@ class cadastreLoading(QObject):
             {'label': u'Murs, fossés, clotûres', 'name': 'geo_symblim', 'table': 'geo_symblim', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Cours d\'eau', 'name': 'geo_tronfluv', 'table': 'geo_tronfluv', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Cours d\'eau (étiquettes)', 'name': 'geo_label_tronfluv', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TRONFLUV_id\'', 'active': True, 'group': 'E'},
-            {'label': u'Tronçons de route', 'name': 'geo_tronroute', 'table': 'geo_tronroute', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Tronçons de route (étiquettes)', 'name': 'geo_label_tronroute', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TRONROUTE_id\'', 'active': False, 'group': 'E'},
             {'label': u'Surfaces', 'name': 'geo_tsurf', 'table': 'geo_tsurf', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Surfaces (étiquettes)', 'name': 'geo_label_tsurf', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TSURF_id\'', 'active': False, 'group': 'E'},
@@ -200,6 +200,8 @@ class cadastreLoading(QObject):
                 uniqueCol
             )
             vlayer = QgsVectorLayer(layerUri.uri(), item['label'], providerName)
+
+            #layer.setSubsetString('"osm_user" = \'donlaser\'')
 
             # apply style
             qmlPath = os.path.join(

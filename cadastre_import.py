@@ -56,6 +56,8 @@ except ImportError:
 
 from scripts.pyogr.ogr2ogr import main as ogr2ogr
 
+from cadastre_dialogs import cadastre_common
+
 class cadastreImport(QObject):
 
     def __init__(self, dialog):
@@ -546,7 +548,7 @@ class cadastreImport(QObject):
                         # Build sql INSERT query depending on database
                         if self.dialog.dbType == 'postgis':
                             sql = "BEGIN;"
-                            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+                            sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
                             sql+= '\n'.join(
                                 [
                                 "INSERT INTO \"%s\" VALUES (%s);" % (
@@ -1010,7 +1012,8 @@ class cadastreImport(QObject):
 
             # Convert SQL into spatialite syntax
             if self.dialog.dbType == 'spatialite':
-                sql = self.qc.postgisToSpatialite(sql, self.targetSrid)
+                sql = cadastre_common.postgisToSpatialite(sql, self.targetSrid)
+                sql = cadastre_common.postgisToSpatialiteLocal10(sql, self.dialog.dataYear)
 
             #~ self.qc.updateLog('|%s|' % sql)
             # Execute query
@@ -1210,6 +1213,7 @@ class cadastreImport(QObject):
                     '-gt', '50000',
                     '--config', 'OGR_EDIGEO_CREATE_LABEL_LAYERS', 'NO'
                 ]
+                #-c client_encoding=latin1
 
             if self.dialog.dbType == 'spatialite':
                 if not settings.contains( "sqlitepath" ): # non-existent entry?
@@ -1277,7 +1281,7 @@ class cadastreImport(QObject):
                     for item in l:
                         sql+= "INSERT INTO edigeo_rel ( nom, de, vers) VALUES ( '%s', '%s', '%s');" % (item[0], item[1], item[2] )
                     sql+="COMMIT;"
-                    sql = self.qc.setSearchPath(sql, self.dialog.schema)
+                    sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
                     self.executeSqlQuery(sql)
                 if self.dialog.dbType == 'spatialite':
                     c = self.connector._get_cursor()
@@ -1413,6 +1417,6 @@ class cadastreImport(QObject):
             for table in edigeoImportTables:
                 sql+= 'DROP TABLE IF EXISTS "%s";' % table
             if self.dialog.dbType == 'postgis':
-                sql = self.qc.setSearchPath(sql, self.dialog.schema)
+                sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 

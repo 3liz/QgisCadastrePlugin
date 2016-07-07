@@ -60,7 +60,8 @@ class cadastre_common():
         # default auth id for layers
         self.defaultAuthId = 'EPSG:2154'
 
-    def hasSpatialiteSupport(self):
+    @staticmethod
+    def hasSpatialiteSupport():
         '''
         Check whether or not
         spatialite support is ok
@@ -235,35 +236,35 @@ class cadastre_common():
                 # Check for data in it
                 sql = 'SELECT * FROM "%s" LIMIT 1' % searchTable
                 if self.dialog.dbType == 'postgis':
-                    sql = self.setSearchPath(sql, self.dialog.schema)
-                [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-                if rowCount >= 1:
+                    sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if ok and rowCount >= 1:
                     hasData = True
 
                 # Check for Majic data in it
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableParcelle
                 if self.dialog.dbType == 'postgis':
-                    sql = self.setSearchPath(sql, self.dialog.schema)
-                [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-                if rowCount >= 1:
+                    sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if ok and rowCount >= 1:
                     hasMajicData = True
                     hasMajicDataParcelle = True
 
                 # Check for Majic data in it
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableProp
                 if self.dialog.dbType == 'postgis':
-                    sql = self.setSearchPath(sql, self.dialog.schema)
-                [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-                if rowCount >= 1:
+                    sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if ok and rowCount >= 1:
                     hasMajicData = True
                     hasMajicDataProp = True
 
                 # Check for Majic data in it
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableVoie
                 if self.dialog.dbType == 'postgis':
-                    sql = self.setSearchPath(sql, self.dialog.schema)
-                [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-                if rowCount >= 1:
+                    sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if ok and rowCount >= 1:
                     hasMajicData = True
                     hasMajicDataVoie = True
 
@@ -292,22 +293,23 @@ class cadastre_common():
         if self.dialog.dbType == 'spatialite':
             sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='%s'" % tableName
 
-        [header, data, rowCount] = self.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-        if rowCount >= 1:
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+        if ok and rowCount >= 1:
             tableExists = True
 
         return tableExists
 
 
-    def getLayerFromLegendByTableProps(self, tableName, geomCol='geom', sql=''):
+    @staticmethod
+    def getLayerFromLegendByTableProps(tableName, geomCol='geom', sql=''):
         '''
         Get the layer from QGIS legend
         corresponding to a database
         table name (postgis or sqlite)
         '''
         layer = None
-        layers = self.dialog.iface.legendInterface().layers()
-        for l in layers:
+        lr = QgsMapLayerRegistry.instance()
+        for lid,l in lr.mapLayers().items():
             if not hasattr(l, 'providerType'):
                 continue
             if hasattr(l, 'type') and l.type() != 0:
@@ -315,7 +317,7 @@ class cadastre_common():
             if not l.providerType() in (u'postgres', u'spatialite'):
                 continue
 
-            connectionParams = self.getConnectionParameterFromDbLayer(l)
+            connectionParams = cadastre_common.getConnectionParameterFromDbLayer(l)
             import re
 
             reg = r'(\.| )?(%s)' % tableName
@@ -330,7 +332,8 @@ class cadastre_common():
 
         return layer
 
-    def getConnectionParameterFromDbLayer(self, layer):
+    @staticmethod
+    def getConnectionParameterFromDbLayer(layer):
         '''
         Get connection parameters
         from the layer datasource
@@ -410,7 +413,8 @@ class cadastre_common():
 
         return connectionParams
 
-    def setSearchPath(self, sql, schema):
+    @staticmethod
+    def setSearchPath(sql, schema):
         '''
         Set the search_path parameters if postgis database
         '''
@@ -423,7 +427,8 @@ class cadastre_common():
         return sql
 
 
-    def fetchDataFromSqlQuery(self, connector, sql, schema=None):
+    @staticmethod
+    def fetchDataFromSqlQuery(connector, sql, schema=None):
         '''
         Execute a SQL query and
         return [header, data, rowCount]
@@ -434,6 +439,7 @@ class cadastre_common():
         header = []
         rowCount = 0
         c = None
+        ok = True
 
 
         try:
@@ -452,9 +458,7 @@ class cadastre_common():
                 rowCount = len(data)
 
         except BaseError as e:
-
-            DlgDbError.showError(e, self.dialog)
-            self.dialog.go = False
+            ok = False
             try:
                 self.updateLog(e.msg)
             except:
@@ -462,21 +466,25 @@ class cadastre_common():
             return
 
         finally:
-            QApplication.restoreOverrideCursor()
+            try:
+                QApplication.restoreOverrideCursor()
+            except:
+                pass
             if c:
                 c.close()
                 del c
 
-        return [header, data, rowCount]
+        return [header, data, rowCount, ok]
 
 
-
-    def getConnectorFromUri(self, connectionParams):
+    @staticmethod
+    def getConnectorFromUri(connectionParams):
         '''
         Set connector property
         for the given database type
         and parameters
         '''
+        connector = None
         uri = QgsDataSourceURI()
         if connectionParams['dbType'] == 'postgis':
             uri.setConnection(
@@ -490,7 +498,7 @@ class cadastre_common():
 
         if connectionParams['dbType'] == 'spatialite':
             uri.setConnection('', '', connectionParams['dbname'], '', '')
-            if self.hasSpatialiteSupport():
+            if cadastre_common.hasSpatialiteSupport():
                 from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
             connector = SpatiaLiteDBConnector(uri)
 
@@ -533,8 +541,8 @@ class cadastre_common():
 
         return s
 
-
-    def postgisToSpatialite(self, sql, targetSrid='2154'):
+    @staticmethod
+    def postgisToSpatialite(sql, targetSrid='2154'):
         '''
         Convert postgis SQL statement
         into spatialite compatible
@@ -591,6 +599,12 @@ class cadastre_common():
         r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE|re.MULTILINE)
         sql = r.sub(r'\1=(SELECT \3);', sql)
 
+        #~ self.updateLog(sql)
+        return sql
+
+
+    @staticmethod
+    def postgisToSpatialiteLocal10(sql, dataYear):
         # majic formatage : replace multiple column update for loca10
         r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
         res = r.findall(sql)
@@ -623,12 +637,11 @@ class cadastre_common():
             WHERE local10.annee = '?';
             DROP TABLE ll;
             '''
-            replaceBy = replaceBy.replace('?', self.dialog.dataYear)
+            replaceBy = replaceBy.replace('?', dataYear)
             sql = sql.replace(statement, replaceBy)
 
         #~ self.updateLog(sql)
         return sql
-
 
     def createNewSpatialiteDatabase(self):
         '''
@@ -693,17 +706,18 @@ class cadastre_common():
         listDic = { self.dialog.connectionDbList[i]:i for i in range(0, len(self.dialog.connectionDbList)) }
         self.dialog.liDbConnection.setCurrentIndex(listDic[myName])
 
-
-    def getCompteCommunalFromParcelleId(self, parcelleId, connectionParams, connector):
+    @staticmethod
+    def getCompteCommunalFromParcelleId(parcelleId, connectionParams, connector):
 
         comptecommunal = None
 
         sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
         if connectionParams['dbType'] == 'postgis':
-            sql = self.setSearchPath(sql, connectionParams['schema'])
-        [header, data, rowCount] = self.fetchDataFromSqlQuery(connector, sql)
-        for line in data:
-            comptecommunal = line[0]
+            sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
+        if ok:
+            for line in data:
+                comptecommunal = line[0]
 
         return comptecommunal
 
@@ -719,6 +733,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
 
         self.connectionDbList = []
         # common cadastre methods
+        from cadastre_dialogs import cadastre_common
         self.qc = cadastre_common(self)
 
         # first disable database specifi tabs
@@ -726,7 +741,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         self.databaseSpecificOptions.setTabEnabled(1, False)
 
         # spatialite support
-        self.hasSpatialiteSupport = self.qc.hasSpatialiteSupport()
+        self.hasSpatialiteSupport = cadastre_common.hasSpatialiteSupport()
         if not self.hasSpatialiteSupport:
             self.liDbType.removeItem(2)
             self.databaseSpecificOptions.setTabEnabled(1, False)
@@ -1067,11 +1082,12 @@ class cadastre_load_dialog(QDialog, Ui_cadastre_load_form):
         self.cadastre_search_dialog = cadastre_search_dialog
 
         # common cadastre methods
+        from cadastre_dialogs import cadastre_common
         self.qc = cadastre_common(self)
         self.ql = cadastreLoading(self)
 
         # spatialite support
-        self.hasSpatialiteSupport = self.qc.hasSpatialiteSupport()
+        self.hasSpatialiteSupport = cadastre_common.hasSpatialiteSupport()
         if not self.hasSpatialiteSupport:
             self.liDbType.removeItem(2)
 
@@ -1161,6 +1177,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
 
         # common cadastre methods
+        from cadastre_dialogs import cadastre_common
         self.qc = cadastre_common(self)
 
         # database properties
@@ -1179,10 +1196,10 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.sectionRequest = None
         self.sectionCommuneFeature = None
 
-        aLayer = self.qc.getLayerFromLegendByTableProps('geo_commune')
+        aLayer = cadastre_common.getLayerFromLegendByTableProps('geo_commune')
         if aLayer:
-            self.connectionParams = self.qc.getConnectionParameterFromDbLayer(aLayer)
-            self.connector = self.qc.getConnectorFromUri( self.connectionParams )
+            self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(aLayer)
+            self.connector = cadastre_common.getConnectorFromUri( self.connectionParams )
 
         # signals/slots
         self.searchComboBoxes = {
@@ -1410,38 +1427,38 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.hasMajicDataVoie = False
         self.hasMajicDataParcelle = False
 
-        aLayer = self.qc.getLayerFromLegendByTableProps('geo_commune')
+        aLayer = cadastre_common.getLayerFromLegendByTableProps('geo_commune')
         if aLayer:
-            self.connectionParams = self.qc.getConnectionParameterFromDbLayer(aLayer)
+            self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(aLayer)
 
         # Get connection parameters
         if self.connectionParams:
 
             # Get Connection params
-            connector = self.qc.getConnectorFromUri(self.connectionParams)
+            connector = cadastre_common.getConnectorFromUri(self.connectionParams)
             if connector:
                 # Get data from table proprietaire
                 sql = 'SELECT * FROM "proprietaire" LIMIT 1'
                 if self.connectionParams['dbType'] == 'postgis':
-                    sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
-                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
-                if rowCount >= 1:
+                    sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
+                if ok and rowCount >= 1:
                     self.hasMajicDataProp = True
 
                 # Get data from table voie
                 sql = 'SELECT * FROM "voie" LIMIT 1'
                 if self.connectionParams['dbType'] == 'postgis':
-                    sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
-                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
-                if rowCount >= 1:
+                    sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
+                if ok and rowCount >= 1:
                     self.hasMajicDataVoie = True
 
                 # Get data from table parcelle
                 sql = 'SELECT * FROM "parcelle" LIMIT 1'
                 if self.connectionParams['dbType'] == 'postgis':
-                    sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
-                [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
-                if rowCount >= 1:
+                    sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
+                if ok and rowCount >= 1:
                     self.hasMajicDataParcelle = True
 
                 connector.__del__()
@@ -1473,7 +1490,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         # Get corresponding QGIS layer
         itemList = []
         table = searchCombo['table'].replace('v_', '') # get data from table not view
-        layer = self.qc.getLayerFromLegendByTableProps(
+        layer = cadastre_common.getLayerFromLegendByTableProps(
             table,
             searchCombo['geomCol'],
             searchCombo['sql']
@@ -1558,7 +1575,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get connection parameters
-        connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
+        connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
         if not connectionParams:
             QApplication.restoreOverrideCursor()
             return None
@@ -1568,7 +1585,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.schema = connectionParams['schema']
 
         # Use db_manager tool to run the query
-        connector = self.qc.getConnectorFromUri(connectionParams)
+        connector = cadastre_common.getConnectorFromUri(connectionParams)
 
         # SQL
         sql = ' SELECT %s' % ', '.join(attributes)
@@ -1586,10 +1603,10 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             sql+= ' ORDER BY %s' % ', '.join(orderBy)
 
         if self.dbType == 'postgis':
-            sql = self.qc.setSearchPath(sql, connectionParams['schema'])
+            sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
         # Get data
         #self.qc.updateLog(sql)
-        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector, sql)
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
 
         # Get features
         features = []
@@ -1648,17 +1665,17 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # Get database connection parameters from a qgis layer
         dbtable = self.searchComboBoxes[key]['table']
-        layer = self.qc.getLayerFromLegendByTableProps( dbtable.replace('v_', '') )
+        layer = cadastre_common.getLayerFromLegendByTableProps( dbtable.replace('v_', '') )
         if not layer:
             QApplication.restoreOverrideCursor()
             return None
-        connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
+        connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
         if not connectionParams:
             QApplication.restoreOverrideCursor()
             return None
 
         # Use db_manager tool to run the query
-        connector = self.qc.getConnectorFromUri(connectionParams)
+        connector = cadastre_common.getConnectorFromUri(connectionParams)
         self.connector = connector
 
         # Format searchValue
@@ -1703,12 +1720,12 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             sql+= ' ORDER BY ddenom' #, c.ccocom'
         self.dbType = connectionParams['dbType']
         if self.dbType == 'postgis':
-            sql = self.qc.setSearchPath(sql, connectionParams['schema'])
+            sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
             sql = sql.replace('MyStringAgg', 'string_agg')
         else:
             sql = sql.replace('MyStringAgg', 'group_concat')
         #~ self.qc.updateLog(sql)
-        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(connector,sql)
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector,sql)
 
         # Fill  combobox
         self.qc.updateLog(u"%s résultats correpondent à '%s'" % (rowCount, searchValue))
@@ -1976,7 +1993,8 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         # Search proprietaire by dnuper
         cc = self.searchComboBoxes['proprietaire']['id']
         if cc:
-            qex = cadastreExport(self, 'proprietaire', cc)
+            layer = self.searchComboBoxes['proprietaire']['layer']
+            qex = cadastreExport(layer, 'proprietaire', cc)
             qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune donnée trouvée pour ce propriétaire !')
@@ -1992,9 +2010,10 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             return
 
         feat = self.searchComboBoxes[key]['chosenFeature']
+        layer = self.searchComboBoxes[key]['layer']
         if feat:
-            comptecommunal = self.qc.getCompteCommunalFromParcelleId( feat['geo_parcelle'], self.connectionParams, self.connector)
-            qex = cadastreExport(self, 'parcelle', comptecommunal, feat['geo_parcelle'])
+            comptecommunal = cadastre_common.getCompteCommunalFromParcelleId( feat['geo_parcelle'], self.connectionParams, self.connector)
+            qex = cadastreExport(layer, 'parcelle', comptecommunal, feat['geo_parcelle'])
             qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')
@@ -2027,6 +2046,7 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
 
         # common cadastre methods
         self.qc = cadastre_common(self)
+        from cadastre_dialogs import cadastre_common
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -2178,9 +2198,6 @@ class cadastre_about_dialog(QDialog, Ui_cadastre_about_form):
         self.iface = iface
         self.setupUi(self)
 
-        # common cadastre methods
-        self.qc = cadastre_common(self)
-
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
         self.buttonBox.rejected.connect(self.onReject)
@@ -2218,16 +2235,17 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         self.cadastre_search_dialog = cadastre_search_dialog
 
         # common cadastre methods
+        from cadastre_dialogs import cadastre_common
         self.qc = cadastre_common(self)
 
         # Get connection parameters
-        connectionParams = self.qc.getConnectionParameterFromDbLayer(layer)
+        connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
         if not connectionParams:
             return
         self.connectionParams = connectionParams
         self.dbType = connectionParams['dbType']
         self.schema = connectionParams['schema']
-        connector = self.qc.getConnectorFromUri(connectionParams)
+        connector = cadastre_common.getConnectorFromUri(connectionParams)
         self.connector = connector
 
 
@@ -2269,9 +2287,9 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         self.hasMajicDataProp = False
         sql = 'SELECT * FROM "proprietaire" LIMIT 1'
         if self.connectionParams['dbType'] == 'postgis':
-            sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
-        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
-        if rowCount >= 1:
+            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+        if ok and rowCount >= 1:
             self.hasMajicDataProp = True
 
     def setParcelleContent(self):
@@ -2317,21 +2335,22 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             ''' % self.feature['geo_parcelle']
 
         if self.connectionParams['dbType'] == 'postgis':
-            sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
 
-        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
         html = ''
-        for line in data:
-            html+= u'<h3>%s</h3>' % line[5]
-            html+= u'<b>Commune :</b>'
-            if line[0] and line[1]:
-                html+= ' %s (%s)<br/>' % (line[0], line[1])
-            else:
-                html+=  u' <i>Pas de données Fantoir dans la base !</i><br/>'
-            html+= u'<b>Surface géographique :</b> %s m²<br/>' % int(self.feature.geometry().area())
-            html+= u'<b>Contenance :</b> %s m²<br/>' % line[2]
-            html+= u'<b>Adresse :</b> %s<br/>' % line[3]
-            html+= u'<b>Urbaine :</b> %s<br/>' % line[4]
+        if ok:
+            for line in data:
+                html+= u'<h3>%s</h3>' % line[5]
+                html+= u'<b>Commune :</b>'
+                if line[0] and line[1]:
+                    html+= ' %s (%s)<br/>' % (line[0], line[1])
+                else:
+                    html+=  u' <i>Pas de données Fantoir dans la base !</i><br/>'
+                html+= u'<b>Surface géographique :</b> %s m²<br/>' % int(self.feature.geometry().area())
+                html+= u'<b>Contenance :</b> %s m²<br/>' % line[2]
+                html+= u'<b>Adresse :</b> %s<br/>' % line[3]
+                html+= u'<b>Urbaine :</b> %s<br/>' % line[4]
 
         self.parcelleInfo.setText('%s' % html)
 
@@ -2360,14 +2379,15 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         AND comptecommunal = (SELECT comptecommunal FROM parcelle WHERE parcelle = '%s')
         ''' % self.feature['geo_parcelle']
         if self.connectionParams['dbType'] == 'postgis':
-            sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
         if self.connectionParams['dbType'] == 'spatialite':
-            sql = self.qc.postgisToSpatialite(sql)
+            sql = cadastre_common.postgisToSpatialite(sql)
 
-        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector, sql)
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
         html = ''
-        for line in data:
-            html+= u'%s<br>' % line[0]
+        if ok:
+            for line in data:
+                html+= u'%s<br>' % line[0]
 
         self.proprietairesInfo.setText('%s' % html)
 
@@ -2387,14 +2407,15 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         sql+= " ORDER BY ddenom"
 
         if self.connectionParams['dbType'] == 'postgis':
-            sql = self.qc.setSearchPath(sql, self.connectionParams['schema'])
+            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
             sql = sql.replace('MyStringAgg', 'string_agg')
         if self.connectionParams['dbType'] == 'spatialite':
             sql = sql.replace('MyStringAgg', 'group_concat')
 
-        [header, data, rowCount] = self.qc.fetchDataFromSqlQuery(self.connector,sql)
-        for line in data:
-            cc = line[1].split(',')
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector,sql)
+        if ok:
+            for line in data:
+                cc = line[1].split(',')
 
         return cc
 
@@ -2411,17 +2432,18 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             return
 
         if self.feature:
-            comptecommunal = self.qc.getCompteCommunalFromParcelleId(self.feature['geo_parcelle'], self.connectionParams, self.connector)
+            comptecommunal = cadastre_common.getCompteCommunalFromParcelleId(self.feature['geo_parcelle'], self.connectionParams, self.connector)
             if comptecommunal:
                 if key == 'proprietaire' and self.cbExportAllCities.isChecked():
                     comptecommunal = self.getProprietaireComptesCommunaux( comptecommunal )
-                qe = cadastreExport(
-                    self,
-                    key,
-                    comptecommunal,
-                    self.feature['geo_parcelle']
-                )
-                qe.exportAsPDF()
+                if self.layer:
+                    qe = cadastreExport(
+                        self.layer,
+                        key,
+                        comptecommunal,
+                        self.feature['geo_parcelle']
+                    )
+                    qe.exportAsPDF()
 
     def centerToParcelle(self):
         '''
@@ -2485,7 +2507,7 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         qs = self.cadastre_search_dialog
         key = 'proprietaire'
 
-        comptecommunal = self.qc.getCompteCommunalFromParcelleId( self.feature['geo_parcelle'], self.connectionParams, self.connector )
+        comptecommunal = cadastre_common.getCompteCommunalFromParcelleId( self.feature['geo_parcelle'], self.connectionParams, self.connector )
         if not comptecommunal:
             print "Aucune parcelle trouvée pour ce propriétaire"
         value = comptecommunal
