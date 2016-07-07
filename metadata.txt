@@ -43,3 +43,6 @@ experimental=False
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
 
+
+# Activate server configuration
+server=True
