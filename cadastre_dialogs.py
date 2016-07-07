@@ -39,7 +39,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/forms")
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
-
+import subprocess
 
 from functools import partial
 
@@ -88,6 +88,17 @@ class cadastre_common():
         t.setTextCursor(c)
         qApp.processEvents()
 
+
+    @staticmethod
+    def openFile(filename):
+        '''
+        Opens a file with default system app
+        '''
+        if sys.platform == "win32":
+            os.startfile(filename)
+        else:
+            opener ="open" if sys.platform == "darwin" else "xdg-open"
+            subprocess.call([opener, filename])
 
     def updateProgressBar(self):
         '''
@@ -589,7 +600,7 @@ class cadastre_common():
         for a in replaceDict:
             r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
             sql = r.sub(a['out'], sql)
-            #~ self.updateLog(sql)
+            #self.updateLog(sql)
 
         # index spatiaux
         r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
@@ -599,7 +610,7 @@ class cadastre_common():
         r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE|re.MULTILINE)
         sql = r.sub(r'\1=(SELECT \3);', sql)
 
-        #~ self.updateLog(sql)
+        #self.updateLog(sql)
         return sql
 
 
@@ -640,7 +651,7 @@ class cadastre_common():
             replaceBy = replaceBy.replace('?', dataYear)
             sql = sql.replace(statement, replaceBy)
 
-        #~ self.updateLog(sql)
+        #self.updateLog(sql)
         return sql
 
     def createNewSpatialiteDatabase(self):
@@ -1407,6 +1418,9 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.hasMajicDataParcelle = False
         self.checkMajicContent()
 
+        # signals
+
+
 
     def clearComboboxes(self):
         '''
@@ -1724,7 +1738,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             sql = sql.replace('MyStringAgg', 'string_agg')
         else:
             sql = sql.replace('MyStringAgg', 'group_concat')
-        #~ self.qc.updateLog(sql)
+        #self.qc.updateLog(sql)
         [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector,sql)
 
         # Fill  combobox
@@ -2017,7 +2031,6 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')
-
 
     def onVisibilityChange(self, visible):
         '''

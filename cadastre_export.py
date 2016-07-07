@@ -498,7 +498,7 @@ class cadastreExport(QObject):
 
             # Opens PDF in default application
             if not self.isMulti and self.iface:
-                self.openFile(temppath)
+                cadastre_common.openFile(temppath)
 
         return temppath
 
@@ -539,15 +539,8 @@ class cadastreExport(QObject):
                     self.printProgress.pbPrint.setValue(int(self.printStep * 100 / nb))
             if self.iface:
                 info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir
-                openFolderOk = QMessageBox.question(
-                    self.dialog,
-                    u"Cadastre - Export",
-                    info,
-                    QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
-                )
-                if openFolderOk == QMessageBox.Yes:
-                    openFolder = QDesktopServices()
-                    openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
+                openFolder = QDesktopServices()
+                openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
 
         else:
             apath = self.exportItemAsPdf(self.comptecommunal)
