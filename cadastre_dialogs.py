@@ -732,6 +732,34 @@ class cadastre_common():
 
         return comptecommunal
 
+    @staticmethod
+    def getProprietaireComptesCommunaux(comptecommunal, connectionParams, connector):
+        '''
+        Get the list of "comptecommunal" for all cities
+        for a owner given one single comptecommunal
+        '''
+        cc = comptecommunal
+
+        sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"
+        sql+= " FROM proprietaire p"
+        sql+= " WHERE 2>1"
+        sql+= " AND ddenom IN (SELECT ddenom FROM proprietaire WHERE comptecommunal = %s)" % connector.quoteString( comptecommunal )
+        sql+= " GROUP BY dnuper, ddenom, dlign4"
+        sql+= " ORDER BY ddenom"
+
+        if connectionParams['dbType'] == 'postgis':
+            sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
+            sql = sql.replace('MyStringAgg', 'string_agg')
+        if connectionParams['dbType'] == 'spatialite':
+            sql = sql.replace('MyStringAgg', 'group_concat')
+
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector,sql)
+        if ok:
+            for line in data:
+                cc = line[1].split(',')
+
+        return cc
+
 
 from cadastre_import_form import *
 from cadastre_import import *
@@ -2405,33 +2433,6 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
         self.proprietairesInfo.setText('%s' % html)
 
 
-    def getProprietaireComptesCommunaux(self, comptecommunal):
-        '''
-        Get the list of "comptecommunal" for all cities
-        for a owner given one single comptecommunal
-        '''
-        cc = comptecommunal
-
-        sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"
-        sql+= " FROM proprietaire p"
-        sql+= " WHERE 2>1"
-        sql+= " AND ddenom IN (SELECT ddenom FROM proprietaire WHERE comptecommunal = %s)" % self.connector.quoteString( comptecommunal )
-        sql+= " GROUP BY dnuper, ddenom, dlign4"
-        sql+= " ORDER BY ddenom"
-
-        if self.connectionParams['dbType'] == 'postgis':
-            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
-            sql = sql.replace('MyStringAgg', 'string_agg')
-        if self.connectionParams['dbType'] == 'spatialite':
-            sql = sql.replace('MyStringAgg', 'group_concat')
-
-        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector,sql)
-        if ok:
-            for line in data:
-                cc = line[1].split(',')
-
-        return cc
-
     def exportAsPDF(self, key):
         '''
         Export the parcelle or proprietaire
@@ -2445,10 +2446,18 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
             return
 
         if self.feature:
-            comptecommunal = cadastre_common.getCompteCommunalFromParcelleId(self.feature['geo_parcelle'], self.connectionParams, self.connector)
+            comptecommunal = cadastre_common.getCompteCommunalFromParcelleId(
+                self.feature['geo_parcelle'],
+                self.connectionParams,
+                self.connector
+            )
             if comptecommunal:
                 if key == 'proprietaire' and self.cbExportAllCities.isChecked():
-                    comptecommunal = self.getProprietaireComptesCommunaux( comptecommunal )
+                    comptecommunal = cadastre_common.getProprietaireComptesCommunaux(
+                        comptecommunal,
+                        self.connectionParams,
+                        self.connector
+                    )
                 if self.layer:
                     qe = cadastreExport(
                         self.layer,

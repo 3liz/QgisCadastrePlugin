@@ -100,10 +100,10 @@ class cadastreFilter(QgsServerFilter):
         params = self.request.parameterMap( )
 
         # Check if needed params are set
-        if 'LAYER' not in params or 'PARCELLE' not in params or 'MAP' not in params:
+        if 'LAYER' not in params or 'PARCELLE' not in params or 'TYPE' not in params or 'MAP' not in params:
             body = {
                 'status': 'fail',
-                'message': 'Missing parameters: MAP, LAYER, PARCELLE are required ',
+                'message': 'Missing parameters: MAP, LAYER, PARCELLE, TYPE are required '
             }
             self.setJsonResponse( '200', body)
             return
@@ -112,6 +112,17 @@ class cadastreFilter(QgsServerFilter):
         pmap = params['MAP']
         player = params['LAYER']
         pparcelle = params['PARCELLE']
+        ptype = params['TYPE']
+
+        # Check type
+        if ptype.lower() not in ('parcelle', 'proprietaire'):
+            QgsMessageLog.logMessage( "Cadastre - Parameter TYPE must be parcelle or proprietaire")
+            body = {
+                'status': 'fail',
+                'message': 'Parameter TYPE must be parcelle or proprietaire'
+            }
+            self.setJsonResponse( '200', body)
+            return
 
         # Open project
         self.projectPath = pmap
@@ -133,19 +144,31 @@ class cadastreFilter(QgsServerFilter):
         layer = layerList[0]
 
         # Get feature
-        req = QgsFeatureRequest().setFilterExpression( u'"geo_parcelle" = \'%s\' ' % pparcelle )
-        it = layer.getFeatures( req )
+        import re
+        pattern = re.compile("^([A-Z0-9]+)*$")
+        if not pattern.match(pparcelle):
+            QgsMessageLog.logMessage( "Cadastre - PARCELLE has not the correct format")
+            body = {
+                'status': 'fail',
+                'message': 'PARCELLE has not the correct format'
+            }
+            self.setJsonResponse('200', body)
+            return
+
+        req = QgsFeatureRequest()
+        req.setFilterExpression(' "geo_parcelle" = \'%s\' ' % pparcelle)
+        it = layer.getFeatures(req)
         feat = None
         for f in it:
             feat = f
             break
         if not feat:
-            QgsMessageLog.logMessage( "CADASTRE - No feature found for layer %s" % player)
+            QgsMessageLog.logMessage( "CADASTRE - No feature found for layer %s and parcelle %s" % (player, pparcelle))
             body = {
                 'status': 'fail',
-                'message': 'No feature found for layer'
+                'message': 'No feature found for layer %s and parcelle %s' % (player, pparcelle)
             }
-            self.setJsonResponse( '200', body)
+            self.setJsonResponse('200', body)
             return
 
         # Export PDF
@@ -156,9 +179,17 @@ class cadastreFilter(QgsServerFilter):
             self.connectionParams,
             self.connector
         )
+        pmulti = 1
+        if ptype == 'proprietaire' and pmulti == 1:
+            comptecommunal = cadastre_common.getProprietaireComptesCommunaux(
+                comptecommunal,
+                self.connectionParams,
+                self.connector
+            )
+
         qex = cadastreExport(
             layer,
-            'parcelle',
+            ptype,
             comptecommunal,
             feat['geo_parcelle']
         )
@@ -199,6 +230,8 @@ class cadastreFilter(QgsServerFilter):
             }
             self.setJsonResponse( '200', body)
             return
+
+
 
     def getPdf(self):
         '''
