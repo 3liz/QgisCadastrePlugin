@@ -686,7 +686,9 @@ class cadastre_common():
             # Get spatialite version
             cursor = conn.execute('SELECT spatialite_version()')
             rep = cursor.fetchall()
-            v = [int(a) for a in rep[0][0].split('.')]
+            # v = [int(a) for a in rep[0][0].split('.')]
+            v = [int(re.findall(r'\d+', a)[0]) for a in rep[0][0].split('.')]
+            # pretty complicated, but it avoids a bug with some versions like 4.3.0a
             vv = v[0] * 100000 + v[1] * 1000 + v[2] * 10
 
             # Add spatialite support
