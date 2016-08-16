@@ -515,22 +515,6 @@ class cadastre_common():
 
         return connector
 
-
-    def chooseDataPath(self, key):
-        '''
-        Ask the user to select a folder
-        and write down the path to appropriate field
-        '''
-        ipath = QFileDialog.getExistingDirectory(
-            None,
-            u"Choisir le répertoire contenant les fichiers",
-            str(self.dialog.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
-        )
-        if os.path.exists(unicode(ipath)):
-            self.dialog.pathSelectors[key]['input'].setText(unicode(ipath))
-
-
-
     def normalizeString(self, s):
         '''
         Removes all accents from
@@ -812,7 +796,7 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
         }
         for key, item in self.pathSelectors.items():
             control = item['button']
-            slot = partial(self.qc.chooseDataPath, key)
+            slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
 
         # projection selector
@@ -927,6 +911,21 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
             self.storeSettings()
 
         self.close()
+
+
+    def chooseDataPath(self, key):
+        '''
+        Ask the user to select a folder
+        and write down the path to appropriate field
+        '''
+        ipath = QFileDialog.getExistingDirectory(
+            None,
+            u"Choisir le répertoire contenant les fichiers",
+            str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
+        )
+        if os.path.exists(unicode(ipath)):
+            self.pathSelectors[key]['input'].setText(unicode(ipath))
+
 
 
     def getValuesFromSettings(self):
@@ -2087,9 +2086,7 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         self.iface = iface
         self.setupUi(self)
 
-        # common cadastre methods
-        self.qc = cadastre_common(self)
-        from cadastre_dialogs import cadastre_common
+        self.plugin_dir = os.path.dirname(__file__)
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -2122,11 +2119,25 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         from functools import partial
         for key, item in self.pathSelectors.items():
             control = item['button']
-            slot = partial(self.qc.chooseDataPath, key)
+            slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
 
         # Set initial widget values
         self.getValuesFromSettings()
+
+
+    def chooseDataPath(self, key):
+        '''
+        Ask the user to select a folder
+        and write down the path to appropriate field
+        '''
+        ipath = QFileDialog.getExistingDirectory(
+            None,
+            u"Choisir le répertoire contenant les fichiers",
+            str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
+        )
+        if os.path.exists(unicode(ipath)):
+            self.pathSelectors[key]['input'].setText(unicode(ipath))
 
 
     def getValuesFromSettings(self):
@@ -2176,7 +2187,7 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
 
         item = self.interfaceSelectors[key]
         iniPath = os.path.join(
-            self.qc.plugin_dir,
+            self.plugin_dir,
             'interface/'
         )
         interfaceInfo = u'''
