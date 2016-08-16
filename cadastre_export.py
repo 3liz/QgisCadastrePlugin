@@ -56,19 +56,17 @@ class cadastreExport(QObject):
         # Store an instance of QgsComposition
         self.currentComposition = None
 
-        # Store an instance of QgsMapRenderer or QgsMapSettings
-        # to avoid a nasty bug with 2.4 :
-        # https://github.com/3liz/QgisCadastrePlugin/issues/36
-        if QGis.QGIS_VERSION_INT < 20400:
-            self.mInstance = QgsMapRenderer()
-        else:
-            self.mInstance = QgsMapSettings()
+        # Get instance needed for QgsComposition
+        self.getMapInstance()
 
         # type of export : proprietaire or parcelle
         self.etype = etype
 
         # id of the parcelle
         self.geo_parcelle = geo_parcelle
+
+        # memory layer for redlining
+        self.redlineLayer = None
 
         self.ccFilter = None
 
@@ -105,6 +103,28 @@ class cadastreExport(QObject):
         self.connector = cadastre_common.getConnectorFromUri(self.connectionParams)
         self.dbType = self.connectionParams['dbType']
 
+
+    def getMapInstance(self):
+        '''
+        Get instance of object needed to instantiate QgsComposition
+        QgsMapRenderer or QgsMapSettings
+        Different if context is server
+        '''
+
+        # Store an instance of QgsMapRenderer or QgsMapSettings
+        # to avoid a nasty bug with 2.4 :
+        # https://github.com/3liz/QgisCadastrePlugin/issues/36
+        if QGis.QGIS_VERSION_INT < 20400:
+            if self.iface:
+                self.mInstance = self.iface.mapCanvas().mapRenderer()
+            else:
+                self.mInstance = QgsMapRenderer()
+        else:
+            if self.iface:
+                self.mInstance = self.iface.mapCanvas().mapSettings()
+            else:
+                self.mInstance = QgsMapSettings()
+
     def setComposerTemplates(self, comptecommunal):
         '''
         Set parameters for given comptecommunal
@@ -123,20 +143,23 @@ class cadastreExport(QObject):
                     'proprietaire': u" AND comptecommunal = '%s'" % comptecommunal,
                     'parcelle': u" AND comptecommunal = '%s'" % comptecommunal
                 },
+                'sticky': True
             },
             'header2' : {
                 'names': ['type'],
                 'position': [153.5, 2.5, 60, 7.5], 'align': [ 128, 4],
                 'keepContent' : True,
                 'type': 'properties',
-                'source': [self.typeLabel]
+                'source': [self.typeLabel],
+                'sticky': True
             },
             'header3' : {
                 'names': ['comptecommunal'],
                 'position': [218.5, 2.5, 75, 7.5], 'align': [ 128, 2],
                 'keepContent' : True,
                 'type': 'properties',
-                'source': [comptecommunalAbrev]
+                'source': [comptecommunalAbrev],
+                'sticky': True
             },
             'proprietaires' : {
                 'names': ['lines'],
@@ -184,13 +207,14 @@ class cadastreExport(QObject):
             },
             'footer' : {
                 'names': ['foot'],
-                'position': [3.5, 208, 290, 2], 'align': [ 128, 4],
+                'position': [3.5, 208, 288, 4], 'align': [ 128, 4],
                 'keepContent' : True,
                 'type': 'properties',
                 'source': [u"Ce document est donné à titre indicatif - Il n'a pas de valeur légale"],
                 'bgcolor' : Qt.white,
                 'htmlState' : 0,
-                'font': QFont('sans-serif', 4, 1, True)
+                'font': QFont('sans-serif', 4, 1, True),
+                'sticky': True
             }
         }
         self.mainTables = {
@@ -390,6 +414,10 @@ class cadastreExport(QObject):
         self.getPageNumberNeeded()
         c.setNumPages(self.numPages)
 
+        # Set plot style if map added
+        if self.etype == 'parcelle':
+            c.setPlotStyle(QgsComposition.Print)
+
         self.currentComposition = c
 
 
@@ -408,11 +436,16 @@ class cadastreExport(QObject):
             ]
         )
 
+        # Add a page for map if etype == parcelle
+        if self.etype == 'parcelle' and self.iface:
+            self.numPages+=1
+
 
     def addPageContent(self, page):
         '''
         Add all needed item for a single page
         '''
+
         # First get content for parent items
         for key, item in self.mainTables.items():
             self.mainTables[key]['content'] = self.getContentForGivenItem(
@@ -423,29 +456,8 @@ class cadastreExport(QObject):
 
         # Then get content for displayed items
         for key, item in self.composerTemplates.items():
-            cl = QgsComposerLabel(self.currentComposition)
-            cl.setItemPosition(
-                item['position'][0],
-                item['position'][1] + (page - 1) * (self.pageHeight + 10),
-                item['position'][2],
-                item['position'][3],
-                False,
-                -1
-            )
-            cl.setVAlign(item['align'][0])
-            cl.setHAlign(item['align'][1])
-            content = self.getContentForGivenItem(key, item, page)
-            cl.setMargin(0)
-            cl.setHtmlState(2)
-            cl.setText(content)
-            cl.setFrameEnabled(False)
-            if 'bgcolor' in item:
-                cl.setBackgroundColor(item['bgcolor'])
-            if 'htmlState' in item:
-                cl.setHtmlState(item['htmlState'])
-            if 'font' in item:
-                cl.setFont(item['font'])
-            self.currentComposition.addItem(cl)
+            self.buildComposerLabel(key,item,page)
+
 
         # Add watershed
         if self.addExperimentalWatershed:
@@ -461,6 +473,97 @@ class cadastreExport(QObject):
             w.setTransparency(60)
             self.currentComposition.addItem(w)
 
+
+    def buildComposerLabel(self, key, item, page):
+        '''
+        Add a QgsLabel to composition for an item and page
+        '''
+        cl = QgsComposerLabel(self.currentComposition)
+
+        # 1st page is a map for parcelle
+        dpage = page -1
+        if self.etype == 'parcelle' and self.iface:
+            dpage = page
+
+        cl.setItemPosition(
+            item['position'][0],
+            item['position'][1] + (dpage) * (self.pageHeight + 10),
+            item['position'][2],
+            item['position'][3],
+            False,
+            -1
+        )
+        cl.setVAlign(item['align'][0])
+        cl.setHAlign(item['align'][1])
+        content = self.getContentForGivenItem(
+            key,
+            item,
+            page
+        )
+        cl.setMargin(0)
+        cl.setHtmlState(2)
+        cl.setText(content)
+        cl.setFrameEnabled(False)
+        if 'bgcolor' in item:
+            cl.setBackgroundColor(item['bgcolor'])
+        if 'htmlState' in item:
+            cl.setHtmlState(item['htmlState'])
+        if 'font' in item:
+            cl.setFont(item['font'])
+        self.currentComposition.addItem(cl)
+
+    def addParcelleMap(self):
+        '''
+        Add content in the first page
+        with a map and basic information
+        '''
+        # First add headers
+        for key, item in self.composerTemplates.items():
+            if 'sticky' in item:
+                self.buildComposerLabel(key, item, 0)
+
+        # Get feature extent
+        exp = QgsExpression('"geo_parcelle" = \'%s\'' % self.geo_parcelle)
+        request = QgsFeatureRequest(exp)
+        extent = None
+        features = self.layer.getFeatures(request)
+        for feature in features:
+            geom = feature.geometry()
+            peri = geom.length()
+            buf = peri / 20
+            extent = geom.buffer(buf,5).boundingBox()
+
+        # Add memory layer to highlight parcelle
+        if extent:
+            if self.redlineLayer:
+                QgsMapLayerRegistry.instance().removeMapLayer(self.redlineLayer.id())
+            crs = self.layer.crs().authid()
+            vl = QgsVectorLayer("Polygon?crs=" + crs, "temporary", "memory")
+            pr = vl.dataProvider()
+            vl.startEditing()
+            pr.addFeatures([f for f in self.layer.getFeatures(request)])
+            vl.commitChanges()
+            vl.updateExtents()
+            props = vl.rendererV2().symbol().symbolLayer(0).properties()
+            props['outline_width'] = u'1'
+            props['outline_color'] = u'0,85,255,255'
+            props['outline_style'] = u'solid'
+            props['style'] = u'no'
+            vl.rendererV2().setSymbol(QgsFillSymbolV2.createSimple(props))
+            QgsMapLayerRegistry.instance().addMapLayer(vl)
+            self.redlineLayer = vl
+
+        # Add composer map & to parcelle
+        miLayers = self.mInstance.layers()
+        miLayers.insert( 0, vl.id() )
+        self.mInstance.setLayers( miLayers )
+        cm = QgsComposerMap(self.currentComposition, 6, 15, 286, 190)
+        if extent:
+            cm.zoomToExtent(extent)
+
+        cm.setFrameEnabled(True)
+        cm.setBackgroundEnabled(True)
+        self.currentComposition.addItem(cm)
 
 
     def exportItemAsPdf(self, comptecommunal, suffix=None):
@@ -478,9 +581,16 @@ class cadastreExport(QObject):
         self.createComposition()
 
         if self.currentComposition:
+            QApplication.setOverrideCursor(Qt.WaitCursor)
+
             # Populate composition for all pages
             for i in range(self.numPages):
-                self.addPageContent(i+1)
+                j=i+1
+                self.addPageContent(j)
+
+            # Add map in first page if export parcelle
+            if self.etype == 'parcelle' and self.iface:
+                self.addParcelleMap()
 
             # Create the pdf output path
             from time import time
@@ -495,6 +605,13 @@ class cadastreExport(QObject):
 
             # Export as pdf
             self.currentComposition.exportAsPDF(temppath)
+
+            if self.redlineLayer:
+                QgsMapLayerRegistry.instance().removeMapLayer(self.redlineLayer.id())
+                miLayers = self.mInstance.layers()
+                self.mInstance.setLayers( miLayers.pop(0) )
+
+            QApplication.restoreOverrideCursor()
 
             # Opens PDF in default application
             if not self.isMulti and self.iface:
