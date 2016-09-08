@@ -33,28 +33,27 @@ CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
 
 -- geo_commune: utilisation de max et non distinct on pour compatibilite sqlite
 INSERT INTO [PREFIXE]geo_commune
-( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]'||SUBSTRING(idu,1,3), '[ANNEE]', object_rid, idu, tex2, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
+( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, commune, geom, lot)
+SELECT '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,3), '[ANNEE]', object_rid, idu, tex2, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,3), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
 FROM [PREFIXE]commune_id
 JOIN (SELECT idu as t_idu, MAX(update_date) AS t_update_date, MAX(creat_date) AS t_creat_date FROM [PREFIXE]commune_id GROUP BY idu, tex2) t2
 ON idu = t2.t_idu AND update_date = t2.t_update_date AND creat_date = t2.t_creat_date
 GROUP BY tex2, idu, update_date, creat_date, geom, object_rid
 ORDER BY tex2, idu, update_date DESC, creat_date DESC;
 
-UPDATE [PREFIXE]geo_commune set commune= p.commune FROM [PREFIXE]commune p WHERE p.annee='[ANNEE]' AND p.commune=SUBSTRING(geo_commune.geo_commune,1,4)||'[DEPDIR]'||SUBSTRING(geo_commune.geo_commune,5,3) AND geo_commune.annee='[ANNEE]';
-UPDATE [PREFIXE]commune SET geo_commune=g.geo_commune FROM [PREFIXE]geo_commune g WHERE g.commune=commune.commune AND g.annee='[ANNEE]';
+UPDATE [PREFIXE]commune SET geo_commune=commune.commune;
 
 -- geo_section
 INSERT INTO [PREFIXE]geo_section
 ( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot)
-SELECT DISTINCT '[ANNEE]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))), '[LOT]'--, ogc_fid
+SELECT DISTINCT '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))), '[LOT]'--, ogc_fid
 FROM [PREFIXE]section_id
 GROUP BY object_rid, idu, tex, creat_date, update_date;
 
 -- geo_subdsect
 INSERT INTO [PREFIXE]geo_subdsect
 (geo_subdsect, annee, object_rid, idu, geo_section, geo_qupl, geo_copl, eor, dedi, icl, dis, geo_inp, dred, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]'||SUBSTRING(idu,1,10), '[ANNEE]', object_rid, idu, '[ANNEE]'||SUBSTRING(idu,1,8), qupl, copl, to_number(eor,'0000000000'), to_date(dedi, 'DD/MM/YYYY'), floor(icl), to_date(dis, 'DD/MM/YYYY'), inp, to_date(dred,'DD/MM/YYYY'), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)),'[LOT]'
+SELECT '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,10), '[ANNEE]', object_rid, idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,8), qupl, copl, to_number(eor,'0000000000'), to_date(dedi, 'DD/MM/YYYY'), floor(icl), to_date(dis, 'DD/MM/YYYY'), inp, to_date(dred,'DD/MM/YYYY'), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)),'[LOT]'
 FROM [PREFIXE]subdsect_id;
 
 -- geo_parcelle
@@ -66,12 +65,12 @@ CREATE INDEX geo_subdsect_lot_idx ON [PREFIXE]geo_subdsect (lot);
 CREATE INDEX geo_subdsect_object_rid_idx ON [PREFIXE]geo_subdsect (object_rid);
 INSERT INTO [PREFIXE]geo_parcelle
 (geo_parcelle, annee, object_rid, idu, geo_section, geo_subdsect, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]'||'[DEPDIR]'||p.idu, '[ANNEE]', p.object_rid, p.idu, '[ANNEE]'||SUBSTRING(p.idu,1,8), s.geo_subdsect, p.supf, p.indp, p.coar, p.tex, p.tex2, p.codm, to_date(to_char(p.creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(p.update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(p.geom),3)), '[LOT]'
+SELECT '[ANNEE]'||'[DEPDIR]'||p.idu, '[ANNEE]', p.object_rid, p.idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8), s.geo_subdsect, p.supf, p.indp, p.coar, p.tex, p.tex2, p.codm, to_date(to_char(p.creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(p.update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(p.geom),3)), '[LOT]'
 FROM [PREFIXE]parcelle_id AS p
 LEFT JOIN [PREFIXE]edigeo_rel AS r ON r.nom='Rel_PARCELLE_SUBDSECT' AND r.de = p.object_rid
 LEFT JOIN [PREFIXE]geo_subdsect AS s ON s.annee = '[ANNEE]' AND s.lot ='[LOT]' AND r.vers = s.object_rid
 WHERE p.idu IS NOT NULL
-AND '[ANNEE]'||SUBSTRING(p.idu,1,8) =  s.geo_section
+AND '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8) =  s.geo_section
 ;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_object_rid_idx;
@@ -126,7 +125,7 @@ FROM [PREFIXE]lieudit_id;
 
 -- geo_batiment
 INSERT INTO [PREFIXE]geo_batiment( geo_batiment, annee, object_rid, geo_dur, tex, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]'||'[LOT]'||replace(to_char(ogc_fid,'0000000'),' ',''), '[ANNEE]', object_rid, dur, tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
+SELECT '[ANNEE]'||'[DEPDIR]'|| replace(to_char(ogc_fid,'0000000'),' ',''), '[ANNEE]', object_rid, dur, tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
 FROM [PREFIXE]batiment_id;
 
 -- geo_batiment_parcelle
