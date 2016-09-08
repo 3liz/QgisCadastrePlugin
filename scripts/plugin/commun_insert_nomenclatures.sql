@@ -9,6 +9,11 @@ INSERT INTO gnexps VALUES ('DR', 'Exonération permanente des parts département
 INSERT INTO gnexps VALUES ('EP', 'Exonération permanente totale');
 INSERT INTO gnexps VALUES ('NI', 'Non imposable - Exonération toutes collectivités');
 INSERT INTO gnexps VALUES ('RT', 'Exonération des chemins de remembrements association foncière de remembrement');
+INSERT INTO gnexps VALUES ('CC', 'exonération des parts TSE et TATFNB pour les biens communaux situés sur le territoire d’une autre commune de la métropole de Lyon');
+INSERT INTO gnexps VALUES ('DD', 'exonération des parts communale, intercommunale et TSE pour les biens appartenant à un département situés en dehors de son territoire');
+INSERT INTO gnexps VALUES ('GG', 'exonération des parts TSE et TAFNB pour les biens appartenant à un EPCI ou à la métropole de Lyon et situés en dehors de son territoire');
+INSERT INTO gnexps VALUES ('GN', 'transfert de propriétés non bâties par l’État aux grands ports maritimes affectés à un service public ou d utilité générale et non productifs de revenus');
+
 -- nomenclature cgrnum (suf)
 INSERT INTO cgrnum VALUES ('01', 'Terres');
 INSERT INTO cgrnum VALUES ('02', 'Prés');
@@ -313,6 +318,10 @@ INSERT INTO gnexpl VALUES ('DR', 'Exonération permanente des parts département
 INSERT INTO gnexpl VALUES ('EP', 'Exonération permanente');
 INSERT INTO gnexpl VALUES ('NI', 'Non imposable');
 INSERT INTO gnexpl VALUES ('PP', 'Exonération de pev secondaire de bien indivis');
+INSERT INTO gnexpl VALUES ('DM', 'exonération des parts intercommunale, départementale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
+INSERT INTO gnexpl VALUES ('CM', 'exonération des parts communale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
+INSERT INTO gnexpl VALUES ('GM', 'transfert de propriétés bâties par l’État aux grands ports maritimes affectés à un service public ou d’utilité générale et non productifs de revenus');
+
 -- nomenclature gnextl (pevexoneration)
 INSERT INTO gnextl VALUES ('CD', 'Exonération permanente des parts communale et départementale (biens d''une région situés dans une autre région)');
 INSERT INTO gnextl VALUES ('CR', 'Exonération permanente des parts communale et régionale (biens d''un département situés dans un autre département)');
@@ -387,6 +396,21 @@ INSERT INTO gnextl VALUES ('AK', 'Exonération de 20 ans pour les logements inte
 INSERT INTO gnextl VALUES ('NK', 'Exonération de 20 ans pour les logements intermédiaires loués dans les conditions de l’article 279-0 bis A (construction nouvelle) – art. 1384-0 A du CGI');
 INSERT INTO gnextl VALUES ('RT', 'Abattement de 25 % pour les locaux faisant l’objet d’une convention ou d''un contrat de résidence temporaire – art. 1388 quinquies A du CGI');
 INSERT INTO gnextl VALUES ('UM', 'Exonération de 5 ans pour les usines de méthanisation - art. 1387 A du CGI');
+
+INSERT INTO gnextl VALUES ('GP', 'grand port maritime');
+INSERT INTO gnextl VALUES ('RF', 'requalification de copropriétés dégradées d’intérêt
+national acquises par un établissement public foncier');
+INSERT INTO gnextl VALUES ('QP', 'quartier prioritaire');
+INSERT INTO gnextl VALUES ('CV', 'contrat de ville');
+INSERT INTO gnextl VALUES ('RI', 'recherche industrielle');
+INSERT INTO gnextl VALUES ('ZQ', 'abattement de 30 % pour les locaux d’habitation situés dans les immeubles collectifs issus de la transformation de locaux industriels ou commerciaux dans le périmètre des quartiers prioritaires de la politique de la ville');
+INSERT INTO gnextl VALUES ('G1', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus – 1ère année - 100 %');
+INSERT INTO gnextl VALUES ('G2', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus - 2ème année - 100 %');
+INSERT INTO gnextl VALUES ('G3', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus - 3ème année - 75 %');
+INSERT INTO gnextl VALUES ('G4', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus - 4ème année - 50 %');
+INSERT INTO gnextl VALUES ('G5', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus - 5ème année - 25 %');
+
+
 
 -- nomenclature cconad (pevprincipale, pevdependances)
 INSERT INTO cconad VALUES ('CV', 'Cave');
