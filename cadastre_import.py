@@ -462,9 +462,13 @@ class cadastreImport(QObject):
                         fpath = os.path.join(root, i)
                         # Add file path to the list
                         majList.append(fpath)
-                        # Read 3 first letters
+
+                        # Store depdir for this file
+                        # avoid fantoir, as now it is given for the whole country
+                        if table == 'fanr':
+                            continue
+                        # Get depdir : first line with content
                         with open(fpath) as fin:
-                            # Divide file into chuncks
                             for a in fin:
                                 if len( a ) < 4 :
                                   continue
@@ -533,11 +537,11 @@ class cadastreImport(QObject):
 
 
         # 2nd path to insert data
+        depdir = '%s%s' % (self.dialog.edigeoDepartement, self.dialog.edigeoDirection)
         for item in self.majicSourceFileNames:
             table = item['table']
             self.totalSteps+= len(majicFilesFound[table])
             processedFilesCount+=len(majicFilesFound[table])
-
             for fpath in majicFilesFound[table]:
                 self.qc.updateLog(fpath)
 
@@ -549,19 +553,20 @@ class cadastreImport(QObject):
                         if self.dialog.dbType == 'postgis':
                             sql = "BEGIN;"
                             sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
+                            # Build INSERT list
                             sql+= '\n'.join(
                                 [
                                 "INSERT INTO \"%s\" VALUES (%s);" % (
                                     table,
                                     self.connector.quoteString( r.sub(' ', x.strip('\r\n')) )
-                                ) for x in a if x
+                                ) for x in a if x and x[0:3] == depdir
                                 ]
                             )
                             sql+= "COMMIT;"
                             self.executeSqlQuery(sql)
                         else:
                             c = self.connector._get_cursor()
-                            c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x.strip('\r\n')) ,) for x in a if x] )
+                            c.executemany('INSERT INTO %s VALUES (?)' % table, [( r.sub(' ', x.strip('\r\n')) ,) for x in a if x and x[0:3] == depdir] )
                             self.connector._commit()
                             c.close()
                             del c
@@ -1418,5 +1423,5 @@ class cadastreImport(QObject):
                 sql+= 'DROP TABLE IF EXISTS "%s";' % table
             if self.dialog.dbType == 'postgis':
                 sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
-            self.executeSqlQuery(sql)
+            #self.executeSqlQuery(sql)
 
