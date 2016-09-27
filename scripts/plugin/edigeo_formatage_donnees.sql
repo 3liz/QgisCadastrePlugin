@@ -29,7 +29,7 @@ DROP INDEX IF EXISTS idx_edigeorel_de;
 
 CREATE INDEX idx_edigeorel_vers ON [PREFIXE]edigeo_rel (vers);
 CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
-
+CREATE INDEX idx_edigeorel_nom ON [PREFIXE]edigeo_rel (nom);
 
 -- geo_commune: utilisation de max et non distinct on pour compatibilite sqlite
 INSERT INTO [PREFIXE]geo_commune
@@ -67,10 +67,11 @@ INSERT INTO [PREFIXE]geo_parcelle
 (geo_parcelle, annee, object_rid, idu, geo_section, geo_subdsect, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot)
 SELECT '[ANNEE]'||'[DEPDIR]'||p.idu, '[ANNEE]', p.object_rid, p.idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8), s.geo_subdsect, p.supf, p.indp, p.coar, p.tex, p.tex2, p.codm, to_date(to_char(p.creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(p.update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(p.geom),3)), '[LOT]'
 FROM [PREFIXE]parcelle_id AS p
-LEFT JOIN [PREFIXE]edigeo_rel AS r ON r.nom='Rel_PARCELLE_SUBDSECT' AND r.de = p.object_rid
+LEFT JOIN (SELECT DISTINCT de, vers FROM [PREFIXE]edigeo_rel WHERE nom='Rel_PARCELLE_SUBDSECT') AS r ON r.de = p.object_rid
 LEFT JOIN [PREFIXE]geo_subdsect AS s ON s.annee = '[ANNEE]' AND s.lot ='[LOT]' AND r.vers = s.object_rid
 WHERE p.idu IS NOT NULL
 AND '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8) =  s.geo_section
+AND s.annee = '[ANNEE]' AND s.lot ='[LOT]'
 ;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_object_rid_idx;
@@ -243,6 +244,7 @@ WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p
 -- suppression des index temporaires
 DROP INDEX [PREFIXE]idx_edigeorel_vers;
 DROP INDEX [PREFIXE]idx_edigeorel_de;
+DROP INDEX [PREFIXE]idx_edigeorel_nom;
 
 TRUNCATE [PREFIXE]edigeo_rel;
 DROP INDEX IF EXISTS [PREFIXE]geo_parcelle_annee_idx;
