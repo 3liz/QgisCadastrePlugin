@@ -273,7 +273,7 @@ class cadastre_menu:
         '''
 
         # Find parcelle layer
-        parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('geo_parcelle')
+        parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('parcelle_info')
         if not parcelleLayer:
             QMessageBox.warning(
                 self.cadastre_search_dialog,

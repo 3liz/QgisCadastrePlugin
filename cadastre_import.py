@@ -384,9 +384,17 @@ class cadastreImport(QObject):
                 }
             )
 
+            # Ajout de la table parcelle_info
+            replaceDict['2154'] = self.targetSrid
+            scriptList.append(
+                {
+                    'title' : u'Ajout de la table parcelle_info',
+                    'script' : '%s' % os.path.join(self.pScriptDir, 'edigeo_create_table_parcelle_info_majic.sql'),
+                    'divide': False
+                }
+            )
 
-        # Add constraints : only if no EDIGEO import afterwards
-        if not self.dialog.doEdigeoImport :
+            # Add constraints
             scriptList.append(
                 {
                     'title' : u'Ajout des contraintes',
@@ -591,7 +599,7 @@ class cadastreImport(QObject):
 
         # Log : Print connection parameters to database
         jobTitle = u'EDIGEO'
-        self.beginJobLog(13, jobTitle)
+        self.beginJobLog(20, jobTitle)
         self.qc.updateLog(u'Type de base : %s, Connexion: %s, Schéma: %s' % (
                 self.dialog.dbType,
                 self.dialog.connectionName,
@@ -727,6 +735,26 @@ class cadastreImport(QObject):
                 }
             )
 
+
+        # Ajout de la table parcelle_info
+        if ( self.dialog.doMajicImport or self.dialog.hasMajicDataProp ):
+            replaceDict['2154'] = self.targetSrid
+            scriptList.append(
+                {
+                    'title' : u'Ajout de la table parcelle_info',
+                    'script' : '%s' % os.path.join(self.pScriptDir, 'edigeo_create_table_parcelle_info_majic.sql')
+                }
+            )
+        else:
+            replaceDict['2154'] = self.targetSrid
+            scriptList.append(
+                {
+                    'title' : u'Ajout de la table parcelle_info',
+                    'script' : '%s' % os.path.join(self.pScriptDir, 'edigeo_create_table_parcelle_info_simple.sql')
+                }
+            )
+
+
         for item in scriptList:
             if self.go:
                 self.dialog.subStepLabel.setText(item['title'])
@@ -758,6 +786,11 @@ class cadastreImport(QObject):
         # Log
         jobTitle = u'FINALISATION'
         self.beginJobLog(1, jobTitle)
+
+        # Debug spatialite
+        if self.dialog.dbType == 'spatialite':
+            sql = "SELECT RecoverGeometryColumn( 'parcelle_info', 'geom', %s, 'MULTIPOLYGON', 2 );" % self.targetSrid
+            self.executeSqlQuery(sql)
 
         # Re-set SQL optimization parameters to default
         if self.dialog.dbType == 'postgis':
@@ -1423,5 +1456,5 @@ class cadastreImport(QObject):
                 sql+= 'DROP TABLE IF EXISTS "%s";' % table
             if self.dialog.dbType == 'postgis':
                 sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
-            #self.executeSqlQuery(sql)
+            self.executeSqlQuery(sql)
 

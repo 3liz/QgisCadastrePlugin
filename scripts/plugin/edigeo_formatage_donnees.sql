@@ -42,6 +42,8 @@ GROUP BY tex2, idu, update_date, creat_date, geom, object_rid
 ORDER BY tex2, idu, update_date DESC, creat_date DESC;
 
 UPDATE [PREFIXE]commune SET geo_commune=commune.commune;
+DELETE FROM [PREFIXE]geo_commune WHERE tex2 IS NULL or trim(tex2) = '';
+DELETE FROM [PREFIXE]commune WHERE ccocom IS NULL or trim(ccocom) = '';
 
 -- geo_section
 INSERT INTO [PREFIXE]geo_section

@@ -563,6 +563,7 @@ class cadastre_common():
             {'in': r'truncate ', 'out': 'delete from '},
             {'in': r'distinct on *\([a-z, ]+\)', 'out': 'distinct'},
             {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
+            {'in': r'string_agg', 'out': 'group_concat'},
             {'in': r'current_schema::text, ', 'out': ''},
             {'in': r'substring', 'out': 'SUBSTR'},
             {'in': r"(to_char\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS TEXT)"},
@@ -1280,7 +1281,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'parcelle': {
                 'widget': self.liParcelle,
                 'labelAttribute': 'idu',
-                'table': 'v_geo_parcelle', 'geomCol': 'geom', 'sql': '',
+                'table': 'parcelle_info', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','geo_section','geom', 'comptecommunal', 'geo_parcelle'],
@@ -1293,7 +1294,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'proprietaire': {
                 'widget': self.liProprietaire,
                 'labelAttribute': 'idu',
-                'table': 'v_geo_parcelle',
+                'table': 'parcelle_info',
                 'layer': None,
                 'request': None,
                 'attributes': ['comptecommunal','idu','dnupro','geom'],
@@ -1311,7 +1312,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'parcelle_proprietaire': {
                 'widget': self.liParcelleProprietaire,
                 'labelAttribute': 'idu',
-                'table': 'v_geo_parcelle', 'geomCol': 'geom', 'sql': '',
+                'table': 'parcelle_info', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','comptecommunal','geom', 'geo_parcelle'],
@@ -1324,7 +1325,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'adresse': {
                 'widget': self.liAdresse,
                 'labelAttribute': 'voie',
-                'table': 'v_geo_parcelle',
+                'table': 'parcelle_info',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','voie','idu','geom'],
@@ -1341,7 +1342,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             'parcelle_adresse': {
                 'widget': self.liParcelleAdresse,
                 'labelAttribute': 'idu',
-                'table': 'v_geo_parcelle', 'geomCol': 'geom', 'sql': '',
+                'table': 'parcelle_info', 'geomCol': 'geom', 'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','voie','geom', 'comptecommunal', 'geo_parcelle'],
@@ -1532,7 +1533,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # Get corresponding QGIS layer
         itemList = []
-        table = searchCombo['table'].replace('v_', '') # get data from table not view
+        table = searchCombo['table']
         layer = cadastre_common.getLayerFromLegendByTableProps(
             table,
             searchCombo['geomCol'],
@@ -1633,10 +1634,10 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         # SQL
         sql = ' SELECT %s' % ', '.join(attributes)
 
-        # Replace geo_parcelle by v_geo_parcelle if necessary
+        # Replace geo_parcelle by parcelle_info if necessary
         table = connectionParams['table']
         if table == 'geo_parcelle':
-            table = 'v_geo_parcelle'
+            table = 'parcelle_info'
         f = '"%s"' % table
         sql+= ' FROM %s' % f
         sql+= " WHERE 2>1"
@@ -1653,8 +1654,13 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # Get features
         features = []
-        for line in data:
-            request = QgsFeatureRequest().setSubsetOfAttributes(attributes, layer.pendingFields()).setFilterFid(int(line[0]))
+        if rowCount > 0:
+            fids = [str(a[0]) for a in data]
+            exp = ' "%s" IN ( %s ) ' % (
+                attributes[0],
+                ','.join(fids)
+            )
+            request = QgsFeatureRequest().setSubsetOfAttributes(attributes, layer.pendingFields()).setFilterExpression(exp)
             for feat in layer.getFeatures(request):
                 features.append(feat)
 
