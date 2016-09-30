@@ -19,7 +19,8 @@ CREATE TABLE [PREFIXE]parcelle_info
   code text,
   comptecommunal text,
   voie text,
-  proprio text,
+  proprietaire text,
+  proprietaire_info text,
   lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'parcelle_info', 'geom', 2154 , 'MULTIPOLYGON', 2 );
@@ -37,22 +38,34 @@ CASE
 END  AS urbain,
 ccosec || dnupla AS code,
 p.comptecommunal AS comptecommunal, p.voie AS voie,
+
 string_agg(
-        ccodro_lib || ' - '||
-        pr.dnuper || ' - '||
+    trim(
+        pr.dnuper || ' - ' ||
         trim(coalesce(pr.dqualp, '')) || ' ' ||
         trim(coalesce(pr.ddenom, '')) || ' - ' ||
-        trim(coalesce(pr.dlign3, '')) || ' / ' ||
+        ccodro_lib
+    ),
+    '|'
+) AS proprietaire,
+
+string_agg(
+    trim(
+        pr.dnuper || ' - ' ||
         ltrim(trim(coalesce(pr.dlign4, '')), '0') ||
         trim(coalesce(pr.dlign5, '')) || ' ' ||
         trim(coalesce(pr.dlign6, '')) ||
-        CASE
+        trim(
+            CASE
                 WHEN pr.jdatnss IS NOT NULL
                 THEN ' - Né(e) le ' || coalesce(to_char(pr.jdatnss, 'dd/mm/YYYY'), '') || ' à ' || coalesce(pr.dldnss, '')
                 ELSE ''
-        END,
-        '|'
-) AS proprietaire,
+            END
+        )
+    ),
+    '|'
+) AS info_proprietaire,
+
 gp.lot AS lot,
 gp.geom AS geom
 FROM [PREFIXE]parcelle p

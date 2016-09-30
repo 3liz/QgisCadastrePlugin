@@ -43,7 +43,10 @@
     <edittype widgetv2type="TextEdit" name="voie">
       <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
     </edittype>
-    <edittype widgetv2type="TextEdit" name="proprio">
+    <edittype widgetv2type="TextEdit" name="proprietaire">
+      <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+    </edittype>
+    <edittype widgetv2type="TextEdit" name="proprietaire_info">
       <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="lot">
@@ -279,11 +282,27 @@
 &lt;table class="table table-condensed">
 &lt;tr>
 &lt;td>
-[% replace("proprio" , '|', '&lt;/td>&lt;/tr>&lt;tr>&lt;td>')%]
+[% replace("proprietaire" , '|', '&lt;/td>&lt;/tr>&lt;tr>&lt;td>')%]
 &lt;/td>
 &lt;/tr>
 &lt;/table>
 &lt;/p>
+
+
+&lt;p>
+&lt;span style="font-size:1.2em;font-weight:bold;">Propriétaires (infos détaillées)&lt;/span>
+&lt;/p>
+
+&lt;p>
+&lt;table class="table table-condensed">
+&lt;tr>
+&lt;td>
+[% replace("proprietaire_info" , '|', '&lt;/td>&lt;/tr>&lt;tr>&lt;td>')%]
+&lt;/td>
+&lt;/tr>
+&lt;/table>
+&lt;/p>
+
 
 &lt;/div></displayfield>
   <label>0</label>
@@ -346,39 +365,53 @@
     <alias field="geo_parcelle" index="1" name="Identifiant unique"/>
     <alias field="geo_section" index="4" name="Section"/>
     <alias field="idu" index="2" name="Idu"/>
-    <alias field="lot" index="15" name="Lot"/>
+    <alias field="lot" index="16" name="Lot"/>
     <alias field="nomcommune" index="5" name="Commune"/>
     <alias field="ogc_fid" index="0" name="Id"/>
-    <alias field="proprio" index="14" name="Propriétaires"/>
+    <alias field="proprietaire" index="14" name="Propriétaires"/>
+    <alias field="proprietaire_info" index="15" name="Propriétaires (infos détaillées)"/>
     <alias field="surface_geo" index="7" name="Surface m2"/>
     <alias field="tex" index="3" name="Etiquette"/>
     <alias field="urbain" index="10" name="Urbain ?"/>
     <alias field="voie" index="13" name="Voie"/>
   </aliases>
-  <excludeAttributesWMS/>
-  <excludeAttributesWFS/>
+  <excludeAttributesWMS>
+    <attribute>comptecommunal</attribute>
+    <attribute>voie</attribute>
+    <attribute>ogc_fid</attribute>
+    <attribute>lot</attribute>
+    <attribute>tex</attribute>
+  </excludeAttributesWMS>
+  <excludeAttributesWFS>
+    <attribute>comptecommunal</attribute>
+    <attribute>voie</attribute>
+    <attribute>proprietaire_info</attribute>
+    <attribute>lot</attribute>
+    <attribute>tex</attribute>
+  </excludeAttributesWFS>
   <attributeactions default="0">
     <actionsetting showInAttributeTable="1" action="qgis.utils.plugins['postgres91plusauditor'].audit('geo_parcelle20130205164935119',[% $id %])" icon="" capture="0" type="1" name="History audit" shortTitle=""/>
   </attributeactions>
-  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;test&quot;" sortOrder="0">
     <columns>
-      <column width="-1" hidden="0" type="field" name="ogc_fid"/>
-      <column width="-1" hidden="0" type="field" name="geo_parcelle"/>
-      <column width="-1" hidden="0" type="field" name="idu"/>
+      <column width="131" hidden="0" type="field" name="ogc_fid"/>
+      <column width="229" hidden="0" type="field" name="geo_parcelle"/>
+      <column width="146" hidden="0" type="field" name="idu"/>
       <column width="-1" hidden="0" type="field" name="tex"/>
-      <column width="-1" hidden="0" type="field" name="geo_section"/>
-      <column width="-1" hidden="0" type="field" name="nomcommune"/>
+      <column width="166" hidden="0" type="field" name="geo_section"/>
+      <column width="127" hidden="0" type="field" name="nomcommune"/>
       <column width="-1" hidden="0" type="field" name="codecommune"/>
-      <column width="-1" hidden="0" type="field" name="surface_geo"/>
+      <column width="120" hidden="0" type="field" name="surface_geo"/>
       <column width="-1" hidden="0" type="field" name="contenance"/>
       <column width="-1" hidden="0" type="field" name="adresse"/>
       <column width="-1" hidden="0" type="field" name="urbain"/>
-      <column width="-1" hidden="0" type="field" name="code"/>
-      <column width="-1" hidden="0" type="field" name="comptecommunal"/>
-      <column width="-1" hidden="0" type="field" name="voie"/>
-      <column width="-1" hidden="0" type="field" name="proprio"/>
+      <column width="81" hidden="0" type="field" name="code"/>
+      <column width="182" hidden="0" type="field" name="comptecommunal"/>
+      <column width="216" hidden="0" type="field" name="voie"/>
       <column width="-1" hidden="0" type="field" name="lot"/>
       <column width="-1" hidden="1" type="actions"/>
+      <column width="-1" hidden="0" type="field" name="proprietaire"/>
+      <column width="-1" hidden="0" type="field" name="proprietaire_info"/>
     </columns>
   </attributetableconfig>
   <editform>.</editform>
@@ -405,6 +438,12 @@ def my_form_open(dialog, layer, feature):
   <editorlayout>generatedlayout</editorlayout>
   <widgets>
     <widget name="parcelle">
+      <config>
+        <option key="IsMultiline" value="false"/>
+        <option key="UseHtml" value="false"/>
+      </config>
+    </widget>
+    <widget name="test">
       <config>
         <option key="IsMultiline" value="false"/>
         <option key="UseHtml" value="false"/>
