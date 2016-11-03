@@ -26,7 +26,7 @@ CREATE TABLE [PREFIXE]parcelle_info
 SELECT AddGeometryColumn ( current_schema::text, 'parcelle_info', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
 INSERT INTO [PREFIXE]parcelle_info
-SELECT gp.ogc_fid AS ogc_fid, p.parcelle AS geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
+SELECT gp.ogc_fid AS ogc_fid, gp.geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
 c.libcom AS nomcommune, c.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS integer) AS surface_geo, p.dcntpa AS contenance,
 CASE
         WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
@@ -68,15 +68,16 @@ string_agg(
 
 gp.lot AS lot,
 gp.geom AS geom
-FROM [PREFIXE]parcelle p
-INNER JOIN [PREFIXE]geo_parcelle gp ON gp.geo_parcelle = p.parcelle
-INNER JOIN [PREFIXE]proprietaire pr ON p.comptecommunal = pr.comptecommunal
-LEFT JOIN [PREFIXE]ccodro ON ccodro.ccodro = pr.ccodro
+FROM [PREFIXE]geo_parcelle gp
+LEFT OUTER JOIN [PREFIXE]parcelle p ON gp.geo_parcelle = p.parcelle
+LEFT OUTER JOIN [PREFIXE]proprietaire pr ON p.comptecommunal = pr.comptecommunal
+LEFT OUTER JOIN [PREFIXE]ccodro ON ccodro.ccodro = pr.ccodro
 LEFT OUTER JOIN [PREFIXE]commune c ON p.ccocom = c.ccocom AND c.ccodep = p.ccodep
 LEFT OUTER JOIN [PREFIXE]voie v ON v.voie = p.voie
-GROUP BY p.parcelle, gp.ogc_fid, gp.idu, gp.tex, gp.geo_section, gp.lot, c.libcom, c.ccocom, gp.geom, p.dcntpa, v.libvoi, p.dnvoiri, v.natvoi, p.cconvo, p.dvoilib, p.gurbpa, ccosec, dnupla
+GROUP BY gp.geo_parcelle, gp.ogc_fid, gp.idu, gp.tex, gp.geo_section, gp.lot, c.libcom, c.ccocom, gp.geom, p.dcntpa, v.libvoi, p.dnvoiri, v.natvoi, p.comptecommunal, p.cconvo, p.voie, p.dvoilib, p.gurbpa, ccosec, dnupla
 ;
 
+ALTER TABLE [PREFIXE]parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
 CREATE INDEX parcelle_info_geom_idx ON [PREFIXE]parcelle_info USING gist (geom);
 CREATE INDEX parcelle_info_geo_section_idx ON [PREFIXE]parcelle_info (geo_section);
 CREATE INDEX parcelle_info_comptecommunal_idx ON [PREFIXE]parcelle_info (comptecommunal);

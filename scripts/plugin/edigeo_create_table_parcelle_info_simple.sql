@@ -27,6 +27,7 @@ INNER JOIN [PREFIXE]geo_commune c
 ON c.geo_commune = SUBSTRING(gp.geo_parcelle,1,10)
 ;
 
+ALTER TABLE parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
 CREATE INDEX parcelle_info_geom_idx ON [PREFIXE]parcelle_info USING gist (geom);
 CREATE INDEX parcelle_info_geo_section_idx ON [PREFIXE]parcelle_info (geo_section);
 CREATE INDEX parcelle_info_codecommune_idx ON [PREFIXE]parcelle_info (codecommune );
