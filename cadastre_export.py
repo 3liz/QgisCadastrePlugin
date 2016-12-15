@@ -574,6 +574,8 @@ class cadastreExport(QObject):
         '''
         temppath = None
 
+        #QgsMessageLog.logMessage( "cadastre debug - begin exportItemAsPdf" )
+        
         # Set configuration
         self.setComposerTemplates(comptecommunal)
 
@@ -581,7 +583,8 @@ class cadastreExport(QObject):
         self.createComposition()
 
         if self.currentComposition:
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+            if self.iface:
+                QApplication.setOverrideCursor(Qt.WaitCursor)
 
             # Populate composition for all pages
             for i in range(self.numPages):
@@ -602,16 +605,19 @@ class cadastreExport(QObject):
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
             temppath = re.sub(r'[\?\*\+<>]', '-', temppath)
+            #QgsMessageLog.logMessage( "cadastre debug - temppath = %s " % temppath )
 
             # Export as pdf
             self.currentComposition.exportAsPDF(temppath)
+            #QgsMessageLog.logMessage( "cadastre debug - after currentComposition.exportAsPdf" )
 
             if self.redlineLayer:
                 QgsMapLayerRegistry.instance().removeMapLayer(self.redlineLayer.id())
                 miLayers = self.mInstance.layers()
                 self.mInstance.setLayers( miLayers.pop(0) )
 
-            QApplication.restoreOverrideCursor()
+            if self.iface:
+                QApplication.restoreOverrideCursor()
 
             # Opens PDF in default application
             if not self.isMulti and self.iface:
@@ -642,6 +648,7 @@ class cadastreExport(QObject):
                 # Show print progress dialog
                 self.setupPrintProgressDialog()
             nb = len(self.comptecommunal)
+            
             # Export PDF for each compte
             for comptecommunal in self.comptecommunal:
                 # export as PDF

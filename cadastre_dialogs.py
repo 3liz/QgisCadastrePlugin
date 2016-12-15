@@ -444,8 +444,10 @@ class cadastre_common():
         Execute a SQL query and
         return [header, data, rowCount]
         '''
-        QApplication.setOverrideCursor(Qt.WaitCursor)
-
+        try:
+            QApplication.setOverrideCursor(Qt.WaitCursor)
+        except:
+            pass
         data = []
         header = []
         rowCount = 0
@@ -471,9 +473,11 @@ class cadastre_common():
         except BaseError as e:
             ok = False
             try:
-                self.updateLog(e.msg)
+                if self.iface:
+                    self.updateLog(e.msg)
             except:
                 print e.msg
+            #QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
             return
 
         finally:
@@ -484,7 +488,7 @@ class cadastre_common():
             if c:
                 c.close()
                 del c
-
+        #QgsMessageLog.logMessage( "cadastre debug - fetched data rowcount %s " % rowCount )
         return [header, data, rowCount, ok]
 
 
@@ -712,6 +716,7 @@ class cadastre_common():
         sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
         if connectionParams['dbType'] == 'postgis':
             sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
+        #QgsMessageLog.logMessage( "cadastre debug - sql = %s" % sql )
         [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
         if ok:
             for line in data:

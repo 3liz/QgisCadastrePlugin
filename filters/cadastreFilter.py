@@ -155,8 +155,11 @@ class cadastreFilter(QgsServerFilter):
             self.setJsonResponse('200', body)
             return
 
+        #QgsMessageLog.logMessage( "cadastre debug - layer = %s  - geo_parcelle = %s" % ( layer.name(), pparcelle ))
+
         req = QgsFeatureRequest()
         req.setFilterExpression(' "geo_parcelle" = \'%s\' ' % pparcelle)
+
         it = layer.getFeatures(req)
         feat = None
         for f in it:
@@ -171,6 +174,9 @@ class cadastreFilter(QgsServerFilter):
             self.setJsonResponse('200', body)
             return
 
+        #QgsMessageLog.logMessage( "cadastre debug - feature geo_parcelle = %s" % feat['geo_parcelle'])
+
+
         # Export PDF
         self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
         self.connector = cadastre_common.getConnectorFromUri( self.connectionParams )
@@ -179,6 +185,7 @@ class cadastreFilter(QgsServerFilter):
             self.connectionParams,
             self.connector
         )
+
         pmulti = 1
         if ptype == 'proprietaire' and pmulti == 1:
             comptecommunal = cadastre_common.getProprietaireComptesCommunaux(
@@ -187,13 +194,18 @@ class cadastreFilter(QgsServerFilter):
                 self.connector
             )
 
+        #QgsMessageLog.logMessage( "cadastre debug - comptecommunal = %s" % comptecommunal )
+
         qex = cadastreExport(
             layer,
             ptype,
             comptecommunal,
             feat['geo_parcelle']
         )
+        #QgsMessageLog.logMessage( "cadastre debug - after instanciating cadastreExport" )
         paths = qex.exportAsPDF()
+
+        #QgsMessageLog.logMessage( "cadastre debug - paths = %s " %  paths )
 
 
         if paths:
