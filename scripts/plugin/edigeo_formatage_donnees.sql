@@ -216,10 +216,16 @@ FROM [PREFIXE]tpoint_id;
 UPDATE [PREFIXE]geo_tpoint SET ori=360-ori WHERE annee='[ANNEE]' AND lot='[LOT]' AND ori IS NOT NULL;
 
 -- geo_tpoint_commune
+DROP INDEX IF EXISTS [PREFIXE]geo_tpoint_object_rid_idx;
+CREATE INDEX geo_tpoint_object_rid_idx ON [PREFIXE]geo_tpoint (object_rid);
+DROP INDEX IF EXISTS [PREFIXE]geo_tpoint_annee_idx;
+CREATE INDEX geo_tpoint_annee_idx ON [PREFIXE]geo_tpoint (annee);
 INSERT INTO [PREFIXE]geo_tpoint_commune (annee, geo_tpoint, geo_commune)
 SELECT s.annee, s.geo_tpoint, p.geo_commune
 FROM [PREFIXE]geo_tpoint s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_tpoint_object_rid_idx;
+DROP INDEX IF EXISTS [PREFIXE]geo_tpoint_annee_idx;
 
 -- geo_tline
 INSERT INTO [PREFIXE]geo_tline( annee, object_rid, tex, geo_sym, creat_date, update_dat, geom, lot)
@@ -227,10 +233,16 @@ SELECT '[ANNEE]', object_rid,  tex, sym, to_date(to_char(creat_date,'00000000'),
 FROM [PREFIXE]tline_id;
 
 -- geo_tline_commune
+DROP INDEX IF EXISTS [PREFIXE]geo_tline_object_rid_idx;
+CREATE INDEX geo_tline_object_rid_idx ON [PREFIXE]geo_tline (object_rid);
+DROP INDEX IF EXISTS [PREFIXE]geo_tline_annee_idx;
+CREATE INDEX geo_tline_annee_idx ON [PREFIXE]geo_tline (annee);
 INSERT INTO [PREFIXE]geo_tline_commune (annee, geo_tline, geo_commune)
 SELECT s.annee, s.geo_tline, p.geo_commune
 FROM [PREFIXE]geo_tline s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_tline_object_rid_idx;
+DROP INDEX IF EXISTS [PREFIXE]geo_tline_annee_idx;
 
 -- geo_tsurf
 INSERT INTO [PREFIXE]geo_tsurf( annee, object_rid, tex, geo_sym, creat_date, update_dat, geom, lot)
@@ -238,10 +250,16 @@ SELECT '[ANNEE]', object_rid,  tex, sym, to_date(to_char(creat_date,'00000000'),
 FROM [PREFIXE]tsurf_id;
 
 -- geo_tsurf_commune
+DROP INDEX IF EXISTS [PREFIXE]geo_tsurf_object_rid_idx;
+CREATE INDEX geo_tsurf_object_rid_idx ON [PREFIXE]geo_tsurf (object_rid);
+DROP INDEX IF EXISTS [PREFIXE]geo_tsurf_annee_idx;
+CREATE INDEX geo_tsurf_annee_idx ON [PREFIXE]geo_tsurf (annee);
 INSERT INTO [PREFIXE]geo_tsurf_commune (annee, geo_tsurf, geo_commune)
 SELECT s.annee, s.geo_tsurf, p.geo_commune
 FROM [PREFIXE]geo_tsurf s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
 WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
+DROP INDEX IF EXISTS [PREFIXE]geo_tsurf_object_rid_idx;
+DROP INDEX IF EXISTS [PREFIXE]geo_tsurf_annee_idx;
 
 -- suppression des index temporaires
 DROP INDEX [PREFIXE]idx_edigeorel_vers;
