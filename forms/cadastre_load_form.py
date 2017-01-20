@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'forms/cadastre_load_form.ui'
+# Form implementation generated from reading ui file '/vagrant/cadastre_load_form.ui'
 #
-# Created: Tue Nov 18 14:04:12 2014
-#      by: PyQt4 UI code generator 4.10.4
+# Created: Thu Jan 12 21:37:33 2017
+#      by: PyQt4 UI code generator 4.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_load_form(object):
     def setupUi(self, cadastre_load_form):
         cadastre_load_form.setObjectName(_fromUtf8("cadastre_load_form"))
-        cadastre_load_form.resize(352, 603)
+        cadastre_load_form.resize(523, 603)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_load_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_load_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 332, 550))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 503, 550))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -82,6 +82,17 @@ class Ui_cadastre_load_form(object):
         self.horizontalLayout_8.addWidget(self.liTheme)
         self.verticalLayout_14.addLayout(self.horizontalLayout_8)
         self.verticalLayout_2.addWidget(self.groupBox_5)
+        self.groupBox_2 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
+        self.verticalLayout_3 = QtGui.QVBoxLayout(self.groupBox_2)
+        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.formLayout = QtGui.QFormLayout()
+        self.formLayout.setObjectName(_fromUtf8("formLayout"))
+        self.cbMainLayersOnly = QtGui.QCheckBox(self.groupBox_2)
+        self.cbMainLayersOnly.setObjectName(_fromUtf8("cbMainLayersOnly"))
+        self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.cbMainLayersOnly)
+        self.verticalLayout_3.addLayout(self.formLayout)
+        self.verticalLayout_2.addWidget(self.groupBox_2)
         self.btProcessLoading = QtGui.QPushButton(self.scrollAreaWidgetContents)
         self.btProcessLoading.setObjectName(_fromUtf8("btProcessLoading"))
         self.verticalLayout_2.addWidget(self.btProcessLoading)
@@ -116,6 +127,8 @@ class Ui_cadastre_load_form(object):
         self.groupBox_5.setTitle(_translate("cadastre_load_form", "Styles à appliquer", None))
         self.label_12.setText(_translate("cadastre_load_form", "Thème", None))
         self.liTheme.setItemText(0, _translate("cadastre_load_form", "classique", None))
+        self.groupBox_2.setTitle(_translate("cadastre_load_form", "Couches", None))
+        self.cbMainLayersOnly.setText(_translate("cadastre_load_form", "Ajouter seulement Communes, sections, parcelles et bâti", None))
         self.btProcessLoading.setText(_translate("cadastre_load_form", "Charger les données", None))
         self.txtLog.setHtml(_translate("cadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

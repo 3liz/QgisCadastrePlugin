@@ -54,8 +54,14 @@ class cadastreLoading(QObject):
         self.themeDir = None
 
         # List of database layers to load inQGIS
+        self.mainLayers = [
+            u'Communes',
+            u'Sections',
+            u'Parcelles',
+            u'Bâti'
+        ]
         self.qgisCadastreLayerList = [
-            {'label': u'Commune', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C'},
+            {'label': u'Communes', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C'},
             {'label': u'Tronçons de route', 'name': 'geo_tronroute', 'table': 'geo_tronroute', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Voies, routes et chemins', 'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" IN ( \'ZONCOMMUNI_id\') ', 'active': True, 'group': 'E'},
@@ -83,8 +89,9 @@ class cadastreLoading(QObject):
             {'label': u'Objets linéaires', 'name': 'geo_tline', 'table': 'geo_tline', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Objets linéaires (étiquettes)', 'name': 'geo_label_tline', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'TLINE_id\'', 'active': False, 'group': 'E'},
             {'label': u'Numéros de voie', 'name': 'geo_label_num_voie', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'NUMVOIE_id\'', 'active': True, 'group': 'E'},
-            {'label': u'Établissements publics', 'name': 'geo_label_voiep', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'VOIEP_id\'', 'active': True, 'group': 'E'},
-            {'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': '', 'dbType': 'postgis', 'active': False, 'group': 'D'}
+            {'label': u'Établissements publics', 'name': 'geo_label_voiep', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'VOIEP_id\'', 'active': True, 'group': 'E'}
+            #,
+            #{'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': '', 'dbType': 'postgis', 'active': False, 'group': 'D'}
         ]
 
     def updateTimer(self):
@@ -158,6 +165,14 @@ class cadastreLoading(QObject):
         # Loop throuhg qgisQastreLayerList and load each corresponding table
         for item in self.qgisCadastreLayerList:
 
+            # update progress bar
+            self.qc.updateLog(u'* %s' % item['label'])
+            self.dialog.step+=1
+            self.qc.updateProgressBar()
+
+            if item['label'] not in self.mainLayers and self.dialog.cbMainLayersOnly.isChecked():
+                continue
+
             if item.has_key('dbType') and item['dbType'] != self.dialog.dbType:
                 continue
 
@@ -214,11 +229,6 @@ class cadastreLoading(QObject):
             # append vector layer to the list
             qgisCadastreLayers.append(vlayer)
 
-            # update progress bar
-            self.qc.updateLog(u'* %s' % item['label'])
-            self.dialog.step+=1
-            self.qc.updateProgressBar()
-
         self.updateTimer()
 
         # Get canvas and disable rendering
@@ -241,13 +251,16 @@ class cadastreLoading(QObject):
         if u"Cadastre" in groups:
             g1 = self.getGroupIndex(u"Cadastre")
             if not u'Étiquettes cadastre' in groups:
-                ge = li.addGroup(u'Étiquettes cadastre', True, g1)
+                gf = li.addGroup(u'Fond', True, g1)
+            if not u'Étiquettes cadastre' in groups:
+                ge = li.addGroup(u'Étiquettes cadastre', True, gf)
             if not u'Données cadastre' in groups:
-                gd = li.addGroup(u'Données cadastre', True, g1)
+                gd = li.addGroup(u'Données cadastre', True, gf)
         else:
             g1 = li.addGroup("Cadastre")
-            ge = li.addGroup(u'Étiquettes cadastre', True, g1)
-            gd = li.addGroup(u'Données cadastre', True, g1)
+            gf = li.addGroup("Fond", True, g1)
+            ge = li.addGroup(u'Étiquettes cadastre', True, gf)
+            gd = li.addGroup(u'Données cadastre', True, gf)
 
         for layer in qgisCadastreLayers:
             #~ layer.updateExtents()

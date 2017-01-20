@@ -1,6 +1,6 @@
 BEGIN;
 
--- Parcelles pour affichage popup
+-- Création la table parcelle_info ( EDIGEO + MAJIC )
 DROP TABLE IF EXISTS [PREFIXE]parcelle_info;
 
 CREATE TABLE [PREFIXE]parcelle_info

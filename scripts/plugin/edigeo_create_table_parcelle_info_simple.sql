@@ -1,6 +1,6 @@
 BEGIN;
 
--- Parcelles pour affichage popup
+-- Création de la table parcelle_info
 DROP TABLE IF EXISTS [PREFIXE]parcelle_info;
 
 CREATE TABLE [PREFIXE]parcelle_info

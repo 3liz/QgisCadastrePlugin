@@ -1204,7 +1204,7 @@ class cadastre_load_dialog(QDialog, Ui_cadastre_load_form):
         self.cadastre_search_dialog.checkMajicContent()
         self.cadastre_search_dialog.clearComboboxes()
         self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
-        self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
+        #self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
 
 
 
@@ -1445,7 +1445,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 
         # setup some gui items
         self.setupSearchCombobox('commune', None, 'sql')
-        self.setupSearchCombobox('section', None, 'sql')
+        #self.setupSearchCombobox('section', None, 'sql')
 
         # Check majic content
         self.hasMajicDataProp = False
