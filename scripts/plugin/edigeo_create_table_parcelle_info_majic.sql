@@ -25,6 +25,17 @@ CREATE TABLE [PREFIXE]parcelle_info
 );
 SELECT AddGeometryColumn ( current_schema::text, 'parcelle_info', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
+CREATE INDEX aa ON [PREFIXE]parcelle (parcelle );
+CREATE INDEX bb ON [PREFIXE]parcelle (comptecommunal );
+CREATE INDEX cc ON [PREFIXE]parcelle (ccocom );
+CREATE INDEX dd ON [PREFIXE]parcelle (ccodep );
+CREATE INDEX ee ON [PREFIXE]parcelle (voie );
+CREATE INDEX ff ON [PREFIXE]proprietaire (comptecommunal );
+CREATE INDEX gg ON [PREFIXE]geo_parcelle (geo_parcelle );
+CREATE INDEX hh ON [PREFIXE]commune (ccocom );
+CREATE INDEX ii ON [PREFIXE]commune (ccodep );
+CREATE INDEX jj ON [PREFIXE]voie (voie );
+
 INSERT INTO [PREFIXE]parcelle_info
 SELECT gp.ogc_fid AS ogc_fid, gp.geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
 c.libcom AS nomcommune, c.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS integer) AS surface_geo, p.dcntpa AS contenance,
@@ -76,6 +87,18 @@ LEFT OUTER JOIN [PREFIXE]commune c ON p.ccocom = c.ccocom AND c.ccodep = p.ccode
 LEFT OUTER JOIN [PREFIXE]voie v ON v.voie = p.voie
 GROUP BY gp.geo_parcelle, gp.ogc_fid, gp.idu, gp.tex, gp.geo_section, gp.lot, c.libcom, c.ccocom, gp.geom, p.dcntpa, v.libvoi, p.dnvoiri, v.natvoi, p.comptecommunal, p.cconvo, p.voie, p.dvoilib, p.gurbpa, ccosec, dnupla
 ;
+
+
+DROP INDEX aa;
+DROP INDEX bb;
+DROP INDEX cc;
+DROP INDEX dd;
+DROP INDEX ee;
+DROP INDEX ff;
+DROP INDEX gg;
+DROP INDEX hh;
+DROP INDEX ii;
+DROP INDEX jj;
 
 ALTER TABLE [PREFIXE]parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
 CREATE INDEX parcelle_info_geom_idx ON [PREFIXE]parcelle_info USING gist (geom);
