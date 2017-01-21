@@ -183,7 +183,7 @@ class Ui_cadastre_import_form(object):
         self.label_5.setObjectName(_fromUtf8("label_5"))
         self.horizontalLayout_10.addWidget(self.label_5)
         self.inEdigeoDirection = QtGui.QSpinBox(self.groupBox_7)
-        self.inEdigeoDirection.setMaximum(5)
+        self.inEdigeoDirection.setMaximum(10)
         self.inEdigeoDirection.setObjectName(_fromUtf8("inEdigeoDirection"))
         self.horizontalLayout_10.addWidget(self.inEdigeoDirection)
         self.verticalLayout_15.addLayout(self.horizontalLayout_10)

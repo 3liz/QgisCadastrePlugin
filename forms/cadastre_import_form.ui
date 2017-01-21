@@ -335,7 +335,7 @@
             <item>
              <widget class="QSpinBox" name="inEdigeoDirection">
               <property name="maximum">
-               <number>5</number>
+               <number>10</number>
               </property>
              </widget>
             </item>
