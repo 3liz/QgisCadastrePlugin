@@ -61,7 +61,7 @@ class cadastreLoading(QObject):
             u'Bâti'
         ]
         self.qgisCadastreLayerList = [
-            {'label': u'Communes', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C'},
+            {'label': u'Communes', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C', 'subset': 'substr("geo_commune", 5, 6) IN (%s)'},
             {'label': u'Tronçons de route', 'name': 'geo_tronroute', 'table': 'geo_tronroute', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Voies, routes et chemins', 'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" IN ( \'ZONCOMMUNI_id\') ', 'active': True, 'group': 'E'},
@@ -72,8 +72,8 @@ class cadastreLoading(QObject):
             {'label': u'Parcelles (étiquettes)', 'name': 'geo_label_parcelle', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\'', 'active': True, 'group': 'E'},
             {'label': u'Lieux-dits', 'name': 'geo_lieudit', 'table': 'geo_lieudit', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Lieux-dits  (étiquettes)', 'name': 'geo_label_lieudit', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'LIEUDIT_id\'', 'active': False, 'group': 'E'},
-            {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C'},
-            {'label': u'Parcelles', 'name': 'parcelle_info', 'table': 'parcelle_info', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C'},
+            {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C', 'subset': 'substr("geo_commune", 5, 6) IN (%s)'},
+            {'label': u'Parcelles', 'name': 'parcelle_info', 'table': 'parcelle_info', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': 'substr("geo_parcelle", 5, 6) IN (%s)'},
             {'label': u'Sections (étiquettes)', 'name': 'geo_label_section', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SECTION_id\'', 'active': False, 'group': 'E'},
             {'label': u'Bornes', 'name': 'geo_borne', 'table': 'geo_borne', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Croix', 'name': 'geo_croix', 'table': 'geo_croix', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
@@ -216,7 +216,25 @@ class cadastreLoading(QObject):
             )
             vlayer = QgsVectorLayer(layerUri.uri(), item['label'], providerName)
 
-            #layer.setSubsetString('"osm_user" = \'donlaser\'')
+            communeFilter = [a.strip(' \t') for a in self.dialog.communeFilter.text().split(',') if len(str(a.strip(' \t'))) == 6]
+            if communeFilter:
+                communeFilter = "'" + "', '".join(communeFilter) + "'"
+                nschema = ''
+                if self.dialog.dbType == 'postgis':
+                    nschema = '"%s".' % schema
+                if 'subset' in item:
+                    subset = item['subset']
+                else:
+                    subset = '''
+                    st_within( geom, (
+                            SELECT ST_Union(geom)
+                            FROM ''' + nschema + '''geo_commune p
+                            WHERE substr("geo_commune", 5, 6) IN ( %s )
+                            )
+                    )
+                    '''
+
+                vlayer.setSubsetString( subset % communeFilter )
 
             # apply style
             qmlPath = os.path.join(

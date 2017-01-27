@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/vagrant/cadastre_load_form.ui'
 #
-# Created: Thu Jan 12 21:37:33 2017
+# Created: Fri Jan 27 15:57:24 2017
 #      by: PyQt4 UI code generator 4.11.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,7 +33,7 @@ class Ui_cadastre_load_form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 503, 550))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 487, 686))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -86,12 +86,26 @@ class Ui_cadastre_load_form(object):
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.groupBox_2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
-        self.formLayout = QtGui.QFormLayout()
-        self.formLayout.setObjectName(_fromUtf8("formLayout"))
         self.cbMainLayersOnly = QtGui.QCheckBox(self.groupBox_2)
         self.cbMainLayersOnly.setObjectName(_fromUtf8("cbMainLayersOnly"))
-        self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.cbMainLayersOnly)
+        self.verticalLayout_3.addWidget(self.cbMainLayersOnly)
+        self.formLayout = QtGui.QFormLayout()
+        self.formLayout.setObjectName(_fromUtf8("formLayout"))
+        self.label_4 = QtGui.QLabel(self.groupBox_2)
+        self.label_4.setObjectName(_fromUtf8("label_4"))
+        self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.label_4)
+        self.communeFilter = QtGui.QLineEdit(self.groupBox_2)
+        self.communeFilter.setObjectName(_fromUtf8("communeFilter"))
+        self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.communeFilter)
         self.verticalLayout_3.addLayout(self.formLayout)
+        self.label_5 = QtGui.QLabel(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_5.setFont(font)
+        self.label_5.setWordWrap(True)
+        self.label_5.setMargin(1)
+        self.label_5.setObjectName(_fromUtf8("label_5"))
+        self.verticalLayout_3.addWidget(self.label_5)
         self.verticalLayout_2.addWidget(self.groupBox_2)
         self.btProcessLoading = QtGui.QPushButton(self.scrollAreaWidgetContents)
         self.btProcessLoading.setObjectName(_fromUtf8("btProcessLoading"))
@@ -129,6 +143,8 @@ class Ui_cadastre_load_form(object):
         self.liTheme.setItemText(0, _translate("cadastre_load_form", "classique", None))
         self.groupBox_2.setTitle(_translate("cadastre_load_form", "Couches", None))
         self.cbMainLayersOnly.setText(_translate("cadastre_load_form", "Ajouter seulement Communes, sections, parcelles et bâti", None))
+        self.label_4.setText(_translate("cadastre_load_form", "Filtrer par code sur les communes", None))
+        self.label_5.setText(_translate("cadastre_load_form", "Expérimental: On passe une liste séparée par virgule de codes commune \"cadastre\", c\'est-à-dire : code département + code direction + code INSEE. Par exemple pour Amiens: 800021", None))
         self.btProcessLoading.setText(_translate("cadastre_load_form", "Charger les données", None))
         self.txtLog.setHtml(_translate("cadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

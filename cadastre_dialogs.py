@@ -329,6 +329,7 @@ class cadastre_common():
                 continue
 
             connectionParams = cadastre_common.getConnectionParameterFromDbLayer(l)
+
             import re
 
             reg = r'(\.| )?(%s)' % tableName
@@ -337,8 +338,8 @@ class cadastre_common():
                     connectionParams['table'] == tableName or \
                     ( re.findall(reg, '%s' % connectionParams['table']) and re.findall(reg, '%s' % connectionParams['table'])[0] ) \
                 ) and \
-                connectionParams['geocol'] == geomCol and \
-                connectionParams['sql'] == sql:
+                connectionParams['geocol'] == geomCol:
+                #and connectionParams['sql'] == sql:
                 return l
 
         return layer
@@ -1545,6 +1546,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
             searchCombo['sql']
         )
 
+
         self.searchComboBoxes[combo]['layer'] = layer
         if layer:
 
@@ -1568,6 +1570,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 )
             else:
                 features = layer.getFeatures(request)
+
             self.searchComboBoxes[combo]['features'] = features
 
             # Loop through features
@@ -1590,7 +1593,6 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                     if feat and feat[labelAttribute]:
                         itemList.append(feat[labelAttribute])
                         cb.addItem(feat[labelAttribute], feat)
-
 
             # style cb to adjust list width to max length content
             pView = cb.view()

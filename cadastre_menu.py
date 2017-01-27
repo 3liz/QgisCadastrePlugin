@@ -260,7 +260,7 @@ class cadastre_menu:
         '''
         # Find parcelle layer
         from cadastre_dialogs import cadastre_common
-        parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('geo_parcelle')
+        parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('parcelle_info')
         if not parcelleLayer:
             self.identifyParcelleAction.setChecked(False)
             self.iface.actionPan().trigger()

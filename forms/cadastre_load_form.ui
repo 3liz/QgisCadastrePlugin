@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>503</width>
-        <height>550</height>
+        <width>487</width>
+        <height>686</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -130,15 +130,43 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
+           <widget class="QCheckBox" name="cbMainLayersOnly">
+            <property name="text">
+             <string>Ajouter seulement Communes, sections, parcelles et bâti</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QFormLayout" name="formLayout">
             <item row="0" column="0">
-             <widget class="QCheckBox" name="cbMainLayersOnly">
+             <widget class="QLabel" name="label_4">
               <property name="text">
-               <string>Ajouter seulement Communes, sections, parcelles et bâti</string>
+               <string>Filtrer par code sur les communes</string>
               </property>
              </widget>
             </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="communeFilter"/>
+            </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string>Expérimental: On passe une liste séparée par virgule de codes commune &quot;cadastre&quot;, c'est-à-dire : code département + code direction + code INSEE. Par exemple pour Amiens: 800021</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="margin">
+             <number>1</number>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
