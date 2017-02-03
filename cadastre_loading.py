@@ -61,7 +61,7 @@ class cadastreLoading(QObject):
             u'Bâti'
         ]
         self.qgisCadastreLayerList = [
-            {'label': u'Communes', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C', 'subset': 'substr("geo_commune", 5, 6) IN (%s)'},
+            {'label': u'Communes', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C', 'subset': '"geo_commune" IN (%s)'},
             {'label': u'Tronçons de route', 'name': 'geo_tronroute', 'table': 'geo_tronroute', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Voies, routes et chemins', 'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" IN ( \'ZONCOMMUNI_id\') ', 'active': True, 'group': 'E'},
@@ -72,8 +72,8 @@ class cadastreLoading(QObject):
             {'label': u'Parcelles (étiquettes)', 'name': 'geo_label_parcelle', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\'', 'active': True, 'group': 'E'},
             {'label': u'Lieux-dits', 'name': 'geo_lieudit', 'table': 'geo_lieudit', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Lieux-dits  (étiquettes)', 'name': 'geo_label_lieudit', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'LIEUDIT_id\'', 'active': False, 'group': 'E'},
-            {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C', 'subset': 'substr("geo_commune", 5, 6) IN (%s)'},
-            {'label': u'Parcelles', 'name': 'parcelle_info', 'table': 'parcelle_info', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': 'substr("geo_parcelle", 5, 6) IN (%s)'},
+            {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C', 'subset': '"geo_commune" IN (%s)'},
+            {'label': u'Parcelles', 'name': 'parcelle_info', 'table': 'parcelle_info', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': 'substr("geo_parcelle", 1, 10) IN (%s)'},
             {'label': u'Sections (étiquettes)', 'name': 'geo_label_section', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SECTION_id\'', 'active': False, 'group': 'E'},
             {'label': u'Bornes', 'name': 'geo_borne', 'table': 'geo_borne', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Croix', 'name': 'geo_croix', 'table': 'geo_croix', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
@@ -154,7 +154,6 @@ class cadastreLoading(QObject):
         self.qc.updateLog(u'Chargement des tables :')
 
         # Get database list of tables
-        layerUri = self.dialog.db.uri()
         if self.dialog.dbType == 'postgis':
             schemaSearch = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
             schemaInst = schemaSearch[0]
@@ -162,19 +161,48 @@ class cadastreLoading(QObject):
         if self.dialog.dbType == 'spatialite':
             dbTables = self.dialog.db.tables()
 
+        # Get commune filter by expression
+        communeExpression = self.dialog.communeFilter.text()
+        communeFilter = None
+        cExp = QgsExpression(communeExpression)
+        if not cExp.hasParserError():
+            self.qc.updateLog(u'Filtrage à partir des communes : %s' % communeExpression)
+            cReq = QgsFeatureRequest(cExp)
+            cTableList = [a for a in dbTables if a.name == 'geo_commune']
+            cTable = cTableList[0]
+            cUniqueCol = 'ogc_fid'
+            cSchema = self.dialog.schema
+            cGeomCol = 'geom'
+            cLayerUri = self.dialog.db.uri()
+            cLayerUri.setDataSource(
+                cSchema,
+                cTable.name,
+                cGeomCol,
+                '',
+                cUniqueCol
+            )
+            clayer = QgsVectorLayer(cLayerUri.uri(), 'com', providerName)
+            cfeatures = clayer.getFeatures( cReq )
+            cids = [a['commune'] for a in cfeatures]
+            if len(cids):
+                communeFilter = cids
+        else:
+            self.qc.updateLog(u'Filtrage à partir des communes : expression invalide !')
+
+
         # Loop throuhg qgisQastreLayerList and load each corresponding table
         for item in self.qgisCadastreLayerList:
-
-            # update progress bar
-            self.qc.updateLog(u'* %s' % item['label'])
-            self.dialog.step+=1
-            self.qc.updateProgressBar()
 
             if item['label'] not in self.mainLayers and self.dialog.cbMainLayersOnly.isChecked():
                 continue
 
             if item.has_key('dbType') and item['dbType'] != self.dialog.dbType:
                 continue
+
+            # update progress bar
+            self.qc.updateLog(u'* %s' % item['label'])
+            self.dialog.step+=1
+            self.qc.updateProgressBar()
 
             # Tables - Get db_manager table instance
             tableList = [a for a in dbTables if a.name == item['table']]
@@ -206,35 +234,46 @@ class cadastreLoading(QObject):
             sql = item['sql']
             geomCol = item['geom']
 
+            if communeFilter:
+                communeFilterText = "'" + "', '".join(communeFilter) + "'"
+                nschema = ''
+                if self.dialog.dbType == 'postgis':
+                    nschema = '"%s".' % schema
+                if 'subset' in item:
+                    subset = item['subset']
+                    sql+= subset % communeFilterText
+                else:
+                    itemcol = item['table']
+                    if item['table'] == 'geo_label':
+                        itemcol = 'ogc_fid'
+                    subset = itemcol + '''
+                         IN (
+
+                            SELECT b.''' + itemcol + '''
+                            FROM  ''' + nschema + item['table'] + ''' b
+                            JOIN  ''' + nschema + '''geo_commune c
+                            ON ST_Within(b.geom, c.geom)
+                            WHERE true
+                            AND c.geo_commune IN ( %s )
+
+                        )
+                    '''
+                    if sql:
+                        sql+= ' AND '
+                    sql+= subset % communeFilterText
+
+
             # Create vector layer
-            layerUri.setDataSource(
+            alayerUri = self.dialog.db.uri()
+            alayerUri.setDataSource(
                 schema,
                 source,
                 geomCol,
                 sql,
                 uniqueCol
             )
-            vlayer = QgsVectorLayer(layerUri.uri(), item['label'], providerName)
 
-            communeFilter = [a.strip(' \t') for a in self.dialog.communeFilter.text().split(',') if len(str(a.strip(' \t'))) == 6]
-            if communeFilter:
-                communeFilter = "'" + "', '".join(communeFilter) + "'"
-                nschema = ''
-                if self.dialog.dbType == 'postgis':
-                    nschema = '"%s".' % schema
-                if 'subset' in item:
-                    subset = item['subset']
-                else:
-                    subset = '''
-                    st_within( geom, (
-                            SELECT ST_Union(geom)
-                            FROM ''' + nschema + '''geo_commune p
-                            WHERE substr("geo_commune", 5, 6) IN ( %s )
-                            )
-                    )
-                    '''
-
-                vlayer.setSubsetString( subset % communeFilter )
+            vlayer = QgsVectorLayer(alayerUri.uri(), item['label'], providerName)
 
             # apply style
             qmlPath = os.path.join(

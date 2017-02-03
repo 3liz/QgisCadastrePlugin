@@ -32,6 +32,6 @@ CREATE INDEX parcelle_info_geom_idx ON [PREFIXE]parcelle_info USING gist (geom);
 CREATE INDEX parcelle_info_geo_section_idx ON [PREFIXE]parcelle_info (geo_section);
 CREATE INDEX parcelle_info_codecommune_idx ON [PREFIXE]parcelle_info (codecommune );
 CREATE INDEX parcelle_info_geo_parcelle_idx ON [PREFIXE]parcelle_info (geo_parcelle );
-CREATE INDEX parcelle_info_geo_parcelle ON [PREFIXE]parcelle_info( substr("geo_parcelle", 5, 6))
+CREATE INDEX parcelle_info_geo_parcelle ON [PREFIXE]parcelle_info( substr("geo_parcelle", 1, 10))
 
 COMMIT;

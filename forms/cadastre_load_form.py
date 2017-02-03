@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/vagrant/cadastre_load_form.ui'
 #
-# Created: Fri Jan 27 15:57:24 2017
+# Created: Fri Feb  3 17:37:04 2017
 #      by: PyQt4 UI code generator 4.11.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_load_form(object):
     def setupUi(self, cadastre_load_form):
         cadastre_load_form.setObjectName(_fromUtf8("cadastre_load_form"))
-        cadastre_load_form.resize(523, 603)
+        cadastre_load_form.resize(555, 784)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_load_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_load_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 487, 686))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 519, 765))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -89,19 +89,17 @@ class Ui_cadastre_load_form(object):
         self.cbMainLayersOnly = QtGui.QCheckBox(self.groupBox_2)
         self.cbMainLayersOnly.setObjectName(_fromUtf8("cbMainLayersOnly"))
         self.verticalLayout_3.addWidget(self.cbMainLayersOnly)
-        self.formLayout = QtGui.QFormLayout()
-        self.formLayout.setObjectName(_fromUtf8("formLayout"))
         self.label_4 = QtGui.QLabel(self.groupBox_2)
         self.label_4.setObjectName(_fromUtf8("label_4"))
-        self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.label_4)
+        self.verticalLayout_3.addWidget(self.label_4)
         self.communeFilter = QtGui.QLineEdit(self.groupBox_2)
         self.communeFilter.setObjectName(_fromUtf8("communeFilter"))
-        self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.communeFilter)
-        self.verticalLayout_3.addLayout(self.formLayout)
+        self.verticalLayout_3.addWidget(self.communeFilter)
         self.label_5 = QtGui.QLabel(self.groupBox_2)
         font = QtGui.QFont()
         font.setItalic(True)
         self.label_5.setFont(font)
+        self.label_5.setTextFormat(QtCore.Qt.RichText)
         self.label_5.setWordWrap(True)
         self.label_5.setMargin(1)
         self.label_5.setObjectName(_fromUtf8("label_5"))
@@ -141,10 +139,10 @@ class Ui_cadastre_load_form(object):
         self.groupBox_5.setTitle(_translate("cadastre_load_form", "Styles à appliquer", None))
         self.label_12.setText(_translate("cadastre_load_form", "Thème", None))
         self.liTheme.setItemText(0, _translate("cadastre_load_form", "classique", None))
-        self.groupBox_2.setTitle(_translate("cadastre_load_form", "Couches", None))
+        self.groupBox_2.setTitle(_translate("cadastre_load_form", "Couches et filtres", None))
         self.cbMainLayersOnly.setText(_translate("cadastre_load_form", "Ajouter seulement Communes, sections, parcelles et bâti", None))
-        self.label_4.setText(_translate("cadastre_load_form", "Filtrer par code sur les communes", None))
-        self.label_5.setText(_translate("cadastre_load_form", "Expérimental: On passe une liste séparée par virgule de codes commune \"cadastre\", c\'est-à-dire : code département + code direction + code INSEE. Par exemple pour Amiens: 800021", None))
+        self.label_4.setText(_translate("cadastre_load_form", "Filtrer par expression sur les communes", None))
+        self.label_5.setText(_translate("cadastre_load_form", "<html><head/><body><p><span style=\" font-weight:600;\">Expérimental :</span> On passe une expression qui permet de filtrer les communes souhaitées. Par exemple : </p><p>substr(&quot;geo_commune&quot;, 5, 6) LIKE \'54033%\'</p><p>permet de filtrer sur toutes les communes de département 54, direction 0 et dont le code INSEE commence par 33</p></body></html>", None))
         self.btProcessLoading.setText(_translate("cadastre_load_form", "Charger les données", None))
         self.txtLog.setHtml(_translate("cadastre_load_form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

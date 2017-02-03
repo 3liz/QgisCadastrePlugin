@@ -35,6 +35,8 @@ DROP INDEX IF EXISTS geo_parcelle_geo_section_idx;
 CREATE INDEX geo_parcelle_geo_section_idx ON geo_parcelle (geo_section);
 DROP INDEX IF EXISTS geo_unite_fonciere_comptecommunal_idx;
 CREATE INDEX geo_unite_fonciere_comptecommunal_idx ON geo_unite_fonciere (comptecommunal);
+DROP INDEX IF EXISTS geo_label_ogc_fid_idx;
+CREATE INDEX geo_label_ogc_fid_idx ON geo_label (ogc_fid );
 DROP INDEX IF EXISTS geo_label_x_label_idx;
 CREATE INDEX geo_label_x_label_idx ON geo_label (x_label );
 DROP INDEX IF EXISTS geo_label_y_label_idx;

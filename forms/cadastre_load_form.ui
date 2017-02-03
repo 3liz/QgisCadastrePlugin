@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>523</width>
-    <height>603</height>
+    <width>555</width>
+    <height>784</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>487</width>
-        <height>686</height>
+        <width>519</width>
+        <height>765</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -126,7 +126,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
-          <string>Couches</string>
+          <string>Couches et filtres</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
@@ -137,18 +137,14 @@
            </widget>
           </item>
           <item>
-           <layout class="QFormLayout" name="formLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Filtrer par code sur les communes</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="communeFilter"/>
-            </item>
-           </layout>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Filtrer par expression sur les communes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="communeFilter"/>
           </item>
           <item>
            <widget class="QLabel" name="label_5">
@@ -158,7 +154,10 @@
              </font>
             </property>
             <property name="text">
-             <string>Expérimental: On passe une liste séparée par virgule de codes commune &quot;cadastre&quot;, c'est-à-dire : code département + code direction + code INSEE. Par exemple pour Amiens: 800021</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Expérimental :&lt;/span&gt; On passe une expression qui permet de filtrer les communes souhaitées. Par exemple : &lt;/p&gt;&lt;p&gt;substr(&amp;quot;geo_commune&amp;quot;, 5, 6) LIKE '54033%'&lt;/p&gt;&lt;p&gt;permet de filtrer sur toutes les communes de département 54, direction 0 et dont le code INSEE commence par 33&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::RichText</enum>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
