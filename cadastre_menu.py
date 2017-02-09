@@ -36,21 +36,13 @@ class cadastre_menu:
     def __init__(self, iface):
         self.iface = iface
         self.mapCanvas = iface.mapCanvas()
-        self.cadastre_menu = None
-
         self.cadastre_search_dialog = None
 
     def cadastre_add_submenu(self, submenu):
-        if self.cadastre_menu != None:
-            self.cadastre_menu.addMenu(submenu)
-        else:
-            self.iface.addPluginToMenu("&cadastre", submenu.menuAction())
+        self.iface.addPluginToMenu("&Cadastre", submenu.menuAction())
 
     def initGui(self):
 
-        # Add Cadastre to QGIS menu
-        self.cadastre_menu = QMenu(QCoreApplication.translate("cadastre", "Cadastre"))
-        self.iface.mainWindow().menuBar().insertMenu(self.iface.firstRightStandardMenu().menuAction(), self.cadastre_menu)
 
         # Import Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/database.png")
@@ -90,18 +82,18 @@ class cadastre_menu:
         self.version_action = QAction(icon, u"Notes de version", self.iface.mainWindow())
         QObject.connect(self.version_action, SIGNAL("triggered()"), self.open_message_dialog)
 
+        # Add Cadastre to Extension menu
+        self.iface.addPluginToMenu(u"&Cadastre", self.import_action)
+        self.iface.addPluginToMenu(u"&Cadastre", self.load_action)
+        self.iface.addPluginToMenu(u"&Cadastre", self.search_action)
+        self.iface.addPluginToMenu(u"&Cadastre", self.option_action)
+        self.iface.addPluginToMenu(u"&Cadastre", self.about_action)
+        self.iface.addPluginToMenu(u"&Cadastre", self.version_action)
+        self.iface.addPluginToMenu(u"&Cadastre", self.help_action)
 
-        # Add actions to Cadastre menu
-        self.cadastre_menu.addAction(self.import_action)
-        self.cadastre_menu.addAction(self.load_action)
-        self.cadastre_menu.addAction(self.search_action)
-        self.cadastre_menu.addAction(self.option_action)
-        self.cadastre_menu.addAction(self.about_action)
-        self.cadastre_menu.addAction(self.help_action)
-        self.cadastre_menu.addAction(self.version_action)
 
         # Add cadastre toolbar
-        self.toolbar = self.iface.addToolBar(u'Cadastre');
+        self.toolbar = self.iface.addToolBar(u'&Cadastre');
 
         # open import dialog
         self.openImportAction = QAction(
@@ -379,13 +371,16 @@ class cadastre_menu:
 
 
     def unload(self):
-        if self.cadastre_menu != None:
-            self.iface.mainWindow().menuBar().removeAction(self.cadastre_menu.menuAction())
-            self.cadastre_menu.deleteLater()
-            self.iface.mainWindow().removeToolBar(self.toolbar)
-        else:
-            self.iface.removePluginMenu("&cadastre", self.cadastre_menu.menuAction())
-            self.cadastre_menu.deleteLater()
+
+        self.iface.removePluginMenu(u"&Cadastre", self.import_action)
+        self.iface.removePluginMenu(u"&Cadastre", self.load_action)
+        self.iface.removePluginMenu(u"&Cadastre", self.search_action)
+        self.iface.removePluginMenu(u"&Cadastre", self.option_action)
+        self.iface.removePluginMenu(u"&Cadastre", self.about_action)
+        self.iface.removePluginMenu(u"&Cadastre", self.version_action)
+        self.iface.removePluginMenu(u"&Cadastre", self.help_action)
+
+        self.iface.mainWindow().removeToolBar(self.toolbar)
 
         if self.cadastre_search_dialog:
             self.iface.removeDockWidget(self.cadastre_search_dialog)
