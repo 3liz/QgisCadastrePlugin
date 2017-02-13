@@ -24,11 +24,14 @@
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+from PyQt4.QtXml import QDomDocument
 from qgis.core import *
 from cadastre_identify_parcelle import IdentifyParcelle
 from cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
 import ConfigParser
 import os.path
+import tempfile
+from time import time
 
 # ---------------------------------------------
 
@@ -62,6 +65,11 @@ class cadastre_menu:
         self.load_action = QAction(icon, u"Charger des données", self.iface.mainWindow())
         QObject.connect(self.load_action, SIGNAL("triggered()"), self.open_load_dialog)
 
+        # Composer Submenu
+        icon = QIcon(os.path.dirname(__file__) + "/icons/mActionSaveAsPDF.png")
+        self.export_action = QAction(icon, u"Exporter la vue", self.iface.mainWindow())
+        QObject.connect(self.export_action, SIGNAL("triggered()"), self.export_view)
+
         # Options Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/config.png")
         self.option_action = QAction(icon, u"Configurer le plugin", self.iface.mainWindow())
@@ -86,6 +94,7 @@ class cadastre_menu:
         self.iface.addPluginToMenu(u"&Cadastre", self.import_action)
         self.iface.addPluginToMenu(u"&Cadastre", self.load_action)
         self.iface.addPluginToMenu(u"&Cadastre", self.search_action)
+        self.iface.addPluginToMenu(u"&Cadastre", self.export_action)
         self.iface.addPluginToMenu(u"&Cadastre", self.option_action)
         self.iface.addPluginToMenu(u"&Cadastre", self.about_action)
         self.iface.addPluginToMenu(u"&Cadastre", self.version_action)
@@ -123,6 +132,15 @@ class cadastre_menu:
         self.openSearchAction.triggered.connect(self.toggle_search_dialog)
         #~ self.openSearchAction.setCheckable(True)
         self.toolbar.addAction(self.openSearchAction)
+
+        # export composer
+        self.runExportAction = QAction(
+            QIcon(os.path.dirname(__file__) +"/icons/mActionSaveAsPDF.png"),
+            u"Exporter la vue",
+            self.iface.mainWindow()
+        )
+        self.runExportAction.triggered.connect(self.export_view)
+        self.toolbar.addAction(self.runExportAction)
 
         # open Option dialog
         self.openOptionAction = QAction(
@@ -206,6 +224,55 @@ class cadastre_menu:
             self.cadastre_search_dialog.hide()
         else:
             self.cadastre_search_dialog.show()
+
+    def export_view(self):
+        '''
+        Export current view to PDF
+        '''
+        # Load template from file
+        s = QSettings()
+        f = s.value("cadastre/composerTemplateFile", '', type=str)
+        if not os.path.exists(f):
+            f = '%s/composers/paysage_a4.qpt' % os.path.dirname(__file__)
+            s.setValue("cadastre/composerTemplateFile", f)
+
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+        tf = file(f, 'rt')
+        tc= tf.read()
+        tf.close()
+        d= QDomDocument()
+        d.setContent(tc)
+
+        # Create composition
+        ms = self.iface.mapCanvas().mapSettings()
+        c = QgsComposition(ms)
+        c.loadFromTemplate(d)
+
+        c.setPlotStyle(QgsComposition.Print)
+        #c.setPrintResolution(300)
+
+        # Set map
+        canvas = self.iface.mapCanvas()
+        cm = c.getComposerMapById(0)
+        extent = canvas.extent()
+        scale = canvas.scale()
+        cm.setMapCanvas(canvas)
+        if extent:
+            cm.zoomToExtent(extent)
+        if scale:
+            cm.setNewScale(scale)
+
+        # Export
+        tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
+        temp = int(time()*100)
+        temppath = os.path.join(tempDir, 'export_cadastre_%s.pdf' % temp)
+        c.exportAsPDF(temppath)
+
+        QApplication.restoreOverrideCursor()
+
+        if os.path.exists(temppath):
+            cadastre_common.openFile(temppath)
 
     def open_option_dialog(self):
         '''
@@ -375,6 +442,7 @@ class cadastre_menu:
         self.iface.removePluginMenu(u"&Cadastre", self.import_action)
         self.iface.removePluginMenu(u"&Cadastre", self.load_action)
         self.iface.removePluginMenu(u"&Cadastre", self.search_action)
+        self.iface.removePluginMenu(u"&Cadastre", self.export_action)
         self.iface.removePluginMenu(u"&Cadastre", self.option_action)
         self.iface.removePluginMenu(u"&Cadastre", self.about_action)
         self.iface.removePluginMenu(u"&Cadastre", self.version_action)

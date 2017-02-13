@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'forms/cadastre_option_form.ui'
+# Form implementation generated from reading ui file '/vagrant/cadastre_option_form.ui'
 #
-# Created: Thu Nov  6 09:44:33 2014
-#      by: PyQt4 UI code generator 4.10.4
+# Created: Sun Feb 12 16:54:27 2017
+#      by: PyQt4 UI code generator 4.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,14 +26,14 @@ except AttributeError:
 class Ui_cadastre_option_form(object):
     def setupUi(self, cadastre_option_form):
         cadastre_option_form.setObjectName(_fromUtf8("cadastre_option_form"))
-        cadastre_option_form.resize(543, 639)
+        cadastre_option_form.resize(543, 663)
         self.verticalLayout = QtGui.QVBoxLayout(cadastre_option_form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(cadastre_option_form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 523, 619))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 523, 643))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -105,17 +105,32 @@ class Ui_cadastre_option_form(object):
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.inTempDir = QtGui.QLineEdit(self.groupBox_2)
-        self.inTempDir.setObjectName(_fromUtf8("inTempDir"))
-        self.horizontalLayout.addWidget(self.inTempDir)
-        self.btTempDir = QtGui.QToolButton(self.groupBox_2)
+        self.inComposerTemplateFile = QtGui.QLineEdit(self.groupBox_2)
+        self.inComposerTemplateFile.setObjectName(_fromUtf8("inComposerTemplateFile"))
+        self.horizontalLayout.addWidget(self.inComposerTemplateFile)
+        self.btComposerTemplateFile = QtGui.QToolButton(self.groupBox_2)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/plugins/cadastre/icons/open.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btTempDir.setIcon(icon)
-        self.btTempDir.setObjectName(_fromUtf8("btTempDir"))
-        self.horizontalLayout.addWidget(self.btTempDir)
+        self.btComposerTemplateFile.setIcon(icon)
+        self.btComposerTemplateFile.setObjectName(_fromUtf8("btComposerTemplateFile"))
+        self.horizontalLayout.addWidget(self.btComposerTemplateFile)
         self.verticalLayout_4.addLayout(self.horizontalLayout)
         self.verticalLayout_2.addWidget(self.groupBox_2)
+        self.groupBox_4 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.groupBox_4.setObjectName(_fromUtf8("groupBox_4"))
+        self.verticalLayout_6 = QtGui.QVBoxLayout(self.groupBox_4)
+        self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
+        self.horizontalLayout_2 = QtGui.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.inTempDir = QtGui.QLineEdit(self.groupBox_4)
+        self.inTempDir.setObjectName(_fromUtf8("inTempDir"))
+        self.horizontalLayout_2.addWidget(self.inTempDir)
+        self.btTempDir = QtGui.QToolButton(self.groupBox_4)
+        self.btTempDir.setIcon(icon)
+        self.btTempDir.setObjectName(_fromUtf8("btTempDir"))
+        self.horizontalLayout_2.addWidget(self.btTempDir)
+        self.verticalLayout_6.addLayout(self.horizontalLayout_2)
+        self.verticalLayout_2.addWidget(self.groupBox_4)
         self.groupBox_3 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
         self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.groupBox_3)
@@ -141,8 +156,6 @@ class Ui_cadastre_option_form(object):
         self.gridLayout_2.addWidget(self.inSpatialiteTempStore, 1, 1, 1, 1)
         self.verticalLayout_5.addLayout(self.gridLayout_2)
         self.verticalLayout_2.addWidget(self.groupBox_3)
-        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem)
         self.buttonBox = QtGui.QDialogButtonBox(self.scrollAreaWidgetContents)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
@@ -160,7 +173,13 @@ class Ui_cadastre_option_form(object):
         cadastre_option_form.setTabOrder(self.inMajicLotlocal, self.inMajicNbati)
         cadastre_option_form.setTabOrder(self.inMajicNbati, self.inMajicPdl)
         cadastre_option_form.setTabOrder(self.inMajicPdl, self.inMajicProp)
-        cadastre_option_form.setTabOrder(self.inMajicProp, self.buttonBox)
+        cadastre_option_form.setTabOrder(self.inMajicProp, self.inComposerTemplateFile)
+        cadastre_option_form.setTabOrder(self.inComposerTemplateFile, self.btComposerTemplateFile)
+        cadastre_option_form.setTabOrder(self.btComposerTemplateFile, self.inTempDir)
+        cadastre_option_form.setTabOrder(self.inTempDir, self.btTempDir)
+        cadastre_option_form.setTabOrder(self.btTempDir, self.inMaxInsertRows)
+        cadastre_option_form.setTabOrder(self.inMaxInsertRows, self.inSpatialiteTempStore)
+        cadastre_option_form.setTabOrder(self.inSpatialiteTempStore, self.buttonBox)
 
     def retranslateUi(self, cadastre_option_form):
         cadastre_option_form.setWindowTitle(_translate("cadastre_option_form", "Cadastre", None))
@@ -175,7 +194,9 @@ class Ui_cadastre_option_form(object):
         self.label_3.setText(_translate("cadastre_option_form", "LOTLOCAL", None))
         self.label_5.setText(_translate("cadastre_option_form", "PROP", None))
         self.label_6.setText(_translate("cadastre_option_form", "PDL", None))
-        self.groupBox_2.setTitle(_translate("cadastre_option_form", "Répertoire temporaire", None))
+        self.groupBox_2.setTitle(_translate("cadastre_option_form", "Modèle de composition pour l'export de la vue cartographique", None))
+        self.btComposerTemplateFile.setText(_translate("cadastre_option_form", "...", None))
+        self.groupBox_4.setTitle(_translate("cadastre_option_form", "Répertoire temporaire", None))
         self.btTempDir.setText(_translate("cadastre_option_form", "...", None))
         self.groupBox_3.setTitle(_translate("cadastre_option_form", "Performances", None))
         self.label_7.setText(_translate("cadastre_option_form", "Taille maximum des requêtes INSERT", None))

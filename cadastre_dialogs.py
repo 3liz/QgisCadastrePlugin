@@ -1477,6 +1477,7 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
         self.hasMajicDataVoie = False
         self.hasMajicDataParcelle = False
 
+        from cadastre_dialogs import cadastre_common
         aLayer = cadastre_common.getLayerFromLegendByTableProps('geo_commune')
         if aLayer:
             self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(aLayer)
@@ -2126,7 +2127,13 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         self.pathSelectors = {
             "tempDir" : {
                 "button" : self.btTempDir,
-                "input" : self.inTempDir
+                "input" : self.inTempDir,
+                "type": "dir"
+            },
+            "composerTemplateFile" : {
+                "button" : self.btComposerTemplateFile,
+                "input" : self.inComposerTemplateFile,
+                "type": "file"
             }
         }
         from functools import partial
@@ -2144,11 +2151,20 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
         Ask the user to select a folder
         and write down the path to appropriate field
         '''
-        ipath = QFileDialog.getExistingDirectory(
-            None,
-            u"Choisir le répertoire contenant les fichiers",
-            str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
-        )
+        if self.pathSelectors[key]['type'] == 'dir':
+            ipath = QFileDialog.getExistingDirectory(
+                None,
+                u"Choisir le répertoire contenant les fichiers",
+                str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
+            )
+        else:
+            ipath = QFileDialog.getOpenFileName(
+                None,
+                u"Choisir le modèle de composeur utilisé pour l'export",
+                str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t'),
+                u"Composeur (*.qpt)"
+            )
+
         if os.path.exists(unicode(ipath)):
             self.pathSelectors[key]['input'].setText(unicode(ipath))
 
@@ -2189,7 +2205,13 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
                 self.inSpatialiteTempStore.setCurrentIndex(0)
             else:
                 self.inSpatialiteTempStore.setCurrentIndex(1)
-
+        composerTemplateFile = s.value(
+            "cadastre/composerTemplateFile",
+            '%s/composers/paysage_a4.qpt' % self.plugin_dir,
+            type=str
+        )
+        if composerTemplateFile:
+            self.inComposerTemplateFile.setText(composerTemplateFile)
 
 
     def applyInterface(self, key):
@@ -2236,6 +2258,8 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
 
         # Save temp dir
         s.setValue("cadastre/tempDir", self.inTempDir.text().strip(' \t\n\r'))
+        # Save composer template dir
+        s.setValue("cadastre/composerTemplateFile", self.inComposerTemplateFile.text().strip(' \t\n\r'))
 
         # Save performance tuning
         s.setValue("cadastre/maxInsertRows", int(self.inMaxInsertRows.value()))

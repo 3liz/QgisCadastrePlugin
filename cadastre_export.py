@@ -32,7 +32,6 @@ import os.path
 import operator
 import tempfile
 import re
-import tempfile
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
@@ -575,7 +574,7 @@ class cadastreExport(QObject):
         temppath = None
 
         #QgsMessageLog.logMessage( "cadastre debug - begin exportItemAsPdf" )
-        
+
         # Set configuration
         self.setComposerTemplates(comptecommunal)
 
@@ -648,7 +647,7 @@ class cadastreExport(QObject):
                 # Show print progress dialog
                 self.setupPrintProgressDialog()
             nb = len(self.comptecommunal)
-            
+
             # Export PDF for each compte
             for comptecommunal in self.comptecommunal:
                 # export as PDF

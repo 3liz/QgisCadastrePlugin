@@ -108,5 +108,24 @@ CREATE INDEX parcelle_info_codecommune_idx ON [PREFIXE]parcelle_info (codecommun
 CREATE INDEX parcelle_info_geo_parcelle_idx ON [PREFIXE]parcelle_info (geo_parcelle );
 CREATE INDEX parcelle_info_geo_parcelle ON [PREFIXE]parcelle_info( substr("geo_parcelle", 1, 10));
 
+COMMENT ON TABLE [PREFIXE]parcelle_info IS 'Table de parcelles consolidées, proposant les géométries et les informations MAJIC principales, dont les propriétaires';
+
+COMMENT ON COLUMN parcelle_info.ogc_fid IS 'Identifiant unique (base de données)';
+COMMENT ON COLUMN parcelle_info.geo_parcelle IS 'Identifiant de la parcelle : année + département + direction + idu';
+COMMENT ON COLUMN parcelle_info.idu IS 'Identifiant de la parcelle (unique par département et direction seulement)';
+COMMENT ON COLUMN parcelle_info.tex IS 'Etiquette (maximum 3 caractères, ex: 1 ou 24)';
+COMMENT ON COLUMN parcelle_info.geo_section IS 'Code de la section (lien vers table geo_section.geo_section)';
+COMMENT ON COLUMN parcelle_info.nomcommune IS 'Nom de la commune';
+COMMENT ON COLUMN parcelle_info.codecommune IS 'Code de la commune à 3 chiffres, ex: 021';
+COMMENT ON COLUMN parcelle_info.surface_geo IS 'Surface de la parcelle, calculée spatialement';
+COMMENT ON COLUMN parcelle_info.contenance IS 'Contenance de la parcelle (information MAJIC)';
+COMMENT ON COLUMN parcelle_info.adresse IS 'Adresse de la parcelle';
+COMMENT ON COLUMN parcelle_info.urbain IS 'Déclare si la parcelle est urbaine ou non';
+COMMENT ON COLUMN parcelle_info.code IS 'Code de la parcelle (6 caractères, ex: AB0001)';
+COMMENT ON COLUMN parcelle_info.comptecommunal IS 'Compte communal du propriétaire';
+COMMENT ON COLUMN parcelle_info.voie IS 'Code de la voie (lien avec voie)';
+COMMENT ON COLUMN parcelle_info.proprietaire IS 'Information sur les propriétaires: code DNUPER, nom, et type. Les informations sont séparées par | entre propriétaires.';
+COMMENT ON COLUMN parcelle_info.proprietaire_info IS 'Informations détaillées sur les propriétaires bis: code DNUPER, adresse, date et lieu de naissance. Les informations sont séparées par | entre propriétaires.';
+COMMENT ON COLUMN parcelle_info.lot IS 'Lot utilisé pendant l''import';
 
 COMMIT;

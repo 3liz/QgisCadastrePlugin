@@ -27,11 +27,22 @@ INNER JOIN [PREFIXE]geo_commune c
 ON c.geo_commune = SUBSTRING(gp.geo_parcelle,1,10)
 ;
 
-ALTER TABLE parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
+ALTER TABLE [PREFIXE]parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
 CREATE INDEX parcelle_info_geom_idx ON [PREFIXE]parcelle_info USING gist (geom);
 CREATE INDEX parcelle_info_geo_section_idx ON [PREFIXE]parcelle_info (geo_section);
 CREATE INDEX parcelle_info_codecommune_idx ON [PREFIXE]parcelle_info (codecommune );
 CREATE INDEX parcelle_info_geo_parcelle_idx ON [PREFIXE]parcelle_info (geo_parcelle );
 CREATE INDEX parcelle_info_geo_parcelle ON [PREFIXE]parcelle_info( substr("geo_parcelle", 1, 10));
+
+COMMENT ON TABLE [PREFIXE]parcelle_info IS 'Table de parcelles consolidées, proposant les géométries et les informations MAJIC principales, dont les propriétaires';
+COMMENT ON COLUMN parcelle_info.ogc_fid IS 'Identifiant unique (base de données)';
+COMMENT ON COLUMN parcelle_info.geo_parcelle IS 'Identifiant de la parcelle : année + département + direction + idu';
+COMMENT ON COLUMN parcelle_info.idu IS 'Identifiant de la parcelle (unique par département et direction seulement)';
+COMMENT ON COLUMN parcelle_info.tex IS 'Etiquette (code à 3 chiffres)';
+COMMENT ON COLUMN parcelle_info.geo_section IS 'Code de la section (lien vers table geo_section.geo_section)';
+COMMENT ON COLUMN parcelle_info.nomcommune IS 'Nom de la commune';
+COMMENT ON COLUMN parcelle_info.codecommune IS 'Code de la commune à 3 chiffres';
+COMMENT ON COLUMN parcelle_info.surface_geo IS 'Surface de la parcelle, calculée spatialement';
+COMMENT ON COLUMN parcelle_info.lot IS 'Lot utilisé pendant l''import';
 
 COMMIT;
