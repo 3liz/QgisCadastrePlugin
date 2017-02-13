@@ -1,25 +1,11 @@
-===========================================
-Plugin Cadastre - Documentation utilisateur
-===========================================
+# Plugin Cadastre - Documentation utilisateur
 
-:Auteurs: Michaël DOUCHIN - 3liz
-:Date:   2013
-:Copyright: CC-BY-SA
-:Contact: info@3liz.com
-:Résumé: Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.
+**Auteurs** Michaël DOUCHIN - 3liz
+**Résumé** Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.
 
-.. image:: MEDIA/logo-qgis.jpg
-   :align: center
-   :width: 100px
+![Financeurs](MEDIA/cadastre_financeurs.png)
 
-.. meta::
-  :keywords: documentation, QGIS, plugin, cadastre, 3liz
-
-.. image:: MEDIA/cadastre_financeurs.png
-   :align: center
-
-Installation
-===========================================
+## Installation
 
 Le plugin Cadastre est dans les dépôts officiels du projet QGIS. Pour l'installer, il faut :
 
@@ -28,37 +14,35 @@ Le plugin Cadastre est dans les dépôts officiels du projet QGIS. Pour l'instal
 * Onglet **Paramètres** > Vérfier que la case *Afficher les extensions expérimentales* est bien cochée
 * Onglet **En obtenir plus** : chercher le plugin **cadastre**, le sélectionner et cliquer sur installer
 
-Une fois le plugin installé, un nouveau menu **Cadastre** apparaît dans la barre de menu de QGIS. Il comporte les sous-menus suivants :
+Une fois le plugin installé, un nouveau menu **Cadastre** apparaît dans le menu *Extensions* de QGIS. Il comporte les sous-menus suivants :
 
 * **Importer des données**
 * **Charger des données**
 * **Outils de recherche**
+* **Exporter la vue**
 * **Configurer le plugin**
-* **Notes de version**
 * **À propos**
+* **Notes de version**
+* **Aide**
 
 Ces sous-menus sont détaillés dans les chapitres suivants.
 
-Configurer le plugin
-===========================================
+## Configurer le plugin
 
 Avant d'importer les premières données cadastrales dans la base de données, il faut au préalable configurer le plugin :
 
 * Menu **Cadastre > Configurer le plugin** ou **icône outils** de la barre d'outil Cadastre
 
-.. image:: MEDIA/cadastre_option_dialog.png
-   :align: center
+![alt](MEDIA/cadastre_option_dialog.png)
 
 
-Interface
------------
+### Interface
 
 Les 2 boutons **Interface Cadatre** et **Interface QGIS** permettent d'ouvrir une aide pour appliquer une interface simplifiée adaptée à une utilisation de consultation du Cadastre.
 
 A ce jour, QGIS ne permet pas de modifier dynamiquement l'interface via un plugin. Nous incorporerons cette fonctionnalité lorsque ce sera possible. En attendant, il faut donc le faire manuellement, comme expliqué dans la fenêtre d'aide.
 
-Nom des fichiers MAJIC
------------------------
+### Nom des fichiers MAJIC
 
 Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail. En effet, les conventions de nommage peuvent changer d'un département à l'autre. Souvent, les fichiers se terminent par une extension relative au département et à la direction, par exemple .800 pour les fichiers du département de la Somme.
 
@@ -66,16 +50,20 @@ Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur v
 
 Si le plugin ne trouve pas les fichiers MAJIC pendant l'import, alors que vous aviez spécifié le bon répertoire d'import, un message vous avertira et vous proposera d'annuler l'import.
 
-Répertoire temporaire
-----------------------
+### Modèle de composition pour l'export de la vue cartographique
+
+Vous pouvez choisir ici le modèle de composeur d'impression qui sera utilisé dans la fonction **Export la vue**. Un modèle est fourni dans le répertoire *composeur* du plugin, et sera utilisé si vous ne proposez pas le votre.
+
+Pour l'instant, le modèle gère un bloc de carte, mais pas les blocs de table attributaire.
+
+### Répertoire temporaire
 
 Vous pouvez choisir le répertoire dans lequel les scripts seront copiés, et les fichiers décompressés. Choisisez un répertoire contenant assez de place pour stocker les fichiers temporaires, surtout si vous souhaitez charger des données volumineuses.
 
 Ce répertoire est aussi celui dans lequel les **relevés parcellaires** et les **relevés de propriété** seront exportés.
 
 
-Performances
--------------
+### Performances
 
 Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de votre matériel :
 
@@ -84,19 +72,16 @@ Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin
 * **Stockage temporaire** : Le mode *MEMORY* est plus rapide, mais nécessite assez de mémoire vive pour stocker les données à traiter. Le mode *DEFAULT* est plus lent et adapté à des ordinateurs avec peu de mémoire vive.
 
 
-Importer des données
-===========================================
+## Importer des données
 
 Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MAJIC**.
 
-.. image:: MEDIA/cadastre_import_dialog.png
-   :align: center
+![alt](MEDIA/cadastre_import_dialog.png)
 
 
-Principe
-------------
+### Principe
 
-Le plugin permet l'import de données **MAJIC de 2012 à 2015 et des données EDIGEO** . Il est possible d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
+Le plugin permet l'import de données **MAJIC de 2012 à 2016 et des données EDIGEO** . Il est possible d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
 Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.
 
@@ -113,8 +98,7 @@ Il est donc important de conserver une liste des lots définis pendant les impor
 
 .. note::  Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d'un millésime à l'autre ( ajout de colonnes, modification de longueur de champs, etc.
 
-Bases de données
------------------
+### Bases de données
 
 Deux **Systèmes de Gestion de Bases de Données** (SGBD) sont supportés par le plugin Cadastre :
 
@@ -131,8 +115,7 @@ Pour les bases de données **PostGIS**, il faut :
 Pour les bases de données **Spatialite**, l'interface d'import permet de créer une base de données vide et la connexion QGIS liée si nécessaire.
 
 
-Les étapes d'importation
-------------------------
+### Les étapes d'importation
 
 Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu **Configurer le plugin**. Ensuite, on ouvre la boite de dialogue
 
@@ -144,8 +127,8 @@ On configure ensuite les options :
 * Choisir **le type de base de données** : PostGIS ou Spatialite
 * Choisir **la connexion**
 
- - Pour Postgis, on peut ensuite **choisir un schema**, ou en **créer un nouveau**
- - Pour Spatialite, on peut **créer une nouvelle base de données**
+    - Pour Postgis, on peut ensuite **choisir un schema**, ou en **créer un nouveau**
+    - Pour Spatialite, on peut **créer une nouvelle base de données**
 
 * Choisir le répertoire contenant les **fichiers EDIGEO** :
 
@@ -159,12 +142,12 @@ On configure ensuite les options :
 
 * Choisir le répertoire contenant **les fichiers MAJIC**
 
- - Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et importera l'ensemble des données.
- - Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement de les télécharger et de configurer le plugin pour donner le bon nom au fichier fantoir : http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
+    - Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et importera l'ensemble des données.
+    - Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement de les télécharger et de configurer le plugin pour donner le bon nom au fichier fantoir : http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
- - Seuls les formats de 2012 à 2015 sont pris en compte
+    - Seuls les formats de 2012 à 2016 sont pris en compte
 
 * Choisir le **millésime des données**, par exemple 2012
 
@@ -179,35 +162,54 @@ On configure ensuite les options :
 
 Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fenêtre.
 
-.. note::  Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import.
+.. note::  Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import en cours.
 
 
-Charger des données
-===========================================
+## Charger des données
 
-.. image:: MEDIA/cadastre_load_dialog.png
-   :align: center
+Une fois les données importées dans la base, vous pouvez les importer dans QGIS via le menu **Charger les données**.
 
+![alt](MEDIA/cadastre_load_dialog.png)
 
-* Menu **Cadastre > Charger des données**
+### Base de données de travail
+
+Il faut d'abord indiquer au plugin où récupérer les données:
+
 * Choisir le **type de base** de données
 * Choisir ensuite **la connexion** vers la base de donnée dans lequel l'import a été fait
 * Si PostGIS, choisir **le schéma** contenant les données
-* Chosir **le thème** à appliquer
 
-    - *Classique* : un thème proche du rendu de cadastre.gouv.fr
-    - *Orthophoto* : un thème adapté à un affichage par dessus un fond orthophoto.
+### Thème
 
-* **Enlever les données cadastrales existantes dans votre projet QGIS** : Le plugin ne sait pas gérer la recherche et l'interrogation de données si on a plus qu'une version des couches parcelles, communes et sections dans le projet QGIS.
+Puis on choisir un **thème** à utiliser pour la symbologie des couches:
 
-* **Charger les données** en cliquant sur le bouton : une fois les données chargées, l'emprise de la carte est raffraîchie pour afficher l'ensemble des données (zoom sur l'ensemble des communes trouvées)
+* **Classique** : un thème proche du rendu de cadastre.gouv.fr
+* **Orthophoto** : un thème adapté à un affichage par dessus un fond orthophoto.
+
+### Couches et filtres
+
+* En cochant la case **Ajouter seulement Commune, sections, parcelles et bâti**, vous indiquez que vous souhaitez ouvrir seulement ces couches dans QGIS (et pas les autres couches comme les bornes, les croix, etc.)
+
+* **Filtrer par expression sur les communes** : cette option vous permet de ne pas charger la totalité des données, mais seulement celles qui correspondent aux communes filtrées via une expression. Vous devez connaître la structure de la table **geo_commune** pour pouvoir réaliser ce filtre. Si l'expression est invalide, alors le plugin chargera l'ensemble des données.
+
+Attention à cette 2ème option, qui est expérimentale, et qui peut poser des souci de performance. Pour information, cette option ajoute un filtre à chaque couche via une sous-requête. Une fois les couches chargées, vous pouvez consulter ce filtre via l'onglet *Général* de la boîte de dialogue des propriétés de chaque couche.
+
+Exemples d'expression:
+
+* **substr("geo_commune", 5, 6) LIKE '54033%'**  -> les communes du département 54, direction 0 , dont le code INSEE commence par 33
+* **"tex2" IN ('AMIENS', 'ALLONVILLE')** -> le nom de la commune est AMIENS ou ALLONVILLE
 
 
-La barre d'outil Cadastre
-===========================================
+### Notes
 
-.. image:: MEDIA/cadastre_toolbar.png
-   :align: center
+Pensez à **enlever les données cadastrales existantes dans votre projet QGIS** : Le plugin ne sait pas gérer la recherche et l'interrogation de données si on a plus qu'une version des couches parcelles, communes et sections dans le projet QGIS.
+
+Enfin, cliquez sur le bouton **Charger les données** pour lancer le chargement.
+
+
+## La barre d'outil Cadastre
+
+![alt](MEDIA/cadastre_toolbar.png)
 
 La barre d'outil peut s'afficher ou se masquer à partir :
 
@@ -217,13 +219,12 @@ La barre d'outil peut s'afficher ou se masquer à partir :
 Elle contient :
 
 * Un outil pour **identifier une parcelle** sur la carte
-* Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Configurer, A propos
+* Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Exporter la vue, Configurer, A propos
 
 Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir apparaître une bulle d'information.
 
 
-Indentifier une parcelle
---------------------------
+### Indentifier une parcelle
 
 
 Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC dans la base de données. Sinon, seules les informations principales issues de l'EDIGEO seront affichées et certains boutons d'action sont désactivés.
@@ -236,8 +237,7 @@ Pour faire apparaître la fiche d'information d'une parcelle, il faut:
 
 La fenêtre d'identification s'affiche alors,
 
-.. image:: MEDIA/cadastre_parcelle_info.png
-   :align: center
+![alt](MEDIA/cadastre_parcelle_info.png)
 
 Elle présente:
 
@@ -251,15 +251,22 @@ Elle présente:
 
 .. note::  Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)
 
-Le panneau de recherche
-===========================================
 
-.. image:: MEDIA/cadastre_search_dialog.png
-   :align: center
+### Exporter la vue
+
+Dans la barre d'outil Cadastre, ainsi que dans le menu, vous pouvez exporter la vue courante de la carte en PDF via le menu **Exporter la vue**.
+
+Cette fonctionnalité s'appuie sur un **modèle de composeur d'impression**, configurable dans les options du plugin (voir ci-dessus). Si vous n'avez pas configuré de composeur personnalisé, celui installé par le plugin est utilisé.
+
+Cette fonctionnalité est basique, et ne gère pas pour l'instant les composeurs complexes, avec des tables attributaires et des configurations d'atlas.
 
 
-Principe
-----------
+## Le panneau de recherche
+
+![alt](MEDIA/cadastre_search_dialog.png)
+
+
+### Principe
 
 Le panneau de recherche propose des outils pour rechercher des parcelles via 3 entrées principales
 
@@ -278,8 +285,7 @@ Une bulle d'information affiche la fonction des boutons au survol de la souris.
 .. note::  Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.
 
 
-Recherche de lieux
---------------------
+### Recherche de lieux
 
 L'outil présente 3 listes déroulantes :
 
@@ -308,8 +314,7 @@ A côté des 3 listes, un bouton **croix rouge** permet de remettre la liste à 
 Si une parcelle a été sélectionnée dans la liste **Parcelles**, il est possible d'**exporter le relevé parcellaire** en cliquant sur le bouton *icône PDF* situé en bas à droite du bloc de recherche de lieux. Le **PDF est généré et ouvert** avec le lecteur PDF par défaut du système.
 
 
-Recherche d'adresse
---------------------
+### Recherche d'adresse
 
 .. note::  Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l'import Majic): http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
 
@@ -328,8 +333,7 @@ Si des résultats ont été trouvés, on peut ensuite :
 * Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d'**exporter le relevé parcellaire** pour cette parcelle
 
 
-Recherche de propriétaires
----------------------------
+### Recherche de propriétaires
 
 .. note::  Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
 
@@ -341,21 +345,18 @@ Le principe et le fonctionnement est le même que pour la recherche par adresse,
 Il est possible d'exporter le relevé de propriété pour les personnes qui ne possèdent pas de propriété non bâtie.
 
 
-À propos
-===========================================
+## À propos
 
 Le menu **Cadastre > A propos** ouvre une fenêtre d'information sur le plugin Cadastre : financeurs, auteur, licence, dépôt de sources, etc.
 
 Cette fenêtre est automatiquement affichée lors de la première utilisation du plugin, mais pas les fois suivantes.
 
-Notes de version
-==================
+## Notes de version
 
 Le menu **Cadastre > Notes de version** ouvre une fenêtre qui montre les changements effectués sur le plugin Cadastre entre la version installée et la version précédente. Cette fenêtre est affichée automatiquement une première fois lors de la montée de version.
 
 
-Vidéos de démonstration
-========================
+## Vidéos de démonstration
 
 Pour faciliter la prise en main, vous pouvez consulter les vidéos en ligne :
 
@@ -364,16 +365,29 @@ Pour faciliter la prise en main, vous pouvez consulter les vidéos en ligne :
 
 
 
-Modèle de données
-===================
+## Modèle de données
 
-Les liens suivant permettent de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.)
+Le lien suivant permet de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.)
 
-* **Documentation détaillée** : http://demo.3liz.com/plugin_cadastre/SchemaSpyGUI/index.html
-* **Image du modèle** : http://demo.3liz.com/plugin_cadastre/schema_cadastre.png
-* **Liste simplifiée des tables** : http://demo.3liz.com/plugin_cadastre/schema_cadastre_postgresql_autodoc.html
+* **Liste des tables** : http://htmlpreview.github.io/?https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/modele_donnees/postgresql_autodoc/index.html
 
 
+### Les parcelles
 
-.. image:: MEDIA/logo_3liz.png
-   :align: center
+Dans le modèle, plusieurs tables contiennent des informations sur les parcelles
+
+* **geo_parcelle** : contient les parcelles EDIGEO
+
+* **parcelle** : contient les données MAJIC liées au parcelles cadastrales
+
+* **parcelle_info**: contient une version consolidée des parcelles EDIGEO et MAJIC: la géométrie EDIGEO, et les informations résumées de la parcelle, dont les propriétaires ( information séprées par la barre verticale | si la parcelle a plusieurs propriétaires )
+
+Les champs parcelle.parcelle et geo_parcelle.geo_parcelle peuvent être utilisés pour les jointures entre la table parcelle et la table geo_parcelle
+
+L'identifiant **geo_parcelle** (ou parcelle) est unique et constitué comme suit : 
+*Année (4) + Département (2) + Direction (1) + Commune (3) + Préfixe (3) + Secteur (2) + Numéro de plan (4)*
+soit **19 caractères**
+
+
+
+![alt](MEDIA/logo_3liz.png)

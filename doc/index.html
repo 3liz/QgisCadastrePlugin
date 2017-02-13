@@ -1,699 +1,1283 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
-<title>Plugin Cadastre - Documentation utilisateur</title>
-<meta name="date" content="2013" />
-<meta name="copyright" content="CC-BY-SA" />
-<meta content="documentation, QGIS, plugin, cadastre, 3liz" name="keywords" />
-<style type="text/css">
-
-/*
-:Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 7614 2013-02-21 15:55:51Z milde $
-:Copyright: This stylesheet has been placed in the public domain.
-
-Default cascading style sheet for the HTML output of Docutils.
-
-See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
-customize this style sheet.
-*/
-
-/* used to remove borders from tables and images */
-.borderless, table.borderless td, table.borderless th {
-  border: 0 }
-
-table.borderless td, table.borderless th {
-  /* Override padding for "table.docutils td" with "! important".
-     The right padding separates the table cells. */
-  padding: 0 0.5em 0 0 ! important }
-
-.first {
-  /* Override more specific margin styles with "! important". */
-  margin-top: 0 ! important }
-
-.last, .with-subtitle {
-  margin-bottom: 0 ! important }
-
-.hidden {
-  display: none }
-
-a.toc-backref {
-  text-decoration: none ;
-  color: black }
-
-blockquote.epigraph {
-  margin: 2em 5em ; }
-
-dl.docutils dd {
-  margin-bottom: 0.5em }
-
-object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
-  overflow: hidden;
-}
-
-/* Uncomment (and remove this text!) to get bold-faced definition list terms
-dl.docutils dt {
-  font-weight: bold }
-*/
-
-div.abstract {
-  margin: 2em 5em }
-
-div.abstract p.topic-title {
-  font-weight: bold ;
-  text-align: center }
-
-div.admonition, div.attention, div.caution, div.danger, div.error,
-div.hint, div.important, div.note, div.tip, div.warning {
-  margin: 2em ;
-  border: medium outset ;
-  padding: 1em }
-
-div.admonition p.admonition-title, div.hint p.admonition-title,
-div.important p.admonition-title, div.note p.admonition-title,
-div.tip p.admonition-title {
-  font-weight: bold ;
-  font-family: sans-serif }
-
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title, .code .error {
-  color: red ;
-  font-weight: bold ;
-  font-family: sans-serif }
-
-/* Uncomment (and remove this text!) to get reduced vertical space in
-   compound paragraphs.
-div.compound .compound-first, div.compound .compound-middle {
-  margin-bottom: 0.5em }
-
-div.compound .compound-last, div.compound .compound-middle {
-  margin-top: 0.5em }
-*/
-
-div.dedication {
-  margin: 2em 5em ;
-  text-align: center ;
-  font-style: italic }
-
-div.dedication p.topic-title {
-  font-weight: bold ;
-  font-style: normal }
-
-div.figure {
-  margin-left: 2em ;
-  margin-right: 2em }
-
-div.footer, div.header {
-  clear: both;
-  font-size: smaller }
-
-div.line-block {
-  display: block ;
-  margin-top: 1em ;
-  margin-bottom: 1em }
-
-div.line-block div.line-block {
-  margin-top: 0 ;
-  margin-bottom: 0 ;
-  margin-left: 1.5em }
-
-div.sidebar {
-  margin: 0 0 0.5em 1em ;
-  border: medium outset ;
-  padding: 1em ;
-  background-color: #ffffee ;
-  width: 40% ;
-  float: right ;
-  clear: right }
-
-div.sidebar p.rubric {
-  font-family: sans-serif ;
-  font-size: medium }
-
-div.system-messages {
-  margin: 5em }
-
-div.system-messages h1 {
-  color: red }
-
-div.system-message {
-  border: medium outset ;
-  padding: 1em }
-
-div.system-message p.system-message-title {
-  color: red ;
-  font-weight: bold }
-
-div.topic {
-  margin: 2em }
-
-h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
-h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
-  margin-top: 0.4em }
-
-h1.title {
-  text-align: center }
-
-h2.subtitle {
-  text-align: center }
-
-hr.docutils {
-  width: 75% }
-
-img.align-left, .figure.align-left, object.align-left {
-  clear: left ;
-  float: left ;
-  margin-right: 1em }
-
-img.align-right, .figure.align-right, object.align-right {
-  clear: right ;
-  float: right ;
-  margin-left: 1em }
-
-img.align-center, .figure.align-center, object.align-center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.align-left {
-  text-align: left }
-
-.align-center {
-  clear: both ;
-  text-align: center }
-
-.align-right {
-  text-align: right }
-
-/* reset inner alignment in figures */
-div.align-right {
-  text-align: inherit }
-
-/* div.align-center * { */
-/*   text-align: left } */
-
-ol.simple, ul.simple {
-  margin-bottom: 1em }
-
-ol.arabic {
-  list-style: decimal }
-
-ol.loweralpha {
-  list-style: lower-alpha }
-
-ol.upperalpha {
-  list-style: upper-alpha }
-
-ol.lowerroman {
-  list-style: lower-roman }
-
-ol.upperroman {
-  list-style: upper-roman }
-
-p.attribution {
-  text-align: right ;
-  margin-left: 50% }
-
-p.caption {
-  font-style: italic }
-
-p.credits {
-  font-style: italic ;
-  font-size: smaller }
-
-p.label {
-  white-space: nowrap }
-
-p.rubric {
-  font-weight: bold ;
-  font-size: larger ;
-  color: maroon ;
-  text-align: center }
-
-p.sidebar-title {
-  font-family: sans-serif ;
-  font-weight: bold ;
-  font-size: larger }
-
-p.sidebar-subtitle {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-p.topic-title {
-  font-weight: bold }
-
-pre.address {
-  margin-bottom: 0 ;
-  margin-top: 0 ;
-  font: inherit }
-
-pre.literal-block, pre.doctest-block, pre.math, pre.code {
-  margin-left: 2em ;
-  margin-right: 2em }
-
-pre.code .ln { color: grey; } /* line numbers */
-pre.code, code { background-color: #eeeeee }
-pre.code .comment, code .comment { color: #5C6576 }
-pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
-pre.code .literal.string, code .literal.string { color: #0C5404 }
-pre.code .name.builtin, code .name.builtin { color: #352B84 }
-pre.code .deleted, code .deleted { background-color: #DEB0A1}
-pre.code .inserted, code .inserted { background-color: #A3D289}
-
-span.classifier {
-  font-family: sans-serif ;
-  font-style: oblique }
-
-span.classifier-delimiter {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-span.interpreted {
-  font-family: sans-serif }
-
-span.option {
-  white-space: nowrap }
-
-span.pre {
-  white-space: pre }
-
-span.problematic {
-  color: red }
-
-span.section-subtitle {
-  /* font-size relative to parent (h1..h6 element) */
-  font-size: 80% }
-
-table.citation {
-  border-left: solid 1px gray;
-  margin-left: 1px }
-
-table.docinfo {
-  margin: 2em 4em }
-
-table.docutils {
-  margin-top: 0.5em ;
-  margin-bottom: 0.5em }
-
-table.footnote {
-  border-left: solid 1px black;
-  margin-left: 1px }
-
-table.docutils td, table.docutils th,
-table.docinfo td, table.docinfo th {
-  padding-left: 0.5em ;
-  padding-right: 0.5em ;
-  vertical-align: top }
-
-table.docutils th.field-name, table.docinfo th.docinfo-name {
-  font-weight: bold ;
-  text-align: left ;
-  white-space: nowrap ;
-  padding-left: 0 }
-
-/* "booktabs" style (no vertical lines) */
-table.docutils.booktabs {
-  border: 0px;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  border-collapse: collapse;
-}
-table.docutils.booktabs * {
-  border: 0px;
-}
-table.docutils.booktabs th {
-  border-bottom: thin solid;
-  text-align: left;
-}
-
-h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
-h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
-  font-size: 100% }
-
-ul.auto-toc {
-  list-style-type: none }
-
-</style>
-</head>
-<body>
-<div class="document" id="plugin-cadastre-documentation-utilisateur">
-<h1 class="title">Plugin Cadastre - Documentation utilisateur</h1>
-<table class="docinfo" frame="void" rules="none">
-<col class="docinfo-name" />
-<col class="docinfo-content" />
-<tbody valign="top">
-<tr class="field"><th class="docinfo-name">Auteurs:</th><td class="field-body">Michaël DOUCHIN - 3liz</td>
-</tr>
-<tr><th class="docinfo-name">Date:</th>
-<td>2013</td></tr>
-<tr><th class="docinfo-name">Copyright:</th>
-<td>CC-BY-SA</td></tr>
-<tr><th class="docinfo-name">Contact:</th>
-<td><a class="first last reference external" href="mailto:info&#64;3liz.com">info&#64;3liz.com</a></td></tr>
-<tr class="field"><th class="docinfo-name">Résumé:</th><td class="field-body">Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.</td>
-</tr>
-</tbody>
-</table>
-<img alt="MEDIA/logo-qgis.jpg" class="align-center" src="MEDIA/logo-qgis.jpg" style="width: 100px;" />
-<img alt="MEDIA/cadastre_financeurs.png" class="align-center" src="MEDIA/cadastre_financeurs.png" />
-<div class="section" id="installation">
-<h1>Installation</h1>
-<p>Le plugin Cadastre est dans les dépôts officiels du projet QGIS. Pour l'installer, il faut :</p>
-<ul class="simple">
-<li><strong>Lancer QGIS</strong></li>
-<li>Menu <strong>Extension &gt; Installer/Gérer les extensions</strong></li>
-<li>Onglet <strong>Paramètres</strong> &gt; Vérfier que la case <em>Afficher les extensions expérimentales</em> est bien cochée</li>
-<li>Onglet <strong>En obtenir plus</strong> : chercher le plugin <strong>cadastre</strong>, le sélectionner et cliquer sur installer</li>
-</ul>
-<p>Une fois le plugin installé, un nouveau menu <strong>Cadastre</strong> apparaît dans la barre de menu de QGIS. Il comporte les sous-menus suivants :</p>
-<ul class="simple">
-<li><strong>Importer des données</strong></li>
-<li><strong>Charger des données</strong></li>
-<li><strong>Outils de recherche</strong></li>
-<li><strong>Configurer le plugin</strong></li>
-<li><strong>Notes de version</strong></li>
-<li><strong>À propos</strong></li>
-</ul>
-<p>Ces sous-menus sont détaillés dans les chapitres suivants.</p>
-</div>
-<div class="section" id="configurer-le-plugin">
-<h1>Configurer le plugin</h1>
-<p>Avant d'importer les premières données cadastrales dans la base de données, il faut au préalable configurer le plugin :</p>
-<ul class="simple">
-<li>Menu <strong>Cadastre &gt; Configurer le plugin</strong> ou <strong>icône outils</strong> de la barre d'outil Cadastre</li>
-</ul>
-<img alt="MEDIA/cadastre_option_dialog.png" class="align-center" src="MEDIA/cadastre_option_dialog.png" />
-<div class="section" id="interface">
-<h2>Interface</h2>
-<p>Les 2 boutons <strong>Interface Cadatre</strong> et <strong>Interface QGIS</strong> permettent d'ouvrir une aide pour appliquer une interface simplifiée adaptée à une utilisation de consultation du Cadastre.</p>
-<p>A ce jour, QGIS ne permet pas de modifier dynamiquement l'interface via un plugin. Nous incorporerons cette fonctionnalité lorsque ce sera possible. En attendant, il faut donc le faire manuellement, comme expliqué dans la fenêtre d'aide.</p>
-</div>
-<div class="section" id="nom-des-fichiers-majic">
-<h2>Nom des fichiers MAJIC</h2>
-<p>Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail. En effet, les conventions de nommage peuvent changer d'un département à l'autre. Souvent, les fichiers se terminent par une extension relative au département et à la direction, par exemple .800 pour les fichiers du département de la Somme.</p>
-<div class="note">
-<p class="first admonition-title">Note</p>
-<p class="last">Il est important de bien configurer ces noms de fichiers avant votre premier import.</p>
-</div>
-<p>Si le plugin ne trouve pas les fichiers MAJIC pendant l'import, alors que vous aviez spécifié le bon répertoire d'import, un message vous avertira et vous proposera d'annuler l'import.</p>
-</div>
-<div class="section" id="repertoire-temporaire">
-<h2>Répertoire temporaire</h2>
-<p>Vous pouvez choisir le répertoire dans lequel les scripts seront copiés, et les fichiers décompressés. Choisisez un répertoire contenant assez de place pour stocker les fichiers temporaires, surtout si vous souhaitez charger des données volumineuses.</p>
-<p>Ce répertoire est aussi celui dans lequel les <strong>relevés parcellaires</strong> et les <strong>relevés de propriété</strong> seront exportés.</p>
-</div>
-<div class="section" id="performances">
-<h2>Performances</h2>
-<p>Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de votre matériel :</p>
-<ul class="simple">
-<li><strong>Taille maximum des requêtes INSERT</strong> : C'est le nombre total de requêtes INSERT lancées dans un groupe de modification ( BEGIN/COMMIT) . Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du temps.</li>
-<li><strong>Stockage temporaire</strong> : Le mode <em>MEMORY</em> est plus rapide, mais nécessite assez de mémoire vive pour stocker les données à traiter. Le mode <em>DEFAULT</em> est plus lent et adapté à des ordinateurs avec peu de mémoire vive.</li>
-</ul>
-</div>
-</div>
-<div class="section" id="importer-des-donnees">
-<h1>Importer des données</h1>
-<p>Cette boite de dialogue permet de réaliser un <strong>import de données EDIGEO et MAJIC</strong>.</p>
-<img alt="MEDIA/cadastre_import_dialog.png" class="align-center" src="MEDIA/cadastre_import_dialog.png" />
-<div class="section" id="principe">
-<h2>Principe</h2>
-<p>Le plugin permet l'import de données <strong>MAJIC de 2012 à 2015 et des données EDIGEO</strong> . Il est possible d'importer des données de manière incrémentale, <strong>étape par étape</strong>, ou bien d'importer <strong>en une seule fois</strong>.</p>
-<p>Le plugin utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un <strong>ensemble de données cohérent</strong> pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.</p>
-<p>Vous pouvez par exemple importer les données dans cette ordre :</p>
-<ul class="simple">
-<li>données EDIGEO de la commune A, lot &quot;com_a&quot;</li>
-<li>données EDIGEO de la commune B, lot &quot;com_b&quot;</li>
-<li>données MAJIC de la commune A, lot &quot;com_a&quot;</li>
-<li>données EDIGEO de la commune A, lot &quot;com_a&quot; (réimport et écrasement des données précédentes)</li>
-<li>données EDIGEO de la commune C, lot &quot;com_c&quot;</li>
-</ul>
-<p>Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données. Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.</p>
-<div class="note">
-<p class="first admonition-title">Note</p>
-<p class="last">Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d'un millésime à l'autre ( ajout de colonnes, modification de longueur de champs, etc.</p>
-</div>
-</div>
-<div class="section" id="bases-de-donnees">
-<h2>Bases de données</h2>
-<p>Deux <strong>Systèmes de Gestion de Bases de Données</strong> (SGBD) sont supportés par le plugin Cadastre :</p>
-<ul class="simple">
-<li><strong>PostGreSQL</strong> et son extension spatiale <strong>PostGIS</strong></li>
-<li><strong>Sqlite</strong> et son extension spatiale <strong>Spatialite</strong></li>
-</ul>
-<p>Nous conseillons d'utiliser PostGreSQL pour des données volumineuses et pour gérer des accès multiples à la base de données.</p>
-<p>Pour les bases de données <strong>PostGIS</strong>, il faut :</p>
-<ul class="simple">
-<li>avoir créé <strong>une base de données</strong> sur laquelle on a les droits en écriture, et activer l'extension PostGIS.</li>
-<li>avoir créé au préalable <strong>une connexion QGIS</strong> via le menu <strong>Couches &gt; Ajouter une couche PostGIS</strong> vers cette base de données</li>
-</ul>
-<p>Pour les bases de données <strong>Spatialite</strong>, l'interface d'import permet de créer une base de données vide et la connexion QGIS liée si nécessaire.</p>
-</div>
-<div class="section" id="les-etapes-d-importation">
-<h2>Les étapes d'importation</h2>
-<p>Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu <strong>Configurer le plugin</strong>. Ensuite, on ouvre la boite de dialogue</p>
-<ul class="simple">
-<li>via la <strong>barre d'outil Cadastre</strong> , icône base de données</li>
-<li>via le menu <strong>Cadastre &gt; Importer des données</strong></li>
-</ul>
-<p>On configure ensuite les options :</p>
-<ul class="simple">
-<li>Choisir <strong>le type de base de données</strong> : PostGIS ou Spatialite</li>
-<li>Choisir <strong>la connexion</strong></li>
-</ul>
-<blockquote>
-<ul class="simple">
-<li>Pour Postgis, on peut ensuite <strong>choisir un schema</strong>, ou en <strong>créer un nouveau</strong></li>
-<li>Pour Spatialite, on peut <strong>créer une nouvelle base de données</strong></li>
-</ul>
-</blockquote>
-<ul class="simple">
-<li>Choisir le répertoire contenant les <strong>fichiers EDIGEO</strong> :</li>
-</ul>
-<blockquote>
-<ul class="simple">
-<li>On peut sélectionner le <strong>répertoire parent</strong> qui contient l'ensemble des sous-répertoires vers les communes : le plugin ira chercher les fichiers de manière récursive.</li>
-<li>seuls les fichiers <strong>zip</strong> et <strong>tar.bz2</strong> sont pour l'instant gérés</li>
-</ul>
-</blockquote>
-<ul class="simple">
-<li>Choisir la <strong>projection source</strong> des fichiers EDIGEO et la <strong>projection cible</strong> désirée</li>
-<li>Choisir le <strong>numéro du Département</strong>, par exemple : 80 pour la Somme</li>
-<li>Choisir le <strong>numéro de la Direction</strong>, par exemple: 0</li>
-<li>Choisir le répertoire contenant <strong>les fichiers MAJIC</strong></li>
-</ul>
-<blockquote>
-<ul class="simple">
-<li>Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et importera l'ensemble des données.</li>
-<li>Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement de les télécharger et de configurer le plugin pour donner le bon nom au fichier fantoir : <a class="reference external" href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits">http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits</a></li>
-</ul>
-</blockquote>
-<ul class="simple">
-<li>Choisir la <strong>version du format</strong> en utilisant les flèches haut et bas</li>
-</ul>
-<blockquote>
-<ul class="simple">
-<li>Seuls les formats de 2012 à 2015 sont pris en compte</li>
-</ul>
-</blockquote>
-<ul class="simple">
-<li>Choisir le <strong>millésime des données</strong>, par exemple 2012</li>
-<li>Choisir le <strong>Lot</strong> : utilisez par exemple le code INSEE de la commune.</li>
-<li>Activer ou désactiver la case à cocher <strong>Corriger les géométries invalides</strong> selon la qualité de votre jeu de données EDIGEO.</li>
-<li>Utiliser la barre de défilement de la fenêtre pour aller tout en bas et afficher tout le bloc texte de log situé sous la barre de progression.</li>
-<li>Lancer l'import en cliquant sur le bouton <strong>Lancer l'import</strong></li>
-</ul>
-<p>Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fenêtre.</p>
-<div class="note">
-<p class="first admonition-title">Note</p>
-<p class="last">Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import.</p>
-</div>
-</div>
-</div>
-<div class="section" id="charger-des-donnees">
-<h1>Charger des données</h1>
-<img alt="MEDIA/cadastre_load_dialog.png" class="align-center" src="MEDIA/cadastre_load_dialog.png" />
-<ul>
-<li><p class="first">Menu <strong>Cadastre &gt; Charger des données</strong></p>
-</li>
-<li><p class="first">Choisir le <strong>type de base</strong> de données</p>
-</li>
-<li><p class="first">Choisir ensuite <strong>la connexion</strong> vers la base de donnée dans lequel l'import a été fait</p>
-</li>
-<li><p class="first">Si PostGIS, choisir <strong>le schéma</strong> contenant les données</p>
-</li>
-<li><p class="first">Chosir <strong>le thème</strong> à appliquer</p>
-<blockquote>
-<ul class="simple">
-<li><em>Classique</em> : un thème proche du rendu de cadastre.gouv.fr</li>
-<li><em>Orthophoto</em> : un thème adapté à un affichage par dessus un fond orthophoto.</li>
-</ul>
-</blockquote>
-</li>
-<li><p class="first"><strong>Enlever les données cadastrales existantes dans votre projet QGIS</strong> : Le plugin ne sait pas gérer la recherche et l'interrogation de données si on a plus qu'une version des couches parcelles, communes et sections dans le projet QGIS.</p>
-</li>
-<li><p class="first"><strong>Charger les données</strong> en cliquant sur le bouton : une fois les données chargées, l'emprise de la carte est raffraîchie pour afficher l'ensemble des données (zoom sur l'ensemble des communes trouvées)</p>
-</li>
-</ul>
-</div>
-<div class="section" id="la-barre-d-outil-cadastre">
-<h1>La barre d'outil Cadastre</h1>
-<img alt="MEDIA/cadastre_toolbar.png" class="align-center" src="MEDIA/cadastre_toolbar.png" />
-<p>La barre d'outil peut s'afficher ou se masquer à partir :</p>
-<ul class="simple">
-<li>du menu <strong>Vue &gt; Barres d'outils &gt; Cadastre</strong></li>
-<li>d'un clic droit à côté d'une des barres d'outils de QGIS, et sélectionner <strong>Cadastre</strong></li>
-</ul>
-<p>Elle contient :</p>
-<ul class="simple">
-<li>Un outil pour <strong>identifier une parcelle</strong> sur la carte</li>
-<li>Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Configurer, A propos</li>
-</ul>
-<p>Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir apparaître une bulle d'information.</p>
-<div class="section" id="indentifier-une-parcelle">
-<h2>Indentifier une parcelle</h2>
-<p>Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC dans la base de données. Sinon, seules les informations principales issues de l'EDIGEO seront affichées et certains boutons d'action sont désactivés.</p>
-<p>Pour faire apparaître la fiche d'information d'une parcelle, il faut:</p>
-<ul class="simple">
-<li>activer l'outil <strong>Identifier une parcelle</strong> de la barre d'outil</li>
-<li><strong>Zoomer à une échelle</strong> pour laquelle les parcelles sont visibles (à partir de 1/20 000).</li>
-<li><strong>Cliquer sur une des parcelles</strong> de la carte.</li>
-</ul>
-<p>La fenêtre d'identification s'affiche alors,</p>
-<img alt="MEDIA/cadastre_parcelle_info.png" class="align-center" src="MEDIA/cadastre_parcelle_info.png" />
-<p>Elle présente:</p>
-<ul class="simple">
-<li>un bloc avec les <strong>informations générales de la parcelle</strong></li>
-<li>un bloc avec les <strong>propriétaires</strong> de la parcelle</li>
-<li>une zone contenant des <strong>boutons d'action</strong></li>
-</ul>
-<blockquote>
-<ul class="simple">
-<li>2 boutons pour <strong>exporter</strong> le <strong>relevé parcellaire</strong> et le <strong>relevé de propriété</strong> au format PDF</li>
-<li>3 boutons pour <strong>interargir avec l'objet géométrique</strong> lié à la parcelle : centrer la carte sur la parcelle, zoomer sur la parcelle, ou sélectionner l'objet dans la couche</li>
-<li>Un dernier bouton pour <strong>sélectionner dans la couche toutes les parcelles du propriétaire</strong></li>
-</ul>
-</blockquote>
-<div class="note">
-<p class="first admonition-title">Note</p>
-<p class="last">Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)</p>
-</div>
-</div>
-</div>
-<div class="section" id="le-panneau-de-recherche">
-<h1>Le panneau de recherche</h1>
-<img alt="MEDIA/cadastre_search_dialog.png" class="align-center" src="MEDIA/cadastre_search_dialog.png" />
-<div class="section" id="id1">
-<h2>Principe</h2>
-<p>Le panneau de recherche propose des outils pour rechercher des parcelles via 3 entrées principales</p>
-<ul class="simple">
-<li>une recherche par <strong>objet géographque</strong> : commune et section</li>
-<li>une recherche par <strong>adresse</strong></li>
-<li>une recherche par <strong>propriétaire</strong></li>
-</ul>
-<p>Les différentes recherches seront détaillées dans les sous-chapitres suivants.</p>
-<p>Pour afficher le panneau de recherche:</p>
-<ul class="simple">
-<li>Utiliser le menu <strong>Cadastre &gt; Outils de recherche</strong> ou cliquer sur l'<strong>icône loupe</strong> de la barre d'outils</li>
-</ul>
-<p>Une bulle d'information affiche la fonction des boutons au survol de la souris.</p>
-<div class="note">
-<p class="first admonition-title">Note</p>
-<p class="last">Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.</p>
-</div>
-</div>
-<div class="section" id="recherche-de-lieux">
-<h2>Recherche de lieux</h2>
-<p>L'outil présente 3 listes déroulantes :</p>
-<ul class="simple">
-<li><strong>Commune</strong></li>
-<li><strong>Section</strong></li>
-<li><strong>Parcelles</strong></li>
-</ul>
-<p>Il est possible de <strong>sélectionner une entité</strong>:</p>
-<ul class="simple">
-<li>soit <em>à la souris</em> en cliquant sur la flèche pour ouvrir la liste déroulante puis sélectionner un item.</li>
-<li>soit en <em>tapant les premières lettres</em> et en sélectionnant l'item choisi dans la liste d'autocomplétion qui s'affiche alors.</li>
-</ul>
-<p>Les listes déroulantes sont <strong>hiérarchiques</strong> :</p>
-<ul class="simple">
-<li>Lorsqu'on choisit une commune, la liste des sections est raffraîchie et ne montre que les sections de la commune choisie.</li>
-<li>lorsqu'on choisit une section, la liste des parcelles est raffraîchie.</li>
-</ul>
-<p>Des <strong>boutons d'actions</strong> sont positionnés sous les 3 listes déroulantes et permettent de lancer l'action choisie sur le dernier objet sélectionné dans les 3 listes :</p>
-<ul class="simple">
-<li><em>Centrer sur l'objet</em> : la carte est déplacée vers l'objet sélectionné, mais l'échelle est conservée</li>
-<li><em>Zoomer sur l'objet</em> : la carte est déplacée et mise à l'échelle pour afficher l'objet sélectionné</li>
-<li><em>Sélectionner l'objet</em> : l'objet est sélectionné dans la couche de données correspondante ( Communes, Sections ou Parcelles)</li>
-</ul>
-<p>A côté des 3 listes, un bouton <strong>croix rouge</strong> permet de remettre la liste à son état initial, c'est-à-dire sans objet sélectionné. Par exemple, si on avait sélectionné une commune dans la premier liste et une section dans la seconde, on peut cliquer sur la croix rouge à côté de la section pour désélectionner la section dans la liste. Ainsi si on utilise le bouton de Zoom, on zoomera sur la commune et non sur la section qui était précédemment sélectionnée</p>
-<p>Si une parcelle a été sélectionnée dans la liste <strong>Parcelles</strong>, il est possible d'<strong>exporter le relevé parcellaire</strong> en cliquant sur le bouton <em>icône PDF</em> situé en bas à droite du bloc de recherche de lieux. Le <strong>PDF est généré et ouvert</strong> avec le lecteur PDF par défaut du système.</p>
-</div>
-<div class="section" id="recherche-d-adresse">
-<h2>Recherche d'adresse</h2>
-<div class="note">
-<p class="first admonition-title">Note</p>
-<p class="last">Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l'import Majic): <a class="reference external" href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits">http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits</a></p>
-</div>
-<p>Pour lancer une <strong>recherche de parcelles par adresse</strong>, il suffit:</p>
-<ul class="simple">
-<li>d'<em>entrer l'adresse cherchée</em>, sans le numéro de rue dans la liste <strong>Adresse</strong>.</li>
-<li>de cliquer sur le <strong>bouton loupe</strong> situé à côté de la liste, ou d'appuyer sur la <strong>touche entrée</strong></li>
-</ul>
-<p>La recherche est effectuée et la liste déroulante où vous avez tapé l'adresse à chercher est maintenant raffraîchie et contient l'ensemble des résultats trouvés.</p>
-<p>Si des résultats ont été trouvés, on peut ensuite :</p>
-<ul class="simple">
-<li><strong>Sélectionner une adresse</strong> dans la liste déroulante via la souris. Cela <strong>raffraîchit la liste des parcelles</strong> située en dessous.</li>
-<li>cliquer sur les boutons de <strong>centrage, zoom et sélection</strong> . Chaque action est lancée sur <strong>l'ensemble des parcelles correspondantes</strong> à l'adresse choisie</li>
-<li>Sélectionner une des parcelles dans la liste déroulante <strong>Parcelles</strong> et réutiliser les boutons d'action.</li>
-<li>Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d'<strong>exporter le relevé parcellaire</strong> pour cette parcelle</li>
-</ul>
-</div>
-<div class="section" id="recherche-de-proprietaires">
-<h2>Recherche de propriétaires</h2>
-<div class="note">
-<p class="first admonition-title">Note</p>
-<p class="last">Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base</p>
-</div>
-<p>Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences suivantes :</p>
-<ul class="simple">
-<li>Un bouton est ajouté à côté de la liste des propriétaire pour <strong>exporter le relevé de propriété</strong> du propriétaire sélectionné dans la liste</li>
-<li>Le bouton d'<strong>export du relevé parcellaire</strong> est placé à côté de la liste <em>Parcelles</em></li>
-</ul>
-<p>Il est possible d'exporter le relevé de propriété pour les personnes qui ne possèdent pas de propriété non bâtie.</p>
-</div>
-</div>
-<div class="section" id="a-propos">
-<h1>À propos</h1>
-<p>Le menu <strong>Cadastre &gt; A propos</strong> ouvre une fenêtre d'information sur le plugin Cadastre : financeurs, auteur, licence, dépôt de sources, etc.</p>
-<p>Cette fenêtre est automatiquement affichée lors de la première utilisation du plugin, mais pas les fois suivantes.</p>
-</div>
-<div class="section" id="notes-de-version">
-<h1>Notes de version</h1>
-<p>Le menu <strong>Cadastre &gt; Notes de version</strong> ouvre une fenêtre qui montre les changements effectués sur le plugin Cadastre entre la version installée et la version précédente. Cette fenêtre est affichée automatiquement une première fois lors de la montée de version.</p>
-</div>
-<div class="section" id="videos-de-demonstration">
-<h1>Vidéos de démonstration</h1>
-<p>Pour faciliter la prise en main, vous pouvez consulter les vidéos en ligne :</p>
-<ul class="simple">
-<li>Import et chargement : <a class="reference external" href="https://vimeo.com/75004889">https://vimeo.com/75004889</a></li>
-<li>Recherche : <a class="reference external" href="https://vimeo.com/74807532">https://vimeo.com/74807532</a></li>
-</ul>
-</div>
-<div class="section" id="modele-de-donnees">
-<h1>Modèle de données</h1>
-<p>Les liens suivant permettent de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.)</p>
-<ul class="simple">
-<li><strong>Documentation détaillée</strong> : <a class="reference external" href="http://demo.3liz.com/plugin_cadastre/SchemaSpyGUI/index.html">http://demo.3liz.com/plugin_cadastre/SchemaSpyGUI/index.html</a></li>
-<li><strong>Image du modèle</strong> : <a class="reference external" href="http://demo.3liz.com/plugin_cadastre/schema_cadastre.png">http://demo.3liz.com/plugin_cadastre/schema_cadastre.png</a></li>
-<li><strong>Liste simplifiée des tables</strong> : <a class="reference external" href="http://demo.3liz.com/plugin_cadastre/schema_cadastre_postgresql_autodoc.html">http://demo.3liz.com/plugin_cadastre/schema_cadastre_postgresql_autodoc.html</a></li>
-</ul>
-<img alt="MEDIA/logo_3liz.png" class="align-center" src="MEDIA/logo_3liz.png" />
-</div>
-</div>
-</body>
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   ::selection,a::selection{background:rgba(255,255,0,.3)}a,a::selection{color:#0645ad}hr,img{border:0}a,ins{text-decoration:none}::selection,ins,mark{color:#000}dfn,mark{font-style:italic}hr,ol,p,ul{margin:1em 0}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}hr,pre code,table,table tr{padding:0}pre,pre code{white-space:pre}html{font-size:100%;overflow-y:scroll;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{color:#444;font-family:Georgia,Palatino,"Palatino Linotype",Times,"Times New Roman",serif;font-size:12px;line-height:1.5em;padding:1em;margin:auto;max-width:42em;background:#fefefe}a:visited{color:#0b0080}a:hover{color:#06e}a:active{color:#faa700}a:focus{outline:dotted thin}a:active,a:hover{outline:0}::-moz-selection{background:rgba(255,255,0,.3);color:#000}a::-moz-selection{background:rgba(255,255,0,.3);color:#0645ad}img{max-width:100%;-ms-interpolation-mode:bicubic;vertical-align:middle}h1,h2,h3,h4,h5,h6{font-weight:400;color:#111;line-height:1em}b,h4,h5,h6,mark,strong,table tr th{font-weight:700}h1{font-size:2.5em}h2{font-size:2em}h3{font-size:1.5em}h4{font-size:1.2em}h5{font-size:1em}h6{font-size:.9em}blockquote{color:#666;margin:0;padding-left:3em;border-left:.5em #EEE solid}hr{display:block;height:2px;border-top:1px solid #aaa;border-bottom:1px solid #eee}code,kbd,pre,samp{color:#000;font-family:monospace,monospace;font-size:.98em}pre{white-space:pre-wrap;word-wrap:break-word}ins{background:#ff9}mark{background:#ff0}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}ol,ul{padding:0 0 0 2em}li p:last-child{margin:0}dd{margin:0 0 0 2em}table{border-collapse:collapse;border-spacing:0}td{vertical-align:top}@media only screen and (min-width:480px){body{font-size:14px}}@media only screen and (min-width:768px){body{font-size:16px}}@media print{blockquote,img,pre,tr{page-break-inside:avoid}*{background:0 0!important;color:#000!important;filter:none!important;-ms-filter:none!important}body{font-size:12pt;max-width:100%}a,a:visited{text-decoration:underline}hr{height:1px;border:0;border-bottom:1px solid #000}a[href]:after{content:" (" attr(href) ")"}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}blockquote,pre{border:1px solid #999;padding-right:1em}img{max-width:100%!important}@page :left{margin:15mm 20mm 15mm 10mm}@page :right{margin:15mm 10mm 15mm 20mm}h2,h3,p{orphans:3;widows:3}h2,h3{page-break-after:avoid}}table tr{border-top:1px solid #ccc;background-color:#fff;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;border:none;background:0 0}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="plugin-cadastre-documentation-utilisateur">
+   Plugin Cadastre - Documentation utilisateur
+  </h1>
+  <p>
+   <strong>
+    Auteurs
+   </strong>
+   Michaël DOUCHIN - 3liz
+   <br/>
+   <strong>
+    Résumé
+   </strong>
+   Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.
+  </p>
+  <p>
+   <img alt="Financeurs" src="MEDIA/cadastre_financeurs.png"/>
+  </p>
+  <h2 id="installation">
+   Installation
+  </h2>
+  <p>
+   Le plugin Cadastre est dans les dépôts officiels du projet QGIS. Pour l’installer, il faut :
+  </p>
+  <ul>
+   <li>
+    <strong>
+     Lancer QGIS
+    </strong>
+   </li>
+   <li>
+    Menu
+    <strong>
+     Extension &gt; Installer/Gérer les extensions
+    </strong>
+   </li>
+   <li>
+    Onglet
+    <strong>
+     Paramètres
+    </strong>
+    &gt; Vérfier que la case
+    <em>
+     Afficher les extensions expérimentales
+    </em>
+    est bien cochée
+   </li>
+   <li>
+    Onglet
+    <strong>
+     En obtenir plus
+    </strong>
+    : chercher le plugin
+    <strong>
+     cadastre
+    </strong>
+    , le sélectionner et cliquer sur installer
+   </li>
+  </ul>
+  <p>
+   Une fois le plugin installé, un nouveau menu
+   <strong>
+    Cadastre
+   </strong>
+   apparaît dans le menu
+   <em>
+    Extensions
+   </em>
+   de QGIS. Il comporte les sous-menus suivants :
+  </p>
+  <ul>
+   <li>
+    <strong>
+     Importer des données
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Charger des données
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Outils de recherche
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Exporter la vue
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Configurer le plugin
+    </strong>
+   </li>
+   <li>
+    <strong>
+     À propos
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Notes de version
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Aide
+    </strong>
+   </li>
+  </ul>
+  <p>
+   Ces sous-menus sont détaillés dans les chapitres suivants.
+  </p>
+  <h2 id="configurer-le-plugin">
+   Configurer le plugin
+  </h2>
+  <p>
+   Avant d’importer les premières données cadastrales dans la base de données, il faut au préalable configurer le plugin :
+  </p>
+  <ul>
+   <li>
+    Menu
+    <strong>
+     Cadastre &gt; Configurer le plugin
+    </strong>
+    ou
+    <strong>
+     icône outils
+    </strong>
+    de la barre d’outil Cadastre
+   </li>
+  </ul>
+  <p>
+   <img alt="alt" src="MEDIA/cadastre_option_dialog.png"/>
+  </p>
+  <h3 id="interface">
+   Interface
+  </h3>
+  <p>
+   Les 2 boutons
+   <strong>
+    Interface Cadatre
+   </strong>
+   et
+   <strong>
+    Interface QGIS
+   </strong>
+   permettent d’ouvrir une aide pour appliquer une interface simplifiée adaptée à une utilisation de consultation du Cadastre.
+  </p>
+  <p>
+   A ce jour, QGIS ne permet pas de modifier dynamiquement l’interface via un plugin. Nous incorporerons cette fonctionnalité lorsque ce sera possible. En attendant, il faut donc le faire manuellement, comme expliqué dans la fenêtre d’aide.
+  </p>
+  <h3 id="nom-des-fichiers-majic">
+   Nom des fichiers MAJIC
+  </h3>
+  <p>
+   Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail. En effet, les conventions de nommage peuvent changer d’un département à l’autre. Souvent, les fichiers se terminent par une extension relative au département et à la direction, par exemple .800 pour les fichiers du département de la Somme.
+  </p>
+  <p>
+   .. note::  Il est important de bien configurer ces noms de fichiers avant votre premier import.
+  </p>
+  <p>
+   Si le plugin ne trouve pas les fichiers MAJIC pendant l’import, alors que vous aviez spécifié le bon répertoire d’import, un message vous avertira et vous proposera d’annuler l’import.
+  </p>
+  <h3 id="modele-de-composition-pour-lexport-de-la-vue-cartographique">
+   Modèle de composition pour l’export de la vue cartographique
+  </h3>
+  <p>
+   Vous pouvez choisir ici le modèle de composeur d’impression qui sera utilisé dans la fonction
+   <strong>
+    Export la vue
+   </strong>
+   . Un modèle est fourni dans le répertoire
+   <em>
+    composeur
+   </em>
+   du plugin, et sera utilisé si vous ne proposez pas le votre.
+  </p>
+  <p>
+   Pour l’instant, le modèle gère un bloc de carte, mais pas les blocs de table attributaire.
+  </p>
+  <h3 id="repertoire-temporaire">
+   Répertoire temporaire
+  </h3>
+  <p>
+   Vous pouvez choisir le répertoire dans lequel les scripts seront copiés, et les fichiers décompressés. Choisisez un répertoire contenant assez de place pour stocker les fichiers temporaires, surtout si vous souhaitez charger des données volumineuses.
+  </p>
+  <p>
+   Ce répertoire est aussi celui dans lequel les
+   <strong>
+    relevés parcellaires
+   </strong>
+   et les
+   <strong>
+    relevés de propriété
+   </strong>
+   seront exportés.
+  </p>
+  <h3 id="performances">
+   Performances
+  </h3>
+  <p>
+   Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de votre matériel :
+  </p>
+  <ul>
+   <li>
+    <p>
+     <strong>
+      Taille maximum des requêtes INSERT
+     </strong>
+     : C’est le nombre total de requêtes INSERT lancées dans un groupe de modification ( BEGIN/COMMIT) . Vous pouvez baisser le chiffre jusqu’à 10000 si vous avez une machine légère et un gros volume de données à importer. Plus le chiffre est bas, plus l’import initial peut prendre du temps.
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      Stockage temporaire
+     </strong>
+     : Le mode
+     <em>
+      MEMORY
+     </em>
+     est plus rapide, mais nécessite assez de mémoire vive pour stocker les données à traiter. Le mode
+     <em>
+      DEFAULT
+     </em>
+     est plus lent et adapté à des ordinateurs avec peu de mémoire vive.
+    </p>
+   </li>
+  </ul>
+  <h2 id="importer-des-donnees">
+   Importer des données
+  </h2>
+  <p>
+   Cette boite de dialogue permet de réaliser un
+   <strong>
+    import de données EDIGEO et MAJIC
+   </strong>
+   .
+  </p>
+  <p>
+   <img alt="alt" src="MEDIA/cadastre_import_dialog.png"/>
+  </p>
+  <h3 id="principe">
+   Principe
+  </h3>
+  <p>
+   Le plugin permet l’import de données
+   <strong>
+    MAJIC de 2012 à 2016 et des données EDIGEO
+   </strong>
+   . Il est possible d’importer des données de manière incrémentale,
+   <strong>
+    étape par étape
+   </strong>
+   , ou bien d’importer
+   <strong>
+    en une seule fois
+   </strong>
+   .
+  </p>
+  <p>
+   Le plugin utilise pour cela la notion de
+   <strong>
+    lot
+   </strong>
+   . Un lot regroupe un
+   <strong>
+    ensemble de données cohérent
+   </strong>
+   pour votre utilisation. Par exemple, le lot peut être le code d’une commune, ou l’acronyme d’une communauté de commune. C’est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.
+  </p>
+  <p>
+   Vous pouvez par exemple importer les données dans cette ordre :
+  </p>
+  <ul>
+   <li>
+    données EDIGEO de la commune A, lot “com_a”
+   </li>
+   <li>
+    données EDIGEO de la commune B, lot “com_b”
+   </li>
+   <li>
+    données MAJIC de la commune A, lot “com_a”
+   </li>
+   <li>
+    données EDIGEO de la commune A, lot “com_a” (réimport et écrasement des données précédentes)
+   </li>
+   <li>
+    données EDIGEO de la commune C, lot “com_c”
+   </li>
+  </ul>
+  <p>
+   Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données. Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
+  </p>
+  <p>
+   .. note::  Il est conseillé d’importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d’un millésime à l’autre ( ajout de colonnes, modification de longueur de champs, etc.
+  </p>
+  <h3 id="bases-de-donnees">
+   Bases de données
+  </h3>
+  <p>
+   Deux
+   <strong>
+    Systèmes de Gestion de Bases de Données
+   </strong>
+   (SGBD) sont supportés par le plugin Cadastre :
+  </p>
+  <ul>
+   <li>
+    <strong>
+     PostGreSQL
+    </strong>
+    et son extension spatiale
+    <strong>
+     PostGIS
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Sqlite
+    </strong>
+    et son extension spatiale
+    <strong>
+     Spatialite
+    </strong>
+   </li>
+  </ul>
+  <p>
+   Nous conseillons d’utiliser PostGreSQL pour des données volumineuses et pour gérer des accès multiples à la base de données.
+  </p>
+  <p>
+   Pour les bases de données
+   <strong>
+    PostGIS
+   </strong>
+   , il faut :
+  </p>
+  <ul>
+   <li>
+    avoir créé
+    <strong>
+     une base de données
+    </strong>
+    sur laquelle on a les droits en écriture, et activer l’extension PostGIS.
+   </li>
+   <li>
+    avoir créé au préalable
+    <strong>
+     une connexion QGIS
+    </strong>
+    via le menu
+    <strong>
+     Couches &gt; Ajouter une couche PostGIS
+    </strong>
+    vers cette base de données
+   </li>
+  </ul>
+  <p>
+   Pour les bases de données
+   <strong>
+    Spatialite
+   </strong>
+   , l’interface d’import permet de créer une base de données vide et la connexion QGIS liée si nécessaire.
+  </p>
+  <h3 id="les-etapes-dimportation">
+   Les étapes d’importation
+  </h3>
+  <p>
+   Pour lancer l’importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu
+   <strong>
+    Configurer le plugin
+   </strong>
+   . Ensuite, on ouvre la boite de dialogue
+  </p>
+  <ul>
+   <li>
+    via la
+    <strong>
+     barre d’outil Cadastre
+    </strong>
+    , icône base de données
+   </li>
+   <li>
+    via le menu
+    <strong>
+     Cadastre &gt; Importer des données
+    </strong>
+   </li>
+  </ul>
+  <p>
+   On configure ensuite les options :
+  </p>
+  <ul>
+   <li>
+    Choisir
+    <strong>
+     le type de base de données
+    </strong>
+    : PostGIS ou Spatialite
+   </li>
+   <li>
+    <p>
+     Choisir
+     <strong>
+      la connexion
+     </strong>
+    </p>
+    <ul>
+     <li>
+      Pour Postgis, on peut ensuite
+      <strong>
+       choisir un schema
+      </strong>
+      , ou en
+      <strong>
+       créer un nouveau
+      </strong>
+     </li>
+     <li>
+      Pour Spatialite, on peut
+      <strong>
+       créer une nouvelle base de données
+      </strong>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <p>
+     Choisir le répertoire contenant les
+     <strong>
+      fichiers EDIGEO
+     </strong>
+     :
+    </p>
+   </li>
+   <li>
+    <p>
+     On peut sélectionner le
+     <strong>
+      répertoire parent
+     </strong>
+     qui contient l’ensemble des sous-répertoires vers les communes : le plugin ira chercher les fichiers de manière récursive.
+    </p>
+   </li>
+   <li>
+    <p>
+     seuls les fichiers
+     <strong>
+      zip
+     </strong>
+     et
+     <strong>
+      tar.bz2
+     </strong>
+     sont pour l’instant gérés
+    </p>
+   </li>
+   <li>
+    <p>
+     Choisir la
+     <strong>
+      projection source
+     </strong>
+     des fichiers EDIGEO et la
+     <strong>
+      projection cible
+     </strong>
+     désirée
+    </p>
+   </li>
+   <li>
+    <p>
+     Choisir le
+     <strong>
+      numéro du Département
+     </strong>
+     , par exemple : 80 pour la Somme
+    </p>
+   </li>
+   <li>
+    <p>
+     Choisir le
+     <strong>
+      numéro de la Direction
+     </strong>
+     , par exemple: 0
+    </p>
+   </li>
+   <li>
+    <p>
+     Choisir le répertoire contenant
+     <strong>
+      les fichiers MAJIC
+     </strong>
+    </p>
+    <ul>
+     <li>
+      Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et importera l’ensemble des données.
+     </li>
+     <li>
+      Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement de les télécharger et de configurer le plugin pour donner le bon nom au fichier fantoir :
+      <a href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits">
+       http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li>
+    <p>
+     Choisir la
+     <strong>
+      version du format
+     </strong>
+     en utilisant les flèches haut et bas
+    </p>
+    <ul>
+     <li>
+      Seuls les formats de 2012 à 2016 sont pris en compte
+     </li>
+    </ul>
+   </li>
+   <li>
+    <p>
+     Choisir le
+     <strong>
+      millésime des données
+     </strong>
+     , par exemple 2012
+    </p>
+   </li>
+   <li>
+    <p>
+     Choisir le
+     <strong>
+      Lot
+     </strong>
+     : utilisez par exemple le code INSEE de la commune.
+    </p>
+   </li>
+   <li>
+    <p>
+     Activer ou désactiver la case à cocher
+     <strong>
+      Corriger les géométries invalides
+     </strong>
+     selon la qualité de votre jeu de données EDIGEO.
+    </p>
+   </li>
+   <li>
+    <p>
+     Utiliser la barre de défilement de la fenêtre pour aller tout en bas et afficher tout le bloc texte de log situé sous la barre de progression.
+    </p>
+   </li>
+   <li>
+    <p>
+     Lancer l’import en cliquant sur le bouton
+     <strong>
+      Lancer l’import
+     </strong>
+    </p>
+   </li>
+  </ul>
+  <p>
+   Le déroulement de l’import est écrit dans le bloc texte situé en bas de la fenêtre.
+  </p>
+  <p>
+   .. note::  Pendant l’import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l’instant, le plugin n’intègre pas de bouton pour annuler un import en cours.
+  </p>
+  <h2 id="charger-des-donnees">
+   Charger des données
+  </h2>
+  <p>
+   Une fois les données importées dans la base, vous pouvez les importer dans QGIS via le menu
+   <strong>
+    Charger les données
+   </strong>
+   .
+  </p>
+  <p>
+   <img alt="alt" src="MEDIA/cadastre_load_dialog.png"/>
+  </p>
+  <h3 id="base-de-donnees-de-travail">
+   Base de données de travail
+  </h3>
+  <p>
+   Il faut d’abord indiquer au plugin où récupérer les données:
+  </p>
+  <ul>
+   <li>
+    Choisir le
+    <strong>
+     type de base
+    </strong>
+    de données
+   </li>
+   <li>
+    Choisir ensuite
+    <strong>
+     la connexion
+    </strong>
+    vers la base de donnée dans lequel l’import a été fait
+   </li>
+   <li>
+    Si PostGIS, choisir
+    <strong>
+     le schéma
+    </strong>
+    contenant les données
+   </li>
+  </ul>
+  <h3 id="theme">
+   Thème
+  </h3>
+  <p>
+   Puis on choisir un
+   <strong>
+    thème
+   </strong>
+   à utiliser pour la symbologie des couches:
+  </p>
+  <ul>
+   <li>
+    <strong>
+     Classique
+    </strong>
+    : un thème proche du rendu de cadastre.gouv.fr
+   </li>
+   <li>
+    <strong>
+     Orthophoto
+    </strong>
+    : un thème adapté à un affichage par dessus un fond orthophoto.
+   </li>
+  </ul>
+  <h3 id="couches-et-filtres">
+   Couches et filtres
+  </h3>
+  <ul>
+   <li>
+    <p>
+     En cochant la case
+     <strong>
+      Ajouter seulement Commune, sections, parcelles et bâti
+     </strong>
+     , vous indiquez que vous souhaitez ouvrir seulement ces couches dans QGIS (et pas les autres couches comme les bornes, les croix, etc.)
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      Filtrer par expression sur les communes
+     </strong>
+     : cette option vous permet de ne pas charger la totalité des données, mais seulement celles qui correspondent aux communes filtrées via une expression. Vous devez connaître la structure de la table
+     <strong>
+      geo_commune
+     </strong>
+     pour pouvoir réaliser ce filtre. Si l’expression est invalide, alors le plugin chargera l’ensemble des données.
+    </p>
+   </li>
+  </ul>
+  <p>
+   Attention à cette 2ème option, qui est expérimentale, et qui peut poser des souci de performance. Pour information, cette option ajoute un filtre à chaque couche via une sous-requête. Une fois les couches chargées, vous pouvez consulter ce filtre via l’onglet
+   <em>
+    Général
+   </em>
+   de la boîte de dialogue des propriétés de chaque couche.
+  </p>
+  <p>
+   Exemples d’expression:
+  </p>
+  <ul>
+   <li>
+    <strong>
+     substr(“geo_commune”, 5, 6) LIKE ‘54033%’
+    </strong>
+    -&gt; les communes du département 54, direction 0 , dont le code INSEE commence par 33
+   </li>
+   <li>
+    <strong>
+     “tex2” IN (‘AMIENS’, ‘ALLONVILLE’)
+    </strong>
+    -&gt; le nom de la commune est AMIENS ou ALLONVILLE
+   </li>
+  </ul>
+  <h3 id="notes">
+   Notes
+  </h3>
+  <p>
+   Pensez à
+   <strong>
+    enlever les données cadastrales existantes dans votre projet QGIS
+   </strong>
+   : Le plugin ne sait pas gérer la recherche et l’interrogation de données si on a plus qu’une version des couches parcelles, communes et sections dans le projet QGIS.
+  </p>
+  <p>
+   Enfin, cliquez sur le bouton
+   <strong>
+    Charger les données
+   </strong>
+   pour lancer le chargement.
+  </p>
+  <h2 id="la-barre-doutil-cadastre">
+   La barre d’outil Cadastre
+  </h2>
+  <p>
+   <img alt="alt" src="MEDIA/cadastre_toolbar.png"/>
+  </p>
+  <p>
+   La barre d’outil peut s’afficher ou se masquer à partir :
+  </p>
+  <ul>
+   <li>
+    du menu
+    <strong>
+     Vue &gt; Barres d’outils &gt; Cadastre
+    </strong>
+   </li>
+   <li>
+    d’un clic droit à côté d’une des barres d’outils de QGIS, et sélectionner
+    <strong>
+     Cadastre
+    </strong>
+   </li>
+  </ul>
+  <p>
+   Elle contient :
+  </p>
+  <ul>
+   <li>
+    Un outil pour
+    <strong>
+     identifier une parcelle
+    </strong>
+    sur la carte
+   </li>
+   <li>
+    Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Exporter la vue, Configurer, A propos
+   </li>
+  </ul>
+  <p>
+   Pour connaître l’action d’une des icônes, il suffit de laisser la souris un moment au-dessus pour voir apparaître une bulle d’information.
+  </p>
+  <h3 id="indentifier-une-parcelle">
+   Indentifier une parcelle
+  </h3>
+  <p>
+   Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC dans la base de données. Sinon, seules les informations principales issues de l’EDIGEO seront affichées et certains boutons d’action sont désactivés.
+  </p>
+  <p>
+   Pour faire apparaître la fiche d’information d’une parcelle, il faut:
+  </p>
+  <ul>
+   <li>
+    activer l’outil
+    <strong>
+     Identifier une parcelle
+    </strong>
+    de la barre d’outil
+   </li>
+   <li>
+    <strong>
+     Zoomer à une échelle
+    </strong>
+    pour laquelle les parcelles sont visibles (à partir de 1/20 000).
+   </li>
+   <li>
+    <strong>
+     Cliquer sur une des parcelles
+    </strong>
+    de la carte.
+   </li>
+  </ul>
+  <p>
+   La fenêtre d’identification s’affiche alors,
+  </p>
+  <p>
+   <img alt="alt" src="MEDIA/cadastre_parcelle_info.png"/>
+  </p>
+  <p>
+   Elle présente:
+  </p>
+  <ul>
+   <li>
+    un bloc avec les
+    <strong>
+     informations générales de la parcelle
+    </strong>
+   </li>
+   <li>
+    un bloc avec les
+    <strong>
+     propriétaires
+    </strong>
+    de la parcelle
+   </li>
+   <li>
+    <p>
+     une zone contenant des
+     <strong>
+      boutons d’action
+     </strong>
+    </p>
+   </li>
+   <li>
+    <p>
+     2 boutons pour
+     <strong>
+      exporter
+     </strong>
+     le
+     <strong>
+      relevé parcellaire
+     </strong>
+     et le
+     <strong>
+      relevé de propriété
+     </strong>
+     au format PDF
+    </p>
+   </li>
+   <li>
+    3 boutons pour
+    <strong>
+     interargir avec l’objet géométrique
+    </strong>
+    lié à la parcelle : centrer la carte sur la parcelle, zoomer sur la parcelle, ou sélectionner l’objet dans la couche
+   </li>
+   <li>
+    Un dernier bouton pour
+    <strong>
+     sélectionner dans la couche toutes les parcelles du propriétaire
+    </strong>
+   </li>
+  </ul>
+  <p>
+   .. note::  Si vous n’avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l’adresse pourra être tronquée (de même pour les relevés exportés)
+  </p>
+  <h3 id="exporter-la-vue">
+   Exporter la vue
+  </h3>
+  <p>
+   Dans la barre d’outil Cadastre, ainsi que dans le menu, vous pouvez exporter la vue courante de la carte en PDF via le menu
+   <strong>
+    Exporter la vue
+   </strong>
+   .
+  </p>
+  <p>
+   Cette fonctionnalité s’appuie sur un
+   <strong>
+    modèle de composeur d’impression
+   </strong>
+   , configurable dans les options du plugin (voir ci-dessus). Si vous n’avez pas configuré de composeur personnalisé, celui installé par le plugin est utilisé.
+  </p>
+  <p>
+   Cette fonctionnalité est basique, et ne gère pas pour l’instant les composeurs complexes, avec des tables attributaires et des configurations d’atlas.
+  </p>
+  <h2 id="le-panneau-de-recherche">
+   Le panneau de recherche
+  </h2>
+  <p>
+   <img alt="alt" src="MEDIA/cadastre_search_dialog.png"/>
+  </p>
+  <h3 id="principe_1">
+   Principe
+  </h3>
+  <p>
+   Le panneau de recherche propose des outils pour rechercher des parcelles via 3 entrées principales
+  </p>
+  <ul>
+   <li>
+    une recherche par
+    <strong>
+     objet géographque
+    </strong>
+    : commune et section
+   </li>
+   <li>
+    une recherche par
+    <strong>
+     adresse
+    </strong>
+   </li>
+   <li>
+    une recherche par
+    <strong>
+     propriétaire
+    </strong>
+   </li>
+  </ul>
+  <p>
+   Les différentes recherches seront détaillées dans les sous-chapitres suivants.
+  </p>
+  <p>
+   Pour afficher le panneau de recherche:
+  </p>
+  <ul>
+   <li>
+    Utiliser le menu
+    <strong>
+     Cadastre &gt; Outils de recherche
+    </strong>
+    ou cliquer sur l’
+    <strong>
+     icône loupe
+    </strong>
+    de la barre d’outils
+   </li>
+  </ul>
+  <p>
+   Une bulle d’information affiche la fonction des boutons au survol de la souris.
+  </p>
+  <p>
+   .. note::  Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.
+  </p>
+  <h3 id="recherche-de-lieux">
+   Recherche de lieux
+  </h3>
+  <p>
+   L’outil présente 3 listes déroulantes :
+  </p>
+  <ul>
+   <li>
+    <strong>
+     Commune
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Section
+    </strong>
+   </li>
+   <li>
+    <strong>
+     Parcelles
+    </strong>
+   </li>
+  </ul>
+  <p>
+   Il est possible de
+   <strong>
+    sélectionner une entité
+   </strong>
+   :
+  </p>
+  <ul>
+   <li>
+    soit
+    <em>
+     à la souris
+    </em>
+    en cliquant sur la flèche pour ouvrir la liste déroulante puis sélectionner un item.
+   </li>
+   <li>
+    soit en
+    <em>
+     tapant les premières lettres
+    </em>
+    et en sélectionnant l’item choisi dans la liste d’autocomplétion qui s’affiche alors.
+   </li>
+  </ul>
+  <p>
+   Les listes déroulantes sont
+   <strong>
+    hiérarchiques
+   </strong>
+   :
+  </p>
+  <ul>
+   <li>
+    Lorsqu’on choisit une commune, la liste des sections est raffraîchie et ne montre que les sections de la commune choisie.
+   </li>
+   <li>
+    lorsqu’on choisit une section, la liste des parcelles est raffraîchie.
+   </li>
+  </ul>
+  <p>
+   Des
+   <strong>
+    boutons d’actions
+   </strong>
+   sont positionnés sous les 3 listes déroulantes et permettent de lancer l’action choisie sur le dernier objet sélectionné dans les 3 listes :
+  </p>
+  <ul>
+   <li>
+    <em>
+     Centrer sur l’objet
+    </em>
+    : la carte est déplacée vers l’objet sélectionné, mais l’échelle est conservée
+   </li>
+   <li>
+    <em>
+     Zoomer sur l’objet
+    </em>
+    : la carte est déplacée et mise à l’échelle pour afficher l’objet sélectionné
+   </li>
+   <li>
+    <em>
+     Sélectionner l’objet
+    </em>
+    : l’objet est sélectionné dans la couche de données correspondante ( Communes, Sections ou Parcelles)
+   </li>
+  </ul>
+  <p>
+   A côté des 3 listes, un bouton
+   <strong>
+    croix rouge
+   </strong>
+   permet de remettre la liste à son état initial, c’est-à-dire sans objet sélectionné. Par exemple, si on avait sélectionné une commune dans la premier liste et une section dans la seconde, on peut cliquer sur la croix rouge à côté de la section pour désélectionner la section dans la liste. Ainsi si on utilise le bouton de Zoom, on zoomera sur la commune et non sur la section qui était précédemment sélectionnée
+  </p>
+  <p>
+   Si une parcelle a été sélectionnée dans la liste
+   <strong>
+    Parcelles
+   </strong>
+   , il est possible d’
+   <strong>
+    exporter le relevé parcellaire
+   </strong>
+   en cliquant sur le bouton
+   <em>
+    icône PDF
+   </em>
+   situé en bas à droite du bloc de recherche de lieux. Le
+   <strong>
+    PDF est généré et ouvert
+   </strong>
+   avec le lecteur PDF par défaut du système.
+  </p>
+  <h3 id="recherche-dadresse">
+   Recherche d’adresse
+  </h3>
+  <p>
+   .. note::  Pour l’instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l’import Majic):
+   <a href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits">
+    http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
+   </a>
+  </p>
+  <p>
+   Pour lancer une
+   <strong>
+    recherche de parcelles par adresse
+   </strong>
+   , il suffit:
+  </p>
+  <ul>
+   <li>
+    d’
+    <em>
+     entrer l’adresse cherchée
+    </em>
+    , sans le numéro de rue dans la liste
+    <strong>
+     Adresse
+    </strong>
+    .
+   </li>
+   <li>
+    de cliquer sur le
+    <strong>
+     bouton loupe
+    </strong>
+    situé à côté de la liste, ou d’appuyer sur la
+    <strong>
+     touche entrée
+    </strong>
+   </li>
+  </ul>
+  <p>
+   La recherche est effectuée et la liste déroulante où vous avez tapé l’adresse à chercher est maintenant raffraîchie et contient l’ensemble des résultats trouvés.
+  </p>
+  <p>
+   Si des résultats ont été trouvés, on peut ensuite :
+  </p>
+  <ul>
+   <li>
+    <strong>
+     Sélectionner une adresse
+    </strong>
+    dans la liste déroulante via la souris. Cela
+    <strong>
+     raffraîchit la liste des parcelles
+    </strong>
+    située en dessous.
+   </li>
+   <li>
+    cliquer sur les boutons de
+    <strong>
+     centrage, zoom et sélection
+    </strong>
+    . Chaque action est lancée sur
+    <strong>
+     l’ensemble des parcelles correspondantes
+    </strong>
+    à l’adresse choisie
+   </li>
+   <li>
+    Sélectionner une des parcelles dans la liste déroulante
+    <strong>
+     Parcelles
+    </strong>
+    et réutiliser les boutons d’action.
+   </li>
+   <li>
+    Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d’
+    <strong>
+     exporter le relevé parcellaire
+    </strong>
+    pour cette parcelle
+   </li>
+  </ul>
+  <h3 id="recherche-de-proprietaires">
+   Recherche de propriétaires
+  </h3>
+  <p>
+   .. note::  Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n’est présente dans la base
+  </p>
+  <p>
+   Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences suivantes :
+  </p>
+  <ul>
+   <li>
+    Un bouton est ajouté à côté de la liste des propriétaire pour
+    <strong>
+     exporter le relevé de propriété
+    </strong>
+    du propriétaire sélectionné dans la liste
+   </li>
+   <li>
+    Le bouton d’
+    <strong>
+     export du relevé parcellaire
+    </strong>
+    est placé à côté de la liste
+    <em>
+     Parcelles
+    </em>
+   </li>
+  </ul>
+  <p>
+   Il est possible d’exporter le relevé de propriété pour les personnes qui ne possèdent pas de propriété non bâtie.
+  </p>
+  <h2 id="a-propos">
+   À propos
+  </h2>
+  <p>
+   Le menu
+   <strong>
+    Cadastre &gt; A propos
+   </strong>
+   ouvre une fenêtre d’information sur le plugin Cadastre : financeurs, auteur, licence, dépôt de sources, etc.
+  </p>
+  <p>
+   Cette fenêtre est automatiquement affichée lors de la première utilisation du plugin, mais pas les fois suivantes.
+  </p>
+  <h2 id="notes-de-version">
+   Notes de version
+  </h2>
+  <p>
+   Le menu
+   <strong>
+    Cadastre &gt; Notes de version
+   </strong>
+   ouvre une fenêtre qui montre les changements effectués sur le plugin Cadastre entre la version installée et la version précédente. Cette fenêtre est affichée automatiquement une première fois lors de la montée de version.
+  </p>
+  <h2 id="videos-de-demonstration">
+   Vidéos de démonstration
+  </h2>
+  <p>
+   Pour faciliter la prise en main, vous pouvez consulter les vidéos en ligne :
+  </p>
+  <ul>
+   <li>
+    Import et chargement :
+    <a href="https://vimeo.com/75004889">
+     https://vimeo.com/75004889
+    </a>
+   </li>
+   <li>
+    Recherche :
+    <a href="https://vimeo.com/74807532">
+     https://vimeo.com/74807532
+    </a>
+   </li>
+  </ul>
+  <h2 id="modele-de-donnees">
+   Modèle de données
+  </h2>
+  <p>
+   Le lien suivant permet de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.)
+  </p>
+  <ul>
+   <li>
+    <strong>
+     Liste des tables
+    </strong>
+    :
+    <a href="http://htmlpreview.github.io/?https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/modele_donnees/postgresql_autodoc/index.html">
+     http://htmlpreview.github.io/?https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/modele_donnees/postgresql_autodoc/index.html
+    </a>
+   </li>
+  </ul>
+  <h3 id="les-parcelles">
+   Les parcelles
+  </h3>
+  <p>
+   Dans le modèle, plusieurs tables contiennent des informations sur les parcelles
+  </p>
+  <ul>
+   <li>
+    <p>
+     <strong>
+      geo_parcelle
+     </strong>
+     : contient les parcelles EDIGEO
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      parcelle
+     </strong>
+     : contient les données MAJIC liées au parcelles cadastrales
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      parcelle_info
+     </strong>
+     : contient une version consolidée des parcelles EDIGEO et MAJIC: la géométrie EDIGEO, et les informations résumées de la parcelle, dont les propriétaires ( information séprées par la barre verticale | si la parcelle a plusieurs propriétaires )
+    </p>
+   </li>
+  </ul>
+  <p>
+   Les champs parcelle.parcelle et geo_parcelle.geo_parcelle peuvent être utilisés pour les jointures entre la table parcelle et la table geo_parcelle
+  </p>
+  <p>
+   L’identifiant
+   <strong>
+    geo_parcelle
+   </strong>
+   (ou parcelle) est unique et constitué comme suit :
+   <br/>
+   <em>
+    Année (4) + Département (2) + Direction (1) + Commune (3) + Préfixe (3) + Secteur (2) + Numéro de plan (4)
+   </em>
+   <br/>
+   soit
+   <strong>
+    19 caractères
+   </strong>
+  </p>
+  <p>
+   <img alt="alt" src="MEDIA/logo_3liz.png"/>
+  </p>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
 </html>
