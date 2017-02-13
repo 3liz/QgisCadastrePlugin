@@ -1,4 +1,34 @@
 CHANGELOG
+  Version 1.4.0
+  * Menu - Suppression du menu Cadastre et déplacement dans le menu Extensions
+  * Barre d'outil - Modification de l'icône d'identification (merci @pasqual )
+  * Structure bdd - Généralisation des codes départements et direction dans les identifiants
+  * Structure bdd - Parcelles: consolidation des infos propriétaires dans une nouvelle table parcelle_info
+  * Import - Correction d'un bug de remplissage de geo_sym si ptcanv_id.sym est NULL
+  * Import - MAJIC: Filtrage des données importées selon département et direction: on peut utiliser le fichier FANTOIR national
+  * Import - Ajout du support de MAJIC 2016
+  * Import - Edigeo : amélioration de la jointure de geo_parcelle ave geo_subdsect
+  * Import - Correction des doublons sur les parcelles (dus au lien geo_subdsect)
+  * Import - Edigeo: amélioration des performances pour tpoint, tline, tsurf
+  * Import - Augmentation de la limite max pour le code direction - fixes #94
+  * Import - Utilisation directe des fichiers sources sans copie préalable
+  * Import - Suppression des contraintes de taille dans les champs
+  * Import - Déplacement des scripts SQL d'import et nettoyage
+  * Import - Fantoir recommandé lors de l'import MAJIC && lien de téléchargement ajouté
+  * Import - Correction des parcelles dupliquées si plusieurs sous-sections
+  * Import - correction du bug empêchant la création de base sqlite sous 2.16 - #83
+  * Chargement - Ajout du filtre par expression sur les communes (expérimental)
+  * Chargement - possibilité de charger seulement les couches principales
+  * Chargement - Séparation des étiquettes et des données en groupes & désactivation des couches mineures
+  * Chargement - Mise à jour et amélioration des styles
+  * Chargement - Correction de bug sur QgsMapLayer non défini
+  * Chargement - Styles : masquage de la couche Tronçons de routes aux petites échelles
+  * Export - Ajout d'un nouveau menu pour exporter la vue courante en PDF
+  * Export - ajout d'une carte en 1ère page pour le relevé parcellaire
+  * Export - Ouverture automatique du répertoire après export PDF multiple
+  * Recherche - La recherche par commune et section utilise le lot pour éviter les doublons si plusieurs départements
+  * Serveur - Ajout de la capacité "server" pour le plugin
+
   Version 1.3.0
   * Import - MAJIC : support du millésime 2015. La structure a été un peu modifiée. Il faut réaliser l'import dans un nouveau schéma PostGreSQL ou une nouvelle base de données Spatialite. Un script de migration de la structure est disponible pour PostGreSQL pour ceux qui préfèrent conserver le schéma actuel (faites une sauvegarde avant !) : /.qgis2/python/plugins/cadastre/scripts/plugin/updates/update_structure_postgis_from_1.2.0_to_1.3.0.sql
   * Import - Ajout d'un système de création des tables manquantes ( pour les montées de version )

@@ -50,9 +50,7 @@ Documentation
 Base de données
 ----------------
 
-* **Documentation détaillée** : http://demo.3liz.com/plugin_cadastre/SchemaSpyGUI/index.html
-* **Image du modèle** : http://demo.3liz.com/plugin_cadastre/schema_cadastre.png
-* **Liste simplifiée des tables** : http://demo.3liz.com/plugin_cadastre/schema_cadastre_postgresql_autodoc.html
+* **Liste simplifiée des tables** : http://htmlpreview.github.io/?https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/modele_donnees/postgresql_autodoc/index.html
 
 
 Ressources
