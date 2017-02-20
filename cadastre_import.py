@@ -827,6 +827,11 @@ class cadastreImport(QObject):
             sql = self.qc.setSearchPath(sql, self.dialog.schema)
         self.executeSqlQuery(sql)
 
+        # Add parcelle_info index for postgis only (not capability of that type for spatialite)
+        if self.dialog.dbType == 'postgis':
+            sql = 'DROP INDEX IF EXISTS parcelle_info_geo_parcelle_sub;CREATE INDEX parcelle_info_geo_parcelle_sub ON parcelle_info( substr("geo_parcelle", 1, 10));'
+            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            self.executeSqlQuery(sql)
 
         # Refresh spatialite layer statistics
         if self.dialog.dbType == 'spatialite':

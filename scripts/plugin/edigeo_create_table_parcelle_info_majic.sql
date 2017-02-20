@@ -106,7 +106,7 @@ CREATE INDEX parcelle_info_geo_section_idx ON [PREFIXE]parcelle_info (geo_sectio
 CREATE INDEX parcelle_info_comptecommunal_idx ON [PREFIXE]parcelle_info (comptecommunal);
 CREATE INDEX parcelle_info_codecommune_idx ON [PREFIXE]parcelle_info (codecommune );
 CREATE INDEX parcelle_info_geo_parcelle_idx ON [PREFIXE]parcelle_info (geo_parcelle );
-CREATE INDEX parcelle_info_geo_parcelle ON [PREFIXE]parcelle_info( substr("geo_parcelle", 1, 10));
+
 
 COMMENT ON TABLE [PREFIXE]parcelle_info IS 'Table de parcelles consolidées, proposant les géométries et les informations MAJIC principales, dont les propriétaires';
 

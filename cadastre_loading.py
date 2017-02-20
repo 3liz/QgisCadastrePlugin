@@ -253,7 +253,7 @@ class cadastreLoading(QObject):
                             FROM  ''' + nschema + item['table'] + ''' b
                             JOIN  ''' + nschema + '''geo_commune c
                             ON ST_Within(b.geom, c.geom)
-                            WHERE true
+                            WHERE 2>1
                             AND c.geo_commune IN ( %s )
 
                         )
