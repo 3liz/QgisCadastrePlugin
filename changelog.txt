@@ -1,4 +1,7 @@
 CHANGELOG
+  Version 1.4.1
+  * Import/Chargement - correction de bug pour Spatialite sur génération parcelle_info
+
   Version 1.4.0
   * Menu - Suppression du menu Cadastre et déplacement dans le menu Extensions
   * Barre d'outil - Modification de l'icône d'identification (merci @pasqual )
