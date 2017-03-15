@@ -204,6 +204,9 @@ class cadastreFilter(QgsServerFilter):
         )
         #QgsMessageLog.logMessage( "cadastre debug - after instanciating cadastreExport" )
         paths = qex.exportAsPDF()
+        # Create regexp to remove all non ascii chars
+        import re
+        r = re.compile(r"[^ -~]")
 
         #QgsMessageLog.logMessage( "cadastre debug - paths = %s " %  paths )
 
@@ -212,6 +215,7 @@ class cadastreFilter(QgsServerFilter):
             tokens = []
             for path in paths:
                 uid = uuid4()
+                path = r.sub('', path)
                 newpath = os.path.join(
                     tempfile.gettempdir(),
                     '%s.pdf' % uid
