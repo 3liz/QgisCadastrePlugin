@@ -354,7 +354,7 @@ class cadastre_common():
 
         # Get params via regex
         uri = layer.dataProvider().dataSourceUri()
-        reg = "dbname='([^']+)' (?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
+        reg = "(?:service='([^ ]+)' )?(?:dbname='([^ ]+)' )?(?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
         result = re.findall(r'%s' % reg, uri)
         if not result:
             return None
@@ -363,19 +363,20 @@ class cadastre_common():
         if not res:
             return None
 
-        dbname = res[0]
-        host = res[1]
-        port = res[2]
-        user = res[3]
-        password = res[4]
-        sslmode = res[5]
-        key = res[6]
-        estimatedmetadata = res[7]
-        srid = res[8]
-        gtype = res[9]
-        table = res[10]
-        geocol = res[11]
-        sql = res[12]
+        service = res[0]
+        dbname = res[1]
+        host = res[2]
+        port = res[3]
+        user = res[4]
+        password = res[5]
+        sslmode = res[6]
+        key = res[7]
+        estimatedmetadata = res[8]
+        srid = res[9]
+        gtype = res[10]
+        table = res[11]
+        geocol = res[12]
+        sql = res[13]
 
         schema = ''
 
@@ -406,6 +407,7 @@ class cadastre_common():
             dbType = 'spatialite'
 
         connectionParams = {
+            'service' : service,
             'dbname' : dbname,
             'host' : host,
             'port': port,
@@ -446,7 +448,8 @@ class cadastre_common():
         return [header, data, rowCount]
         '''
         try:
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+            if self.iface:
+                QApplication.setOverrideCursor(Qt.WaitCursor)
         except:
             pass
         data = []
@@ -454,8 +457,6 @@ class cadastre_common():
         rowCount = 0
         c = None
         ok = True
-
-
         try:
             c = connector._execute(None,unicode(sql))
             data = []
@@ -477,13 +478,18 @@ class cadastre_common():
                 if self.iface:
                     self.updateLog(e.msg)
             except:
-                print e.msg
-            #QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
+                if self.iface:
+                    print e.msg
+                QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
             return
 
         finally:
             try:
-                QApplication.restoreOverrideCursor()
+                if self.iface:
+                    try:
+                        QApplication.restoreOverrideCursor()
+                    except:
+                        pass
             except:
                 pass
             if c:
@@ -503,13 +509,22 @@ class cadastre_common():
         connector = None
         uri = QgsDataSourceURI()
         if connectionParams['dbType'] == 'postgis':
-            uri.setConnection(
-                connectionParams['host'],
-                connectionParams['port'],
-                connectionParams['dbname'],
-                connectionParams['user'],
-                connectionParams['password']
-            )
+            if connectionParams['host']:
+                uri.setConnection(
+                    connectionParams['host'],
+                    connectionParams['port'],
+                    connectionParams['dbname'],
+                    connectionParams['user'],
+                    connectionParams['password']
+                )
+            if connectionParams['service']:
+                uri.setConnection(
+                    connectionParams['service'],
+                    connectionParams['dbname'],
+                    connectionParams['user'],
+                    connectionParams['password']
+                )
+
             connector = PostGisDBConnector(uri)
 
         if connectionParams['dbType'] == 'spatialite':
@@ -717,12 +732,10 @@ class cadastre_common():
         sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
         if connectionParams['dbType'] == 'postgis':
             sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
-        #QgsMessageLog.logMessage( "cadastre debug - sql = %s" % sql )
         [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
         if ok:
             for line in data:
                 comptecommunal = line[0]
-
         return comptecommunal
 
     @staticmethod

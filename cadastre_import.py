@@ -1235,20 +1235,27 @@ class cadastreImport(QObject):
                 settingsList = ["service", "host", "port", "database", "username", "password"]
                 service, host, port, database, username, password = map(lambda x: settings.value(x), settingsList)
 
-                cmdArgs = [
-                    '',
-                    '-s_srs', self.sourceSridFull,
-                    targetSridOption, self.targetSridFull,
-                    '-append',
-                    '-f', 'PostgreSQL',
-                    'PG:host=%s port=%s dbname=%s active_schema=%s user=%s password=%s' % (
+                if service:
+                    pg_access = 'PG:service=%s active_schema=%s' % (
+                        service,
+                        self.dialog.schema
+                    )
+                else:
+                    pg_access = 'PG:host=%s port=%s dbname=%s active_schema=%s user=%s password=%s' % (
                         host,
                         port,
                         database,
                         self.dialog.schema,
                         username,
                         password
-                    ),
+                    )
+                cmdArgs = [
+                    '',
+                    '-s_srs', self.sourceSridFull,
+                    targetSridOption, self.targetSridFull,
+                    '-append',
+                    '-f', 'PostgreSQL',
+                    pg_access,
                     filename,
                     '-lco', 'GEOMETRY_NAME=geom',
                     '-lco', 'PG_USE_COPY=YES',
@@ -1282,6 +1289,7 @@ class cadastreImport(QObject):
                     '--config', 'OGR_SQLITE_CACHE', '512'
                 ]
 
+            self.qc.updateLog( ' '.join(cmdArgs))
             # Run only if ogr2ogr found
             if self.go:
                 # Workaround to get ogr2ogr error messages via stdout
@@ -1462,4 +1470,5 @@ class cadastreImport(QObject):
             if self.dialog.dbType == 'postgis':
                 sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
+
 

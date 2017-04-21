@@ -45,6 +45,7 @@ class cadastreFilter(QgsServerFilter):
         self.layer = None
         self.connectionParams = None
         self.connector = None
+        self.debugMode = True
 
     def setJsonResponse(self, status, body):
         '''
@@ -155,7 +156,8 @@ class cadastreFilter(QgsServerFilter):
             self.setJsonResponse('200', body)
             return
 
-        #QgsMessageLog.logMessage( "cadastre debug - layer = %s  - geo_parcelle = %s" % ( layer.name(), pparcelle ))
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - layer = %s  - geo_parcelle = %s" % ( layer.name(), pparcelle ))
 
         req = QgsFeatureRequest()
         req.setFilterExpression(' "geo_parcelle" = \'%s\' ' % pparcelle)
@@ -174,18 +176,25 @@ class cadastreFilter(QgsServerFilter):
             self.setJsonResponse('200', body)
             return
 
-        #QgsMessageLog.logMessage( "cadastre debug - feature geo_parcelle = %s" % feat['geo_parcelle'])
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - feature geo_parcelle = %s" % feat['geo_parcelle'])
 
 
-        # Export PDF
+        # Get layer connection parameters
         self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - connection params = %s" % self.connectionParams )
+
         self.connector = cadastre_common.getConnectorFromUri( self.connectionParams )
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - after getting connector" )
+
+        # Get compte communal
         comptecommunal = cadastre_common.getCompteCommunalFromParcelleId(
             feat['geo_parcelle'],
             self.connectionParams,
             self.connector
         )
-
         pmulti = 1
         if ptype == 'proprietaire' and pmulti == 1:
             comptecommunal = cadastre_common.getProprietaireComptesCommunaux(
@@ -193,33 +202,36 @@ class cadastreFilter(QgsServerFilter):
                 self.connectionParams,
                 self.connector
             )
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - comptecommunal = %s" % comptecommunal )
 
-        #QgsMessageLog.logMessage( "cadastre debug - comptecommunal = %s" % comptecommunal )
-
+        # Export PDF
         qex = cadastreExport(
             layer,
             ptype,
             comptecommunal,
             feat['geo_parcelle']
         )
-        #QgsMessageLog.logMessage( "cadastre debug - after instanciating cadastreExport" )
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - after instanciating cadastreExport" )
+
         paths = qex.exportAsPDF()
-        # Create regexp to remove all non ascii chars
-        import re
-        r = re.compile(r"[^ -~]")
-
-        #QgsMessageLog.logMessage( "cadastre debug - paths = %s " %  paths )
-
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - after exportAsPDF(), path: %s" % paths )
 
         if paths:
             tokens = []
             for path in paths:
                 uid = uuid4()
-                path = r.sub('', path)
+
+                if self.debugMode:
+                    QgsMessageLog.logMessage( "cadastre debug - item path: %s" % path )
                 newpath = os.path.join(
                     tempfile.gettempdir(),
                     '%s.pdf' % uid
                 )
+                if self.debugMode:
+                    QgsMessageLog.logMessage( "cadastre debug - item newpath: %s" % newpath )
                 os.rename(path,newpath)
                 tokens.append( str(uid) )
 
@@ -269,6 +281,8 @@ class cadastreFilter(QgsServerFilter):
             tempfile.gettempdir(),
             '%s.pdf' % ptoken
         )
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - GetPDF = path is %s" % path )
         if not os.path.exists(path):
             body = {
                 'status': 'fail',
@@ -276,6 +290,9 @@ class cadastreFilter(QgsServerFilter):
             }
             self.setJsonResponse( '200', body)
             return
+
+        if self.debugMode:
+            QgsMessageLog.logMessage( "cadastre debug - GetPDF = path exists %s" % path )
 
         # Send PDF
         self.request.clearHeaders()
@@ -287,7 +304,6 @@ class cadastreFilter(QgsServerFilter):
             with open(path, 'rb') as f:
                 loads = f.readlines()
             ba = QByteArray(b''.join(loads))
-            self.request.clearBody()
             self.request.appendBody(ba)
             return
         except:
@@ -298,5 +314,6 @@ class cadastreFilter(QgsServerFilter):
             self.setJsonResponse( '200', body)
             return
         finally:
+            #print "path to remove : %s" % path
             os.remove(path)
 

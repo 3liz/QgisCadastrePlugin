@@ -128,7 +128,6 @@ class cadastreExport(QObject):
         '''
         Set parameters for given comptecommunal
         '''
-
         # List of templates
         comptecommunalAbrev = comptecommunal[9:]
         self.composerTemplates = {
@@ -316,7 +315,6 @@ class cadastreExport(QObject):
                 #~ print sql
                 [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
 
-
             # Page no defined = means the query is here to
             # get line count and whole data for proprietes_baties & proprietes_non_baties
             if not page:
@@ -325,7 +323,6 @@ class cadastreExport(QObject):
                     self.lineCount[key]['count'] = rowCount
                     # keep data
                     self.lineCount[key]['data'] = data
-
             if page:
                 # Get content for each line of data
                 for line in data:
@@ -363,7 +360,6 @@ class cadastreExport(QObject):
 
         # replace some unwanted content
         content = content.replace('None', '')
-
         return content
 
 
@@ -372,7 +368,8 @@ class cadastreExport(QObject):
         Get the content of a template file
         and replace all variables with given data
         '''
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        if self.iface:
+            QApplication.setOverrideCursor(Qt.WaitCursor)
 
         def replfunc(match):
             return replaceDict[match.group(0)]
@@ -392,7 +389,8 @@ class cadastreExport(QObject):
             return msg
 
         finally:
-            QApplication.restoreOverrideCursor()
+            if self.iface:
+                QApplication.restoreOverrideCursor()
 
 
     def createComposition(self):
@@ -457,7 +455,6 @@ class cadastreExport(QObject):
         for key, item in self.composerTemplates.items():
             self.buildComposerLabel(key,item,page)
 
-
         # Add watershed
         if self.addExperimentalWatershed:
             w = QgsComposerPicture(self.currentComposition)
@@ -471,7 +468,6 @@ class cadastreExport(QObject):
             w.setBackgroundEnabled(False)
             w.setTransparency(60)
             self.currentComposition.addItem(w)
-
 
     def buildComposerLabel(self, key, item, page):
         '''
@@ -499,6 +495,7 @@ class cadastreExport(QObject):
             item,
             page
         )
+
         cl.setMargin(0)
         cl.setHtmlState(2)
         cl.setText(content)
@@ -573,8 +570,6 @@ class cadastreExport(QObject):
         '''
         temppath = None
 
-        #QgsMessageLog.logMessage( "cadastre debug - begin exportItemAsPdf" )
-
         # Set configuration
         self.setComposerTemplates(comptecommunal)
 
@@ -584,7 +579,6 @@ class cadastreExport(QObject):
         if self.currentComposition:
             if self.iface:
                 QApplication.setOverrideCursor(Qt.WaitCursor)
-
             # Populate composition for all pages
             for i in range(self.numPages):
                 j=i+1
@@ -601,14 +595,15 @@ class cadastreExport(QObject):
                 comptecommunal,
                 int(time()*100)
             )
+            # Create regexp to remove all non ascii chars
+            import re
+            r = re.compile(r"[^ -~]")
+            temp = r.sub('', temp)
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
-            temppath = re.sub(r'[\?\*\+<>]', '-', temppath)
-            #QgsMessageLog.logMessage( "cadastre debug - temppath = %s " % temppath )
 
             # Export as pdf
             self.currentComposition.exportAsPDF(temppath)
-            #QgsMessageLog.logMessage( "cadastre debug - after currentComposition.exportAsPdf" )
 
             if self.redlineLayer:
                 QgsMapLayerRegistry.instance().removeMapLayer(self.redlineLayer.id())
@@ -647,7 +642,6 @@ class cadastreExport(QObject):
                 # Show print progress dialog
                 self.setupPrintProgressDialog()
             nb = len(self.comptecommunal)
-
             # Export PDF for each compte
             for comptecommunal in self.comptecommunal:
                 # export as PDF
@@ -660,16 +654,15 @@ class cadastreExport(QObject):
                 if self.iface:
                     self.printStep+=1
                     self.printProgress.pbPrint.setValue(int(self.printStep * 100 / nb))
+
             if self.iface:
                 info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir
                 openFolder = QDesktopServices()
                 openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
-
         else:
             apath = self.exportItemAsPdf(self.comptecommunal)
             if apath:
                 paths.append(apath)
-
         return paths
 
 
