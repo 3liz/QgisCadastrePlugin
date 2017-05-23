@@ -1682,6 +1682,8 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 ','.join(fids)
             )
             request = QgsFeatureRequest().setSubsetOfAttributes(attributes, layer.pendingFields()).setFilterExpression(exp)
+            if orderBy:
+                request.addOrderBy(orderBy[0])
             for feat in layer.getFeatures(request):
                 features.append(feat)
 
