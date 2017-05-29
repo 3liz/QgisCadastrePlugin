@@ -126,7 +126,9 @@ DROP INDEX IF EXISTS [PREFIXE]geo_numvoie_annee_idx;
 -- geo_lieudit
 INSERT INTO [PREFIXE]geo_lieudit
 ( annee, object_rid, tex, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]', object_rid, tex, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
+SELECT '[ANNEE]', object_rid,
+trim(concat(tex, ' ', tex2, ' ', tex3, ' ', tex4, ' ', tex5, ' ', tex6, ' ', tex7, ' ', tex8, ' ', tex9, ' ', tex10)),
+to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
 FROM [PREFIXE]lieudit_id;
 
 -- geo_batiment
