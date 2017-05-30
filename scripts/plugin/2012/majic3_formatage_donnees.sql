@@ -589,6 +589,7 @@ SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
   REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,7,6),' ', '0'),'+','¤') AS comptecommunal,
   '[LOT]' as lot
 FROM [PREFIXE]prop
+WHERE trim(SUBSTRING(tmp,7,6)) != ''
 ORDER BY ccodep,ccocom,dnupro,dnulp,dnuper;
 
 -- création: comptecommunal à partir de proprietaire

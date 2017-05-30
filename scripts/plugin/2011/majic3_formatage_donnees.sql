@@ -545,7 +545,7 @@ SELECT
   SUBSTRING(tmp,504,4) AS jantfc,
   SUBSTRING(tmp,508,4) AS jantbc,
   REPLACE(REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,7,6),' ', '0'),'+','¤') AS comptecommunal
-FROM [PREFIXE]prop;
+FROM [PREFIXE]prop WHERE trim(SUBSTRING(tmp,7,6)) != '';
 -- création: comptecommunal à partir de proprietaire;
 INSERT INTO [PREFIXE]comptecommunal
   (comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence)
