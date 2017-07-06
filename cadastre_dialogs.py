@@ -446,56 +446,56 @@ class cadastre_common():
         '''
         Execute a SQL query and
         return [header, data, rowCount]
+        NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
         '''
-        try:
-            if self.iface:
-                QApplication.setOverrideCursor(Qt.WaitCursor)
-        except:
-            pass
         data = []
         header = []
         rowCount = 0
         c = None
         ok = True
         try:
-            c = connector._execute(None,unicode(sql))
+            c = connector._execute(None,unicode(sql).encode('utf-8'))
             data = []
             header = connector._get_cursor_columns(c)
-
             if header == None:
                 header = []
-
             if len(header) > 0:
                 data = connector._fetchall(c)
-
             rowCount = c.rowcount
             if rowCount == -1:
                 rowCount = len(data)
+        except UnicodeDecodeError as e:
+            try:
+                c = connector._execute(None,unicode(sql))
+                data = []
+                header = connector._get_cursor_columns(c)
+                if header == None:
+                    header = []
+                if len(header) > 0:
+                    data = connector._fetchall(c)
+                rowCount = c.rowcount
+                if rowCount == -1:
+                    rowCount = len(data)
+
+            except BaseError as e:
+                ok = False
+                error_message = e.msg
 
         except BaseError as e:
             ok = False
-            try:
-                if self.iface:
-                    self.updateLog(e.msg)
-            except:
-                if self.iface:
-                    print e.msg
-                QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
-            return
+            error_message = e.msg
 
         finally:
-            try:
-                if self.iface:
-                    try:
-                        QApplication.restoreOverrideCursor()
-                    except:
-                        pass
-            except:
-                pass
             if c:
                 c.close()
                 del c
-        #QgsMessageLog.logMessage( "cadastre debug - fetched data rowcount %s " % rowCount )
+
+        # Log errors
+        if not ok:
+            print error_message
+            QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
+            return
+
         return [header, data, rowCount, ok]
 
 

@@ -39,6 +39,7 @@ from datetime import datetime
 from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
 from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
+from pyspatialite import dbapi2 as sqlite
 
 # Import ogr2ogr.py from processing plugin
 try:
@@ -1104,6 +1105,7 @@ class cadastreImport(QObject):
         '''
         Execute a SQL string query
         And commit
+        NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
         '''
         if self.go:
             QApplication.setOverrideCursor(Qt.WaitCursor)
@@ -1112,7 +1114,7 @@ class cadastreImport(QObject):
 
             if self.dialog.dbType == 'postgis':
                 try:
-                    c = self.connector._execute_and_commit(sql)
+                    c = self.connector._execute_and_commit(sql.encode('utf-8'))
                 except BaseError as e:
                     if not ignoreError \
                     and not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
@@ -1120,6 +1122,16 @@ class cadastreImport(QObject):
                         DlgDbError.showError(e, self.dialog)
                         self.go = False
                         self.qc.updateLog(e.msg)
+                except UnicodeDecodeError as e:
+                    try:
+                        c = self.connector._execute_and_commit(sql)
+                    except BaseError as e:
+                        if not ignoreError \
+                        and not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
+                        and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
+                            DlgDbError.showError(e, self.dialog)
+                            self.go = False
+                            self.qc.updateLog(e.msg)
                 finally:
                     QApplication.restoreOverrideCursor()
                     if c:
@@ -1136,7 +1148,7 @@ class cadastreImport(QObject):
                 try:
                     c = self.connector._get_cursor()
                     c.executescript(sql)
-                except BaseError as e:
+                except (BaseError, sqlite.OperationalError) as e:
                     if not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
                     and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                         self.go = False
