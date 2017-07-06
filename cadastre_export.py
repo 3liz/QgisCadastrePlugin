@@ -312,7 +312,7 @@ class cadastreExport(QObject):
                 sql = cadastre_common.postgisToSpatialite(sql)
             # Run SQL only if data has not already been defined
             if data is None:
-                #~ print sql
+                #print sql.encode('utf-8')
                 [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
 
             # Page no defined = means the query is here to
