@@ -318,8 +318,13 @@ class cadastre_menu:
         If not deactivate Identify parcelle tool
         '''
         # Find parcelle layer
-        from cadastre_dialogs import cadastre_common
-        parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('parcelle_info')
+        parcelleLayer = None
+        try:
+            from cadastre_dialogs import cadastre_common
+            parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('parcelle_info')
+        except:
+            parcelleLayer = None
+
         if not parcelleLayer:
             self.identifyParcelleAction.setChecked(False)
             self.iface.actionPan().trigger()
