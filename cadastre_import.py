@@ -1301,7 +1301,7 @@ class cadastreImport(QObject):
                     '--config', 'OGR_SQLITE_CACHE', '512'
                 ]
 
-            self.qc.updateLog( ' '.join(cmdArgs))
+            #self.qc.updateLog( ' '.join(cmdArgs))
             # Run only if ogr2ogr found
             if self.go:
                 # Workaround to get ogr2ogr error messages via stdout

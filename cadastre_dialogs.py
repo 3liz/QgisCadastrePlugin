@@ -749,7 +749,7 @@ class cadastre_common():
         sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"
         sql+= " FROM proprietaire p"
         sql+= " WHERE 2>1"
-        sql+= " AND ddenom IN (SELECT ddenom FROM proprietaire WHERE comptecommunal = %s)" % connector.quoteString( comptecommunal )
+        sql+= " AND trim(p.ddenom) IN (SELECT trim(ddenom) FROM proprietaire WHERE comptecommunal = '%s')" % comptecommunal
         sql+= " GROUP BY dnuper, ddenom, dlign4"
         sql+= " ORDER BY ddenom"
 
@@ -760,11 +760,12 @@ class cadastre_common():
             sql = sql.replace('MyStringAgg', 'group_concat')
 
         [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector,sql)
+        ccs = []
         if ok:
             for line in data:
-                cc = line[1].split(',')
+                ccs = ccs + line[1].split(',')
 
-        return cc
+        return ccs
 
 
 from cadastre_import_form import *

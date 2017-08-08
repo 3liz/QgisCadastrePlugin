@@ -592,13 +592,14 @@ class cadastreExport(QObject):
             from time import time
             temp = "releve_%s_%s_%s.pdf" % (
                 self.etype,
-                comptecommunal,
+                comptecommunal.replace('+', 'plus').replace('*', 'fois'), #.replace('¤', 'plus'),
                 int(time()*100)
             )
             # Create regexp to remove all non ascii chars
             import re
             r = re.compile(r"[^ -~]")
             temp = r.sub('', temp)
+            #print temp
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
 
