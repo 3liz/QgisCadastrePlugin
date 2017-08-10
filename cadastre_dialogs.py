@@ -768,13 +768,19 @@ class cadastre_common():
         return ccs
 
 
-from cadastre_import_form import *
-from cadastre_import import *
 
-class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
-    def __init__(self, iface):
-        QDialog.__init__(self)
+from cadastre_import import *
+from PyQt4 import uic
+IMPORT_FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(
+        os.path.dirname(__file__),
+        'forms/cadastre_import_form.ui'
+    )
+)
+class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
+    def __init__(self, iface, parent=None):
         self.iface = iface
+        super(cadastre_import_dialog, self).__init__(parent)
         self.setupUi(self)
 
         self.connectionDbList = []
@@ -1130,12 +1136,18 @@ class cadastre_import_dialog(QDialog, Ui_cadastre_import_form):
 #        load - Load data from database
 # --------------------------------------------------------
 
-from cadastre_load_form import *
-from cadastre_loading import *
 
-class cadastre_load_dialog(QDialog, Ui_cadastre_load_form):
-    def __init__(self, iface, cadastre_search_dialog):
-        QDialog.__init__(self)
+from cadastre_loading import *
+from PyQt4 import uic
+LOAD_FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(
+        os.path.dirname(__file__),
+        'forms/cadastre_load_form.ui'
+    )
+)
+class cadastre_load_dialog(QDialog, LOAD_FORM_CLASS):
+    def __init__(self, iface, cadastre_search_dialog, parent=None):
+        super(cadastre_load_dialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
         self.mc = self.iface.mapCanvas()
@@ -1227,12 +1239,18 @@ class cadastre_load_dialog(QDialog, Ui_cadastre_load_form):
 #        search - search for data among database ans export
 # ---------------------------------------------------------
 
-from cadastre_search_form import *
 from cadastre_export import *
-
-class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
-    def __init__(self, iface):
-        QDockWidget.__init__(self)
+from PyQt4 import uic
+SEARCH_FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(
+        os.path.dirname(__file__),
+        'forms/cadastre_search_form.ui'
+    )
+)
+class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
+    def __init__(self, iface, parent=None):
+        #QDockWidget.__init__(self)
+        super(cadastre_search_dialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
@@ -1431,6 +1449,11 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
                 control = item['widget']
                 slot = partial(self.onSearchItemChoose, key)
                 control.currentIndexChanged[str].connect(slot)
+
+                # when the cb get the focus
+                #slot = partial(self.onSearchItemFocus, key)
+                #control.clicked.connect(slot)
+
             else:
                 control = item['widget']
                 # when the user edits the combobox content
@@ -2108,11 +2131,17 @@ class cadastre_search_dialog(QDockWidget, Ui_cadastre_search_form):
 #        Option - Let the user configure options
 # --------------------------------------------------------
 
-from cadastre_option_form import *
 
-class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
-    def __init__(self, iface):
-        QDialog.__init__(self)
+from PyQt4 import uic
+OPTION_FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(
+        os.path.dirname(__file__),
+        'forms/cadastre_option_form.ui'
+    )
+)
+class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
+    def __init__(self, iface, parent=None):
+        super(cadastre_option_dialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
 
@@ -2297,11 +2326,17 @@ class cadastre_option_dialog(QDialog, Ui_cadastre_option_form):
 #        About - Let the user display the about dialog
 # --------------------------------------------------------
 
-from cadastre_about_form import *
 
-class cadastre_about_dialog(QDialog, Ui_cadastre_about_form):
-    def __init__(self, iface):
-        QDialog.__init__(self)
+from PyQt4 import uic
+ABOUT_FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(
+        os.path.dirname(__file__),
+        'forms/cadastre_about_form.ui'
+    )
+)
+class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
+    def __init__(self, iface, parent=None):
+        super(cadastre_about_dialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
 
@@ -2328,12 +2363,18 @@ class cadastre_about_dialog(QDialog, Ui_cadastre_about_form):
 #        Parcelle - Show parcelle information
 # --------------------------------------------------------
 
-from cadastre_parcelle_form import *
-from cadastre_export import *
 
-class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
-    def __init__(self, iface, layer, feature, cadastre_search_dialog):
-        QDialog.__init__(self)
+from cadastre_export import *
+from PyQt4 import uic
+PARCELLE_FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(
+        os.path.dirname(__file__),
+        'forms/cadastre_parcelle_form.ui'
+    )
+)
+class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
+    def __init__(self, iface, layer, feature, cadastre_search_dialog, parent=None):
+        super(cadastre_parcelle_dialog, self).__init__(parent)
         self.iface = iface
         self.feature = feature
         self.layer = layer
@@ -2637,11 +2678,16 @@ class cadastre_parcelle_dialog(QDialog, Ui_cadastre_parcelle_form):
 #        Messages - Displays a message to the user
 # --------------------------------------------------------
 
-from cadastre_message_form import *
-
-class cadastre_message_dialog(QDialog, Ui_cadastre_message_form):
-    def __init__(self, iface, message):
-        QDialog.__init__(self)
+from PyQt4 import uic
+MESSAGE_FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(
+        os.path.dirname(__file__),
+        'forms/cadastre_message_form.ui'
+    )
+)
+class cadastre_message_dialog(QDialog, MESSAGE_FORM_CLASS):
+    def __init__(self, iface, message, parent=None):
+        super(cadastre_message_dialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
 

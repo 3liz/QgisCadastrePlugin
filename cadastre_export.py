@@ -682,10 +682,15 @@ class cadastreExport(QObject):
         self.printProgress.show()
 
 if iface:
-    from cadastre_print_form import *
-
-    class cadastrePrintProgress(QDialog, Ui_cadastre_print_form):
-        def __init__(self):
-            QDialog.__init__(self)
+    from PyQt4 import uic
+    PRINT_FORM_CLASS, _ = uic.loadUiType(
+        os.path.join(
+            os.path.dirname(__file__),
+            'forms/cadastre_print_form.ui'
+        )
+    )
+    class cadastrePrintProgress(QDialog, PRINT_FORM_CLASS):
+        def __init__(self, parent=None):
+            super(cadastrePrintProgress, self).__init__(parent)
             # Set up the user interface
             self.setupUi(self)
