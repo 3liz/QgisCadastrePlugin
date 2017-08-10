@@ -1316,6 +1316,29 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                     'getIfNoFeature': False
                 }
             },
+            'adresse': {
+                'widget': self.liAdresse,
+                'labelAttribute': 'voie',
+                'table': 'parcelle_info',
+                'layer': None,
+                'request': None,
+                'attributes': ['ogc_fid','voie','idu','geom'],
+                'orderBy': ['voie'],
+                'features': None,
+                'chosenFeature': None,
+                'resetWidget': self.btResetAdresse,
+                'connector': None,
+                'search': {
+                    'button' : self.btSearchAdresse,
+                    'child': 'parcelle',
+                    'minlen': 3
+                },
+                'child': {
+                    'key': 'parcelle',
+                    'fkey': 'voie',
+                    'getIfNoFeature': False
+                }
+            },
             'parcelle': {
                 'widget': self.liParcelle,
                 'labelAttribute': 'idu',
@@ -1345,7 +1368,8 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                     'button' : self.btSearchProprietaire,
                     'child': 'parcelle_proprietaire',
                     'minlen': 3
-                }
+                },
+                'resetWidget': self.btResetProprietaire,
             },
             'parcelle_proprietaire': {
                 'widget': self.liParcelleProprietaire,
@@ -1359,36 +1383,6 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 'chosenFeature': None,
                 'connector': None,
                 'resetWidget': self.btResetParcelleProprietaire
-            },
-            'adresse': {
-                'widget': self.liAdresse,
-                'labelAttribute': 'voie',
-                'table': 'parcelle_info',
-                'layer': None,
-                'request': None,
-                'attributes': ['ogc_fid','voie','idu','geom'],
-                'orderBy': ['voie'],
-                'features': None,
-                'chosenFeature': None,
-                'connector': None,
-                'search': {
-                    'button' : self.btSearchAdresse,
-                    'child': 'parcelle_adresse',
-                    'minlen': 3
-                }
-            },
-            'parcelle_adresse': {
-                'widget': self.liParcelleAdresse,
-                'labelAttribute': 'idu',
-                'table': 'parcelle_info', 'geomCol': 'geom', 'sql': '',
-                'layer': None,
-                'request': None,
-                'attributes': ['ogc_fid','tex','idu','voie','geom', 'comptecommunal', 'geo_parcelle'],
-                'orderBy': ['geo_parcelle'],
-                'features': None,
-                'chosenFeature': None,
-                'connector': None,
-                'resetWidget': self.btResetParcelleAdresse
             }
         }
 
@@ -1403,15 +1397,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                     'zoom': self.btZoomerLieu,
                     'select': self.btSelectionnerLieu
                 },
-                'comboboxes': ['commune', 'section', 'parcelle']
-            },
-            'adresse':{
-                'buttons':{
-                    'centre': self.btCentrerAdresse,
-                    'zoom': self.btZoomerAdresse,
-                    'select': self.btSelectionnerAdresse
-                },
-                'comboboxes': ['adresse', 'parcelle_adresse']
+                'comboboxes': ['commune', 'section', 'adresse', 'parcelle']
             },
             'proprietaire':{
                 'buttons':{
@@ -1450,18 +1436,21 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 slot = partial(self.onSearchItemChoose, key)
                 control.currentIndexChanged[str].connect(slot)
 
-                # when the cb get the focus
-                #slot = partial(self.onSearchItemFocus, key)
-                #control.clicked.connect(slot)
+                # when the user resets the entered value
+                control = item['resetWidget']
+                slot = partial(self.onSearchItemReset, key)
+                control.clicked.connect(slot)
 
             else:
                 control = item['widget']
                 # when the user edits the combobox content
                 slot = partial(self.onNonSearchItemEdit, key)
                 control.editTextChanged[str].connect(slot)
+
                 # when the user chooses in the list
                 slot = partial(self.onNonSearchItemChoose, key)
                 control.currentIndexChanged[str].connect(slot)
+
                 # when the user reset the entered value
                 control = item['resetWidget']
                 slot = partial(self.onNonSearchItemReset, key)
@@ -1473,7 +1462,6 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         self.btExportProprietaire.clicked.connect(self.exportProprietaire)
         self.exportParcelleButtons = {
             'parcelle': self.btExportParcelle,
-            'parcelle_adresse': self.btExportParcelleAdresse,
             'parcelle_proprietaire': self.btExportParcelleProprietaire
         }
         for key, item in self.exportParcelleButtons.items():
@@ -1551,7 +1539,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
 
                 connector.__del__()
 
-        self.grpAdresse.setEnabled(self.hasMajicDataVoie and self.hasMajicDataParcelle)
+        self.liAdresse.setEnabled(self.hasMajicDataVoie and self.hasMajicDataParcelle)
         self.grpProprietaire.setEnabled(self.hasMajicDataProp)
         self.btExportParcelle.setEnabled(self.hasMajicDataProp)
 
@@ -1800,12 +1788,24 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         sqlSearchValue = self.qc.normalizeString(searchValue)
 
         # Build SQL query
+        hasCommuneFilter = None
         if key == 'adresse':
-            sql = ' SELECT DISTINCT v.voie, c.libcom, v.natvoi, v.libvoi'
+            sql = ' SELECT DISTINCT v.voie, c.tex2 AS libcom, v.natvoi, v.libvoi'
             sql+= ' FROM voie v'
-            sql+= ' INNER JOIN commune c ON c.ccodep = v.ccodep AND c.ccocom = v.ccocom'
+            # filter among commune existing in geo_commune
+            sql+= ' INNER JOIN geo_commune c ON c.commune = v.commune'
             sql+= " WHERE libvoi LIKE %s" % self.connector.quoteString('%'+sqlSearchValue+'%')
-            sql+= ' ORDER BY c.libcom, v.natvoi, v.libvoi'
+
+            # filter on the chosen commune in the combobox, if any
+            communeCb = self.searchComboBoxes['commune']
+            searchCom = unicode(self.liCommune.currentText())
+            if communeCb and not isinstance(communeCb['chosenFeature'], list) and not 'item(s)' in searchCom:
+                geo_commune = communeCb['chosenFeature']['geo_commune']
+                sql+= ' AND trim(c.geo_commune) = %s' % self.connector.quoteString(geo_commune)
+                hasCommuneFilter = True
+
+            # order
+            sql+= ' ORDER BY c.tex2, v.natvoi, v.libvoi'
 
         if key == 'proprietaire':
             sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper" #, c.ccocom"
@@ -1821,10 +1821,16 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         else:
             sql = sql.replace('MyStringAgg', 'group_concat')
         #self.qc.updateLog(sql)
+        #print sql
         [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector,sql)
 
-        # Fill  combobox
-        self.qc.updateLog(u"%s résultats correpondent à '%s'" % (rowCount, searchValue))
+        # Write message in log
+        msg = u"%s résultats correpondent à '%s'" % (rowCount, searchValue)
+        if key == 'adresse' and hasCommuneFilter:
+            msg+=  ' pour la commune %s' % searchCom
+        self.qc.updateLog(msg)
+
+        # Fill in the combobox
         cb = self.searchComboBoxes[key]['widget']
         cb.clear()
         cb.addItem(u'%s item(s)' % rowCount , '')
@@ -1852,6 +1858,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         pView = cb.view()
         pView.setMinimumWidth(pView.sizeHintForColumn(0))
 
+        # Select content when the use click inside the combobox : select the text
+        #cb.setEditable(True)
+        cb.lineEdit().selectAll()
+        cb.lineEdit().setFocus()
+
         # Restore cursor
         QApplication.restoreOverrideCursor()
 
@@ -1872,15 +1883,14 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             QApplication.restoreOverrideCursor()
             return None
 
-        # Set filter expression
+        # Set filter expression for children data
+        ckey = self.searchComboBoxes[key]['search']['child']
         if key == 'adresse':
             filterExpression = "voie = '%s'" % value['voie']
 
         if key == 'proprietaire':
             filterExpression = "comptecommunal IN (%s)" % ', '.join(value['cc'])
 
-        # Get data for child and fill combobox
-        ckey = self.searchComboBoxes[key]['search']['child']
         [layer, features] = self.setupSearchCombobox(
             ckey,
             filterExpression,
@@ -1921,6 +1931,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             feature = item['chosenFeature']
             ckey = item['child']['key']
             fkey = item['child']['fkey']
+
             if feature:
                 filterExpression = "%s = '%s' AND lot = '%s'" % (fkey, feature[fkey], feature['lot'])
                 self.setupSearchCombobox(ckey, filterExpression, 'sql')
@@ -1943,7 +1954,28 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         Unchoose item in combobox
         which also trigger onNonSearchItemChoose above
         '''
+        self.searchComboBoxes[key]['chosenFeature'] = None
         self.searchComboBoxes[key]['widget'].setCurrentIndex(0)
+
+
+
+    def onSearchItemReset(self, key):
+        '''
+        Unchoose item in a searchable combobox
+        which also trigger
+        '''
+        self.searchComboBoxes[key]['chosenFeature'] = None
+        self.searchComboBoxes[key]['widget'].setCurrentIndex(0)
+        self.searchComboBoxes[key]['widget'].lineEdit().selectAll()
+        self.searchComboBoxes[key]['widget'].lineEdit().setFocus()
+
+
+    def onSearchItemFocus(self, key):
+        '''
+        Select all content on focus by click
+        '''
+        self.searchComboBoxes[key]['widget'].lineEdit().selectAll()
+        self.searchComboBoxes[key]['widget'].lineEdit().setFocus()
 
 
 

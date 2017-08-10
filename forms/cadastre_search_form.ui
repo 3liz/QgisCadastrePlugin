@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>339</width>
+    <width>402</width>
     <height>625</height>
    </rect>
   </property>
@@ -25,7 +25,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>319</width>
+         <width>382</width>
          <height>580</height>
         </rect>
        </property>
@@ -38,54 +38,14 @@
           <layout class="QVBoxLayout" name="verticalLayout_14">
            <item>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_12">
-               <property name="maximumSize">
-                <size>
-                 <width>70</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Commune</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="0">
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>Parcelle</string>
+                <string>Adresse</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Section</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="liCommune">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="liSection">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
+             <item row="3" column="1">
               <layout class="QHBoxLayout" name="horizontalLayout_4">
                <item>
                 <widget class="QComboBox" name="liParcelle">
@@ -102,7 +62,14 @@
                </item>
               </layout>
              </item>
-             <item row="0" column="2">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Section</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
               <widget class="QToolButton" name="btResetCommune">
                <property name="toolTip">
                 <string>Retour à l'ensemble des communes</string>
@@ -116,7 +83,41 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
+             <item row="3" column="3">
+              <widget class="QToolButton" name="btResetParcelle">
+               <property name="toolTip">
+                <string>Retour à l'ensemble des parcelles</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/delete.png</normaloff>:/plugins/cadastre/icons/delete.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="liSection">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="liCommune">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
               <widget class="QToolButton" name="btResetSection">
                <property name="toolTip">
                 <string>Retour à l'ensemble des sections</string>
@@ -130,8 +131,41 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="2">
-              <widget class="QToolButton" name="btResetParcelle">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_12">
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Commune</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Parcelle</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QComboBox" name="liAdresse">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QToolButton" name="btResetAdresse">
                <property name="toolTip">
                 <string>Retour à l'ensemble des parcelles</string>
                </property>
@@ -141,6 +175,34 @@
                <property name="icon">
                 <iconset resource="resource.qrc">
                  <normaloff>:/plugins/cadastre/icons/delete.png</normaloff>:/plugins/cadastre/icons/delete.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QToolButton" name="btSearchAdresse">
+               <property name="toolTip">
+                <string>Lancer la recherche</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/search.png</normaloff>:/plugins/cadastre/icons/search.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="4">
+              <widget class="QToolButton" name="btExportParcelle">
+               <property name="toolTip">
+                <string>Exporter le relevé parcellaire</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
                </property>
               </widget>
              </item>
@@ -190,167 +252,6 @@
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="btExportParcelle">
-               <property name="toolTip">
-                <string>Exporter le relevé parcellaire</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="grpAdresse">
-          <property name="title">
-           <string>Recherche d'adresse</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="1">
-              <widget class="QComboBox" name="liAdresse">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>Adresse</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_6">
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Parcelle</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="liParcelleAdresse">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QToolButton" name="btResetParcelleAdresse">
-               <property name="toolTip">
-                <string>Retour à l'ensemble des parcelles</string>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/delete.png</normaloff>:/plugins/cadastre/icons/delete.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QToolButton" name="btSearchAdresse">
-               <property name="toolTip">
-                <string>Lancer la recherche</string>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/search.png</normaloff>:/plugins/cadastre/icons/search.png</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QPushButton" name="btCentrerAdresse">
-               <property name="toolTip">
-                <string>Centrer sur la/les parcelle(s)</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/centrer.png</normaloff>:/plugins/cadastre/icons/centrer.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btZoomerAdresse">
-               <property name="toolTip">
-                <string>Zoomer sur la/les parcelle(s)</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/zoom.png</normaloff>:/plugins/cadastre/icons/zoom.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btSelectionnerAdresse">
-               <property name="toolTip">
-                <string>Sélectionner la/les parcelle(s)</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/select.png</normaloff>:/plugins/cadastre/icons/select.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btExportParcelleAdresse">
-               <property name="toolTip">
-                <string>Exporter le relevé parcellaire</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
           </layout>
@@ -364,6 +265,33 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="4">
+              <widget class="QToolButton" name="btExportProprietaire">
+               <property name="toolTip">
+                <string>Exporter le relevé de propriété</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="liParcelleProprietaire">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="1">
               <widget class="QComboBox" name="liProprietaire">
                <property name="sizePolicy">
@@ -390,27 +318,7 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="liParcelleProprietaire">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Nom</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
+             <item row="0" column="3">
               <widget class="QToolButton" name="btSearchProprietaire">
                <property name="toolTip">
                 <string>Lancer la recherche</string>
@@ -421,6 +329,41 @@
                <property name="icon">
                 <iconset resource="resource.qrc">
                  <normaloff>:/plugins/cadastre/icons/search.png</normaloff>:/plugins/cadastre/icons/search.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Nom</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QToolButton" name="btExportParcelleProprietaire">
+               <property name="toolTip">
+                <string>Exporter le relevé parcellaire</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QToolButton" name="btResetProprietaire">
+               <property name="toolTip">
+                <string>Retour à l'ensemble des parcelles</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/delete.png</normaloff>:/plugins/cadastre/icons/delete.png</iconset>
                </property>
               </widget>
              </item>
@@ -435,34 +378,6 @@
                <property name="icon">
                 <iconset resource="resource.qrc">
                  <normaloff>:/plugins/cadastre/icons/delete.png</normaloff>:/plugins/cadastre/icons/delete.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="3">
-              <widget class="QToolButton" name="btExportParcelleProprietaire">
-               <property name="toolTip">
-                <string>Exporter le relevé parcellaire</string>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="3">
-              <widget class="QToolButton" name="btExportProprietaire">
-               <property name="toolTip">
-                <string>Exporter le relevé de propriété</string>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
                </property>
               </widget>
              </item>
@@ -550,28 +465,24 @@ p, li { white-space: pre-wrap; }
  </widget>
  <tabstops>
   <tabstop>scrollArea_3</tabstop>
-  <tabstop>liAdresse</tabstop>
-  <tabstop>btSearchAdresse</tabstop>
-  <tabstop>liParcelleAdresse</tabstop>
-  <tabstop>btResetParcelleAdresse</tabstop>
-  <tabstop>btCentrerAdresse</tabstop>
-  <tabstop>btZoomerAdresse</tabstop>
-  <tabstop>btSelectionnerAdresse</tabstop>
-  <tabstop>btExportParcelleAdresse</tabstop>
   <tabstop>liCommune</tabstop>
-  <tabstop>btResetCommune</tabstop>
   <tabstop>liSection</tabstop>
-  <tabstop>btResetSection</tabstop>
+  <tabstop>liAdresse</tabstop>
   <tabstop>liParcelle</tabstop>
+  <tabstop>btResetCommune</tabstop>
+  <tabstop>btResetSection</tabstop>
+  <tabstop>btResetAdresse</tabstop>
+  <tabstop>btSearchAdresse</tabstop>
   <tabstop>btResetParcelle</tabstop>
+  <tabstop>btExportParcelle</tabstop>
   <tabstop>btCentrerLieu</tabstop>
   <tabstop>btZoomerLieu</tabstop>
   <tabstop>btSelectionnerLieu</tabstop>
-  <tabstop>btExportParcelle</tabstop>
   <tabstop>liProprietaire</tabstop>
+  <tabstop>liParcelleProprietaire</tabstop>
+  <tabstop>btResetProprietaire</tabstop>
   <tabstop>btSearchProprietaire</tabstop>
   <tabstop>btExportProprietaire</tabstop>
-  <tabstop>liParcelleProprietaire</tabstop>
   <tabstop>btResetParcelleProprietaire</tabstop>
   <tabstop>btExportParcelleProprietaire</tabstop>
   <tabstop>btCentrerProprietaire</tabstop>
