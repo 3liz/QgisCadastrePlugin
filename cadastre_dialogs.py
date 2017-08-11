@@ -1285,7 +1285,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             'commune': {
                 'widget': self.liCommune,
                 'labelAttribute': 'tex2',
-                'table': 'geo_commune', 'geomCol': 'geom', 'sql': '',
+                'table': 'geo_commune',
+                'geomCol': 'geom',
+                'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex2','idu','geo_commune','geom', 'lot'],
@@ -1293,16 +1295,20 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 'features': None,
                 'chosenFeature': None,
                 'resetWidget': self.btResetCommune,
-                'child': {
-                    'key': 'section',
-                    'fkey': 'geo_commune',
-                    'getIfNoFeature': True
-                }
+                'children': [
+                    {
+                        'key': 'section',
+                        'fkey': 'geo_commune',
+                        'getIfNoFeature': True
+                    }
+                ]
             },
             'section': {
                 'widget': self.liSection,
                 'labelAttribute': 'idu',
-                'table': 'geo_section', 'geomCol': 'geom', 'sql': '',
+                'table': 'geo_section',
+                'geomCol': 'geom',
+                'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','geo_commune','geo_section','geom','lot'],
@@ -1310,17 +1316,21 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 'features': None,
                 'chosenFeature': None,
                 'resetWidget': self.btResetSection,
-                'child': {
-                    'key': 'parcelle',
-                    'fkey': 'geo_section',
-                    'getIfNoFeature': False
-                }
+                'children': [
+                    {
+                        'key': 'parcelle',
+                        'fkey': 'geo_section',
+                        'getIfNoFeature': False
+                    }
+                ]
             },
             'adresse': {
                 'widget': self.liAdresse,
                 'labelAttribute': 'voie',
                 'table': 'parcelle_info',
                 'layer': None,
+                'geomCol': None,
+                'sql': '',
                 'request': None,
                 'attributes': ['ogc_fid','voie','idu','geom'],
                 'orderBy': ['voie'],
@@ -1330,19 +1340,23 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 'connector': None,
                 'search': {
                     'button' : self.btSearchAdresse,
-                    'child': 'parcelle',
+                    'parcelle_child': 'parcelle',
                     'minlen': 3
                 },
-                'child': {
-                    'key': 'parcelle',
-                    'fkey': 'voie',
-                    'getIfNoFeature': False
-                }
+                'children': [
+                    {
+                        'key': 'parcelle',
+                        'fkey': 'voie',
+                        'getIfNoFeature': False
+                    }
+                ]
             },
             'parcelle': {
                 'widget': self.liParcelle,
                 'labelAttribute': 'idu',
-                'table': 'parcelle_info', 'geomCol': 'geom', 'sql': '',
+                'table': 'parcelle_info',
+                'geomCol': 'geom',
+                'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','geo_section','geom', 'comptecommunal', 'geo_parcelle'],
@@ -1366,7 +1380,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 'connector': None,
                 'search': {
                     'button' : self.btSearchProprietaire,
-                    'child': 'parcelle_proprietaire',
+                    'parcelle_child': 'parcelle_proprietaire',
                     'minlen': 3
                 },
                 'resetWidget': self.btResetProprietaire,
@@ -1374,7 +1388,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             'parcelle_proprietaire': {
                 'widget': self.liParcelleProprietaire,
                 'labelAttribute': 'idu',
-                'table': 'parcelle_info', 'geomCol': 'geom', 'sql': '',
+                'table': 'parcelle_info',
+                'geomCol': 'geom',
+                'sql': '',
                 'layer': None,
                 'request': None,
                 'attributes': ['ogc_fid','tex','idu','comptecommunal','geom', 'geo_parcelle'],
@@ -1571,7 +1587,6 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             searchCombo['geomCol'],
             searchCombo['sql']
         )
-
 
         self.searchComboBoxes[combo]['layer'] = layer
         if layer:
@@ -1883,8 +1898,8 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             QApplication.restoreOverrideCursor()
             return None
 
-        # Set filter expression for children data
-        ckey = self.searchComboBoxes[key]['search']['child']
+        # Set filter expression for parcell child data
+        ckey = self.searchComboBoxes[key]['search']['parcelle_child']
         if key == 'adresse':
             filterExpression = "voie = '%s'" % value['voie']
 
@@ -1920,24 +1935,26 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
     def onNonSearchItemChoose(self, key):
         '''
         Get feature from chosen item in combobox
-        and optionnaly fill its child combobox
+        and optionnaly fill its children combobox
         '''
         # get feature from the chosen value
         self.getFeatureFromComboboxValue(key)
 
-        # optionnaly also update child combobox
+        # optionnaly also update children combobox
         item = self.searchComboBoxes[key]
-        if item.has_key('child'):
-            feature = item['chosenFeature']
-            ckey = item['child']['key']
-            fkey = item['child']['fkey']
-
-            if feature:
-                filterExpression = "%s = '%s' AND lot = '%s'" % (fkey, feature[fkey], feature['lot'])
-                self.setupSearchCombobox(ckey, filterExpression, 'sql')
-            else:
-                if item['child']['getIfNoFeature']:
-                    self.setupSearchCombobox(ckey, None, 'sql')
+        if item.has_key('children'):
+            if not isinstance(item['children'], list):
+                return
+            for child in item['children']:
+                feature = item['chosenFeature']
+                ckey = child['key']
+                fkey = child['fkey']
+                if feature:
+                    filterExpression = "%s = '%s' AND lot = '%s'" % (fkey, feature[fkey], feature['lot'])
+                    self.setupSearchCombobox(ckey, filterExpression, 'sql')
+                else:
+                    if child['getIfNoFeature']:
+                        self.setupSearchCombobox(ckey, None, 'sql')
 
 
     def onNonSearchItemEdit(self, key):
@@ -2674,8 +2691,8 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         value = comptecommunal
         filterExpression = "comptecommunal IN ('%s')" % value
 
-        # Get data for child and fill combobox
-        ckey = qs.searchComboBoxes[key]['search']['child']
+        # Get data for child parcelle combo and fill it
+        ckey = qs.searchComboBoxes[key]['search']['parcelle_child']
         [layer, features] = qs.setupSearchCombobox(
             ckey,
             filterExpression,

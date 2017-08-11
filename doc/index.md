@@ -270,8 +270,7 @@ Cette fonctionnalité est basique, et ne gère pas pour l'instant les composeurs
 
 Le panneau de recherche propose des outils pour rechercher des parcelles via 3 entrées principales
 
-* une recherche par **objet géographque** : commune et section
-* une recherche par **adresse**
+* une recherche par **objet géographque** : commune, section, adresse et parcelles
 * une recherche par **propriétaire**
 
 Les différentes recherches seront détaillées dans les sous-chapitres suivants.
@@ -282,7 +281,7 @@ Pour afficher le panneau de recherche:
 
 Une bulle d'information affiche la fonction des boutons au survol de la souris.
 
-.. note::  Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.
+.. note::  Si la base de données ne contient aucune donnée MAJIC, alors les recherches par adresse et par propriétaire sont désactivés.
 
 
 ### Recherche de lieux
@@ -291,17 +290,18 @@ L'outil présente 3 listes déroulantes :
 
 * **Commune**
 * **Section**
+* **Adresses**
 * **Parcelles**
 
-Il est possible de **sélectionner une entité**:
+Il est possible de **sélectionner une entité** dans les listes:
 
 * soit *à la souris* en cliquant sur la flèche pour ouvrir la liste déroulante puis sélectionner un item.
-* soit en *tapant les premières lettres* et en sélectionnant l'item choisi dans la liste d'autocomplétion qui s'affiche alors.
+* soit en *tapant les premières lettres* et en sélectionnant l'item choisi dans la liste d'autocomplétion qui s'affiche alors. Il faut avoir au préalable vider le contenu de la liste déroulante.
 
 Les listes déroulantes sont **hiérarchiques** :
 
-* Lorsqu'on choisit une commune, la liste des sections est raffraîchie et ne montre que les sections de la commune choisie.
-* lorsqu'on choisit une section, la liste des parcelles est raffraîchie.
+* Lorsqu'on choisit une commune, la liste des sections est raffraîchie et ne montre que les sections de la commune choisie. La recherche d'adresse est aussi filtrée sur cette commune.
+* lorsqu'on choisit une section, la liste des parcelles est raffraîchie et montre les parcelles sur la section.
 
 Des **boutons d'actions** sont positionnés sous les 3 listes déroulantes et permettent de lancer l'action choisie sur le dernier objet sélectionné dans les 3 listes :
 
@@ -309,7 +309,7 @@ Des **boutons d'actions** sont positionnés sous les 3 listes déroulantes et pe
 * *Zoomer sur l'objet* : la carte est déplacée et mise à l'échelle pour afficher l'objet sélectionné
 * *Sélectionner l'objet* : l'objet est sélectionné dans la couche de données correspondante ( Communes, Sections ou Parcelles)
 
-A côté des 3 listes, un bouton **croix rouge** permet de remettre la liste à son état initial, c'est-à-dire sans objet sélectionné. Par exemple, si on avait sélectionné une commune dans la premier liste et une section dans la seconde, on peut cliquer sur la croix rouge à côté de la section pour désélectionner la section dans la liste. Ainsi si on utilise le bouton de Zoom, on zoomera sur la commune et non sur la section qui était précédemment sélectionnée
+A côté des listes, un bouton **croix rouge** permet de remettre la liste à son état initial, c'est-à-dire sans objet sélectionné. Par exemple, si on avait sélectionné une commune dans la premier liste et une section dans la seconde, on peut cliquer sur la croix rouge à côté de la section pour désélectionner la section dans la liste. Ainsi si on utilise le bouton de Zoom, on zoomera sur la commune et non sur la section qui était précédemment sélectionnée
 
 Si une parcelle a été sélectionnée dans la liste **Parcelles**, il est possible d'**exporter le relevé parcellaire** en cliquant sur le bouton *icône PDF* situé en bas à droite du bloc de recherche de lieux. Le **PDF est généré et ouvert** avec le lecteur PDF par défaut du système.
 
@@ -323,7 +323,7 @@ Pour lancer une **recherche de parcelles par adresse**, il suffit:
 * d'*entrer l'adresse cherchée*, sans le numéro de rue dans la liste **Adresse**.
 * de cliquer sur le **bouton loupe** situé à côté de la liste, ou d'appuyer sur la **touche entrée**
 
-La recherche est effectuée et la liste déroulante où vous avez tapé l'adresse à chercher est maintenant raffraîchie et contient l'ensemble des résultats trouvés.
+La recherche est effectuée et la liste déroulante où vous avez tapé l'adresse à chercher est maintenant raffraîchie et contient l'ensemble des résultats trouvés. Si une commune était sélectionnée dans la liste des communes, la recherche d'adresse ne renvoit que les voies de cette commune.
 
 Si des résultats ont été trouvés, on peut ensuite :
 
@@ -332,6 +332,7 @@ Si des résultats ont été trouvés, on peut ensuite :
 * Sélectionner une des parcelles dans la liste déroulante **Parcelles** et réutiliser les boutons d'action.
 * Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d'**exporter le relevé parcellaire** pour cette parcelle
 
+Vous pouvez cliquer sur la croix rouge à côté de la recherche d'adresse pour désélectionner l'adresse choisie.
 
 ### Recherche de propriétaires
 
@@ -344,6 +345,35 @@ Le principe et le fonctionnement est le même que pour la recherche par adresse,
 
 Il est possible d'exporter le relevé de propriété pour les personnes qui ne possèdent pas de propriété non bâtie.
 
+
+### Utilisation du plugin QuickFinder pour chercher les parcelles
+
+Vous pouvez installer le plugin QuickFinder pour préparer et utiliser des recherches sur différentes couches cadastrales. Exemple de configuration intéressante:
+
+* Ouvrir la boîte de dialogue de configuration du plugin: *Menu Extensions / QuickFinder / Settings*
+* Aller à l'onglet *Project Search*
+* Cocher la case *Search in project layers*
+* A côté du champ *QuickFinder file*, cliquer sur le bouton avec une icône "page" pour créer un nouveau fichier (en anglais, au survol du  bouton: *Create a new QuickFinder file* ). Enregistrer le fichier dans le répertoire du projet QGIS, et lui donner le même nom de fichier (par exemple "cadastre.qfts" pour un projet QGIS "cadastre.qgs")
+* Cliquer sur le bouton "+" en vert pour ajouter une nouvelle recherche: cela ouvre une boite de dialogue *project search*. Configurer une recherche pour les parcelles:
+  - *Search name* : Parcelles
+  - *Layer*: Parcelles
+  - *Field* : vous pouvez utiliser un champ, ou mieux une expression QGIS pour concaténer des informations, en cliquant sur le bouton "epsilon", par exemple:
+  ```sql
+  Concat(
+    'COM ', "codecommune", ' / ',
+    'SEC ', substr("idu", 7, 2), ' / ',
+    'PAR ', substr("idu", 9, 4), ' / ',
+    'ADR ', "adresse", ' / ',
+    '', "proprietaire",
+    ' @@', "codecommune"
+  )
+  ```
+  ( la partie avec @@ et le codecommune à la fin sont utiles si vous publiez le cadastre sur internet vers l'application Lizmap. Cela permet de filtrer les données )
+  - *Geometry storage*: wkt
+  - *Priority*: 1
+  - *record entries*: laisser coché, cela va lancer la création des données de recherche et leur stockage dans le fichier QuickFinder
+
+Une fois cette configuration effectuée, vous pouvez fermer les fenêtres QuickFinder, puis utiliser la barre d'outil QuickFinder pour chercher des parcelles via leur code, le code commune, le code de section, ou bien le nom des propriétaires.
 
 ## À propos
 
@@ -384,7 +414,7 @@ Dans le modèle, plusieurs tables contiennent des informations sur les parcelles
 
 Les champs parcelle.parcelle et geo_parcelle.geo_parcelle peuvent être utilisés pour les jointures entre la table parcelle et la table geo_parcelle
 
-L'identifiant **geo_parcelle** (ou parcelle) est unique et constitué comme suit : 
+L'identifiant **geo_parcelle** (ou parcelle) est unique et constitué comme suit :
 *Année (4) + Département (2) + Direction (1) + Commune (3) + Préfixe (3) + Secteur (2) + Numéro de plan (4)*
 soit **19 caractères**
 

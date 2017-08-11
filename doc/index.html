@@ -888,13 +888,7 @@
     <strong>
      objet géographque
     </strong>
-    : commune et section
-   </li>
-   <li>
-    une recherche par
-    <strong>
-     adresse
-    </strong>
+    : commune, section, adresse et parcelles
    </li>
    <li>
     une recherche par
@@ -926,7 +920,7 @@
    Une bulle d’information affiche la fonction des boutons au survol de la souris.
   </p>
   <p>
-   .. note::  Si la base de données ne contient aucune donnée MAJIC, alors les outils de recherche par adresse et par propriétaire sont désactivés.
+   .. note::  Si la base de données ne contient aucune donnée MAJIC, alors les recherches par adresse et par propriétaire sont désactivés.
   </p>
   <h3 id="recherche-de-lieux">
    Recherche de lieux
@@ -947,6 +941,11 @@
    </li>
    <li>
     <strong>
+     Adresses
+    </strong>
+   </li>
+   <li>
+    <strong>
      Parcelles
     </strong>
    </li>
@@ -956,7 +955,7 @@
    <strong>
     sélectionner une entité
    </strong>
-   :
+   dans les listes:
   </p>
   <ul>
    <li>
@@ -971,7 +970,7 @@
     <em>
      tapant les premières lettres
     </em>
-    et en sélectionnant l’item choisi dans la liste d’autocomplétion qui s’affiche alors.
+    et en sélectionnant l’item choisi dans la liste d’autocomplétion qui s’affiche alors. Il faut avoir au préalable vider le contenu de la liste déroulante.
    </li>
   </ul>
   <p>
@@ -983,10 +982,10 @@
   </p>
   <ul>
    <li>
-    Lorsqu’on choisit une commune, la liste des sections est raffraîchie et ne montre que les sections de la commune choisie.
+    Lorsqu’on choisit une commune, la liste des sections est raffraîchie et ne montre que les sections de la commune choisie. La recherche d’adresse est aussi filtrée sur cette commune.
    </li>
    <li>
-    lorsqu’on choisit une section, la liste des parcelles est raffraîchie.
+    lorsqu’on choisit une section, la liste des parcelles est raffraîchie et montre les parcelles sur la section.
    </li>
   </ul>
   <p>
@@ -1017,7 +1016,7 @@
    </li>
   </ul>
   <p>
-   A côté des 3 listes, un bouton
+   A côté des listes, un bouton
    <strong>
     croix rouge
    </strong>
@@ -1082,7 +1081,7 @@
    </li>
   </ul>
   <p>
-   La recherche est effectuée et la liste déroulante où vous avez tapé l’adresse à chercher est maintenant raffraîchie et contient l’ensemble des résultats trouvés.
+   La recherche est effectuée et la liste déroulante où vous avez tapé l’adresse à chercher est maintenant raffraîchie et contient l’ensemble des résultats trouvés. Si une commune était sélectionnée dans la liste des communes, la recherche d’adresse ne renvoit que les voies de cette commune.
   </p>
   <p>
    Si des résultats ont été trouvés, on peut ensuite :
@@ -1124,6 +1123,9 @@
     pour cette parcelle
    </li>
   </ul>
+  <p>
+   Vous pouvez cliquer sur la croix rouge à côté de la recherche d’adresse pour désélectionner l’adresse choisie.
+  </p>
   <h3 id="recherche-de-proprietaires">
    Recherche de propriétaires
   </h3>
@@ -1154,6 +1156,103 @@
   </ul>
   <p>
    Il est possible d’exporter le relevé de propriété pour les personnes qui ne possèdent pas de propriété non bâtie.
+  </p>
+  <h3 id="utilisation-du-plugin-quickfinder-pour-chercher-les-parcelles">
+   Utilisation du plugin QuickFinder pour chercher les parcelles
+  </h3>
+  <p>
+   Vous pouvez installer le plugin QuickFinder pour préparer et utiliser des recherches sur différentes couches cadastrales. Exemple de configuration intéressante:
+  </p>
+  <ul>
+   <li>
+    Ouvrir la boîte de dialogue de configuration du plugin:
+    <em>
+     Menu Extensions / QuickFinder / Settings
+    </em>
+   </li>
+   <li>
+    Aller à l’onglet
+    <em>
+     Project Search
+    </em>
+   </li>
+   <li>
+    Cocher la case
+    <em>
+     Search in project layers
+    </em>
+   </li>
+   <li>
+    A côté du champ
+    <em>
+     QuickFinder file
+    </em>
+    , cliquer sur le bouton avec une icône “page” pour créer un nouveau fichier (en anglais, au survol du  bouton:
+    <em>
+     Create a new QuickFinder file
+    </em>
+    ). Enregistrer le fichier dans le répertoire du projet QGIS, et lui donner le même nom de fichier (par exemple “cadastre.qfts” pour un projet QGIS “cadastre.qgs”)
+   </li>
+   <li>
+    Cliquer sur le bouton “+” en vert pour ajouter une nouvelle recherche: cela ouvre une boite de dialogue
+    <em>
+     project search
+    </em>
+    . Configurer une recherche pour les parcelles:
+   </li>
+   <li>
+    <em>
+     Search name
+    </em>
+    : Parcelles
+   </li>
+   <li>
+    <em>
+     Layer
+    </em>
+    : Parcelles
+   </li>
+   <li>
+    <em>
+     Field
+    </em>
+    : vous pouvez utiliser un champ, ou mieux une expression QGIS pour concaténer des informations, en cliquant sur le bouton “epsilon”, par exemple:
+    <br/>
+    <code>
+     sql
+  Concat(
+    'COM ', "codecommune", ' / ',
+    'SEC ', substr("idu", 7, 2), ' / ',
+    'PAR ', substr("idu", 9, 4), ' / ',
+    'ADR ', "adresse", ' / ',
+    '', "proprietaire",
+    ' @@', "codecommune"
+  )
+    </code>
+    <br/>
+    ( la partie avec @@ et le codecommune à la fin sont utiles si vous publiez le cadastre sur internet vers l’application Lizmap. Cela permet de filtrer les données )
+   </li>
+   <li>
+    <em>
+     Geometry storage
+    </em>
+    : wkt
+   </li>
+   <li>
+    <em>
+     Priority
+    </em>
+    : 1
+   </li>
+   <li>
+    <em>
+     record entries
+    </em>
+    : laisser coché, cela va lancer la création des données de recherche et leur stockage dans le fichier QuickFinder
+   </li>
+  </ul>
+  <p>
+   Une fois cette configuration effectuée, vous pouvez fermer les fenêtres QuickFinder, puis utiliser la barre d’outil QuickFinder pour chercher des parcelles via leur code, le code commune, le code de section, ou bien le nom des propriétaires.
   </p>
   <h2 id="a-propos">
    À propos
