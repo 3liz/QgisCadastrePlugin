@@ -178,20 +178,6 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="4">
-              <widget class="QToolButton" name="btSearchAdresse">
-               <property name="toolTip">
-                <string>Lancer la recherche</string>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/search.png</normaloff>:/plugins/cadastre/icons/search.png</iconset>
-               </property>
-              </widget>
-             </item>
              <item row="3" column="4">
               <widget class="QToolButton" name="btExportParcelle">
                <property name="toolTip">
@@ -265,7 +251,7 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="4">
+             <item row="0" column="3">
               <widget class="QToolButton" name="btExportProprietaire">
                <property name="toolTip">
                 <string>Exporter le relevé de propriété</string>
@@ -318,20 +304,6 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="3">
-              <widget class="QToolButton" name="btSearchProprietaire">
-               <property name="toolTip">
-                <string>Lancer la recherche</string>
-               </property>
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/search.png</normaloff>:/plugins/cadastre/icons/search.png</iconset>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="label_4">
                <property name="text">
@@ -339,7 +311,7 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="4">
+             <item row="1" column="3">
               <widget class="QToolButton" name="btExportParcelleProprietaire">
                <property name="toolTip">
                 <string>Exporter le relevé parcellaire</string>
@@ -472,7 +444,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>btResetCommune</tabstop>
   <tabstop>btResetSection</tabstop>
   <tabstop>btResetAdresse</tabstop>
-  <tabstop>btSearchAdresse</tabstop>
   <tabstop>btResetParcelle</tabstop>
   <tabstop>btExportParcelle</tabstop>
   <tabstop>btCentrerLieu</tabstop>
@@ -481,7 +452,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>liProprietaire</tabstop>
   <tabstop>liParcelleProprietaire</tabstop>
   <tabstop>btResetProprietaire</tabstop>
-  <tabstop>btSearchProprietaire</tabstop>
   <tabstop>btExportProprietaire</tabstop>
   <tabstop>btResetParcelleProprietaire</tabstop>
   <tabstop>btExportParcelleProprietaire</tabstop>
