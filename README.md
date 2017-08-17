@@ -47,6 +47,11 @@ Lien : http://www.gnu.org/licenses/gpl.html
 Documentation
 ==============
 
+Utilisation
+------------
+
+Voir [doc/index.md](doc/index.md)
+
 Base de données
 ----------------
 
