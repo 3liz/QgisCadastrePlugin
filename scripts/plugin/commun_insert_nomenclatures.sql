@@ -210,13 +210,15 @@ INSERT INTO cnatsp VALUES ('VCHAS', 'Chasselas');
 INSERT INTO cnatsp VALUES ('VDQS', 'Vins délimités de qualité supérieure');
 INSERT INTO cnatsp VALUES ('VIGNE', 'Vigne');
 INSERT INTO cnatsp VALUES ('VIVIE', 'Vivier');
+
 -- nomenclature ccolloc (sufexoneration, pevexoneration)
-INSERT INTO ccolloc VALUES ('TC', 'toutes les collectivités');
+INSERT INTO ccolloc VALUES ('TC', 'Toutes collectivités');
 INSERT INTO ccolloc VALUES ('C', 'Commune => l''exonération porte sur la seule part communale');
 INSERT INTO ccolloc VALUES ('D', 'Département => l''exonération porte sur la seule part départementale');
 INSERT INTO ccolloc VALUES ('R', 'Région => l''exonération porte sur la seule part régionale');
 INSERT INTO ccolloc VALUES ('GC', 'Groupement de communes');
 INSERT INTO ccolloc VALUES ('A', 'l''exonération porte sur la taxe additionnelle');
+
 -- nomenclature gnexts (sufexoneration)
 INSERT INTO gnexts VALUES ('TU ', 'Exo pour terrains nouvellement plantés en arbres truffiers – art. 1395 B-II du CGI');
 INSERT INTO gnexts VALUES ('OL ', 'Exonération pour terrains plantés en oliviers (sur délibération)');
@@ -232,6 +234,8 @@ INSERT INTO gnexts VALUES ('PR', 'Résineux - plantations et semis - futaies, ta
 INSERT INTO gnexts VALUES ('PF', 'Feuillus - plantations et semis - futaies, taillis sous futaie en régénération naturelle Exonération temporaire de 50 ans');
 INSERT INTO gnexts VALUES ('ER', 'Terrains boisés présentant un état de futaie irrégulière en équilibre de régénération Exonération partielle 25% de 15 ans, Renouvelable (% dans PEXN)');
 INSERT INTO gnexts VALUES ('VG', 'Vergers, cultures fruitières d’arbres et d’arbustes, vignes.');
+INSERT INTO gnexts VALUES ('HQ', 'Exonération de 50 % pendant 5 ans pour les subdivisions fiscales dont la nature de culture est soit pré, soit landes');
+INSERT INTO gnexts VALUES ('HS', 'Exonération de 100 % pendant 5 ans pour les subdivisions fiscales dont la nature de culture est soit pré, soit landes');
 
 -- nomenclature ccoeva (local10)
 INSERT INTO ccoeva VALUES ('A', 'Méthode comptable');
@@ -299,6 +303,24 @@ INSERT INTO dnatlc VALUES ('L', 'Location autre que propriétaire ou usufruitier
 INSERT INTO dnatlc VALUES ('P', 'Occupé par le propriétaire ou l’usufruitier');
 INSERT INTO dnatlc VALUES ('T', 'Location, non affectée à l''habitation, soumise à TVA');
 INSERT INTO dnatlc VALUES ('V', 'Vacant');
+-- nomenclature dnatcg
+INSERT INTO dnatcg VALUES ('AC', 'Addition de construction');
+INSERT INTO dnatcg VALUES ('CA', 'Changement d’affectation');
+INSERT INTO dnatcg VALUES ('CC', 'Changement de consistance');
+INSERT INTO dnatcg VALUES ('CI', 'Changement de l''identification du local');
+INSERT INTO dnatcg VALUES ('CN', 'Construction nouvelle');
+INSERT INTO dnatcg VALUES ('CU', 'Changement d’utilisation');
+INSERT INTO dnatcg VALUES ('CX', 'Modification suite à contentieux');
+INSERT INTO dnatcg VALUES ('DL', 'Division de locaux');
+INSERT INTO dnatcg VALUES ('DP', 'Démolition partielle');
+INSERT INTO dnatcg VALUES ('DT', 'Démolition totale');
+INSERT INTO dnatcg VALUES ('ME', 'Modification des critères d’évaluation');
+INSERT INTO dnatcg VALUES ('RL', 'Réunion de locaux');
+-- nomenclature gimtom
+INSERT INTO gimtom VALUES ('', 'Imposable TEOM');
+INSERT INTO gimtom VALUES ('E', 'Exonération de TEOM de droit pour les locaux: en exonération NI, EP, CR, DR autre que les locaux d’habitation; de code nature U, US, UE, UG, U1 à U9, AU ; loués par des personnes publiques et affectées à un service public');
+INSERT INTO gimtom VALUES ('D', 'Exonération TEOM sur délibération de la collectivité gestionnaire de TEOM (locaux à usage industriel ou commercial, locaux dotés d’un incinérateur)');
+INSERT INTO gimtom VALUES ('V', 'Local d’habitation en exonération permanente EP/CR/DR sans fonctionnaire logé (vacants)');
 -- nomenclature hlmsem (local10)
 INSERT INTO hlmsem VALUES ('5', 'hlm');
 INSERT INTO hlmsem VALUES ('6', 'sem');
@@ -321,6 +343,25 @@ INSERT INTO gnexpl VALUES ('PP', 'Exonération de pev secondaire de bien indivis
 INSERT INTO gnexpl VALUES ('DM', 'exonération des parts intercommunale, départementale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
 INSERT INTO gnexpl VALUES ('CM', 'exonération des parts communale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
 INSERT INTO gnexpl VALUES ('GM', 'transfert de propriétés bâties par l’État aux grands ports maritimes affectés à un service public ou d’utilité générale et non productifs de revenus');
+
+-- nomenclature pour ccthp (Occupation du local)
+INSERT INTO ccthp VALUES ('B', 'Locaux meublés à usage d’habitation faisant l’objet de locations occasionnelles permanentes ou saisonnières (TH)');
+INSERT INTO ccthp VALUES ('D', 'Division fiscale (CFE) ou local démoli (TH)');
+INSERT INTO ccthp VALUES ('F', 'Fonctionnaire logé (TH)');
+INSERT INTO ccthp VALUES ('G', 'Occupation à titre gratuit (TH)');
+INSERT INTO ccthp VALUES ('L', 'Occupation par un locataire (TH)');
+INSERT INTO ccthp VALUES ('N', 'Local dépendance non imposable (TH)');
+INSERT INTO ccthp VALUES ('P', 'Occupation par le propriétaire (TH)');
+INSERT INTO ccthp VALUES ('R', 'Occupation par un artisan exonéré (CFE)');
+INSERT INTO ccthp VALUES ('T', 'Local imposé à la taxe professionnelle (TH)');
+INSERT INTO ccthp VALUES ('U', 'Utilisation commune (CFE)');
+INSERT INTO ccthp VALUES ('V', 'Local vacant');
+INSERT INTO ccthp VALUES ('X', 'Occupation par bail rural (TH)');
+INSERT INTO ccthp VALUES ('', 'Non défini');
+
+-- nomenclature pour cbtabt (Code exonération HLM Zone sensible)
+INSERT INTO cbtabt VALUES ('AS', 'Antisismique dans les DOM');
+INSERT INTO cbtabt VALUES ('CV', 'Logements sociaux situés dans un quartier prioritaire – Contrat de ville');
 
 -- nomenclature gnextl (pevexoneration)
 INSERT INTO gnextl VALUES ('CD', 'Exonération permanente des parts communale et départementale (biens d''une région situés dans une autre région)');
@@ -410,6 +451,16 @@ INSERT INTO gnextl VALUES ('G3', 'transfert de propriétés bâties par l’Éta
 INSERT INTO gnextl VALUES ('G4', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus - 4ème année - 50 %');
 INSERT INTO gnextl VALUES ('G5', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus - 5ème année - 25 %');
 
+INSERT INTO gnextl VALUES ('BH', 'Locaux à usage de bureau transformés en habitation principale');
+INSERT INTO gnextl VALUES ('EW', 'Exonération ECF de droits acquis');
+INSERT INTO gnextl VALUES ('E1', 'Exonération ECF de droit commun – 100 % – 1ère année');
+INSERT INTO gnextl VALUES ('E2', 'Exonération ECF de droit commun – 100 % – 2 e année');
+INSERT INTO gnextl VALUES ('E3', 'Exonération ECF de droit commun – 67 % – 3 e année');
+INSERT INTO gnextl VALUES ('E4', 'Exonération ECF de droit commun – 33 % – 4 e année');
+INSERT INTO gnextl VALUES ('MS', 'Maison de santé');
+INSERT INTO gnextl VALUES ('PI', 'Locaux situés sur des terrains pollués dans le périmètre d’un projet d’intérêt général');
+INSERT INTO gnextl VALUES ('QV', 'Locaux HLM se situant dans un quartier prioritaire');
+INSERT INTO gnextl VALUES ('ZQ', 'Abattement de 30 % pour les locaux d’habitation situés dans les immeubles collectifs issus de la transformation de locaux industriels ou commerciaux dans le périmètre des quartiers prioritaires de la politique de la ville');
 
 
 -- nomenclature cconad (pevprincipale, pevdependances)
@@ -938,17 +989,19 @@ INSERT INTO dformjur VALUES ('7349', Null, 'Autre établissement public local de
 INSERT INTO dformjur VALUES ('7351', Null, 'Institution interdépartementale ou entente');
 INSERT INTO dformjur VALUES ('7352', Null, 'Institution interrégionale ou entente');
 INSERT INTO dformjur VALUES ('7353', 'SIVU', 'Syndicat intercommunal à vocation unique (SIVU)');
-INSERT INTO dformjur VALUES ('7354', 'SYMC', 'Syndicat mixte communal');
-INSERT INTO dformjur VALUES ('7355', 'SYMI', 'Autre syndicat mixte');
+INSERT INTO dformjur VALUES ('7354', 'SYMC', 'Syndicat mixte fermé');
+INSERT INTO dformjur VALUES ('7355', 'SYMI', 'Syndicat mixte ouvert');
 INSERT INTO dformjur VALUES ('7356', Null, 'Commission syndicale pour la gestion des biens indivis descommunes');
+INSERT INTO dformjur VALUES ('7357', 'PETR', 'Pôle d’équilibre territorial');
 INSERT INTO dformjur VALUES ('7361', 'CCAS', 'Centre communal d''action sociale');
 INSERT INTO dformjur VALUES ('7362', Null, 'Caisse des écoles');
 INSERT INTO dformjur VALUES ('7363', 'CCMU', 'Caisse de crédit municipal');
 INSERT INTO dformjur VALUES ('7364', Null, 'Établissement d''hospitalisation');
 INSERT INTO dformjur VALUES ('7365', Null, 'Syndicat inter hospitalier');
 INSERT INTO dformjur VALUES ('7366', Null, 'Établissement public local social et médico-social');
+INSERT INTO dformjur VALUES ('7367', 'CIAS', 'Centre intercommunal d’action social');
 INSERT INTO dformjur VALUES ('7371', 'OHLM', 'Office public d''habitation à loyer modéré (OPHLM)');
-INSERT INTO dformjur VALUES ('7372', 'SDI', 'Service départemental d''incendie');
+INSERT INTO dformjur VALUES ('7372', 'SDIS', 'Service départemental d''incendie');
 INSERT INTO dformjur VALUES ('7373', 'EP', 'Établissement public local culturel');
 INSERT INTO dformjur VALUES ('7378', 'EPA', 'Régie d''une collectivité locale à caractère administratif');
 INSERT INTO dformjur VALUES ('7379', 'EPA', '(Autre) Établissement public administratif local');

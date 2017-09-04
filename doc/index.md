@@ -81,7 +81,7 @@ Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MA
 
 ### Principe
 
-Le plugin permet l'import de données **MAJIC de 2012 à 2016 et des données EDIGEO** . Il est possible d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
+Le plugin permet l'import de données **MAJIC de 2012 à 2017 et des données EDIGEO** . Il est possible d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
 Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.
 
@@ -147,7 +147,7 @@ On configure ensuite les options :
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
-    - Seuls les formats de 2012 à 2016 sont pris en compte
+    - Seuls les formats de 2012 à 2017 sont pris en compte
 
 * Choisir le **millésime des données**, par exemple 2012
 
