@@ -444,7 +444,6 @@ national acquises par un établissement public foncier');
 INSERT INTO gnextl VALUES ('QP', 'quartier prioritaire');
 INSERT INTO gnextl VALUES ('CV', 'contrat de ville');
 INSERT INTO gnextl VALUES ('RI', 'recherche industrielle');
-INSERT INTO gnextl VALUES ('ZQ', 'abattement de 30 % pour les locaux d’habitation situés dans les immeubles collectifs issus de la transformation de locaux industriels ou commerciaux dans le périmètre des quartiers prioritaires de la politique de la ville');
 INSERT INTO gnextl VALUES ('G1', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus – 1ère année - 100 %');
 INSERT INTO gnextl VALUES ('G2', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus - 2ème année - 100 %');
 INSERT INTO gnextl VALUES ('G3', 'transfert de propriétés bâties par l’État aux grands ports maritimes non affectés à un service public ou d’utilité générale ou productifs de revenus - 3ème année - 75 %');

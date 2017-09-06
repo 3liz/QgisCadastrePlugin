@@ -21,7 +21,6 @@ SELECT
   SUBSTRING(tmp,10,2) AS ccosec,
   SUBSTRING(tmp,12,4) AS dnupla,
 
-  -- cenr : pas récupéré
   to_number(SUBSTRING(tmp,22,9),'000000000') AS dcntpa,
   SUBSTRING(tmp,31,1) AS dsrpar,
   SUBSTRING(tmp,32,6) AS dnupro,
@@ -39,9 +38,9 @@ SELECT
   CASE WHEN (SUBSTRING(tmp,70,1) IS NULL OR SUBSTRING(tmp,70,1) != '1') THEN '0' ELSE SUBSTRING(tmp,70,1) END AS gparnf,
   CASE WHEN (SUBSTRING(tmp,71,1) IS NULL OR SUBSTRING(tmp,71,1) != '1') THEN '0' ELSE SUBSTRING(tmp,71,1) END AS gparbat,
 
-  SUBSTRING(tmp,72,12) AS parrev, -- vide
-  CASE WHEN SUBSTRING(tmp,84,01) IS NULL THEN '0' WHEN SUBSTRING(tmp,84,01)  !=  '1' THEN '0' ELSE SUBSTRING(tmp,84,01) END AS gpardp, -- vide
-  SUBSTRING(tmp,85,01) AS fviti, -- vide
+  SUBSTRING(tmp,72,12) AS parrev,
+  CASE WHEN SUBSTRING(tmp,84,01) IS NULL THEN '0' WHEN SUBSTRING(tmp,84,01)  !=  '1' THEN '0' ELSE SUBSTRING(tmp,84,01) END AS gpardp,
+  SUBSTRING(tmp,85,01) AS fviti,
 
   SUBSTRING(tmp,86,4) AS dnvoiri,
   SUBSTRING(tmp,90,1) AS dindic,
@@ -49,7 +48,7 @@ SELECT
   SUBSTRING(tmp,96,4) AS ccoriv,
   SUBSTRING(tmp,100,4) AS ccocif,
 
-  SUBSTRING(tmp,104,1) AS gpafpd, -- vide
+  SUBSTRING(tmp,104,1) AS gpafpd,
   'N',
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,32,6),' ', '0') AS comptecommunal,
   CASE WHEN trim(SUBSTRING(tmp,61,3))='' THEN NULL ELSE REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,52,9)||SUBSTRING(tmp,61,3),' ', '0') END AS pdl,
@@ -89,7 +88,6 @@ SELECT
   SUBSTRING(tmp,12,4) AS dnupla,
   CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END AS ccosub,
 
-  -- cenr : pas récupéré
   CASE WHEN trim(SUBSTRING(tmp,22,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,22,9),'999999999') END AS dcntsf,
   SUBSTRING(tmp,31,6) AS dnupro,
   CASE WHEN trim(SUBSTRING(tmp,37,2))='' THEN NULL ELSE SUBSTRING(tmp,37,2) END AS gnexps,
@@ -108,7 +106,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,81,3))='' THEN NULL ELSE SUBSTRING(tmp,81,3) END AS dnupdl,
   SUBSTRING(tmp,84,7) AS dnulot,
 
-  SUBSTRING(tmp,91,46) AS rclsi, -- vide
+  SUBSTRING(tmp,91,46) AS rclsi,
 
   SUBSTRING(tmp,137,1) AS gnidom,
   SUBSTRING(tmp,138,1) AS topja,
@@ -197,8 +195,6 @@ SELECT
   SUBSTRING(tmp,4,3) AS ccocom,
   SUBSTRING(tmp,7,10) AS invar,
 
-  -- cenr : pas récupéré
-
   SUBSTRING(tmp,36,3) AS ccopre,
   SUBSTRING(tmp,39,2) AS ccosec,
   SUBSTRING(tmp,41,4) AS dnupla,
@@ -216,7 +212,7 @@ SELECT
   SUBSTRING(tmp,76,30) AS dvoilib,
   SUBSTRING(tmp,106,1) AS cleinvar,
 
-  SUBSTRING(tmp,107,1) AS locinc, -- vide
+  SUBSTRING(tmp,107,1) AS locinc,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,36,9),' ', '0') AS parcelle,
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,6)||SUBSTRING(tmp,62,5),' ', '0')||SUBSTRING(tmp,57,4) AS voie,
   '[LOT]' as lot
@@ -239,8 +235,6 @@ SELECT
   SUBSTRING(tmp,4,3) AS ccocom,
   SUBSTRING(tmp,7,10) AS invar,
 
-  -- cenr Code enregistrement, pas pris
-
   SUBSTRING(tmp,36,1) AS gpdl,
   SUBSTRING(tmp,37,1) AS dsrpar,
   SUBSTRING(tmp,38,6) AS dnupro,
@@ -248,7 +242,7 @@ SELECT
   SUBSTRING(tmp,52,6) AS dnufnl,
   CASE WHEN trim(SUBSTRING(tmp,58,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,58,1)) END AS ccoeva,
 
-  SUBSTRING(tmp,59,1) AS ccitlv, -- vide
+  SUBSTRING(tmp,59,1) AS ccitlv,
 
   CASE WHEN trim(SUBSTRING(tmp,60,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,60,1)) END AS dteloc,
   SUBSTRING(tmp,61,2) AS gtauom,
@@ -257,16 +251,16 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,67,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,67,2)) END AS cconlc,
   CASE WHEN trim(SUBSTRING(tmp,69,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,69,9),'999999999') END AS dvltrt,
 
-  SUBSTRING(tmp,78,4) AS ccoape, -- vide
+  SUBSTRING(tmp,78,4) AS ccoape,
 
   SUBSTRING(tmp,82,2) AS cc48lc,
   CASE WHEN trim(SUBSTRING(tmp,84,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,84,9),'999999999') END AS dloy48a,
   CASE WHEN trim(SUBSTRING(tmp,93,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,93,1)) END AS top48a,
   CASE WHEN trim(SUBSTRING(tmp,94,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,94,1)) END AS dnatlc,
 
-  SUBSTRING(tmp,95,8) AS dnupas, -- vide
-  SUBSTRING(tmp,103,2) AS gnexcf, -- vide
-  SUBSTRING(tmp,105,3) AS dtaucf, -- vide
+  SUBSTRING(tmp,95,8) AS dnupas,
+  SUBSTRING(tmp,103,2) AS gnexcf,
+  SUBSTRING(tmp,105,3) AS dtaucf,
 
   SUBSTRING(tmp,108,1) AS cchpr,
   SUBSTRING(tmp,109,4) AS jannat,
@@ -276,10 +270,10 @@ SELECT
   SUBSTRING(tmp,117,2) AS dnatcg,
   CASE WHEN trim(SUBSTRING(tmp,119,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,119,8),'DDMMYYYY') END AS jdatcgl,
 
-  SUBSTRING(tmp,127,6) AS dnutbx, -- vide
-  SUBSTRING(tmp,133,9) AS dvltla, -- vide
-  SUBSTRING(tmp,142,4) AS janloc, -- vide
-  SUBSTRING(tmp,146,2) AS ccsloc, -- vide
+  SUBSTRING(tmp,127,6) AS dnutbx,
+  SUBSTRING(tmp,133,9) AS dvltla,
+  SUBSTRING(tmp,142,4) AS janloc,
+  SUBSTRING(tmp,146,2) AS ccsloc,
 
   CASE WHEN trim(SUBSTRING(tmp,148,1))='' THEN NULL ELSE to_number(SUBSTRING(tmp,148,1),'9') END  AS fburx,
   SUBSTRING(tmp,149,1) AS gimtom,
@@ -287,7 +281,7 @@ SELECT
   SUBSTRING(tmp,152,4) AS jdtabt,
   SUBSTRING(tmp,156,4) AS jrtabt,
 
-  SUBSTRING(tmp,160,4) AS jacloc, -- vide
+  SUBSTRING(tmp,160,4) AS jacloc,
 
   SUBSTRING(tmp,169,5) AS cconac,
   SUBSTRING(tmp,174,1) AS toprev,
@@ -318,7 +312,7 @@ WHERE local00.ccodep = local10.ccodep AND local00.ccodir = local10.ccodir AND lo
 INSERT INTO [PREFIXE]pev
 (
  pev, annee, ccodep, ccodir, ccocom, invar,
- dnupev, cenr,
+ dnupev,
  ccoaff, ccostb, dcapec, dcetlc,
  ccocac, dnutrf, dcfloc, dsupot, dvlper, dvlpera, gnexpl,
  ccthp, retimp, dnuref, gnidom,
@@ -335,7 +329,6 @@ SELECT
   SUBSTRING(tmp,7,10) AS invar,
 
   SUBSTRING(tmp,28,3) AS dnupev,
-  SUBSTRING(tmp,31,2) AS cenr,
 
   CASE WHEN trim(SUBSTRING(tmp,36,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,36,1)) END AS ccoaff,
   SUBSTRING(tmp,37,1) AS ccostb,
@@ -389,7 +382,7 @@ SELECT
 
   CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END AS janbil,
   SUBSTRING(tmp,28,3) AS dnupev,
-  -- cenr : pas pris
+
   SUBSTRING(tmp,33,3) AS dnuexb,
   CASE WHEN trim(SUBSTRING(tmp,36,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,36,2)) END AS ccolloc,
   CASE WHEN trim(SUBSTRING(tmp,38,5))='' THEN NULL ELSE to_number(SUBSTRING(tmp,38,5),'99999')/100 END AS pexb,
@@ -397,11 +390,11 @@ SELECT
   SUBSTRING(tmp,45,4) AS jandeb,
   SUBSTRING(tmp,49,4) AS janimp,
 
-  SUBSTRING(tmp,53,9) AS vecdif, -- vide
-  SUBSTRING(tmp,63,9) AS vecdifa, -- vide
-  SUBSTRING(tmp,73,9) AS fcexb, -- vide
-  SUBSTRING(tmp,83,9) AS fcexba, -- vide
-  SUBSTRING(tmp,93,9) AS rcexba, -- vide
+  SUBSTRING(tmp,53,9) AS vecdif,
+  SUBSTRING(tmp,63,9) AS vecdifa,
+  SUBSTRING(tmp,73,9) AS fcexb,
+  SUBSTRING(tmp,83,9) AS fcexba,
+  SUBSTRING(tmp,93,9) AS rcexba,
 
   CASE WHEN trim(SUBSTRING(tmp,103,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,103,9),'999999999') END AS dvldif2,
 
@@ -433,20 +426,20 @@ SELECT
   SUBSTRING(tmp,4,3) AS ccocom,
   SUBSTRING(tmp,7,10) AS invar,
 
-  SUBSTRING(tmp,24,4) AS janbil, -- vide
+  SUBSTRING(tmp,24,4) AS janbil,
   SUBSTRING(tmp,28,3) AS dnupev,
-  -- cenr : pas pris
+
   CASE WHEN trim(SUBSTRING(tmp,36,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,36,9),'999999999') END AS co_vlbai,
 
   CASE WHEN trim(SUBSTRING(tmp,46,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,46,9),'999999999') END AS co_vlbaia,
 
   CASE WHEN trim(SUBSTRING(tmp,56,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,56,9),'999999999') END  AS co_bipevla,
 
-  CASE WHEN trim(SUBSTRING(tmp,66,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,66,9),'999999999') END  AS de_vlbai, -- vide
-  CASE WHEN trim(SUBSTRING(tmp,76,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,76,9),'999999999') END  AS de_vlbaia, -- vide
-  CASE WHEN trim(SUBSTRING(tmp,86,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,86,9),'999999999') END  AS de_bipevla, -- vide
-  CASE WHEN trim(SUBSTRING(tmp,96,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,96,9),'999999999') END  AS tse_vlbai, -- vide
-  CASE WHEN trim(SUBSTRING(tmp,106,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,106,9),'999999999') END  AS tse_vlbaia, -- vide
+  CASE WHEN trim(SUBSTRING(tmp,66,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,66,9),'999999999') END  AS de_vlbai,
+  CASE WHEN trim(SUBSTRING(tmp,76,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,76,9),'999999999') END  AS de_vlbaia,
+  CASE WHEN trim(SUBSTRING(tmp,86,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,86,9),'999999999') END  AS de_bipevla,
+  CASE WHEN trim(SUBSTRING(tmp,96,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,96,9),'999999999') END  AS tse_vlbai,
+  CASE WHEN trim(SUBSTRING(tmp,106,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,106,9),'999999999') END  AS tse_vlbaia,
   CASE WHEN trim(SUBSTRING(tmp,116,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,116,9),'999999999') END  AS tse_bipevla,
   CASE WHEN trim(SUBSTRING(tmp,126,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,126,9),'999999999') END  AS gp_vlbai,
   CASE WHEN trim(SUBSTRING(tmp,136,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,136,9),'999999999') END  AS gp_vlbaia,
@@ -477,7 +470,7 @@ SELECT
   SUBSTRING(tmp,7,10) AS invar,
 
   SUBSTRING(tmp,28,3) AS dnupev,
-  -- cenr : pas récupéré
+
   CASE WHEN SUBSTRING(tmp,33,3) IS NOT NULL THEN trim(SUBSTRING(tmp,33,3)) ELSE SUBSTRING(tmp,33,3) END AS dnudes,
   CASE WHEN trim(SUBSTRING(tmp,36,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,36,2)) END AS dep1_cconad,
   CASE WHEN trim(SUBSTRING(tmp,38,6))='' THEN NULL ELSE to_number(SUBSTRING(tmp,38,6),'999999') END AS dep1_dsueic,
@@ -531,9 +524,9 @@ INSERT INTO [PREFIXE]pevprofessionnelle
 (
  pevprofessionnelle, annee,
  ccodep, ccodir, ccocom, invar,
- dnupev, cenr,
- dsopot, dsup1, dsup2, dsup3,
- dsupk1, dsupk2
+ dnupev,
+ dsupot, dsup1, dsup2, dsup3,
+ dsupk1, dsupk2,
  pev, lot
 )
 SELECT
@@ -545,18 +538,17 @@ SELECT
   SUBSTRING(tmp,7,10) AS invar,
 
   SUBSTRING(tmp,28,3) AS dnupev,
-  SUBSTRING(tmp,31,2) AS cenr,
 
-  CASE WHEN trim(SUBSTRING(tmp,36,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,36,9),'999999999') AS dsupot,
-  CASE WHEN trim(SUBSTRING(tmp,45,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,45,9),'999999999') AS dsup1,
-  CASE WHEN trim(SUBSTRING(tmp,54,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,54,9),'999999999') AS dsup2,
-  CASE WHEN trim(SUBSTRING(tmp,63,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,63,9),'999999999') AS dsup3,
+  CASE WHEN trim(SUBSTRING(tmp,36,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,36,9),'999999999') END AS dsupot,
+  CASE WHEN trim(SUBSTRING(tmp,45,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,45,9),'999999999') END AS dsup1,
+  CASE WHEN trim(SUBSTRING(tmp,54,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,54,9),'999999999') END AS dsup2,
+  CASE WHEN trim(SUBSTRING(tmp,63,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,63,9),'999999999') END AS dsup3,
 
   CASE WHEN trim(SUBSTRING(tmp,100,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,100,9),'999999999') END AS dsupk1,
-  CASE WHEN trim(SUBSTRING(tmp,109,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,109,9),'999999999') END AS dsupk1,
+  CASE WHEN trim(SUBSTRING(tmp,109,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,109,9),'999999999') END AS dsupk2,
 
   REPLACE('[ANNEE]'||SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
-  '[LOT]' as lot
+  '[LOT]' AS lot
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='50';
 
 -- Traitement: pevdependances
@@ -575,7 +567,7 @@ select
   SUBSTRING(tmp,7,10) AS invar,
 
   SUBSTRING(tmp,28,3) AS dnupev,
-  -- cenr : pas récupéré
+
   SUBSTRING(tmp,33,3) AS dnudes,
   CASE WHEN trim(SUBSTRING(tmp,36,6))='' THEN NULL ELSE to_number(SUBSTRING(tmp,36,6),'999999') END AS dsudep,
   CASE WHEN trim(SUBSTRING(tmp,42,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,42,2)) END AS cconad,
@@ -595,7 +587,7 @@ select
   CASE WHEN trim(SUBSTRING(tmp,69,2))='' THEN NULL ELSE to_number(SUBSTRING(tmp,69,2),'99')/10 END AS dcimlc,
   CASE WHEN trim(SUBSTRING(tmp,71,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,71,3),'999')/100 END AS dcetde,
 
-  SUBSTRING(tmp,74,3) AS dcspde, -- vide
+  SUBSTRING(tmp,74,3) AS dcspde,
 
   SUBSTRING(tmp,77,6) AS dcspdea,
 
