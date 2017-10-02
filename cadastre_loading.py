@@ -307,12 +307,20 @@ class cadastreLoading(QObject):
                 groups.append(group[0])
         if u"Cadastre" in groups:
             g1 = self.getGroupIndex(u"Cadastre")
-            if not u'Étiquettes cadastre' in groups:
+            if not u'Fond' in groups:
                 gf = li.addGroup(u'Fond', True, g1)
+            else:
+                gf = self.getGroupIndex(u'Fond')
+
             if not u'Étiquettes cadastre' in groups:
                 ge = li.addGroup(u'Étiquettes cadastre', True, gf)
+            else:
+                ge = self.getGroupIndex(u'Étiquettes cadastre')
+
             if not u'Données cadastre' in groups:
                 gd = li.addGroup(u'Données cadastre', True, gf)
+            else:
+                gd = self.getGroupIndex(u"Données cadastre")
         else:
             g1 = li.addGroup("Cadastre")
             gf = li.addGroup("Fond", True, g1)
