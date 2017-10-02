@@ -38,10 +38,17 @@
           <layout class="QVBoxLayout" name="verticalLayout_14">
            <item>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_5">
+             <item row="3" column="4">
+              <widget class="QToolButton" name="btExportParcelle">
+               <property name="toolTip">
+                <string>Exporter le relevé parcellaire</string>
+               </property>
                <property name="text">
-                <string>Adresse</string>
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
                </property>
               </widget>
              </item>
@@ -151,20 +158,7 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QComboBox" name="liAdresse">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="3">
+             <item row="4" column="3">
               <widget class="QToolButton" name="btResetAdresse">
                <property name="toolTip">
                 <string>Retour à l'ensemble des parcelles</string>
@@ -178,17 +172,23 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="4">
-              <widget class="QToolButton" name="btExportParcelle">
-               <property name="toolTip">
-                <string>Exporter le relevé parcellaire</string>
+             <item row="4" column="1">
+              <widget class="QComboBox" name="liAdresse">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="resource.qrc">
-                 <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
+                <string>Adresse</string>
                </property>
               </widget>
              </item>
@@ -439,11 +439,9 @@ p, li { white-space: pre-wrap; }
   <tabstop>scrollArea_3</tabstop>
   <tabstop>liCommune</tabstop>
   <tabstop>liSection</tabstop>
-  <tabstop>liAdresse</tabstop>
   <tabstop>liParcelle</tabstop>
   <tabstop>btResetCommune</tabstop>
   <tabstop>btResetSection</tabstop>
-  <tabstop>btResetAdresse</tabstop>
   <tabstop>btResetParcelle</tabstop>
   <tabstop>btExportParcelle</tabstop>
   <tabstop>btCentrerLieu</tabstop>
