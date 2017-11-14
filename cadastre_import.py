@@ -492,7 +492,7 @@ class cadastreImport(QObject):
         rKeys = [ a['table'] for a in self.majicSourceFileNames if a['required'] ]
         mKeys = [ a for a in rKeys if a not in fKeys ]
         if mKeys:
-            msg = u"<b>Des fichiers MAJIC importants sont manquants: %s </b><br/>Vérifier le chemin des fichiers MAJIC:<br/>%s <br/>ainsi que les noms des fichiers configurés dans les options du plugin Cadastre:<br/>%s<br/><br/>Vous pouvez télécharger les fichiers fantoirs à cette adresse :<br/><a href='http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits'>http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits</a><br/>" % (
+            msg = u"<b>Des fichiers MAJIC importants sont manquants: %s </b><br/>Vérifier le chemin des fichiers MAJIC:<br/>%s <br/>ainsi que les noms des fichiers configurés dans les options du plugin Cadastre:<br/>%s<br/><br/>Vous pouvez télécharger les fichiers fantoirs à cette adresse :<br/><a href='https://www.collectivites-locales.gouv.fr/mise-a-disposition-gratuite-fichier-des-voies-et-des-lieux-dits-fantoir'>https://www.collectivites-locales.gouv.fr/mise-a-disposition-gratuite-fichier-des-voies-et-des-lieux-dits-fantoir</a><br/>" % (
                 ', '.join(mKeys),
                 self.dialog.majicSourceDir,
                 ', '.join([a['value'].upper() for a in self.majicSourceFileNames])
