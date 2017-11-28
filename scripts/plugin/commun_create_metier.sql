@@ -731,6 +731,7 @@ CREATE TABLE annul (annul text primary key, annul_lib text);
 CREATE TABLE typvoi (typvoi text primary key, typvoi_lib text);
 CREATE TABLE indldnbat (indldnbat text primary key, indldnbat_lib text);
 CREATE TABLE dformjur (dformjur text primary key, formjur text, libformjur text);
+CREATE TABLE ccocac (ccocac text primary key, ccocac_lib text);
 
 CREATE TABLE geo_commune
 (
