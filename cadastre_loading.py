@@ -385,3 +385,37 @@ class cadastreLoading(QObject):
 
 
         QApplication.restoreOverrideCursor()
+
+    def loadSqlLayer(self):
+        '''
+        Load a vector layer from SQL and information given by the user
+        '''
+        providerName = self.dialog.dbpluginclass.providerName()
+        self.dialog.schema = unicode(self.dialog.liDbSchema.currentText())
+
+        sqlText = self.dialog.sqlText.toPlainText()
+        if self.dialog.dbType == 'postgis':
+            self.dialog.schema = unicode(self.dialog.liDbSchema.currentText())
+
+        geometryColumn = self.dialog.geometryColumn.text()
+        if not geometryColumn:
+            geometryColumn = None
+
+        layerName = self.dialog.layerName.text()
+        if not layerName:
+            layerName = 'requete_cadastre_%s' % datetime.now()
+
+        layer = self.dialog.db.toSqlLayer(
+            sqlText,
+            geometryColumn,
+            None,
+            layerName,
+            QgsMapLayer.VectorLayer,
+            False
+        )
+        if layer.isValid():
+            # Add layer to layer tree
+            QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+        else:
+            self.qc.updateLog(u"La couche n'est pas valide et n'a pu être chargée. Pour PostGIS, avez-vous pensé à indiquer le schéma comme préfixe des tables ?" )
+

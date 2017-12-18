@@ -143,13 +143,13 @@ On configure ensuite les options :
 * Choisir le répertoire contenant **les fichiers MAJIC**
 
     - Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et importera l'ensemble des données.
-    - Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement de les télécharger et de configurer le plugin pour donner le bon nom au fichier fantoir : http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
+    - Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement de les télécharger et de configurer le plugin pour donner le bon nom au fichier fantoir : https://www.collectivites-locales.gouv.fr/mise-a-disposition-gratuite-fichier-des-voies-et-des-lieux-dits-fantoir
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
     - Seuls les formats de 2012 à 2017 sont pris en compte
 
-* Choisir le **millésime des données**, par exemple 2012
+* Choisir le **millésime des données**, par exemple 2017
 
 * Choisir le **Lot** : utilisez par exemple le code INSEE de la commune.
 
@@ -170,6 +170,7 @@ Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fe
 Une fois les données importées dans la base, vous pouvez les importer dans QGIS via le menu **Charger les données**.
 
 ![alt](MEDIA/cadastre_load_dialog.png)
+
 
 ### Base de données de travail
 
@@ -205,6 +206,46 @@ Exemples d'expression:
 Pensez à **enlever les données cadastrales existantes dans votre projet QGIS** : Le plugin ne sait pas gérer la recherche et l'interrogation de données si on a plus qu'une version des couches parcelles, communes et sections dans le projet QGIS.
 
 Enfin, cliquez sur le bouton **Charger les données** pour lancer le chargement.
+
+### Charger une couche à partir d'un requête.
+
+L'onglet **Charger une requête** vous donne la possibilité d'utiliser une requête SQL pour récupérer des données de la base. Pour cela, il faut bien connaître le modèle de la base de données, et les spécificités des données MAJIC. Cette fonctionnalité vise à évoluer pour proposer une liste de requêtes intéressantes pour l'exploitation des données cadastrales.
+
+![alt](MEDIA/cadastre_load_dialog_requete.png)
+
+Une fois la connexion choisie, vous pouvez écrire le texte SQL dans le champ texte.
+
+* La requête peut renvoyer des données spatiales ou seulement des données attributaires.
+* Si un des champs retournés est une géométrie, vous devez spécifier son nom dans le champ texte dédié.
+* Si vous utilisez une connexion PostGIS, il faut préfixer les tables avec le nom du schéma. Par exemple `cadastre.geo_parcelle`.
+
+La requête suivante retourne par exemple pour chaque code de parcelle la date de l'acte (on suppose que le schéma est cadastre). Vous pouvez ensuite utiliser une jointure QGIS pour faire le lien avec la couche Parcelles:
+
+```
+SELECT p.parcelle, p.jdatat AS date_acte
+FROM cadastre.parcelle p
+```
+
+La requête suivante renvoit toutes les parcelles appartenant à des collectivités locales, avec la géométrie et les noms des propriétaires
+
+```
+SELECT gp.geo_parcelle,
+string_agg(
+   trim(
+      concat(
+         pr.dnuper || ' - ',
+         trim(pr.dqualp) || ' ',
+         trim(pr.ddenom)
+      )
+   ),'|'
+) AS proprietaire,
+gp.geom AS geom
+FROM cadastre.geo_parcelle gp
+JOIN cadastre.parcelle p ON gp.geo_parcelle = p.parcelle
+JOIN cadastre.proprietaire pr ON p.comptecommunal = pr.comptecommunal
+WHERE pr.dnatpr = 'CLL'
+GROUP BY gp.geo_parcelle, gp.geom
+```
 
 
 ## La barre d'outil Cadastre

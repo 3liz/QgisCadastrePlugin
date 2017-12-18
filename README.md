@@ -41,8 +41,7 @@ GitHub : https://github.com/3liz/QgisCadastrePlugin
 Licence
 =======
 
-GPL V3
-Lien : http://www.gnu.org/licenses/gpl.html
+GNU Public License (GPL) Version 2 ou supérieure
 
 Documentation
 ==============

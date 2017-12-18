@@ -1187,6 +1187,9 @@ class cadastre_load_dialog(QDialog, LOAD_FORM_CLASS):
         self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
         self.btProcessLoading.clicked.connect(self.onProcessLoadingClicked)
         self.ql.cadastreLoadingFinished.connect(self.onLoadingEnd)
+
+        self.btLoadSqlLayer.clicked.connect(self.onLoadSqlLayerClicked)
+
         self.rejected.connect(self.onClose)
         self.buttonBox.rejected.connect(self.onClose)
 
@@ -1223,6 +1226,16 @@ class cadastre_load_dialog(QDialog, LOAD_FORM_CLASS):
         if self.connection:
             if self.db:
                 self.ql.processLoading()
+
+    def onLoadSqlLayerClicked(self):
+        '''
+        Loads a layer
+        from given SQL
+        when user clicked on button
+        '''
+        if self.connection:
+            if self.db:
+                self.ql.loadSqlLayer()
 
     def onLoadingEnd(self):
         '''
