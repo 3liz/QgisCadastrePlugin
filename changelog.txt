@@ -1,4 +1,22 @@
 CHANGELOG
+
+  Version 1.5.0
+  * Chargement - Ajout de couches via requête SQL
+  * Import - Ajout de la nomenclature pour ccocac
+  * Import - Correction sur la table pivot geo_batiment_parcelle: restriction par intersection
+  * Rechercher - Déplacement de la recherche d'adresse sous celle par parcelle
+  * Chargement - correction d'un bug sur l'ajout dans les groupes Cadastre
+  * Import - Ajout du support de MAJIC 2017
+  * Recherche - Support de l'autocomplétion pour les adresses et les propriétaires
+  * Recherche - Intégration des adresses dans la recherche de lieux
+  * Import - Correction du bug de récupération des propriétés bâties
+  * Import/Identification - contournement du bug d'encodage sur requête pour QGIS 2.18.10 et >
+  * Identification - correction du bug sur chargement de projet QGIS
+  * Import - Majic : import des propriétaires si et seulement si dnupro est non vide
+  * Import - Lieudits: utilisation de tous les champs tex
+  * Recherche - Réapplication de l'ordre dans les listes déroulantes (sections, parcelles)
+  * BDD - Possibilité de se connecter avec un connexion utilisant un service PostgreSQL
+
   Version 1.4.1
   * Import/Chargement - correction de bug pour Spatialite sur génération parcelle_info
 

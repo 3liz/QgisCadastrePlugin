@@ -7,7 +7,7 @@ description=
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
 about=This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
-version=1.4.1
+version=1.5.0
 author=3liz
 email=info@3liz.com
 
@@ -17,39 +17,22 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 1.4.1
-  * Import/Chargement - correction de bug pour Spatialite sur génération parcelle_info
-  Version 1.4.0
-  * Menu - Suppression du menu Cadastre et déplacement dans le menu Extensions
-  * Barre d'outil - Modification de l'icône d'identification (merci @pasqual )
-  * Structure bdd - Généralisation des codes départements et direction dans les identifiants
-  * Structure bdd - Parcelles: consolidation des infos propriétaires dans une nouvelle table parcelle_info
-  * Import - Correction d'un bug de remplissage de geo_sym si ptcanv_id.sym est NULL
-  * Import - MAJIC: Filtrage des données importées selon département et direction: on peut utiliser le fichier FANTOIR national
-  * Import - Ajout du support de MAJIC 2016
-  * Import - Edigeo : amélioration de la jointure de geo_parcelle ave geo_subdsect
-  * Import - Correction des doublons sur les parcelles (dus au lien geo_subdsect)
-  * Import - Edigeo: amélioration des performances pour tpoint, tline, tsurf
-  * Import - Augmentation de la limite max pour le code direction - fixes #94
-  * Import - Utilisation directe des fichiers sources sans copie préalable
-  * Import - Suppression des contraintes de taille dans les champs
-  * Import - Déplacement des scripts SQL d'import et nettoyage
-  * Import - Fantoir recommandé lors de l'import MAJIC && lien de téléchargement ajouté
-  * Import - Correction des parcelles dupliquées si plusieurs sous-sections
-  * Import - correction du bug empêchant la création de base sqlite sous 2.16 - #83
-  * Chargement - Ajout du filtre par expression sur les communes (expérimental)
-  * Chargement - possibilité de charger seulement les couches principales
-  * Chargement - Séparation des étiquettes et des données en groupes & désactivation des couches mineures
-  * Chargement - Mise à jour et amélioration des styles
-  * Chargement - Correction de bug sur QgsMapLayer non défini
-  * Chargement - Styles : masquage de la couche Tronçons de routes aux petites échelles
-  * Export - Ajout d'un nouveau menu pour exporter la vue courante en PDF
-  * Export - ajout d'une carte en 1ère page pour le relevé parcellaire
-  * Export - Ouverture automatique du répertoire après export PDF multiple
-  * Recherche - La recherche par commune et section utilise le lot pour éviter les doublons si plusieurs départements
-  * Serveur - Ajout de la capacité "server" pour le plugin
-
-
+  Version 1.5.0
+  * Chargement - Ajout de couches via requête SQL
+  * Import - Ajout de la nomenclature pour ccocac
+  * Import - Correction sur la table pivot geo_batiment_parcelle: restriction par intersection
+  * Rechercher - Déplacement de la recherche d'adresse sous celle par parcelle
+  * Chargement - correction d'un bug sur l'ajout dans les groupes Cadastre
+  * Import - Ajout du support de MAJIC 2017
+  * Recherche - Support de l'autocomplétion pour les adresses et les propriétaires
+  * Recherche - Intégration des adresses dans la recherche de lieux
+  * Import - Correction du bug de récupération des propriétés bâties
+  * Import/Identification - contournement du bug d'encodage sur requête pour QGIS 2.18.10 et >
+  * Identification - correction du bug sur chargement de projet QGIS
+  * Import - Majic : import des propriétaires si et seulement si dnupro est non vide
+  * Import - Lieudits: utilisation de tous les champs tex
+  * Recherche - Réapplication de l'ordre dans les listes déroulantes (sections, parcelles)
+  * BDD - Possibilité de se connecter avec un connexion utilisant un service PostgreSQL
 
 # tags are comma separated with spaces allowed
 tags=cadastre, france, majic, edigeo, import
