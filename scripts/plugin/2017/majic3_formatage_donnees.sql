@@ -700,7 +700,7 @@ SELECT
   'N',
   '[LOT]' as lot
 FROM [PREFIXE]proprietaire
-WHERE annee='[ANNEE]'
+WHERE annee='[ANNEE]' AND lot='[LOT]'
 GROUP BY ccodep, ccodir, ccocom, dnupro;
 
 -- Traitement: pdl
