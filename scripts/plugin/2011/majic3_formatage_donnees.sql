@@ -558,7 +558,7 @@ SELECT
   dnupro,
   'N'
 FROM [PREFIXE]proprietaire
-where annee='[ANNEE]' group by ccodep, ccodir, ccocom, dnupro;
+where annee='[ANNEE]' and lot='[LOT]' group by ccodep, ccodir, ccocom, dnupro;
 -- traitement: pdl;
 INSERT INTO [PREFIXE]pdl
 (
