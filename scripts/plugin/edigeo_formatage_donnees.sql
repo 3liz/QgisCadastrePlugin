@@ -55,8 +55,14 @@ GROUP BY object_rid, idu, tex, creat_date, update_date;
 -- geo_subdsect
 INSERT INTO [PREFIXE]geo_subdsect
 (geo_subdsect, annee, object_rid, idu, geo_section, geo_qupl, geo_copl, eor, dedi, icl, dis, geo_inp, dred, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,10), '[ANNEE]', object_rid, idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,8), qupl, copl, to_number(eor,'0000000000'), to_date(dedi, 'DD/MM/YYYY'), floor(icl), to_date(dis, 'DD/MM/YYYY'), inp, to_date(dred,'DD/MM/YYYY'), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)),'[LOT]'
-FROM [PREFIXE]subdsect_id;
+SELECT '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,10), '[ANNEE]', object_rid, idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,8), qupl, copl, to_number(eor,'0000000000'),
+CASE WHEN dedi ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dedi,'DD/MM/YYYY') ELSE to_date(faussedate,'DD/MM/YYYY') END,
+floor(icl),
+CASE WHEN dis ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dis, 'DD/MM/YYYY') ELSE to_date(faussedate,'DD/MM/YYYY') END,
+inp,
+CASE WHEN dred ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dred, 'DD/MM/YYYY') ELSE to_date(faussedate,'DD/MM/YYYY') END,
+to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)),'[LOT]'
+FROM [PREFIXE]subdsect_id, (SELECT '01/01/1900' AS faussedate) foo;
 
 -- geo_parcelle
 DROP INDEX IF EXISTS [PREFIXE]parcelle_id_object_rid;

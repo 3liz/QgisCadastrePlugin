@@ -1025,7 +1025,6 @@ class cadastreImport(QObject):
 
         return None
 
-
     def executeSqlScript(self, scriptPath, divide=False, ignoreError=False):
         '''
         Execute an SQL script file
@@ -1147,14 +1146,40 @@ class cadastreImport(QObject):
 
             if self.dialog.dbType == 'spatialite':
                 #~ self.qc.updateLog(sql)
+
                 try:
+                    # Get cursor
                     c = self.connector._get_cursor()
+
+                    # Add regex function (use the above regexp python function)
+                    def regexp(motif, item):
+                        import re
+                        a = False
+                        if item is None or not item:
+                            item = ''
+                        try:
+                            regex = re.compile(motif, re.I)  # re.I: ignore casse
+                            a = regex.search(item) is not None
+                        except Exception as e:
+                            print e.msg
+                        return a
+
+                    c.connection.create_function('regexp', 2, regexp);
+
+                    # Run query
                     c.executescript(sql)
-                except (BaseError, sqlite.OperationalError) as e:
+                except BaseError as e:
                     if not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
                     and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                         self.go = False
-                        self.qc.updateLog(u"<b>Erreurs rencontrées pour la requête:</b> <p>%s</p>" % sql)
+                        self.qc.updateLog(u"<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
+                        self.qc.updateLog(u"<b>Erreur </b> <p>%s</p>" % e.msg)
+                except sqlite.OperationalError as e:
+                    if not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
+                    and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
+                        self.go = False
+                        self.qc.updateLog(u"<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
+                        self.qc.updateLog(u"<b>Erreur </b> <p>%s</p>" % format(e))
                 finally:
                     QApplication.restoreOverrideCursor()
                     if c:

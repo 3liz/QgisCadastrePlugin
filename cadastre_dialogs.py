@@ -601,7 +601,8 @@ class cadastre_common():
             {'in': r"ST_MakeValid\(geom\)",
              'out': r"CASE WHEN ST_IsValid(geom) THEN geom ELSE ST_Buffer(geom,0) END"},
             {'in': r"ST_MakeValid\(p\.geom\)",
-             'out': r"CASE WHEN ST_IsValid(p.geom) THEN p.geom ELSE ST_Buffer(p.geom,0) END"}
+             'out': r"CASE WHEN ST_IsValid(p.geom) THEN p.geom ELSE ST_Buffer(p.geom,0) END"},
+            {'in': r' ~ ', 'out': ' regexp '}
         ]
 
         for a in replaceDict:
