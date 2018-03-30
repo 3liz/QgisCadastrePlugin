@@ -55,14 +55,15 @@ GROUP BY object_rid, idu, tex, creat_date, update_date;
 -- geo_subdsect
 INSERT INTO [PREFIXE]geo_subdsect
 (geo_subdsect, annee, object_rid, idu, geo_section, geo_qupl, geo_copl, eor, dedi, icl, dis, geo_inp, dred, creat_date, update_dat, geom, lot)
-SELECT '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,10), '[ANNEE]', object_rid, idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,8), qupl, copl, to_number(eor,'0000000000'),
-CASE WHEN dedi ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dedi,'DD/MM/YYYY') ELSE to_date(faussedate,'DD/MM/YYYY') END,
+SELECT DISTINCT '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,10), '[ANNEE]', object_rid, idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(idu,1,8), qupl, copl, to_number(eor,'0000000000'),
+CASE WHEN dedi ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dedi,'DD/MM/YYYY') ELSE NULL END,
 floor(icl),
-CASE WHEN dis ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dis, 'DD/MM/YYYY') ELSE to_date(faussedate,'DD/MM/YYYY') END,
+CASE WHEN dis ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dis, 'DD/MM/YYYY') ELSE NULL END,
 inp,
-CASE WHEN dred ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dred, 'DD/MM/YYYY') ELSE to_date(faussedate,'DD/MM/YYYY') END,
+CASE WHEN dred ~ '^\d{2}/\d{2}/\d{4}$' THEN to_date(dred, 'DD/MM/YYYY') ELSE NULL END,
 to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)),'[LOT]'
-FROM [PREFIXE]subdsect_id, (SELECT '01/01/1900' AS faussedate) foo;
+FROM [PREFIXE]subdsect_id
+;
 
 -- geo_parcelle
 DROP INDEX IF EXISTS [PREFIXE]parcelle_id_object_rid;
@@ -79,10 +80,10 @@ INSERT INTO [PREFIXE]geo_parcelle
 SELECT '[ANNEE]'||'[DEPDIR]'||p.idu, '[ANNEE]', p.object_rid, p.idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8), s.geo_subdsect, p.supf, p.indp, p.coar, p.tex, p.tex2, p.codm, to_date(to_char(p.creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(p.update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(p.geom),3)), '[LOT]'
 FROM [PREFIXE]parcelle_id AS p
 LEFT JOIN (SELECT DISTINCT de, vers FROM [PREFIXE]edigeo_rel WHERE nom='Rel_PARCELLE_SUBDSECT') AS r ON r.de = p.object_rid
-LEFT JOIN [PREFIXE]geo_subdsect AS s ON s.annee = '[ANNEE]' AND s.lot ='[LOT]' AND r.vers = s.object_rid
+LEFT JOIN [PREFIXE]geo_subdsect AS s
+ON s.annee = '[ANNEE]' AND s.lot ='[LOT]' AND r.vers = s.object_rid AND '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8) =  s.geo_section
 WHERE p.idu IS NOT NULL
-AND '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8) =  s.geo_section
-AND s.annee = '[ANNEE]' AND s.lot ='[LOT]'
+
 ;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_object_rid_idx;
