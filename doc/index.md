@@ -114,7 +114,6 @@ Pour les bases de données **PostGIS**, il faut :
 
 Pour les bases de données **Spatialite**, l'interface d'import permet de créer une base de données vide et la connexion QGIS liée si nécessaire.
 
-
 ### Les étapes d'importation
 
 Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu **Configurer le plugin**. Ensuite, on ouvre la boite de dialogue
@@ -164,6 +163,27 @@ Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fe
 
 .. note::  Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import en cours.
 
+
+### Projections IGNF
+
+Si votre donnée EDIGEO est en projection IGNF, par exemple pour la Guadeloupe, IGNF:GUAD48UTM20 (Guadeloupe Ste Anne), et que vous souhaitez importer les données dans PostgreSQL, il faut au préalable ajouter dans votre table public.spatial_ref_sys la définition de la projection IGNF. Si vous utilisez à la place l'équivalent EPSG (par exemple ici EPSG:2970), vous risquez un décalage des données lors de la reprojection.
+
+Vous pouvez ajouter dans votre base de données la définition via une requête, par exemple avec la requête suivante pour IGNF:GUAD48UTM20:
+
+```
+INSERT INTO spatial_ref_sys values (
+    998999,
+    'IGNF',
+    998999,
+    'PROJCS["Guadeloupe Ste Anne",GEOGCS["Guadeloupe Ste Anne",DATUM["Guadeloupe St Anne",SPHEROID["International-Hayford 1909",6378388.0000,297.0000000000000,AUTHORITY["IGNF","ELG001"]],TOWGS84[-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400],AUTHORITY["IGNF","REG425"]],PRIMEM["Greenwich",0.000000000,AUTHORITY["IGNF","LGO01"]],UNIT["degree",0.01745329251994330],AXIS["Longitude",EAST],AXIS["Latitude",NORTH],AUTHORITY["IGNF","GUAD48GEO"]],PROJECTION["Transverse_Mercator",AUTHORITY["IGNF","PRC0220"]],PARAMETER["semi_major",6378388.0000],PARAMETER["semi_minor",6356911.9461],PARAMETER["latitude_of_origin",0.000000000],PARAMETER["central_meridian",-63.000000000],PARAMETER["scale_factor",0.99960000],PARAMETER["false_easting",500000.000],PARAMETER["false_northing",0.000],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","GUAD48UTM20"]]',
+    '+init=IGNF:GUAD48UTM20'
+);
+```
+
+Attention, il est important d'utiliser un code qui est <= 998999, car PostGIS place des contraintes sur le SRID. Nous avons utilisé ici 998999, qui est le maximum possible.
+La liste des caractéristiques des projections peut être trouvée à ce lien : http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql ( voir discussion Géorézo : https://georezo.net/forum/viewtopic.php?pid=268134 ). Attention, il faut extraire de ce fichier la commande INSERT qui correspond à votre code IGNF, et remplacer le SRID par 998999.
+
+Ensuite, dans la projection source, vous pouvez utiliser IGNF:GUAD48UTM20 au lieu du code EPSG correspondant.
 
 ## Charger des données
 

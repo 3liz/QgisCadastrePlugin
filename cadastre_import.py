@@ -75,8 +75,19 @@ class cadastreImport(QObject):
         if self.dialog.doEdigeoImport:
             self.sourceSridFull = self.dialog.edigeoSourceProj
             self.targetSridFull = self.dialog.edigeoTargetProj
+            self.sourceAuth = self.sourceSridFull.split(":")[0]
             self.sourceSrid = self.sourceSridFull.split(":")[1]
             self.targetSrid = self.targetSridFull.split(":")[1]
+
+            # Check IGNF code
+            if self.sourceAuth == 'IGNF':
+                sqlsearch = '%%AUTHORITY["IGNF","%s"]%%' % self.sourceSrid.upper()
+                sql = "SELECT auth_srid FROM spatial_ref_sys WHERE auth_name='IGNF' AND  srtext LIKE '%s' LIMIT 1" % sqlsearch
+                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector,sql)
+                if rowCount == 1:
+                    for line in data:
+                        self.sourceSrid = str(line[0])
+
         else:
             self.targetSrid = '2154'
 
