@@ -22,10 +22,32 @@
  ***************************************************************************/
 """
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt4.QtCore import (
+    Qt,
+    pyqtSignal,
+    SIGNAL,
+    QObject,
+    QSettings,
+    QUrl
+)
+from PyQt4.QtGui import (
+    QIcon,
+    QApplication,
+    QAction,
+    QActionGroup,
+    QWidgetAction,
+    QMessageBox
+)
 from PyQt4.QtXml import QDomDocument
-from qgis.core import *
+
+from qgis.core import (
+    QgsMapLayerRegistry,
+    QgsMessageLog,
+    QgsLogger,
+    QgsMapLayer,
+    QgsComposition
+)
+
 from cadastre_identify_parcelle import IdentifyParcelle
 from cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
 import ConfigParser

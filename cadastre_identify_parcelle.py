@@ -21,10 +21,25 @@
  *                                                                         *
  ***************************************************************************/
 """
-from qgis.gui import QgsMapTool
-from qgis.core import QgsMapLayer, QgsVectorLayer, QgsFeature, QgsFeatureRequest, QgsGeometry, QgsRectangle
-from PyQt4.QtGui import QCursor, QPixmap
-from PyQt4.QtCore import Qt, pyqtSignal
+from PyQt4.QtCore import (
+    Qt,
+    pyqtSignal
+)
+from PyQt4.QtGui import (
+    QCursor,
+    QPixmap
+)
+from qgis.core import (
+    QgsMapLayer,
+    QgsVectorLayer,
+    QgsFeature,
+    QgsFeatureRequest,
+    QgsGeometry,
+    QgsRectangle
+)
+from qgis.gui import (
+    QgsMapTool
+)
 from cadastre_cursor import Cursor
 
 class IdentifyParcelle(QgsMapTool):

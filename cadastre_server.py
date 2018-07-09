@@ -22,11 +22,17 @@
  ***************************************************************************/
 """
 try:
-    from qgis.server import *
+    from qgis.server import (
+        serverIface,
+        QgsServerFilter
+    )
 except:
     pass
 
-from qgis.core import QgsMessageLog, QgsLogger
+from qgis.core import (
+    QgsMessageLog,
+    QgsLogger
+)
 
 class cadastreServer:
     """Plugin for QGIS server

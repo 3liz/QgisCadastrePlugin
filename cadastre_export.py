@@ -32,10 +32,35 @@ import os.path
 import operator
 import tempfile
 import re
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
 
+from PyQt4.QtCore import (
+    Qt,
+    QObject,
+    QSettings,
+    QUrl
+)
+from PyQt4.QtGui import (
+    QApplication,
+    QDesktopServices,
+    QFont
+)
+from qgis.core import (
+    QGis,
+    QgsMapLayerRegistry,
+    QgsMessageLog,
+    QgsLogger,
+    QgsExpression,
+    QgsMapLayer,
+    QgsVectorLayer,
+    QgsFeatureRequest,
+    QgsComposition,
+    QgsComposerPicture,
+    QgsComposerMap,
+    QgsComposerLabel,
+    QgsMapRenderer,
+    QgsMapSettings,
+    QgsFillSymbolV2
+)
 from cadastre_dialogs import cadastre_common
 
 try:
@@ -688,6 +713,9 @@ if iface:
             os.path.dirname(__file__),
             'forms/cadastre_print_form.ui'
         )
+    )
+    from PyQt4.QtGui import (
+        QDialog
     )
     class cadastrePrintProgress(QDialog, PRINT_FORM_CLASS):
         def __init__(self, parent=None):

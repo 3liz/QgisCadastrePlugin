@@ -23,13 +23,30 @@
  ***************************************************************************/
 """
 
-from qgis.server import *
-from qgis.core import QgsProject, QgsMessageLog, QgsLogger, QgsMapLayer, QgsVectorLayer, QgsMapLayerRegistry, QgsFeatureRequest
-from qgis.gui import QgsMapCanvas, QgsLayerTreeMapCanvasBridge, QgsLayerTreeView
+from qgis.server import QgsServerFilter
+
 from PyQt4.QtCore import QFileInfo
 from PyQt4.QtXml import QDomDocument
+
+from qgis.core import (
+    QgsProject,
+    QgsMessageLog,
+    QgsLogger,
+    QgsMapLayer,
+    QgsVectorLayer,
+    QgsMapLayerRegistry,
+    QgsFeatureRequest
+)
+from qgis.gui import (
+    QgsMapCanvas,
+    QgsLayerTreeMapCanvasBridge,
+    QgsLayerTreeView
+)
 from cadastre.cadastre_dialogs import cadastre_common
-from cadastre.cadastre_export import *
+from cadastre.cadastre_export import (
+    cadastreExport,
+    cadastrePrintProgress
+)
 import os.path, json, time
 from uuid import uuid4
 import tempfile

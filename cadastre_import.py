@@ -30,13 +30,31 @@ import time
 import tempfile
 import shutil
 from distutils import dir_util
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+
+from PyQt4.QtCore import (
+    Qt,
+    QObject,
+    QSettings
+)
+from PyQt4.QtGui import (
+    QCursor,
+    QPixmap,
+    QApplication,
+    QMessageBox
+)
+from qgis.core import (
+    QgsMessageLog,
+    QgsLogger
+)
 from datetime import datetime
 
 # db_manager scripts
-from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
+from db_manager.db_plugins.plugin import (
+    DBPlugin,
+    Schema,
+    Table,
+    BaseError
+)
 from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
 from pyspatialite import dbapi2 as sqlite

@@ -27,16 +27,50 @@ import os.path
 import operator
 import re
 import tempfile
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import QgsGenericProjectionSelector
+from PyQt4.QtCore import (
+    Qt,
+    pyqtSignal,
+    QObject,
+    QSettings,
+    QRegExp
+)
+from PyQt4.QtGui import (
+    QTextCursor,
+    QDialog,
+    QApplication,
+    qApp,
+    QCursor,
+    QPixmap,
+    QCompleter,
+    QSortFilterProxyModel,
+    QStringListModel,
+    QDockWidget,
+    QMessageBox
+)
+from qgis.core import (
+    QgsMapLayerRegistry,
+    QgsMessageLog,
+    QgsLogger,
+    QgsExpression,
+    QgsDataSourceURI,
+    QgsMapLayer,
+    QgsFeatureRequest,
+    QgsCoordinateTransform,
+    QgsCoordinateReferenceSystem
+)
+from qgis.gui import (
+    QgsGenericProjectionSelector
+)
 import unicodedata
 
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/forms")
 
-from db_manager.db_plugins.plugin import DBPlugin, Schema, Table
+from db_manager.db_plugins.plugin import (
+    DBPlugin,
+    Schema,
+    Table
+)
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
 import subprocess
@@ -774,7 +808,7 @@ class cadastre_common():
 
 
 
-from cadastre_import import *
+from cadastre_import import cadastreImport
 from PyQt4 import uic
 IMPORT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -1142,7 +1176,7 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
 # --------------------------------------------------------
 
 
-from cadastre_loading import *
+from cadastre_loading import cadastreLoading
 from PyQt4 import uic
 LOAD_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -1297,7 +1331,7 @@ class CustomQCompleter(QCompleter):
 #        search - search for data among database ans export
 # ---------------------------------------------------------
 
-from cadastre_export import *
+from cadastre_import import cadastreImport
 from PyQt4 import uic
 SEARCH_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -2521,7 +2555,7 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
 # --------------------------------------------------------
 
 
-from cadastre_export import *
+from cadastre_export import cadastreExport, cadastrePrintProgress
 from PyQt4 import uic
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(

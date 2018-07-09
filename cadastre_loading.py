@@ -27,13 +27,37 @@ import re
 import time
 import tempfile
 import shutil
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+
+from PyQt4.QtCore import (
+    Qt,
+    QObject,
+    QSettings,
+    pyqtSignal
+)
+from PyQt4.QtGui import (
+    QApplication,
+    QMessageBox
+)
+
+from qgis.core import (
+    QGis,
+    QgsMapLayerRegistry,
+    QgsMessageLog,
+    QgsLogger,
+    QgsExpression,
+    QgsMapLayer,
+    QgsVectorLayer,
+    QgsFeatureRequest
+)
 from datetime import datetime
 
 # db_manager scripts
-from db_manager.db_plugins.plugin import DBPlugin, Schema, Table, BaseError
+from db_manager.db_plugins.plugin import (
+    DBPlugin,
+    Schema,
+    Table,
+    BaseError
+)
 from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
 
