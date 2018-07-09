@@ -2555,7 +2555,11 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
 # --------------------------------------------------------
 
 
-from cadastre_export import cadastreExport, cadastrePrintProgress
+from cadastre_export import cadastreExport
+try:
+    from cadastre_export import cadastrePrintProgress
+except:
+    pass
 from PyQt4 import uic
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(

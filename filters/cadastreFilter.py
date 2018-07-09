@@ -22,10 +22,13 @@
  *                                                                                                                                                 *
  ***************************************************************************/
 """
-
+# import shutil
 from qgis.server import QgsServerFilter
 
-from PyQt4.QtCore import QFileInfo
+from PyQt4.QtCore import (
+    QFileInfo,
+    QByteArray
+)
 from PyQt4.QtXml import QDomDocument
 
 from qgis.core import (
@@ -44,9 +47,13 @@ from qgis.gui import (
 )
 from cadastre.cadastre_dialogs import cadastre_common
 from cadastre.cadastre_export import (
-    cadastreExport,
-    cadastrePrintProgress
+    cadastreExport
 )
+try:
+    from cadastre_export import cadastrePrintProgress
+except:
+    pass
+
 import os.path, json, time
 from uuid import uuid4
 import tempfile
@@ -244,11 +251,14 @@ class cadastreFilter(QgsServerFilter):
                 if self.debugMode:
                     QgsMessageLog.logMessage( "cadastre debug - item path: %s" % path )
                 newpath = os.path.join(
+                    # '/srv/qgis/temp/',
                     tempfile.gettempdir(),
                     '%s.pdf' % uid
                 )
                 if self.debugMode:
                     QgsMessageLog.logMessage( "cadastre debug - item newpath: %s" % newpath )
+
+                # shutil.copy(path,newpath)
                 os.rename(path,newpath)
                 tokens.append( str(uid) )
 
@@ -295,6 +305,7 @@ class cadastreFilter(QgsServerFilter):
 
         ptoken = params['TOKEN']
         path = os.path.join(
+            # '/srv/qgis/temp/',
             tempfile.gettempdir(),
             '%s.pdf' % ptoken
         )
@@ -320,8 +331,8 @@ class cadastreFilter(QgsServerFilter):
         try:
             with open(path, 'rb') as f:
                 loads = f.readlines()
-            ba = QByteArray(b''.join(loads))
-            self.request.appendBody(ba)
+                ba = QByteArray(b''.join(loads))
+                self.request.appendBody(ba)
             return
         except:
             body = {
@@ -331,6 +342,6 @@ class cadastreFilter(QgsServerFilter):
             self.setJsonResponse( '200', body)
             return
         finally:
-            #print "path to remove : %s" % path
+            # print("path to remove : %s" % path)
             os.remove(path)
-
+        return
