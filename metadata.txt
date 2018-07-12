@@ -20,7 +20,7 @@ email=info@3liz.com
 changelog=
   Version 1.5.2
   * Import - Transformation des champs date en texte pour le MAJIC, par respect de la donnée source
-  * Correction d'un bug de la 1.5.1 avec QFileDialog et BaseError manquant
+  * Correction d'un bug de la 1.5.1 avec QFileDialog, QFileInfo et BaseError manquant
   Version 1.5.1
   * Import - MAJIC : correction de bug si dates mauvaises (30 fév par ex)
   * Import - Support partiel des données EDIGEO en projection IGNF

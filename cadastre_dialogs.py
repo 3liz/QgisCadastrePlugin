@@ -32,7 +32,8 @@ from PyQt4.QtCore import (
     pyqtSignal,
     QObject,
     QSettings,
-    QRegExp
+    QRegExp,
+    QFileInfo
 )
 from PyQt4.QtGui import (
     QTextCursor,
@@ -75,6 +76,7 @@ from db_manager.db_plugins.plugin import (
     BaseError
 )
 from db_manager.db_plugins import createDbPlugin
+from db_manager.dlg_db_error import DlgDbError
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
 import subprocess
 
