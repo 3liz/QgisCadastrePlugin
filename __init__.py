@@ -20,10 +20,11 @@
  ***************************************************************************/
  This script initializes the plugin, making it known to QGIS.
 """
+from __future__ import absolute_import
 
 def classFactory(iface):
     # load Cadastre class from file Cadastre
-    from cadastre_menu import cadastre_menu
+    from .cadastre_menu import cadastre_menu
     return cadastre_menu(iface)
 
 

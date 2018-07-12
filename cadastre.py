@@ -21,18 +21,20 @@
  *                                                                         *
  ***************************************************************************/
 """
+from __future__ import absolute_import
 # Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+from builtins import object
+from qgis.PyQt.QtCore import Qt, qVersion, QCoreApplication, QTranslator, QObject, QSettings, QUrl
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QApplication, QAction
 # Initialize Qt resources from file resources.py
-import resources
+from . import resources
 # Import the code for the dialog
 from cadastredialog import CadastreDialog
 import os.path
 
 
-class Cadastre:
+class Cadastre(object):
 
     def __init__(self, iface):
         # Save reference to the QGIS interface

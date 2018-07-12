@@ -1,6 +1,8 @@
+from builtins import range
+from builtins import object
 import ogr
 
-class OgrDs:
+class OgrDs(object):
 
     def __init__(self, format, ds):
         self.open(format, ds)

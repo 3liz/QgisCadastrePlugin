@@ -21,14 +21,9 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import (
-    Qt,
-    pyqtSignal
-)
-from PyQt4.QtGui import (
-    QCursor,
-    QPixmap
-)
+from __future__ import absolute_import
+from qgis.PyQt.QtCore import Qt, pyqtSignal
+from qgis.PyQt.QtGui import QCursor, QPixmap
 from qgis.core import (
     QgsMapLayer,
     QgsVectorLayer,
@@ -40,7 +35,7 @@ from qgis.core import (
 from qgis.gui import (
     QgsMapTool
 )
-from cadastre_cursor import Cursor
+from .cadastre_cursor import Cursor
 
 class IdentifyParcelle(QgsMapTool):
 

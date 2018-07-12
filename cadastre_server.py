@@ -21,6 +21,8 @@
  *                                                                                                                                                 *
  ***************************************************************************/
 """
+from __future__ import absolute_import
+from builtins import object
 try:
     from qgis.server import (
         serverIface,
@@ -34,7 +36,7 @@ from qgis.core import (
     QgsLogger
 )
 
-class cadastreServer:
+class cadastreServer(object):
     """Plugin for QGIS server
     this plugin loads Cadastre server tools"""
 
@@ -42,9 +44,9 @@ class cadastreServer:
         # Save reference to the QGIS server interface
         self.serverIface = serverIface
         QgsMessageLog.logMessage("SUCCESS - Cadastre init", 'plugin', QgsMessageLog.INFO)
-        from filters.cadastreFilter import cadastreFilter
+        from .filters.cadastreFilter import cadastreFilter
         try:
             serverIface.registerFilter( cadastreFilter(serverIface), 100 )
-        except Exception, e:
+        except Exception as e:
             QgsLogger.debug("cadastreServer - Error loading filter cadastreServer : %s" % e )
             QgsMessageLog.logMessage("CADASTRE  - Error loading filter cadastreServer: %s" % e, 'plugin', QgsMessageLog.WARNING)

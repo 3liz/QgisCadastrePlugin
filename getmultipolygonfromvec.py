@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from builtins import str
+from builtins import object
 import sys, os
 
 class GetMultiPolygonFromVec(object):
@@ -36,7 +38,7 @@ class GetMultiPolygonFromVec(object):
     mapPfePoly = self.__polygons__()
 
     mapLyFeaMulti = {}
-    for ly,feas in self.mapLyFea.items() :
+    for ly,feas in list(self.mapLyFea.items()) :
       mapLyFeaMulti[ ly ] ={}
       for fea in feas :
         multipolygon = []

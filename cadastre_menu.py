@@ -21,43 +21,36 @@
  *                                                                                                                                                 *
  ***************************************************************************/
 """
+from __future__ import absolute_import
 
-from PyQt4.QtCore import (
-    Qt,
-    pyqtSignal,
-    SIGNAL,
-    QObject,
-    QSettings,
-    QUrl
-)
-from PyQt4.QtGui import (
-    QIcon,
-    QApplication,
-    QAction,
-    QActionGroup,
-    QWidgetAction,
-    QMessageBox
-)
-from PyQt4.QtXml import QDomDocument
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
+from qgis.PyQt.QtCore import Qt, pyqtSignal, QObject, QSettings, QUrl
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QApplication, QAction, QActionGroup, QWidgetAction, QMessageBox
+from qgis.PyQt.QtXml import QDomDocument
 
 from qgis.core import (
-    QgsMapLayerRegistry,
+    QgsProject,
+    QgsReadWriteContext,
     QgsMessageLog,
     QgsLogger,
     QgsMapLayer,
-    QgsComposition
+    QgsLayout,
+    QgsLayoutExporter
 )
 
-from cadastre_identify_parcelle import IdentifyParcelle
-from cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
-import ConfigParser
+from .cadastre_identify_parcelle import IdentifyParcelle
+from .cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
+import configparser
 import os.path
 import tempfile
 from time import time
 
 # ---------------------------------------------
 
-class cadastre_menu:
+class cadastre_menu(object):
     def __init__(self, iface):
         self.iface = iface
         self.mapCanvas = iface.mapCanvas()
@@ -72,12 +65,12 @@ class cadastre_menu:
         # Import Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/database.png")
         self.import_action = QAction(icon, u"Importer des données", self.iface.mainWindow())
-        QObject.connect(self.import_action, SIGNAL("triggered()"), self.open_import_dialog)
+        self.import_action.triggered.connect(self.open_import_dialog)
 
         # Search Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/search.png")
         self.search_action = QAction(icon, u"Outils de recherche", self.iface.mainWindow())
-        QObject.connect(self.search_action, SIGNAL("triggered()"), self.toggle_search_dialog)
+        self.search_action.triggered.connect(self.toggle_search_dialog)
         if not self.cadastre_search_dialog:
             dialog = cadastre_search_dialog(self.iface)
             self.cadastre_search_dialog = dialog
@@ -85,32 +78,32 @@ class cadastre_menu:
         # Load Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/output.png")
         self.load_action = QAction(icon, u"Charger des données", self.iface.mainWindow())
-        QObject.connect(self.load_action, SIGNAL("triggered()"), self.open_load_dialog)
+        self.load_action.triggered.connect(self.open_load_dialog)
 
         # Composer Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/mActionSaveAsPDF.png")
         self.export_action = QAction(icon, u"Exporter la vue", self.iface.mainWindow())
-        QObject.connect(self.export_action, SIGNAL("triggered()"), self.export_view)
+        self.export_action.triggered.connect(self.export_view)
 
         # Options Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/config.png")
         self.option_action = QAction(icon, u"Configurer le plugin", self.iface.mainWindow())
-        QObject.connect(self.option_action, SIGNAL("triggered()"), self.open_option_dialog)
+        self.option_action.triggered.connect(self.open_option_dialog)
 
         # About Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
         self.about_action = QAction(icon, u"À propos", self.iface.mainWindow())
-        QObject.connect(self.about_action, SIGNAL("triggered()"), self.open_about_dialog)
+        self.about_action.triggered.connect(self.open_about_dialog)
 
         # Help Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
         self.help_action = QAction(icon, u"Aide", self.iface.mainWindow())
-        QObject.connect(self.help_action, SIGNAL("triggered()"), self.open_help)
+        self.help_action.triggered.connect(self.open_help)
 
         # version Submenu
         icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
         self.version_action = QAction(icon, u"Notes de version", self.iface.mainWindow())
-        QObject.connect(self.version_action, SIGNAL("triggered()"), self.open_message_dialog)
+        self.version_action.triggered.connect(self.open_message_dialog)
 
         # Add Cadastre to Extension menu
         self.iface.addPluginToMenu(u"&Cadastre", self.import_action)
@@ -202,7 +195,7 @@ class cadastre_menu:
             self.open_about_dialog()
 
         # Display some messages depending on version number
-        mConfig = ConfigParser.ConfigParser()
+        mConfig = configparser.ConfigParser()
         metadataFile = os.path.dirname(__file__) + "/metadata.txt"
         mConfig.read( metadataFile )
         self.mConfig = mConfig
@@ -217,7 +210,7 @@ class cadastre_menu:
         self.iface.newProjectCreated.connect(self.onNewProjectCreated)
 
         # Delete layers from table when deleted from registry
-        lr = QgsMapLayerRegistry.instance()
+        lr = QgsProject.instance()
         lr.layersRemoved.connect( self.checkIdentifyParcelleTool )
 
 
@@ -259,37 +252,35 @@ class cadastre_menu:
             s.setValue("cadastre/composerTemplateFile", f)
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
-        tf = file(f, 'rt')
-        tc= tf.read()
-        tf.close()
-        d= QDomDocument()
-        d.setContent(tc)
 
-        # Create composition
-        ms = self.iface.mapCanvas().mapSettings()
-        c = QgsComposition(ms)
-        c.loadFromTemplate(d)
+        # Create composition from QPT templat
+        p = QgsProject()
+        l = QgsLayout(p)
+        with open(f) as ff:
+            template_content = ff.read()
+        doc = QDomDocument()
+        doc.setContent(template_content)
 
-        c.setPlotStyle(QgsComposition.Print)
-        #c.setPrintResolution(300)
+        # adding to existing items
+        new_items, ok = l.loadFromTemplate(doc, QgsReadWriteContext(), False)
 
-        # Set map
+        # Set scale and extent
         canvas = self.iface.mapCanvas()
-        cm = c.getComposerMapById(0)
+        lm = l.itemById (0)
         extent = canvas.extent()
         scale = canvas.scale()
-        cm.setMapCanvas(canvas)
         if extent:
-            cm.zoomToExtent(extent)
+            lm.zoomToExtent(extent)
         if scale:
-            cm.setNewScale(scale)
+            lm.setScale(scale)
 
         # Export
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
         self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
         temp = int(time()*100)
         temppath = os.path.join(tempDir, 'export_cadastre_%s.pdf' % temp)
-        c.exportAsPDF(temppath)
+        exporter = QgsLayoutExporter(l)
+        exporter.exportToPdf(temppath, QgsLayoutExporter.PdfExportSettings() )
 
         QApplication.restoreOverrideCursor()
 
@@ -342,7 +333,7 @@ class cadastre_menu:
         # Find parcelle layer
         parcelleLayer = None
         try:
-            from cadastre_dialogs import cadastre_common
+            from .cadastre_dialogs import cadastre_common
             parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('parcelle_info')
         except:
             parcelleLayer = None
@@ -459,9 +450,9 @@ class cadastre_menu:
         i = 0
         for item in changelog.split('*'):
             if i == 0:
-                message+= '<b>%s</b><ul>' % item.decode('utf-8')
+                message+= '<b>%s</b><ul>' % item
             else:
-                message+= '<li>%s</li>' % item.decode('utf-8')
+                message+= '<li>%s</li>' % item
             i+=1
         message+='</ul>'
         message+= '</p>'

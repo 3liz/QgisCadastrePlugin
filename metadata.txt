@@ -1,14 +1,14 @@
 # Mandatory items:
 [general]
 name=cadastre
-qgisMinimumVersion=2.0.0
-qgisMaximumVersion=2.99
+qgisMinimumVersion=3.0
+qgisMaximumVersion=3.99
 description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
 about=This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
-version=1.5.2
+version=1.6.0
 author=3liz
 email=info@3liz.com
 
@@ -18,30 +18,8 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 1.5.2
-  * Import - Transformation des champs date en texte pour le MAJIC, par respect de la donnée source
-  * Correction d'un bug de la 1.5.1 avec QFileDialog, QFileInfo et BaseError manquant
-  Version 1.5.1
-  * Import - MAJIC : correction de bug si dates mauvaises (30 fév par ex)
-  * Import - Support partiel des données EDIGEO en projection IGNF
-  * Import - Correction d'un bug de non remplissage des parcelles si correspondance geo_subdsect manquant
-  * Import - EDIGEO : conversion en date des champs de geo_subdsect seulement si format correct #120
-  Version 1.5.0 (pour rappel)
-  * Chargement - Ajout de couches via requête SQL
-  * Import - Ajout de la nomenclature pour ccocac
-  * Import - Correction sur la table pivot geo_batiment_parcelle: restriction par intersection
-  * Rechercher - Déplacement de la recherche d'adresse sous celle par parcelle
-  * Chargement - correction d'un bug sur l'ajout dans les groupes Cadastre
-  * Import - Ajout du support de MAJIC 2017
-  * Recherche - Support de l'autocomplétion pour les adresses et les propriétaires
-  * Recherche - Intégration des adresses dans la recherche de lieux
-  * Import - Correction du bug de récupération des propriétés bâties
-  * Import/Identification - contournement du bug d'encodage sur requête pour QGIS 2.18.10 et >
-  * Identification - correction du bug sur chargement de projet QGIS
-  * Import - Majic : import des propriétaires si et seulement si dnupro est non vide
-  * Import - Lieudits: utilisation de tous les champs tex
-  * Recherche - Réapplication de l'ordre dans les listes déroulantes (sections, parcelles)
-  * BDD - Possibilité de se connecter avec un connexion utilisant un service PostgreSQL
+  Version 1.6.0
+  * Plugin - compatibilité avec QGIS 3
 
 # tags are comma separated with spaces allowed
 tags=cadastre, france, majic, edigeo, import
@@ -52,7 +30,7 @@ repository=https://github.com/3liz/Qadastre
 icon=icon.png
 
 # experimental flag
-experimental=False
+experimental=True
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False

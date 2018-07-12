@@ -21,6 +21,7 @@
 # DEALINGS IN THE SOFTWARE.
 ###############################################################################
 
+from builtins import range
 from osgeo import ogr, gdal
 from string import Template
 import tempfile

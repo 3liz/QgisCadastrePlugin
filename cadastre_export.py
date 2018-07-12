@@ -21,11 +21,14 @@
  *                                                                                                                                                 *
  ***************************************************************************/
 """
+from __future__ import print_function
+from __future__ import absolute_import
 
 # TODO
 # * Utiliser une seule requête et non plusieurs requêtes avec des offset -> long si nb parcelle grand
 
 
+from builtins import range
 import csv, sys
 import subprocess
 import os.path
@@ -33,20 +36,12 @@ import operator
 import tempfile
 import re
 
-from PyQt4.QtCore import (
-    Qt,
-    QObject,
-    QSettings,
-    QUrl
-)
-from PyQt4.QtGui import (
-    QApplication,
-    QDesktopServices,
-    QFont
-)
+from qgis.PyQt.QtCore import Qt, QObject, QSettings, QUrl
+from qgis.PyQt.QtWidgets import QApplication
+from qgis.PyQt.QtGui import QDesktopServices, QFont
 from qgis.core import (
-    QGis,
-    QgsMapLayerRegistry,
+    Qgis,
+    QgsProject,
     QgsMessageLog,
     QgsLogger,
     QgsExpression,
@@ -61,7 +56,7 @@ from qgis.core import (
     QgsMapSettings,
     QgsFillSymbolV2
 )
-from cadastre_dialogs import cadastre_common
+from .cadastre_dialogs import cadastre_common
 
 try:
     from qgis.utils import iface
@@ -280,11 +275,11 @@ class cadastreExport(QObject):
         # items for which not the run a query for each page
         # but only once and keep content for next pages
         self.contentKeeped = {}
-        for key, item in self.composerTemplates.items():
-            if item.has_key('keepContent') and item['keepContent']:
+        for key, item in list(self.composerTemplates.items()):
+            if 'keepContent' in item and item['keepContent']:
                 self.contentKeeped[key] = ''
-        for key, item in self.mainTables.items():
-            if item.has_key('keepContent') and item['keepContent']:
+        for key, item in list(self.mainTables.items()):
+            if 'keepContent' in item and item['keepContent']:
                 self.contentKeeped[key] = ''
 
     def getContentForGivenItem(self, key, item, page=None):
@@ -294,7 +289,7 @@ class cadastreExport(QObject):
         and assign data from item
         '''
         # First check previous stored content
-        if item.has_key('keepContent') and item['keepContent'] \
+        if 'keepContent' in item and item['keepContent'] \
          and self.contentKeeped[key]:
             return self.contentKeeped[key]
 
@@ -324,8 +319,8 @@ class cadastreExport(QObject):
             sql = sql.replace('$and', item['and'][self.etype] )
 
             # Limit results if asked
-            if page and key in self.mainTables.keys() \
-            and key in self.lineCount.keys():
+            if page and key in list(self.mainTables.keys()) \
+            and key in list(self.lineCount.keys()):
                 offset = int((page- 1) * self.maxLineNumber)
                 #~ sql+= " LIMIT %s" % self.maxLineNumber
                 #~ sql+= " OFFSET %s" % offset
@@ -343,7 +338,7 @@ class cadastreExport(QObject):
             # Page no defined = means the query is here to
             # get line count and whole data for proprietes_baties & proprietes_non_baties
             if not page:
-                if key in self.lineCount.keys():
+                if key in list(self.lineCount.keys()):
                     # line count
                     self.lineCount[key]['count'] = rowCount
                     # keep data
@@ -357,8 +352,8 @@ class cadastreExport(QObject):
                     content+= self.getHtmlFromTemplate(tplPath, replaceDict)
 
                 # fill empty data to have full size table
-                if key in self.mainTables.keys() \
-                and key not in self.contentKeeped.keys() \
+                if key in list(self.mainTables.keys()) \
+                and key not in list(self.contentKeeped.keys()) \
                 and len(data) < self.maxLineNumber:
                     for l in range(self.maxLineNumber - len(data)):
                         replaceDict = {}
@@ -380,7 +375,7 @@ class cadastreExport(QObject):
             content = self.getHtmlFromTemplate(tplPath, replaceDict)
 
         # Keep somme content globally
-        if item.has_key('keepContent') and item['keepContent']:
+        if 'keepContent' in item and item['keepContent']:
             self.contentKeeped[key] = content
 
         # replace some unwanted content
@@ -407,10 +402,11 @@ class cadastreExport(QObject):
             data = regex.sub(replfunc, data)
             return data
 
-        except IOError, e:
+        except IOError as e:
             msg = u"Erreur lors de l'export: %s" % e
             self.go = False
-            print "%s" % msg
+            # fix_print_with_import
+            print("%s" % msg)
             return msg
 
         finally:
@@ -449,7 +445,7 @@ class cadastreExport(QObject):
         needed to fit all the data
         '''
         # retrieve total data and get total count
-        for key in self.lineCount.keys():
+        for key in list(self.lineCount.keys()):
             self.getContentForGivenItem(key, self.mainTables[key])
         self.numPages = max(
             [
@@ -469,7 +465,7 @@ class cadastreExport(QObject):
         '''
 
         # First get content for parent items
-        for key, item in self.mainTables.items():
+        for key, item in list(self.mainTables.items()):
             self.mainTables[key]['content'] = self.getContentForGivenItem(
                 key,
                 item,
@@ -477,7 +473,7 @@ class cadastreExport(QObject):
             )
 
         # Then get content for displayed items
-        for key, item in self.composerTemplates.items():
+        for key, item in list(self.composerTemplates.items()):
             self.buildComposerLabel(key,item,page)
 
         # Add watershed
@@ -539,7 +535,7 @@ class cadastreExport(QObject):
         with a map and basic information
         '''
         # First add headers
-        for key, item in self.composerTemplates.items():
+        for key, item in list(self.composerTemplates.items()):
             if 'sticky' in item:
                 self.buildComposerLabel(key, item, 0)
 
@@ -557,7 +553,7 @@ class cadastreExport(QObject):
         # Add memory layer to highlight parcelle
         if extent:
             if self.redlineLayer:
-                QgsMapLayerRegistry.instance().removeMapLayer(self.redlineLayer.id())
+                QgsProject.instance().removeMapLayer(self.redlineLayer.id())
             crs = self.layer.crs().authid()
             vl = QgsVectorLayer("Polygon?crs=" + crs, "temporary", "memory")
             pr = vl.dataProvider()
@@ -571,7 +567,7 @@ class cadastreExport(QObject):
             props['outline_style'] = u'solid'
             props['style'] = u'no'
             vl.rendererV2().setSymbol(QgsFillSymbolV2.createSimple(props))
-            QgsMapLayerRegistry.instance().addMapLayer(vl)
+            QgsProject.instance().addMapLayer(vl)
             self.redlineLayer = vl
 
         # Add composer map & to parcelle
@@ -632,7 +628,7 @@ class cadastreExport(QObject):
             self.currentComposition.exportAsPDF(temppath)
 
             if self.redlineLayer:
-                QgsMapLayerRegistry.instance().removeMapLayer(self.redlineLayer.id())
+                QgsProject.instance().removeMapLayer(self.redlineLayer.id())
                 miLayers = self.mInstance.layers()
                 self.mInstance.setLayers( miLayers.pop(0) )
 
@@ -707,14 +703,14 @@ class cadastreExport(QObject):
         self.printProgress.show()
 
 if iface:
-    from PyQt4 import uic
+    from qgis.PyQt import uic
     PRINT_FORM_CLASS, _ = uic.loadUiType(
         os.path.join(
             os.path.dirname(__file__),
             'forms/cadastre_print_form.ui'
         )
     )
-    from PyQt4.QtGui import (
+    from qgis.PyQt.QtWidgets import (
         QDialog
     )
     class cadastrePrintProgress(QDialog, PRINT_FORM_CLASS):

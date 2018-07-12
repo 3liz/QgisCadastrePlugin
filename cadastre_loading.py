@@ -22,26 +22,19 @@
  ***************************************************************************/
 """
 
+from builtins import str
 import sys, os, glob
 import re
 import time
 import tempfile
 import shutil
 
-from PyQt4.QtCore import (
-    Qt,
-    QObject,
-    QSettings,
-    pyqtSignal
-)
-from PyQt4.QtGui import (
-    QApplication,
-    QMessageBox
-)
+from qgis.PyQt.QtCore import Qt, QObject, QSettings, pyqtSignal
+from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
 from qgis.core import (
-    QGis,
-    QgsMapLayerRegistry,
+    Qgis,
+    QgsProject,
     QgsMessageLog,
     QgsLogger,
     QgsExpression,
@@ -145,7 +138,7 @@ class cadastreLoading(QObject):
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # default style to apply for Cadastre layers
-        self.themeDir = unicode(self.dialog.liTheme.currentText())
+        self.themeDir = str(self.dialog.liTheme.currentText())
         if not os.path.exists(os.path.join(
             self.qc.plugin_dir,
             "styles/%s" % self.themeDir
@@ -170,7 +163,7 @@ class cadastreLoading(QObject):
         # Get selected options
         providerName = self.dialog.dbpluginclass.providerName()
         qgisCadastreLayers = []
-        self.dialog.schema = unicode(self.dialog.liDbSchema.currentText())
+        self.dialog.schema = str(self.dialog.liDbSchema.currentText())
         self.dialog.totalSteps = len(self.qgisCadastreLayerList)
 
         # Run the loading
@@ -220,7 +213,7 @@ class cadastreLoading(QObject):
             if item['label'] not in self.mainLayers and self.dialog.cbMainLayersOnly.isChecked():
                 continue
 
-            if item.has_key('dbType') and item['dbType'] != self.dialog.dbType:
+            if 'dbType' in item and item['dbType'] != self.dialog.dbType:
                 continue
 
             # update progress bar
@@ -230,7 +223,7 @@ class cadastreLoading(QObject):
 
             # Tables - Get db_manager table instance
             tableList = [a for a in dbTables if a.name == item['table']]
-            if len(tableList) == 0 and not item.has_key('isView'):
+            if len(tableList) == 0 and 'isView' not in item:
                 self.qc.updateLog(u'  - Aucune table trouvée pour %s' % item['label'])
                 continue
 
@@ -246,7 +239,7 @@ class cadastreLoading(QObject):
             schema = self.dialog.schema
 
             # View
-            if item.has_key('isView'):
+            if 'isView' in item:
                 if self.dialog.dbType == 'spatialite':
                     schemaReplace = ''
                 else:
@@ -319,7 +312,7 @@ class cadastreLoading(QObject):
 
         # Add all layers to QGIS registry
         self.qc.updateLog(u'Ajout des couches dans le registre de QGIS')
-        QgsMapLayerRegistry.instance().addMapLayers(qgisCadastreLayers)
+        QgsProject.instance().addMapLayers(qgisCadastreLayers)
         self.updateTimer()
 
         # Create a group "Cadastre" and move all layers into it
@@ -415,11 +408,11 @@ class cadastreLoading(QObject):
         Load a vector layer from SQL and information given by the user
         '''
         providerName = self.dialog.dbpluginclass.providerName()
-        self.dialog.schema = unicode(self.dialog.liDbSchema.currentText())
+        self.dialog.schema = str(self.dialog.liDbSchema.currentText())
 
         sqlText = self.dialog.sqlText.toPlainText()
         if self.dialog.dbType == 'postgis':
-            self.dialog.schema = unicode(self.dialog.liDbSchema.currentText())
+            self.dialog.schema = str(self.dialog.liDbSchema.currentText())
 
         geometryColumn = self.dialog.geometryColumn.text()
         if not geometryColumn:
@@ -439,7 +432,7 @@ class cadastreLoading(QObject):
         )
         if layer.isValid():
             # Add layer to layer tree
-            QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+            QgsProject.instance().addMapLayers([layer], True)
         else:
             self.qc.updateLog(u"La couche n'est pas valide et n'a pu être chargée. Pour PostGIS, avez-vous pensé à indiquer le schéma comme préfixe des tables ?" )
 

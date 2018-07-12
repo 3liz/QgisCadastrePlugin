@@ -21,13 +21,18 @@
  *                                                                                                                                                 *
  ***************************************************************************/
 """
+from __future__ import print_function
+from __future__ import absolute_import
 
+from builtins import str
+from builtins import range
+from builtins import object
 import csv
 import os.path
 import operator
 import re
 import tempfile
-from PyQt4.QtCore import (
+from qgis.PyQt.QtCore import (
     Qt,
     pyqtSignal,
     QObject,
@@ -35,33 +40,34 @@ from PyQt4.QtCore import (
     QRegExp,
     QFileInfo
 )
-from PyQt4.QtGui import (
-    QTextCursor,
+from qgis.PyQt.QtWidgets import (
     QDialog,
     QFileDialog,
     QApplication,
     qApp,
-    QCursor,
-    QPixmap,
     QCompleter,
-    QSortFilterProxyModel,
-    QStringListModel,
     QDockWidget,
     QMessageBox
 )
+from qgis.PyQt.QtGui import (
+    QCursor,
+    QTextCursor,
+    QPixmap
+)
+from qgis.PyQt.QtCore import QSortFilterProxyModel
 from qgis.core import (
-    QgsMapLayerRegistry,
+    QgsProject,
     QgsMessageLog,
     QgsLogger,
     QgsExpression,
-    QgsDataSourceURI,
+    QgsDataSourceUri,
     QgsMapLayer,
     QgsFeatureRequest,
     QgsCoordinateTransform,
     QgsCoordinateReferenceSystem
 )
 from qgis.gui import (
-    QgsGenericProjectionSelector
+    QgsProjectionSelectionDialog
 )
 import unicodedata
 
@@ -87,7 +93,7 @@ from functools import partial
 # --------------------------------------------------------
 
 
-class cadastre_common():
+class cadastre_common(object):
 
     def __init__(self, dialog):
 
@@ -97,7 +103,7 @@ class cadastre_common():
         self.plugin_dir = os.path.dirname(os.path.abspath(__file__))
 
         # default auth id for layers
-        self.defaultAuthId = 'EPSG:2154'
+        self.defaultAuthId = '2154'
 
     @staticmethod
     def hasSpatialiteSupport():
@@ -155,7 +161,7 @@ class cadastre_common():
         '''
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
-        dbType = unicode(self.dialog.liDbType.currentText()).lower()
+        dbType = str(self.dialog.liDbType.currentText()).lower()
         self.dialog.liDbConnection.clear()
 
         if self.dialog.liDbType.currentIndex() != 0:
@@ -167,8 +173,8 @@ class cadastre_common():
             # fill the connections combobox
             self.dialog.connectionDbList = []
             for c in dbpluginclass.connections():
-                self.dialog.liDbConnection.addItem( unicode(c.connectionName()))
-                self.dialog.connectionDbList.append(unicode(c.connectionName()))
+                self.dialog.liDbConnection.addItem( str(c.connectionName()))
+                self.dialog.connectionDbList.append(str(c.connectionName()))
 
             # Show/Hide database specific pannel
             if hasattr(self.dialog, 'databaseSpecificOptions'):
@@ -205,9 +211,9 @@ class cadastre_common():
         self.dialog.liDbSchema.clear()
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
-        connectionName = unicode(self.dialog.liDbConnection.currentText())
+        connectionName = str(self.dialog.liDbConnection.currentText())
         self.dialog.connectionName = connectionName
-        dbType = unicode(self.dialog.liDbType.currentText()).lower()
+        dbType = str(self.dialog.liDbType.currentText()).lower()
 
         # Deactivate schema fields
         self.toggleSchemaList(False)
@@ -246,8 +252,8 @@ class cadastre_common():
                 # Activate schema fields
                 self.toggleSchemaList(True)
                 for s in db.schemas():
-                    self.dialog.liDbSchema.addItem( unicode(s.name))
-                    self.dialog.schemaList.append(unicode(s.name))
+                    self.dialog.liDbSchema.addItem( str(s.name))
+                    self.dialog.schemaList.append(str(s.name))
             else:
                 self.toggleSchemaList(False)
         else:
@@ -358,8 +364,8 @@ class cadastre_common():
         table name (postgis or sqlite)
         '''
         layer = None
-        lr = QgsMapLayerRegistry.instance()
-        for lid,l in lr.mapLayers().items():
+        lr = QgsProject.instance()
+        for lid,l in list(lr.mapLayers().items()):
             if not hasattr(l, 'providerType'):
                 continue
             if hasattr(l, 'type') and l.type() != 0:
@@ -494,7 +500,7 @@ class cadastre_common():
         ok = True
         #print "run query"
         try:
-            c = connector._execute(None,unicode(sql).encode('utf-8'))
+            c = connector._execute(None,str(sql).encode('utf-8'))
             data = []
             header = connector._get_cursor_columns(c)
             if header == None:
@@ -506,7 +512,7 @@ class cadastre_common():
                 rowCount = len(data)
         except UnicodeDecodeError as e:
             try:
-                c = connector._execute(None,unicode(sql))
+                c = connector._execute(None,str(sql))
                 data = []
                 header = connector._get_cursor_columns(c)
                 if header == None:
@@ -533,7 +539,8 @@ class cadastre_common():
 
         # Log errors
         if not ok:
-            print error_message
+            # fix_print_with_import
+            print(error_message)
             QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
             return
 
@@ -548,7 +555,7 @@ class cadastre_common():
         and parameters
         '''
         connector = None
-        uri = QgsDataSourceURI()
+        uri = QgsDataSourceUri()
         if connectionParams['dbType'] == 'postgis':
             if connectionParams['host']:
                 uri.setConnection(
@@ -586,7 +593,7 @@ class cadastre_common():
         s = p.sub('oe', s)
 
         if isinstance(s,str):
-            s = unicode(s,"utf8","replace")
+            s = str(s,"utf8","replace")
 
         s=unicodedata.normalize('NFD',s)
         s = s.encode('ascii','ignore')
@@ -708,7 +715,7 @@ class cadastre_common():
         spatial tools and create QGIS connection
         '''
         # Let the user choose new file path
-        ipath = QFileDialog.getSaveFileName (
+        ipath, __, __ = QFileDialog.getSaveFileName (
             None,
             u"Choisir l'emplacement du nouveau fichier",
             str(os.path.expanduser("~").encode('utf-8')).strip(' \t'),
@@ -719,15 +726,15 @@ class cadastre_common():
             return None
 
         # Delete file if exists (question already asked above)
-        if os.path.exists(unicode(ipath)):
-            os.remove(unicode(ipath))
+        if os.path.exists(str(ipath)):
+            os.remove(str(ipath))
 
         # Create the spatialite database
         try:
             from pyspatialite import dbapi2 as db
 
             # Create a connection (which will create the file automatically)
-            conn=db.connect(unicode(ipath))
+            conn=db.connect(str(ipath))
             c=conn.cursor()
 
             # Get spatialite version
@@ -811,8 +818,8 @@ class cadastre_common():
 
 
 
-from cadastre_import import cadastreImport
-from PyQt4 import uic
+from .cadastre_import import cadastreImport
+from qgis.PyQt import uic
 IMPORT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         os.path.dirname(__file__),
@@ -827,7 +834,7 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
 
         self.connectionDbList = []
         # common cadastre methods
-        from cadastre_dialogs import cadastre_common
+        from .cadastre_dialogs import cadastre_common
         self.qc = cadastre_common(self)
 
         # first disable database specifi tabs
@@ -863,7 +870,7 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
                 "input" : self.inMajicSourceDir
             }
         }
-        for key, item in self.pathSelectors.items():
+        for key, item in list(self.pathSelectors.items()):
             control = item['button']
             slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
@@ -881,7 +888,7 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
                 "sentence" : "Choisir la projection de destination"
             }
         }
-        for key, item in self.projSelectors.items():
+        for key, item in list(self.projSelectors.items()):
             control = item['button']
             slot = partial(self.chooseProjection, key)
             control.clicked.connect(slot)
@@ -992,8 +999,8 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
             u"Choisir le répertoire contenant les fichiers",
             str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
         )
-        if os.path.exists(unicode(ipath)):
-            self.pathSelectors[key]['input'].setText(unicode(ipath))
+        if os.path.exists(str(ipath)):
+            self.pathSelectors[key]['input'].setText(str(ipath))
 
 
 
@@ -1003,7 +1010,7 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
         and set input fields appropriately
         '''
         s = QSettings()
-        for k,v in self.sList.items():
+        for k,v in list(self.sList.items()):
             value = s.value("cadastre/%s" % k, '', type=str)
             if value and value != 'None' and v['widget']:
                 if v['wType'] == 'text':
@@ -1053,39 +1060,45 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
         '''
         header = u"Choisir la projection"
         sentence = self.projSelectors[key]['sentence']
-        projSelector = QgsGenericProjectionSelector(self)
-        projSelector.setMessage( "<h2>%s</h2>%s" % (header.encode('UTF8'), sentence.encode('UTF8')) )
-        projSelector.setSelectedAuthId(self.qc.defaultAuthId)
-        if projSelector.exec_():
-            self.crs = QgsCoordinateReferenceSystem( projSelector.selectedCrsId(), QgsCoordinateReferenceSystem.InternalCrsId )
-            if len(projSelector.selectedAuthId()) == 0:
-                QMessageBox.information(
-                    self,
-                    self.tr("Cadastre"),
-                    self.tr(u"Aucun système de coordonnée de référence valide n'a été sélectionné")
-                )
-                return
-            else:
-                self.projSelectors[key]['input'].clear()
-                self.projSelectors[key]['input'].setText(self.crs.authid() + " - " + self.crs.description())
-        else:
-            return
+        projSelector = QgsProjectionSelectionDialog(self)
+        projSelector.setMessage( "<h2>%s</h2>%s" % (header, sentence) )
+        crs = QgsCoordinateReferenceSystem(self.qc.defaultAuthId)
+        self.projSelector = projSelector
+        self.projSelector.exec_()
+        print(crs.authid())
+        self.projSelector.setCrs(crs)
+        print(self.projSelector.crs().authid())
+
+    def onProjectionChosen(self):
+        print(self.projSelector.crs())
+        # if not self.crs or self.crs == '':
+            # QMessageBox.information(
+                # self,
+                # self.tr("Cadastre"),
+                # self.tr(u"Aucun système de coordonnée de référence valide n'a été sélectionné")
+            # )
+            # return
+        # else:
+            # self.projSelectors[key]['input'].clear()
+            # self.projSelectors[key]['input'].setText(self.crs.authid() + " - " + self.crs.description())
+
+
 
     def checkImportInputData(self):
         '''
         Check the user defined inpu data
         '''
 
-        self.dataVersion = unicode(self.inDataVersion.text())
-        self.dataYear = unicode(self.inDataYear.text())
-        self.schema = unicode(self.liDbSchema.currentText())
-        self.majicSourceDir = unicode(self.inMajicSourceDir.text()).strip(' \t')
-        self.edigeoSourceDir = unicode(self.inEdigeoSourceDir.text()).strip(' \t')
-        self.edigeoDepartement = unicode(self.inEdigeoDepartement.text()).strip(' \t')
-        self.edigeoDirection = unicode(self.inEdigeoDirection.text()).strip(' \t')
-        self.edigeoLot = unicode(self.inEdigeoLot.text()).strip(' \t')
-        self.edigeoSourceProj = unicode(self.inEdigeoSourceProj.text().split( " - " )[ 0 ])
-        self.edigeoTargetProj = unicode(self.inEdigeoTargetProj.text().split( " - " )[ 0 ])
+        self.dataVersion = str(self.inDataVersion.text())
+        self.dataYear = str(self.inDataYear.text())
+        self.schema = str(self.liDbSchema.currentText())
+        self.majicSourceDir = str(self.inMajicSourceDir.text()).strip(' \t')
+        self.edigeoSourceDir = str(self.inEdigeoSourceDir.text()).strip(' \t')
+        self.edigeoDepartement = str(self.inEdigeoDepartement.text()).strip(' \t')
+        self.edigeoDirection = str(self.inEdigeoDirection.text()).strip(' \t')
+        self.edigeoLot = str(self.inEdigeoLot.text()).strip(' \t')
+        self.edigeoSourceProj = str(self.inEdigeoSourceProj.text().split( " - " )[ 0 ])
+        self.edigeoTargetProj = str(self.inEdigeoTargetProj.text().split( " - " )[ 0 ])
 
         # defined properties
         self.doMajicImport = os.path.exists(self.majicSourceDir)
@@ -1179,8 +1192,8 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
 # --------------------------------------------------------
 
 
-from cadastre_loading import cadastreLoading
-from PyQt4 import uic
+from .cadastre_loading import cadastreLoading
+from qgis.PyQt import uic
 LOAD_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         os.path.dirname(__file__),
@@ -1197,7 +1210,7 @@ class cadastre_load_dialog(QDialog, LOAD_FORM_CLASS):
         self.cadastre_search_dialog = cadastre_search_dialog
 
         # common cadastre methods
-        from cadastre_dialogs import cadastre_common
+        from .cadastre_dialogs import cadastre_common
         self.qc = cadastre_common(self)
         self.ql = cadastreLoading(self)
 
@@ -1334,8 +1347,8 @@ class CustomQCompleter(QCompleter):
 #        search - search for data among database ans export
 # ---------------------------------------------------------
 
-from cadastre_import import cadastreImport
-from PyQt4 import uic
+from .cadastre_import import cadastreImport
+from qgis.PyQt import uic
 SEARCH_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         os.path.dirname(__file__),
@@ -1351,7 +1364,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
 
         # common cadastre methods
-        from cadastre_dialogs import cadastre_common
+        from .cadastre_dialogs import cadastre_common
         self.qc = cadastre_common(self)
 
         # database properties
@@ -1523,16 +1536,16 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             'zoom': self.setZoomToChosenItem,
             'select': self.setSelectionToChosenItem
         }
-        for key, item in self.zoomButtons.items():
-            for k, button in item['buttons'].items():
+        for key, item in list(self.zoomButtons.items()):
+            for k, button in list(item['buttons'].items()):
                 control = button
                 slot = partial(zoomButtonsFunctions[k], key)
                 control.clicked.connect(slot)
 
         # Manuel search button and combo (proprietaire, adresse)
-        for key, item in self.searchComboBoxes.items():
+        for key, item in list(self.searchComboBoxes.items()):
             # Combobox not prefilled (too much data proprietaires & adresse
-            if item.has_key('search'):
+            if 'search' in item:
 
                 # when the user add some text : autocomplete
                 # the search comboboxes are not filled in with item
@@ -1578,7 +1591,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             'parcelle': self.btExportParcelle,
             'parcelle_proprietaire': self.btExportParcelleProprietaire
         }
-        for key, item in self.exportParcelleButtons.items():
+        for key, item in list(self.exportParcelleButtons.items()):
             control = item
             slot = partial(self.exportParcelle, key)
             control.clicked.connect(slot)
@@ -1602,9 +1615,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         Clear comboboxes content
         '''
         self.txtLog.clear()
-        for key, item in self.searchComboBoxes.items():
+        for key, item in list(self.searchComboBoxes.items()):
             # manual search widgets
-            if item.has_key('widget'):
+            if 'widget' in item:
                 item['widget'].clear()
 
     def checkMajicContent(self):
@@ -1616,7 +1629,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         self.hasMajicDataVoie = False
         self.hasMajicDataParcelle = False
 
-        from cadastre_dialogs import cadastre_common
+        from .cadastre_dialogs import cadastre_common
         aLayer = cadastre_common.getLayerFromLegendByTableProps('geo_commune')
         if aLayer:
             self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(aLayer)
@@ -1764,7 +1777,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # Get value
         combo = self.searchComboBoxes[key]['widget']
-        searchValue = unicode(combo.currentText())
+        searchValue = str(combo.currentText())
 
         # Abort if searchValue length too small
         minlen = self.searchComboBoxes[key]['search']['minlen']
@@ -1828,7 +1841,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
 
             # filter on the chosen commune in the combobox, if any
             communeCb = self.searchComboBoxes['commune']
-            searchCom = unicode(self.liCommune.currentText())
+            searchCom = str(self.liCommune.currentText())
             if communeCb and communeCb['chosenFeature'] and not isinstance(communeCb['chosenFeature'], list) and not 'item(s)' in searchCom:
                 geo_commune = communeCb['chosenFeature']['geo_commune']
                 sql+= ' AND trim(c.geo_commune) = %s' % self.connector.quoteString(geo_commune)
@@ -2087,7 +2100,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # optionnaly also update children combobox
         item = self.searchComboBoxes[key]
-        if item.has_key('children'):
+        if 'children' in item:
             if not isinstance(item['children'], list):
                 return
             for child in item['children']:
@@ -2314,7 +2327,8 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         becomes visible
         '''
         if visible:
-            print "visible"
+            # fix_print_with_import
+            print("visible")
             #~ self.setupSearchCombobox('commune', None, 'sql')
         else:
             self.txtLog.clear()
@@ -2326,7 +2340,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
 # --------------------------------------------------------
 
 
-from PyQt4 import uic
+from qgis.PyQt import uic
 OPTION_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         os.path.dirname(__file__),
@@ -2356,7 +2370,7 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
             }
         }
         from functools import partial
-        for key, item in self.interfaceSelectors.items():
+        for key, item in list(self.interfaceSelectors.items()):
             control = item['button']
             slot = partial(self.applyInterface, key)
             control.clicked.connect(slot)
@@ -2376,7 +2390,7 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
             }
         }
         from functools import partial
-        for key, item in self.pathSelectors.items():
+        for key, item in list(self.pathSelectors.items()):
             control = item['button']
             slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
@@ -2397,15 +2411,15 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
                 str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
             )
         else:
-            ipath = QFileDialog.getOpenFileName(
+            ipath, __ = QFileDialog.getOpenFileName(
                 None,
                 u"Choisir le modèle de composeur utilisé pour l'export",
                 str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t'),
                 u"Composeur (*.qpt)"
             )
 
-        if os.path.exists(unicode(ipath)):
-            self.pathSelectors[key]['input'].setText(unicode(ipath))
+        if os.path.exists(str(ipath)):
+            self.pathSelectors[key]['input'].setText(str(ipath))
 
 
     def getValuesFromSettings(self):
@@ -2521,7 +2535,7 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
 # --------------------------------------------------------
 
 
-from PyQt4 import uic
+from qgis.PyQt import uic
 ABOUT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         os.path.dirname(__file__),
@@ -2558,12 +2572,13 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
 # --------------------------------------------------------
 
 
-from cadastre_export import cadastreExport
+
 try:
-    from cadastre_export import cadastrePrintProgress
+    from .cadastre_export import cadastreExport
+    from .cadastre_export import cadastrePrintProgress
 except:
     pass
-from PyQt4 import uic
+from qgis.PyQt import uic
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         os.path.dirname(__file__),
@@ -2581,7 +2596,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         self.cadastre_search_dialog = cadastre_search_dialog
 
         # common cadastre methods
-        from cadastre_dialogs import cadastre_common
+        from .cadastre_dialogs import cadastre_common
         self.qc = cadastre_common(self)
 
         # Get connection parameters
@@ -2604,7 +2619,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
             'parcelle' : self.btExportParcelle,
             'proprietaire': self.btExportProprietaire
         }
-        for key, item in exportButtons.items():
+        for key, item in list(exportButtons.items()):
             control = item
             slot = partial(self.exportAsPDF, key)
             control.clicked.connect(slot)
@@ -2836,7 +2851,8 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 
         comptecommunal = cadastre_common.getCompteCommunalFromParcelleId( self.feature['geo_parcelle'], self.connectionParams, self.connector )
         if not comptecommunal:
-            print "Aucune parcelle trouvée pour ce propriétaire"
+            # fix_print_with_import
+            print("Aucune parcelle trouvée pour ce propriétaire")
         value = comptecommunal
         filterExpression = "comptecommunal IN ('%s')" % value
 
@@ -2876,7 +2892,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 #        Messages - Displays a message to the user
 # --------------------------------------------------------
 
-from PyQt4 import uic
+from qgis.PyQt import uic
 MESSAGE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         os.path.dirname(__file__),

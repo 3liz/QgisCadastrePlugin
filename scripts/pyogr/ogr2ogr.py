@@ -35,6 +35,9 @@
 # Note : this is the most direct port of ogr2ogr.cpp possible
 # It could be made much more Python'ish !
 
+from __future__ import print_function
+from builtins import range
+from builtins import object
 import sys
 import os
 import stat
@@ -50,7 +53,7 @@ except:
 
 ###############################################################################
 
-class ScaledProgressObject:
+class ScaledProgressObject(object):
     def __init__(self, min, max, cbk, cbk_data = None):
         self.min = min
         self.max = max
@@ -106,7 +109,7 @@ def TermProgress( dfComplete, pszMessage, pProgressArg ):
 
     return True
 
-class TargetLayerInfo:
+class TargetLayerInfo(object):
     def __init__(self):
         self.poDstLayer = None
         self.poCT = None
@@ -114,7 +117,7 @@ class TargetLayerInfo:
         self.panMap = None
         self.iSrcZField = None
 
-class AssociatedLayers:
+class AssociatedLayers(object):
     def __init__(self):
         self.poSrcLayer = None
         self.psInfo = None
@@ -641,7 +644,7 @@ def ogr2ogr(
 #/* -------------------------------------------------------------------- */
 #/*      Open data source.                                               */
 #/* -------------------------------------------------------------------- */
-    if isinstance(pszDataSource, basestring):
+    if isinstance(pszDataSource, str):
         poDS = ogr.Open(pszDataSource, False)
     else:
         poDS = pszDataSource

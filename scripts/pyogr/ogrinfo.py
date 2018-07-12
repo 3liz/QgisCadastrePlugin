@@ -34,6 +34,9 @@
 # Note : this is the most direct port of ogrinfo.cpp possible
 # It could be made much more Python'ish !
 
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import sys
 
 try:
@@ -262,7 +265,7 @@ def ogrinfo(readonly = False,
 
     poDS_Name = poDS.GetName()
     if str(type(pszDataSource)) == "<type 'unicode'>" and str(type(poDS_Name)) == "<type 'str'>":
-        poDS_Name = unicode(poDS_Name, "utf8")
+        poDS_Name = str(poDS_Name, "utf8")
     if bVerbose and pszDataSource != poDS_Name:
         print( "INFO: Internal data source name `%s'\n"
                 "      different from user name `%s'." % (poDS_Name, pszDataSource ))
