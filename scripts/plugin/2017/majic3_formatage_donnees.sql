@@ -24,7 +24,7 @@ SELECT
   to_number(SUBSTRING(tmp,22,9),'000000000') AS dcntpa,
   SUBSTRING(tmp,31,1) AS dsrpar,
   SUBSTRING(tmp,32,6) AS dnupro,
-  CASE WHEN trim(SUBSTRING(tmp,38,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,38,8),'DDMMYYYY') END AS jdatat,
+  CASE WHEN trim(SUBSTRING(tmp,38,8))='' THEN NULL ELSE SUBSTRING(tmp,38,8) END AS jdatat,
   SUBSTRING(tmp,46,5) AS dreflf,
   SUBSTRING(tmp,51,1) AS gpdl,
 
@@ -110,7 +110,7 @@ SELECT
 
   SUBSTRING(tmp,137,1) AS gnidom,
   SUBSTRING(tmp,138,1) AS topja,
-  CASE WHEN trim(SUBSTRING(tmp,139,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,139,8),'DDMMYYYY') END AS datja,
+  CASE WHEN trim(SUBSTRING(tmp,139,8))='' THEN NULL ELSE SUBSTRING(tmp,139,8) END AS datja,
   SUBSTRING(tmp,147,1) AS postel,
   CASE WHEN trim(SUBSTRING(tmp,148,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,148,3),'999') END AS ccortar,
 
@@ -238,7 +238,7 @@ SELECT
   SUBSTRING(tmp,36,1) AS gpdl,
   SUBSTRING(tmp,37,1) AS dsrpar,
   SUBSTRING(tmp,38,6) AS dnupro,
-  CASE WHEN trim(SUBSTRING(tmp,44,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,44,8),'DDMMYYYY') END AS jdatat,
+  CASE WHEN trim(SUBSTRING(tmp,44,8))='' THEN NULL ELSE SUBSTRING(tmp,44,8) END AS jdatat,
   SUBSTRING(tmp,52,6) AS dnufnl,
   CASE WHEN trim(SUBSTRING(tmp,58,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,58,1)) END AS ccoeva,
 
@@ -268,7 +268,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,115,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,115,1)) END AS hlmsem,
   SUBSTRING(tmp,116,1) AS postel,
   SUBSTRING(tmp,117,2) AS dnatcg,
-  CASE WHEN trim(SUBSTRING(tmp,119,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,119,8),'DDMMYYYY') END AS jdatcgl,
+  CASE WHEN trim(SUBSTRING(tmp,119,8))='' THEN NULL ELSE SUBSTRING(tmp,119,8) END AS jdatcgl,
 
   SUBSTRING(tmp,127,6) AS dnutbx,
   SUBSTRING(tmp,133,9) AS dvltla,
@@ -665,7 +665,7 @@ SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
   SUBSTRING(tmp,287,3) AS dqualp,
   SUBSTRING(tmp,290,30) AS dnomlp,
   SUBSTRING(tmp,320,15) AS dprnlp,
-  CASE WHEN trim(SUBSTRING(tmp,335,10))='' THEN NULL WHEN SUBSTRING(tmp,335,10)='00/00/0000' THEN NULL ELSE to_date(SUBSTRING(tmp,335,10),'DD/MM/YYYY') END AS jdatnss,
+  CASE WHEN trim(SUBSTRING(tmp,335,10))='' THEN NULL WHEN SUBSTRING(tmp,335,10)='00/00/0000' THEN NULL ELSE SUBSTRING(tmp,335,10) END AS jdatnss,
   SUBSTRING(tmp,345,58) AS dldnss,
   NULL AS epxnee,
   NULL AS dnomcp,
@@ -673,7 +673,7 @@ SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
   SUBSTRING(tmp,467,9) AS dsiren,
 
   SUBSTRING(tmp,478,1) AS topja,
-  CASE WHEN trim(SUBSTRING(tmp,479,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,479,8),'DDMMYYYY') END AS datja,
+  CASE WHEN trim(SUBSTRING(tmp,479,8))='' THEN NULL ELSE SUBSTRING(tmp,479,8) END AS datja,
 
   SUBSTRING(tmp,534,4) AS dformjur,
   SUBSTRING(tmp,538,60) AS dnomus,
@@ -778,7 +778,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,38,7))='' THEN NULL ELSE to_number(SUBSTRING(tmp,38,7),'9999999') END AS dnumql,
   CASE WHEN trim(SUBSTRING(tmp,45,7))='' THEN NULL ELSE to_number(SUBSTRING(tmp,45,7),'999999') END AS ddenql,
   SUBSTRING(tmp,52,20) AS dfilot,
-  CASE WHEN trim(SUBSTRING(tmp,72,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,72,8),'DDMMYYYY') END AS datact,
+  CASE WHEN trim(SUBSTRING(tmp,72,8))='' THEN NULL ELSE SUBSTRING(tmp,72,8) END AS datact,
   SUBSTRING(tmp,83,6) AS dnuprol,
   SUBSTRING(tmp,89,5) AS dreflf,
   SUBSTRING(tmp,94,4) AS ccocif,

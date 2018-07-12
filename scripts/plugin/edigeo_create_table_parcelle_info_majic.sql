@@ -69,7 +69,7 @@ string_agg(
         trim(
             CASE
                 WHEN pr.jdatnss IS NOT NULL
-                THEN ' - Né(e) le ' || coalesce(to_char(pr.jdatnss, 'dd/mm/YYYY'), '') || ' à ' || coalesce(pr.dldnss, '')
+                THEN ' - Né(e) le ' || coalesce(pr.jdatnss, '') || ' à ' || coalesce(pr.dldnss, '')
                 ELSE ''
             END
         )
