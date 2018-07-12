@@ -67,10 +67,12 @@ import unicodedata
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/forms")
 
+# db_manager scripts
 from db_manager.db_plugins.plugin import (
     DBPlugin,
     Schema,
-    Table
+    Table,
+    BaseError
 )
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
