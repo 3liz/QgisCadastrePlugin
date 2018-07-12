@@ -8,7 +8,7 @@ description=
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
 about=This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
-version=1.5.1
+version=1.5.2
 author=3liz
 email=info@3liz.com
 
@@ -18,6 +18,9 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
+  Version 1.5.2
+  * Import - Transformation des champs date en texte pour le MAJIC, par respect de la donnée source
+  * Correction d'un bug de la 1.5.1 avec QFileDialog et BaseError manquant
   Version 1.5.1
   * Import - MAJIC : correction de bug si dates mauvaises (30 fév par ex)
   * Import - Support partiel des données EDIGEO en projection IGNF
