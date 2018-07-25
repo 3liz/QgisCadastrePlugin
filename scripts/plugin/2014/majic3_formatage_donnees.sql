@@ -269,7 +269,7 @@ UPDATE [PREFIXE]local10 SET
   parcelle = REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '0'),
   voie= REPLACE(local10.annee||local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi||local00.ccoriv,' ', '0')
 FROM [PREFIXE]local00
-WHERE local00.ccodep = local10.ccodep AND local00.ccodir = local10.ccodir AND local00.invar = local10.invar AND local00.annee='[ANNEE]' AND local10.annee='[ANNEE]';
+WHERE local00.ccodep = local10.ccodep AND local00.ccodir = local10.ccodir AND local00.invar = local10.invar AND local00.annee='[ANNEE]' AND local10.annee='[ANNEE]' AND local00.lot='[LOT]' AND local10.lot='[LOT]';
 
 -- Traitement: pev
 INSERT INTO [PREFIXE]pev
