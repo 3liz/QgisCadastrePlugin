@@ -40,7 +40,8 @@ from qgis.core import (
     QgsExpression,
     QgsMapLayer,
     QgsVectorLayer,
-    QgsFeatureRequest
+    QgsFeatureRequest,
+    QgsLayerTreeLayer
 )
 from datetime import datetime
 
@@ -179,10 +180,10 @@ class cadastreLoading(QObject):
             dbTables = self.dialog.db.tables()
 
         # Get commune filter by expression
-        communeExpression = self.dialog.communeFilter.text()
+        communeExpression = self.dialog.communeFilter.text().strip()
         communeFilter = None
         cExp = QgsExpression(communeExpression)
-        if not cExp.hasParserError():
+        if communeExpression != '' and not cExp.hasParserError():
             self.qc.updateLog(u'Filtrage à partir des communes : %s' % communeExpression)
             cReq = QgsFeatureRequest(cExp)
             cTableList = [a for a in dbTables if a.name == 'geo_commune']
@@ -204,7 +205,7 @@ class cadastreLoading(QObject):
             if len(cids):
                 communeFilter = cids
         else:
-            self.qc.updateLog(u'Filtrage à partir des communes : expression invalide !')
+            self.qc.updateLog(u'Filtrage à partir des communes, expression invalide : %s' % cExp.parserErrorString())
 
 
         # Loop throuhg qgisQastreLayerList and load each corresponding table
@@ -230,10 +231,10 @@ class cadastreLoading(QObject):
             if tableList:
                 table = tableList[0]
                 source = table.name
-                uniqueField = table.getValidQGisUniqueFields(True)
-                if uniqueField:
+                try:
+                    uniqueField = table.getValidQGisUniqueFields(True)
                     uniqueCol = uniqueField.name
-                else:
+                except:
                     uniqueCol = 'ogc_fid'
 
             schema = self.dialog.schema
@@ -310,67 +311,60 @@ class cadastreLoading(QObject):
         canvas = iface.mapCanvas()
         canvas.freeze(True)
 
-        # Add all layers to QGIS registry
+        # Add all layers to QGIS registry (but not yet to the layer tree)
         self.qc.updateLog(u'Ajout des couches dans le registre de QGIS')
-        QgsProject.instance().addMapLayers(qgisCadastreLayers)
+        QgsProject.instance().addMapLayers(qgisCadastreLayers, False)
         self.updateTimer()
 
         # Create a group "Cadastre" and move all layers into it
         self.qc.updateLog(u'Ajout des couches dans le groupe Cadastre')
-        li = self.dialog.iface.legendInterface()
-        groups = []
-        for group in li.groupLayerRelationship():
-            if group[0]:
-                groups.append(group[0])
-        if u"Cadastre" in groups:
-            g1 = self.getGroupIndex(u"Cadastre")
-            if not u'Fond' in groups:
-                gf = li.addGroup(u'Fond', True, g1)
-            else:
-                gf = self.getGroupIndex(u'Fond')
+        root = QgsProject.instance().layerTreeRoot()
+        g1 = root.findGroup(u"Cadastre")
+        if g1:
+            gf = root.findGroup(u"Fond")
+            if not gf:
+                gf = g1.addGroup("Fond")
 
-            if not u'Étiquettes cadastre' in groups:
-                ge = li.addGroup(u'Étiquettes cadastre', True, gf)
-            else:
-                ge = self.getGroupIndex(u'Étiquettes cadastre')
+            ge = root.findGroup(u'Étiquettes cadastre')
+            if not ge:
+                ge = gf.addGroup(u'Étiquettes cadastre')
 
-            if not u'Données cadastre' in groups:
-                gd = li.addGroup(u'Données cadastre', True, gf)
-            else:
-                gd = self.getGroupIndex(u"Données cadastre")
+            gd = root.findGroup(u"Données cadastre")
+            if not gd:
+                gd = gf.addGroup(u"Données cadastre")
         else:
-            g1 = li.addGroup("Cadastre")
-            gf = li.addGroup("Fond", True, g1)
-            ge = li.addGroup(u'Étiquettes cadastre', True, gf)
-            gd = li.addGroup(u'Données cadastre', True, gf)
+            g1 = root.insertGroup(0, "Cadastre")
+            gf = g1.addGroup("Fond")
+            ge = gf.addGroup(u'Étiquettes cadastre')
+            gd = gf.addGroup(u'Données cadastre')
 
         for layer in qgisCadastreLayers:
             #~ layer.updateExtents()
+            # Get layertree item
+            nodeLayer = QgsLayerTreeLayer(layer)
+
             # Get layer options
             qlayer = [ a for a in self.qgisCadastreLayerList if a['label'] == layer.name() ]
             if qlayer:
                 qlayer = qlayer[0]
 
-                # Enable/Disable layer
-                if not qlayer['active']:
-                    li.setLayerVisible(layer, False)
-
                 # Move layer to proper group
                 if qlayer['group'] == 'E':
-                    li.moveLayer(layer, ge)
+                    ge.insertChildNode(0, nodeLayer)
                 elif qlayer['group'] == 'D':
-                    li.moveLayer(layer, gd)
+                    gd.insertChildNode(0, nodeLayer)
                 else:
-                    li.moveLayer(layer, g1)
+                    g1.insertChildNode(0, nodeLayer)
+
+                # Enable/Disable layer
+                if not qlayer['active']:
+                    nodeLayer.setItemVisibilityChecked(Qt.Unchecked)
             else:
                 # Move layer to Cadastre group
-                li.moveLayer(layer, g1)
+                g1.insertChildNode(-1, nodeLayer)
 
             # Do not expand layer legend
-            li.setLayerExpanded(layer, False)
-
-        # Close Cadastre group
-        # li.setGroupExpanded(g1, False)
+            nodeLayer.setExpanded(False)
 
         self.updateTimer()
 
