@@ -38,6 +38,7 @@ from qgis.core import (
     QgsLogger,
     QgsMapLayer,
     QgsLayout,
+    QgsPrintLayout,
     QgsLayoutExporter
 )
 
@@ -252,35 +253,39 @@ class cadastre_menu(object):
             s.setValue("cadastre/composerTemplateFile", f)
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
-
-        # Create composition from QPT templat
-        p = QgsProject()
-        l = QgsLayout(p)
-        with open(f) as ff:
+        template_content = None
+        with open(f, 'rt', encoding="utf-8") as ff:
             template_content = ff.read()
-        doc = QDomDocument()
-        doc.setContent(template_content)
+        if not template_content:
+            return
+        d = QDomDocument()
+        d.setContent(template_content)
 
-        # adding to existing items
-        new_items, ok = l.loadFromTemplate(doc, QgsReadWriteContext(), False)
+        c = QgsPrintLayout(QgsProject.instance())
+        c.loadFromTemplate(d, QgsReadWriteContext() )
 
         # Set scale and extent
+        cm=c.referenceMap()
         canvas = self.iface.mapCanvas()
-        lm = l.itemById (0)
         extent = canvas.extent()
         scale = canvas.scale()
         if extent:
-            lm.zoomToExtent(extent)
+            cm.zoomToExtent(extent)
         if scale:
-            lm.setScale(scale)
+            cm.setScale(scale)
 
         # Export
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
         self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
         temp = int(time()*100)
         temppath = os.path.join(tempDir, 'export_cadastre_%s.pdf' % temp)
-        exporter = QgsLayoutExporter(l)
-        exporter.exportToPdf(temppath, QgsLayoutExporter.PdfExportSettings() )
+
+        exporter = QgsLayoutExporter(c)
+        exportersettings = QgsLayoutExporter.PdfExportSettings()
+        exportersettings.dpi = 300
+        exportersettings.forceVectorOutput = True
+        exportersettings.rasterizeWholeImage = False #rasterizeWholeImage = false
+        exporter.exportToPdf(temppath, exportersettings )
 
         QApplication.restoreOverrideCursor()
 

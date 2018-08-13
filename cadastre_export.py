@@ -36,7 +36,7 @@ import operator
 import tempfile
 import re
 
-from qgis.PyQt.QtCore import Qt, QObject, QSettings, QUrl
+from qgis.PyQt.QtCore import Qt, QObject, QSettings, QUrl, QRectF
 from qgis.PyQt.QtWidgets import QApplication
 from qgis.PyQt.QtGui import QDesktopServices, QFont
 from qgis.core import (
@@ -48,13 +48,18 @@ from qgis.core import (
     QgsMapLayer,
     QgsVectorLayer,
     QgsFeatureRequest,
-    QgsComposition,
-    QgsComposerPicture,
-    QgsComposerMap,
-    QgsComposerLabel,
-    QgsMapRenderer,
     QgsMapSettings,
-    QgsFillSymbolV2
+    QgsFillSymbol,
+    QgsPrintLayout,
+    QgsLayoutPoint,
+    QgsLayoutItemLabel,
+    QgsLayoutSize,
+    QgsUnitTypes,
+    QgsLayoutItemMap,
+    QgsLayoutExporter,
+    QgsLayoutItemPage,
+    QgsLayoutGridSettings,
+    QgsLayoutMeasurement
 )
 from .cadastre_dialogs import cadastre_common
 
@@ -133,7 +138,7 @@ class cadastreExport(QObject):
         # Store an instance of QgsMapRenderer or QgsMapSettings
         # to avoid a nasty bug with 2.4 :
         # https://github.com/3liz/QgisCadastrePlugin/issues/36
-        if QGis.QGIS_VERSION_INT < 20400:
+        if Qgis.QGIS_VERSION_INT < 20400:
             if self.iface:
                 self.mInstance = self.iface.mapCanvas().mapRenderer()
             else:
@@ -308,8 +313,8 @@ class cadastreExport(QObject):
             # Load SQL query and get data
             # Get sql file
             sqlFile = tplPath + '.sql'
-            fin = open(sqlFile)
-            sql = fin.read().decode('utf-8')
+            fin = open(sqlFile, 'rt', encoding='utf-8')
+            sql = fin.read()
             fin.close()
 
             # Add schema to search_path if postgis
@@ -332,7 +337,7 @@ class cadastreExport(QObject):
                 sql = cadastre_common.postgisToSpatialite(sql)
             # Run SQL only if data has not already been defined
             if data is None:
-                #print sql.encode('utf-8')
+                #print(sql)
                 [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
 
             # Page no defined = means the query is here to
@@ -396,8 +401,8 @@ class cadastreExport(QObject):
         regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
 
         try:
-            fin = open(tplPath)
-            data = fin.read().decode('utf-8')
+            fin = open(tplPath, 'rt', encoding='utf-8')
+            data = fin.read()
             fin.close()
             data = regex.sub(replfunc, data)
             return data
@@ -416,28 +421,27 @@ class cadastreExport(QObject):
 
     def createComposition(self):
         '''
-        Create a composition
+        Create a print Layout
         '''
-        # Create composition
-        c = QgsComposition(self.mInstance)
+        c = QgsPrintLayout(QgsProject.instance())
+        c.initializeDefaults()
+        c.setUnits(QgsUnitTypes.LayoutMillimeters)
 
-        # Set main properties
-        c.setPaperSize(self.pageWidth, self.pageHeight)
-        c.setPrintResolution(self.printResolution)
-        c.setSnapGridOffsetX(3.5)
-        c.setSnapGridOffsetY(0)
-        c.setSnapGridResolution(2.5)
+        g=QgsLayoutGridSettings(c)
+        g.setOffset( QgsLayoutPoint(3.5, 0, QgsUnitTypes.LayoutMillimeters)   )
+        g.setResolution( QgsLayoutMeasurement(2.5) )
 
         # Set page number
         self.getPageNumberNeeded()
-        c.setNumPages(self.numPages)
+        # Set main properties
+        for i in range(1, self.numPages):
+            p=QgsLayoutItemPage(c)
+            #page.setPageSize('A6')
+            p.setPageSize( QgsLayoutSize(self.pageWidth, self.pageHeight, QgsUnitTypes.LayoutMillimeters) )
+            c.pageCollection().addPage(p)
 
-        # Set plot style if map added
-        if self.etype == 'parcelle':
-            c.setPlotStyle(QgsComposition.Print)
-
+        # Set the global currentComposition
         self.currentComposition = c
-
 
     def getPageNumberNeeded(self):
         '''
@@ -492,23 +496,30 @@ class cadastreExport(QObject):
 
     def buildComposerLabel(self, key, item, page):
         '''
-        Add a QgsLabel to composition for an item and page
+        Add a label to the print layout for an item and page
         '''
-        cl = QgsComposerLabel(self.currentComposition)
+        cl = QgsLayoutItemLabel(self.currentComposition)
 
         # 1st page is a map for parcelle
         dpage = page -1
         if self.etype == 'parcelle' and self.iface:
             dpage = page
 
-        cl.setItemPosition(
-            item['position'][0],
-            item['position'][1] + (dpage) * (self.pageHeight + 10),
-            item['position'][2],
-            item['position'][3],
-            False,
-            -1
+        cl.attemptMove(
+            QgsLayoutPoint(
+                item['position'][0],
+                item['position'][1]+ (dpage) * (self.pageHeight + 10),
+                QgsUnitTypes.LayoutMillimeters
+            )
         )
+        cl.setFixedSize(
+            QgsLayoutSize(
+                item['position'][2],
+                item['position'][3],
+                QgsUnitTypes.LayoutMillimeters
+            )
+        )
+
         cl.setVAlign(item['align'][0])
         cl.setHAlign(item['align'][1])
         content = self.getContentForGivenItem(
@@ -518,16 +529,18 @@ class cadastreExport(QObject):
         )
 
         cl.setMargin(0)
-        cl.setHtmlState(2)
+        cl.setMode(1)
         cl.setText(content)
         cl.setFrameEnabled(False)
         if 'bgcolor' in item:
             cl.setBackgroundColor(item['bgcolor'])
         if 'htmlState' in item:
-            cl.setHtmlState(item['htmlState'])
+            cl.setMode(item['htmlState'])
         if 'font' in item:
             cl.setFont(item['font'])
-        self.currentComposition.addItem(cl)
+
+        self.currentComposition.addLayoutItem(cl)
+
 
     def addParcelleMap(self):
         '''
@@ -561,20 +574,24 @@ class cadastreExport(QObject):
             pr.addFeatures([f for f in self.layer.getFeatures(request)])
             vl.commitChanges()
             vl.updateExtents()
-            props = vl.rendererV2().symbol().symbolLayer(0).properties()
+            props = vl.renderer().symbol().symbolLayer(0).properties()
             props['outline_width'] = u'1'
             props['outline_color'] = u'0,85,255,255'
             props['outline_style'] = u'solid'
             props['style'] = u'no'
-            vl.rendererV2().setSymbol(QgsFillSymbolV2.createSimple(props))
+            vl.renderer().setSymbol(QgsFillSymbol.createSimple(props))
             QgsProject.instance().addMapLayer(vl)
             self.redlineLayer = vl
 
         # Add composer map & to parcelle
         miLayers = self.mInstance.layers()
-        miLayers.insert( 0, vl.id() )
-        self.mInstance.setLayers( miLayers )
-        cm = QgsComposerMap(self.currentComposition, 6, 15, 286, 190)
+        miLayers.insert( 0, vl )
+        cm = QgsLayoutItemMap(self.currentComposition)
+        cm.updateBoundingRect()
+        cm.setRect(QRectF(0, 0, 286, 190))
+        cm.setPos(6,15)
+        cm.setLayers(QgsProject.instance().mapThemeCollection().masterVisibleLayers())
+
         if extent:
             cm.zoomToExtent(extent)
 
@@ -590,7 +607,7 @@ class cadastreExport(QObject):
         for one "compte communal"
         '''
         temppath = None
-
+        # print("export pour le cc %s" % comptecommunal)
         # Set configuration
         self.setComposerTemplates(comptecommunal)
 
@@ -601,6 +618,7 @@ class cadastreExport(QObject):
             if self.iface:
                 QApplication.setOverrideCursor(Qt.WaitCursor)
             # Populate composition for all pages
+            # print("numpage %s" % self.numPages)
             for i in range(self.numPages):
                 j=i+1
                 self.addPageContent(j)
@@ -623,14 +641,19 @@ class cadastreExport(QObject):
             #print temp
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
+            # print("export temppath %s" % temppath)
 
             # Export as pdf
-            self.currentComposition.exportAsPDF(temppath)
+            exportersettings=QgsLayoutExporter.PdfExportSettings()
+            exportersettings.dpi=300
+            exportersettings.forceVectorOutput = True
+            exportersettings.rasterizeWholeImage = False
+            exporter = QgsLayoutExporter(self.currentComposition)
+            exporter.exportToPdf(temppath, exportersettings)
 
+            # Remove redline layer
             if self.redlineLayer:
                 QgsProject.instance().removeMapLayer(self.redlineLayer.id())
-                miLayers = self.mInstance.layers()
-                self.mInstance.setLayers( miLayers.pop(0) )
 
             if self.iface:
                 QApplication.restoreOverrideCursor()
@@ -649,7 +672,7 @@ class cadastreExport(QObject):
         if sys.platform == "win32":
             os.startfile(filename)
         else:
-            opener ="open" if sys.platform == "darwin" else "xdg-open"
+            opener = "open" if sys.platform == "darwin" else "xdg-open"
             subprocess.call([opener, filename])
 
 
@@ -701,6 +724,8 @@ class cadastreExport(QObject):
         self.printProgress.pbPrint.setValue(0)
         # Show dialog
         self.printProgress.show()
+
+
 
 if iface:
     from qgis.PyQt import uic
