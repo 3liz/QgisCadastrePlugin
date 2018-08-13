@@ -33,17 +33,17 @@ from qgis.core import (
     QgsRectangle
 )
 from qgis.gui import (
-    QgsMapTool
+    QgsMapToolIdentify
 )
 from .cadastre_cursor import Cursor
 
-class IdentifyParcelle(QgsMapTool):
+class IdentifyParcelle(QgsMapToolIdentify):
 
     cadastreGeomIdentified = pyqtSignal(QgsVectorLayer, QgsFeature)
 
     def __init__(self, canvas, layer):
 
-        super(QgsMapTool, self).__init__(canvas)
+        super(QgsMapToolIdentify, self).__init__(canvas)
         self.canvas = canvas
         self.layer = layer
         self.cursor = QCursor(QPixmap(Cursor), 1, 6)
@@ -71,7 +71,7 @@ class IdentifyParcelle(QgsMapTool):
 
         # Determine the location of the click in real-world coords
         point = self.toLayerCoordinates( layer, mouseEvent.pos() )
-        pntGeom = QgsGeometry.fromPoint( point )
+        pntGeom = QgsGeometry.fromPointXY( point )
         pntBuff = pntGeom.buffer( ( self.canvas.mapUnitsPerPixel() * 2 ), 0 )
         rect = pntBuff.boundingBox()
         rq = QgsFeatureRequest( rect )
