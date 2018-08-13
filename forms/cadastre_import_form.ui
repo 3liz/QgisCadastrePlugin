@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
+    <width>720</width>
     <height>694</height>
    </rect>
   </property>
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>558</width>
-        <height>681</height>
+        <width>686</width>
+        <height>691</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -210,49 +210,44 @@
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <item>
              <widget class="QLabel" name="label_12">
-              <property name="text">
-               <string>Projections: source</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="inEdigeoSourceProj"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btEdigeoSourceProj">
               <property name="maximumSize">
                <size>
-                <width>30</width>
+                <width>150</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="text">
-               <string>...</string>
+               <string>Projection: Source</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <widget class="QgsProjectionSelectionWidget" name="inEdigeoSourceProj"/>
             </item>
             <item>
              <widget class="QLabel" name="label_13">
-              <property name="text">
-               <string>Cible</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="inEdigeoTargetProj"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btEdigeoTargetProj">
               <property name="maximumSize">
                <size>
-                <width>30</width>
+                <width>80</width>
                 <height>16777215</height>
                </size>
               </property>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="text">
-               <string>...</string>
+               <string>Cible</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
+            </item>
+            <item>
+             <widget class="QgsProjectionSelectionWidget" name="inEdigeoTargetProj"/>
             </item>
            </layout>
           </item>
@@ -499,6 +494,13 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QgsProjectionSelectionWidget</class>
+   <extends>QWidget</extends>
+   <header>qgis.gui</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resource.qrc"/>
  </resources>

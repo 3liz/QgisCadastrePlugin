@@ -67,6 +67,7 @@ from qgis.core import (
     QgsCoordinateReferenceSystem
 )
 from qgis.gui import (
+    QgsProjectionSelectionTreeWidget,
     QgsProjectionSelectionDialog
 )
 import unicodedata
@@ -858,24 +859,6 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
             slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
 
-        # projection selector
-        self.projSelectors = {
-            "edigeoSourceProj" : {
-                "button" : self.btEdigeoSourceProj,
-                "input" : self.inEdigeoSourceProj,
-                "sentence" : "Choisir la projection des fichiers Edigeo"
-            },
-            "edigeoTargetProj" : {
-                "button" : self.btEdigeoTargetProj,
-                "input" : self.inEdigeoTargetProj,
-                "sentence" : "Choisir la projection de destination"
-            }
-        }
-        for key, item in list(self.projSelectors.items()):
-            control = item['button']
-            slot = partial(self.chooseProjection, key)
-            control.clicked.connect(slot)
-
         # Set initial values
         self.doMajicImport = False
         self.doEdigeoImport = False
@@ -945,12 +928,12 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
             },
             'edigeoSourceProj': {
                 'widget': self.inEdigeoSourceProj,
-                'wType': 'text',
+                'wType': 'crs',
                 'property': self.edigeoSourceProj
             },
             'edigeoTargetProj': {
                 'widget': self.inEdigeoTargetProj,
-                'wType': 'text',
+                'wType': 'crs',
                 'property': self.edigeoTargetProj
             }
         }
@@ -1003,6 +986,8 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
                 if v['wType'] == 'combobox':
                     listDic = {v['list'][i]:i for i in range(0, len(v['list']))}
                     v['widget'].setCurrentIndex(listDic[value])
+                if v['wType'] == 'crs':
+                    v['widget'].setCrs(QgsCoordinateReferenceSystem(value))
 
 
     def createSchema(self):
@@ -1036,37 +1021,6 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
                 self.inDbCreateSchema.clear()
                 QApplication.restoreOverrideCursor()
 
-
-    def chooseProjection(self, key):
-        '''
-        Let the user choose a SCR
-        '''
-        header = u"Choisir la projection"
-        sentence = self.projSelectors[key]['sentence']
-        projSelector = QgsProjectionSelectionDialog(self)
-        projSelector.setMessage( "<h2>%s</h2>%s" % (header, sentence) )
-        crs = QgsCoordinateReferenceSystem(self.qc.defaultAuthId)
-        self.projSelector = projSelector
-        self.projSelector.exec_()
-        print(crs.authid())
-        self.projSelector.setCrs(crs)
-        print(self.projSelector.crs().authid())
-
-    def onProjectionChosen(self):
-        print(self.projSelector.crs())
-        # if not self.crs or self.crs == '':
-            # QMessageBox.information(
-                # self,
-                # self.tr("Cadastre"),
-                # self.tr(u"Aucun système de coordonnée de référence valide n'a été sélectionné")
-            # )
-            # return
-        # else:
-            # self.projSelectors[key]['input'].clear()
-            # self.projSelectors[key]['input'].setText(self.crs.authid() + " - " + self.crs.description())
-
-
-
     def checkImportInputData(self):
         '''
         Check the user defined inpu data
@@ -1080,8 +1034,8 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
         self.edigeoDepartement = str(self.inEdigeoDepartement.text()).strip(' \t')
         self.edigeoDirection = str(self.inEdigeoDirection.text()).strip(' \t')
         self.edigeoLot = str(self.inEdigeoLot.text()).strip(' \t')
-        self.edigeoSourceProj = str(self.inEdigeoSourceProj.text().split( " - " )[ 0 ])
-        self.edigeoTargetProj = str(self.inEdigeoTargetProj.text().split( " - " )[ 0 ])
+        self.edigeoSourceProj = self.inEdigeoSourceProj.crs().authid()
+        self.edigeoTargetProj = self.inEdigeoTargetProj.crs().authid()
 
         # defined properties
         self.doMajicImport = os.path.exists(self.majicSourceDir)
