@@ -500,7 +500,7 @@ class cadastre_common(object):
         ok = True
         #print "run query"
         try:
-            c = connector._execute(None,str(sql).encode('utf-8'))
+            c = connector._execute(None,str(sql))
             data = []
             header = connector._get_cursor_columns(c)
             if header == None:
@@ -715,7 +715,7 @@ class cadastre_common(object):
         spatial tools and create QGIS connection
         '''
         # Let the user choose new file path
-        ipath, __, __ = QFileDialog.getSaveFileName (
+        ipath, __ = QFileDialog.getSaveFileName (
             None,
             u"Choisir l'emplacement du nouveau fichier",
             str(os.path.expanduser("~").encode('utf-8')).strip(' \t'),
@@ -731,34 +731,17 @@ class cadastre_common(object):
 
         # Create the spatialite database
         try:
-            from pyspatialite import dbapi2 as db
-
             # Create a connection (which will create the file automatically)
-            conn=db.connect(str(ipath))
-            c=conn.cursor()
-
-            # Get spatialite version
-            cursor = conn.execute('SELECT spatialite_version()')
-            rep = cursor.fetchall()
-            # v = [int(a) for a in rep[0][0].split('.')]
-            v = [int(re.findall(r'\d+', a)[0]) for a in rep[0][0].split('.')]
-            # pretty complicated, but it avoids a bug with some versions like 4.3.0a
-            vv = v[0] * 100000 + v[1] * 1000 + v[2] * 10
-
-            # Add spatialite support
-            if vv >= 401000:
-                # 4.1 and above
-                sql = "SELECT initspatialmetadata(1)"
-            else:
-                # Under 4.1
-                sql = "SELECT initspatialmetadata()"
-            c.execute(sql)
+            from qgis.utils import spatialite_connect
+            con = spatialite_connect(str(ipath), isolation_level=None)
+            cur = con.cursor()
+            sql = "SELECT InitSpatialMetadata(1)"
+            cur.execute(sql)
+            con.close()
+            del con
         except:
             self.updateLog(u"Échec lors de la création du fichier Spatialite !")
             return None
-        finally:
-            conn.close()
-            del conn
 
         # Create QGIS connexion
         baseKey = "/SpatiaLite/connections/"
@@ -1706,7 +1689,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             keepattributes = self.searchComboBoxes[combo]['attributes']
             request = QgsFeatureRequest().setSubsetOfAttributes(
                 keepattributes,
-                layer.pendingFields()
+                layer.fields()
             )
 
             self.searchComboBoxes[combo]['request'] = request
@@ -1992,7 +1975,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 attributes[0],
                 ','.join(fids)
             )
-            request = QgsFeatureRequest().setSubsetOfAttributes(attributes, layer.pendingFields()).setFilterExpression(exp)
+            request = QgsFeatureRequest().setSubsetOfAttributes(attributes, layer.fields()).setFilterExpression(exp)
             if orderBy:
                 request.addOrderBy(orderBy[0])
             for feat in layer.getFeatures(request):

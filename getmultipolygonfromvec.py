@@ -51,7 +51,8 @@ class GetMultiPolygonFromVec(object):
     """ Find features with more than 1 faces """
     if not self.path : return False
 
-    f = open( self.path, 'r' )
+
+    f = open( self.path, 'r', encoding='ISO-8859-1' )
     if not f :return False
 
     osRTY = ''

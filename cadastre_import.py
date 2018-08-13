@@ -1031,12 +1031,12 @@ class cadastreImport(QObject):
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
             try:
-                fin = open(scriptPath)
-                data = fin.read().decode("utf-8-sig")
+                fin = open(scriptPath, encoding='utf-8-sig')
+                data = fin.read() #.decode("utf-8-sig")
                 fin.close()
                 fout = open(scriptPath, 'w')
                 data = self.replaceParametersInString(data, replaceDict)
-                data = data.encode('utf-8')
+                # data = data.encode('utf-8')
                 fout.write(data)
                 fout.close()
 
@@ -1062,8 +1062,8 @@ class cadastreImport(QObject):
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
             # Read sql script
-            sql = open(scriptPath).read()
-            sql = sql.decode("utf-8-sig")
+            sql = open(scriptPath, encoding="utf-8-sig").read()
+            # sql = sql.decode("utf-8-sig")
 
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
@@ -1142,7 +1142,7 @@ class cadastreImport(QObject):
 
             if self.dialog.dbType == 'postgis':
                 try:
-                    c = self.connector._execute_and_commit(sql.encode('utf-8'))
+                    c = self.connector._execute_and_commit(sql)
                 except BaseError as e:
                     if not ignoreError \
                     and not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
@@ -1391,10 +1391,17 @@ class cadastreImport(QObject):
         '''
         if self.go:
             reg = '^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_[0-9]+)_(Objet_[0-9]+)'
-            with open(path) as inputFile:
-                # Get a list of RID relations combining a "Rel" and two "_Objet"
-                l = [ a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
+            l = None
+            try:
+                with open(path) as inputFile:
+                    # Get a list of RID relations combining a "Rel" and two "_Objet"
+                    l = [ a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
+            except:
+                with open(path, encoding="ISO-8859-15") as inputFile:
+                    # Get a list of RID relations combining a "Rel" and two "_Objet"
+                    l = [ a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
 
+            if l:
                 # Create a sql script to insert all items
                 if self.dialog.dbType == 'postgis':
                     sql="BEGIN;"
