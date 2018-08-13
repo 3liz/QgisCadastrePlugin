@@ -64,7 +64,8 @@ from qgis.core import (
     QgsMapLayer,
     QgsFeatureRequest,
     QgsCoordinateTransform,
-    QgsCoordinateReferenceSystem
+    QgsCoordinateReferenceSystem,
+    QgsMapSettings
 )
 from qgis.gui import (
     QgsProjectionSelectionTreeWidget,
@@ -2112,12 +2113,12 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 extent = searchCombo['chosenFeature'].geometry().boundingBox()
 
             # reproject extent if needed
-            if self.mc.hasCrsTransformEnabled():
-                crsDest = self.mc.mapRenderer().destinationCrs()
-                layer = searchCombo['layer']
-                crsSrc = layer.crs()
-                xform = QgsCoordinateTransform(crsSrc, crsDest)
-                extent = xform.transform(extent)
+            crsDest = QgsMapSettings().destinationCrs()
+            layer = searchCombo['layer']
+            crsSrc = layer.crs()
+            if crsSrc.authid() != crsDest.authid():
+              xform = QgsCoordinateTransform(crsSrc, crsDest,QgsProject.instance())
+              extent = xform.transform(extent)
 
             self.mc.setExtent(extent)
             self.mc.refresh()
@@ -2148,12 +2149,12 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 extent = searchCombo['chosenFeature'].geometry().boundingBox()
 
             # reproject extent if needed
-            if self.mc.hasCrsTransformEnabled():
-                crsDest = self.mc.mapRenderer().destinationCrs()
-                layer = searchCombo['layer']
-                crsSrc = layer.crs()
-                xform = QgsCoordinateTransform(crsSrc, crsDest)
-                extent = xform.transform(extent)
+            crsDest = QgsMapSettings().destinationCrs()
+            layer = searchCombo['layer']
+            crsSrc = layer.crs()
+            if crsSrc.authid() != crsDest.authid():
+              xform = QgsCoordinateTransform(crsSrc, crsDest,QgsProject.instance())
+              extent = xform.transform(extent)
 
             self.mc.setExtent(extent)
 
@@ -2734,12 +2735,12 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
             extent = self.feature.geometry().boundingBox()
 
             # reproject extent if needed
-            if self.mc.hasCrsTransformEnabled():
-                crsDest = self.mc.mapRenderer().destinationCrs()
-                layer = self.layer
-                crsSrc = layer.crs()
-                xform = QgsCoordinateTransform(crsSrc, crsDest)
-                extent = xform.transform(extent)
+            crsDest = QgsMapSettings().destinationCrs()
+            layer = self.layer
+            crsSrc = layer.crs()
+            if crsSrc.authid() != crsDest.authid():
+              xform = QgsCoordinateTransform(crsSrc, crsDest,QgsProject.instance())
+              extent = xform.transform(extent)
 
             self.mc.setExtent(extent)
 
@@ -2755,12 +2756,12 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
             extent = self.feature.geometry().boundingBox()
 
             # reproject extent if needed
-            if self.mc.hasCrsTransformEnabled():
-                crsDest = self.mc.mapRenderer().destinationCrs()
-                layer = self.layer
-                crsSrc = layer.crs()
-                xform = QgsCoordinateTransform(crsSrc, crsDest)
-                extent = xform.transform(extent)
+            crsDest = QgsMapSettings().destinationCrs()
+            layer = self.layer
+            crsSrc = layer.crs()
+            if crsSrc.authid() != crsDest.authid():
+              xform = QgsCoordinateTransform(crsSrc, crsDest,QgsProject.instance())
+              extent = xform.transform(extent)
 
             self.mc.setExtent(extent)
             self.mc.refresh()
