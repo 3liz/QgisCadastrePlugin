@@ -38,7 +38,8 @@ from qgis.PyQt.QtCore import (
     QObject,
     QSettings,
     QRegExp,
-    QFileInfo
+    QFileInfo,
+    QStringListModel
 )
 from qgis.PyQt.QtWidgets import (
     QDialog,
@@ -594,12 +595,10 @@ class cadastre_common(object):
         p = re.compile( '(œ)')
         s = p.sub('oe', s)
 
-        if isinstance(s,str):
-            s = str(s,"utf8","replace")
-
         s=unicodedata.normalize('NFD',s)
         s = s.encode('ascii','ignore')
-        s = s.upper().strip(' \t\n')
+        s = s.upper()
+        s = s.decode().strip(' \t\n')
         r = re.compile(r"[^ -~]")
         s = r.sub(' ', s)
         s = s.replace("'", " ")
@@ -1970,7 +1969,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         label = cb.currentText()
         li = cb.lineEdit()
         co = li.completer()
-        co.model().setStringList(label.split('|')[0].strip())
+        labellist = []
+        labellist.append(label.split('|')[0].strip())
+        co.model().setStringList(labellist)
         co.updateModel()
         if label in self.searchComboBoxes[key]['foundValues']:
             chosenValue = self.searchComboBoxes[key]['foundValues'][label]
