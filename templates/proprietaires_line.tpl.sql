@@ -4,7 +4,7 @@ CASE WHEN epxnee = 'NEE' THEN 'EP ' || trim(Coalesce(dnomlp, '')) || ' ' || trim
 trim(Coalesce(p.dlign3, '')) || ' / ' || ltrim(trim(Coalesce(p.dlign4, '')), '0') || trim(Coalesce(p.dlign5, '')) || ' ' || trim(Coalesce(p.dlign6, '')) AS adrprop,
 CASE
   WHEN jdatnss IS NOT NULL
-  THEN ' Né(e) le ' || coalesce(to_char(jdatnss, 'dd/mm/YYYY'), '') || ' à ' || coalesce(p.dldnss, '')
+  THEN ' Né(e) le ' || coalesce(jdatnss, '') || ' à ' || coalesce(p.dldnss, '')
   ELSE ''
 END AS nele
 FROM proprietaire p

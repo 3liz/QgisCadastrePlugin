@@ -377,7 +377,6 @@ class cadastre_common(object):
                 continue
 
             connectionParams = cadastre_common.getConnectionParameterFromDbLayer(l)
-
             import re
 
             reg = r'(\.| )?(%s)' % tableName
@@ -402,9 +401,11 @@ class cadastre_common(object):
 
         # Get params via regex
         uri = layer.dataProvider().dataSourceUri()
-        reg = "(?:service='([^ ]+)' )?(?:dbname='([^ ]+)' )?(?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
+        reg = "(?:service='([^ ]+)' )?(?:dbname='([^ ]+)' )?(?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:checkPrimaryKeyUnicity='([0-1]+)' )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
+
         result = re.findall(r'%s' % reg, uri)
         if not result:
+            print('no result')
             return None
 
         res = result[0]
@@ -420,11 +421,12 @@ class cadastre_common(object):
         sslmode = res[6]
         key = res[7]
         estimatedmetadata = res[8]
-        srid = res[9]
-        gtype = res[10]
-        table = res[11]
-        geocol = res[12]
-        sql = res[13]
+        checkPrimaryKeyUnicity = res[9]
+        srid = res[10]
+        gtype = res[11]
+        table = res[12]
+        geocol = res[13]
+        sql = res[14]
 
         schema = ''
 
@@ -464,6 +466,7 @@ class cadastre_common(object):
             'sslmode' : sslmode,
             'key': key,
             'estimatedmetadata' : estimatedmetadata,
+            'checkPrimaryKeyUnicity' : checkPrimaryKeyUnicity,
             'srid' : srid,
             'type': gtype,
             'schema': schema,
@@ -496,6 +499,7 @@ class cadastre_common(object):
         return [header, data, rowCount]
         NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
         '''
+        # print(sql)
         data = []
         header = []
         rowCount = 0
@@ -545,6 +549,8 @@ class cadastre_common(object):
             # fix_print_with_import
             print(error_message)
             QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
+            print("cadastre debug - error while fetching data from database, sql=")
+            print(sql)
             return
 
         return [header, data, rowCount, ok]
@@ -2670,7 +2676,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         SELECT coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || ' - ' ||trim(coalesce(p.dlign3, '')) || ' / ' || ltrim(trim(coalesce(p.dlign4, '')), '0') || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, '')) ||
         CASE
           WHEN jdatnss IS NOT NULL
-          THEN ' - Né(e) le ' || coalesce(to_char(jdatnss, 'dd/mm/YYYY'), '') || ' à ' || coalesce(p.dldnss, '')
+          THEN ' - Né(e) le ' || coalesce(jdatnss, '') || ' à ' || coalesce(p.dldnss, '')
           ELSE ''
         END
         FROM proprietaire p
