@@ -106,7 +106,7 @@ CREATE INDEX geo_subdfisc_annee_idx ON [PREFIXE]geo_subdfisc (annee, object_rid)
 INSERT INTO [PREFIXE]geo_subdfisc_parcelle (annee, geo_subdfisc, geo_parcelle)
 SELECT s.annee, s.geo_subdfisc, p.geo_parcelle
 FROM [PREFIXE]geo_subdfisc s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_SUBDFISC_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_SUBDFISC_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdfisc_annee_idx;
 
 -- geo_voiep
@@ -127,7 +127,7 @@ CREATE INDEX geo_numvoie_annee_idx ON [PREFIXE]geo_numvoie (annee, object_rid);
 INSERT INTO [PREFIXE]geo_numvoie_parcelle (annee, geo_numvoie, geo_parcelle)
 SELECT s.annee, s.geo_numvoie, p.geo_parcelle
 FROM [PREFIXE]geo_numvoie s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_NUMVOIE_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_NUMVOIE_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
 DROP INDEX IF EXISTS [PREFIXE]geo_numvoie_annee_idx;
 
 -- geo_lieudit
@@ -153,7 +153,7 @@ CREATE INDEX geo_parcelle_geom_idx ON [PREFIXE]geo_parcelle USING GIST (geom);
 INSERT INTO [PREFIXE]geo_batiment_parcelle (annee, geo_batiment, geo_parcelle)
 SELECT s.annee, s.geo_batiment, p.geo_parcelle
 FROM [PREFIXE]geo_batiment s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_BATIMENT_PARCELLE'
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_BATIMENT_PARCELLE'
 AND s.object_rid=r.de AND p.object_rid=r.vers
 AND ST_Intersects(ST_Centroid(s.geom), p.geom)
 ;
@@ -198,7 +198,7 @@ CREATE INDEX geo_borne_annee_idx ON [PREFIXE]geo_borne (annee, object_rid);
 INSERT INTO [PREFIXE]geo_borne_parcelle (annee, geo_borne, geo_parcelle)
 SELECT s.annee, s.geo_borne, p.geo_parcelle
 FROM [PREFIXE]geo_borne s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_BORNE_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_BORNE_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
 DROP INDEX IF EXISTS [PREFIXE]geo_borne_annee_idx;
 
 -- geo_croix
@@ -212,7 +212,7 @@ CREATE INDEX geo_croix_annee_idx ON [PREFIXE]geo_croix (annee, object_rid);
 INSERT INTO [PREFIXE]geo_croix_parcelle (annee, geo_croix, geo_parcelle)
 SELECT s.annee, s.geo_croix, p.geo_parcelle
 FROM [PREFIXE]geo_croix s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_CROIX_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_CROIX_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
 DROP INDEX IF EXISTS [PREFIXE]geo_croix_annee_idx;
 
 -- geo_symblim
@@ -227,7 +227,7 @@ CREATE INDEX geo_symblim_annee_idx ON [PREFIXE]geo_symblim (annee, object_rid);
 INSERT INTO [PREFIXE]geo_symblim_parcelle (annee, geo_symblim, geo_parcelle)
 SELECT s.annee, s.geo_symblim, p.geo_parcelle
 FROM [PREFIXE]geo_symblim s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_SYMBLIM_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_SYMBLIM_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
 DROP INDEX IF EXISTS [PREFIXE]geo_symblim_annee_idx;
 
 -- geo_tpoint
@@ -244,7 +244,7 @@ CREATE INDEX geo_tpoint_annee_idx ON [PREFIXE]geo_tpoint (annee);
 INSERT INTO [PREFIXE]geo_tpoint_commune (annee, geo_tpoint, geo_commune)
 SELECT s.annee, s.geo_tpoint, p.geo_commune
 FROM [PREFIXE]geo_tpoint s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
 DROP INDEX IF EXISTS [PREFIXE]geo_tpoint_object_rid_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_tpoint_annee_idx;
 
@@ -261,7 +261,7 @@ CREATE INDEX geo_tline_annee_idx ON [PREFIXE]geo_tline (annee);
 INSERT INTO [PREFIXE]geo_tline_commune (annee, geo_tline, geo_commune)
 SELECT s.annee, s.geo_tline, p.geo_commune
 FROM [PREFIXE]geo_tline s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
 DROP INDEX IF EXISTS [PREFIXE]geo_tline_object_rid_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_tline_annee_idx;
 
@@ -278,7 +278,7 @@ CREATE INDEX geo_tsurf_annee_idx ON [PREFIXE]geo_tsurf (annee);
 INSERT INTO [PREFIXE]geo_tsurf_commune (annee, geo_tsurf, geo_commune)
 SELECT s.annee, s.geo_tsurf, p.geo_commune
 FROM [PREFIXE]geo_tsurf s, [PREFIXE]geo_commune p, [PREFIXE]edigeo_rel r
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_DETOPO_COMMUNE' AND p.object_rid=r.de AND s.object_rid=r.vers;
 DROP INDEX IF EXISTS [PREFIXE]geo_tsurf_object_rid_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_tsurf_annee_idx;
 
