@@ -33,6 +33,14 @@ Michaël DOUCHIN
 e-mail: info@3liz.com
 twitter : https://twitter.com/kimaidou
 
+Contributeurs
+=============
+
+Merci pour vos contributions:
+
+* Landry Breuil: @landryb , notamment pour ses tests sur de gros volumes de données, et les corrections sur certaines requêtes
+* @fred-V13 pour l'aide sur la migration du plugin vers QGIS 3
+
 Sources
 =======
 
