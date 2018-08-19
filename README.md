@@ -33,6 +33,11 @@ Michaël DOUCHIN
 e-mail: info@3liz.com
 twitter : https://twitter.com/kimaidou
 
+Contributeurs
+=============
+
+* Landry Breuil @landryb
+
 Sources
 =======
 
