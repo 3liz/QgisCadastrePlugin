@@ -1,14 +1,19 @@
 # Mandatory items:
 [general]
+
 name=cadastre
+
 qgisMinimumVersion=3.0
 qgisMaximumVersion=3.99
+
 description=
 
     This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
 about=This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
+
 version=1.6.0
+
 author=3liz
 email=info@3liz.com
 
@@ -19,7 +24,7 @@ email=info@3liz.com
 # Uncomment the following line and add your changelog entries:
 changelog=
   Version 1.6.0
-  * Plugin - compatibilité avec QGIS 3
+  * Compatibilité du plugin avec QGIS 3. Les version compatibles avec QGIS 2 seront des versions de correction uniquement, avec un numéro en 1.5.*
 
 # tags are comma separated with spaces allowed
 tags=cadastre, france, majic, edigeo, import
@@ -36,4 +41,4 @@ experimental=True
 deprecated=False
 
 # Activate server configuration
-server=True
+server=False
