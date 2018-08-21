@@ -10,6 +10,7 @@ DELETE FROM [PREFIXE]pdl WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]comptecommunal WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]proprietaire WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]pevdependances WHERE lot='[LOT]';
+DELETE FROM [PREFIXE]pevlissage WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]pevprofessionnelle WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]pevprincipale WHERE lot='[LOT]';
 DELETE FROM [PREFIXE]pevtaxation WHERE lot='[LOT]';

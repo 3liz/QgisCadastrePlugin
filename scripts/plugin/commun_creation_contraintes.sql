@@ -11,6 +11,7 @@ ALTER TABLE [PREFIXE]pevexoneration ADD CONSTRAINT pevexoneration_pk PRIMARY KEY
 ALTER TABLE [PREFIXE]pevtaxation ADD CONSTRAINT pevtaxation_pk PRIMARY KEY  (pevtaxation);
 ALTER TABLE [PREFIXE]pevprincipale ADD CONSTRAINT pevprincipale_pk PRIMARY KEY  (pevprincipale);
 ALTER TABLE [PREFIXE]pevprofessionnelle ADD CONSTRAINT pevprofessionnelle_pk PRIMARY KEY  (pevprofessionnelle);
+ALTER TABLE [PREFIXE]pevlissage ADD CONSTRAINT pevlissage_pk PRIMARY KEY  (pevlissage);
 ALTER TABLE [PREFIXE]pevdependances ADD CONSTRAINT pevdependances_pk PRIMARY KEY  (pevdependances);
 ALTER TABLE [PREFIXE]proprietaire ADD CONSTRAINT proprietaire_pk PRIMARY KEY  (proprietaire);
 DELETE FROM [PREFIXE]comptecommunal WHERE comptecommunal IS NULL;

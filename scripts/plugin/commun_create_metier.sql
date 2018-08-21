@@ -303,6 +303,7 @@ CREATE TABLE pevexoneration (
     fcexb2 integer,
     fcexba2 integer,
     rcexba2 integer,
+    valplaf text,
     lot text
 );
 
@@ -413,6 +414,28 @@ CREATE TABLE pevprofessionnelle (
     dsup3 text,
     dsupk1 text,
     dsupk2 text,
+    lot text
+);
+
+CREATE TABLE pevlissage (
+    pevlissage text,
+    annee  text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar  text,
+    dnupev text,
+    pev    text,
+    mlbcom integer,
+    mlbsyn integer,
+    mlbcu integer,
+    mlbdep integer,
+    mlbts1 integer,
+    mlbts2 integer,
+    mlbtas integer,
+    mlbgem integer,
+    mlbtom integer,
+    tbfpas integer,
     lot text
 );
 
@@ -1165,7 +1188,7 @@ COMMENT ON COLUMN parcelle.ccopre IS 'Préfixe de section ou quartier servi pour
 COMMENT ON COLUMN parcelle.ccosec IS 'Section cadastrale - ';
 COMMENT ON COLUMN parcelle.dnupla IS 'Numéro de plan - ';
 COMMENT ON COLUMN parcelle.dcntpa IS 'Contenance de la parcelle - en centiares';
-COMMENT ON COLUMN parcelle.dsrpar IS 'Lettre de série-role - ';
+COMMENT ON COLUMN parcelle.dsrpar IS 'Lettre de série-role - INDISPONIBLE depuis 2018';
 COMMENT ON COLUMN parcelle.dnupro IS 'Compte communal du propriétaire de la parcelle - ';
 COMMENT ON COLUMN parcelle.jdatat IS 'Date de l acte - jjmmaaaa';
 COMMENT ON COLUMN parcelle.dreflf IS 'Référence au Livre Foncier en Alsace-Moselle - ';
@@ -1294,7 +1317,7 @@ COMMENT ON COLUMN local10.ccodir IS 'code direction - ';
 COMMENT ON COLUMN local10.ccocom IS 'code commune INSEE - ';
 COMMENT ON COLUMN local10.invar IS 'numéro invariant - ';
 COMMENT ON COLUMN local10.gpdl IS 'indicateur d’appartenance à un lot de pdl - 1 = oui, sinon 0';
-COMMENT ON COLUMN local10.dsrpar IS 'lettre de série rôle - ';
+COMMENT ON COLUMN local10.dsrpar IS 'lettre de série rôle - INDISPONIBLE';
 COMMENT ON COLUMN local10.dnupro IS 'compte communal de propriétaire - ';
 COMMENT ON COLUMN local10.jdatat IS 'date d’acte de mutation - jjmmaaaa';
 COMMENT ON COLUMN local10.dnufnl IS 'compte communal de fonctionnaire logé - redevable de la tom';
@@ -1401,6 +1424,8 @@ COMMENT ON COLUMN pevexoneration.dvldif2a IS 'Montant de VL exonérée (valeur d
 COMMENT ON COLUMN pevexoneration.fcexb2 IS 'Fraction de VL exonérée (valeur 70) - ';
 COMMENT ON COLUMN pevexoneration.fcexba2 IS 'Fraction de VL exonérée (valeur de l’année) - ';
 COMMENT ON COLUMN pevexoneration.rcexba2 IS 'Revenu cadastral exonéré (valeur de l’année) - ';
+COMMENT ON COLUMN pevexoneration.valplaf IS 'Montant du planchonnement sur la base exonérée neutralisée';
+
 COMMENT ON TABLE pevtaxation IS 'Article taxation de pev';
 COMMENT ON COLUMN pevtaxation.ccodep IS 'Code département - ';
 COMMENT ON COLUMN pevtaxation.ccodir IS 'Code direction - ';
@@ -1496,7 +1521,30 @@ COMMENT ON COLUMN pevprofessionnelle.dsup3 IS 'Surface des parties secondaires n
 COMMENT ON COLUMN pevprofessionnelle.dsupk1 IS 'Surface des stationnements couverts';
 COMMENT ON COLUMN pevprofessionnelle.dsupk2 IS 'Surface des stationnements non couverts';
 
-COMMENT ON TABLE pevdependances IS 'Article descriptif de dépendance';
+COMMENT ON TABLE pevlissage IS 'Descriptif des quotes-parts de lissage (locaux révisés). Bati enregistrement 52';
+COMMENT ON COLUMN pevlissage.ccodep IS 'Code du département';
+COMMENT ON COLUMN pevlissage.ccodir IS 'Code de direction';
+COMMENT ON COLUMN pevlissage.ccocom IS 'Code commune INSEE';
+COMMENT ON COLUMN pevlissage.invar  IS 'Numéro invariant';
+COMMENT ON COLUMN pevlissage.dnupev IS 'Numéro de PEV';
+COMMENT ON COLUMN pevlissage.pev    IS 'Code unique de PEV';
+COMMENT ON COLUMN pevlissage.mlbcom IS 'Quote-part de lissage de la commune';
+COMMENT ON COLUMN pevlissage.mlbsyn IS 'Quote-part de lissage du syndicat intercommunal';
+COMMENT ON COLUMN pevlissage.mlbcu  IS 'Quote-part de lissage de
+l’intercommunalité';
+COMMENT ON COLUMN pevlissage.mlbdep IS 'Quote-part de lissage du
+département';
+COMMENT ON COLUMN pevlissage.mlbts1 IS 'Quote-part de lissage de la TSE';
+COMMENT ON COLUMN pevlissage.mlbts2 IS 'Quote-part de lissage de la TSE
+autre';
+COMMENT ON COLUMN pevlissage.mlbtas IS 'Quote-part de lissage de la TASA';
+COMMENT ON COLUMN pevlissage.mlbgem IS 'Quote-part de lissage GEMAPI';
+COMMENT ON COLUMN pevlissage.mlbtom IS 'Quote-part de lissage TEOM';
+COMMENT ON COLUMN pevlissage.tbfpas IS 'Pas de lissage du local';
+COMMENT ON COLUMN pevlissage.lot IS 'Code de lot d''import';
+
+
+COMMENT ON TABLE pevdependances IS 'Article descriptif de dépendance. Bati enregistrement 60';
 COMMENT ON COLUMN pevdependances.ccodep IS 'Code département - ';
 COMMENT ON COLUMN pevdependances.ccodir IS 'Code direction - ';
 COMMENT ON COLUMN pevdependances.ccocom IS 'Code commune INSEE - ';
