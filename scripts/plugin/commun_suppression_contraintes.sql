@@ -39,6 +39,7 @@ ALTER TABLE [PREFIXE]pdl DROP CONSTRAINT pdl_pk;
 ALTER TABLE [PREFIXE]comptecommunal DROP CONSTRAINT comptecommunal_pk;
 ALTER TABLE [PREFIXE]proprietaire DROP CONSTRAINT proprietaire_pk;
 ALTER TABLE [PREFIXE]pevdependances DROP CONSTRAINT pevdependances_pk;
+ALTER TABLE [PREFIXE]pevlissage DROP CONSTRAINT pevlissage_pk;
 ALTER TABLE [PREFIXE]pevprofessionnelle DROP CONSTRAINT pevprofessionnelle_pk;
 ALTER TABLE [PREFIXE]pevprincipale DROP CONSTRAINT pevprincipale_pk;
 ALTER TABLE [PREFIXE]pevtaxation DROP CONSTRAINT pevtaxation_pk;

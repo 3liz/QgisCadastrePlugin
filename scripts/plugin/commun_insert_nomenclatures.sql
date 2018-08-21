@@ -218,6 +218,9 @@ INSERT INTO ccolloc VALUES ('D', 'Département => l''exonération porte sur la s
 INSERT INTO ccolloc VALUES ('R', 'Région => l''exonération porte sur la seule part régionale');
 INSERT INTO ccolloc VALUES ('GC', 'Groupement de communes');
 INSERT INTO ccolloc VALUES ('A', 'l''exonération porte sur la taxe additionnelle');
+-- 2018
+INSERT INTO ccolloc VALUES ('TS', 'Taxe spéciale d’équipement (TSE)');
+INSERT INTO ccolloc VALUES ('OM', 'Taxe sur l’enlèvement des ordures ménagères (TEOM)');
 
 -- nomenclature gnexts (sufexoneration)
 INSERT INTO gnexts VALUES ('TU ', 'Exo pour terrains nouvellement plantés en arbres truffiers – art. 1395 B-II du CGI');
@@ -460,7 +463,10 @@ INSERT INTO gnextl VALUES ('MS', 'Maison de santé');
 INSERT INTO gnextl VALUES ('PI', 'Locaux situés sur des terrains pollués dans le périmètre d’un projet d’intérêt général');
 INSERT INTO gnextl VALUES ('QV', 'Locaux HLM se situant dans un quartier prioritaire');
 INSERT INTO gnextl VALUES ('ZQ', 'Abattement de 30 % pour les locaux d’habitation situés dans les immeubles collectifs issus de la transformation de locaux industriels ou commerciaux dans le périmètre des quartiers prioritaires de la politique de la ville');
-
+-- 2018
+INSERT INTO gnextl VALUES ('BS', 'Abattement de 30 % pour les logements faisant l’objet d’un bail réel solidaire');
+INSERT INTO gnextl VALUES ('ES', 'Équipements souterrains indissociables des casiers des installations de stockage de déchets non dangereux');
+INSERT INTO gnextl VALUES ('MA', 'Minoration de 60 % de la valeur locative des locaux d’habitation situés à Mayotte');
 
 -- nomenclature cconad (pevprincipale, pevdependances)
 INSERT INTO cconad VALUES ('CV', 'Cave');
@@ -846,7 +852,7 @@ INSERT INTO dformjur VALUES ('5499', 'SARL', 'Société à responsabilité limit
 INSERT INTO dformjur VALUES ('5505', 'SA', 'SA à participation ouvrière à conseil d''administration');
 INSERT INTO dformjur VALUES ('5510', 'SA', 'SA nationale à conseil d''administration');
 INSERT INTO dformjur VALUES ('5515', 'SEM', 'SA d''économie mixte à conseil d''administration');
-INSERT INTO dformjur VALUES ('5520', 'STE', 'Société d''investissement à capital variable (SICAV) à conseil d''administration');
+INSERT INTO dformjur VALUES ('5520', 'STE', 'Fond à forme sociétale à conseil d’administration');
 INSERT INTO dformjur VALUES ('5522', 'STE', 'SA immobilière pour le commerce et l''industrie (SICOMI) à conseil d''administration');
 INSERT INTO dformjur VALUES ('5525', 'SA', 'SA immobilière d''investissement à conseil d''administration');
 INSERT INTO dformjur VALUES ('5530', Null, 'SA d''aménagement foncier et d''équipement rural (SAFER) à conseil d''administration');
@@ -871,7 +877,7 @@ INSERT INTO dformjur VALUES ('5599', 'SA', 'SA à conseil d''administration (s.a
 INSERT INTO dformjur VALUES ('5605', 'SA', 'SA à participation ouvrière à directoire');
 INSERT INTO dformjur VALUES ('5610', 'SA', 'SA nationale à directoire');
 INSERT INTO dformjur VALUES ('5615', 'SA', 'SA d''économie mixte à directoire');
-INSERT INTO dformjur VALUES ('5620', 'STE', 'Société d''investissement à capital variable (SICAV) à directoire');
+INSERT INTO dformjur VALUES ('5620', 'STE', 'Fond à forme sociétale à directoire');
 INSERT INTO dformjur VALUES ('5622', 'STE', 'SA immobilière pour le commerce et l''industrie (SICOMI) à directoire');
 INSERT INTO dformjur VALUES ('5625', 'STE', 'SA immobilière d''investissement à directoire');
 INSERT INTO dformjur VALUES ('5630', Null, 'Safer anonyme à directoire');
@@ -954,7 +960,7 @@ INSERT INTO dformjur VALUES ('6598', 'SC', 'Exploitation agricole à responsabil
 INSERT INTO dformjur VALUES ('6599', Null, 'Autre société civile');
 INSERT INTO dformjur VALUES ('6901', Null, 'Autre personne de droit privé inscrite au registre du commerce et des sociétés');
 INSERT INTO dformjur VALUES ('7111', Null, 'Autorité constitutionnelle');
-INSERT INTO dformjur VALUES ('7112', 'ETAT', 'Autorité administrative indépendante');
+INSERT INTO dformjur VALUES ('7112', 'ETAT', 'Autorité administrative ou publique indépendante');
 INSERT INTO dformjur VALUES ('7113', 'ETAT', 'Ministère');
 INSERT INTO dformjur VALUES ('7120', 'ETAT', 'Service central d''un ministère');
 INSERT INTO dformjur VALUES ('7150', 'ETAT', 'Service du ministère de la Défense');
@@ -1056,6 +1062,7 @@ INSERT INTO dformjur VALUES ('F002', Null, 'Les associés de sci');
 INSERT INTO dformjur VALUES ('F003', Null, 'Professionnels très pauvres du foncier');
 
 
+
 INSERT INTO ccocac VALUES ('MAG1', 'Boutiques et magasins sur rue (exemples : commerces, restaurants, cafés ou agences bancaires pour une surface principale inférieure à 400 m²)');
 INSERT INTO ccocac VALUES ('MAG2', 'Commerces sans accès direct sur la rue (surface principale inférieure à 400 m²)');
 INSERT INTO ccocac VALUES ('MAG3', 'Magasins appartenant à un ensemble commercial(surface principale inférieure à 400 m²)');
@@ -1106,3 +1113,5 @@ INSERT INTO ccocac VALUES ('ENS', 'Etablissements d''enseignement et locaux assi
 INSERT INTO ccocac VALUES ('CLI', 'Cliniques et Établissements du secteur sanitaire et social');
 INSERT INTO ccocac VALUES ('IND', 'Établissements industriels n''étant pas évaluées selon la méthode comptable');
 INSERT INTO ccocac VALUES ('EXC', 'Autres établissements');
+
+
