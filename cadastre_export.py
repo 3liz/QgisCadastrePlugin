@@ -21,14 +21,6 @@
  *                                                                                                                                                 *
  ***************************************************************************/
 """
-from __future__ import print_function
-from __future__ import absolute_import
-
-# TODO
-# * Utiliser une seule requête et non plusieurs requêtes avec des offset -> long si nb parcelle grand
-
-
-from builtins import range
 import csv, sys
 import subprocess
 import os.path

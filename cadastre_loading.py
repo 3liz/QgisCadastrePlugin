@@ -22,7 +22,6 @@
  ***************************************************************************/
 """
 
-from builtins import str
 import sys, os, glob
 import re
 import time

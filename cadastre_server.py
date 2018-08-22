@@ -21,8 +21,6 @@
  *                                                                                                                                                 *
  ***************************************************************************/
 """
-from __future__ import absolute_import
-from builtins import object
 try:
     from qgis.server import (
         serverIface,

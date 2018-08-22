@@ -21,9 +21,7 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import absolute_import
 # Import the PyQt and QGIS libraries
-from builtins import object
 from qgis.PyQt.QtCore import Qt, qVersion, QCoreApplication, QTranslator, QObject, QSettings, QUrl
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QApplication, QAction

@@ -35,9 +35,6 @@
 # Note : this is the most direct port of ogr2ogr.cpp possible
 # It could be made much more Python'ish !
 
-from __future__ import print_function
-from builtins import range
-from builtins import object
 import sys
 import os
 import stat

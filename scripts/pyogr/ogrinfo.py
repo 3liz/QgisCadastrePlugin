@@ -34,9 +34,6 @@
 # Note : this is the most direct port of ogrinfo.cpp possible
 # It could be made much more Python'ish !
 
-from __future__ import print_function
-from builtins import str
-from builtins import range
 import sys
 
 try:
