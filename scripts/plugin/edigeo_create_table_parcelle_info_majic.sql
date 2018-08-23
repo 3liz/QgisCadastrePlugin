@@ -12,8 +12,8 @@ CREATE TABLE [PREFIXE]parcelle_info
   geo_section text,
   nomcommune text,
   codecommune text,
-  surface_geo integer,
-  contenance integer,
+  surface_geo bigint,
+  contenance bigint,
   adresse text,
   urbain text,
   code text,
@@ -38,7 +38,7 @@ CREATE INDEX jj ON [PREFIXE]voie (voie );
 
 INSERT INTO [PREFIXE]parcelle_info
 SELECT gp.ogc_fid AS ogc_fid, gp.geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
-c.libcom AS nomcommune, c.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS integer) AS surface_geo, p.dcntpa AS contenance,
+c.libcom AS nomcommune, c.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS bigint) AS surface_geo, p.dcntpa AS contenance,
 CASE
         WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
         ELSE ltrim(p.cconvo, '0') || p.dvoilib
