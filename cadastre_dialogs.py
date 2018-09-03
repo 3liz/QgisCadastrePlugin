@@ -533,7 +533,11 @@ class cadastre_common():
 
         # Log errors
         if not ok:
-            print error_message
+            try:
+                print error_message.encode('utf-8')
+                print sql
+            except:
+                ok = False
             QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
             return
 
