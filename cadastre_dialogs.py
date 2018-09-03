@@ -2667,7 +2667,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         SELECT coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || ' - ' ||trim(coalesce(p.dlign3, '')) || ' / ' || ltrim(trim(coalesce(p.dlign4, '')), '0') || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, '')) ||
         CASE
           WHEN jdatnss IS NOT NULL
-          THEN ' - Né(e) le ' || coalesce(jdatnss, '') || ' à ' || coalesce(p.dldnss, '')
+          THEN ' - Né(e) le ' || jdatnss || ' à ' || coalesce(p.dldnss, '')
           ELSE ''
         END
         FROM proprietaire p
