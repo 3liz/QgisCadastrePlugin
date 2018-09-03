@@ -540,12 +540,9 @@ class cadastre_common(object):
 
         # Log errors
         if not ok:
-            # fix_print_with_import
             print(error_message)
             QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
-            print("cadastre debug - error while fetching data from database, sql=")
             print(sql)
-            return
 
         return [header, data, rowCount, ok]
 
