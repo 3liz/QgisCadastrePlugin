@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Version 1.5.4
+
+* Correction de bug sur l'interrogation de propriétaire suite à la gestion des dates en texte
+* Correction d'un bug d'encodage sur message d'erreur de requête SQL
+* Import - Utilisation d'entiers longs pour les surfaces de parcelle_info (corrige le bug pour les très grandes parcelles)
+* Import - Ajout du support du millésime 2018
+
 ## Version 1.5.3
 
 * Import - Suppression des doublons dans les tables parcelles : ajout d'une clause DISTINCT pour créer les lignes de geo_parcelle
