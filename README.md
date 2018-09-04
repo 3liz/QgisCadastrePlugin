@@ -40,6 +40,7 @@ Merci pour vos contributions:
 
 * Landry Breuil: @landryb , notamment pour ses tests sur de gros volumes de données, et les corrections sur certaines requêtes
 * @fred-V13 pour l'aide sur la migration du plugin vers QGIS 3
+* Maël Reboux: @MaelREBOUX
 
 Sources
 =======

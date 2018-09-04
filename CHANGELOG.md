@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Version 1.6.1
+
+* Correction de bug sur l'interrogation de propriétaire suite à la gestion des dates en texte
+* Correction d'un bug d'encodage sur message d'erreur de requête SQL
+* Import - Utilisation d'entiers longs pour les surfaces de parcelle_info (corrige le bug pour les très grandes parcelles)
+* Import - Ajout du support du millésime 2018
+
 ## Version 1.6.0
 
 * Compatibilité du plugin avec QGIS 3. Les version compatibles avec QGIS 2 seront des versions de correction uniquement, avec un numéro en 1.5.*
