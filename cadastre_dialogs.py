@@ -89,6 +89,19 @@ from functools import partial
 #        import - Import data from EDIGEO and MAJIC files
 # --------------------------------------------------------
 
+import time
+# Fonction qui permet de calculer le temps passé par une méthode
+# Pour l'activer, ajouter simplement le décorateur @timing sur la méthode.
+def timing(f):
+    def wrap(*args):
+        time1 = time.time()
+        ret = f(*args)
+        time2 = time.time()
+        print('{:s} function took {:.3f} ms'.format(f.__name__, (time2-time1)*1000.0))
+
+        return ret
+    return wrap
+
 
 class cadastre_common(object):
 
@@ -2559,6 +2572,8 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         # Set dialog content
         self.setParcelleContent()
         self.setProprietairesContent()
+        self.setSubdivisionsContent()
+        self.setLocauxContent()
 
     def checkMajicContent(self):
         '''
@@ -2573,6 +2588,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         if ok and rowCount >= 1:
             self.hasMajicDataProp = True
 
+    # @timing
     def setParcelleContent(self):
         '''
         Get data for the selected
@@ -2581,39 +2597,17 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         '''
 
         if self.hasMajicDataProp:
-            # Get parcelle info
-            sql = '''
-            SELECT
-            c.libcom AS nomcommune, c.ccocom AS codecommune, p.dcntpa AS contenance,
-            CASE
-                    WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
-                    ELSE ltrim(p.cconvo, '0') || p.dvoilib
-            END AS adresse,
-            CASE
-                    WHEN p.gurbpa = 'U' THEN 'Oui'
-                    ELSE 'Non'
-            END  AS urbain,
-            ccosec || dnupla
-            FROM parcelle p
-            LEFT OUTER JOIN commune c ON p.ccocom = c.ccocom AND c.ccodep = p.ccodep
-            LEFT OUTER JOIN voie v ON v.voie = p.voie
-            WHERE 2>1
-            AND parcelle = '%s'
-            LIMIT 1
-            ''' % self.feature['geo_parcelle']
+            sqlfile = 'templates/parcelle_info_general_majic.sql'
         else:
             self.parcelleInfo.setText(u'<i>Les données MAJIC n\'ont pas été trouvées dans la base de données</i>')
+            sqlfile = 'templates/parcelle_info_general_no_majic.sql'
 
-            sql ='''
-            SELECT c.tex2 AS nomcommune, c.idu AS codecommune, '' AS contenance,
-            '' AS adresse,
-            '' AS urbain,
-            p.idu
-            FROM geo_parcelle p
-            INNER JOIN geo_commune c
-            ON ST_Intersects(p.geom, c.geom)
-            WHERE geo_parcelle = '%s'
-            ''' % self.feature['geo_parcelle']
+        sql = ''
+        with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
+            sql = sqltemplate.read() % self.feature['geo_parcelle']
+        if not sql:
+            self.parcelleInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
+            return
 
         if self.connectionParams['dbType'] == 'postgis':
             sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
@@ -2628,6 +2622,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
                     html+= ' %s (%s)<br/>' % (line[0], line[1])
                 else:
                     html+=  u' <i>Pas de données Fantoir dans la base !</i><br/>'
+                html+= u'<b>Date de l\'acte :</b> %s<br/>' % line[6]
                 html+= u'<b>Surface géographique :</b> %s m²<br/>' % int(self.feature.geometry().area())
                 html+= u'<b>Contenance :</b> %s m²<br/>' % line[2]
                 html+= u'<b>Adresse :</b> %s<br/>' % line[3]
@@ -2635,7 +2630,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 
         self.parcelleInfo.setText('%s' % html)
 
-
+    # @timing
     def setProprietairesContent(self):
         '''
         Get proprietaires data
@@ -2647,18 +2642,14 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
             return
 
         # Get proprietaire info
-        sql = u'''
-        SELECT coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || ' - ' ||trim(coalesce(p.dlign3, '')) || ' / ' || ltrim(trim(coalesce(p.dlign4, '')), '0') || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, '')) ||
-        CASE
-          WHEN jdatnss IS NOT NULL
-          THEN ' - Né(e) le ' || jdatnss || ' à ' || coalesce(p.dldnss, '')
-          ELSE ''
-        END
-        FROM proprietaire p
-        LEFT JOIN ccodro ON ccodro.ccodro = p.ccodro
-        WHERE 2>1
-        AND comptecommunal = (SELECT comptecommunal FROM parcelle WHERE parcelle = '%s')
-        ''' % self.feature['geo_parcelle']
+        sql = ''
+        sqlfile = 'templates/parcelle_info_proprietaires.sql'
+        with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
+            sql = sqltemplate.read() % self.feature['geo_parcelle']
+        if not sql:
+            self.proprietairesInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
+            return
+
         if self.connectionParams['dbType'] == 'postgis':
             sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
         if self.connectionParams['dbType'] == 'spatialite':
@@ -2668,10 +2659,130 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         html = ''
         if ok:
             for line in data:
-                html+= u'%s<br>' % line[0]
+                html+= u'<div style="background-color:#e7e7e7;margin-bottom:20px;padding:10px;">%s</div>' % line[0]
 
         self.proprietairesInfo.setText('%s' % html)
 
+    # @timing
+    def setSubdivisionsContent(self):
+        '''
+        Get subdivision data
+        '''
+
+        # Check for MAJIC DATA
+        if not self.hasMajicDataProp:
+            self.subdivisionsInfo.setText(u'Les données MAJIC de subdivisions n\'ont pas été trouvées dans la base de données')
+            return
+
+        sql = ''
+        sqlfile = 'templates/parcelle_info_subdivisions.sql'
+        with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
+            sql = sqltemplate.read() % self.feature['geo_parcelle']
+        if not sql:
+            self.subdivisionsInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
+            return
+        if self.connectionParams['dbType'] == 'postgis':
+            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
+        if self.connectionParams['dbType'] == 'spatialite':
+            sql = cadastre_common.postgisToSpatialite(sql)
+
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+        html = ''
+        if ok:
+            suf = {}
+            for line in data:
+                suf[line[0]] = line[0:7]
+            if suf:
+                if len(suf) == 1:
+                    html+= u'La parcelle contient <b>%s</b> subdivision fiscale.' % len(suf)
+                else:
+                    html+= u'La parcelle contient <b>%s</b> subdivisions fiscales.' % len(suf)
+            for s,val in suf.items():
+                html+= u'<hr>'
+                html+= u'<h3>Subdivision %s</h3>' % val[0]
+                html+= u'<b>Revenu cadastral :</b> %s<br/>' % val[5]
+                html+= u'<b>Groupe :</b> %s<br/>' % val[1]
+                html+= u'<b>Sous-Groupe :</b> %s<br/>' % val[2]
+                if val[3]:
+                    html+= u'<b>Classe :</b> %s<br/>' % val[3]
+                if val[4]:
+                    html+= u'<b>Nature culture spéciale :</b> %s<br/>' % val[4]
+
+                # Exonerations
+                if not val[6]:
+                    continue
+                html+= u'<br/><b>Exonérations</b>'
+                html+= u'<table width="100%" border=1 cellspacing=0 cellpadding=5>'
+                html+= u'<tr>'
+                html+= u'<th>Nature</th>'
+                html+= u'<th>Collectivité</th>'
+                html+= u'<th>Pourcentage</th>'
+                html+= u'<th>Montant</th>'
+                html+= u'</tr>'
+                for line in data:
+                    if line[0] != s or not line[6]:
+                        continue
+                    html+= u'<tr>'
+                    html+= u'<td>%s</td>' % line[6].split('(')[0]
+                    html+= u'<td>%s</td>' % line[7].split('=>')[0]
+                    html+= u'<td>%s</td>' % line[8]
+                    html+= u'<td>%s</td>' % line[9]
+                    html+= u'</tr>'
+
+                html+= u'</table>'
+
+        self.subdivisionsInfo.setText('%s' % html)
+
+
+    # @timing
+    def setLocauxContent(self):
+        '''
+        Get locaux data
+        '''
+
+        # Check for MAJIC DATA
+        if not self.hasMajicDataProp:
+            self.locauxInfo.setText(u'Les données MAJIC de propriétaires n\'ont pas été trouvées dans la base de données')
+            return
+
+        # Get data from table
+        # ok = False
+        # try:
+            # sql = "SELECT parcelle, nb_locaux, locaux FROM parcelle_info_locaux WHERE parcelle = '%s' LIMIT 1;" % self.feature['geo_parcelle']
+            # if self.connectionParams['dbType'] == 'postgis':
+                # sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
+            # if self.connectionParams['dbType'] == 'spatialite':
+                # sql = cadastre_common.postgisToSpatialite(sql)
+            # [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+        # except:
+            # self.locauxInfo.setText(u'Impossible de lire les informations détaillées sur les locaux')
+            # ok = False
+
+        ## Get date from query instead
+        sql = ''
+        sqlfile = 'templates/parcelle_info_locaux.sql'
+        with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
+            sql = sqltemplate.read() % self.feature['geo_parcelle']
+        if not sql:
+            self.subdivisionsInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
+            return
+        if self.connectionParams['dbType'] == 'postgis':
+            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
+        if self.connectionParams['dbType'] == 'spatialite':
+            sql = cadastre_common.postgisToSpatialite(sql)
+
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+        html = ''
+        if ok and data:
+            loc = {}
+            for line in data:
+                if line[1] == 1:
+                    html+= u'La parcelle contient <b>%s</b> local.' % line[1]
+                else:
+                    html+= u'La parcelle contient <b>%s</b> locaux.' % line[1]
+                html+= u'%s' % line[2]
+        # print(html)
+        self.locauxInfo.setText('%s' % html)
 
     def exportAsPDF(self, key):
         '''
