@@ -494,7 +494,7 @@ class cadastre_common():
         ok = True
         #print "run query"
         try:
-            c = connector._execute(None,unicode(sql).encode('utf-8'))
+            c = connector._execute(None,unicode(sql))
             data = []
             header = connector._get_cursor_columns(c)
             if header == None:
@@ -504,22 +504,6 @@ class cadastre_common():
             rowCount = c.rowcount
             if rowCount == -1:
                 rowCount = len(data)
-        except UnicodeDecodeError as e:
-            try:
-                c = connector._execute(None,unicode(sql))
-                data = []
-                header = connector._get_cursor_columns(c)
-                if header == None:
-                    header = []
-                if len(header) > 0:
-                    data = connector._fetchall(c)
-                rowCount = c.rowcount
-                if rowCount == -1:
-                    rowCount = len(data)
-
-            except BaseError as e:
-                ok = False
-                error_message = e.msg
 
         except BaseError as e:
             ok = False
