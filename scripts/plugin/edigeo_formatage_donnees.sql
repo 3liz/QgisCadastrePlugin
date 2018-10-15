@@ -68,6 +68,8 @@ FROM [PREFIXE]subdsect_id
 -- geo_parcelle
 DROP INDEX IF EXISTS [PREFIXE]parcelle_id_object_rid;
 CREATE INDEX parcelle_id_object_rid ON [PREFIXE]parcelle_id (object_rid);
+DROP INDEX IF EXISTS [PREFIXE]parcelle_id_temp_idx;
+CREATE INDEX parcelle_id_temp_idx ON [PREFIXE]parcelle_id ('[ANNEE]'||'[DEPDIR]'||SUBSTR(idu,1,8));
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 CREATE INDEX geo_subdsect_annee_idx ON [PREFIXE]geo_subdsect (annee);
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_lot_idx;
@@ -77,14 +79,20 @@ CREATE INDEX geo_subdsect_object_rid_idx ON [PREFIXE]geo_subdsect (object_rid);
 
 INSERT INTO [PREFIXE]geo_parcelle
 (geo_parcelle, annee, object_rid, idu, geo_section, geo_subdsect, supf, geo_indp, coar, tex, tex2, codm, creat_date, update_dat, geom, lot)
-SELECT DISTINCT '[ANNEE]'||'[DEPDIR]'||p.idu, '[ANNEE]', p.object_rid, p.idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8), s.geo_subdsect, p.supf, p.indp, p.coar, p.tex, p.tex2, p.codm, to_date(to_char(p.creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(p.update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(p.geom),3)), '[LOT]'
+SELECT DISTINCT '[ANNEE]'||'[DEPDIR]'||p.idu, '[ANNEE]', p.object_rid, p.idu, '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8), foo.geo_subdsect, p.supf, p.indp, p.coar, p.tex, p.tex2, p.codm, to_date(to_char(p.creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(p.update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_CollectionExtract(ST_MakeValid(p.geom),3)), '[LOT]'
 FROM [PREFIXE]parcelle_id AS p
-LEFT JOIN (SELECT DISTINCT de, vers FROM [PREFIXE]edigeo_rel WHERE nom='Rel_PARCELLE_SUBDSECT') AS r ON r.de = p.object_rid
-LEFT JOIN [PREFIXE]geo_subdsect AS s
-ON s.annee = '[ANNEE]' AND s.lot ='[LOT]' AND r.vers = s.object_rid AND '[ANNEE]'||'[DEPDIR]'||SUBSTRING(p.idu,1,8) =  s.geo_section
+LEFT JOIN (
+    SELECT s.geo_section, s.geo_subdsect, r.de
+    FROM
+        [PREFIXE]geo_subdsect s,
+        (SELECT DISTINCT de, vers FROM [PREFIXE]edigeo_rel WHERE nom='Rel_PARCELLE_SUBDSECT') AS r
+    WHERE s.annee = '[ANNEE]' AND s.lot ='[LOT]' AND r.vers = s.object_rid
+) foo
+ON foo.de = p.object_rid  AND '[ANNEE]'||'[DEPDIR]'||SUBSTR(p.idu,1,8) = foo.geo_section
 WHERE p.idu IS NOT NULL
-
 ;
+
+DROP INDEX IF EXISTS [PREFIXE]parcelle_id_temp_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_object_rid_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_lot_idx;
