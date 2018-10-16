@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 1.6.2
+
+* Général - suppression de code inutile suite à la migration QGIS3
+* Import - Correction de parcelles en doublons dû au lien avec geo_subdsect
+* Export PDF - Correction d'un bug et restauration de l'affichage des propriétaires
+
 ## Version 1.6.1
 
 * Correction de bug sur l'interrogation de propriétaire suite à la gestion des dates en texte
