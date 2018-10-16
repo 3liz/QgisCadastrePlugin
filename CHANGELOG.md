@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 1.5.5
+
+* Import - Suppression du hack d'encodage pour 2.18.10
+* Import - Correction de parcelles en doublons dû au lien avec geo_subdsect
+* Export PDF - Correction d'un bug et restauration de l'affichage des propriétaires
+
 ## Version 1.5.4
 
 * Correction de bug sur l'interrogation de propriétaire suite à la gestion des dates en texte
