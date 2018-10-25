@@ -1309,6 +1309,10 @@ class cadastreImport(QObject):
                         self.dialog.schema
                     )
                 else:
+                    # qgis can connect to postgis DB without a specified host param connection, but ogr2ogr cannot
+                    if not host:
+                        host = "localhost"
+                        
                     pg_access = 'PG:host=%s port=%s dbname=%s active_schema=%s user=%s password=%s' % (
                         host,
                         port,
