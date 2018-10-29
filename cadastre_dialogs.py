@@ -94,7 +94,7 @@ def timing(f):
         time1 = time.time()
         ret = f(*args)
         time2 = time.time()
-        print('{:s} function took {:.3f} ms'.format(f.__name__, (time2-time1)*1000.0))
+        print '%s function took %0.3f ms' % (f.func_name, (time2-time1)*1000.0)
 
         return ret
     return wrap
@@ -2656,7 +2656,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 
         sql = ''
         with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % self.feature['geo_parcelle']
+            sql = sqltemplate.read().decode("utf-8") % self.feature['geo_parcelle']
         if not sql:
             self.parcelleInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
             return
@@ -2697,7 +2697,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         sql = ''
         sqlfile = 'templates/parcelle_info_proprietaires.sql'
         with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % self.feature['geo_parcelle']
+            sql = sqltemplate.read().decode("utf-8") % self.feature['geo_parcelle']
         if not sql:
             self.proprietairesInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
             return
@@ -2729,7 +2729,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         sql = ''
         sqlfile = 'templates/parcelle_info_subdivisions.sql'
         with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % self.feature['geo_parcelle']
+            sql = sqltemplate.read().decode("utf-8") % self.feature['geo_parcelle']
         if not sql:
             self.subdivisionsInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
             return
@@ -2814,7 +2814,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         sql = ''
         sqlfile = 'templates/parcelle_info_locaux.sql'
         with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % self.feature['geo_parcelle']
+            sql = sqltemplate.read().decode("utf-8") % self.feature['geo_parcelle']
         if not sql:
             self.subdivisionsInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
             return
