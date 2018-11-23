@@ -1121,3 +1121,9 @@ INSERT INTO detent VALUES ('3','passable');
 INSERT INTO detent VALUES ('4','médiocre');
 INSERT INTO detent VALUES ('5','mauvais');
 
+
+
+INSERT INTO filiation VALUES ('D','Division');
+INSERT INTO filiation VALUES ('R','Réunion');
+INSERT INTO filiation VALUES ('T','Transfert');
+
