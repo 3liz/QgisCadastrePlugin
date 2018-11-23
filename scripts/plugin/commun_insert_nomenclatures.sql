@@ -1102,7 +1102,6 @@ INSERT INTO ccocac VALUES ('CLI4', 'Centres de rééducation, de thalassothérap
 INSERT INTO ccocac VALUES ('IND1', 'Établissements industriels nécessitant un outillage important autres que les carrières et assimilés');
 INSERT INTO ccocac VALUES ('IND2', 'carrières et Établissements assimilables');
 INSERT INTO ccocac VALUES ('EXC1', 'Locaux ne relevant d’aucune des catégories précédentes par leurs caractéristiques sortant de l’ordinaire');
-
 INSERT INTO ccocac VALUES ('MAG', 'Magasins et lieux de vente');
 INSERT INTO ccocac VALUES ('BUR', 'Bureaux et locaux divers assimilables');
 INSERT INTO ccocac VALUES ('DEP', 'Lieux de dépôt ou stockage et parcs de stationnement');
@@ -1114,4 +1113,11 @@ INSERT INTO ccocac VALUES ('CLI', 'Cliniques et Établissements du secteur sanit
 INSERT INTO ccocac VALUES ('IND', 'Établissements industriels n''étant pas évaluées selon la méthode comptable');
 INSERT INTO ccocac VALUES ('EXC', 'Autres établissements');
 
+
+
+INSERT INTO detent VALUES ('1','bon');
+INSERT INTO detent VALUES ('2','assez bon');
+INSERT INTO detent VALUES ('3','passable');
+INSERT INTO detent VALUES ('4','médiocre');
+INSERT INTO detent VALUES ('5','mauvais');
 
