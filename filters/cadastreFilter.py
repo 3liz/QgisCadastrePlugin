@@ -27,7 +27,8 @@ from qgis.server import QgsServerFilter
 
 from PyQt4.QtCore import (
     QFileInfo,
-    QByteArray
+    QByteArray,
+    QSettings
 )
 from PyQt4.QtXml import QDomDocument
 
@@ -54,7 +55,8 @@ try:
 except:
     pass
 
-import os.path, json, time
+import os.path, json
+from time import time
 from uuid import uuid4
 import tempfile
 
@@ -64,12 +66,15 @@ class cadastreFilter(QgsServerFilter):
         super(cadastreFilter, self).__init__(serverIface)
         self.serverIface = serverIface
         self.request = None
-        self.project = None
         self.projectPath = None
         self.layer = None
+        self.layername = None
         self.connectionParams = None
         self.connector = None
         self.debugMode = True
+        self.feature = None
+        self.type = None
+        self.geo_parcelle = None
 
     def setJsonResponse(self, status, body):
         '''
@@ -81,6 +86,17 @@ class cadastreFilter(QgsServerFilter):
         self.request.setHeader('Status', status)
         self.request.clearBody()
         self.request.appendBody( json.dumps( body ) )
+
+    def setHtmlResponse(self, status, body):
+        '''
+        Set response with given parameters
+        '''
+        self.request.clearHeaders()
+        self.request.setInfoFormat('text/html')
+        self.request.setHeader('Content-type', 'text/html')
+        self.request.setHeader('Status', status)
+        self.request.clearBody()
+        self.request.appendBody( body )
 
     def responseComplete(self):
         self.request = self.serverIface.requestHandler()
@@ -95,16 +111,16 @@ class cadastreFilter(QgsServerFilter):
         if 'REQUEST' not in params:
             body = {
                 'status': 'fail',
-                'message': 'Missing parameters REQUEST: must be CreatePdf or GetPdf ',
+                'message': 'Missing parameters REQUEST: must be getHtml, CreatePdf or GetPdf ',
             }
             self.setJsonResponse( '200', body)
             return
 
         prequest = params['REQUEST']
-        if prequest.lower() not in ('createpdf', 'getpdf'):
+        if prequest.lower() not in ('gethtml', 'createpdf', 'getpdf'):
             body = {
                 'status': 'fail',
-                'message': 'Missing parameters REQUEST: must be CreatePdf or GetPdf ',
+                'message': 'Missing parameters REQUEST: must be GetHtml, CreatePdf or GetPdf ',
             }
             self.setJsonResponse( '200', body)
             return
@@ -118,9 +134,14 @@ class cadastreFilter(QgsServerFilter):
             self.getPdf()
             return
 
-    def createPdf(self):
+        if prequest.lower() == 'gethtml':
+            self.getHtml()
+            return
+
+
+    def loadRessources(self):
         '''
-        Create a PDF from cadastre data
+        Load QGIS project, find layer and feature corresponding to given parameters
         '''
         params = self.request.parameterMap( )
 
@@ -140,25 +161,28 @@ class cadastreFilter(QgsServerFilter):
         ptype = params['TYPE']
 
         # Check type
-        if ptype.lower() not in ('parcelle', 'proprietaire'):
-            QgsMessageLog.logMessage( "Cadastre - Parameter TYPE must be parcelle or proprietaire")
+        if ptype.lower() not in ('parcelle', 'proprietaire', 'fiche'):
+            QgsMessageLog.logMessage( "Cadastre - Parameter TYPE must be parcelle, fiche or proprietaire")
             body = {
                 'status': 'fail',
-                'message': 'Parameter TYPE must be parcelle or proprietaire'
+                'message': 'Parameter TYPE must be parcelle, fiche or proprietaire'
             }
             self.setJsonResponse( '200', body)
             return
 
         # Open project
-        self.projectPath = pmap
         pfile = QFileInfo( pmap )
         p = QgsProject.instance()
         p.read(pfile)
 
         # Find layer
         lr = QgsMapLayerRegistry.instance()
-        layerList = [ layer for lname,layer in lr.mapLayers().items() if layer.name() == player ]
-        if len(layerList ) != 1:
+        layer = None
+        for lname,lay in lr.mapLayers().items():
+            if lay.name() == player:
+                layer = lay
+                break
+        if not layer:
             QgsMessageLog.logMessage( "Cadastre - layer %s not in project" % player)
             body = {
                 'status': 'fail',
@@ -166,7 +190,6 @@ class cadastreFilter(QgsServerFilter):
             }
             self.setJsonResponse( '200', body)
             return
-        layer = layerList[0]
 
         # Get feature
         import re
@@ -204,6 +227,14 @@ class cadastreFilter(QgsServerFilter):
             QgsMessageLog.logMessage( "cadastre debug - feature geo_parcelle = %s" % feat['geo_parcelle'])
 
 
+        # Set properties
+        self.projectPath = pmap
+        self.geo_parcelle = pparcelle
+        self.feature = feat
+        self.type = ptype
+        self.layer = layer
+        self.layername = player
+
         # Get layer connection parameters
         self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
         if self.debugMode:
@@ -212,15 +243,51 @@ class cadastreFilter(QgsServerFilter):
         self.connector = cadastre_common.getConnectorFromUri( self.connectionParams )
         if self.debugMode:
             QgsMessageLog.logMessage( "cadastre debug - after getting connector" )
+            QgsMessageLog.logMessage( "cadastre debug - ptype = %s" % ptype )
+
+
+
+    def getHtml(self):
+
+        # Load ressources based on passed params
+        self.loadRessources()
+
+        html = ''
+        html+= cadastre_common.getItemHtml('parcelle_majic', self.feature, self.connectionParams, self.connector)
+        html+= cadastre_common.getItemHtml('proprietaires', self.feature, self.connectionParams, self.connector)
+        html+= cadastre_common.getItemHtml('subdivisions', self.feature, self.connectionParams, self.connector)
+        html+= cadastre_common.getItemHtml('locaux', self.feature, self.connectionParams, self.connector)
+        html+= cadastre_common.getItemHtml('locaux_detail', self.feature, self.connectionParams, self.connector)
+        # QgsMessageLog.logMessage( "cadastre debug - HTML = %s" % html )
+        # body = html
+        # self.setHtmlResponse( '200', body)
+        body = {
+            'status': 'success',
+            'message': 'PDF generated',
+            'data': html
+        }
+        self.setJsonResponse( '200', body)
+
+
+        return
+
+
+
+    def createPdf(self):
+        '''
+        Create a PDF from cadastre data
+        '''
+        # Load ressources based on passed params
+        self.loadRessources()
 
         # Get compte communal
         comptecommunal = cadastre_common.getCompteCommunalFromParcelleId(
-            feat['geo_parcelle'],
+            self.geo_parcelle,
             self.connectionParams,
             self.connector
         )
         pmulti = 1
-        if ptype == 'proprietaire' and pmulti == 1:
+        if self.type == 'proprietaire' and pmulti == 1:
             comptecommunal = cadastre_common.getProprietaireComptesCommunaux(
                 comptecommunal,
                 self.connectionParams,
@@ -231,10 +298,10 @@ class cadastreFilter(QgsServerFilter):
 
         # Export PDF
         qex = cadastreExport(
-            layer,
-            ptype,
+            self.layer,
+            self.type,
             comptecommunal,
-            feat['geo_parcelle']
+            self.geo_parcelle
         )
         if self.debugMode:
             QgsMessageLog.logMessage( "cadastre debug - after instanciating cadastreExport" )
