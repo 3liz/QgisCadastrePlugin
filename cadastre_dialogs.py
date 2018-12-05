@@ -794,6 +794,61 @@ class cadastre_common(object):
 
         return ccs
 
+    @staticmethod
+    def getItemHtml(item, feature, connectionParams, connector):
+        '''
+        Build Html for a item (parcelle, proprietaires, etc.)
+        based on SQL query
+        '''
+        html = ''
+        plugin_dir = os.path.dirname(os.path.abspath(__file__))
+
+        infos = {
+            'parcelle_majic': {
+                'label': 'Parcelle'
+            },
+            'parcelle_simple': {
+                'label': 'Parcelle'
+            },
+            'proprietaires': {
+                'label': u'Propriétaires'
+            },
+            'subdivisions': {
+                'label': u'Subdivisions fiscales'
+            },
+            'subdivisions_exoneration': {
+                'label': u'Exonérations'
+            },
+            'locaux': {
+                'label': u'Locaux'
+            },
+            'locaux_detail': {
+                'label': u'Locaux : informations détaillées'
+            }
+        }
+        info = infos[item]
+        sqlfile = 'templates/parcelle_info_%s.sql' % item
+        sql = ''
+        with open(os.path.join(plugin_dir, sqlfile)) as sqltemplate:
+            sql = sqltemplate.read().decode("utf-8") % feature['geo_parcelle']
+        if not sql:
+            html+= u'Impossible de lire le SQL dans le fichier %s' % sqlfile
+            return html
+
+        if connectionParams['dbType'] == 'postgis':
+            sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
+        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
+        # print sql
+
+        if ok:
+            html+= '<h2>' + info['label']+ '</h2>'
+            for line in data:
+                # print info['label']
+                # print line
+                if line and len(line) > 0 and line[0]:
+                    html+= u'%s' % line[0].replace('100p', '100%')
+
+        return html
 
 
 from .cadastre_import import cadastreImport
@@ -2569,11 +2624,25 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         self.hasMajicDataProp = False
         self.checkMajicContent()
 
+        # Get CSS
+        self.css = None
+        self.getCss()
+
         # Set dialog content
         self.setParcelleContent()
         self.setProprietairesContent()
         self.setSubdivisionsContent()
         self.setLocauxContent()
+
+    def getCss(self):
+        '''
+        Get CSS from CSS file
+        '''
+        css = ''
+        plugin_dir = os.path.dirname(os.path.abspath(__file__))
+        with open(os.path.join(plugin_dir, 'scripts/css/cadastre.css'), 'r') as f:
+            css = f.read()
+        self.css = css
 
     def checkMajicContent(self):
         '''
@@ -2591,44 +2660,17 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
     # @timing
     def setParcelleContent(self):
         '''
-        Get data for the selected
-        parcelle and set the dialog
-        text content
+        Get parcelle data
+        and set the dialog content
         '''
-
-        if self.hasMajicDataProp:
-            sqlfile = 'templates/parcelle_info_general_majic.sql'
+        if self.feature.fieldNameIndex('proprietaire') > 0:
+            item = 'parcelle_majic'
         else:
-            self.parcelleInfo.setText(u'<i>Les données MAJIC n\'ont pas été trouvées dans la base de données</i>')
-            sqlfile = 'templates/parcelle_info_general_no_majic.sql'
+            item = 'parcelle_simple'
 
-        sql = ''
-        with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % self.feature['geo_parcelle']
-        if not sql:
-            self.parcelleInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
-            return
-
-        if self.connectionParams['dbType'] == 'postgis':
-            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
-
-        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
-        html = ''
-        if ok:
-            for line in data:
-                html+= u'<h3>%s</h3>' % line[5]
-                html+= u'<b>Commune :</b>'
-                if line[0] and line[1]:
-                    html+= ' %s (%s)<br/>' % (line[0], line[1])
-                else:
-                    html+=  u' <i>Pas de données Fantoir dans la base !</i><br/>'
-                html+= u'<b>Date de l\'acte :</b> %s<br/>' % line[6]
-                html+= u'<b>Surface géographique :</b> %s m²<br/>' % int(self.feature.geometry().area())
-                html+= u'<b>Contenance :</b> %s m²<br/>' % line[2]
-                html+= u'<b>Adresse :</b> %s<br/>' % line[3]
-                html+= u'<b>Urbaine :</b> %s<br/>' % line[4]
-
-        self.parcelleInfo.setText('%s' % html)
+        html = cadastre_common.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+        self.parcelleInfo.setStyleSheet( self.css )
+        self.parcelleInfo.setHtml('%s' % html)
 
     # @timing
     def setProprietairesContent(self):
@@ -2636,153 +2678,44 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         Get proprietaires data
         and set the dialog content
         '''
-        # Check for MAJIC DATA
-        if not self.hasMajicDataProp:
-            self.proprietairesInfo.setText(u'Les données MAJIC de propriétaires n\'ont pas été trouvées dans la base de données')
-            return
-
-        # Get proprietaire info
-        sql = ''
-        sqlfile = 'templates/parcelle_info_proprietaires.sql'
-        with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % self.feature['geo_parcelle']
-        if not sql:
-            self.proprietairesInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
-            return
-
-        if self.connectionParams['dbType'] == 'postgis':
-            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
-        if self.connectionParams['dbType'] == 'spatialite':
-            sql = cadastre_common.postgisToSpatialite(sql)
-
-        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
-        html = ''
-        if ok:
-            for line in data:
-                html+= u'<div style="background-color:#e7e7e7;margin-bottom:20px;padding:10px;">%s</div>' % line[0]
-
+        if self.feature.fieldNameIndex('proprietaire') == -1:
+            html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
+        else:
+            item = 'proprietaires'
+            html = cadastre_common.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+        self.proprietairesInfo.setStyleSheet( self.css )
         self.proprietairesInfo.setText('%s' % html)
 
     # @timing
     def setSubdivisionsContent(self):
         '''
         Get subdivision data
+        and set the dialog content
         '''
-
-        # Check for MAJIC DATA
-        if not self.hasMajicDataProp:
-            self.subdivisionsInfo.setText(u'Les données MAJIC de subdivisions n\'ont pas été trouvées dans la base de données')
-            return
-
-        sql = ''
-        sqlfile = 'templates/parcelle_info_subdivisions.sql'
-        with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % self.feature['geo_parcelle']
-        if not sql:
-            self.subdivisionsInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
-            return
-        if self.connectionParams['dbType'] == 'postgis':
-            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
-        if self.connectionParams['dbType'] == 'spatialite':
-            sql = cadastre_common.postgisToSpatialite(sql)
-
-        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
-        html = ''
-        if ok:
-            suf = {}
-            for line in data:
-                suf[line[0]] = line[0:7]
-            if suf:
-                if len(suf) == 1:
-                    html+= u'La parcelle contient <b>%s</b> subdivision fiscale.' % len(suf)
-                else:
-                    html+= u'La parcelle contient <b>%s</b> subdivisions fiscales.' % len(suf)
-            for s,val in suf.items():
-                html+= u'<hr>'
-                html+= u'<h3>Subdivision %s</h3>' % val[0]
-                html+= u'<b>Revenu cadastral :</b> %s<br/>' % val[5]
-                html+= u'<b>Groupe :</b> %s<br/>' % val[1]
-                html+= u'<b>Sous-Groupe :</b> %s<br/>' % val[2]
-                if val[3]:
-                    html+= u'<b>Classe :</b> %s<br/>' % val[3]
-                if val[4]:
-                    html+= u'<b>Nature culture spéciale :</b> %s<br/>' % val[4]
-
-                # Exonerations
-                if not val[6]:
-                    continue
-                html+= u'<br/><b>Exonérations</b>'
-                html+= u'<table width="100%" border=1 cellspacing=0 cellpadding=5>'
-                html+= u'<tr>'
-                html+= u'<th>Nature</th>'
-                html+= u'<th>Collectivité</th>'
-                html+= u'<th>Pourcentage</th>'
-                html+= u'<th>Montant</th>'
-                html+= u'</tr>'
-                for line in data:
-                    if line[0] != s or not line[6]:
-                        continue
-                    html+= u'<tr>'
-                    html+= u'<td>%s</td>' % line[6].split('(')[0]
-                    html+= u'<td>%s</td>' % line[7].split('=>')[0]
-                    html+= u'<td>%s</td>' % line[8]
-                    html+= u'<td>%s</td>' % line[9]
-                    html+= u'</tr>'
-
-                html+= u'</table>'
-
+        if self.feature.fieldNameIndex('proprietaire') == -1:
+            html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
+        else:
+            item = 'subdivisions'
+            html = cadastre_common.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+        self.subdivisionsInfo.setStyleSheet( self.css )
         self.subdivisionsInfo.setText('%s' % html)
-
 
     # @timing
     def setLocauxContent(self):
         '''
         Get locaux data
+        and set the dialog content
         '''
-
-        # Check for MAJIC DATA
-        if not self.hasMajicDataProp:
-            self.locauxInfo.setText(u'Les données MAJIC de propriétaires n\'ont pas été trouvées dans la base de données')
-            return
-
-        # Get data from table
-        # ok = False
-        # try:
-            # sql = "SELECT parcelle, nb_locaux, locaux FROM parcelle_info_locaux WHERE parcelle = '%s' LIMIT 1;" % self.feature['geo_parcelle']
-            # if self.connectionParams['dbType'] == 'postgis':
-                # sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
-            # if self.connectionParams['dbType'] == 'spatialite':
-                # sql = cadastre_common.postgisToSpatialite(sql)
-            # [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
-        # except:
-            # self.locauxInfo.setText(u'Impossible de lire les informations détaillées sur les locaux')
-            # ok = False
-
-        ## Get date from query instead
-        sql = ''
-        sqlfile = 'templates/parcelle_info_locaux.sql'
-        with open(os.path.join(self.qc.plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % self.feature['geo_parcelle']
-        if not sql:
-            self.subdivisionsInfo.setText(u'Impossible de lire le SQL dans le fichier %s' % sqlfile)
-            return
-        if self.connectionParams['dbType'] == 'postgis':
-            sql = cadastre_common.setSearchPath(sql, self.connectionParams['schema'])
-        if self.connectionParams['dbType'] == 'spatialite':
-            sql = cadastre_common.postgisToSpatialite(sql)
-
-        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
-        html = ''
-        if ok and data:
-            loc = {}
-            for line in data:
-                if line[1] == 1:
-                    html+= u'La parcelle contient <b>%s</b> local.' % line[1]
-                else:
-                    html+= u'La parcelle contient <b>%s</b> locaux.' % line[1]
-                html+= u'%s' % line[2]
-        # print(html)
+        if self.feature.fieldNameIndex('proprietaire') == -1:
+            html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
+        else:
+            item = 'locaux'
+            html = cadastre_common.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            item = 'locaux_detail'
+            html+= cadastre_common.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+        self.locauxInfo.setStyleSheet( self.css )
         self.locauxInfo.setText('%s' % html)
+
 
     def exportAsPDF(self, key):
         '''
@@ -2817,6 +2750,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
                         self.feature['geo_parcelle']
                     )
                     qe.exportAsPDF()
+
 
     def centerToParcelle(self):
         '''
