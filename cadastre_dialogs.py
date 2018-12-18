@@ -830,7 +830,7 @@ class cadastre_common(object):
         sqlfile = 'templates/parcelle_info_%s.sql' % item
         sql = ''
         with open(os.path.join(plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read().decode("utf-8") % feature['geo_parcelle']
+            sql = sqltemplate.read() % feature['geo_parcelle']
         if not sql:
             html+= u'Impossible de lire le SQL dans le fichier %s' % sqlfile
             return html
