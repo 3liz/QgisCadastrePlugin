@@ -671,6 +671,7 @@ class cadastre_common(object):
         replaceBy = ''
         for statement in res:
             replaceBy = '''
+            DROP TABLE IF EXISTS ll;
             CREATE TABLE ll AS
             SELECT DISTINCT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.ccodep || l10.ccodir || l10.invar AS local00, REPLACE(l10.annee || l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '0') AS parcelle, REPLACE(l10.annee || l10.ccodep || l10.ccodir || l10.ccocom || l.ccovoi,' ', '0') AS voie
             FROM local00 l
