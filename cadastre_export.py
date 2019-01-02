@@ -96,6 +96,7 @@ class cadastreExport(QObject):
 
         if isinstance(comptecommunal, list):
             self.isMulti = True
+            comptecommunal = list(set(comptecommunal))
             if len(comptecommunal) == 1:
                 self.isMulti = False
                 comptecommunal = comptecommunal[0].strip(" '")

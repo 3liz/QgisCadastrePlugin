@@ -765,8 +765,9 @@ class cadastre_common():
         if ok:
             for line in data:
                 ccs = ccs + line[1].split(',')
-
-        return ccs
+        # deduplicate
+        ret = list(set(ccs))
+        return ret
 
     @staticmethod
     def getItemHtml(item, feature, connectionParams, connector):
@@ -2728,7 +2729,6 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
             html+= cadastre_common.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.locauxInfo.setStyleSheet( self.css )
         self.locauxInfo.setText('%s' % html)
-
 
     def exportAsPDF(self, key):
         '''
