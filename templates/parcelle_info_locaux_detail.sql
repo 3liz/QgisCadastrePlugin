@@ -203,7 +203,7 @@ SELECT
         '<h4>Propriété</h4>' ||
         '<p>' ||
         '<b>Compte propriétaire: </b>' ||  l10_compte_proprietaire ||
-        '<br/><b>Date de l''acte: </b>' ||  Coalesce(l10_date_acte::text, '-') ||
+        '<br/><b>Date de l''acte: </b>' ||  Coalesce(cast(l10_date_acte AS text), '-') ||
         '</p>' ||
 
         '<h4>Caractéristiques</h4>' ||
