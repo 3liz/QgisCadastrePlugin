@@ -406,80 +406,34 @@ class cadastre_common(object):
         '''
         connectionParams = None
 
-        # Get params via regex
-        uri = layer.dataProvider().dataSourceUri()
-        reg = "(?:service='([^ ]+)' )?(?:dbname='([^ ]+)' )?(?:host=([^ ]+) )?(?:port=([0-9]+) )?(?:user='([^ ]+)' )?(?:password='([^ ]+)' )?(?:sslmode=([^ ]+) )?(?:key='([^ ]+)' )?(?:estimatedmetadata=([^ ]+) )?(?:checkPrimaryKeyUnicity='([0-1]+)' )?(?:srid=([0-9]+) )?(?:type=([a-zA-Z]+) )?(?:table=\"(.+)\" \()?(?:([^ ]+)\) )?(?:sql=(.*))?"
-
-        result = re.findall(r'%s' % reg, uri)
-        if not result:
-            print('no result')
-            return None
-
-        res = result[0]
-        if not res:
-            return None
-
-        service = res[0]
-        dbname = res[1]
-        host = res[2]
-        port = res[3]
-        user = res[4]
-        password = res[5]
-        sslmode = res[6]
-        key = res[7]
-        estimatedmetadata = res[8]
-        checkPrimaryKeyUnicity = res[9]
-        srid = res[10]
-        gtype = res[11]
-        table = res[12]
-        geocol = res[13]
-        sql = res[14]
-
-        schema = ''
-
-        if ' FROM ' not in table:
-            if re.search('"\."', table):
-                table = '"' + table + '"'
-                sp = table.replace('"', '').split('.')
-                schema = sp[0]
-                table = sp[1]
-        else:
-            reg = r'\* FROM ([^\)]+)?(\))?'
-            f = re.findall(r'%s' % reg, table)
-
-            if f and f[0]:
-                sp = f[0][0].replace('"', '').split('.')
-                if len(sp) > 1:
-                    schema = sp[0].replace('\\', '')
-                    table = sp[1]
-                else:
-                    table = sp[0]
-            else:
-                return None
-
-
         if layer.providerType() == u'postgres':
             dbType = 'postgis'
         else:
             dbType = 'spatialite'
 
+        src = layer.source()
+        try:
+            uri = QgsDataSourceUri(src)
+        except:
+            uri = QgsDataSourceURI(src)
+
         connectionParams = {
-            'service' : service,
-            'dbname' : dbname,
-            'host' : host,
-            'port': port,
-            'user' : user,
-            'password': password,
-            'sslmode' : sslmode,
-            'key': key,
-            'estimatedmetadata' : estimatedmetadata,
-            'checkPrimaryKeyUnicity' : checkPrimaryKeyUnicity,
-            'srid' : srid,
-            'type': gtype,
-            'schema': schema,
-            'table' : table,
-            'geocol' : geocol,
-            'sql' : sql,
+            'service' : uri.service(),
+            'dbname' : uri.database(),
+            'host' : uri.host(),
+            'port': uri.port(),
+            'user' : uri.username(),
+            'password': uri.password(),
+            'sslmode' : uri.sslMode(),
+            'key': uri.keyColumn(),
+            'estimatedmetadata' : str(uri.useEstimatedMetadata()),
+            'checkPrimaryKeyUnicity' : '',
+            'srid' : uri.srid(),
+            'type': uri.wkbType(),
+            'schema': uri.schema(),
+            'table' : uri.table(),
+            'geocol' : uri.geometryColumn(),
+            'sql' : uri.sql(),
             'dbType': dbType
         }
 
@@ -838,6 +792,8 @@ class cadastre_common(object):
 
         if connectionParams['dbType'] == 'postgis':
             sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
+        if connectionParams['dbType'] == 'spatialite':
+            sql = cadastre_common.postgisToSpatialite(sql, connectionParams['srid'])
         [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
         # print sql
 
