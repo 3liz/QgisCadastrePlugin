@@ -22,8 +22,8 @@ FROM (
         '<td>' || dteloc_lib || '</td>' ||
         '<td>' || cconlc_lib || '</td>' ||
         '<td>' || dnatlc_lib || '</td>' ||
-        '<td>' || COALESCE(l10.jdatat, '') || '</td>' ||
-        '<td>' || Coalesce(l10.jannat, '') || '</td>' ||
+        '<td>' || COALESCE(cast(l10.jdatat AS text), '') || '</td>' ||
+        '<td>' || Coalesce(cast(l10.jannat AS text), '') || '</td>' ||
         '<td>' ||
             trim(coalesce(pr.dqualp, '')) || ' ' ||
             CASE WHEN trim(pr.dnomus) != trim(pr.dnomlp) THEN Coalesce( trim(pr.dnomus) || '/' || trim(pr.dprnus) || ', née ', '' ) ELSE '' END ||

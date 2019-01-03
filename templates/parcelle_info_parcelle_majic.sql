@@ -3,7 +3,7 @@ SELECT
 '<table class="table table-condensed table-striped" border=1 cellspacing=0 cellpadding=3>' ||
     '<tr><th>Code</th> <td>' || ccosec || dnupla || '</td></tr>' ||
     '<tr><th>Commune</th> <td>' || c.libcom || '</td></tr>' ||
-    '<tr><th>Date de l''acte</th> <td>' || COALESCE(p.jdatat, '') || '</td></tr>' ||
+    '<tr><th>Date de l''acte</th> <td>' || COALESCE(Cast(p.jdatat AS text), '') || '</td></tr>' ||
     '<tr><th>Surface cadastrale (contenance)</th> <td>' || p.dcntpa || ' m²</td></tr>' ||
     '<tr><th>Surface géographique</th> <td>' || round(ST_Area(gp.geom)) || ' m²</td></tr>' ||
     '<tr><th>Surface bâtie</th><td>' || coalesce(sum(round(ST_Area(b.geom))), 0) || ' m²</td></tr>' ||
