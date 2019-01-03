@@ -103,7 +103,29 @@ pevs AS (
             '<b>Nombre de pièces: </b>' || pp.dnbpdc || '<br/><b>Pièces principales: </b>' || pp.dnbppr ||
             '<br/><b>Surface des pièces: </b>' || pp.dsupdc || ' m2' || '<br/><b>Salles à manger: </b>' || pp.dnbsam || '<br/><b>Chambres: </b>' || pp.dnbcha ||
             '<br/><b>Cuisines - 9m2: </b>' || pp.dnbcu8 || '<br/><b>Cuisines > 9m2: </b>' || pp.dnbcu9 ||
-            '<br/><b>Salles d''eau: </b>' || pp.dnbsea || '<br/><b>Pièces annexes: </b>' || pp.dnbann
+            '<br/><b>Salles d''eau: </b>' || pp.dnbsea || '<br/><b>Pièces annexes: </b>' || pp.dnbann ||
+            '<br/><b>Matériaux des gros murs: </b>' ||
+                CASE
+                    WHEN pp.dmatgm IN ('00', '00') THEN 'indéterminé'
+                    WHEN pp.dmatgm IN ('10', '01') THEN 'pierre'
+                    WHEN pp.dmatgm IN ('20', '02') THEN 'meulière'
+                    WHEN pp.dmatgm IN ('30', '03') THEN 'béton'
+                    WHEN pp.dmatgm IN ('40', '04') THEN 'brique'
+                    WHEN pp.dmatgm IN ('50', '05') THEN 'aggloméré'
+                    WHEN pp.dmatgm IN ('80', '08') THEN 'bois'
+                    WHEN pp.dmatgm IN ('90', '09') THEN 'autres'
+                    ELSE 'inconnu'
+                END ||
+            '<br/><b>Matériaux des toitures: </b>' ||
+                CASE
+                    WHEN pp.dmatto IN ('00', '00') THEN 'indéterminé'
+                    WHEN pp.dmatto IN ('10', '01') THEN 'tuiles'
+                    WHEN pp.dmatto IN ('20', '02') THEN 'ardoises'
+                    WHEN pp.dmatto IN ('30', '03') THEN 'zinc aluminium'
+                    WHEN pp.dmatto IN ('40', '04') THEN 'béton'
+                    ELSE 'inconnu'
+                END
+
         ) AS descriptif,
         (
             '<b>Eau: </b>' || pp.geaulc || '<br/><b>Électricité: </b>' || pp.gelelc ||
@@ -118,7 +140,28 @@ pevs AS (
         'Dépendance' AS type_pev, cconad_lib AS sous_type_pev,
         (
             '<b>Situation particulière: </b>' || pd.dcspdea || '<br/><b>Surface réelle: </b>' || pd.dsudep || ' m2</b>' ||
-            '<br/><b>Pondération: </b>' || pd.dcimlc || '<br/><b>État d''entretien: </b>' || pd.detent
+            '<br/><b>Pondération: </b>' || pd.dcimlc || '<br/><b>État d''entretien: </b>' || pd.detent ||
+            '<br/><b>Matériaux des gros murs: </b>' ||
+                CASE
+                    WHEN pd.dmatgm IN ('00', '00') THEN 'indéterminé'
+                    WHEN pd.dmatgm IN ('10', '01') THEN 'pierre'
+                    WHEN pd.dmatgm IN ('20', '02') THEN 'meulière'
+                    WHEN pd.dmatgm IN ('30', '03') THEN 'béton'
+                    WHEN pd.dmatgm IN ('40', '04') THEN 'brique'
+                    WHEN pd.dmatgm IN ('50', '05') THEN 'aggloméré'
+                    WHEN pd.dmatgm IN ('60', '06') THEN 'bois'
+                    WHEN pd.dmatgm IN ('90', '09') THEN 'autres'
+                    ELSE 'inconnu'
+                END ||
+            '<br/><b>Matériaux des toitures: </b>' ||
+                CASE
+                    WHEN pd.dmatto IN ('00', '00') THEN 'indéterminé'
+                    WHEN pd.dmatto IN ('10', '01') THEN 'tuiles'
+                    WHEN pd.dmatto IN ('20', '02') THEN 'ardoises'
+                    WHEN pd.dmatto IN ('30', '03') THEN 'zinc aluminium'
+                    WHEN pd.dmatto IN ('40', '04') THEN 'béton'
+                    ELSE 'inconnu'
+                END
         ) AS descriptif,
         (
             '<b>Eau: </b>' || pd.geaulc || '<br/><b>Électricité: </b>' || pd.gelelc ||

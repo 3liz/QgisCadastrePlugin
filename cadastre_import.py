@@ -864,6 +864,16 @@ class cadastreImport(QObject):
             sql = self.qc.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 
+            # Add index on geo_parcelle and geo_batiment centroids
+            sql = '''
+            DROP INDEX IF EXISTS geo_parcelle_centroide_geom_idx;
+            DROP INDEX IF EXISTS geo_batiment_centroide_geom_idx;
+            CREATE INDEX geo_parcelle_centroide_geom_idx ON geo_parcelle USING gist (ST_Centroid(geom));
+            CREATE INDEX geo_batiment_centroide_geom_idx ON geo_batiment USING gist (ST_Centroid(geom));
+            '''
+            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            self.executeSqlQuery(sql)
+
         # Refresh spatialite layer statistics
         if self.dialog.dbType == 'spatialite':
             sql = ''
