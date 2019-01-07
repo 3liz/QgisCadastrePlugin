@@ -64,7 +64,7 @@ except:
 
 class cadastreExport(QObject):
 
-    def __init__(self, layer, etype, comptecommunal, geo_parcelle=None):
+    def __init__(self, layer, etype, comptecommunal, geo_parcelle=None, target_dir=None):
 
         self.plugin_dir = os.path.dirname(__file__)
         self.iface = iface
@@ -107,7 +107,10 @@ class cadastreExport(QObject):
         # target directory for saving
         s = QSettings()
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
-        self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
+        if not target_dir or not os.path.exists(target_dir):
+            self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
+        else:
+            self.targetDir = target_dir
 
         # label for header2
         if self.etype == 'proprietaire':
