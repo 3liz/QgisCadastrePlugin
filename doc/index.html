@@ -308,7 +308,9 @@
    Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données. Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
   </p>
   <p>
-   .. note::  Il est conseillé d’importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d’un millésime à l’autre ( ajout de colonnes, modification de longueur de champs, etc.
+   <sub>
+    Note:  Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d'un millésime à l'autre ( ajout de colonnes, modification de longueur de champs, etc.
+   </sub>
   </p>
   <h3 id="bases-de-donnees">
    Bases de données
@@ -579,7 +581,42 @@
    Le déroulement de l’import est écrit dans le bloc texte situé en bas de la fenêtre.
   </p>
   <p>
-   .. note::  Pendant l’import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l’instant, le plugin n’intègre pas de bouton pour annuler un import en cours.
+   <sub>
+    Note:  Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import en cours.
+   </sub>
+  </p>
+  <h3 id="projections-ignf">
+   Projections IGNF
+  </h3>
+  <p>
+   Si votre donnée EDIGEO est en projection IGNF, par exemple pour la Guadeloupe, IGNF:GUAD48UTM20 (Guadeloupe Ste Anne), et que vous souhaitez importer les données dans PostgreSQL, il faut au préalable ajouter dans votre table public.spatial_ref_sys la définition de la projection IGNF. Si vous utilisez à la place l’équivalent EPSG (par exemple ici EPSG:2970), vous risquez un décalage des données lors de la reprojection.
+  </p>
+  <p>
+   Vous pouvez ajouter dans votre base de données la définition via une requête, par exemple avec la requête suivante pour IGNF:GUAD48UTM20:
+  </p>
+  <pre><code>INSERT INTO spatial_ref_sys values (
+    998999,
+    'IGNF',
+    998999,
+    'PROJCS["Guadeloupe Ste Anne",GEOGCS["Guadeloupe Ste Anne",DATUM["Guadeloupe St Anne",SPHEROID["International-Hayford 1909",6378388.0000,297.0000000000000,AUTHORITY["IGNF","ELG001"]],TOWGS84[-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400],AUTHORITY["IGNF","REG425"]],PRIMEM["Greenwich",0.000000000,AUTHORITY["IGNF","LGO01"]],UNIT["degree",0.01745329251994330],AXIS["Longitude",EAST],AXIS["Latitude",NORTH],AUTHORITY["IGNF","GUAD48GEO"]],PROJECTION["Transverse_Mercator",AUTHORITY["IGNF","PRC0220"]],PARAMETER["semi_major",6378388.0000],PARAMETER["semi_minor",6356911.9461],PARAMETER["latitude_of_origin",0.000000000],PARAMETER["central_meridian",-63.000000000],PARAMETER["scale_factor",0.99960000],PARAMETER["false_easting",500000.000],PARAMETER["false_northing",0.000],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","GUAD48UTM20"]]',
+    '+init=IGNF:GUAD48UTM20'
+);
+</code></pre>
+  <p>
+   Attention, il est important d’utiliser un code qui est &lt;= 998999, car PostGIS place des contraintes sur le SRID. Nous avons utilisé ici 998999, qui est le maximum possible.
+   <br/>
+   La liste des caractéristiques des projections peut être trouvée à ce lien :
+   <a href="http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql">
+    http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql
+   </a>
+   ( voir discussion Géorézo :
+   <a href="https://georezo.net/forum/viewtopic.php?pid=268134">
+    https://georezo.net/forum/viewtopic.php?pid=268134
+   </a>
+   ). Attention, il faut extraire de ce fichier la commande INSERT qui correspond à votre code IGNF, et remplacer le SRID par 998999.
+  </p>
+  <p>
+   Ensuite, dans la projection source, vous pouvez utiliser IGNF:GUAD48UTM20 au lieu du code EPSG correspondant.
   </p>
   <h2 id="charger-des-donnees">
    Charger des données
@@ -849,46 +886,58 @@ GROUP BY gp.geo_parcelle, gp.geom
    <img alt="alt" src="MEDIA/cadastre_parcelle_info.png"/>
   </p>
   <p>
-   Elle présente:
+   Elle présente plusieurs onglets:
   </p>
   <ul>
    <li>
-    un bloc avec les
+    un onglet avec les
     <strong>
      informations générales de la parcelle
     </strong>
    </li>
    <li>
-    un bloc avec les
+    un onglet avec les
     <strong>
      propriétaires
     </strong>
     de la parcelle
    </li>
    <li>
-    <p>
-     une zone contenant des
-     <strong>
-      boutons d’action
-     </strong>
-    </p>
+    un onglet avec les
+    <strong>
+     subdivisions fiscales
+    </strong>
    </li>
    <li>
-    <p>
-     2 boutons pour
-     <strong>
-      exporter
-     </strong>
-     le
-     <strong>
-      relevé parcellaire
-     </strong>
-     et le
-     <strong>
-      relevé de propriété
-     </strong>
-     au format PDF
-    </p>
+    un onglet avec les
+    <strong>
+     locaux
+    </strong>
+    et leurs informations détaillées
+   </li>
+  </ul>
+  <p>
+   ainsi qu’une zone contenant des
+   <strong>
+    boutons d’action
+   </strong>
+   :
+  </p>
+  <ul>
+   <li>
+    2 boutons pour
+    <strong>
+     exporter
+    </strong>
+    le
+    <strong>
+     relevé parcellaire
+    </strong>
+    et le
+    <strong>
+     relevé de propriété
+    </strong>
+    au format PDF
    </li>
    <li>
     3 boutons pour
@@ -905,7 +954,10 @@ GROUP BY gp.geo_parcelle, gp.geom
    </li>
   </ul>
   <p>
-   .. note::  Si vous n’avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l’adresse pourra être tronquée (de même pour les relevés exportés)
+   ~Si vous n’avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l’adresse pourra être tronquée (de même pour les relevés exportés)
+  </p>
+  <p>
+   Si vous n’avez pas de données MAJIC, seule les informations sur la parcelle (1er onglet) seront présentées.~
   </p>
   <h3 id="exporter-la-vue">
    Exporter la vue
@@ -977,7 +1029,9 @@ GROUP BY gp.geo_parcelle, gp.geom
    Une bulle d’information affiche la fonction des boutons au survol de la souris.
   </p>
   <p>
-   .. note::  Si la base de données ne contient aucune donnée MAJIC, alors les recherches par adresse et par propriétaire sont désactivés.
+   <sub>
+    Note:  Si la base de données ne contient aucune donnée MAJIC, alors les recherches par adresse et par propriétaire sont désactivés.
+   </sub>
   </p>
   <h3 id="recherche-de-lieux">
    Recherche de lieux
@@ -1102,9 +1156,9 @@ GROUP BY gp.geo_parcelle, gp.geom
    Recherche d’adresse
   </h3>
   <p>
-   .. note::  Pour l’instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l’import Majic):
-   <a href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits">
-    http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
+   ~Pour l’instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l’import Majic):
+   <a href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits~">
+    http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits~
    </a>
   </p>
   <p>
@@ -1187,7 +1241,9 @@ GROUP BY gp.geo_parcelle, gp.geom
    Recherche de propriétaires
   </h3>
   <p>
-   .. note::  Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n’est présente dans la base
+   <sub>
+    Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
+   </sub>
   </p>
   <p>
    Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences suivantes :
@@ -1358,19 +1414,17 @@ GROUP BY gp.geo_parcelle, gp.geom
    Modèle de données
   </h2>
   <p>
-   Le lien suivant permet de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.)
+   Le lien suivant permet de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.):
+   <a href="https://3liz.github.io/QgisCadastrePlugin-documentation/index.html">
+    https://3liz.github.io/QgisCadastrePlugin-documentation/index.html
+   </a>
   </p>
-  <ul>
-   <li>
-    <strong>
-     Liste des tables
-    </strong>
-    :
-    <a href="http://htmlpreview.github.io/?https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/modele_donnees/postgresql_autodoc/index.html">
-     http://htmlpreview.github.io/?https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/modele_donnees/postgresql_autodoc/index.html
-    </a>
-   </li>
-  </ul>
+  <p>
+   Pour plus d’informations, voir le dépôt des sources de la documentation:
+   <a href="https://github.com/3liz/QgisCadastrePlugin-documentation">
+    https://github.com/3liz/QgisCadastrePlugin-documentation
+   </a>
+  </p>
   <h3 id="les-parcelles">
    Les parcelles
   </h3>

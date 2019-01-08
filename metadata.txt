@@ -12,7 +12,8 @@ description=
 
 about=This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
-version=1.5.5
+version=1.5.6
+
 author=3liz
 email=info@3liz.com
 
@@ -22,15 +23,15 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 1.5.5
-  * Import - Suppression du hack d'encodage pour 2.18.10
-  * Import - Correction de parcelles en doublons dû au lien avec geo_subdsect
-  * Export PDF - Correction d'un bug et restauration de l'affichage des propriétaires
-  Version 1.5.4
-  * Correction de bug sur l'interrogation de propriétaire suite à la gestion des dates en texte
-  * Correction d'un bug d'encodage sur message d'erreur de requête SQL
-  * Import - Utilisation d'entiers longs pour les surfaces de parcelle_info (corrige le bug pour les très grandes parcelles)
-  * Import - Ajout du support du millésime 2018
+  Version 1.5.6
+  * Fiche parcellaire - Ajout des informations des propriétaires, subdivisions et locaux
+  * Fiche parcelle - Ajout de la surface spatiale bâtie
+  * Export (version QGIS 2): Ajout d'un script python pour exporter les relevés PDF via ligne de commande
+  * Fix - Général: Amélioration de la récupération d'informations sur les couches (hôte, base de données, etc.)
+  * Fix - Import: Suppression de table temporaire ll si besoin
+  * Fix - Export: relevé de propriété: dédoublonnage des comptes communaux exportés en PDF
+  * Fix - Correction d'un bug d'encodage
+  * Divers - Ajout des derniers financeurs dans le dialogue "A propos"
 
 # tags are comma separated with spaces allowed
 tags=cadastre, france, majic, edigeo, import

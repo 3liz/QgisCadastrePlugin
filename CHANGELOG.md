@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Version 1.5.6
+
+* Fiche parcellaire - Ajout des informations des propriétaires, subdivisions et locaux
+* Fiche parcelle - Ajout de la surface spatiale bâtie
+* Export (version QGIS 2): Ajout d'un script python pour exporter les relevés PDF via ligne de commande
+* Fix - Général: Amélioration de la récupération d'informations sur les couches (hôte, base de données, etc.)
+* Fix - Import: Suppression de table temporaire ll si besoin
+* Fix - Export: relevé de propriété: dédoublonnage des comptes communaux exportés en PDF
+* Fix - Correction d'un bug d'encodage
+* Divers - Ajout des derniers financeurs dans le dialogue "A propos"
+
 ## Version 1.5.5
 
 * Import - Suppression du hack d'encodage pour 2.18.10

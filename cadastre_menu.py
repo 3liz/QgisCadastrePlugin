@@ -36,7 +36,8 @@ from PyQt4.QtGui import (
     QAction,
     QActionGroup,
     QWidgetAction,
-    QMessageBox
+    QMessageBox,
+    QDesktopServices
 )
 from PyQt4.QtXml import QDomDocument
 

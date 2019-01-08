@@ -96,7 +96,7 @@ Vous pouvez par exemple importer les données dans cette ordre :
 Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir ensuite quel lot utiliser si on souhaite écraser des données. Une version prochaine du plugin pourra intégrer un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports réalisés.
 
 
-.. note::  Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d'un millésime à l'autre ( ajout de colonnes, modification de longueur de champs, etc.
+~Note:  Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas PostGreSQL différents, car la structure peut changer d'un millésime à l'autre ( ajout de colonnes, modification de longueur de champs, etc.~
 
 ### Bases de données
 
@@ -161,7 +161,7 @@ On configure ensuite les options :
 
 Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fenêtre.
 
-.. note::  Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import en cours.
+~Note:  Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin n'intègre pas de bouton pour annuler un import en cours.~
 
 
 ### Projections IGNF
@@ -315,9 +315,9 @@ ainsi qu'une zone contenant des **boutons d'action**:
  
 
 
-Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)
+~Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)
 
-Si vous n'avez pas de données MAJIC, seule les informations sur la parcelle (1er onglet) seront présentées.
+Si vous n'avez pas de données MAJIC, seule les informations sur la parcelle (1er onglet) seront présentées.~
 
 
 ### Exporter la vue
@@ -349,7 +349,7 @@ Pour afficher le panneau de recherche:
 
 Une bulle d'information affiche la fonction des boutons au survol de la souris.
 
-.. note::  Si la base de données ne contient aucune donnée MAJIC, alors les recherches par adresse et par propriétaire sont désactivés.
+~Note:  Si la base de données ne contient aucune donnée MAJIC, alors les recherches par adresse et par propriétaire sont désactivés.~
 
 
 ### Recherche de lieux
@@ -384,7 +384,7 @@ Si une parcelle a été sélectionnée dans la liste **Parcelles**, il est possi
 
 ### Recherche d'adresse
 
-.. note::  Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l'import Majic): http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
+~Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC, vous pouvez le télécharger pour votre département ici (et relancer l'import Majic): http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits~
 
 Pour lancer une **recherche de parcelles par adresse**, il suffit:
 
@@ -404,7 +404,7 @@ Vous pouvez cliquer sur la croix rouge à côté de la recherche d'adresse pour 
 
 ### Recherche de propriétaires
 
-.. note::  Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
+~Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base~
 
 Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences suivantes :
 
