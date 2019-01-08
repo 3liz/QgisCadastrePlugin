@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>692</width>
-    <height>652</height>
+    <width>644</width>
+    <height>794</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>656</width>
-        <height>709</height>
+        <width>610</width>
+        <height>940</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -38,7 +38,7 @@
           <item>
            <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>La réalisation du plugin Cadastre a été financée par</string>
+             <string>La réalisation du plugin Cadastre a été financée initialement par:</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -115,6 +115,12 @@
             </item>
             <item row="1" column="3">
              <widget class="QLabel" name="label">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string>&lt;a href=&quot;http://www.aduga.org/&quot; style=&quot;color:#434343;text-decoration:none;&quot;&gt;L'Agence de Développement et  d'Urbanisme du Grand Amiénois&lt;/a&gt;</string>
               </property>
@@ -128,6 +134,12 @@
             </item>
             <item row="1" column="1">
              <widget class="QLabel" name="label_4">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string>&lt;a href=&quot;http://www.picardie-europe.eu/&quot; style=&quot;color:#434343;text-decoration:none;&quot;&gt;Le  Fonds Européen de Développement Régional de Picardie&lt;/a&gt;</string>
               </property>
@@ -141,6 +153,12 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_3">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string>&lt;a href=&quot;http://europa.eu/index_fr.htm&quot; style=&quot;color:#434343;text-decoration:none;&quot;&gt;L'Union Européenne&lt;/a&gt;</string>
               </property>
@@ -176,6 +194,12 @@
             </item>
             <item row="1" column="2">
              <widget class="QLabel" name="label_2">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string>&lt;a href=&quot;http://www.picardie.fr/&quot; style=&quot;color:#434343;text-decoration:none;&quot;&gt;Le Conseil Régional de Picardie&lt;/a&gt;</string>
               </property>
@@ -188,6 +212,28 @@
              </widget>
             </item>
            </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_7">
+         <property name="title">
+          <string>Maintenance</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les structures suivantes ont aidé 3liz pour la maintenance ou l'ajout de fonctionnalités:&lt;/p&gt;&lt;p&gt;- L'&lt;span style=&quot; font-weight:600;&quot;&gt;ADUGA&lt;/span&gt; : maintenace pour les millésimes MAJIC&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Ville de Megève&lt;/span&gt;: migration du plugin vers QGIS 3&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Communauté d'Agglomération du Soissonnais&lt;/span&gt; : amélioration de la recherche et de la fiche parcellaire&lt;/p&gt;&lt;p&gt;- Le &lt;span style=&quot; font-weight:600;&quot;&gt;Conseil départemental du Gard&lt;/span&gt; : ajout d'informations dans la fiche parcellaire&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::RichText</enum>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -265,7 +311,7 @@
             <item row="0" column="1">
              <widget class="QLabel" name="label_14">
               <property name="text">
-               <string>&lt;a href=&quot;mailto:mdouchin@3liz.com?subject=Plugin cadastre - A propos&quot; style=&quot;color:#7BA11A;text-decoration:none;&quot;&gt;mdouchin@3liz.com&lt;/a&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;mailto:info@3liz.com?subject=Plugin cadastre - A propos&quot;&gt;&lt;span style=&quot; color:#7ba11a;&quot;&gt;info@3liz.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -318,14 +364,14 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_15">
               <property name="text">
-               <string>Licence GPL Version 3</string>
+               <string>Licence GPL Version 2.0</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
              <widget class="QLabel" name="label_16">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;/&gt;&lt;img src=&quot;:/plugins/cadastre/images/logo_gnu3.png&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.fr.html&quot; style=&quot;color:#7BA11A;text-decoration:none;&quot;&gt;Voir le site officiel&lt;/a&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
