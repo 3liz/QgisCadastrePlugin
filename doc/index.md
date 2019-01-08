@@ -300,17 +300,24 @@ La fenêtre d'identification s'affiche alors,
 
 ![alt](MEDIA/cadastre_parcelle_info.png)
 
-Elle présente:
+Elle présente plusieurs onglets:
 
-* un bloc avec les **informations générales de la parcelle**
-* un bloc avec les **propriétaires** de la parcelle
-* une zone contenant des **boutons d'action**
+* un onglet avec les **informations générales de la parcelle**
+* un onglet avec les **propriétaires** de la parcelle
+* un onglet avec les **subdivisions fiscales**
+* un onglet avec les **locaux** et leurs informations détaillées
 
- - 2 boutons pour **exporter** le **relevé parcellaire** et le **relevé de propriété** au format PDF
- - 3 boutons pour **interargir avec l'objet géométrique** lié à la parcelle : centrer la carte sur la parcelle, zoomer sur la parcelle, ou sélectionner l'objet dans la couche
- - Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
+ainsi qu'une zone contenant des **boutons d'action**:
 
-.. note::  Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)
+  - 2 boutons pour **exporter** le **relevé parcellaire** et le **relevé de propriété** au format PDF
+  - 3 boutons pour **interargir avec l'objet géométrique** lié à la parcelle : centrer la carte sur la parcelle, zoomer sur la parcelle, ou sélectionner l'objet dans la couche
+  - Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
+ 
+
+
+Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)
+
+Si vous n'avez pas de données MAJIC, seule les informations sur la parcelle (1er onglet) seront présentées.
 
 
 ### Exporter la vue
@@ -458,10 +465,9 @@ Pour faciliter la prise en main, vous pouvez consulter les vidéos en ligne :
 
 ## Modèle de données
 
-Le lien suivant permet de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.)
+Le lien suivant permet de voir comment sont organisées les données cadastrales dans la base de données (tables, contraintes, etc.): https://3liz.github.io/QgisCadastrePlugin-documentation/index.html
 
-* **Liste des tables** : http://htmlpreview.github.io/?https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/modele_donnees/postgresql_autodoc/index.html
-
+Pour plus d'informations, voir le dépôt des sources de la documentation: https://github.com/3liz/QgisCadastrePlugin-documentation
 
 ### Les parcelles
 
