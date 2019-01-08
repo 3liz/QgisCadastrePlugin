@@ -15,15 +15,22 @@ Financeurs
 
 La réalisation du plugin Cadastre a été financée par :
 
-* L'Union Européenne ( http://europa.eu/index_fr.htm )
-* Le  Fonds Européen de Développement Régional de Picardie ( http://www.picardie-europe.eu )
-* Le Conseil Régional de Picardie ( http://www.picardie.fr )
-* L'Agence de Développement et d'Urbanisme du Grand Amiénois ( http://www.aduga.org )
+* L'**Union Européenne** ( http://europa.eu/index_fr.htm )
+* Le **Fonds Européen de Développement Régional de Picardie** ( http://www.picardie-europe.eu )
+* Le **Conseil Régional de Picardie** ( http://www.picardie.fr )
+* L'**Agence de Développement et d'Urbanisme du Grand Amiénois (ADUGA)** ( http://www.aduga.org )
+
+Les structures suivantes ont aidé 3liz pour la maintenance ou l'ajout de fonctionnalités:
+
+- L'**ADUGA** : maintenance pour les nouveaux millésimes
+- La **Ville de Megève**: migration du plugin vers QGIS 3
+- La **Communauté d'Agglomération du Soissonnais** : amélioration de la recherche et ajout d'informations sur les fiches parcellaires
+- Le **Conseil départemental du Gard** : ajout d'informations dans la fiche parcellaire
 
 Conception
 ==========
 
-Le plugin Cadastre a été conçu et développé par la Société 3LIZ.
+Le plugin Cadastre a été conçu et développé par la Société **3LIZ**.
 Site internet : http://www.3liz.com
 
 Auteurs
@@ -63,7 +70,10 @@ Voir [doc/index.md](doc/index.md)
 Base de données
 ----------------
 
-* **Liste simplifiée des tables** : http://htmlpreview.github.io/?https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/modele_donnees/postgresql_autodoc/index.html
+Documentation sur la structure des tables créées par le plugin
+
+* fichiers source: https://github.com/3liz/QgisCadastrePlugin-documentation
+* consulation: https://3liz.github.io/QgisCadastrePlugin-documentation/
 
 
 Ressources
