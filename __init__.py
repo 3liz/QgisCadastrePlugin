@@ -34,5 +34,5 @@ def serverClassFactory(serverIface):  # pylint: disable=invalid-name
     :type iface: QgsServerInterface
     """
     #
-    from .cadastre_server import cadastreServer
-    return cadastreServer(serverIface)
+    from .server.cadastre_server import CadastreServer
+    return CadastreServer(serverIface)

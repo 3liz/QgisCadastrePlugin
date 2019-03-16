@@ -15,7 +15,7 @@ from cadastre_dialogs import cadastre_common
 from cadastre_export import *
 
 try:
-    from cadastre_export import cadastrePrintProgress
+    from cadastre_export_dialog import cadastrePrintProgress
 except:
     pass
 

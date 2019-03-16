@@ -103,6 +103,9 @@ def timing(f):
     return wrap
 
 
+import cadastre.cadastre_common_base as common_utils
+
+
 class cadastre_common(object):
 
     def __init__(self, dialog):
@@ -115,19 +118,9 @@ class cadastre_common(object):
         # default auth id for layers
         self.defaultAuthId = '2154'
 
-    @staticmethod
-    def hasSpatialiteSupport():
-        '''
-        Check whether or not
-        spatialite support is ok
-        '''
-        try:
-            from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
-            return True
-        except ImportError:
-            return False
-            pass
-
+    # Bind as class propertis for compatibility
+    hasSpatialiteSupport = common_utils.hasSpatialiteSupport
+    openFile = common_utils.openFile
 
     def updateLog(self, msg):
         '''
@@ -143,18 +136,6 @@ class cadastre_common(object):
         t.setTextCursor(c)
         qApp.processEvents()
 
-
-    @staticmethod
-    def openFile(filename):
-        '''
-        Opens a file with default system app
-        '''
-        if sys.platform == "win32":
-            os.startfile(filename)
-        else:
-            opener ="open" if sys.platform == "darwin" else "xdg-open"
-            subprocess.call([opener, filename])
-
     def updateProgressBar(self):
         '''
         Update the progress bar
@@ -163,7 +144,6 @@ class cadastre_common(object):
             self.dialog.step+=1
             self.dialog.pbProcess.setValue(int(self.dialog.step * 100/self.dialog.totalSteps))
             qApp.processEvents()
-
 
     def updateConnectionList(self):
         '''
@@ -199,7 +179,6 @@ class cadastre_common(object):
                 self.dialog.databaseSpecificOptions.setTabEnabled(1, False)
 
         QApplication.restoreOverrideCursor()
-
 
     def toggleSchemaList(self, t):
         '''
@@ -270,7 +249,6 @@ class cadastre_common(object):
             self.toggleSchemaList(False)
 
         QApplication.restoreOverrideCursor()
-
 
     def checkDatabaseForExistingStructure(self):
         '''
@@ -365,174 +343,12 @@ class cadastre_common(object):
 
         return tableExists
 
-
-    @staticmethod
-    def getLayerFromLegendByTableProps(tableName, geomCol='geom', sql=''):
-        '''
-        Get the layer from QGIS legend
-        corresponding to a database
-        table name (postgis or sqlite)
-        '''
-        layer = None
-        lr = QgsProject.instance()
-        for lid,l in list(lr.mapLayers().items()):
-            if not hasattr(l, 'providerType'):
-                continue
-            if hasattr(l, 'type') and l.type() != 0:
-                continue
-            if not l.providerType() in (u'postgres', u'spatialite'):
-                continue
-
-            connectionParams = cadastre_common.getConnectionParameterFromDbLayer(l)
-            import re
-
-            reg = r'(\.| )?(%s)' % tableName
-            if connectionParams and \
-                ( \
-                    connectionParams['table'] == tableName or \
-                    ( re.findall(reg, '%s' % connectionParams['table']) and re.findall(reg, '%s' % connectionParams['table'])[0] ) \
-                ) and \
-                connectionParams['geocol'] == geomCol:
-                #and connectionParams['sql'] == sql:
-                return l
-
-        return layer
-
-    @staticmethod
-    def getConnectionParameterFromDbLayer(layer):
-        '''
-        Get connection parameters
-        from the layer datasource
-        '''
-        connectionParams = None
-
-        if layer.providerType() == u'postgres':
-            dbType = 'postgis'
-        else:
-            dbType = 'spatialite'
-
-        src = layer.source()
-        try:
-            uri = QgsDataSourceUri(src)
-        except:
-            uri = QgsDataSourceURI(src)
-
-        connectionParams = {
-            'service' : uri.service(),
-            'dbname' : uri.database(),
-            'host' : uri.host(),
-            'port': uri.port(),
-            'user' : uri.username(),
-            'password': uri.password(),
-            'sslmode' : uri.sslMode(),
-            'key': uri.keyColumn(),
-            'estimatedmetadata' : str(uri.useEstimatedMetadata()),
-            'checkPrimaryKeyUnicity' : '',
-            'srid' : uri.srid(),
-            'type': uri.wkbType(),
-            'schema': uri.schema(),
-            'table' : uri.table(),
-            'geocol' : uri.geometryColumn(),
-            'sql' : uri.sql(),
-            'dbType': dbType
-        }
-
-        return connectionParams
-
-    @staticmethod
-    def setSearchPath(sql, schema):
-        '''
-        Set the search_path parameters if postgis database
-        '''
-        prefix = u'SET search_path = "%s", public, pg_catalog;' % schema
-        if re.search('^BEGIN;', sql):
-            sql = sql.replace('BEGIN;', 'BEGIN;%s' % prefix)
-        else:
-            sql = prefix + sql
-
-        return sql
-
-
-    @staticmethod
-    def fetchDataFromSqlQuery(connector, sql, schema=None):
-        '''
-        Execute a SQL query and
-        return [header, data, rowCount]
-        NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
-        '''
-        # print(sql)
-        data = []
-        header = []
-        rowCount = 0
-        c = None
-        ok = True
-        #print "run query"
-        try:
-            c = connector._execute(None,str(sql))
-            data = []
-            header = connector._get_cursor_columns(c)
-            if header == None:
-                header = []
-            if len(header) > 0:
-                data = connector._fetchall(c)
-            rowCount = c.rowcount
-            if rowCount == -1:
-                rowCount = len(data)
-
-        except BaseError as e:
-            ok = False
-            error_message = e.msg
-
-        finally:
-            if c:
-                #print "close connection"
-                c.close()
-                del c
-
-        # Log errors
-        if not ok:
-            print(error_message)
-            QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
-            print(sql)
-
-        return [header, data, rowCount, ok]
-
-
-    @staticmethod
-    def getConnectorFromUri(connectionParams):
-        '''
-        Set connector property
-        for the given database type
-        and parameters
-        '''
-        connector = None
-        uri = QgsDataSourceUri()
-        if connectionParams['dbType'] == 'postgis':
-            if connectionParams['host']:
-                uri.setConnection(
-                    connectionParams['host'],
-                    connectionParams['port'],
-                    connectionParams['dbname'],
-                    connectionParams['user'],
-                    connectionParams['password']
-                )
-            if connectionParams['service']:
-                uri.setConnection(
-                    connectionParams['service'],
-                    connectionParams['dbname'],
-                    connectionParams['user'],
-                    connectionParams['password']
-                )
-
-            connector = PostGisDBConnector(uri)
-
-        if connectionParams['dbType'] == 'spatialite':
-            uri.setConnection('', '', connectionParams['dbname'], '', '')
-            if cadastre_common.hasSpatialiteSupport():
-                from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
-            connector = SpatiaLiteDBConnector(uri)
-
-        return connector
+    # Bind as class properties for compatibility
+    getLayerFromLegendByTableProps    = common_utils.getLayerFromLegendByTableProps
+    getConnectionParameterFromDbLayer = common_utils.getConnectionParameterFromDbLayer
+    setSearchPath = common_utils.setSearchPath
+    fetchDataFromSqlQuery = common_utils.fetchDataFromSqlQuery
+    getConnectorFromUri = common_utils.getConnectorFromUri
 
     def normalizeString(self, s):
         '''
@@ -553,110 +369,10 @@ class cadastre_common(object):
 
         return s
 
-    @staticmethod
-    def postgisToSpatialite(sql, targetSrid='2154'):
-        '''
-        Convert postgis SQL statement
-        into spatialite compatible
-        statements
-        '''
 
-        # delete some incompatible options
-        # replace other by spatialite syntax
-        replaceDict = [
-            # delete
-            {'in': r'with\(oids=.+\)', 'out': ''},
-            {'in': r'comment on [^;]+;', 'out': ''},
-            {'in': r'alter table ([^;]+) add primary key( )+\(([^;]+)\);',
-            'out': r'create index idx_\1_\3 on \1 (\3);'},
-            {'in': r'alter table ([^;]+) add constraint [^;]+ primary key( )+\(([^;]+)\);',
-            'out': r'create index idx_\1_\3 on \1 (\3);'},
-            {'in': r'alter table [^;]+drop column[^;]+;', 'out': ''},
-            {'in': r'alter table [^;]+drop constraint[^;]+;', 'out': ''},
-            #~ {'in': r'^analyse [^;]+;', 'out': ''},
-            # replace
-            {'in': r'truncate (bati|fanr|lloc|nbat|pdll|prop)',
-            'out': r'drop table \1;create table \1 (tmp text)'},
-            {'in': r'truncate ', 'out': 'delete from '},
-            {'in': r'distinct on *\([a-z, ]+\)', 'out': 'distinct'},
-            {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
-            {'in': r'string_agg', 'out': 'group_concat'},
-            {'in': r'current_schema::text, ', 'out': ''},
-            {'in': r'substring', 'out': 'SUBSTR'},
-            {'in': r"(to_char\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS TEXT)"},
-            {'in': r"(to_number\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS float)"},
-            {'in': r"(to_date\()([^']+) *, *'DDMMYYYY' *\)",
-            'out': r"date(substr(\2, 5, 4) || '-' || substr(\2, 3, 2) || '-' || substr(\2, 1, 2))"},
-            {'in': r"(to_date\()([^']+) *, *'DD/MM/YYYY' *\)",
-            'out': r"date(substr(\2, 7, 4) || '-' || substr(\2, 4, 2) || '-' || substr(\2, 1, 2))"},
-            {'in': r"(to_date\()([^']+) *, *'YYYYMMDD' *\)",
-            'out': r"date(substr(\2, 1, 4) || '-' || substr(\2, 5, 2) || '-' || substr(\2, 7, 2))"},
-            {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",
-            'out': r"strftime('%d/%m/%Y', \2)"},
-            {'in': r"ST_MakeValid\(geom\)",
-             'out': r"CASE WHEN ST_IsValid(geom) THEN geom ELSE ST_Buffer(geom,0) END"},
-            {'in': r"ST_MakeValid\(p\.geom\)",
-             'out': r"CASE WHEN ST_IsValid(p.geom) THEN p.geom ELSE ST_Buffer(p.geom,0) END"},
-            {'in': r' ~ ', 'out': ' regexp '}
-        ]
-
-        for a in replaceDict:
-            r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
-            sql = r.sub(a['out'], sql)
-            #self.updateLog(sql)
-
-        # index spatiaux
-        r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
-        sql = r.sub(r"SELECT createSpatialIndex('\2', '\5');", sql)
-
-        # replace postgresql "update from" statement
-        r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE|re.MULTILINE)
-        sql = r.sub(r'\1=(SELECT \3);', sql)
-
-        #self.updateLog(sql)
-        return sql
-
-
-    @staticmethod
-    def postgisToSpatialiteLocal10(sql, dataYear):
-        # majic formatage : replace multiple column update for loca10
-        r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
-        res = r.findall(sql)
-        replaceBy = ''
-        for statement in res:
-            replaceBy = '''
-            DROP TABLE IF EXISTS ll;
-            CREATE TABLE ll AS
-            SELECT DISTINCT l.invar, l.ccopre , l.ccosec, l.dnupla, l.ccoriv, l.ccovoi, l.dnvoiri, l10.annee || l10.ccodep || l10.ccodir || l10.invar AS local00, REPLACE(l10.annee || l10.ccodep || l10.ccodir || l10.ccocom || l.ccopre || l.ccosec || l.dnupla,' ', '0') AS parcelle, REPLACE(l10.annee || l10.ccodep || l10.ccodir || l10.ccocom || l.ccovoi,' ', '0') AS voie
-            FROM local00 l
-            INNER JOIN local10 AS l10 ON l.invar = l10.invar AND l.annee = l10.annee
-            WHERE l10.annee='?';
-            CREATE INDEX  idx_ll_invar ON ll (invar);
-            UPDATE local10 SET ccopre = (SELECT DISTINCT ll.ccopre FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET ccosec = (SELECT DISTINCT ll.ccosec FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET dnupla = (SELECT DISTINCT ll.dnupla FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET ccoriv = (SELECT DISTINCT ll.ccoriv FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET ccovoi = (SELECT DISTINCT ll.ccovoi FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET dnvoiri = (SELECT DISTINCT ll.dnvoiri FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET local00 = (SELECT DISTINCT ll.local00 FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET parcelle = (SELECT DISTINCT ll.parcelle FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            UPDATE local10 SET voie = (SELECT DISTINCT ll.voie FROM ll WHERE ll.invar = local10.invar)
-            WHERE local10.annee = '?';
-            DROP TABLE ll;
-            '''
-            replaceBy = replaceBy.replace('?', dataYear)
-            sql = sql.replace(statement, replaceBy)
-
-        #self.updateLog(sql)
-        return sql
+    # Bind as class properties for compatibility
+    postgisToSpatialite = common_utils.postgisToSpatialite
+    postgisToSpatialiteLocal10 = common_utils.postgisToSpatialiteLocal10
 
     def createNewSpatialiteDatabase(self):
         '''
@@ -706,107 +422,11 @@ class cadastre_common(object):
         listDic = { self.dialog.connectionDbList[i]:i for i in range(0, len(self.dialog.connectionDbList)) }
         self.dialog.liDbConnection.setCurrentIndex(listDic[myName])
 
-    @staticmethod
-    def getCompteCommunalFromParcelleId(parcelleId, connectionParams, connector):
 
-        comptecommunal = None
-
-        sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
-        if connectionParams['dbType'] == 'postgis':
-            sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
-        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
-        if ok:
-            for line in data:
-                comptecommunal = line[0]
-        return comptecommunal
-
-    @staticmethod
-    def getProprietaireComptesCommunaux(comptecommunal, connectionParams, connector):
-        '''
-        Get the list of "comptecommunal" for all cities
-        for a owner given one single comptecommunal
-        '''
-        cc = comptecommunal
-
-        sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"
-        sql+= " FROM proprietaire p"
-        sql+= " WHERE 2>1"
-        sql+= " AND trim(p.ddenom) IN (SELECT trim(ddenom) FROM proprietaire WHERE comptecommunal = '%s')" % comptecommunal
-        sql+= " GROUP BY dnuper, ddenom, dlign4"
-        sql+= " ORDER BY ddenom"
-
-        if connectionParams['dbType'] == 'postgis':
-            sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
-            sql = sql.replace('MyStringAgg', 'string_agg')
-        if connectionParams['dbType'] == 'spatialite':
-            sql = sql.replace('MyStringAgg', 'group_concat')
-
-        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector,sql)
-        ccs = []
-        if ok:
-            for line in data:
-                ccs = ccs + line[1].split(',')
-        # deduplicate
-        ret = list(set(ccs))
-        return ret
-
-    @staticmethod
-    def getItemHtml(item, feature, connectionParams, connector):
-        '''
-        Build Html for a item (parcelle, proprietaires, etc.)
-        based on SQL query
-        '''
-        html = ''
-        plugin_dir = os.path.dirname(os.path.abspath(__file__))
-
-        infos = {
-            'parcelle_majic': {
-                'label': 'Parcelle'
-            },
-            'parcelle_simple': {
-                'label': 'Parcelle'
-            },
-            'proprietaires': {
-                'label': u'Propriétaires'
-            },
-            'subdivisions': {
-                'label': u'Subdivisions fiscales'
-            },
-            'subdivisions_exoneration': {
-                'label': u'Exonérations'
-            },
-            'locaux': {
-                'label': u'Locaux'
-            },
-            'locaux_detail': {
-                'label': u'Locaux : informations détaillées'
-            }
-        }
-        info = infos[item]
-        sqlfile = 'templates/parcelle_info_%s.sql' % item
-        sql = ''
-        with open(os.path.join(plugin_dir, sqlfile)) as sqltemplate:
-            sql = sqltemplate.read() % feature['geo_parcelle']
-        if not sql:
-            html+= u'Impossible de lire le SQL dans le fichier %s' % sqlfile
-            return html
-
-        if connectionParams['dbType'] == 'postgis':
-            sql = cadastre_common.setSearchPath(sql, connectionParams['schema'])
-        if connectionParams['dbType'] == 'spatialite':
-            sql = cadastre_common.postgisToSpatialite(sql, connectionParams['srid'])
-        [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
-        # print sql
-
-        if ok:
-            html+= '<h2>' + info['label']+ '</h2>'
-            for line in data:
-                # print info['label']
-                # print line
-                if line and len(line) > 0 and line[0]:
-                    html+= u'%s' % line[0].replace('100p', '100%')
-
-        return html
+    # Bind as class properties for compatibility
+    getCompteCommunalFromParcelleId = common_utils.getCompteCommunalFromParcelleId
+    getProprietaireComptesCommunaux = common_utils.getProprietaireComptesCommunaux
+    getItemHtml = common_utils.getItemHtml
 
 
 from .cadastre_import import cadastreImport
@@ -2517,13 +2137,8 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
 #        Parcelle - Show parcelle information
 # --------------------------------------------------------
 
+from .cadastre_export_dialog import cadastreExport, cadastrePrintProgress 
 
-
-try:
-    from .cadastre_export import cadastreExport
-    from .cadastre_export import cadastrePrintProgress
-except:
-    pass
 from qgis.PyQt import uic
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
