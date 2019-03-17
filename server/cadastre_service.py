@@ -173,7 +173,7 @@ class CadastreService(QgsService):
             if self.debugMode:
                 QgsMessageLog.logMessage( "Item path: %s" % path )
 
-            newpath = self.cachedir / '%s.pdf' % uid.hex
+            newpath = self.cachedir / ('%s.pdf' % uid.hex)
             path.rename(newpath)
             tokens.append( uid.hex )
 
@@ -217,10 +217,10 @@ class CadastreService(QgsService):
         def get_param(name: str, allowed_values: Sequence[str]=None) -> str:
             v = params.get(name)
             if not v:
-                raise CadastreError(400,"Invalid or Missing %s" % name)
+                raise CadastreError(400,"Missing parameter '%s'" % name)
             v = v.lower()
             if allowed_values and not v in allowed_values:
-                raise CadastreError(400,"Invalid value for  or Missing %s" % name)
+                raise CadastreError(400,"Invalid or missing value for '%s'" % name)
             return v
 
         # Get layer and expression
@@ -262,12 +262,11 @@ class CadastreService(QgsService):
     def get_pdf(self, params: Dict[str,str], response: QgsServerResponse ) -> None:
         """ Get PDF files previously exported
         """
-        # Check if needed params are set
-        if 'TOKEN' not in params:
+        ptoken = params.get('TOKEN')
+        if not ptoken:
             raise CadastreError(400,"Missing parameter: token")
 
-        ptoken = params['TOKEN']
-        path   = self.cachedir / '%s.pdf' % ptoken
+        path = self.cachedir / ('%s.pdf' % ptoken)
 
         if self.debugMode:
             QgsMessageLog.logMessage("GetPDF = path is %s" % path.as_posix(),'cadastre', Qgis.Debug)
