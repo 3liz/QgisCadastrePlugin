@@ -19,8 +19,11 @@ import sys
 import os
 import re
 
+from typing import Dict, List, Any, Union
+
 from qgis.core import (
     QgsProject,
+    QgsMapLayer,
     QgsMessageLog,
     QgsDataSourceUri,
 )
@@ -41,7 +44,7 @@ def hasSpatialiteSupport() -> bool:
         pass
 
 
-def openFile(filename):
+def openFile(filename: str) -> None:
     '''
     Opens a file with default system app
     '''
@@ -53,20 +56,20 @@ def openFile(filename):
         subprocess.call([opener, filename])
 
 
-def getLayerFromLegendByTableProps(tableName, geomCol='geom', sql=''):
+def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol: str='geom', sql: str='') -> QgsMapLayer:
     '''
     Get the layer from QGIS legend
     corresponding to a database
     table name (postgis or sqlite)
     '''
     layer = None
-    lr = QgsProject.instance()
+    lr = project
     for lid,l in list(lr.mapLayers().items()):
         if not hasattr(l, 'providerType'):
             continue
         if hasattr(l, 'type') and l.type() != 0:
             continue
-        if not l.providerType() in (u'postgres', u'spatialite'):
+        if not l.providerType() in ('postgres', 'spatialite'):
             continue
 
         connectionParams = getConnectionParameterFromDbLayer(l)
@@ -85,14 +88,14 @@ def getLayerFromLegendByTableProps(tableName, geomCol='geom', sql=''):
     return layer
 
 
-def getConnectionParameterFromDbLayer(layer):
+def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> Dict[str,str]:
     '''
     Get connection parameters
     from the layer datasource
     '''
     connectionParams = None
 
-    if layer.providerType() == u'postgres':
+    if layer.providerType() == 'postgres':
         dbType = 'postgis'
     else:
         dbType = 'spatialite'
@@ -103,6 +106,7 @@ def getConnectionParameterFromDbLayer(layer):
     except:
         uri = QgsDataSourceURI(src)
 
+    # TODO Use immutable namedtuple
     connectionParams = {
         'service' : uri.service(),
         'dbname' : uri.database(),
@@ -126,11 +130,11 @@ def getConnectionParameterFromDbLayer(layer):
     return connectionParams
 
 
-def setSearchPath(sql, schema):
+def setSearchPath(sql: str, schema: str) -> str:
     '''
     Set the search_path parameters if postgis database
     '''
-    prefix = u'SET search_path = "%s", public, pg_catalog;' % schema
+    prefix = 'SET search_path = "%s", public, pg_catalog;' % schema
     if re.search('^BEGIN;', sql):
         sql = sql.replace('BEGIN;', 'BEGIN;%s' % prefix)
     else:
@@ -139,7 +143,8 @@ def setSearchPath(sql, schema):
     return sql
 
 
-def fetchDataFromSqlQuery(connector, sql, schema=None):
+def fetchDataFromSqlQuery(connector: 'db_manager.db_plugins.DBConnector', 
+        sql: str, schema: str=None) -> List[Any]:
     '''
     Execute a SQL query and
     return [header, data, rowCount]
@@ -180,10 +185,11 @@ def fetchDataFromSqlQuery(connector, sql, schema=None):
         QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
         print(sql)
 
+    # TODO: Return tuple
     return [header, data, rowCount, ok]
 
 
-def getConnectorFromUri(connectionParams):
+def getConnectorFromUri(connectionParams: Dict[str,str]) -> 'db_manager.db_plugins.DBConnector':
     '''
     Set connector property
     for the given database type
@@ -219,7 +225,7 @@ def getConnectorFromUri(connectionParams):
     return connector
 
 
-def postgisToSpatialite(sql, targetSrid='2154'):
+def postgisToSpatialite(sql: str, targetSrid: str='2154') -> str:
     '''
     Convert postgis SQL statement
     into spatialite compatible
@@ -280,7 +286,7 @@ def postgisToSpatialite(sql, targetSrid='2154'):
     return sql
 
 
-def postgisToSpatialiteLocal10(sql, dataYear):
+def postgisToSpatialiteLocal10(sql: str, dataYear: str) -> str:
     # majic formatage : replace multiple column update for loca10
     r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
     res = r.findall(sql)
@@ -320,7 +326,8 @@ def postgisToSpatialiteLocal10(sql, dataYear):
     return sql
 
 
-def getCompteCommunalFromParcelleId(parcelleId, connectionParams, connector):
+def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,str], 
+        connector: 'db_manager.db_plugins.DBConnector') -> Union[str,None]:
 
     comptecommunal = None
 
@@ -334,7 +341,8 @@ def getCompteCommunalFromParcelleId(parcelleId, connectionParams, connector):
     return comptecommunal
 
 
-def getProprietaireComptesCommunaux(comptecommunal, connectionParams, connector):
+def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[str,str], 
+        connector: 'db_manager.db_plugins.DBConnector') -> List[str]:
     '''
     Get the list of "comptecommunal" for all cities
     for a owner given one single comptecommunal
@@ -364,7 +372,8 @@ def getProprietaireComptesCommunaux(comptecommunal, connectionParams, connector)
     return ret
 
 
-def getItemHtml(item, feature, connectionParams, connector):
+def getItemHtml(item: str, feature, connectionParams: Dict[str,str], 
+        connector: 'db_manager.db_plugins.DBConnector') -> str:
     '''
     Build Html for a item (parcelle, proprietaires, etc.)
     based on SQL query
@@ -380,19 +389,19 @@ def getItemHtml(item, feature, connectionParams, connector):
             'label': 'Parcelle'
         },
         'proprietaires': {
-            'label': u'Propriétaires'
+            'label': 'Propriétaires'
         },
         'subdivisions': {
-            'label': u'Subdivisions fiscales'
+            'label': 'Subdivisions fiscales'
         },
         'subdivisions_exoneration': {
-            'label': u'Exonérations'
+            'label': 'Exonérations'
         },
         'locaux': {
-            'label': u'Locaux'
+            'label': 'Locaux'
         },
         'locaux_detail': {
-            'label': u'Locaux : informations détaillées'
+            'label': 'Locaux : informations détaillées'
         }
     }
     info = infos[item]
@@ -401,7 +410,7 @@ def getItemHtml(item, feature, connectionParams, connector):
     with open(os.path.join(plugin_dir, sqlfile)) as sqltemplate:
         sql = sqltemplate.read() % feature['geo_parcelle']
     if not sql:
-        html+= u'Impossible de lire le SQL dans le fichier %s' % sqlfile
+        html+= 'Impossible de lire le SQL dans le fichier %s' % sqlfile
         return html
 
     if connectionParams['dbType'] == 'postgis':
@@ -417,7 +426,7 @@ def getItemHtml(item, feature, connectionParams, connector):
             # print info['label']
             # print line
             if line and len(line) > 0 and line[0]:
-                html+= u'%s' % line[0].replace('100p', '100%')
+                html+= '%s' % line[0].replace('100p', '100%')
 
     return html
 

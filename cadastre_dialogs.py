@@ -338,7 +338,9 @@ class cadastre_common(object):
         return tableExists
 
     # Bind as class properties for compatibility
-    getLayerFromLegendByTableProps    = common_utils.getLayerFromLegendByTableProps
+    def getLayerFromLegendByTableProps( *args, **kwargs ) -> QgsMapLayer:
+        return common_utils.getLayerFromLegendByTableProps(QgsProject.instance(),*args, **kwargs)
+
     getConnectionParameterFromDbLayer = common_utils.getConnectionParameterFromDbLayer
     setSearchPath = common_utils.setSearchPath
     fetchDataFromSqlQuery = common_utils.fetchDataFromSqlQuery
