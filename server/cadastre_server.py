@@ -41,12 +41,12 @@ class CadastreServer:
         self.cachedir = Path(cachedirstr)
         self.cachedir.mkdir(mode=0o750, parents=True, exist_ok=True)
 
-        QgsMessageLog.logMessage('Cache directory set to %s' % rootpathstr,'wmtsCache',Qgis.Info)
+        QgsMessageLog.logMessage('Cache directory set to %s' % cachedirstr,'cadastre',Qgis.Info)
 
         debug = os.getenv('QGIS_CADASTRE_DEBUG', '').lower() in ('1','yes','y','true')
 
         reg = serverIface.serviceRegistry()
-        reg.registerService(CadastreService(path=self.cachedir, debug=debug))
+        reg.registerService(CadastreService(cachedir=self.cachedir, debug=debug))
 
     def createService(self, debug: bool=False) -> CadastreService:
         """ Create  a new service instance
