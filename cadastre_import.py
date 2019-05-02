@@ -847,13 +847,13 @@ class cadastreImport(QObject):
             sql = 'DELETE FROM geo_label WHERE NOT MbrWithin(geom, ( SELECT ST_Buffer(ST_Envelope(Collect(geom)), 100 ) AS geom FROM geo_commune ));'
         else:
             sql = 'DELETE FROM geo_label WHERE NOT ST_Within(geom, ( SELECT ST_Buffer(ST_Envelope(ST_Collect(geom)), 100 ) AS geom FROM geo_commune ));'
-            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
         self.executeSqlQuery(sql)
 
         # Add parcelle_info index for postgis only (not capability of that type for spatialite)
         if self.dialog.dbType == 'postgis':
             sql = 'DROP INDEX IF EXISTS parcelle_info_geo_parcelle_sub;CREATE INDEX parcelle_info_geo_parcelle_sub ON parcelle_info( substr("geo_parcelle", 1, 10));'
-            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 
             # Add index on geo_parcelle and geo_batiment centroids
@@ -863,7 +863,7 @@ class cadastreImport(QObject):
             CREATE INDEX geo_parcelle_centroide_geom_idx ON geo_parcelle USING gist (ST_Centroid(geom));
             CREATE INDEX geo_batiment_centroide_geom_idx ON geo_batiment USING gist (ST_Centroid(geom));
             '''
-            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 
         # Refresh spatialite layer statistics
@@ -1073,7 +1073,7 @@ class cadastreImport(QObject):
 
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
-                sql = self.qc.setSearchPath(sql, self.dialog.schema)
+                sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
 
             # Remove make valid if asked
             if not self.dialog.edigeoMakeValid:
@@ -1441,7 +1441,7 @@ class cadastreImport(QObject):
         # Run each query
         for sql in sqlList:
             if self.dialog.dbType == 'postgis':
-                sql = self.qc.setSearchPath(sql, self.dialog.schema)
+                sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 
 
