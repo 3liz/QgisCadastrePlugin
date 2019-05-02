@@ -755,6 +755,12 @@ CREATE TABLE typvoi (typvoi text primary key, typvoi_lib text);
 CREATE TABLE indldnbat (indldnbat text primary key, indldnbat_lib text);
 CREATE TABLE dformjur (dformjur text primary key, formjur text, libformjur text);
 CREATE TABLE ccocac (ccocac text primary key, ccocac_lib text);
+CREATE TABLE cconac (cconac text primary key, cconac_lib text);
+CREATE TABLE dmatgm (dmatgm text primary key, dmatgm_lib text);
+CREATE TABLE dmatto (dmatto text primary key, dmatto_lib text);
+CREATE TABLE drgpos (dgrpos text primary key, dgrpos_lib text);
+CREATE TABLE detent (detent text primary key, detent_lib text);
+CREATE TABLE type_filiation (type_filiation text primary key, type_filiation_lib text);
 
 CREATE TABLE geo_commune
 (
