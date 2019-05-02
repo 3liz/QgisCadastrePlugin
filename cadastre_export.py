@@ -645,7 +645,7 @@ class cadastreExport:
         # Export as many pdf as compte communal
         if self.isMulti:
             nb = len(self.comptecommunal)
-            with self.mProgress(nb) as printProgress:
+            with self.mProgress(self, nb=nb) as printProgress:
                 printStep = 0
                 # Export PDF for each compte
                 for comptecommunal in self.comptecommunal:
@@ -656,7 +656,7 @@ class cadastreExport:
                         paths.append(apath)
 
                     printStep+=1
-                    printProgress( self.printStep )
+                    printProgress( printStep )
         else:
             apath = self.exportItemAsPdf(self.comptecommunal)
             if apath:
