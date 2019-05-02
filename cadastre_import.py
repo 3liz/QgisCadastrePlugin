@@ -1066,10 +1066,13 @@ class cadastreImport(QObject):
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
             # Read sql script
+            sql = ''
             try:
-                sql = open(scriptPath, encoding="utf-8-sig").read()
+                with open(scriptPath, encoding="utf-8-sig") as f:
+                    sql = f.read()
             except:
-                sql = open(scriptPath, encoding="ISO-8859-15").read()
+                with open(scriptPath, encoding="ISO-8859-15") as f:
+                    sql = f.read()
 
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
