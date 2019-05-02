@@ -1,6 +1,6 @@
 """
 Cadastre - Dialog classeas
- 
+
 This plugins helps users to import the french land registry ('cadastre')
 into a database. It is meant to ease the use of the data in QGIs
 by providing search tools and appropriate layer symbology.
@@ -8,7 +8,7 @@ by providing search tools and appropriate layer symbology.
 begin     : 2013-06-11
 copyright : (C) 2013,2019 by 3liz
 email     : info@3liz.com
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -18,6 +18,7 @@ the Free Software Foundation; either version 2 of the License, or
 import sys
 import os
 import re
+from pathlib import Path
 
 from typing import Dict, List, Any, Union
 
@@ -143,7 +144,7 @@ def setSearchPath(sql: str, schema: str) -> str:
     return sql
 
 
-def fetchDataFromSqlQuery(connector: 'db_manager.db_plugins.DBConnector', 
+def fetchDataFromSqlQuery(connector: 'db_manager.db_plugins.DBConnector',
         sql: str, schema: str=None) -> List[Any]:
     '''
     Execute a SQL query and
@@ -326,7 +327,7 @@ def postgisToSpatialiteLocal10(sql: str, dataYear: str) -> str:
     return sql
 
 
-def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,str], 
+def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,str],
         connector: 'db_manager.db_plugins.DBConnector') -> Union[str,None]:
 
     comptecommunal = None
@@ -341,7 +342,7 @@ def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,
     return comptecommunal
 
 
-def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[str,str], 
+def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[str,str],
         connector: 'db_manager.db_plugins.DBConnector') -> List[str]:
     '''
     Get the list of "comptecommunal" for all cities
@@ -372,14 +373,14 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
     return ret
 
 
-def getItemHtml(item: str, feature, connectionParams: Dict[str,str], 
+def getItemHtml(item: str, feature, connectionParams: Dict[str,str],
         connector: 'db_manager.db_plugins.DBConnector') -> str:
     '''
     Build Html for a item (parcelle, proprietaires, etc.)
     based on SQL query
     '''
     html = ''
-    plugin_dir = os.path.dirname(os.path.abspath(__file__))
+    plugin_dir = str(Path(__file__).resolve().parent)
 
     infos = {
         'parcelle_majic': {

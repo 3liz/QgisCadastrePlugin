@@ -8,7 +8,7 @@ by providing search tools and appropriate layer symbology.
 begin     : 2013-06-11
 copyright : (C) 2013,2019 by 3liz
 email     : info@3liz.com
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -63,7 +63,8 @@ from qgis.gui import (
 import unicodedata
 
 import sys
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/forms")
+from pathlib import Path
+sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
 
 # db_manager scripts
 from db_manager.db_plugins.plugin import (
@@ -107,7 +108,7 @@ class cadastre_common(object):
         self.dialog = dialog
 
         # plugin directory path
-        self.plugin_dir = os.path.dirname(os.path.abspath(__file__))
+        self.plugin_dir = str(Path(__file__).resolve().parent)
 
         # default auth id for layers
         self.defaultAuthId = '2154'
@@ -429,8 +430,9 @@ from .cadastre_import import cadastreImport
 from qgis.PyQt import uic
 IMPORT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        os.path.dirname(__file__),
-        'forms/cadastre_import_form.ui'
+        str(Path(__file__).resolve().parent),
+        'forms',
+        'cadastre_import_form.ui'
     )
 )
 class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
@@ -753,11 +755,11 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
 
 
 from .cadastre_loading import cadastreLoading
-from qgis.PyQt import uic
 LOAD_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        os.path.dirname(__file__),
-        'forms/cadastre_load_form.ui'
+        str(Path(__file__).resolve().parent),
+        'forms',
+        'cadastre_load_form.ui'
     )
 )
 class cadastre_load_dialog(QDialog, LOAD_FORM_CLASS):
@@ -908,11 +910,11 @@ class CustomQCompleter(QCompleter):
 # ---------------------------------------------------------
 
 from .cadastre_import import cadastreImport
-from qgis.PyQt import uic
 SEARCH_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        os.path.dirname(__file__),
-        'forms/cadastre_search_form.ui'
+        str(Path(__file__).resolve().parent),
+        'forms',
+        'cadastre_search_form.ui'
     )
 )
 class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
@@ -1899,12 +1901,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
 #        Option - Let the user configure options
 # --------------------------------------------------------
 
-
-from qgis.PyQt import uic
 OPTION_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        os.path.dirname(__file__),
-        'forms/cadastre_option_form.ui'
+        str(Path(__file__).resolve().parent),
+        'forms',
+        'cadastre_option_form.ui'
     )
 )
 class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
@@ -1913,7 +1914,7 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
         self.iface = iface
         self.setupUi(self)
 
-        self.plugin_dir = os.path.dirname(__file__)
+        self.plugin_dir = str(Path(__file__).resolve().parent)
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -2095,11 +2096,11 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
 # --------------------------------------------------------
 
 
-from qgis.PyQt import uic
 ABOUT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        os.path.dirname(__file__),
-        'forms/cadastre_about_form.ui'
+        str(Path(__file__).resolve().parent),
+        'forms',
+        'cadastre_about_form.ui'
     )
 )
 class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
@@ -2131,13 +2132,13 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
 #        Parcelle - Show parcelle information
 # --------------------------------------------------------
 
-from .cadastre_export_dialog import cadastreExport, cadastrePrintProgress 
+from .cadastre_export_dialog import cadastreExport, cadastrePrintProgress
 
-from qgis.PyQt import uic
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        os.path.dirname(__file__),
-        'forms/cadastre_parcelle_form.ui'
+        str(Path(__file__).resolve().parent),
+        'forms',
+        'cadastre_parcelle_form.ui'
     )
 )
 class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
@@ -2206,8 +2207,8 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         Get CSS from CSS file
         '''
         css = ''
-        plugin_dir = os.path.dirname(os.path.abspath(__file__))
-        with open(os.path.join(plugin_dir, 'scripts/css/cadastre.css'), 'r') as f:
+        plugin_dir = str(Path(__file__).resolve().parent)
+        with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), 'r') as f:
             css = f.read()
         self.css = css
 
@@ -2423,11 +2424,11 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 #        Messages - Displays a message to the user
 # --------------------------------------------------------
 
-from qgis.PyQt import uic
 MESSAGE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        os.path.dirname(__file__),
-        'forms/cadastre_message_form.ui'
+        str(Path(__file__).resolve().parent),
+        'forms',
+        'cadastre_message_form.ui'
     )
 )
 class cadastre_message_dialog(QDialog, MESSAGE_FORM_CLASS):

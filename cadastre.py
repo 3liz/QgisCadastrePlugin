@@ -29,6 +29,7 @@ from qgis.PyQt.QtWidgets import QApplication, QAction
 from . import resources
 # Import the code for the dialog
 from cadastredialog import CadastreDialog
+from pathlib import Path
 import os.path
 
 
@@ -38,7 +39,7 @@ class Cadastre(object):
         # Save reference to the QGIS interface
         self.iface = iface
         # initialize plugin directory
-        self.plugin_dir = os.path.dirname(__file__)
+        self.plugin_dir = str(Path(__file__).resolve().parent)
         # initialize locale
         locale = QSettings().value("locale/userLocale")[0:2]
         localePath = os.path.join(self.plugin_dir, 'i18n', 'cadastre_{}.qm'.format(locale))

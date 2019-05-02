@@ -40,12 +40,13 @@ import cadastre.cadastre_common_base as cadastre_common
 
 from qgis.PyQt.QtWidgets import QDialog
 
-
+from pathlib import Path
 from qgis.PyQt import uic
 PRINT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        os.path.dirname(__file__),
-        'forms/cadastre_print_form.ui'
+        str(Path(__file__).resolve().parent),
+        'forms',
+        'cadastre_print_form.ui'
     )
 )
 

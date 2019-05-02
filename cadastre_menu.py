@@ -4,11 +4,11 @@ Cadastre - QGIS plugin menu class
 This plugins helps users to import the french land registry ('cadastre')
 into a database. It is meant to ease the use of the data in QGIs
 by providing search tools and appropriate layer symbology.
-                
+
 begin     : 2013-06-11
 copyright : (C) 2013 by 3liz
 email     : info@3liz.com
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -36,6 +36,7 @@ from .cadastre_identify_parcelle import IdentifyParcelle
 from .cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
 
 import configparser
+from pathlib import Path
 import os.path
 import tempfile
 from time import time
@@ -54,12 +55,13 @@ class cadastre_menu(object):
     def initGui(self):
 
         # Import Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/database.png")
+        plugin_dir = str(Path(__file__).resolve().parent)
+        icon = QIcon(plugin_dir + "/icons/database.png")
         self.import_action = QAction(icon, "Importer des données", self.iface.mainWindow())
         self.import_action.triggered.connect(self.open_import_dialog)
 
         # Search Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/search.png")
+        icon = QIcon(plugin_dir + "/icons/search.png")
         self.search_action = QAction(icon, "Outils de recherche", self.iface.mainWindow())
         self.search_action.triggered.connect(self.toggle_search_dialog)
         if not self.cadastre_search_dialog:
@@ -67,32 +69,32 @@ class cadastre_menu(object):
             self.cadastre_search_dialog = dialog
 
         # Load Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/output.png")
+        icon = QIcon(plugin_dir + "/icons/output.png")
         self.load_action = QAction(icon, "Charger des données", self.iface.mainWindow())
         self.load_action.triggered.connect(self.open_load_dialog)
 
         # Composer Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/mActionSaveAsPDF.png")
+        icon = QIcon(plugin_dir + "/icons/mActionSaveAsPDF.png")
         self.export_action = QAction(icon, "Exporter la vue", self.iface.mainWindow())
         self.export_action.triggered.connect(self.export_view)
 
         # Options Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/config.png")
+        icon = QIcon(plugin_dir + "/icons/config.png")
         self.option_action = QAction(icon, "Configurer le plugin", self.iface.mainWindow())
         self.option_action.triggered.connect(self.open_option_dialog)
 
         # About Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
+        icon = QIcon(plugin_dir + "/icons/about.png")
         self.about_action = QAction(icon, "À propos", self.iface.mainWindow())
         self.about_action.triggered.connect(self.open_about_dialog)
 
         # Help Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
+        icon = QIcon(plugin_dir + "/icons/about.png")
         self.help_action = QAction(icon, "Aide", self.iface.mainWindow())
         self.help_action.triggered.connect(self.open_help)
 
         # version Submenu
-        icon = QIcon(os.path.dirname(__file__) + "/icons/about.png")
+        icon = QIcon(plugin_dir + "/icons/about.png")
         self.version_action = QAction(icon, "Notes de version", self.iface.mainWindow())
         self.version_action.triggered.connect(self.open_message_dialog)
 
@@ -112,7 +114,7 @@ class cadastre_menu(object):
 
         # open import dialog
         self.openImportAction = QAction(
-            QIcon(os.path.dirname(__file__) +"/icons/database.png"),
+            QIcon(plugin_dir +"/icons/database.png"),
             "Importer des données",
             self.iface.mainWindow()
         )
@@ -122,7 +124,7 @@ class cadastre_menu(object):
 
         # open load dialog
         self.openLoadAction = QAction(
-            QIcon(os.path.dirname(__file__) +"/icons/output.png"),
+            QIcon(plugin_dir +"/icons/output.png"),
             "Charger des données",
             self.iface.mainWindow()
         )
@@ -131,7 +133,7 @@ class cadastre_menu(object):
 
         # open search dialog
         self.openSearchAction = QAction(
-            QIcon(os.path.dirname(__file__) +"/icons/search.png"),
+            QIcon(plugin_dir +"/icons/search.png"),
             "Outils de recherche",
             self.iface.mainWindow()
         )
@@ -141,7 +143,7 @@ class cadastre_menu(object):
 
         # export composer
         self.runExportAction = QAction(
-            QIcon(os.path.dirname(__file__) +"/icons/mActionSaveAsPDF.png"),
+            QIcon(plugin_dir +"/icons/mActionSaveAsPDF.png"),
             "Exporter la vue",
             self.iface.mainWindow()
         )
@@ -150,7 +152,7 @@ class cadastre_menu(object):
 
         # open Option dialog
         self.openOptionAction = QAction(
-            QIcon(os.path.dirname(__file__) +"/icons/config.png"),
+            QIcon(plugin_dir +"/icons/config.png"),
             "Configurer le plugin",
             self.iface.mainWindow()
         )
@@ -159,7 +161,7 @@ class cadastre_menu(object):
 
         # open About dialog
         self.openAboutAction = QAction(
-            QIcon(os.path.dirname(__file__) +"/icons/about.png"),
+            QIcon(plugin_dir +"/icons/about.png"),
             "À propos",
             self.iface.mainWindow()
         )
@@ -168,7 +170,7 @@ class cadastre_menu(object):
 
         # Create action for "Parcelle information"
         self.identifyParcelleAction = QAction(
-            QIcon(os.path.dirname(__file__) +"/icons/toolbar/get-parcelle-info.png"),
+            QIcon(plugin_dir +"/icons/toolbar/get-parcelle-info.png"),
             "Infos parcelle",
             self.iface.mainWindow()
         )
@@ -187,7 +189,7 @@ class cadastre_menu(object):
 
         # Display some messages depending on version number
         mConfig = configparser.ConfigParser()
-        metadataFile = os.path.dirname(__file__) + "/metadata.txt"
+        metadataFile = plugin_dir + "/metadata.txt"
         mConfig.read( metadataFile, encoding='utf-8' )
         self.mConfig = mConfig
         myVersion = mConfig.get('general', 'version').replace('.', '_')
@@ -239,7 +241,7 @@ class cadastre_menu(object):
         s = QSettings()
         f = s.value("cadastre/composerTemplateFile", '', type=str)
         if not os.path.exists(f):
-            f = '%s/composers/paysage_a4.qpt' % os.path.dirname(__file__)
+            f = os.path.join(str(Path(__file__).resolve().parent), 'composers', 'paysage_a4.qpt')
             s.setValue("cadastre/composerTemplateFile", f)
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
@@ -399,7 +401,7 @@ class cadastre_menu(object):
     def open_help(self):
         '''Opens the html help file content with default browser'''
         #~ localHelpUrl = "https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/index.rst"
-        localHelpUrl = os.path.dirname(__file__) + "/doc/index.html"
+        localHelpUrl = os.path.join(str(Path(__file__).resolve().parent), 'doc', 'index.html')
         QDesktopServices.openUrl( QUrl(localHelpUrl) )
 
     def open_message_dialog(self):
