@@ -8,7 +8,7 @@ INSERT INTO [PREFIXE]parcelle
  dparpi, ccoarp, gparnf, gparbat, parrev, gpardp, fviti, dnvoiri, dindic, ccovoi, ccoriv, ccocif, gpafpd, ajoutcoherence,
  comptecommunal, pdl, voie,
  cconvo, dvoilib, ccocomm, ccoprem, ccosecm, dnuplam, parcellefiliation, type_filiation,
- ccoifp,
+ ccoifp, inspireid,
  lot
 )
 SELECT
@@ -65,6 +65,7 @@ SELECT
   SUBSTRING(tmp,178,1) AS type_filiation,
 
   CASE WHEN trim(SUBSTRING(tmp,179,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,179,3),'999') END AS ccoifp,
+  REPLACE('FR'||SUBSTRING(tmp,1,15),' ','0') AS inspireid,
 
   '[LOT]' as lot
 FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='10';

@@ -51,6 +51,7 @@ CREATE TABLE parcelle (
     parcellefiliation text,
     type_filiation text,
     ccoifp integer,
+	inspireid text,
     lot text
 );
 
@@ -841,6 +842,7 @@ CREATE TABLE geo_parcelle
   codm text,
   creat_date date,
   update_dat date,
+  inspireid text,
   lot text,
   ogc_fid serial NOT NULL
 );
