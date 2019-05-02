@@ -1,14 +1,14 @@
 """
 Cadastre - Export method class
- 
+
 This plugins helps users to import the french land registry ('cadastre')
 into a database. It is meant to ease the use of the data in QGIs
 by providing search tools and appropriate layer symbology.
- 
+
 begin     : 2013-06-11
 copyright : (C) 2013, 2019 by 3liz
 email     : info@3liz.com
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -35,7 +35,8 @@ from qgis.core import (
 
 from qgis.utils import iface
 
-from cadastre.cadastre_export import cadastreExport as cadastreExportBase
+from .cadastre_export import cadastreExport as cadastreExportBase
+import cadastre.cadastre_common_base as cadastre_common
 
 from qgis.PyQt.QtWidgets import QDialog
 
@@ -72,12 +73,12 @@ def printProgress(self, nb: int) -> Generator[Callable[[int], None] ,None, None]
 
 class cadastreExport(cadastreExportBase):
 
-    def __init__(self, layer: QgsMapLayer, etype: str, comptecommunal: str, 
+    def __init__(self, layer: QgsMapLayer, etype: str, comptecommunal: str,
                  geo_parcelle: str=None, target_dir: str=None) -> None:
 
         self.mProgress = printProgress
 
-        super().__init__(DesktopExportContext(), QgsProject.instance(), 
+        super().__init__(QgsProject.instance(),
                 layer, etype, comptecommunal, geo_parcelle, target_dir)
 
         self.print_parcelle_page = True
@@ -88,7 +89,8 @@ class cadastreExport(cadastreExportBase):
         QgsMapRenderer or QgsMapSettings
         Different if context is server
         '''
-        return self.iface.mapCanvas().mapSettings()
+        #return self.iface.mapCanvas().mapSettings()
+        return super().getMapInstance()
 
     def getHtmlFromTemplate(self, tplPath, replaceDict):
         '''
@@ -97,7 +99,7 @@ class cadastreExport(cadastreExportBase):
         '''
         QApplication.setOverrideCursor(Qt.WaitCursor)
         try:
-            super().getHtmlFromTemplate(tplPath, replaceDict)
+            return super().getHtmlFromTemplate(tplPath, replaceDict)
         finally:
             QApplication.restoreOverrideCursor()
 
@@ -110,7 +112,7 @@ class cadastreExport(cadastreExportBase):
                 cadastre_common.openFile(temppath)
         finally:
             QApplication.restoreOverrideCursor()
-            
+
         return temppath
 
     def exportAsPDF(self):

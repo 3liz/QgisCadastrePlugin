@@ -1,14 +1,14 @@
 """
 Cadastre - Export method class
- 
+
 This plugins helps users to import the french land registry ('cadastre')
 into a database. It is meant to ease the use of the data in QGIs
 by providing search tools and appropriate layer symbology.
- 
+
 begin     : 2013-06-11
 copyright : (C) 2013, 2019 by 3liz
 email     : info@3liz.com
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -51,6 +51,7 @@ import cadastre.cadastre_common_base as cadastre_common
 
 from contextlib import contextmanager
 from typing import Generator, Callable
+from pathlib import Path
 
 @contextmanager
 def _printProgress(self, nb: int) -> Generator[Callable[[int], None] ,None, None]:
@@ -61,10 +62,10 @@ def _printProgress(self, nb: int) -> Generator[Callable[[int], None] ,None, None
 
 class cadastreExport:
 
-    def __init__(self, project: QgsProject, layer: QgsMapLayer, etype: str, comptecommunal: str, 
+    def __init__(self, project: QgsProject, layer: QgsMapLayer, etype: str, comptecommunal: str,
                  geo_parcelle: str=None, target_dir: str=None) -> None:
 
-        self.plugin_dir = os.path.dirname(__file__)
+        self.plugin_dir = str(Path(__file__).resolve().parent)
 
         self.print_parcelle_page = False
 
@@ -290,7 +291,8 @@ class cadastreExport:
         # Build template file path
         tplPath = os.path.join(
             self.plugin_dir,
-            "templates/%s.tpl" % key
+            "templates",
+            "%s.tpl" % key
         )
 
         # Build replace dict depending on source type
@@ -385,9 +387,9 @@ class cadastreExport:
         regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
 
         try:
-            fin = open(tplPath, 'rt', encoding='utf-8')
-            data = fin.read()
-            fin.close()
+            data = ''
+            with open(tplPath, 'rt', encoding='utf-8') as fin:
+                data = fin.read()
             data = regex.sub(replfunc, data)
             return data
 
