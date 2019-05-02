@@ -1074,8 +1074,13 @@ class cadastreImport(QObject):
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
             # Read sql script
-            sql = open(scriptPath).read()
-            sql = sql.decode("utf-8-sig")
+            sql = ''
+            try:
+                with open(scriptPath, encoding="utf-8-sig") as f:
+                    sql = f.read()
+            except:
+                with open(scriptPath, encoding="ISO-8859-15") as f:
+                    sql = f.read()
 
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
@@ -1322,7 +1327,7 @@ class cadastreImport(QObject):
                     # qgis can connect to postgis DB without a specified host param connection, but ogr2ogr cannot
                     if not host:
                         host = "localhost"
-                        
+
                     pg_access = 'PG:host=%s port=%s dbname=%s active_schema=%s user=%s password=%s' % (
                         host,
                         port,
