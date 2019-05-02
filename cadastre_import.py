@@ -1035,14 +1035,14 @@ class cadastreImport(QObject):
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
             try:
-                fin = open(scriptPath, encoding='utf-8-sig')
-                data = fin.read() #.decode("utf-8-sig")
-                fin.close()
-                fout = open(scriptPath, 'w')
+                data = ''
+                with open(scriptPath, encoding='utf-8-sig') as fin:
+                    data = fin.read() #.decode("utf-8-sig")
+
                 data = self.replaceParametersInString(data, replaceDict)
                 # data = data.encode('utf-8')
-                fout.write(data)
-                fout.close()
+                with open(scriptPath, 'w') as fout:
+                    fout.write(data)
 
             except IOError as e:
                 msg = u"<b>Erreur lors du paramétrage des scripts d'import: %s</b>" % e
