@@ -45,5 +45,5 @@ experimental=False
 deprecated=False
 
 # Activate server configuration
-server=true
+server=True
 

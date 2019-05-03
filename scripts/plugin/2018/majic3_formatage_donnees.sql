@@ -8,7 +8,7 @@ INSERT INTO [PREFIXE]parcelle
  dparpi, ccoarp, gparnf, gparbat, parrev, gpardp, fviti, dnvoiri, dindic, ccovoi, ccoriv, ccocif, gpafpd, ajoutcoherence,
  comptecommunal, pdl, voie,
  cconvo, dvoilib, ccocomm, ccoprem, ccosecm, dnuplam, parcellefiliation, type_filiation,
- ccoifp,
+ ccoifp, inspireid,
  lot
 )
 SELECT
@@ -50,7 +50,7 @@ SELECT
 
   SUBSTRING(tmp,104,1) AS gpafpd,
   'N',
-  REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,32,6),' ', '0') AS comptecommunal,
+REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,32,6),' ', '0') AS comptecommunal,
   CASE WHEN trim(SUBSTRING(tmp,61,3))='' THEN NULL ELSE REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,52,9)||SUBSTRING(tmp,61,3),' ', '0') END AS pdl,
   CASE WHEN trim(SUBSTRING(tmp,91,5))='' THEN NULL ELSE REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,91,5)||SUBSTRING(tmp,96,4),' ', '0') END AS voie,
 
@@ -65,6 +65,7 @@ SELECT
   SUBSTRING(tmp,178,1) AS type_filiation,
 
   CASE WHEN trim(SUBSTRING(tmp,179,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,179,3),'999') END AS ccoifp,
+  REPLACE('FR'||SUBSTRING(tmp,1,15),' ','0') AS inspireid,
 
   '[LOT]' as lot
 FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='10';
@@ -113,10 +114,9 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,139,8))='' THEN NULL ELSE SUBSTRING(tmp,139,8) END AS datja,
   SUBSTRING(tmp,147,1) AS postel,
   CASE WHEN trim(SUBSTRING(tmp,148,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,148,3),'999') END AS ccortar,
-
-  REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
-  REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,31,6),' ', '0') AS comptecommunal,
-  CASE WHEN  trim(SUBSTRING(tmp,81,3))='' THEN NULL ELSE REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,72,9)||SUBSTRING(tmp,81,3),' ', '0') END AS pdl,
+REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
+REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,31,6),' ', '0') AS comptecommunal,
+CASE WHEN  trim(SUBSTRING(tmp,81,3))='' THEN NULL ELSE REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,72,9)||SUBSTRING(tmp,81,3),' ', '0') END AS pdl,
   '[LOT]' as lot
 FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='21';
 
@@ -287,7 +287,7 @@ SELECT
   SUBSTRING(tmp,174,1) AS toprev,
   CASE WHEN trim(SUBSTRING(tmp,175,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,175,3),'999') END AS ccoifp,
 
-  REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,38,6),' ', '0') AS comptecommunal,
+REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,38,6),' ', '0') AS comptecommunal,
   '[LOT]' as lot
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='10';
 
@@ -722,7 +722,7 @@ SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
   SUBSTRING(tmp,598,40) AS dprnus,
 
 
-  REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,7,6),' ', '0') AS comptecommunal,
+REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,7,6),' ', '0') AS comptecommunal,
   '[LOT]' as lot
 FROM [PREFIXE]prop
 WHERE trim(SUBSTRING(tmp,7,6)) != ''
@@ -733,7 +733,7 @@ CREATE INDEX idxan_proprietaire ON proprietaire (annee);
 INSERT INTO [PREFIXE]comptecommunal
   (comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence, lot)
 SELECT
-  REPLACE(ccodep||ccocom||dnupro,' ', '0') AS comptecommunal,
+REPLACE(ccodep||ccodir||ccocom||dnupro,' ', '0') AS comptecommunal,
   '[ANNEE]',
   ccodep,
   ccodir,
@@ -767,8 +767,8 @@ SELECT
   SUBSTRING(tmp,82,1) AS gprmut,
   SUBSTRING(tmp,83,6) AS dnupro,
   SUBSTRING(tmp,94,4) AS ccocif,
-  REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
-  REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,83,6),' ', '0') AS comptecommunal,
+REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
+REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,83,6),' ', '0') AS comptecommunal,
   '[LOT]' as lot
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='10';
 
@@ -824,9 +824,9 @@ SELECT
   SUBSTRING(tmp,83,6) AS dnuprol,
   SUBSTRING(tmp,89,5) AS dreflf,
   SUBSTRING(tmp,94,4) AS ccocif,
-  REPLACE(SUBSTRING(tmp,1,18),' ', '0') AS pdl,
-  REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,4,3)||SUBSTRING(tmp,83,6),' ', '0') AS comptecommunal,
-  REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
+REPLACE(SUBSTRING(tmp,1,18),' ', '0') AS pdl,
+REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,83,6),' ', '0') AS comptecommunal,
+REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
   '[LOT]' as lot
 FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='30';
 

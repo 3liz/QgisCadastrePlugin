@@ -847,13 +847,13 @@ class cadastreImport(QObject):
             sql = 'DELETE FROM geo_label WHERE NOT MbrWithin(geom, ( SELECT ST_Buffer(ST_Envelope(Collect(geom)), 100 ) AS geom FROM geo_commune ));'
         else:
             sql = 'DELETE FROM geo_label WHERE NOT ST_Within(geom, ( SELECT ST_Buffer(ST_Envelope(ST_Collect(geom)), 100 ) AS geom FROM geo_commune ));'
-            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
         self.executeSqlQuery(sql)
 
         # Add parcelle_info index for postgis only (not capability of that type for spatialite)
         if self.dialog.dbType == 'postgis':
             sql = 'DROP INDEX IF EXISTS parcelle_info_geo_parcelle_sub;CREATE INDEX parcelle_info_geo_parcelle_sub ON parcelle_info( substr("geo_parcelle", 1, 10));'
-            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 
             # Add index on geo_parcelle and geo_batiment centroids
@@ -863,7 +863,7 @@ class cadastreImport(QObject):
             CREATE INDEX geo_parcelle_centroide_geom_idx ON geo_parcelle USING gist (ST_Centroid(geom));
             CREATE INDEX geo_batiment_centroide_geom_idx ON geo_batiment USING gist (ST_Centroid(geom));
             '''
-            sql = self.qc.setSearchPath(sql, self.dialog.schema)
+            sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 
         # Refresh spatialite layer statistics
@@ -1035,14 +1035,14 @@ class cadastreImport(QObject):
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
             try:
-                fin = open(scriptPath, encoding='utf-8-sig')
-                data = fin.read() #.decode("utf-8-sig")
-                fin.close()
-                fout = open(scriptPath, 'w')
+                data = ''
+                with open(scriptPath, encoding='utf-8-sig') as fin:
+                    data = fin.read() #.decode("utf-8-sig")
+
                 data = self.replaceParametersInString(data, replaceDict)
                 # data = data.encode('utf-8')
-                fout.write(data)
-                fout.close()
+                with open(scriptPath, 'w') as fout:
+                    fout.write(data)
 
             except IOError as e:
                 msg = u"<b>Erreur lors du paramétrage des scripts d'import: %s</b>" % e
@@ -1066,14 +1066,17 @@ class cadastreImport(QObject):
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
             # Read sql script
+            sql = ''
             try:
-                sql = open(scriptPath, encoding="utf-8-sig").read()
+                with open(scriptPath, encoding="utf-8-sig") as f:
+                    sql = f.read()
             except:
-                sql = open(scriptPath, encoding="ISO-8859-15").read()
+                with open(scriptPath, encoding="ISO-8859-15") as f:
+                    sql = f.read()
 
             # Set schema if needed
             if self.dialog.dbType == 'postgis':
-                sql = self.qc.setSearchPath(sql, self.dialog.schema)
+                sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
 
             # Remove make valid if asked
             if not self.dialog.edigeoMakeValid:
@@ -1316,6 +1319,10 @@ class cadastreImport(QObject):
                         self.dialog.schema
                     )
                 else:
+                    # qgis can connect to postgis DB without a specified host param connection, but ogr2ogr cannot
+                    if not host:
+                        host = "localhost"
+                        
                     pg_access = 'PG:host=%s port=%s dbname=%s active_schema=%s user=%s password=%s' % (
                         host,
                         port,
@@ -1441,7 +1448,7 @@ class cadastreImport(QObject):
         # Run each query
         for sql in sqlList:
             if self.dialog.dbType == 'postgis':
-                sql = self.qc.setSearchPath(sql, self.dialog.schema)
+                sql = cadastre_common.setSearchPath(sql, self.dialog.schema)
             self.executeSqlQuery(sql)
 
 
