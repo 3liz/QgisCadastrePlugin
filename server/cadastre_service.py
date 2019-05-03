@@ -1,6 +1,6 @@
 """
  Cadastre - Export method class
-                                                                 
+
 A QGIS service plugin
 
 This plugins helps users to import the french land registry ('cadastre')
@@ -10,11 +10,11 @@ by providing search tools and appropriate layer symbology.
 begin                                : 2013-06-11
 copyright                            : (C) 2013,2019 by 3liz
 email                                : info@3liz.com
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or   
-(at your option) any later version.                                      
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 """
 
 import os
@@ -35,8 +35,8 @@ from qgis.core import (Qgis,
                        QgsFeatureRequest,
                        QgsFeature)
 
-from qgis.server import (QgsService, 
-                         QgsServerRequest, 
+from qgis.server import (QgsService,
+                         QgsServerRequest,
                          QgsServerResponse)
 
 import cadastre.cadastre_common_base as cadastre_common
@@ -58,13 +58,13 @@ def write_json_response( data: Dict[str,str], response: QgsServerResponse, code:
 
 class CadastreError(Exception):
 
-    def __init__(code: int, msg: str) -> None:
+    def __init__(self, code: int, msg: str) -> None:
         super().__init__(msg)
         self.msg  = msg
         self.code = code
         QgsMessageLog.logMessage("Cadastre request error %s: %s" % (code,msg),"cadastre",Qgis.Critical)
-    
-    def formatResponse(response: QgsServerResponse) -> None:
+
+    def formatResponse(self, response: QgsServerResponse) -> None:
         """ Format error response
         """
         body = { 'status': 'fail', 'message': self.msg }
@@ -73,7 +73,7 @@ class CadastreError(Exception):
 
 
 # Immutable structure for holding resources values
-CadastreResources = namedtuple('CadastreResources', 
+CadastreResources = namedtuple('CadastreResources',
         ('layer','geo_parcelle','feature','type','layername',
          'connector','connectionParams'))
 
@@ -91,7 +91,7 @@ class CadastreService(QgsService):
     def name(self) -> str:
         """ Service name
         """
-        return 'cadastre'
+        return 'CADASTRE'
 
     def version(self) -> str:
         """ Service version
@@ -104,7 +104,7 @@ class CadastreService(QgsService):
         return method in (QgsServerRequest.GetMethod,
                           QgsServerRequest.PostMethod)
 
-    def executeRequest(self, request: QgsServerRequest, response: QgsServerResponse, 
+    def executeRequest(self, request: QgsServerRequest, response: QgsServerResponse,
                        project: QgsProject) -> None:
         """ Execute a 'cadastre' request
         """
@@ -162,7 +162,7 @@ class CadastreService(QgsService):
 
         if not paths:
             raise CadastreError(424,'An error occured while generating the PDF')
-    
+
         if self.debugMode:
             QgsMessageLog.logMessage( "exportAsPDF(), paths: %s" % paths,'cadastre', Qgis.Debug )
 
@@ -243,7 +243,7 @@ class CadastreService(QgsService):
         req.setFilterExpression(' "geo_parcelle" = \'%s\' ' % pparcelle)
 
         it = layer.getFeatures(req)
-        feat = QgsFeature() 
+        feat = QgsFeature()
         if not it.nextFeature(feat):
             raise CadastreError(404,"Feature not found for parcelle '%s' in layer '%s'" % (pparcelle,player))
 
