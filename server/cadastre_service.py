@@ -218,7 +218,7 @@ class CadastreService(QgsService):
             v = params.get(name)
             if not v:
                 raise CadastreError(400,"Missing parameter '%s'" % name)
-            v = v.lower()
+            v = v
             if allowed_values and not v in allowed_values:
                 raise CadastreError(400,"Invalid or missing value for '%s'" % name)
             return v
@@ -230,7 +230,7 @@ class CadastreService(QgsService):
 
         # Get feature
         if not PARCELLE_FORMAT_RE.match(pparcelle):
-            raise CadastreError(400, "Invalid PARCELLE format")
+            raise CadastreError(400, "Invalid PARCELLE format: %s" % pparcelle)
 
         # Find layer
         lr = project.mapLayersByName(lname)
