@@ -1,23 +1,23 @@
 #!/usr/bin/env python
-import qgis
 import sys, os
-from qgis.gui import QgsMapCanvas, QgsLayerTreeMapCanvasBridge
-from qgis.core import QgsApplication, QgsProject, QgsComposition, QgsComposerMap, QgsMessageLog, QgsLogger, QgsExpression, QgsFeatureRequest, QgsMapLayerRegistry
-from PyQt4.QtCore import QFileInfo, QByteArray
-from PyQt4.QtXml import QDomDocument
-from PyQt4.QtGui import QApplication
 
+qgisPrefixPath = "/usr"
 os.environ["DISPLAY"] = ":99"
+os.environ["HOME"] = "/srv/qgis"
+sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/"))
+sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/plugins/"))
 sys.path.append('/srv/qgis/plugins')
-sys.path.append('/usr/share/qgis/python/plugins')
 
-from cadastre_dialogs import cadastre_common
-from cadastre_export import *
+from qgis.PyQt.QtCore import QByteArray
+from qgis.PyQt.QtXml import QDomDocument
 
-try:
-    from cadastre_export_dialog import cadastrePrintProgress
-except:
-    pass
+import qgis
+from qgis.gui import QgsMapCanvas, QgsLayerTreeMapCanvasBridge
+from qgis.core import QgsApplication, QgsProject, QgsMessageLog, QgsLogger, QgsExpression, QgsFeatureRequest
+
+import cadastre
+from cadastre.cadastre_dialogs import cadastre_common
+from cadastre.cadastre_export import cadastreExport
 
 import argparse
 import os.path, json, time
@@ -84,20 +84,27 @@ if("-O" in sys.argv):
 
 
 # Instantiate QGIS
-QgsApplication.setPrefixPath("/usr", True)
+QgsApplication.setPrefixPath(qgisPrefixPath, True)
 qgs = QgsApplication([], True)
 QgsApplication.initQgis()
 
-# Get the project instance
-project = QgsProject.instance()
-
 # Open the project
-p = QgsProject.instance()
-p.read(QFileInfo(project_path))
+p = QgsProject()
+p.read(project_path)
+canvas = QgsMapCanvas()
+bridge = QgsLayerTreeMapCanvasBridge(
+    p.layerTreeRoot(),
+    canvas
+)
+bridge.setCanvasLayers()
 
 # Get the layers in the project
-layers = QgsMapLayerRegistry.instance().mapLayers()
-layerList = [ layer for lname,layer in layers.items() if layer.name() == parcelle_layer ]
+layerList = p.mapLayersByName(parcelle_layer)
+if not layerList:
+    layers = p.mapLayers()
+    for lname,layer in layers.items():
+        print(lname+' '+layer.name()+' '+parcelle_layer)
+    layerList = [ layer for lname,layer in layers.items() if layer.name() == parcelle_layer ]
 layer = layerList[0]
 
 # Get Feature
@@ -131,6 +138,7 @@ if export_type == 'proprietaire' and pmulti == 1:
 # Export PDF
 print(target_dir)
 qex = cadastreExport(
+    p,
     layer,
     export_type,
     comptecommunal,
