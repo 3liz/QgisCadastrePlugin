@@ -145,7 +145,7 @@ class CadastreService(QgsService):
             res.connector
         )
         pmulti = 1
-        if self.type == 'proprietaire' and pmulti == 1:
+        if res.type == 'proprietaire' and pmulti == 1:
             comptecommunal = cadastre_common.getProprietaireComptesCommunaux(
                 comptecommunal,
                 res.connectionParams,
@@ -156,7 +156,7 @@ class CadastreService(QgsService):
             QgsMessageLog.logMessage( "Comptecommunal = %s" % comptecommunal,'cadastre',Qgis.Debug )
 
         # Export PDF
-        qex = cadastreExport(res.layer,res.type,comptecommunal,res.geo_parcelle)
+        qex = cadastreExport(project, res.layer,res.type,comptecommunal,res.geo_parcelle)
 
         paths = qex.exportAsPDF()
 
@@ -233,11 +233,12 @@ class CadastreService(QgsService):
             raise CadastreError(400, "Invalid PARCELLE format: %s" % pparcelle)
 
         # Find layer
-        lr = project.mapLayersByName(lname)
+        layer = None
+        lr = project.mapLayersByName(player)
         if len(lr) > 0:
             layer = lr[0]
         else:
-            raise CadastreError(404,"Layer '%s' not found" % lname)
+            raise CadastreError(404,"Layer '%s' not found" % player)
 
         req = QgsFeatureRequest()
         req.setFilterExpression(' "geo_parcelle" = \'%s\' ' % pparcelle)
@@ -249,7 +250,7 @@ class CadastreService(QgsService):
 
         # Get layer connection parameters
         connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
-        connector = cadastre_common.getConnectorFromUri( self.connectionParams )
+        connector = cadastre_common.getConnectorFromUri( connectionParams )
 
         return CadastreResources(geo_parcelle = pparcelle,
                                  feature = feat,
