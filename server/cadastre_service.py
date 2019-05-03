@@ -116,7 +116,7 @@ class CadastreService(QgsService):
             if reqparam == 'createpdf':
                 self.create_pdf(params, response, project)
             elif reqparam == 'getpdf':
-                self.get_pdf()
+                self.get_pdf(params, response)
             elif reqparam == 'gethtml':
                 self.get_html(params, response, project)
             else:
@@ -277,7 +277,7 @@ class CadastreService(QgsService):
 
         # Send PDF
         response.setHeader('Content-type', 'application/pdf')
-        response.request.setStatusCode(200)
+        response.setStatusCode(200)
         try:
             response.write(path.read_bytes())
             path.unlink()
