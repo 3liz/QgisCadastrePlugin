@@ -54,7 +54,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,61,3))='' THEN NULL ELSE REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,52,9)||SUBSTRING(tmp,61,3),' ', '0') END AS pdl,
   CASE WHEN trim(SUBSTRING(tmp,91,5))='' THEN NULL ELSE REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,91,5)||SUBSTRING(tmp,96,4),' ', '0') END AS voie,
 
-  SUBSTRING(tmp,136,4) AS cconvo,
+  TRIM(SUBSTRING(tmp,136,4)) AS cconvo,
   SUBSTRING(tmp,140,26) AS dvoilib,
 
   CASE WHEN trim(SUBSTRING(tmp,166,3))='' THEN NULL ELSE SUBSTRING(tmp,166,3) END AS ccocomm,
@@ -909,7 +909,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,7,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,7,1)) END AS natvoiriv,
   SUBSTRING(tmp,7,4) AS ccoriv,
   SUBSTRING(tmp,11,1) AS clerivili,
-  SUBSTRING(tmp,12,4) AS natvoi,
+  TRIM(SUBSTRING(tmp,12,4)) AS natvoi,
   SUBSTRING(tmp,16,26) AS libvoi,
   CASE WHEN trim(SUBSTRING(tmp,43,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,43,1)) END AS typcom,
   SUBSTRING(tmp,46,1) AS ruract,
