@@ -749,6 +749,7 @@ CREATE TABLE gtyp4 (gtyp4 text primary key, gtyp4_lib text);
 CREATE TABLE gtyp5 (gtyp5 text primary key, gtyp5_lib text);
 CREATE TABLE gtyp6 (gtyp6 text primary key, gtyp6_lib text);
 CREATE TABLE typcom (typcom text primary key, typcom_lib text);
+CREATE TABLE natvoi (natvoi text primary key, natvoi_lib text);
 CREATE TABLE natvoiriv (natvoiriv text primary key, natvoiriv_lib text);
 CREATE TABLE carvoi (carvoi text primary key, carvoi_lib text);
 CREATE TABLE annul (annul text primary key, annul_lib text);
