@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+# Return key from metadata
+
+import os
+import sys
+
+from configparser import ConfigParser
+
+def read_metadata_key( filename, key ):
+
+    if not os.path.exists(filename):
+        print("File",filename,"does not exists")
+        sys.exit(1)
+
+    parser = ConfigParser()
+    parser.read(filename, encoding='utf-8')
+    return parser.get("general",key)
+
+if len(sys.argv) < 3:
+    print("Usage: metadata_key <file> <key>")
+    sys.exit(1)
+
+print(read_metadata_key(sys.argv[1],sys.argv[2]))    
+
+
