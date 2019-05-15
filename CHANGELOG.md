@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## version 1.5.7
+
+* Fix - lecture de fichiers en iso-8859 lors de l'import
+* Fix - Ajout modalité 'V' à la nomenclature de CCODRO
+* Fix - Problème de connexion avec ogr2ogr quand le 'host' n'est pas définie
+
 ## Version 1.5.6
 
 * Fiche parcellaire - Ajout des informations des propriétaires, subdivisions et locaux
