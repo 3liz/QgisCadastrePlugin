@@ -22,6 +22,7 @@ from qgis.PyQt.QtXml import QDomDocument
 
 from qgis.core import (
     Qgis,
+    QgsApplication,
     QgsProject,
     QgsReadWriteContext,
     QgsMessageLog,
@@ -34,6 +35,7 @@ from qgis.core import (
 
 from .cadastre_identify_parcelle import IdentifyParcelle
 from .cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
+from .processing.provider import CadastreProvider
 
 import configparser
 from pathlib import Path
@@ -48,11 +50,15 @@ class cadastre_menu(object):
         self.iface = iface
         self.mapCanvas = iface.mapCanvas()
         self.cadastre_search_dialog = None
+        self.provider = CadastreProvider()
 
     def cadastre_add_submenu(self, submenu):
         self.iface.addPluginToMenu("&Cadastre", submenu.menuAction())
 
     def initGui(self):
+
+        # Add procesing provider
+        QgsApplication.processingRegistry().addProvider(self.provider)
 
         # Import Submenu
         plugin_dir = str(Path(__file__).resolve().parent)
@@ -474,4 +480,7 @@ class cadastre_menu(object):
 
         if self.cadastre_search_dialog:
             self.iface.removeDockWidget(self.cadastre_search_dialog)
+
+        # Remove processing provider
+        QgsApplication.processingRegistry().removeProvider(self.provider)
 
