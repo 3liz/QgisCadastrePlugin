@@ -70,7 +70,7 @@ class cadastreLoading(QObject):
         self.defaultThemeDir = 'classique'
         self.themeDir = None
 
-        # List of database layers to load inQGIS
+        # List of database layers to load in QGIS
         self.mainLayers = [
             u'Communes',
             u'Sections',
@@ -78,7 +78,7 @@ class cadastreLoading(QObject):
             u'Bâti'
         ]
         self.qgisCadastreLayerList = [
-            {'label': u'Communes', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C', 'subset': '"geo_commune" IN (%s)'},
+            {'label': u'Communes', 'name': 'geo_commune', 'table': 'geo_commune', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': '"geo_commune" IN (%s)'},
             {'label': u'Tronçons de route', 'name': 'geo_tronroute', 'table': 'geo_tronroute', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Voies, routes et chemins', 'name': 'geo_zoncommuni', 'table': 'geo_zoncommuni', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Noms de voies', 'name': 'geo_label_zoncommuni', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" IN ( \'ZONCOMMUNI_id\') ', 'active': True, 'group': 'E'},
@@ -89,7 +89,7 @@ class cadastreLoading(QObject):
             {'label': u'Parcelles (étiquettes)', 'name': 'geo_label_parcelle', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'PARCELLE_id\'', 'active': True, 'group': 'E'},
             {'label': u'Lieux-dits', 'name': 'geo_lieudit', 'table': 'geo_lieudit', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Lieux-dits  (étiquettes)', 'name': 'geo_label_lieudit', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'LIEUDIT_id\'', 'active': False, 'group': 'E'},
-            {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'C', 'subset': '"geo_commune" IN (%s)'},
+            {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': '"geo_commune" IN (%s)'},
             {'label': u'Parcelles', 'name': 'parcelle_info', 'table': 'parcelle_info', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': 'substr("geo_parcelle", 1, 10) IN (%s)'},
             {'label': u'Sections (étiquettes)', 'name': 'geo_label_section', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SECTION_id\'', 'active': False, 'group': 'E'},
             {'label': u'Bornes', 'name': 'geo_borne', 'table': 'geo_borne', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
@@ -110,6 +110,13 @@ class cadastreLoading(QObject):
             #,
             #{'label': u'Unités foncières', 'name': 'geo_unite_fonciere', 'table': 'geo_unite_fonciere', 'geom':'geom', 'sql': '', 'dbType': 'postgis', 'active': False, 'group': 'D'}
         ]
+        # List of database layers to load in QGIS
+        self.variableLayers = {
+            'Communes':{'var_key':'communes', 'unique_col':'geo_commune'},
+            'Sections':{'var_key':'sections', 'unique_col':'geo_section'},
+            'Parcelles':{'var_key':'parcelles', 'unique_col':'geo_parcelle'},
+            'Bâti':{'var_key':'batiment', 'unique_col':'geo_batiment'},
+        }
 
     def updateTimer(self):
         b = datetime.now()
@@ -335,6 +342,7 @@ class cadastreLoading(QObject):
             ge = gf.addGroup(u'Étiquettes cadastre')
             gd = gf.addGroup(u'Données cadastre')
 
+        variables = QgsProject.instance().customVariables()
         for layer in qgisCadastreLayers:
             #~ layer.updateExtents()
             # Get layertree item
@@ -362,6 +370,14 @@ class cadastreLoading(QObject):
 
             # Do not expand layer legend
             nodeLayer.setExpanded(False)
+
+            # set varaibles
+            if layer.name() in self.variableLayers:
+                varlayer = self.variableLayers[layer.name()]
+                variables['cadastre_'+varlayer['var_key']+'_layer_id'] = layer.id()
+                variables['cadastre_'+varlayer['var_key']+'_unique_col'] = varlayer['unique_col']
+
+        QgsProject.instance().setCustomVariables(variables)
 
         self.updateTimer()
 
