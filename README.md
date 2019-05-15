@@ -9,6 +9,8 @@ Le plugin Cadastre a été conçu pour faciliter l'utilisation des données cada
 * Un **outil d'identification** permet d'afficher les données liées à une parcelle en cliquant sur le polygone représentant la parcelle.
 * Il est possible enfin d'exporter les données sous forme de **relevés parcellaires** et de **relevés de propriété**.
 
+Si vous voulez utiliser le plugin avec QGIS2, récupérez la version 1.5. Les
+versions 1.6 et suivantes sont pour QGIS3.
 
 Financeurs
 ==========

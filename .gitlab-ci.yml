@@ -9,7 +9,7 @@ variables:
     FACTORY_PACKAGE_TYPE: plugin
     FACTORY_MANIFEST: ".lizcloud/factory.manifest"
 
-build:
+build_3:
   stage: build
   script:
     - make -C .lizcloud -f factory.mk package
@@ -21,7 +21,7 @@ build:
   tags:
     - infrav3
 
-deploy_snap:
+deploy_snap_3:
   stage: deploy
   script:
     - $FACTORY_SCRIPTS/deploy-package $FACTORY_PACKAGE_NAME
@@ -30,7 +30,7 @@ deploy_snap:
   tags:
     - infrav3
 
-release_prod:
+release_prod_3:
   stage: release
   script:
     - $FACTORY_SCRIPTS/release_package $FACTORY_PACKAGE_NAME
@@ -42,3 +42,33 @@ release_prod:
   tags:
     - infrav3
 
+
+build_2:
+  stage: build
+  script:
+    - make  -C .lizcloud -f fabric.mk package
+  environment:
+    name: snap
+  tags:
+    - fabric
+
+deploy_snap_2:
+  stage: deploy
+  script:
+    - sudo -u fabric fab snap deploy:qgis3_cadastre,force=true
+  environment:
+    name: snap
+  tags:
+    - fabric
+
+release_prod_2:
+  stage: release
+  script:
+    - sudo -u fabric fab prod release:qgis3_cadastre
+  environment:
+    name: production
+  when: manual
+  only:
+    - tags
+  tags:
+    - fabric

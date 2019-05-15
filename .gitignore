@@ -45,3 +45,5 @@ nosetests.xml
 __output__
 .cache
 .local
+
+.idea
