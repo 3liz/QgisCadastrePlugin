@@ -115,7 +115,6 @@ class cadastreLoading(QObject):
             'Communes':{'var_key':'communes', 'unique_col':'geo_commune'},
             'Sections':{'var_key':'sections', 'unique_col':'geo_section'},
             'Parcelles':{'var_key':'parcelles', 'unique_col':'geo_parcelle'},
-            'Bâti':{'var_key':'batiment', 'unique_col':'geo_batiment'},
         }
 
     def updateTimer(self):

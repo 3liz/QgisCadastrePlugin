@@ -52,7 +52,8 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
             QgsProcessingParameterVectorLayer(
                 self.TOWN_LAYER,
                 self.tr('La couche communes'),
-                [QgsProcessing.TypeVectorPolygon]
+                [QgsProcessing.TypeVectorPolygon],
+                defaultValue='Communes'
             )
         )
 
@@ -110,13 +111,13 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
         """
 
         town_layer = self.parameterAsVectorLayer(parameters, self.TOWN_LAYER, context)
-        town_unique_field = self.parameterAsString(parameters, self.TOWN_UNIQUE_FIELDFIELD, context)
+        town_unique_field = self.parameterAsString(parameters, self.TOWN_UNIQUE_FIELD, context)
 
         section_layer = self.parameterAsVectorLayer(parameters, self.SECTION_LAYER, context)
-        section_unique_field = self.parameterAsString(parameters, self.SECTION_UNIQUE_FIELDFIELD, context)
+        section_unique_field = self.parameterAsString(parameters, self.SECTION_UNIQUE_FIELD, context)
 
         parcel_layer = self.parameterAsVectorLayer(parameters, self.PARCEL_LAYER, context)
-        parcel_unique_field = self.parameterAsString(parameters, self.PARCEL_UNIQUE_FIELDFIELD, context)
+        parcel_unique_field = self.parameterAsString(parameters, self.PARCEL_UNIQUE_FIELD, context)
 
         variables = context.project().customVariables()
 
