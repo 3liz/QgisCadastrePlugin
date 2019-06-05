@@ -113,7 +113,9 @@ class CadastreService(QgsService):
         try:
             reqparam  = params.get('REQUEST','').lower()
 
-            if reqparam == 'createpdf':
+            if reqparam == 'getcapabilities':
+                self.get_capabilities(params, response, project)
+            elif reqparam == 'createpdf':
                 self.create_pdf(params, response, project)
             elif reqparam == 'getpdf':
                 self.get_pdf(params, response)
@@ -121,7 +123,7 @@ class CadastreService(QgsService):
                 self.get_html(params, response, project)
             else:
                 raise CadastreError(400, ("Invalid REQUEST parameter: "
-                                          "must be one of GetHtml, CreatePdf or GetPdf,"
+                                          "must be one of GetCapabilities, GetHtml, CreatePdf or GetPdf,"
                                           "found '%s'") % reqparam)
 
         except CadastreError as err:
@@ -130,6 +132,66 @@ class CadastreService(QgsService):
             QgsMessageLog.logMessage("Unhandled exception:\n%s" % traceback.format_exc(),"cadastre",Qgis.Critical)
             err = CadastreError(500,"Internal 'cadastre' service error")
             err.formatResponse(response)
+
+
+    def get_capabilities(self, params:Dict[str,str], response: QgsServerResponse, project: QgsProject) -> None:
+        """ Get cadastral capabilities based on config stored as project custom variables
+        """
+        # get project custom variables
+        variables = project.customVariables()
+
+        if 'cadastre_parcelle_layer_id' not in variables or \
+           'cadastre_parcelle_unique_field' not in variables:
+            raise CadastreError(400, "Project has no cadastral capabilities")
+
+        parcelle_layer_id = variables['cadastre_parcelle_layer_id']
+        parcelle_layer_unique_field = variables['cadastre_parcelle_unique_field']
+
+        player = project.mapLayer(parcelle_layer_id)
+        if not player:
+            raise CadastreError(404, "Parcel layer not available")
+
+        capabilities =  {
+            'parcelle': {
+                'id': player.id(),
+                'name': player.name(),
+                'title': player.title(),
+                'shortName': player.shortName(),
+                'unique_field': parcelle_layer_unique_field
+            }
+        }
+
+        if 'cadastre_section_layer_id' in variables:
+            section_layer_id = variables['cadastre_section_layer_id']
+            slayer = project.mapLayer(section_layer_id)
+            if slayer:
+                capabilities['section'] = {
+                    'id': slayer.id(),
+                    'name': slayer.name(),
+                    'title': slayer.title(),
+                    'shortName': slayer.shortName()
+                }
+                if 'cadastre_section_unique_field' in variables:
+                    capabilities['section']['unique_field'] = variables['cadastre_section_unique_field']
+
+        if 'cadastre_commune_layer_id' in variables:
+            commune_layer_id = variables['cadastre_commune_layer_id']
+            slayer = project.mapLayer(commune_layer_id)
+            if slayer:
+                capabilities['commune'] = {
+                    'id': slayer.id(),
+                    'name': slayer.name(),
+                    'title': slayer.title(),
+                    'shortName': slayer.shortName()
+                }
+                if 'cadastre_commune_unique_field' in variables:
+                    capabilities['commune']['unique_field'] = variables['cadastre_commune_unique_field']
+
+        write_json_response({
+            'status': 'success',
+            'message': 'Capabilities',
+            'data': capabilities
+        },response)
 
 
     def create_pdf(self, params:Dict[str,str], response: QgsServerResponse, project: QgsProject) -> None:
