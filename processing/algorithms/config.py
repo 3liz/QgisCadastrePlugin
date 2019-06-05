@@ -33,12 +33,12 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
     Algorithm to set project varaibles for cadastre use
     """
 
-    TOWN_LAYER = 'TOWN_LAYER'
-    TOWN_UNIQUE_FIELD = 'TOWN_UNIQUE_FIELD'
+    COMMUNE_LAYER = 'COMMUNE_LAYER'
+    COMMUNE_UNIQUE_FIELD = 'COMMUNE_UNIQUE_FIELD'
     SECTION_LAYER = 'SECTION_LAYER'
     SECTION_UNIQUE_FIELD = 'SECTION_UNIQUE_FIELD'
-    PARCEL_LAYER = 'PARCEL_LAYER'
-    PARCEL_UNIQUE_FIELD = 'PARCEL_UNIQUE_FIELD'
+    PARCELLE_LAYER = 'PARCELLE_LAYER'
+    PARCELLE_UNIQUE_FIELD = 'PARCELLE_UNIQUE_FIELD'
 
     SUCCESS = 'SUCCESS'
 
@@ -50,7 +50,7 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
 
         self.addParameter(
             QgsProcessingParameterVectorLayer(
-                self.TOWN_LAYER,
+                self.COMMUNE_LAYER,
                 self.tr('La couche communes'),
                 [QgsProcessing.TypeVectorPolygon],
                 defaultValue='Communes'
@@ -59,9 +59,9 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
 
         self.addParameter(
             QgsProcessingParameterField(
-                self.TOWN_UNIQUE_FIELD,
+                self.COMMUNE_UNIQUE_FIELD,
                 self.tr('Champs identifiant les communes'),
-                parentLayerParameterName=self.TOWN_LAYER,
+                parentLayerParameterName=self.COMMUNE_LAYER,
                 defaultValue='geo_commune',
                 type=QgsProcessingParameterField.String
             )
@@ -87,7 +87,7 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
 
         self.addParameter(
             QgsProcessingParameterVectorLayer(
-                self.PARCEL_LAYER,
+                self.PARCELLE_LAYER,
                 self.tr('La couche parcelles'),
                 [QgsProcessing.TypeVectorPolygon]
             )
@@ -95,9 +95,9 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
 
         self.addParameter(
             QgsProcessingParameterField(
-                self.PARCEL_UNIQUE_FIELD,
+                self.PARCELLE_UNIQUE_FIELD,
                 self.tr('Champs identifiant les parcelles'),
-                parentLayerParameterName=self.PARCEL_LAYER,
+                parentLayerParameterName=self.PARCELLE_LAYER,
                 defaultValue='geo_parcelle',
                 type=QgsProcessingParameterField.String
             )
@@ -110,25 +110,25 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
         Here is where the processing itself takes place.
         """
 
-        town_layer = self.parameterAsVectorLayer(parameters, self.TOWN_LAYER, context)
-        town_unique_field = self.parameterAsString(parameters, self.TOWN_UNIQUE_FIELD, context)
+        commune_layer = self.parameterAsVectorLayer(parameters, self.COMMUNE_LAYER, context)
+        commune_unique_field = self.parameterAsString(parameters, self.COMMUNE_UNIQUE_FIELD, context)
 
         section_layer = self.parameterAsVectorLayer(parameters, self.SECTION_LAYER, context)
         section_unique_field = self.parameterAsString(parameters, self.SECTION_UNIQUE_FIELD, context)
 
-        parcel_layer = self.parameterAsVectorLayer(parameters, self.PARCEL_LAYER, context)
-        parcel_unique_field = self.parameterAsString(parameters, self.PARCEL_UNIQUE_FIELD, context)
+        parcelle_layer = self.parameterAsVectorLayer(parameters, self.PARCELLE_LAYER, context)
+        parcelle_unique_field = self.parameterAsString(parameters, self.PARCELLE_UNIQUE_FIELD, context)
 
         variables = context.project().customVariables()
 
-        variables['cadastre_commune_layer_id'] = town_layer.id()
-        variables['cadastre_commune_unique_col'] = town_unique_field
+        variables['cadastre_commune_layer_id'] = commune_layer.id()
+        variables['cadastre_commune_unique_field'] = commune_unique_field
 
         variables['cadastre_section_layer_id'] = section_layer.id()
-        variables['cadastre_section_unique_col'] = section_unique_field
+        variables['cadastre_section_unique_field'] = section_unique_field
 
-        variables['cadastre_parcelle_layer_id'] = parcel_layer.id()
-        variables['cadastre_parcelle_unique_col'] = parcel_unique_field
+        variables['cadastre_parcelle_layer_id'] = parcelle_layer.id()
+        variables['cadastre_parcelle_unique_field'] = parcelle_unique_field
 
         context.project().setCustomVariables(variables)
         # Returns empty dict if no outputs

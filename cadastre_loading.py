@@ -112,9 +112,9 @@ class cadastreLoading(QObject):
         ]
         # List of database layers to load in QGIS
         self.variableLayers = {
-            'Communes':{'var_key':'communes', 'unique_col':'geo_commune'},
-            'Sections':{'var_key':'sections', 'unique_col':'geo_section'},
-            'Parcelles':{'var_key':'parcelles', 'unique_col':'geo_parcelle'},
+            'Communes':{'var_key':'commune', 'unique_field':'geo_commune'},
+            'Sections':{'var_key':'section', 'unique_field':'geo_section'},
+            'Parcelles':{'var_key':'parcelle', 'unique_field':'geo_parcelle'},
         }
 
     def updateTimer(self):
@@ -374,7 +374,7 @@ class cadastreLoading(QObject):
             if layer.name() in self.variableLayers:
                 varlayer = self.variableLayers[layer.name()]
                 variables['cadastre_'+varlayer['var_key']+'_layer_id'] = layer.id()
-                variables['cadastre_'+varlayer['var_key']+'_unique_col'] = varlayer['unique_col']
+                variables['cadastre_'+varlayer['var_key']+'_unique_field'] = varlayer['unique_field']
 
         QgsProject.instance().setCustomVariables(variables)
 
