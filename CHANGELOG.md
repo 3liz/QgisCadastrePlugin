@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## Version 1.7.1
+
+* Refactorize code for server and Qgis 3+
+* Ajouts et mises à jour de tables domaine
+* Correction valeur compte communal
+* Ajout inspireid
+* Amélioration de plugin Server
+* Nouvelle table de nomenclature natvoi
+* Correction identifiants
+* trim code de nature de voie
+* [Serveur] Add GetCapabilities method to server CADASTRE service
+* Creation d'un provider QgsProcessing
+
 ## Version 1.7.0
 
 * Fiche parcellaire - Ajout des informations des propriétaires, subdivisions et locaux
