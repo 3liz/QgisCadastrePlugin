@@ -40,6 +40,7 @@ CREATE TABLE parcelle (
     ccoriv text,
     voie text,
     ccocif text,
+    ccpper text,
     gpafpd text,
     ajoutcoherence text,
     cconvo text,
@@ -51,7 +52,7 @@ CREATE TABLE parcelle (
     parcellefiliation text,
     type_filiation text,
     ccoifp integer,
-	inspireid text,
+    inspireid text,
     lot text
 );
 
@@ -105,7 +106,6 @@ CREATE TABLE sufexoneration (
     ccosub text,
     suf text,
     rnuexn text,
-    vecexn numeric(10,2),
     ccolloc text,
     pexn integer,
     gnexts text,
@@ -1219,6 +1219,7 @@ COMMENT ON COLUMN parcelle.dindic IS 'Indice de répétition - ';
 COMMENT ON COLUMN parcelle.ccovoi IS 'Code Majic2 de la voie - ';
 COMMENT ON COLUMN parcelle.ccoriv IS 'Code Rivoli de la voie - ';
 COMMENT ON COLUMN parcelle.ccocif IS 'Code du cdif (code topad) - ';
+COMMENT ON COLUMN parcelle.ccpper IS 'Code de la trésorerie (code TOPAD) - ';
 COMMENT ON COLUMN parcelle.gpafpd IS 'Domanialité, représentation au plan - INDISPONIBLE';
 COMMENT ON COLUMN parcelle.cconvo IS 'Code nature de la voie';
 COMMENT ON COLUMN parcelle.dvoilib IS 'Libellé de la voie';
@@ -1271,7 +1272,6 @@ COMMENT ON COLUMN sufexoneration.ccosec IS 'Section cadastrale - ';
 COMMENT ON COLUMN sufexoneration.dnupla IS 'Numéro de plan - ';
 COMMENT ON COLUMN sufexoneration.ccosub IS 'Lettres indicatives de suf - ';
 COMMENT ON COLUMN sufexoneration.rnuexn IS 'Numéro d ordre d’exonération temporaire - 01 à 04';
-COMMENT ON COLUMN sufexoneration.vecexn IS 'Montant de VL sur lequel porte l’exonération - en Euros';
 COMMENT ON COLUMN sufexoneration.ccolloc IS 'Collectivité accordant l’exonération - TC, C, R d OU GC';
 COMMENT ON COLUMN sufexoneration.pexn IS 'Pourcentage d’exonération - 100';
 COMMENT ON COLUMN sufexoneration.gnexts IS 'Code d’exonération temporaire - TA TR NO PB PP PR PF ER TU OL HP HR ou NA';
