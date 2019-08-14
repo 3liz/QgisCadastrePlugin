@@ -212,14 +212,15 @@ INSERT INTO cnatsp VALUES ('VIGNE', 'Vigne');
 INSERT INTO cnatsp VALUES ('VIVIE', 'Vivier');
 
 -- nomenclature ccolloc (sufexoneration, pevexoneration)
-INSERT INTO ccolloc VALUES ('TC', 'Toutes collectivités');
-INSERT INTO ccolloc VALUES ('C', 'Commune => l''exonération porte sur la seule part communale');
-INSERT INTO ccolloc VALUES ('D', 'Département => l''exonération porte sur la seule part départementale');
-INSERT INTO ccolloc VALUES ('R', 'Région => l''exonération porte sur la seule part régionale');
+-- valeurs conformes à la documentation DGFiP 2019 NBAT 2.2.5 (p.14)
+INSERT INTO ccolloc VALUES ('C', 'Commune');
 INSERT INTO ccolloc VALUES ('GC', 'Groupement de communes');
-INSERT INTO ccolloc VALUES ('A', 'l''exonération porte sur la taxe additionnelle');
--- 2018
-INSERT INTO ccolloc VALUES ('TS', 'Taxe spéciale d’équipement (TSE)');
+INSERT INTO ccolloc VALUES ('TS', 'TSE (taxe spéciale d’équipement)');
+INSERT INTO ccolloc VALUES ('A', 'Taxe additionnelle');
+-- valeurs obsolètes mais existant toujours en base
+INSERT INTO ccolloc VALUES ('TC', 'Toutes collectivités');
+INSERT INTO ccolloc VALUES ('D', 'Département');
+INSERT INTO ccolloc VALUES ('R', 'Région');
 INSERT INTO ccolloc VALUES ('OM', 'Taxe sur l’enlèvement des ordures ménagères (TEOM)');
 
 -- nomenclature gnexts (sufexoneration)
