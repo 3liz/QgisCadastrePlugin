@@ -166,6 +166,7 @@ CREATE TABLE local00 (
     ccocif text,
     dvoilib text,
     cleinvar text,
+    ccpper text,
     locinc text,
     lot text
 );
@@ -763,6 +764,7 @@ CREATE TABLE dmatto (dmatto text primary key, dmatto_lib text);
 CREATE TABLE drgpos (dgrpos text primary key, dgrpos_lib text);
 CREATE TABLE detent (detent text primary key, detent_lib text);
 CREATE TABLE type_filiation (type_filiation text primary key, type_filiation_lib text);
+CREATE TABLE fburx (fburx text primary key, fburx_lib text);
 
 CREATE TABLE geo_commune
 (
@@ -1319,6 +1321,7 @@ COMMENT ON COLUMN local00.dindic IS 'indice de répétition - ';
 COMMENT ON COLUMN local00.ccocif IS 'code du cdi/cdif (code topad) - ';
 COMMENT ON COLUMN local00.dvoilib IS 'libelle de la voie - ';
 COMMENT ON COLUMN local00.cleinvar IS 'clé alpha no invariant - ';
+COMMENT ON COLUMN local00.ccpper IS 'Code de trésorerie gestionnaire - ';
 COMMENT ON COLUMN local00.locinc IS 'code local sans évaluation - INDISPONIBLE';
 COMMENT ON TABLE local10 IS 'Article identifiant du local';
 COMMENT ON COLUMN local10.ccodep IS 'code département - ';

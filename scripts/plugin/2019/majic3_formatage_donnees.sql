@@ -185,7 +185,7 @@ FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='36';
 INSERT INTO [PREFIXE]local00
 (
  local00, annee, ccodep, ccodir, ccocom, invar, ccopre, ccosec, dnupla, dnubat, descr, dniv, dpor, ccoriv, ccovoi, dnvoiri, dindic, ccocif, dvoilib, cleinvar,
- locinc, parcelle, voie, lot
+ ccpper, locinc, parcelle, voie, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10),' ','0') AS local00,
@@ -211,7 +211,7 @@ SELECT
   SUBSTRING(tmp,72,4) AS ccocif,
   SUBSTRING(tmp,76,30) AS dvoilib,
   SUBSTRING(tmp,106,1) AS cleinvar,
-
+  SUBSTRING(tmp,125,3) AS ccpper,
   SUBSTRING(tmp,107,1) AS locinc,
   REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,36,9),' ', '0') AS parcelle,
   REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,62,5),' ', '0')||SUBSTRING(tmp,57,4) AS voie,
