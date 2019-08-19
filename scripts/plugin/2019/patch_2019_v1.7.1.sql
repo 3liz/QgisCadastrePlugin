@@ -63,7 +63,7 @@ CREATE TABLE parcelle
 );
 
 -- nouvel attribut ccpper
-DROP TABLE IF EXISTS parcelle CASCADE;
+DROP TABLE IF EXISTS local00 CASCADE;
 CREATE TABLE local00
 (
     local00 text NOT NULL,
