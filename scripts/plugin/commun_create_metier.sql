@@ -428,7 +428,7 @@ CREATE TABLE pevlissage (
     ccocom text,
     invar  text,
     dnupev text,
-    pev    text,
+    pev    text, -- dnupec dans doc DGFiP
     mlbcom integer,
     mlbsyn integer,
     mlbcu integer,
