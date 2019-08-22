@@ -94,6 +94,72 @@ CREATE TABLE local00
     CONSTRAINT local00_pk PRIMARY KEY (local00)
 );
 
+-- nouvelle table pevexoneration_imposable
+DROP TABLE IF EXISTS pevexoneration_imposable CASCADE;
+CREATE TABLE pevexoneration_imposable
+(
+    pevexoneration_imposable text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    janbil text,
+    dnupev text,
+    pev text,
+    dnuexb text,
+    ccolloc text,
+    pexb numeric(5,2),
+    gnextl text,
+    jandeb text,
+    janimp text,
+    vecdif text,
+    vecdifa text,
+    fcexb text,
+    fcexba text,
+    rcexba text,
+    dvldif2 integer,
+    dvldif2a integer,
+    fcexb2 integer,
+    fcexba2 integer,
+    rcexba2 integer,
+    valplaf text,
+    lot text
+);
+
+-- nouvelle table pevexoneration_imposee
+DROP TABLE IF EXISTS pevexoneration_imposee CASCADE;
+CREATE TABLE pevexoneration_imposee
+(
+    pevexoneration_imposee text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    janbil text,
+    dnupev text,
+    pev text,
+    dnuexb text,
+    ccolloc text,
+    pexb numeric(5,2),
+    gnextl text,
+    jandeb text,
+    janimp text,
+    vecdif text,
+    vecdifa text,
+    fcexb text,
+    fcexba text,
+    rcexba text,
+    dvldif2 integer,
+    dvldif2a integer,
+    fcexb2 integer,
+    fcexba2 integer,
+    rcexba2 integer,
+    valplaf text,
+    lot text
+);
+
 -- nouvelle table de nomenclature
 DROP TABLE IF EXISTS fburx CASCADE;
 CREATE TABLE fburx 

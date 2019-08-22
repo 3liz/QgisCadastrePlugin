@@ -310,6 +310,66 @@ CREATE TABLE pevexoneration (
     lot text
 );
 
+CREATE TABLE pevexoneration_imposable (
+    pevexoneration_imposable text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    Janbil text,
+    dnupev text,
+    pev text,
+    dnuexb text,
+    ccolloc text,
+    pexb numeric(5,2),
+    gnextl text,
+    jandeb text,
+    janimp text,
+    vecdif text,
+    vecdifa text,
+    fcexb text,
+    fcexba text,
+    rcexba text,
+    dvldif2 integer,
+    dvldif2a integer,
+    fcexb2 integer,
+    fcexba2 integer,
+    rcexba2 integer,
+    valplaf text,
+    lot text
+);
+
+CREATE TABLE pevexoneration_imposee (
+    pevexoneration_imposee text,
+    annee text,
+    ccodep text,
+    ccodir text,
+    ccocom text,
+    invar text,
+    Janbil text,
+    dnupev text,
+    pev text,
+    dnuexb text,
+    ccolloc text,
+    pexb numeric(5,2),
+    gnextl text,
+    jandeb text,
+    janimp text,
+    vecdif text,
+    vecdifa text,
+    fcexb text,
+    fcexba text,
+    rcexba text,
+    dvldif2 integer,
+    dvldif2a integer,
+    fcexb2 integer,
+    fcexba2 integer,
+    rcexba2 integer,
+    valplaf text,
+    lot text
+);
+
 CREATE TABLE pevtaxation (
     pevtaxation text,
     annee text,
@@ -1415,7 +1475,7 @@ COMMENT ON COLUMN pev.dtaurv IS 'Taux de réduction';
 COMMENT ON COLUMN pev.dcmloc IS 'Coefficient de modulation du local';
 
 
-COMMENT ON TABLE pevexoneration IS 'Article exonération de pev';
+COMMENT ON TABLE pevexoneration IS 'Article exonération de pev imposable';
 COMMENT ON COLUMN pevexoneration.ccodep IS 'Code département - ';
 COMMENT ON COLUMN pevexoneration.ccodir IS 'Code direction - ';
 COMMENT ON COLUMN pevexoneration.ccocom IS 'Code commune INSEE - ';
@@ -1439,6 +1499,56 @@ COMMENT ON COLUMN pevexoneration.fcexb2 IS 'Fraction de VL exonérée (valeur 70
 COMMENT ON COLUMN pevexoneration.fcexba2 IS 'Fraction de VL exonérée (valeur de l’année) - ';
 COMMENT ON COLUMN pevexoneration.rcexba2 IS 'Revenu cadastral exonéré (valeur de l’année) - ';
 COMMENT ON COLUMN pevexoneration.valplaf IS 'Montant du planchonnement sur la base exonérée neutralisée';
+
+COMMENT ON TABLE pevexoneration_imposable IS 'Article exonération de pev imposable';
+COMMENT ON COLUMN pevexoneration_imposable.ccodep IS 'Code département - ';
+COMMENT ON COLUMN pevexoneration_imposable.ccodir IS 'Code direction - ';
+COMMENT ON COLUMN pevexoneration_imposable.ccocom IS 'Code commune INSEE - ';
+COMMENT ON COLUMN pevexoneration_imposable.invar IS 'Numéro invariant - ';
+COMMENT ON COLUMN pevexoneration_imposable.Janbil IS 'Année d’immobilisation - servie pour ets. industriels';
+COMMENT ON COLUMN pevexoneration_imposable.dnupev IS 'Numéro de pev - ';
+COMMENT ON COLUMN pevexoneration_imposable.dnuexb IS 'Numéro d’ordre de l’article - 001 à 015';
+COMMENT ON COLUMN pevexoneration_imposable.ccolloc IS 'Code de collectivité locale accordant l’exonération - C D R TC tableau 2.3.9';
+COMMENT ON COLUMN pevexoneration_imposable.pexb IS 'Taux d’exonération accordée - 999V99';
+COMMENT ON COLUMN pevexoneration_imposable.gnextl IS 'Nature d’exonération temporaire (et permanente pour ets. Industriels) - tableau des codes 2.3.10 et 2.3.8';
+COMMENT ON COLUMN pevexoneration_imposable.jandeb IS 'année de début d’exonération - ';
+COMMENT ON COLUMN pevexoneration_imposable.janimp IS 'année de retour à imposition - ';
+COMMENT ON COLUMN pevexoneration_imposable.vecdif IS 'montant saisi de l’EC bénéficiant exo - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposable.vecdifa IS 'vecdif multiplié par coeff - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposable.fcexb IS 'Fraction EC exonérée - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposable.fcexba IS 'fcexb multiplié par coeff - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposable.rcexba IS 'revenu cadastral exonéré - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposable.dvldif2 IS 'Montant de VL exonérée (valeur 70) - ';
+COMMENT ON COLUMN pevexoneration_imposable.dvldif2a IS 'Montant de VL exonérée (valeur de l’année) - ';
+COMMENT ON COLUMN pevexoneration_imposable.fcexb2 IS 'Fraction de VL exonérée (valeur 70) - ';
+COMMENT ON COLUMN pevexoneration_imposable.fcexba2 IS 'Fraction de VL exonérée (valeur de l’année) - ';
+COMMENT ON COLUMN pevexoneration_imposable.rcexba2 IS 'Revenu cadastral exonéré (valeur de l’année) - ';
+COMMENT ON COLUMN pevexoneration_imposable.valplaf IS 'Montant du planchonnement sur la base exonérée neutralisée';
+
+COMMENT ON TABLE pevexoneration_imposee IS 'Article exonération de pev imposée';
+COMMENT ON COLUMN pevexoneration_imposee.ccodep IS 'Code département - ';
+COMMENT ON COLUMN pevexoneration_imposee.ccodir IS 'Code direction - ';
+COMMENT ON COLUMN pevexoneration_imposee.ccocom IS 'Code commune INSEE - ';
+COMMENT ON COLUMN pevexoneration_imposee.invar IS 'Numéro invariant - ';
+COMMENT ON COLUMN pevexoneration_imposee.Janbil IS 'Année d’immobilisation - servie pour ets. industriels';
+COMMENT ON COLUMN pevexoneration_imposee.dnupev IS 'Numéro de pev - ';
+COMMENT ON COLUMN pevexoneration_imposee.dnuexb IS 'Numéro d’ordre de l’article - 001 à 015';
+COMMENT ON COLUMN pevexoneration_imposee.ccolloc IS 'Code de collectivité locale accordant l’exonération - C D R TC tableau 2.3.9';
+COMMENT ON COLUMN pevexoneration_imposee.pexb IS 'Taux d’exonération accordée - 999V99';
+COMMENT ON COLUMN pevexoneration_imposee.gnextl IS 'Nature d’exonération temporaire (et permanente pour ets. Industriels) - tableau des codes 2.3.10 et 2.3.8';
+COMMENT ON COLUMN pevexoneration_imposee.jandeb IS 'année de début d’exonération - ';
+COMMENT ON COLUMN pevexoneration_imposee.janimp IS 'année de retour à imposition - ';
+COMMENT ON COLUMN pevexoneration_imposee.vecdif IS 'montant saisi de l’EC bénéficiant exo - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposee.vecdifa IS 'vecdif multiplié par coeff - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposee.fcexb IS 'Fraction EC exonérée - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposee.fcexba IS 'fcexb multiplié par coeff - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposee.rcexba IS 'revenu cadastral exonéré - INDISPONIBLE';
+COMMENT ON COLUMN pevexoneration_imposee.dvldif2 IS 'Montant de VL exonérée (valeur 70) - ';
+COMMENT ON COLUMN pevexoneration_imposee.dvldif2a IS 'Montant de VL exonérée (valeur de l’année) - ';
+COMMENT ON COLUMN pevexoneration_imposee.fcexb2 IS 'Fraction de VL exonérée (valeur 70) - ';
+COMMENT ON COLUMN pevexoneration_imposee.fcexba2 IS 'Fraction de VL exonérée (valeur de l’année) - ';
+COMMENT ON COLUMN pevexoneration_imposee.rcexba2 IS 'Revenu cadastral exonéré (valeur de l’année) - ';
+COMMENT ON COLUMN pevexoneration_imposee.valplaf IS 'Montant du planchonnement sur la base exonérée neutralisée';
 
 COMMENT ON TABLE pevtaxation IS 'Article taxation de pev';
 COMMENT ON COLUMN pevtaxation.ccodep IS 'Code département - ';
