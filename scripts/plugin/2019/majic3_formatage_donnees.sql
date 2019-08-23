@@ -418,6 +418,106 @@ SELECT
   '[LOT]' as lot
 FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='30';
 
+-- Traitement: pevexoneration_imposable
+INSERT INTO [PREFIXE]pevexoneration_imposable
+(
+ pevexoneration_imposable, annee,ccodep, ccodir, ccocom, invar, Janbil, dnupev, dnuexb, ccolloc, pexb, gnextl, jandeb, janimp, vecdif, vecdifa, fcexb, fcexba, rcexba,
+ dvldif2, dvldif2a, fcexb2, fcexba2, rcexba2,
+ valplaf,
+ pev, lot
+)
+SELECT
+  REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3)||CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END, ' ','0') AS pevexoneration_imposable,
+  '[ANNEE]',
+  SUBSTRING(tmp,1,2) AS ccodep,
+  SUBSTRING(tmp,3,1) AS ccodir,
+  SUBSTRING(tmp,4,3) AS ccocom,
+  SUBSTRING(tmp,7,10) AS invar,
+
+  CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END AS janbil,
+  SUBSTRING(tmp,28,3) AS dnupev,
+
+  SUBSTRING(tmp,33,3) AS dnuexb,
+  CASE WHEN trim(SUBSTRING(tmp,36,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,36,2)) END AS ccolloc,
+  CASE WHEN trim(SUBSTRING(tmp,38,5))='' THEN NULL ELSE to_number(SUBSTRING(tmp,38,5),'99999')/100 END AS pexb,
+  CASE WHEN trim(SUBSTRING(tmp,43,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,43,2)) END AS gnextl,
+  SUBSTRING(tmp,45,4) AS jandeb,
+  SUBSTRING(tmp,49,4) AS janimp,
+
+  SUBSTRING(tmp,53,9) AS vecdif,
+  SUBSTRING(tmp,63,9) AS vecdifa,
+  SUBSTRING(tmp,73,9) AS fcexb,
+  SUBSTRING(tmp,83,9) AS fcexba,
+  SUBSTRING(tmp,93,9) AS rcexba,
+
+  CASE WHEN trim(SUBSTRING(tmp,103,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,103,9),'999999999') END AS dvldif2,
+
+  CASE WHEN trim(SUBSTRING(tmp,113,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,113,9),'999999999') END AS dvldif2a,
+
+  CASE WHEN trim(SUBSTRING(tmp,123,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,123,9),'999999999') END AS fcexb2,
+
+  CASE WHEN trim(SUBSTRING(tmp,133,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,133,9),'999999999') END AS fcexba2,
+
+  CASE WHEN trim(SUBSTRING(tmp,143,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,143,9),'999999999') END AS rcexba2,
+
+  CASE WHEN trim(SUBSTRING(tmp,173,10))='' THEN NULL ELSE SUBSTRING(tmp,173,10) END AS valplaf,
+
+
+  REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
+
+  '[LOT]' as lot
+FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='30';
+
+-- Traitement: pevexoneration_imposee
+INSERT INTO [PREFIXE]pevexoneration_imposee
+(
+ pevexoneration_imposee, annee,ccodep, ccodir, ccocom, invar, Janbil, dnupev, dnuexb, ccolloc, pexb, gnextl, jandeb, janimp, vecdif, vecdifa, fcexb, fcexba, rcexba,
+ dvldif2, dvldif2a, fcexb2, fcexba2, rcexba2,
+ valplaf,
+ pev, lot
+)
+SELECT
+  REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3)||CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END, ' ','0') AS pevexoneration_imposee,
+  '[ANNEE]',
+  SUBSTRING(tmp,1,2) AS ccodep,
+  SUBSTRING(tmp,3,1) AS ccodir,
+  SUBSTRING(tmp,4,3) AS ccocom,
+  SUBSTRING(tmp,7,10) AS invar,
+
+  CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END AS janbil,
+  SUBSTRING(tmp,28,3) AS dnupev,
+
+  SUBSTRING(tmp,33,3) AS dnuexb,
+  CASE WHEN trim(SUBSTRING(tmp,36,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,36,2)) END AS ccolloc,
+  CASE WHEN trim(SUBSTRING(tmp,38,5))='' THEN NULL ELSE to_number(SUBSTRING(tmp,38,5),'99999')/100 END AS pexb,
+  CASE WHEN trim(SUBSTRING(tmp,43,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,43,2)) END AS gnextl,
+  SUBSTRING(tmp,45,4) AS jandeb,
+  SUBSTRING(tmp,49,4) AS janimp,
+
+  SUBSTRING(tmp,53,9) AS vecdif,
+  SUBSTRING(tmp,63,9) AS vecdifa,
+  SUBSTRING(tmp,73,9) AS fcexb,
+  SUBSTRING(tmp,83,9) AS fcexba,
+  SUBSTRING(tmp,93,9) AS rcexba,
+
+  CASE WHEN trim(SUBSTRING(tmp,103,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,103,9),'999999999') END AS dvldif2,
+
+  CASE WHEN trim(SUBSTRING(tmp,113,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,113,9),'999999999') END AS dvldif2a,
+
+  CASE WHEN trim(SUBSTRING(tmp,123,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,123,9),'999999999') END AS fcexb2,
+
+  CASE WHEN trim(SUBSTRING(tmp,133,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,133,9),'999999999') END AS fcexba2,
+
+  CASE WHEN trim(SUBSTRING(tmp,143,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,143,9),'999999999') END AS rcexba2,
+
+  CASE WHEN trim(SUBSTRING(tmp,173,10))='' THEN NULL ELSE SUBSTRING(tmp,173,10) END AS valplaf,
+
+
+  REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
+
+  '[LOT]' as lot
+FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='31';
+
 -- Traitement: pevtaxation
 INSERT INTO [PREFIXE]pevtaxation
 (
@@ -939,7 +1039,8 @@ CREATE INDEX idxan_suf ON suf (annee);
 CREATE INDEX idxan_sufexoneration ON sufexoneration (annee);
 CREATE INDEX idxan_suftaxation ON suftaxation (annee);
 CREATE INDEX idxan_pev ON pev (annee);
-CREATE INDEX idxan_pevexoneration ON pevexoneration (annee);
+CREATE INDEX idxan_pevexoneration_imposable ON pevexoneration_imposable (annee);
+CREATE INDEX idxan_pevexoneration_imposee ON pevexoneration_imposee (annee);
 CREATE INDEX idxan_pevtaxation ON pevtaxation (annee);
 CREATE INDEX idxan_pevprincipale ON pevprincipale (annee);
 CREATE INDEX idxan_pevprofessionnelle ON pevprofessionnelle (annee);
@@ -962,7 +1063,8 @@ CREATE INDEX idx_local00_parcelle  ON local00 (parcelle);
 CREATE INDEX idx_local00_voie  ON local00 (voie);
 CREATE INDEX idx_local10_local00  ON local10 (local00);
 CREATE INDEX idx_local10_comptecommunal  ON local10 (comptecommunal);
-CREATE INDEX idx_pevexoneration_pev ON pevexoneration (pev);
+CREATE INDEX idx_pevexoneration_imposable_pev ON pevexoneration_imposable (pev);
+CREATE INDEX idx_pevexoneration_imposee_pev ON pevexoneration_imposee (pev);
 CREATE INDEX idx_pevtaxation_pev ON pevtaxation (pev);
 CREATE INDEX idx_parcelle_voie ON parcelle (voie);
 CREATE INDEX idx_parcelle_comptecommunal ON parcelle (comptecommunal);
@@ -975,7 +1077,8 @@ ANALYZE [PREFIXE]suftaxation;
 ANALYZE [PREFIXE]local00;
 ANALYZE [PREFIXE]local10;
 ANALYZE [PREFIXE]pev;
-ANALYZE [PREFIXE]pevexoneration;
+ANALYZE [PREFIXE]pevexoneration_imposable;
+ANALYZE [PREFIXE]pevexoneration_imposee;
 ANALYZE [PREFIXE]pevtaxation;
 ANALYZE [PREFIXE]pevprincipale;
 ANALYZE [PREFIXE]pevprofessionnelle;
