@@ -6,6 +6,7 @@
 -- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -- mise à jour MAJIC version 2019
 
+-- SET search_path = "cadastre_qgis" ;
 
 -- nouvel attribut ccpper
 DROP TABLE IF EXISTS parcelle CASCADE;
@@ -61,6 +62,34 @@ CREATE TABLE parcelle
     lot text,
     CONSTRAINT parcelle_pk PRIMARY KEY (parcelle)
 );
+
+
+-- la suppression / recréation de la table parcele implique de refaire la vue v_geo_parcelle
+CREATE OR REPLACE VIEW v_geo_parcelle AS
+ SELECT g.geo_parcelle,
+    g.annee,
+    g.object_rid,
+    g.idu,
+    g.geo_section,
+    g.geo_subdsect,
+    g.supf,
+    g.geo_indp,
+    g.coar,
+    g.tex,
+    g.tex2,
+    g.codm,
+    g.creat_date,
+    g.update_dat,
+    g.inspireid,
+    g.lot,
+    g.ogc_fid,
+    g.geom,
+    p.comptecommunal,
+    p.voie
+   FROM geo_parcelle g LEFT JOIN parcelle p ON g.geo_parcelle = p.parcelle;
+
+
+
 
 -- nouvel attribut ccpper
 DROP TABLE IF EXISTS local00 CASCADE;
