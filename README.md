@@ -30,7 +30,7 @@ Documentation sur la structure des tables créées par le plugin
 Prérequis
 =========
 
-* QGIS 3 LTR
+* QGIS 3.4 LTR
 * PostgreSQL : > 9.6 + PostGIS : > 1.5
 * Spatialite : 4.3.0
 
