@@ -3,14 +3,37 @@ Description
 
 Le plugin Cadastre a été conçu pour faciliter l'utilisation des données cadastrales dans QGIS. Plusieurs modules aident l'utilisateur à importer des données, les afficher dans QGIS, faire des recherches et imprimer les relevés :
 
-* L'**import de données cadastrales**, MAJIC et EDIGEO, dans une base de données **PostGreSQL/PostGIS** ou **Sqlite/Spatialite**.
+* L'**import de données cadastrales**, MAJIC et EDIGEO, dans une base de données **PostgreSQL/PostGIS** ou **Sqlite/Spatialite**.
 * Un **module de chargement** permet d'ajouter automatiquement l'ensemble des couches cadastrales dans QGIS, avec la possibilité de choisir le style appliqué.
 * Un **panneau de recherche** offre la possibilité de rechercher des parcelles par adresse, propriétaire ou par situation (commune, section) et de naviguer vers ces parcelles cadastrales.
 * Un **outil d'identification** permet d'afficher les données liées à une parcelle en cliquant sur le polygone représentant la parcelle.
 * Il est possible enfin d'exporter les données sous forme de **relevés parcellaires** et de **relevés de propriété**.
 
-Si vous voulez utiliser le plugin avec QGIS2, récupérez la version 1.5. Les
-versions 1.6 et suivantes sont pour QGIS3.
+
+Documentation
+==============
+
+Utilisation
+------------
+
+Voir [doc/index.md](doc/index.md)
+
+Base de données
+----------------
+
+Documentation sur la structure des tables créées par le plugin
+
+* fichiers source: https://github.com/3liz/QgisCadastrePlugin-documentation
+* consulation: https://3liz.github.io/QgisCadastrePlugin-documentation/
+
+
+Prérequis
+=========
+
+* QGIS 3 LTR
+* PostgreSQL : > 9.6 + PostGIS : > 1.5
+* Spatialite : 4.3.0
+
 
 Financeurs
 ==========
@@ -45,11 +68,10 @@ twitter : https://twitter.com/kimaidou
 Contributeurs
 =============
 
-Merci pour vos contributions:
-
-* Landry Breuil: @landryb , notamment pour ses tests sur de gros volumes de données, et les corrections sur certaines requêtes
+* Landry BREUIL : @landryb , notamment pour ses tests sur de gros volumes de données, et les corrections sur certaines requêtes
 * @fred-V13 pour l'aide sur la migration du plugin vers QGIS 3
-* Maël Reboux: @MaelREBOUX
+* Maël REBOUX : @MaelREBOUX
+* Étienne ROUVIN : @EtienneRouvin
 
 Sources
 =======
@@ -61,21 +83,6 @@ Licence
 
 GNU Public License (GPL) Version 2 ou supérieure
 
-Documentation
-==============
-
-Utilisation
-------------
-
-Voir [doc/index.md](doc/index.md)
-
-Base de données
-----------------
-
-Documentation sur la structure des tables créées par le plugin
-
-* fichiers source: https://github.com/3liz/QgisCadastrePlugin-documentation
-* consulation: https://3liz.github.io/QgisCadastrePlugin-documentation/
 
 
 Ressources
@@ -83,6 +90,7 @@ Ressources
 
 Les scripts d'import pour PostgreSQL proviennent de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciements aux contributeurs.
 Dépôt de sources :  https://adullact.net/scm/viewvc.php/trunk/data/pgsql/?root=opencadastre
+
 
 English short description
 ==========================
