@@ -3,13 +3,13 @@
 
 name=cadastre
 
-qgisMinimumVersion=3.0
+qgisMinimumVersion=3.4
 
 description=This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
 about=This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
-version=1.7.1
+version=1.8.0
 
 author=3liz
 email=info@3liz.com
@@ -20,17 +20,15 @@ email=info@3liz.com
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  Version 1.7.1
-  * Refactorize code for server and Qgis 3+
-  * Ajouts et mises à jour de tables domaine
-  * Correction valeur compte communal
-  * Ajout inspireid
-  * Amélioration de plugin Server
-  * Nouvelle table de nomenclature natvoi
-  * Correction identifiants
-  * trim code de nature de voie
-  * [Serveur] Add GetCapabilities method to server CADASTRE service
-  * Creation d'un provider QgsProcessing
+  Version 1.8.0
+  IMPORTANT
+  À partir de cette version seule la version QGIS LTR sera supportée. Pour cette version il s'agit de la version 3.4.x
+
+  Nouveautés
+  * Prise en charge des évolutions MAJIC 2019 (voir #192 pour les détails). Noter la création de 2 nouvelles tables.
+  * Précisions sur les versions QGIS, PostgreSQL / PostGIS et Spatialite supportées (#197)
+  * Mise à jour de la documentation de la structure de la base de données (#204)
+
 
 # tags are comma separated with spaces allowed
 tags=cadastre, france, majic, edigeo, import

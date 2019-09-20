@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Version 1.8.0
+
+**IMPORTANT**
+À partir de cette version seule la version QGIS LTR sera supportée. Pour cette version il s'agit de la version 3.4.x
+
+Nouveautés:
+
+* Prise en charge des évolutions MAJIC 2019 (voir #192 pour les détails). Noter la création de 2 nouvelles tables.
+* Précisions sur les versions QGIS, PostgreSQL / PostGIS et Spatialite supportées (#197)
+* Mise à jour de la documentation de la structure de la base de données (#204)
+
+
 ## Version 1.7.1
 
 * Refactorize code for server and Qgis 3+
