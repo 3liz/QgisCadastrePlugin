@@ -102,10 +102,7 @@ def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> Dict[str,str]:
         dbType = 'spatialite'
 
     src = layer.source()
-    try:
-        uri = QgsDataSourceUri(src)
-    except:
-        uri = QgsDataSourceURI(src)
+    uri = QgsDataSourceUri(src)
 
     # TODO Use immutable namedtuple
     connectionParams = {
