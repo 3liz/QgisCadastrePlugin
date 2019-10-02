@@ -68,9 +68,12 @@ def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol:
     for lid,l in list(lr.mapLayers().items()):
         if not hasattr(l, 'providerType'):
             continue
-        if hasattr(l, 'type') and l.type() != 0:
+        if hasattr(l, 'type') and l.type() != QgsMapLayer.VectorLayer:
+            # Ignore this layer as it's not a vector
+            # QgsMapLayer.VectorLayer is an equivalent to QgsMapLayerType.VectorLayer since 3.8
             continue
         if not l.providerType() in ('postgres', 'spatialite'):
+            # Ignore this layer as it's not a postgres or spatialite vector layer
             continue
 
         connectionParams = getConnectionParameterFromDbLayer(l)

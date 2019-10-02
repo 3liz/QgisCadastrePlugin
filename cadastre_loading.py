@@ -433,7 +433,7 @@ class cadastreLoading(QObject):
             geometryColumn,
             None,
             layerName,
-            QgsMapLayer.VectorLayer,
+            QgsMapLayer.VectorLayer, # QgsMapLayer.VectorLayer is an equivalent to QgsMapLayerType.VectorLayer since 3.8
             False
         )
         if layer.isValid():
