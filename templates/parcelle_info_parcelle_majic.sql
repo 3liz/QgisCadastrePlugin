@@ -10,10 +10,11 @@ SELECT
     '<tr><th>Pourcentage du bâti</th><td>' || coalesce(round(100 * sum(ST_Area(b.geom)) / ST_Area(gp.geom)), 0) || '</td></tr>' ||
 
     '<tr><th>Adresse</th> <td>' ||
+    coalesce(
     CASE
-            WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
+            WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(coalesce(v.natvoi, '')) || ' ' || v.libvoi)
             ELSE ltrim(p.cconvo, '0') || p.dvoilib
-    END ||
+    END, '') ||
     '</td></tr>' ||
     '<tr><th>Urbaine</th> <td>' ||
     CASE
