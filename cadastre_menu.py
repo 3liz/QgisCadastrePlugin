@@ -436,6 +436,13 @@ class cadastre_menu(object):
                     'Pour cette nouvelle version 1.4.0 du plugin, la structure de la base de données a été légèrement modifiée par rapport à la 1.4.0. Pour pouvoir utiliser les fonctions du plugin Cadastre, vous devez donc impérativement <b>réimporter les données dans une base vide</b>. Les changements concernent les identifiants des tables parcelle, geo_parcelle, commune, local00, local10, pev, pevexoneration, pevtaxation, pevprincipale, pevprofessionnelle, pevdependances, ainsi que la création d\'une table parcelle_info pour consolider EDIGEO et MAJIC.'
                 ]
             ]
+            ,
+            '1.8.1': [
+                [
+                    'Spatialite: Correction de l\'affichage des locaux dans la fiche parcellaire',
+                    'Il faut réimporter les données, ou bien lancer la requête suivante via le gestionnaire de base de données de QGIS: UPDATE local10 SET "parcelle" = substr("parcelle",5), "local00" = substr("local00",5), "voie" = substr("voie",5) WHERE substr("parcelle",0,5) = "annee";'
+                ]
+            ]
         }
         mConfig = self.mConfig
         version = mConfig.get('general', 'version')
