@@ -1,6 +1,3 @@
--- Suppression de l'attribut vecexn qui disparait en 2019
-ALTER TABLE [PREFIXE]sufexoneration DROP COLUMN IF EXISTS vecexn;
-
 -- FORMATAGE DONNEES : DEBUT
 BEGIN;
 
