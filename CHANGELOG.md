@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## Version 1.8.1
+
+Corrections de bugs essentiellement
+
+* Import - EDIGEO: amélioration des performances geo_batiment_parcelle
+* Import - MAJIC: correction bug d'encodage
+* Import MAJIC - garder vexen pour compatibilité Spatialite
+* Spatialite - Correction des identifiants parcelle, voie et local00 dans la table local10
+* Fiche parcellaire - résumé: ajout de coalesce sur l'adresse
+* [BUGFIX] Use of QgsMapLayer.VectorLayer in getLayerFromLegendByTableProps
+* remove old code from QGIS 2
+* Création couche parcelle_info OK
+
 ## Version 1.8.0
 
 **IMPORTANT**
