@@ -576,7 +576,7 @@ class cadastreImport(QObject):
                 self.qc.updateLog(fpath)
 
                 # read file content
-                with open(fpath) as fin:
+                with open(fpath, encoding='ascii', errors='replace') as fin:
                     # Divide file into chuncks
                     for a in self.chunk(fin, self.maxInsertRows):
                         # Build sql INSERT query depending on database
@@ -1322,7 +1322,7 @@ class cadastreImport(QObject):
                     # qgis can connect to postgis DB without a specified host param connection, but ogr2ogr cannot
                     if not host:
                         host = "localhost"
-                        
+
                     pg_access = 'PG:host=%s port=%s dbname=%s active_schema=%s user=%s password=%s' % (
                         host,
                         port,
