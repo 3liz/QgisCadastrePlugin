@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/plugins/cadastre">
+	<file>icons/identify.png</file>
     <file>icons/centrer.png</file>
     <file>icons/select.png</file>
     <file>icons/zoom.png</file>

@@ -33,21 +33,37 @@ from qgis.PyQt.QtCore import (
     QSettings,
     QRegExp,
     QFileInfo,
-    QStringListModel
+    QStringListModel,
+    QSize
 )
 from qgis.PyQt.QtWidgets import (
+    QAction,
     QDialog,
     QFileDialog,
     QApplication,
     qApp,
     QCompleter,
     QDockWidget,
-    QMessageBox
+    QMenu,
+    QMessageBox,
+    QPushButton,
+    QGroupBox,
+    QTextBrowser,
+    QTextEdit,
+    QDialogButtonBox
 )
+from qgis.PyQt.QtPrintSupport import (
+    QPrintPreviewDialog,
+    QPrinter
+)
+
 from qgis.PyQt.QtGui import (
     QCursor,
+    QKeySequence,
     QTextCursor,
-    QPixmap
+    QTextDocument,
+    QPixmap,
+    QIcon
 )
 from qgis.PyQt.QtCore import QSortFilterProxyModel
 from qgis.core import (
@@ -491,9 +507,9 @@ class cadastre_common(object):
 
         # Log errors
         if not ok:
-            print(error_message)
+            #print(error_message)
             QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
-            print(sql)
+            #print(sql)
 
         return [header, data, rowCount, ok]
 
@@ -759,6 +775,7 @@ class cadastre_common(object):
         html = ''
         plugin_dir = os.path.dirname(os.path.abspath(__file__))
 
+        #NEW ADD LOT INDIVISION
         infos = {
             'parcelle_majic': {
                 'label': 'Parcelle'
@@ -768,6 +785,9 @@ class cadastre_common(object):
             },
             'proprietaires': {
                 'label': u'Propriétaires'
+            },
+            'indivisions': {
+                'label': u'Détails'
             },
             'subdivisions': {
                 'label': u'Subdivisions fiscales'
@@ -783,6 +803,7 @@ class cadastre_common(object):
             }
         }
         info = infos[item]
+        
         sqlfile = 'templates/parcelle_info_%s.sql' % item
         sql = ''
         with open(os.path.join(plugin_dir, sqlfile)) as sqltemplate:
@@ -796,14 +817,16 @@ class cadastre_common(object):
         if connectionParams['dbType'] == 'spatialite':
             sql = cadastre_common.postgisToSpatialite(sql, connectionParams['srid'])
         [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(connector, sql)
-        # print sql
 
         if ok:
-            html+= '<h2>' + info['label']+ '</h2>'
+            #NEW ADD LOT INDIVISION
+            isData = False
             for line in data:
-                # print info['label']
-                # print line
                 if line and len(line) > 0 and line[0]:
+                    if not isData :
+                       if item == "indivisions" : html+= '<br>' 
+                       html+= '<h2>' + info['label']+ '</h2>' 
+                       isData = True 
                     html+= u'%s' % line[0].replace('100p', '100%')
 
         return html
@@ -1301,7 +1324,6 @@ SEARCH_FORM_CLASS, _ = uic.loadUiType(
 )
 class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
     def __init__(self, iface, parent=None):
-        #QDockWidget.__init__(self)
         super(cadastre_search_dialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
@@ -1455,10 +1477,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         # Detect that the user has hidden/showed the dock
         self.visibilityChanged.connect(self.onVisibilityChange)
 
-        # center/zoom/selection buttons
+        # identifier/center/zoom/selection buttons
         self.zoomButtons = {
             'lieu':{
                 'buttons':{
+                    'identifier': self.btIdentifierProprietaire,
                     'centre': self.btCentrerLieu,
                     'zoom': self.btZoomerLieu,
                     'select': self.btSelectionnerLieu
@@ -1476,6 +1499,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
 
         }
         zoomButtonsFunctions = {
+            'identifier': self.setIdentifierToChosenItem,
             'centre': self.setCenterToChosenItem,
             'zoom': self.setZoomToChosenItem,
             'select': self.setSelectionToChosenItem
@@ -1551,7 +1575,6 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         self.checkMajicContent()
 
         # signals
-
 
 
     def clearComboboxes(self):
@@ -2187,7 +2210,166 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 i = [feat.id() for feat in searchCombo['chosenFeature']]
             else:
                 i = searchCombo['chosenFeature'].id()
+
             searchCombo['layer'].select(i)
+
+
+
+    def updateConnexionParams(self):
+        '''
+        Update connection settings if broken
+        '''
+        from .cadastre_dialogs import cadastre_common
+
+        dbtable = self.searchComboBoxes['commune']['table']
+        layer = cadastre_common.getLayerFromLegendByTableProps( dbtable.replace('v_', '') )
+        if not layer: return
+
+        # Get connection parameters
+        connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
+        
+        if not connectionParams: return
+            
+        self.connectionParams = connectionParams
+        self.dbType = connectionParams['dbType']
+        self.schema = connectionParams['schema']
+        connector = cadastre_common.getConnectorFromUri(connectionParams)
+        self.connector = connector
+
+            
+    def setIdentifierToChosenItem(self, key):
+        '''
+        Select the proprietaire(s)
+        corresponding to the chosen item
+        '''        
+        w = None
+        for item in self.zoomButtons[key]['comboboxes']:
+            if self.searchComboBoxes[item]['chosenFeature'] and self.searchComboBoxes[item]['layer']: w = item
+            
+        if w:
+            #parcelle = w
+            if not (w=='parcelle'): return 
+            searchCombo = self.searchComboBoxes[w]
+            cb = searchCombo['widget']
+
+            if not self.connectionParams or not self.connector : self.updateConnexionParams()
+
+            if not self.connector : return
+
+            # Select
+            if searchCombo['chosenFeature'] and searchCombo['layer']:
+                layer = searchCombo['layer']
+                feat = searchCombo['chosenFeature']
+                
+                if feat:
+                    
+                    item = 'proprietaires'
+
+                    html = cadastre_common.getItemHtml(item, feat, self.connectionParams, self.connector)
+                    #NEW ADD LOT INDIVISION
+                    html+= cadastre_common.getItemHtml('indivisions', feat, self.connectionParams, self.connector)
+
+                    msgDlgBox = QMessageBox(self)
+ 
+                    msgDlgBox.setFixedSize(700, 320)
+                    msgDlgBox.setWindowTitle("Cadastre+, ID parcelle : %s" % feat['geo_parcelle'])
+                    msgDlgBox.setWindowIcon(QIcon("%s/icons/identify.png" % os.path.dirname(__file__)))
+                    msgDlgBox.setIcon(QMessageBox.Information)
+                               
+                    groupBox1 = QGroupBox(msgDlgBox)
+                    groupBox1.setGeometry(0, 0, 680, 290)
+                    groupBox1.setFixedSize(680, 290)
+                    groupBox1.setObjectName("groupBox1")
+
+                    textEdit = QTextBrowser(groupBox1)
+                    textEdit.setMaximumSize(670, 280)
+                    textEdit.setMinimumSize(670, 280)
+                    textEdit.setGeometry(5, 5, 670, 280)
+                    textEdit.setReadOnly(True)
+                    textEdit.append(html)
+                    textEdit.setToolTip(feat['geo_parcelle'])
+
+                    self.textEdit = textEdit
+
+                    buttonPrintInfosProprietaires = QPushButton(msgDlgBox)
+                    buttonPrintInfosProprietaires.setObjectName("buttonPrintInfosProprietaires")
+                    buttonPrintInfosProprietaires.setIcon(QIcon("%s/icons/print.png" % os.path.dirname(__file__)))
+                    buttonPrintInfosProprietaires.setText(" &Imprimer ...")
+                    buttonPrintInfosProprietaires.setFixedSize(125, 25)
+
+                    buttonCopyInfosProprietaires = QPushButton(msgDlgBox)
+                    buttonCopyInfosProprietaires.setObjectName("buttonCopyInfosProprietaires")
+                    buttonCopyInfosProprietaires.setIcon(QIcon("%s/icons/copy.png" % os.path.dirname(__file__)))
+                    buttonCopyInfosProprietaires.setText(" &Copier")
+                    buttonCopyInfosProprietaires.setFixedSize(125, 25)
+
+                    buttonSaveInfosProprietaires = QPushButton(msgDlgBox)
+                    buttonSaveInfosProprietaires.setObjectName("buttonSaveInfosProprietaires")
+                    buttonSaveInfosProprietaires.setIcon(QIcon("%s/icons/save.png" % os.path.dirname(__file__)))
+                    buttonSaveInfosProprietaires.setText(" &Enregistrer sous ...")
+                    buttonSaveInfosProprietaires.setFixedSize(125, 25)
+
+                    buttonReject = QPushButton(msgDlgBox)
+                    buttonReject.setObjectName("CloseButton")
+                    buttonReject.setText("&Fermer")
+                    buttonReject.setFixedSize(125, 25)
+                    
+                    buttonPrintInfosProprietaires.clicked.connect(self.printInfosProprietaires)
+                    buttonCopyInfosProprietaires.clicked.connect(self.copyInfosProprietaires)
+                    buttonSaveInfosProprietaires.clicked.connect(self.saveInfosProprietaires)
+                    buttonReject.clicked.connect(msgDlgBox.reject)
+                   
+
+                    msgDlgBox.layout().addWidget(groupBox1,0,1,1,6)
+                    msgDlgBox.layout().addWidget(buttonPrintInfosProprietaires,6,1,1,1)
+                    msgDlgBox.layout().addWidget(buttonCopyInfosProprietaires,6,2,1,1)
+                    msgDlgBox.layout().addWidget(buttonSaveInfosProprietaires,6,3,1,1)
+                    msgDlgBox.layout().addWidget(buttonReject,6,6,1,1)
+
+                    msgDlgBox.setStandardButtons(msgDlgBox.NoButton)
+                    msgDlgBox.setModal(False)
+                    msgDlgBox.show() 
+
+                else:
+
+                    self.qc.updateLog(u'Aucune parcelle sélectionnée !')
+
+    '''
+    Action for selected proprietaire(s)
+    print/copy in clipboard/save
+    ''' 
+    def printInfosProprietaires(self):
+
+                document = QTextDocument()  
+                document.setHtml("<h1>Parcelle : %s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (self.textEdit.toolTip(), self.textEdit.toHtml()))
+        
+                printer = QPrinter() 
+                printer.setPageSize(QPrinter.A4)
+                printer.setOrientation(QPrinter.Landscape)
+                printer.setPageMargins(5, 10, 5, 10, QPrinter.Millimeter)
+                printer.setOutputFormat(QPrinter.NativeFormat)
+                dlg = QPrintPreviewDialog(printer)
+                dlg.setWindowIcon(QIcon("%s/icons/print.png" % os.path.dirname(__file__)))
+                dlg.setWindowTitle("Aperçu")
+                dlg.setWindowFlags(Qt.WindowMaximizeButtonHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+                dlg.paintRequested.connect(document.print_)
+                dlg.exec_()
+                
+    def copyInfosProprietaires(self) : QApplication.clipboard().setText("<h1>Parcelle : %s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (self.textEdit.toolTip(), self.textEdit.toHtml())); self.qc.updateLog(u'Texte copié dans le presse papier !')
+    
+    def saveInfosProprietaires(self) :
+            dlgFile = QFileDialog(self, "Enregistrer sous ...")
+            dlgFile.setNameFilters(("All (*.htm*)", "HTML (*.html)", "HTM (*.htm)")) 
+            dlgFile.selectNameFilter("Fichier HTML (*.html)")
+            dlgFile.setDefaultSuffix("html")
+            dlgFile.setViewMode(QFileDialog.Detail)
+            dlgFile.setDirectory(os.path.dirname(__file__))
+            dlgFile.setAcceptMode(QFileDialog.AcceptSave)
+  
+            if dlgFile.exec_():
+                fileName = dlgFile.selectedFiles()[0]
+                with open(fileName, 'w', encoding="ansi", errors="surrogateescape") as inFile : inFile.write("<h1>Parcelle : %s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (self.textEdit.toolTip(), self.textEdit.toHtml())) 
+                self.qc.updateLog(u'fichier sauvegarde sous : %s !' % fileName)
 
 
     def setCenterToChosenItem(self, key):
@@ -2236,8 +2418,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         as PDF using the template composer
         filled with appropriate data
         '''
-        if not self.connector:
-            return
+        if not self.connectionParams or not self.connector : self.updateConnexionParams()
+        
+        if not self.connector : return
 
         # Search proprietaire by dnuper
         cc = self.searchComboBoxes['proprietaire']['id']
@@ -2255,8 +2438,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         as PDF using the template composer
         filled with appropriate data
         '''
-        if not self.connector:
-            return
+        if not self.connectionParams or not self.connector : self.updateConnexionParams()
+        
+        if not self.connector : return
 
         feat = self.searchComboBoxes[key]['chosenFeature']
         layer = self.searchComboBoxes[key]['layer']
@@ -2274,8 +2458,8 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         '''
         if visible:
             # fix_print_with_import
-            print("visible")
             #~ self.setupSearchCombobox('commune', None, 'sql')
+            pass
         else:
             self.txtLog.clear()
 
@@ -2517,8 +2701,6 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
 #        Parcelle - Show parcelle information
 # --------------------------------------------------------
 
-
-
 try:
     from .cadastre_export import cadastreExport
     from .cadastre_export import cadastrePrintProgress
@@ -2540,21 +2722,28 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         self.mc = iface.mapCanvas()
         self.setupUi(self)
         self.cadastre_search_dialog = cadastre_search_dialog
+        self.setWindowIcon(QIcon("%s/icons/toolbar/get-parcelle-info.png" % os.path.dirname(__file__)))
+        self.setWindowTitle("Cadastre+, ID parcelle : %s" % self.feature['geo_parcelle'])
+        self.setMinimumWidth(450)
 
-        # common cadastre methods
-        from .cadastre_dialogs import cadastre_common
-        self.qc = cadastre_common(self)
+        self.txtLog = QTextEdit(self)
+        self.txtLog.setEnabled(False)
+
+        self.butActions = myPushButtonFunny(self)
+        self.butActions.initPushButton(40, 24,  10, 0, "butActions", "", "Actions ...", True, QIcon("%s/icons/actions.png" % os.path.dirname(__file__)), 40, 24, True)
+        self.contextMnubutActions(self.butActions)
 
         # Get connection parameters
         connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
-        if not connectionParams:
-            return
+        if not connectionParams : return
+        
         self.connectionParams = connectionParams
         self.dbType = connectionParams['dbType']
         self.schema = connectionParams['schema']
         connector = cadastre_common.getConnectorFromUri(connectionParams)
         self.connector = connector
 
+        self.buttonBox.button(QDialogButtonBox.Ok).setText(u"Fermer")
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -2577,6 +2766,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 
         # Select parcelle from proprietaire action
         self.btParcellesProprietaire.clicked.connect(self.selectParcellesProprietaire)
+        self.tabWidget.currentChanged.connect(self.updateMenuContext)
 
         # Check majic content
         self.hasMajicDataProp = False
@@ -2591,6 +2781,132 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         self.setProprietairesContent()
         self.setSubdivisionsContent()
         self.setLocauxContent()
+        self.updateMenuContext()        
+
+
+    def resizeEvent(self, event):
+        try : 
+            self.butActions.setGeometry(max(300, self.width()-60), 15, 48, 48)
+            self.txtLog.setGeometry(5, self.height()-32, max(200, self.width()-100), 20)
+        except : pass   
+
+    '''
+    Action for selected proprietaire(s)
+    print/copy in clipboard/save
+    '''
+    def setObj(self) :
+        
+        index = self.tabWidget.currentIndex()
+
+        if  index == 0 : return self.parcelleInfo
+        elif index == 1 : return self.proprietairesInfo 
+        elif index == 2 : return self.subdivisionsInfo
+        elif index == 3 : return self.locauxInfo
+
+        return None 
+        
+        
+    def printInfosTab(self):
+        obj = self.setObj()
+        if not obj : return
+        index = self.tabWidget.currentIndex()
+
+        document = QTextDocument()
+        title = self.windowTitle().replace("Cadastre+, ID", "").title() 
+        document.setHtml("<h1>%s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (title, obj.toHtml()))
+    
+        printer = QPrinter() 
+        printer.setPageSize(QPrinter.A4)
+        printer.setOrientation(QPrinter.Portrait) if  index == 0 else printer.setOrientation(QPrinter.Landscape)
+        printer.setPageMargins(5, 10, 5, 10, QPrinter.Millimeter)
+        printer.setOutputFormat(QPrinter.NativeFormat)
+        dlg = QPrintPreviewDialog(printer)
+        dlg.setWindowIcon(QIcon("%s/icons/print.png" % os.path.dirname(__file__)))
+        dlg.setWindowTitle("Aperçu")
+        dlg.setWindowFlags(Qt.WindowMaximizeButtonHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        dlg.paintRequested.connect(document.print_)
+        dlg.exec_()
+
+           
+    def copyInfosTabQc(self):
+        obj = self.setObj()
+        if not obj : return
+        if not (obj == self.proprietairesInfo) : return
+        if not self.feature : return
+
+        if self.cadastre_search_dialog : self.cadastre_search_dialog.qc.updateLog(obj.toPlainText())
+        
+
+    def copyInfosTab(self) :
+        obj = self.setObj()
+        if not obj : return
+        title = self.windowTitle().replace("Cadastre+, ID", "").title()
+        QApplication.clipboard().setText("<h1>%s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (title, obj.toHtml()));
+        self.txtLog.setText(u'Texte copié dans le presse papier !')
+    
+    def saveInfosTab(self) :
+        obj = self.setObj()
+        if not obj : return
+    
+        dlgFile = QFileDialog(self, "Enregistrer sous ...")
+        dlgFile.setNameFilters(("All (*.htm*)", "HTML (*.html)", "HTM (*.htm)")) 
+        dlgFile.selectNameFilter("Fichier HTML (*.html)")
+        dlgFile.setDefaultSuffix("html")
+        dlgFile.setViewMode(QFileDialog.Detail)
+        dlgFile.setDirectory(os.path.dirname(__file__))
+        dlgFile.setAcceptMode(QFileDialog.AcceptSave)
+
+        if dlgFile.exec_():
+            fileName = dlgFile.selectedFiles()[0]
+            title = self.windowTitle().replace("Cadastre+, ID", "").title()
+            with open(fileName, 'w', encoding="ansi", errors="surrogateescape") as inFile : inFile.write("<h1>%s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (title, obj.toHtml()))
+            self.txtLog.setText(u'fichier sauvegarde sous : %s !' % fileName)
+
+
+    def contextMnubutActions(self, obj): 
+        actions = {"printPage" : ("print.png", "Imprimer la page courante ..." , "Ctrl+P", self.printInfosTab, True),
+                   "~0" : (),
+                   "copyPage" : ("copy.png", "Copier la page courante dans le presse papier", "Ctrl+C" , self.copyInfosTab, True),
+                   "copyPageQc" : ("copy.png", "Copier les infos propriétaires dans la fenêtre 'Outils de recherche'", "" , self.copyInfosTabQc, True),
+                   "~1" : (),
+                   "savePage" : ("save.png", "Enregistrer la page courante sous ..." , "Ctrl+S", self.saveInfosTab, True)
+                   }
+        self.builderContextMenu(obj, actions)
+
+    def updateMenuContext(self):
+        try :
+            self.copyPageQc.setEnabled(self.tabWidget.currentIndex()==1)
+        except : pass    
+
+
+    def builderContextMenu(self, obj, actions):
+        contextMnu = QMenu()
+        
+        for key in actions :
+            if key.startswith("~") : contextMnu.addSeparator()
+            elif key.startswith("list-") :
+                    icon = "%s/icons/%s" % (os.path.dirname(__file__), actions[key][0])
+                    subMenu = QMenu(actions[key][1], self)
+                    subMenu.setIcon(QIcon(icon))
+                    i = 0
+                    for elt in actions[key][3] :
+                        urlServer = QAction(QIcon(icon), elt, self)
+                        urlServer.setObjectName("urlServer%s" % (i))
+                        subMenu.addAction(urlServer)
+                        urlServer.triggered.connect(self.shortCut)
+                        i+= 1
+                    contextMnu.addMenu(subMenu)     
+            else :   
+                icon = "%s/icons/%s" % (os.path.dirname(__file__), actions[key][0])
+                action = QAction(QIcon(icon), actions[key][1], self)
+                if actions[key][2] != "" : action.setShortcut(QKeySequence(actions[key][2]))
+                setattr(self, key, action) 
+                action.setEnabled(actions[key][4])
+                contextMnu.addAction(action)
+                action.triggered.connect(actions[key][3])
+
+        obj.setMenu(contextMnu)
+   
 
     def getCss(self):
         '''
@@ -2641,6 +2957,9 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         else:
             item = 'proprietaires'
             html = cadastre_common.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            #NEW ADD LOT INDIVISION
+            html+= cadastre_common.getItemHtml('indivisions', self.feature, self.connectionParams, self.connector)
+
         self.proprietairesInfo.setStyleSheet( self.css )
         self.proprietairesInfo.setText('%s' % html)
 
@@ -2679,8 +2998,9 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         Export the parcelle or proprietaire
         information as a PDF file
         '''
-        if not self.connector:
-            return
+        if not self.connectionParams or not self.connector : self.updateConnexionParams()
+        
+        if not self.connector : return
 
         if not self.hasMajicDataProp:
             self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
@@ -2774,7 +3094,7 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         comptecommunal = cadastre_common.getCompteCommunalFromParcelleId( self.feature['geo_parcelle'], self.connectionParams, self.connector )
         if not comptecommunal:
             # fix_print_with_import
-            print("Aucune parcelle trouvée pour ce propriétaire")
+            self.txtLog.setText("Aucune parcelle trouvée pour ce propriétaire")
         value = comptecommunal
         filterExpression = "comptecommunal IN ('%s')" % value
 
@@ -2846,3 +3166,23 @@ class cadastre_message_dialog(QDialog, MESSAGE_FORM_CLASS):
         the user closes the dialog
         '''
         self.close()
+
+
+class myPushButtonFunny(QPushButton):
+     def __init__(self, *args): super(myPushButtonFunny, self).__init__(*args)
+            
+     def initPushButton(self, sizeWidth, sizeHeight, coordX, coordY, name, text, toolTip, isGeom, icon, iconWidth, iconHeight, isStyleSheeted):
+            self.setMinimumSize(sizeWidth, sizeHeight)
+            self.setMaximumSize(sizeWidth, sizeHeight)
+            self.iconWidth = iconWidth
+            self.iconHeight = iconHeight
+            self.selfFocused = False
+            self.subMenuVisble = False
+            if isGeom : self.setGeometry(coordX, coordY, sizeWidth, sizeHeight)
+            if icon != "" :
+               self.setIcon(QIcon(icon))
+               self.setIconSize(QSize(self.iconWidth , self.iconHeight))
+            self.setToolTip(toolTip)
+            if isStyleSheeted : self.setStyleSheet(" QPushButton {border-width: 0px; border-radius: 10px;  border-color: beige;}")
+            self.setObjectName(name)
+            if text != "" : self.setText(text)

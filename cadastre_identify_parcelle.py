@@ -56,16 +56,14 @@ class IdentifyParcelle(QgsMapToolIdentify):
         layerData = []
         layer = self.layer
 
-        if not layer:
-            return
+        # Ignore if no layer
+        if not layer : return
+        
+        # Ignore this layer as it's not a vector
+        if layer.type() != QgsMapLayer.VectorLayer : return
 
-        if layer.type() != QgsMapLayer.VectorLayer:
-            # Ignore this layer as it's not a vector
-            return
-
-        if layer.featureCount() == 0:
-            # There are no features - skip
-            return
+        # There are no features - skip
+        if layer.featureCount() == 0 : return
 
         #~ layer.removeSelection()
 

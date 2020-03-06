@@ -196,6 +196,20 @@
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
+			<item>
+              <widget class="QPushButton" name="btIdentifierProprietaire">
+               <property name="toolTip">
+                <string>Identifier propriétaire(s)</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="resource.qrc">
+                 <normaloff>:/plugins/cadastre/icons/identify.png</normaloff>:/plugins/cadastre/icons/identify.png</iconset>
+               </property>
+              </widget>
+             </item>			
              <item>
               <widget class="QPushButton" name="btCentrerLieu">
                <property name="toolTip">
