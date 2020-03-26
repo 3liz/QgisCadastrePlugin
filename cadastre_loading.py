@@ -90,7 +90,7 @@ class cadastreLoading(QObject):
             {'label': u'Lieux-dits', 'name': 'geo_lieudit', 'table': 'geo_lieudit', 'geom': 'geom', 'sql': '', 'active': True, 'group': 'D'},
             {'label': u'Lieux-dits  (étiquettes)', 'name': 'geo_label_lieudit', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'LIEUDIT_id\'', 'active': False, 'group': 'E'},
             {'label': u'Sections', 'name': 'geo_section', 'table': 'geo_section', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': '"geo_commune" IN (%s)'},
-            {'label': u'Parcelles', 'name': 'parcelle_info', 'table': 'parcelle_info', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': 'substr("geo_parcelle", 1, 10) IN (%s)'},
+            {'label': u'Parcelles', 'name': 'parcelle_info', 'table': 'parcelle_info', 'geom': 'geom', 'sql': '', 'key': 'ogc_fid', 'active': True, 'group': 'C', 'subset': 'substr("geo_parcelle", 1, 6) IN (%s)'},
             {'label': u'Sections (étiquettes)', 'name': 'geo_label_section', 'table': 'geo_label', 'geom': 'geom', 'sql': '"ogr_obj_lnk_layer" = \'SECTION_id\'', 'active': False, 'group': 'E'},
             {'label': u'Bornes', 'name': 'geo_borne', 'table': 'geo_borne', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
             {'label': u'Croix', 'name': 'geo_croix', 'table': 'geo_croix', 'geom': 'geom', 'sql': '', 'active': False, 'group': 'D'},
