@@ -11,7 +11,7 @@ about=This plugins helps users to use french land registry data, called Cadastre
 
 version=1.8.1
 
-author=3liz
+author=3Liz
 email=info@3liz.com
 
 # end of mandatory metadata
