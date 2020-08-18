@@ -224,24 +224,28 @@ INSERT INTO ccolloc VALUES ('R', 'Région');
 INSERT INTO ccolloc VALUES ('OM', 'Taxe sur l’enlèvement des ordures ménagères (TEOM)');
 
 -- nomenclature gnexts (sufexoneration)
-INSERT INTO gnexts VALUES ('DA', 'Éxonération des terres agricoles dans les DOM (groupes de cultures 1 à 6, 8 et 9)');
-INSERT INTO gnexts VALUES ('CB', 'Éxonération pour les parcelles exploitées selon le mode de production biologique');
-INSERT INTO gnexts VALUES ('TU', 'Exo pour terrains nouvellement plantés en arbres truffiers – art. 1395 B-II du CGI');
-INSERT INTO gnexts VALUES ('OL', 'Exonération pour terrains plantés en oliviers (sur délibération)');
-INSERT INTO gnexts VALUES ('TR', 'Exonération pour plantation de truffiers (sur délibération)');
-INSERT INTO gnexts VALUES ('NO', 'Exonération pour plantation de noyers (sur délibération)');
-INSERT INTO gnexts VALUES ('PB', 'Exonération pour plantation de bois (groupe 5)');
-INSERT INTO gnexts VALUES ('TA', 'Exonération des terres agricoles (groupes de culture 1 à 6, 8 et 9)');
-INSERT INTO gnexts VALUES ('HP', 'Exonération temporaire (exonération totale en zone naturelle)');
-INSERT INTO gnexts VALUES ('HR', 'Exonération temporaire (exonération de 50% sur proposition de la CCID)');
-INSERT INTO gnexts VALUES ('NA', 'Exonération Natura 2000');
-INSERT INTO gnexts VALUES ('PP', 'Peupliers - plantations et semis Exonération temporaire de 10 ans');
-INSERT INTO gnexts VALUES ('PR', 'Résineux - plantations et semis - futaies, taillis sous futaie en régénération naturelle Exonération temporaire de 30 ans');
-INSERT INTO gnexts VALUES ('PF', 'Feuillus - plantations et semis - futaies, taillis sous futaie en régénération naturelle Exonération temporaire de 50 ans');
-INSERT INTO gnexts VALUES ('ER', 'Terrains boisés présentant un état de futaie irrégulière en équilibre de régénération Exonération partielle 25% de 15 ans, Renouvelable (% dans PEXN)');
-INSERT INTO gnexts VALUES ('VG', 'Vergers, cultures fruitières d’arbres et d’arbustes, vignes.');
+-- valeurs conformes à la documentation DGFiP 2020 (2.2.6 p. 14)
+INSERT INTO gnexts VALUES ('CB', 'Exonération pour les parcelles exploitées selon le mode de production biologique');
+INSERT INTO gnexts VALUES ('DA', 'Exonération des terres agricoles (groupes de cultures 1 à 6, 8 et 9) dans les DOM');
+INSERT INTO gnexts VALUES ('ER', 'Terrains boisés présentant un état de futaie irrégulière en équilibre de régénération – Exonération partielle (25 %) de 15 ans, renouvelable');
 INSERT INTO gnexts VALUES ('HQ', 'Exonération de 50 % pendant 5 ans pour les subdivisions fiscales dont la nature de culture est soit pré, soit landes');
 INSERT INTO gnexts VALUES ('HS', 'Exonération de 100 % pendant 5 ans pour les subdivisions fiscales dont la nature de culture est soit pré, soit landes');
+INSERT INTO gnexts VALUES ('NA', 'Exonération Natura 2000');
+INSERT INTO gnexts VALUES ('NO', 'Exonération pour plantation de noyer (sur délibération)');
+INSERT INTO gnexts VALUES ('OL', 'Exonération pour terrains plantés en olivier (sur délibération)');
+INSERT INTO gnexts VALUES ('PB', 'Exonération pour plantation de bois (groupe 5)');
+INSERT INTO gnexts VALUES ('PF', 'Feuillus – Plantation et semis, futaies, taillis sous futaie en régénération naturelle – Exonération temporaire de 50 ans');
+INSERT INTO gnexts VALUES ('PN', 'Exonération pour terrains dans parc national naturel (DOM)');
+INSERT INTO gnexts VALUES ('PP', 'Peupliers – Plantation et semis – Exonération temporaire de 10 ans');
+INSERT INTO gnexts VALUES ('PR', 'Résineux – Plantation et semis, futaies, taillis sous futaie en régénération naturelle – Exonération temporaire de 30 ans');
+INSERT INTO gnexts VALUES ('TA', 'Exonération des terres agricoles (groupes de cultures 1 à 6, 8 et 9)');
+INSERT INTO gnexts VALUES ('TU', 'Exonération pour terrains nouvellement plantés en arbres truffiers – art. 1395 B-II du CGI');
+INSERT INTO gnexts VALUES ('VG', 'Vergers, cultures fruitières d’arbres et d’arbustes, vignes');
+-- valeurs obsolètes mais existant toujours en base
+INSERT INTO gnexts VALUES ('TR', 'Exonération pour plantation de truffiers (sur délibération)');
+INSERT INTO gnexts VALUES ('HP', 'Exonération temporaire (exonération totale en zone naturelle)');
+INSERT INTO gnexts VALUES ('HR', 'Exonération temporaire (exonération de 50% sur proposition de la CCID)');
+
 
 -- nomenclature ccoeva (local10)
 INSERT INTO ccoeva VALUES ('A', 'Méthode comptable');
