@@ -31,7 +31,7 @@ Prérequis
 =========
 
 * QGIS 3.4 LTR
-* PostgreSQL : > 9.6 + PostGIS : > 1.5
+* PostgreSQL : >= 9.6 + PostGIS >= 1.5 et < 3.x
 * Spatialite : 4.3.0
 
 
