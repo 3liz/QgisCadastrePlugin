@@ -499,6 +499,7 @@ CREATE TABLE pevlissage (
     mlbgem integer,
     mlbtom integer,
     tbfpas integer,
+    mlbtfc integer,
     lot text
 );
 
