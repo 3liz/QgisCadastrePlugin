@@ -46,11 +46,25 @@ DELETE FROM [PREFIXE]geo_commune WHERE tex2 IS NULL or trim(tex2) = '';
 DELETE FROM [PREFIXE]commune WHERE ccocom IS NULL or trim(ccocom) = '';
 
 -- geo_section
+-- pour éviter les doublons des données EDIGEO on sélectionne les sections avec le update_date le plus récent
 INSERT INTO [PREFIXE]geo_section
 ( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot)
-SELECT DISTINCT '[DEPDIR]'||SUBSTRING(idu,1,8), '[ANNEE]', object_rid, idu, tex, '[DEPDIR]'||SUBSTRING(idu,1,3), to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))), '[LOT]'--, ogc_fid
-FROM [PREFIXE]section_id
-GROUP BY object_rid, idu, tex, creat_date, update_date;
+  SELECT
+    '[DEPDIR]'||SUBSTRING(idu,1,8), '[ANNEE]',
+    object_rid, idu, tex, '[DEPDIR]'||SUBSTRING(idu,1,3), 
+    to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), 
+    to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), 
+    ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))), 
+    '[LOT]'
+  FROM [PREFIXE]section_id edi_section
+  WHERE ogc_fid = (
+    SELECT ogc_fid FROM [PREFIXE]section_id 
+    WHERE idu = edi_section.idu
+    ORDER BY update_date DESC
+    LIMIT 1
+  )
+  GROUP BY object_rid, idu, tex, creat_date, update_date
+  ORDER BY idu, update_date DESC ;
 
 -- geo_subdsect
 INSERT INTO [PREFIXE]geo_subdsect
