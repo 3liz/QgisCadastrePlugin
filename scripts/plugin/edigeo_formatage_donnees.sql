@@ -31,15 +31,28 @@ CREATE INDEX idx_edigeorel_vers ON [PREFIXE]edigeo_rel (vers);
 CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
 CREATE INDEX idx_edigeorel_nom ON [PREFIXE]edigeo_rel (nom);
 
--- geo_commune: utilisation de max et non distinct on pour compatibilite sqlite
+-- geo_commune
+-- pour éviter les doublons des données EDIGEO on sélectionne les communes avec le update_date le plus récent
 INSERT INTO [PREFIXE]geo_commune
 ( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, commune, geom, lot)
-SELECT '[DEPDIR]'||SUBSTRING(idu,1,3), '[ANNEE]', object_rid, idu, tex2, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), '[DEPDIR]'||SUBSTRING(idu,1,3), ST_Multi(ST_CollectionExtract(ST_MakeValid(geom),3)), '[LOT]'
-FROM [PREFIXE]commune_id
-JOIN (SELECT idu as t_idu, MAX(update_date) AS t_update_date, MAX(creat_date) AS t_creat_date FROM [PREFIXE]commune_id GROUP BY idu, tex2) t2
-ON idu = t2.t_idu AND update_date = t2.t_update_date AND creat_date = t2.t_creat_date
-GROUP BY tex2, idu, update_date, creat_date, geom, object_rid
-ORDER BY tex2, idu, update_date DESC, creat_date DESC;
+  SELECT
+    '[DEPDIR]'||SUBSTRING(idu,1,8), '[ANNEE]',
+    object_rid, idu, tex2,  
+    to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), 
+    to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), 
+    '[DEPDIR]'||SUBSTRING(idu,1,3),
+    ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))), 
+    '[LOT]'
+  FROM [PREFIXE]commune_id edi_commune
+  WHERE ogc_fid = (
+    SELECT ogc_fid 
+    FROM [PREFIXE]commune_id 
+    WHERE idu = edi_commune.idu
+    ORDER BY update_date DESC
+    LIMIT 1
+  )
+  GROUP BY object_rid, idu, tex2, creat_date, update_date
+  ORDER BY idu, update_date DESC ;
 
 UPDATE [PREFIXE]commune SET geo_commune=commune.commune;
 DELETE FROM [PREFIXE]geo_commune WHERE tex2 IS NULL or trim(tex2) = '';
