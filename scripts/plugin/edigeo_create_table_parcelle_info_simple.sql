@@ -23,7 +23,7 @@ c.tex2 AS nomcommune, c.idu AS codecommune, Cast(ST_Area(gp.geom) AS integer) AS
 gp.lot AS lot,
 gp.geom AS geom
 FROM [PREFIXE]geo_parcelle gp
-INNER JOIN (SELECT DISTINCT idu, tex2, geo_commune FROM [PREFIXE]geo_commune) c
+INNER JOIN [PREFIXE]geo_commune c
 ON c.geo_commune = SUBSTRING(gp.geo_parcelle,1,6)
 ;
 
