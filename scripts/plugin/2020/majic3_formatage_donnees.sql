@@ -663,7 +663,7 @@ INSERT INTO [PREFIXE]pevlissage
  dnupev,
  mlbcom, mlbsyn, mlbcu , mlbdep,
  mlbts1, mlbts2, mlbtas,
- mlbgem, mlbtom, tbfpas, mlbtfc
+ mlbgem, mlbtom, tbfpas, mlbtfc,
  pev, lot
 )
 SELECT DISTINCT
