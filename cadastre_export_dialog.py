@@ -15,25 +15,18 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
-import csv, sys
-import subprocess
 import os.path
-import operator
-import tempfile
-import re
 
-from qgis.PyQt.QtCore import Qt, QObject, QUrl
+from qgis.PyQt.QtCore import Qt, QUrl
 from qgis.PyQt.QtWidgets import QApplication
 from qgis.PyQt.QtGui import QDesktopServices
 
 from qgis.core import (
     QgsProject,
-    QgsMessageLog,
     QgsMapLayer,
     QgsMapSettings,
 )
 
-from qgis.utils import iface
 
 from .cadastre_export import cadastreExport as cadastreExportBase
 import cadastre.cadastre_common_base as cadastre_common

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys, os
+import os
 
 class GetMultiPolygonFromVec(object):
   __slots__ = ( 'listPar', 'listPfe', 'listFea', 'mapLyFea', 'mapFeaPfe', 'mapPfePar', 'mapParCor', 'mapParPno', 'mapPnoPar', 'path' )

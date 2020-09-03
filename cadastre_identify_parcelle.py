@@ -22,7 +22,7 @@
  ***************************************************************************/
 """
 from __future__ import absolute_import
-from qgis.PyQt.QtCore import Qt, pyqtSignal
+from qgis.PyQt.QtCore import pyqtSignal
 from qgis.PyQt.QtGui import QCursor, QPixmap
 from qgis.core import (
     QgsMapLayer,
@@ -30,7 +30,6 @@ from qgis.core import (
     QgsFeature,
     QgsFeatureRequest,
     QgsGeometry,
-    QgsRectangle
 )
 from qgis.gui import (
     QgsMapToolIdentify

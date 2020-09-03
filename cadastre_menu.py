@@ -15,20 +15,15 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
-from qgis.PyQt.QtCore import Qt, pyqtSignal, QObject, QSettings, QUrl
+from qgis.PyQt.QtCore import Qt, QSettings, QUrl
 from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from qgis.PyQt.QtWidgets import QApplication, QAction, QActionGroup, QWidgetAction, QMessageBox
 from qgis.PyQt.QtXml import QDomDocument
 
 from qgis.core import (
-    Qgis,
     QgsApplication,
     QgsProject,
     QgsReadWriteContext,
-    QgsMessageLog,
-    QgsLogger,
-    QgsMapLayer,
-    QgsLayout,
     QgsPrintLayout,
     QgsLayoutExporter
 )

@@ -15,15 +15,11 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
-import csv
 import os.path
-import operator
 import re
 import tempfile
 from qgis.PyQt.QtCore import (
     Qt,
-    pyqtSignal,
-    QObject,
     QSettings,
     QRegExp,
     QFileInfo,
@@ -39,27 +35,19 @@ from qgis.PyQt.QtWidgets import (
     QMessageBox
 )
 from qgis.PyQt.QtGui import (
-    QCursor,
     QTextCursor,
-    QPixmap
 )
 from qgis.PyQt.QtCore import QSortFilterProxyModel
 from qgis.core import (
     QgsProject,
-    QgsMessageLog,
-    QgsLogger,
     QgsExpression,
-    QgsDataSourceUri,
     QgsMapLayer,
     QgsFeatureRequest,
     QgsCoordinateTransform,
     QgsCoordinateReferenceSystem,
     QgsMapSettings
 )
-from qgis.gui import (
-    QgsProjectionSelectionTreeWidget,
-    QgsProjectionSelectionDialog
-)
+
 import unicodedata
 
 import sys
@@ -68,15 +56,10 @@ sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
 
 # db_manager scripts
 from db_manager.db_plugins.plugin import (
-    DBPlugin,
-    Schema,
-    Table,
     BaseError
 )
 from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
-from db_manager.db_plugins.postgis.connector import PostGisDBConnector
-import subprocess
 
 from functools import partial
 
@@ -2132,7 +2115,7 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
 #        Parcelle - Show parcelle information
 # --------------------------------------------------------
 
-from .cadastre_export_dialog import cadastreExport, cadastrePrintProgress
+from .cadastre_export_dialog import cadastreExport
 
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(

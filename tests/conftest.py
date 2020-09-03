@@ -13,7 +13,7 @@ logging.disable(logging.NOTSET)
 LOGGER = logging.getLogger('cadastre')
 LOGGER.setLevel(logging.DEBUG)
 
-from typing import (Union, Any, Mapping, Dict, Generator, 
+from typing import (Union, Any, Dict, Generator,
                     List)
 
 #
@@ -230,7 +230,7 @@ def load_plugins(serverIface: 'QgsServerInterface') -> None:
 def install_logger_hook( verbose: bool=False ) -> None:
     """ Install message log hook
     """
-    from qgis.core import Qgis, QgsApplication, QgsMessageLog
+    from qgis.core import Qgis, QgsApplication
     # Add a hook to qgis  message log
     def writelogmessage(message, tag, level):
         arg = '{}: {}'.format( tag, message )

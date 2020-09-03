@@ -38,7 +38,7 @@ def hasSpatialiteSupport() -> bool:
     spatialite support is ok
     '''
     try:
-        from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
+        from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector  # NOQA
         return True
     except ImportError:
         return False
