@@ -224,24 +224,28 @@ INSERT INTO ccolloc VALUES ('R', 'Région');
 INSERT INTO ccolloc VALUES ('OM', 'Taxe sur l’enlèvement des ordures ménagères (TEOM)');
 
 -- nomenclature gnexts (sufexoneration)
-INSERT INTO gnexts VALUES ('DA', 'Éxonération des terres agricoles dans les DOM (groupes de cultures 1 à 6, 8 et 9)');
-INSERT INTO gnexts VALUES ('CB', 'Éxonération pour les parcelles exploitées selon le mode de production biologique');
-INSERT INTO gnexts VALUES ('TU', 'Exo pour terrains nouvellement plantés en arbres truffiers – art. 1395 B-II du CGI');
-INSERT INTO gnexts VALUES ('OL', 'Exonération pour terrains plantés en oliviers (sur délibération)');
-INSERT INTO gnexts VALUES ('TR', 'Exonération pour plantation de truffiers (sur délibération)');
-INSERT INTO gnexts VALUES ('NO', 'Exonération pour plantation de noyers (sur délibération)');
-INSERT INTO gnexts VALUES ('PB', 'Exonération pour plantation de bois (groupe 5)');
-INSERT INTO gnexts VALUES ('TA', 'Exonération des terres agricoles (groupes de culture 1 à 6, 8 et 9)');
-INSERT INTO gnexts VALUES ('HP', 'Exonération temporaire (exonération totale en zone naturelle)');
-INSERT INTO gnexts VALUES ('HR', 'Exonération temporaire (exonération de 50% sur proposition de la CCID)');
-INSERT INTO gnexts VALUES ('NA', 'Exonération Natura 2000');
-INSERT INTO gnexts VALUES ('PP', 'Peupliers - plantations et semis Exonération temporaire de 10 ans');
-INSERT INTO gnexts VALUES ('PR', 'Résineux - plantations et semis - futaies, taillis sous futaie en régénération naturelle Exonération temporaire de 30 ans');
-INSERT INTO gnexts VALUES ('PF', 'Feuillus - plantations et semis - futaies, taillis sous futaie en régénération naturelle Exonération temporaire de 50 ans');
-INSERT INTO gnexts VALUES ('ER', 'Terrains boisés présentant un état de futaie irrégulière en équilibre de régénération Exonération partielle 25% de 15 ans, Renouvelable (% dans PEXN)');
-INSERT INTO gnexts VALUES ('VG', 'Vergers, cultures fruitières d’arbres et d’arbustes, vignes.');
+-- valeurs conformes à la documentation DGFiP 2020 (2.2.6 p. 14)
+INSERT INTO gnexts VALUES ('CB', 'Exonération pour les parcelles exploitées selon le mode de production biologique');
+INSERT INTO gnexts VALUES ('DA', 'Exonération des terres agricoles (groupes de cultures 1 à 6, 8 et 9) dans les DOM');
+INSERT INTO gnexts VALUES ('ER', 'Terrains boisés présentant un état de futaie irrégulière en équilibre de régénération – Exonération partielle (25 %) de 15 ans, renouvelable');
 INSERT INTO gnexts VALUES ('HQ', 'Exonération de 50 % pendant 5 ans pour les subdivisions fiscales dont la nature de culture est soit pré, soit landes');
 INSERT INTO gnexts VALUES ('HS', 'Exonération de 100 % pendant 5 ans pour les subdivisions fiscales dont la nature de culture est soit pré, soit landes');
+INSERT INTO gnexts VALUES ('NA', 'Exonération Natura 2000');
+INSERT INTO gnexts VALUES ('NO', 'Exonération pour plantation de noyer (sur délibération)');
+INSERT INTO gnexts VALUES ('OL', 'Exonération pour terrains plantés en olivier (sur délibération)');
+INSERT INTO gnexts VALUES ('PB', 'Exonération pour plantation de bois (groupe 5)');
+INSERT INTO gnexts VALUES ('PF', 'Feuillus – Plantation et semis, futaies, taillis sous futaie en régénération naturelle – Exonération temporaire de 50 ans');
+INSERT INTO gnexts VALUES ('PN', 'Exonération pour terrains dans parc national naturel (DOM)');
+INSERT INTO gnexts VALUES ('PP', 'Peupliers – Plantation et semis – Exonération temporaire de 10 ans');
+INSERT INTO gnexts VALUES ('PR', 'Résineux – Plantation et semis, futaies, taillis sous futaie en régénération naturelle – Exonération temporaire de 30 ans');
+INSERT INTO gnexts VALUES ('TA', 'Exonération des terres agricoles (groupes de cultures 1 à 6, 8 et 9)');
+INSERT INTO gnexts VALUES ('TU', 'Exonération pour terrains nouvellement plantés en arbres truffiers – art. 1395 B-II du CGI');
+INSERT INTO gnexts VALUES ('VG', 'Vergers, cultures fruitières d’arbres et d’arbustes, vignes');
+-- valeurs obsolètes mais existant toujours en base
+INSERT INTO gnexts VALUES ('TR', 'Exonération pour plantation de truffiers (sur délibération)');
+INSERT INTO gnexts VALUES ('HP', 'Exonération temporaire (exonération totale en zone naturelle)');
+INSERT INTO gnexts VALUES ('HR', 'Exonération temporaire (exonération de 50% sur proposition de la CCID)');
+
 
 -- nomenclature ccoeva (local10)
 INSERT INTO ccoeva VALUES ('A', 'Méthode comptable');
@@ -375,7 +379,7 @@ INSERT INTO cbtabt VALUES ('AS', 'Antisismique dans les DOM');
 INSERT INTO cbtabt VALUES ('CV', 'Logements sociaux situés dans un quartier prioritaire – Contrat de ville');
 
 -- nomenclature gnextl (pevexoneration)
--- valeurs conformes à la documentation DGFiP 2019 BATI 2.2.14 (p.18)
+-- valeurs conformes à la documentation DGFiP 2020 (BATI 2.2.14 p.18)
 INSERT INTO gnextl VALUES ('AD', 'Droit commun (2 ans) - addition de construction');
 INSERT INTO gnextl VALUES ('AE', 'Exonération de 20 ans en faveur des logements sociaux qui respectent un certain nombre de normes environnementales pour additions de constructions');
 INSERT INTO gnextl VALUES ('AF', '2 ans pour addition de construction avec prêtconventionne, PAP ou PLA');
@@ -392,9 +396,12 @@ INSERT INTO gnextl VALUES ('AV', 'Exonération de 25 ans pour les logements fina
 INSERT INTO gnextl VALUES ('AW', 'Exonération de 25 ans pour les logements financés au moyen de prêts aidés par l''Etat (addition de construction)');
 INSERT INTO gnextl VALUES ('AY', 'Exo de 15 ans pour logements sociaux (AC)');
 INSERT INTO gnextl VALUES ('AZ', 'Exonération de 30 ans pour les logements sociaux respectant certains critères de qualité environnementale (addition de construction).');
+INSERT INTO gnextl VALUES ('BD', 'Entreprises situées dans un bassin à redynamiser ou dans une zone de
+développement prioritaire, sur délibération.');
 INSERT INTO gnextl VALUES ('BE', 'Local situé dans un bassin d''emploi à redynamiser. Article 1383 H du CGI.');
 INSERT INTO gnextl VALUES ('BH', 'Locaux à usage de bureau transformés en habitation principale');
 INSERT INTO gnextl VALUES ('BS', 'Abattement de 30 % pour les logements faisant l’objet d’un bail réel solidaire');
+INSERT INTO gnextl VALUES ('BU', 'Entreprises situées dans un bassin à redynamiser ou dans une zone de développement prioritaire, de droit.');
 INSERT INTO gnextl VALUES ('CE', 'Abattement de 5 ans pour cession relevant de l’article 1388 sexies du CGI (Mayotte)');
 INSERT INTO gnextl VALUES ('D', 'Personne âgée et non imposable à l’impôt sur le revenu'); 
 INSERT INTO gnextl VALUES ('DF', 'Exonération pour bâtiment déshydratation des fourrages.');
@@ -469,7 +476,6 @@ INSERT INTO gnextl VALUES ('ZL', 'Transformation local commercial en habitation'
 INSERT INTO gnextl VALUES ('ZQ', 'Abattement de 30 % pour les locaux d’habitation situés dans les immeubles collectifs issus de la transformation de locaux industriels ou commerciaux dans le périmètre des quartiers prioritaires de la politique de la ville');
 INSERT INTO gnextl VALUES ('ZR', 'Exonération de 15 ans pour locaux situés dans une zone de revitalisation rurale art. 1383 E du CGI');
 INSERT INTO gnextl VALUES ('ZT', 'Logement topé ZUS');
-INSERT INTO gnextl VALUES ('ZV', 'Exonération de 5 ans pour zone franche urbaine de 3éme génération art. 1384 C bis du CGI');
 -- valeurs obsolètes mais existant toujours en base
 INSERT INTO gnextl VALUES ('AX', 'Longue durée (10 ans) - addition de construction');
 INSERT INTO gnextl VALUES ('CD', 'Exonération permanente des parts communale et départementale (biens d''une région situés dans une autre région)');
@@ -485,8 +491,8 @@ INSERT INTO gnextl VALUES ('RA', 'Exonération de certains établissements indus
 INSERT INTO gnextl VALUES ('ZF', 'Exonération zone franche');
 INSERT INTO gnextl VALUES ('ZS', 'Abattement ZUS 30 % HLM SEM (obsolète à partir du format 2012)');
 INSERT INTO gnextl VALUES ('ZU', 'Exonération pour nouvelles zones franches');
+INSERT INTO gnextl VALUES ('ZV', 'Exonération de 5 ans pour zone franche urbaine de 3éme génération art. 1384 C bis du CGI');
 
--- 2018
 
 -- nomenclature cconad (pevprincipale, pevdependances)
 INSERT INTO cconad VALUES ('CV', 'Cave');
