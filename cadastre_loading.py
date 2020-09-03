@@ -22,20 +22,13 @@
  ***************************************************************************/
 """
 
-import sys, os, glob
-import re
-import time
-import tempfile
-import shutil
+import os
 
 from qgis.PyQt.QtCore import Qt, QObject, QSettings, pyqtSignal
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
 from qgis.core import (
-    Qgis,
     QgsProject,
-    QgsMessageLog,
-    QgsLogger,
     QgsExpression,
     QgsMapLayer,
     QgsVectorLayer,
@@ -43,16 +36,6 @@ from qgis.core import (
     QgsLayerTreeLayer
 )
 from datetime import datetime
-
-# db_manager scripts
-from db_manager.db_plugins.plugin import (
-    DBPlugin,
-    Schema,
-    Table,
-    BaseError
-)
-from db_manager.db_plugins import createDbPlugin
-from db_manager.dlg_db_error import DlgDbError
 
 
 class cadastreLoading(QObject):

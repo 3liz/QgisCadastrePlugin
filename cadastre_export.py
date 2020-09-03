@@ -15,20 +15,14 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
-import csv, sys
-import subprocess
 import os
-import operator
 import tempfile
 import re
 
 from qgis.PyQt.QtCore import Qt, QSettings, QRectF
 from qgis.PyQt.QtGui import QFont
 from qgis.core import (
-    Qgis,
     QgsProject,
-    QgsMessageLog,
-    QgsLogger,
     QgsExpression,
     QgsMapLayer,
     QgsVectorLayer,

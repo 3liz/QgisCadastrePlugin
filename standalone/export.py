@@ -8,21 +8,14 @@ sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/"))
 sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/plugins/"))
 sys.path.append('/srv/qgis/plugins')
 
-from qgis.PyQt.QtCore import QByteArray
-from qgis.PyQt.QtXml import QDomDocument
 
-import qgis
 from qgis.gui import QgsMapCanvas, QgsLayerTreeMapCanvasBridge
-from qgis.core import QgsApplication, QgsProject, QgsMessageLog, QgsLogger, QgsExpression, QgsFeatureRequest
+from qgis.core import QgsApplication, QgsProject, QgsFeatureRequest
 
-import cadastre
 from cadastre.cadastre_dialogs import cadastre_common
 from cadastre.cadastre_export import cadastreExport
 
 import argparse
-import os.path, json, time
-from uuid import uuid4
-import tempfile
 
 # Variables
 parser = argparse.ArgumentParser()

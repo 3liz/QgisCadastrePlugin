@@ -22,13 +22,11 @@
  ***************************************************************************/
 """
 # Import the PyQt and QGIS libraries
-from qgis.PyQt.QtCore import Qt, qVersion, QCoreApplication, QTranslator, QObject, QSettings, QUrl
+from qgis.PyQt.QtCore import qVersion, QCoreApplication, QTranslator, QSettings
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QApplication, QAction
+from qgis.PyQt.QtWidgets import QAction
 # Initialize Qt resources from file resources.py
-from . import resources
-# Import the code for the dialog
-from cadastredialog import CadastreDialog
+from . import resources  # NOQA
 from pathlib import Path
 import os.path
 

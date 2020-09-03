@@ -23,32 +23,21 @@
 """
 import os, glob
 import io
-import string, sys
+import sys
 import re
-import time
 import tempfile
 import shutil
 from distutils import dir_util
 
 from qgis.PyQt.QtCore import Qt, QObject, QSettings
-from qgis.PyQt.QtGui import QCursor, QPixmap
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
-from qgis.core import (
-    QgsMessageLog,
-    QgsLogger
-)
 from datetime import datetime
 
 # db_manager scripts
 from db_manager.db_plugins.plugin import (
-    DBPlugin,
-    Schema,
-    Table,
     BaseError
 )
-from db_manager.db_plugins import createDbPlugin
 from db_manager.dlg_db_error import DlgDbError
-from qgis.utils import spatialite_connect
 import sqlite3 as sqlite
 
 # Import ogr2ogr.py from processing plugin

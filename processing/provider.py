@@ -21,9 +21,7 @@
  ***************************************************************************/
 """
 
-from qgis.PyQt.QtCore import QCoreApplication
-from qgis.core import (QgsApplication,
-                       QgsProcessingProvider)
+from qgis.core import QgsProcessingProvider
 
 from .algorithms.config import ConfigProjectAlgorithm
 
