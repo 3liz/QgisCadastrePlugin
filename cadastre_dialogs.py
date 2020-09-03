@@ -618,7 +618,7 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
     def createSchema(self):
         QApplication.setOverrideCursor(Qt.WaitCursor)
         try:
-            if self.db == None:
+            if self.db is None:
                 QMessageBox.warning(
                     self,
                     QApplication.translate("DBManagerPlugin", "Sorry"),

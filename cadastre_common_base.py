@@ -162,7 +162,7 @@ def fetchDataFromSqlQuery(connector: 'db_manager.db_plugins.DBConnector',
         c = connector._execute(None,str(sql))
         data = []
         header = connector._get_cursor_columns(c)
-        if header == None:
+        if header is None:
             header = []
         if len(header) > 0:
             data = connector._fetchall(c)
