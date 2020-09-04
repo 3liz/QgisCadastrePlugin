@@ -180,17 +180,17 @@ FROM [PREFIXE]batiment_id;
 
 -- geo_batiment_parcelle
 DROP INDEX IF EXISTS [PREFIXE]geo_batiment_annee_idx;
-CREATE INDEX geo_batiment_annee_idx ON [PREFIXE]geo_batiment (annee);
+CREATE INDEX geo_batiment_annee_idx ON [PREFIXE]geo_batiment (annee, object_rid);
 DROP INDEX IF EXISTS [PREFIXE]geo_batiment_geom_idx;
 CREATE INDEX geo_batiment_geom_idx ON [PREFIXE]geo_batiment USING GIST (ST_Centroid(geom));
 DROP INDEX IF EXISTS [PREFIXE]geo_parcelle_geom_idx;
 CREATE INDEX geo_parcelle_geom_idx ON [PREFIXE]geo_parcelle USING GIST (geom);
 INSERT INTO [PREFIXE]geo_batiment_parcelle (annee, geo_batiment, geo_parcelle)
 SELECT s.annee, s.geo_batiment, p.geo_parcelle
-FROM [PREFIXE]geo_batiment s
-INNER JOIN [PREFIXE]geo_parcelle p
-    ON ST_Intersects(ST_Centroid(s.geom), p.geom)
-WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot
+FROM [PREFIXE]geo_batiment s, [PREFIXE]geo_parcelle p, [PREFIXE]edigeo_rel r
+WHERE s.annee='[ANNEE]' AND s.annee=p.annee AND s.lot='[LOT]' AND p.lot=s.lot AND r.nom='Rel_BATIMENT_PARCELLE'
+AND s.object_rid=r.de AND p.object_rid=r.vers
+AND ST_Intersects(ST_Centroid(s.geom), p.geom)
 ;
 DROP INDEX IF EXISTS [PREFIXE]geo_batiment_annee_idx;
 DROP INDEX IF EXISTS [PREFIXE]geo_batiment_geom_idx;
