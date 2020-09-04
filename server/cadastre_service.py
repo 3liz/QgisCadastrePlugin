@@ -279,7 +279,7 @@ class CadastreService(QgsService):
             if not v:
                 raise CadastreError(400,"Missing parameter '%s'" % name)
             v = v
-            if allowed_values and not v in allowed_values:
+            if allowed_values and v not in allowed_values:
                 raise CadastreError(400,"Invalid or missing value for '%s'" % name)
             return v
 

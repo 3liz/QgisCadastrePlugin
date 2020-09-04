@@ -392,10 +392,10 @@ class cadastre_common(object):
         # Create QGIS connexion
         baseKey = "/SpatiaLite/connections/"
         settings = QSettings()
-        myName = os.path.basename(ipath);
-        baseKey+= myName;
+        myName = os.path.basename(ipath)
+        baseKey+= myName
         myFi = QFileInfo(ipath)
-        settings.setValue( baseKey + "/sqlitepath", myFi.canonicalFilePath());
+        settings.setValue( baseKey + "/sqlitepath", myFi.canonicalFilePath())
 
         # Update connections combo box and set new db selected
         self.updateConnectionList()
@@ -1386,7 +1386,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             # filter on the chosen commune in the combobox, if any
             communeCb = self.searchComboBoxes['commune']
             searchCom = str(self.liCommune.currentText())
-            if communeCb and communeCb['chosenFeature'] and not isinstance(communeCb['chosenFeature'], list) and not 'item(s)' in searchCom:
+            if communeCb and communeCb['chosenFeature'] and not isinstance(communeCb['chosenFeature'], list) and 'item(s)' not in searchCom:
                 geo_commune = communeCb['chosenFeature']['geo_commune']
                 sql+= ' AND trim(c.geo_commune) = %s' % self.connector.quoteString(geo_commune)
                 hasCommuneFilter = True

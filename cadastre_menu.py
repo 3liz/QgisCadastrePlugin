@@ -111,7 +111,7 @@ class cadastre_menu(object):
 
 
         # Add cadastre toolbar
-        self.toolbar = self.iface.addToolBar('&Cadastre');
+        self.toolbar = self.iface.addToolBar('&Cadastre')
 
         # open import dialog
         self.openImportAction = QAction(
@@ -121,7 +121,7 @@ class cadastre_menu(object):
         )
         self.openImportAction.triggered.connect(self.open_import_dialog)
         self.toolbar.addAction(self.openImportAction)
-        self.toolbar.setObjectName("cadastreToolbar");
+        self.toolbar.setObjectName("cadastreToolbar")
 
         # open load dialog
         self.openLoadAction = QAction(

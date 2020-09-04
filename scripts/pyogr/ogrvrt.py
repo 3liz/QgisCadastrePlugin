@@ -1,7 +1,7 @@
 # Based on ogr2vrt.py implementation by Frank Warmerdam included in GDAL/OGR
 ###############################################################################
 # Copyright (c) 2009, Frank Warmerdam <warmerdam@pobox.com>
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
 # to deal in the Software without restriction, including without limitation

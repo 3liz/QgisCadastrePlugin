@@ -63,7 +63,7 @@ class GetMultiPolygonFromVec(object):
     for line in f :
       line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
-        continue;
+        continue
       if line[:5] == 'RTYSA':
         osRTY = line[8:]
         osRID = ''
@@ -106,7 +106,7 @@ class GetMultiPolygonFromVec(object):
     for line in f :
       line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
-        continue;
+        continue
       if line[:5] == 'RTYSA':
         osRTY = line[8:]
         osRID = ''
@@ -142,7 +142,7 @@ class GetMultiPolygonFromVec(object):
     for line in f :
       line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
-        continue;
+        continue
       if lnkStartType == 'PAR' and lnkEndType == 'PFE' and lnkEndName in self.listPfe :
         if lnkEndName in self.mapPfePar :
           self.mapPfePar[ lnkEndName ].append( lnkStartName )
@@ -189,7 +189,7 @@ class GetMultiPolygonFromVec(object):
     for line in f :
       line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
-        continue;
+        continue
       if line[:5] == 'RTYSA':
         osRTY = line[8:]
         osRID = ''
@@ -221,7 +221,7 @@ class GetMultiPolygonFromVec(object):
     for line in f :
       line = line.replace('\n', '').replace('\r', '')
       if len( line ) < 8 :
-        continue;
+        continue
       if osRTY == 'LNK' and lnkStartType == 'PAR' and lnkStartName in self.listPar and lnkEndType == 'PNO' :
         if lnkEndName in self.mapPnoPar :
           self.mapPnoPar[ lnkEndName ].append( lnkStartName )

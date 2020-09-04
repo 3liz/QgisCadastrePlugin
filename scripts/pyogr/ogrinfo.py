@@ -55,11 +55,11 @@ def EQUAL(a, b):
 #/************************************************************************/
 
 def main(argv = None):
-    
+
     bVerbose = True
     bSummaryOnly = False
     nFetchFID = ogr.NullFID
-    
+
     pszWHERE = None
     pszDataSource = None
     papszLayers = None
@@ -279,7 +279,7 @@ def ogrinfo(readonly = False,
             print( "layer names ignored in combination with -sql." )
 
         if pszGeomField is None:
-            poResultSet = poDS.ExecuteSQL( pszSQLStatement, poSpatialFilter, 
+            poResultSet = poDS.ExecuteSQL( pszSQLStatement, poSpatialFilter,
                                             pszDialect )
         else:
             poResultSet = poDS.ExecuteSQL( pszSQLStatement, None, pszDialect )
@@ -300,9 +300,9 @@ def ogrinfo(readonly = False,
 
     for iRepeat in range(nRepeatCount):
         if papszLayers is None:
-#/* -------------------------------------------------------------------- */ 
-#/*      Process each data source layer.                                 */ 
-#/* -------------------------------------------------------------------- */ 
+#/* -------------------------------------------------------------------- */
+#/*      Process each data source layer.                                 */
+#/* -------------------------------------------------------------------- */
             for iLayer in range(poDS.GetLayerCount()):
                 poLayer = poDS.GetLayer(iLayer)
 
@@ -334,9 +334,9 @@ def ogrinfo(readonly = False,
                     ReportOnLayer( poLayer, pszWHERE, pszGeomField, poSpatialFilter, options )
 
         else:
-#/* -------------------------------------------------------------------- */ 
-#/*      Process specified data source layers.                           */ 
-#/* -------------------------------------------------------------------- */ 
+#/* -------------------------------------------------------------------- */
+#/*      Process specified data source layers.                           */
+#/* -------------------------------------------------------------------- */
             for papszIter in papszLayers:
                 poLayer = poDS.GetLayerByName(papszIter)
 
@@ -399,7 +399,7 @@ def ReportOnLayer( poLayer, pszWHERE, pszGeomField, poSpatialFilter, options ):
 #/*      Report various overall information.                             */
 #/* -------------------------------------------------------------------- */
     print( "" )
-    
+
     print( "Layer name: %s" % poDefn.GetName() )
 
     if bVerbose:
@@ -410,9 +410,9 @@ def ReportOnLayer( poLayer, pszWHERE, pszGeomField, poSpatialFilter, options ):
                 print( "Geometry (%s): %s" % (poGFldDefn.GetNameRef(), ogr.GeometryTypeToName( poGFldDefn.GetType() ) ))
         else:
             print( "Geometry: %s" % ogr.GeometryTypeToName( poDefn.GetGeomType() ) )
-        
+
         print( "Feature Count: %d" % poLayer.GetFeatureCount() )
-        
+
         if nGeomFieldCount > 1:
             for iGeom in range(nGeomFieldCount):
                 poGFldDefn = poLayer.GetLayerDefn().GetGeomFieldDefn(iGeom)
@@ -438,10 +438,10 @@ def ReportOnLayer( poLayer, pszWHERE, pszGeomField, poSpatialFilter, options ):
             else:
                 pszWKT = poLayer.GetSpatialRef().ExportToPrettyWkt()
             print( "Layer SRS WKT:\n%s" % pszWKT )
-    
+
         if len(poLayer.GetFIDColumn()) > 0:
             print( "FID Column = %s" % poLayer.GetFIDColumn() )
-    
+
         if nGeomFieldCount > 1:
             for iGeom in range(nGeomFieldCount):
                 poGFldDefn = poLayer.GetLayerDefn().GetGeomFieldDefn(iGeom)
@@ -452,7 +452,7 @@ def ReportOnLayer( poLayer, pszWHERE, pszGeomField, poSpatialFilter, options ):
 
         for iAttr in range(poDefn.GetFieldCount()):
             poField = poDefn.GetFieldDefn( iAttr )
-            
+
             print( "%s: %s (%d.%d)" % ( \
                     poField.GetNameRef(), \
                     poField.GetFieldTypeName( poField.GetType() ), \
