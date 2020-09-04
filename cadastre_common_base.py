@@ -30,7 +30,7 @@ from qgis.core import (
 )
 
 from db_manager.db_plugins.plugin import BaseError
-from db_manager.db_plugins.postgis.connector import PostGisDBConnector
+from db_manager.db_plugins.postgis.connector import PostGisDBConnector, DBConnector
 
 def hasSpatialiteSupport() -> bool:
     '''
@@ -144,7 +144,7 @@ def setSearchPath(sql: str, schema: str) -> str:
     return sql
 
 
-def fetchDataFromSqlQuery(connector: 'db_manager.db_plugins.DBConnector',
+def fetchDataFromSqlQuery(connector: 'DBConnector',
         sql: str, schema: str=None) -> List[Any]:
     '''
     Execute a SQL query and
@@ -190,7 +190,7 @@ def fetchDataFromSqlQuery(connector: 'db_manager.db_plugins.DBConnector',
     return [header, data, rowCount, ok]
 
 
-def getConnectorFromUri(connectionParams: Dict[str,str]) -> 'db_manager.db_plugins.DBConnector':
+def getConnectorFromUri(connectionParams: Dict[str,str]) -> 'DBConnector':
     '''
     Set connector property
     for the given database type
@@ -331,7 +331,7 @@ def postgisToSpatialiteLocal10(sql: str, dataYear: str) -> str:
 
 
 def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,str],
-        connector: 'db_manager.db_plugins.DBConnector') -> Union[str,None]:
+        connector: 'DBConnector') -> Union[str,None]:
 
     comptecommunal = None
 
@@ -346,7 +346,7 @@ def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,
 
 
 def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[str,str],
-        connector: 'db_manager.db_plugins.DBConnector') -> List[str]:
+        connector: 'DBConnector') -> List[str]:
     '''
     Get the list of "comptecommunal" for all cities
     for a owner given one single comptecommunal
@@ -377,7 +377,7 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
 
 
 def getItemHtml(item: str, feature, connectionParams: Dict[str,str],
-        connector: 'db_manager.db_plugins.DBConnector') -> str:
+        connector: 'DBConnector') -> str:
     '''
     Build Html for a item (parcelle, proprietaires, etc.)
     based on SQL query

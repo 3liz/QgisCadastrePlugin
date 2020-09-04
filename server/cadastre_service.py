@@ -342,5 +342,5 @@ class CadastreService(QgsService):
             response.write(path.read_bytes())
             path.unlink()
         except:
-            QgsMessageLog.logMessage("Error occured while reading PDF file",'cadastre',QGis.Critical)
+            QgsMessageLog.logMessage("Error occured while reading PDF file",'cadastre',Qgis.Critical)
             raise
