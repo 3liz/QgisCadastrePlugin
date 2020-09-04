@@ -63,6 +63,7 @@ def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol:
     corresponding to a database
     table name (postgis or sqlite)
     '''
+    import re
     layer = None
     lr = project
     for lid,l in list(lr.mapLayers().items()):
@@ -77,7 +78,6 @@ def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol:
             continue
 
         connectionParams = getConnectionParameterFromDbLayer(l)
-        import re
 
         reg = r'(\.| )?(%s)' % tableName
         if connectionParams and \

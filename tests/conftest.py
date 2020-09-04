@@ -20,8 +20,8 @@ from typing import (Union, Any, Dict, Generator,
 from qgis.core import Qgis, QgsApplication, QgsProject
 from qgis.server import (QgsServer,
                          QgsServerInterface,
-                         QgsServerRequest, 
-                         QgsBufferServerRequest, 
+                         QgsServerRequest,
+                         QgsBufferServerRequest,
                          QgsBufferServerResponse)
 
 plugin_path = None
@@ -138,7 +138,7 @@ def client(request):
     return _Client()
 
 
-## 
+##
 ## Plugins
 ##
 

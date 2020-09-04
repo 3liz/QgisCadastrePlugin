@@ -85,7 +85,7 @@ def TermProgress( dfComplete, pszMessage, pProgressArg ):
     if nThisTick > 40:
         nThisTick = 40
 
-    # Have we started a new progress run?  
+    # Have we started a new progress run?
     if nThisTick < nLastTick and nLastTick >= 39:
         nLastTick = -1
 
@@ -137,12 +137,12 @@ class Enum(set):
 GeomOperation = Enum(["NONE", "SEGMENTIZE", "SIMPLIFY_PRESERVE_TOPOLOGY"])
 
 def main(args = None, progress_func = TermProgress, progress_data = None):
-    
+
     global bSkipFailures
     global nGroupTransactions
     global bPreserveFID
     global nFIDToFetch
-    
+
     pszFormat = "ESRI Shapefile"
     pszDataSource = None
     pszDestDataSource = None
@@ -703,7 +703,7 @@ def ogr2ogr(
 
             return False
 
-        if poDriver.TestCapability( ogr.ODrCCreateDataSource ) == False:
+        if not poDriver.TestCapability( ogr.ODrCCreateDataSource ):
             print( "%s driver does not support data source creation." % pszFormat)
             return False
 
@@ -1423,7 +1423,7 @@ def SetupTargetLayer( poSrcDS, poSrcLayer, poDstDS, papszLCO, pszNewLayerName, \
         elif nCoordDim == 3:
             eGType = eGType | ogr.wkb25DBit
 
-        if poDstDS.TestCapability( ogr.ODsCCreateLayer ) == False:
+        if not poDstDS.TestCapability( ogr.ODsCCreateLayer ):
             print("Layer " + pszNewLayerName + "not found, and CreateLayer not supported by driver.")
             return None
 
@@ -1615,7 +1615,7 @@ def TranslateLayer( psInfo, poSrcDS, poSrcLayer, poDstDS,  \
     bForceToPolygon = False
     bForceToMultiPolygon = False
     bForceToMultiLineString = False
-    
+
     poDstLayer = psInfo.poDstLayer
     #papszTransformOptions = psInfo.papszTransformOptions
     poCT = psInfo.poCT

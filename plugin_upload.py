@@ -19,9 +19,9 @@ def main(options, args):
             options.server, options.port, ENDPOINT)
     # fix_print_with_import
     print("Connecting to: %s" % hidepassword(address))
-    
+
     server = xmlrpc.client.ServerProxy(address, verbose=VERBOSE)
-    
+
     try:
         plugin_id, version_id = server.plugin.upload(xmlrpc.client.Binary(open(args[0]).read()))
         # fix_print_with_import
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         # interactive mode
         username = getpass.getuser()
         # fix_print_with_import
-        print("Please enter user name [%s] :"%username, end=' ')
+        print("Please enter user name [%s] :" % username, end=' ')
         res = eval(input())
         if res != "":
             options.username = res

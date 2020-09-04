@@ -1111,7 +1111,7 @@ class cadastreImport(QObject):
                     #self.qc.updateLog('@@%s$$' % sql)
                     self.updateProgressBar()
                     # Avoid adding 2 times the same column for spatialite
-                    if  self.dialog.dbType == 'spatialite' \
+                    if self.dialog.dbType == 'spatialite' \
                     and re.search(r'ADD COLUMN tempo_import', sqla, re.IGNORECASE):
                         try:
                             self.executeSqlQuery(sql, ignoreError)
@@ -1191,7 +1191,7 @@ class cadastreImport(QObject):
                             print(e.msg)
                         return a
 
-                    c.connection.create_function('regexp', 2, regexp);
+                    c.connection.create_function('regexp', 2, regexp)
 
                     # Run query
                     c.executescript(sql)
