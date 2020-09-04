@@ -102,7 +102,6 @@ class cadastreExport:
         self.pageHeight = 210
         self.pageWidth = 297
         self.printResolution = 300
-        self.addExperimentalWatershed = False
 
         # target directory for saving
         s = QSettings()
@@ -455,20 +454,6 @@ class cadastreExport:
         # Then get content for displayed items
         for key, item in list(self.composerTemplates.items()):
             self.buildComposerLabel(key,item,page)
-
-        # Add watershed
-        if self.addExperimentalWatershed:
-            w = QgsComposerPicture(self.currentComposition)
-            w.setItemPosition(50, (page - 1) * (self.pageHeight + 10), 150, 100)
-            w.setFrameEnabled(False)
-            pictureFile = os.path.join(
-                self.plugin_dir,
-                "templates/experimental.svg"
-            )
-            w.setPictureFile(pictureFile)
-            w.setBackgroundEnabled(False)
-            w.setTransparency(60)
-            self.currentComposition.addItem(w)
 
     def buildComposerLabel(self, key, item, page):
         '''
