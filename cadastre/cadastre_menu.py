@@ -402,7 +402,7 @@ class cadastre_menu(object):
     def open_help(self):
         '''Opens the html help file content with default browser'''
         #~ localHelpUrl = "https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/index.rst"
-        localHelpUrl = os.path.join(str(Path(__file__).resolve().parent), 'doc', 'index.html')
+        localHelpUrl = os.path.join(str(Path(__file__).resolve().parent), 'docs', 'index.html')
         QDesktopServices.openUrl( QUrl(localHelpUrl) )
 
     def open_message_dialog(self):

@@ -16,7 +16,7 @@ Documentation
 Utilisation
 ------------
 
-Voir [doc/index.md](doc/index.md)
+Voir [docs/index.md](docs/index.md)
 
 Base de données
 ----------------
