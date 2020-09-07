@@ -398,12 +398,10 @@ class cadastre_menu(object):
             self.cadastre_search_dialog.checkMajicContent()
             self.cadastre_search_dialog.clearComboboxes()
 
-
     def open_help(self):
         '''Opens the html help file content with default browser'''
-        #~ localHelpUrl = "https://github.com/3liz/QgisCadastrePlugin/blob/master/doc/index.rst"
-        localHelpUrl = os.path.join(str(Path(__file__).resolve().parent), 'docs', 'index.html')
-        QDesktopServices.openUrl( QUrl(localHelpUrl) )
+        help_url = "http://3liz.github.io/QgisCadastrePlugin/"
+        QDesktopServices.openUrl(QUrl(help_url))
 
     def open_message_dialog(self):
         '''
