@@ -6,12 +6,12 @@ name=cadastre
 qgisMinimumVersion=3.4
 
 description=This plugins helps users to use French land registry data, called Cadastre, in QGIS. It is only useful in
-France for people having access to Cadastre data. Funded by : the European Union, Fonds Européen de Développement
-Régional de Picardie, Conseil Régional de Picardie, Agence de Développement et d'Urbanisme du Grand Amienois.
+  France for people having access to Cadastre data. Funded by : the European Union, Fonds Européen de Développement
+  Régional de Picardie, Conseil Régional de Picardie, Agence de Développement et d'Urbanisme du Grand Amienois.
 
 about=This plugins helps users to use French land registry data, called Cadastre, in QGIS. It is only useful in
-France for people having access to Cadastre data. Funded by : the European Union, Fonds Européen de Développement
-Régional de Picardie, Conseil Régional de Picardie, Agence de Développement et d'Urbanisme du Grand Amienois.
+  France for people having access to Cadastre data. Funded by : the European Union, Fonds Européen de Développement
+  Régional de Picardie, Conseil Régional de Picardie, Agence de Développement et d'Urbanisme du Grand Amienois.
 
 version=master
 
