@@ -1,3 +1,8 @@
+---
+Title: Cadastre
+Favicon: icon.png
+...
+
 # Plugin Cadastre - Documentation utilisateur
 
 **Auteurs** Michaël DOUCHIN - 3liz
