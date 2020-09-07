@@ -46,4 +46,7 @@ __output__
 .cache
 .local
 
-.idea
+# PyCharm
+.idea/
+
+cadastre.*.*.*.zip

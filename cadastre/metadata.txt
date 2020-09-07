@@ -9,7 +9,7 @@ description=This plugins helps users to use french land registry data, called Ca
 
 about=This plugins helps users to use french land registry data, called Cadastre, in QGIS. It is only usefull in France for people having access to Cadastre data. Funded by : the European Union, Fonds Europeen de Developpement Regional de Picardie, Conseil Regional de Picardie, Agence de Developpement et d Urbanisme du Grand Amienois.
 
-version=1.8.1
+version=1.9.0
 
 author=3Liz
 email=info@3liz.com
@@ -18,28 +18,7 @@ email=info@3liz.com
 
 # Optional items:
 
-# Uncomment the following line and add your changelog entries:
-changelog=
-  Version 1.8.1
-  Corrections de bugs essentiellement
-  * Import - EDIGEO: amélioration des performances geo_batiment_parcelle
-  * Import - MAJIC: correction bug d'encodage
-  * Import MAJIC - garder vexen pour compatibilité Spatialite
-  * Spatialite - Correction des identifiants parcelle, voie et local00 dans la table local10
-  * Fiche parcellaire - résumé: ajout de coalesce sur l'adresse
-  * [BUGFIX] Use of QgsMapLayer.VectorLayer in getLayerFromLegendByTableProps
-  * remove old code from QGIS 2
-  * Création couche parcelle_info OK
-
-  Version 1.8.0
-  IMPORTANT
-  À partir de cette version seule la version QGIS LTR sera supportée. Pour cette version il s'agit de la version 3.4.x
-
-  Nouveautés
-  * Prise en charge des évolutions MAJIC 2019 (voir #192 pour les détails). Noter la création de 2 nouvelles tables.
-  * Précisions sur les versions QGIS, PostgreSQL / PostGIS et Spatialite supportées (#197)
-  * Mise à jour de la documentation de la structure de la base de données (#204)
-
+changelog=changelog
 
 # tags are comma separated with spaces allowed
 tags=cadastre, france, majic, edigeo, import
