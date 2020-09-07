@@ -1,21 +1,17 @@
 # CHANGELOG
 
-# CHANGELOG
-
-
 ### 1.9.0 - 07/09/2020
 
 * Documentation
-	* mise à jour des prérequis ([#240](https://github.com/3liz/QgisCadastrePlugin/issues/240) + [ad93660](https://github.com/3liz/QgisCadastrePlugin/commit/ad93660c04eb8ad0560d27229d4ac741bce4ef45)) : support de QGIS 3.10 LTR et précisions sur les versions PostgreSQL et PostGIS supportées
-* Support du millésime MAJIC 2020 ([#239](https://github.com/3liz/QgisCadastrePlugin/issues/239))
+	* Support de QGIS 3.10 LTR #240
+	* Précisions sur les versions PostgreSQL et PostGIS supportées
+* Support du millésime MAJIC 2020 #239
 * Améliorations et corrections
-	* Suppression des doublons de communes et de sections dans les données EDIGEO ([#196](https://github.com/3liz/QgisCadastrePlugin/issues/196))
-	* Unités foncières : suppression des enregistrements sans comptes communaux ([#221](https://github.com/3liz/QgisCadastrePlugin/issues/221))
-	* Correction d'un bogue dans l'affichage des informations d'une parcelle si le nom de la voie est nul ([#207](https://github.com/3liz/QgisCadastrePlugin/issues/207))
-	* Correction d'un bogue affectant le chargement de la couche des parcelles si on utilise du filtrage sur le code de commune ([#229](https://github.com/3liz/QgisCadastrePlugin/issues/229))
-	* Maintenance sur le code Python ([ef5418b](https://github.com/3liz/QgisCadastrePlugin/commit/ef5418b85ea7dff14f4056262fd0c33fc6ebdc6d) +  [e71a9e6](https://github.com/3liz/QgisCadastrePlugin/commit/e71a9e646a9d27299d1f06b7a197560448b1aa1b) + [8226db0](https://github.com/3liz/QgisCadastrePlugin/commit/8226db02949a513b24146a15cfaa10e55688a6bd) + [755a347](https://github.com/3liz/QgisCadastrePlugin/commit/755a347157020be6e00a445b6466a04649637365))
-
-
+	* Suppression des doublons de communes et de sections dans les données EDIGEO #196
+	* Unités foncières : suppression des enregistrements sans comptes communaux #221
+	* Correction d'un bogue dans l'affichage des informations d'une parcelle si le nom de la voie est nul #207
+	* Correction d'un bogue affectant le chargement de la couche des parcelles si on utilise du filtrage sur le code de commune #229
+	* Maintenance sur le code Python
 
 ### 1.8.1 - 21/10/2019
 
