@@ -28,6 +28,7 @@ from qgis.core import (QgsProcessing,
                        QgsProcessingParameterField,
                        QgsProcessingOutputNumber)
 
+
 class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
     """
     Algorithm to set project varaibles for cadastre use
