@@ -124,7 +124,7 @@ class CadastreService(QgsService):
 
         except CadastreError as err:
             err.formatResponse(response)
-        except Exception as exc:
+        except Exception:
             QgsMessageLog.logMessage("Unhandled exception:\n%s" % traceback.format_exc(), "cadastre", Qgis.Critical)
             err = CadastreError(500, "Internal 'cadastre' service error")
             err.formatResponse(response)

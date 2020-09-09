@@ -2,7 +2,8 @@
 /***************************************************************************
  Cadastre
                                  A QGIS plugin
- This plugins helps users to import the french land registry ('cadastre') into a database. It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
+ This plugins helps users to import the french land registry ('cadastre') into a database.
+ It is meant to ease the use of the data in QGIs by providing search tools and appropriate layer symbology.
                              -------------------
         begin                : 2013-06-11
         copyright            : (C) 2013 by 3liz

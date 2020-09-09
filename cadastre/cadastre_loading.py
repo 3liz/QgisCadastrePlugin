@@ -420,7 +420,7 @@ class cadastreLoading(QObject):
         '''
         Load a vector layer from SQL and information given by the user
         '''
-        providerName = self.dialog.dbpluginclass.providerName()
+        self.dialog.dbpluginclass.providerName()
         self.dialog.schema = str(self.dialog.liDbSchema.currentText())
 
         sqlText = self.dialog.sqlText.toPlainText()

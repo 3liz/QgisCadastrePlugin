@@ -872,8 +872,8 @@ class CustomQCompleter(QCompleter):
             self.filterProxyModel.setSourceModel(self.source_model)
 
         pattern = QRegExp(self.local_completion_prefix,
-                          Qt.CaseInsensitive
-                          , QRegExp.FixedString
+                          Qt.CaseInsensitive,
+                          QRegExp.FixedString
                           )
 
         self.filterProxyModel.setFilterRegExp(pattern)
@@ -893,7 +893,6 @@ class CustomQCompleter(QCompleter):
 #        search - search for data among database ans export
 # ---------------------------------------------------------
 
-from .cadastre_import import cadastreImport
 
 SEARCH_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -1702,7 +1701,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         '''
         # Get widget
         searchCombo = self.searchComboBoxes[combo]
-        cb = searchCombo['widget']
+        # cb = searchCombo['widget']
 
         # Zoom
         if searchCombo['chosenFeature']:
@@ -1733,7 +1732,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         '''
         # Get widget
         searchCombo = self.searchComboBoxes[combo]
-        cb = searchCombo['widget']
+        # cb = searchCombo['widget']
 
         # Center
         if searchCombo['chosenFeature']:
@@ -1771,7 +1770,7 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         '''
         # Get widget
         searchCombo = self.searchComboBoxes[combo]
-        cb = searchCombo['widget']
+        # cb = searchCombo['widget']
 
         # Select
         if searchCombo['chosenFeature'] and searchCombo['layer']:
@@ -2008,7 +2007,7 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
         and apply personalized interface
         '''
 
-        item = self.interfaceSelectors[key]
+        # item = self.interfaceSelectors[key]
         iniPath = os.path.join(
             self.plugin_dir,
             'interface/'
@@ -2059,7 +2058,6 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
         Run some actions when
         the user closes the dialog
         '''
-        string = "cadastre option dialog closed"
         self.close()
 
 
