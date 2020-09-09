@@ -105,9 +105,9 @@ class cadastre_common(object):
     openFile = common_utils.openFile
 
     def updateLog(self, msg):
-        '''
+        """
         Update the log
-        '''
+        """
         t = self.dialog.txtLog
         t.ensureCursorVisible()
         prefix = '<span style="font-weight:normal;">'
@@ -119,18 +119,18 @@ class cadastre_common(object):
         qApp.processEvents()
 
     def updateProgressBar(self):
-        '''
+        """
         Update the progress bar
-        '''
+        """
         if self.dialog.go:
             self.dialog.step += 1
             self.dialog.pbProcess.setValue(int(self.dialog.step * 100 / self.dialog.totalSteps))
             qApp.processEvents()
 
     def updateConnectionList(self):
-        '''
+        """
         Update the combo box containing the database connection list
-        '''
+        """
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         dbType = str(self.dialog.liDbType.currentText()).lower()
@@ -163,9 +163,9 @@ class cadastre_common(object):
         QApplication.restoreOverrideCursor()
 
     def toggleSchemaList(self, t):
-        '''
+        """
         Toggle Schema list and inputs
-        '''
+        """
         self.dialog.liDbSchema.setEnabled(t)
         if hasattr(self.dialog, "inDbCreateSchema"):
             self.dialog.inDbCreateSchema.setEnabled(t)
@@ -175,9 +175,9 @@ class cadastre_common(object):
             self.dialog.btCreateNewSpatialiteDb.setEnabled(not t)
 
     def updateSchemaList(self):
-        '''
+        """
         Update the combo box containing the schema list if relevant
-        '''
+        """
         self.dialog.liDbSchema.clear()
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
@@ -232,11 +232,11 @@ class cadastre_common(object):
         QApplication.restoreOverrideCursor()
 
     def checkDatabaseForExistingStructure(self):
-        '''
+        """
         Search among a database / schema
         if there are alreaday Cadastre structure tables
         in it
-        '''
+        """
         hasStructure = False
         hasData = False
         hasMajicData = False
@@ -302,10 +302,10 @@ class cadastre_common(object):
         self.dialog.hasMajicData = hasMajicDataVoie
 
     def checkDatabaseForExistingTable(self, tableName, schemaName=''):
-        '''
+        """
         Check if the given table
         exists in the database
-        '''
+        """
         tableExists = False
 
         if not self.dialog.db:
@@ -334,11 +334,11 @@ class cadastre_common(object):
     getConnectorFromUri = common_utils.getConnectorFromUri
 
     def normalizeString(self, s):
-        '''
+        """
         Removes all accents from
         the given string and
         replace e dans l'o
-        '''
+        """
         p = re.compile('(œ)')
         s = p.sub('oe', s)
 
@@ -357,11 +357,11 @@ class cadastre_common(object):
     postgisToSpatialiteLocal10 = common_utils.postgisToSpatialiteLocal10
 
     def createNewSpatialiteDatabase(self):
-        '''
+        """
         Choose a file path to save
         create the sqlite database with
         spatial tools and create QGIS connection
-        '''
+        """
         # Let the user choose new file path
         ipath, __ = QFileDialog.getSaveFileName(
             None,
@@ -551,9 +551,9 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
         self.getValuesFromSettings()
 
     def onClose(self):
-        '''
+        """
         Close dialog
-        '''
+        """
         if self.db:
             self.db.connector.__del__()
 
@@ -565,10 +565,10 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
         self.close()
 
     def chooseDataPath(self, key):
-        '''
+        """
         Ask the user to select a folder
         and write down the path to appropriate field
-        '''
+        """
         ipath = QFileDialog.getExistingDirectory(
             None,
             u"Choisir le répertoire contenant les fichiers",
@@ -578,10 +578,10 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
             self.pathSelectors[key]['input'].setText(str(ipath))
 
     def getValuesFromSettings(self):
-        '''
+        """
         get values from QGIS settings
         and set input fields appropriately
-        '''
+        """
         s = QSettings()
         for k, v in list(self.sList.items()):
             value = s.value("cadastre/%s" % k, '', type=str)
@@ -628,9 +628,9 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
                 QApplication.restoreOverrideCursor()
 
     def checkImportInputData(self):
-        '''
+        """
         Check the user defined inpu data
-        '''
+        """
 
         self.dataVersion = str(self.inDataVersion.text())
         self.dataYear = str(self.inDataYear.text())
@@ -678,9 +678,9 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
         return msg
 
     def processImport(self):
-        '''
+        """
         Lancement du processus d'import
-        '''
+        """
 
         msg = self.checkImportInputData()
         if msg:
@@ -714,9 +714,9 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
         qi.endImport()
 
     def storeSettings(self):
-        '''
+        """
         Store cadastre settings in QGIS
-        '''
+        """
         # store chosen data in QGIS settings
         s = QSettings()
         s.setValue("cadastre/dataVersion", str(self.dataVersion))
@@ -793,19 +793,19 @@ class cadastre_load_dialog(QDialog, LOAD_FORM_CLASS):
         self.buttonBox.rejected.connect(self.onClose)
 
     def onClose(self):
-        '''
+        """
         Close dialog
-        '''
+        """
         if self.db:
             self.db.connector.__del__()
         self.close()
 
     def getStyleList(self):
-        '''
+        """
         Get the list of style directories
         inside the plugin dir
         and add combobox item
-        '''
+        """
         spath = os.path.join(self.qc.plugin_dir, "styles/")
         dirs = os.listdir(spath)
         dirs = [a for a in dirs if os.path.isdir(os.path.join(spath, a))]
@@ -816,31 +816,31 @@ class cadastre_load_dialog(QDialog, LOAD_FORM_CLASS):
             cb.addItem('%s' % d, d)
 
     def onProcessLoadingClicked(self):
-        '''
+        """
         Activate the loading of layers
         from database tables
         when user clicked on button
-        '''
+        """
         if self.connection:
             if self.db:
                 self.ql.processLoading()
 
     def onLoadSqlLayerClicked(self):
-        '''
+        """
         Loads a layer
         from given SQL
         when user clicked on button
-        '''
+        """
         if self.connection:
             if self.db:
                 self.ql.loadSqlLayer()
 
     def onLoadingEnd(self):
-        '''
+        """
         Actions to trigger
         when all the layers
         have been loaded
-        '''
+        """
         self.cadastre_search_dialog.checkMajicContent()
         self.cadastre_search_dialog.clearComboboxes()
         self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
@@ -1155,9 +1155,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         # signals
 
     def clearComboboxes(self):
-        '''
+        """
         Clear comboboxes content
-        '''
+        """
         self.txtLog.clear()
         for key, item in list(self.searchComboBoxes.items()):
             # manual search widgets
@@ -1165,10 +1165,10 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 item['widget'].clear()
 
     def checkMajicContent(self):
-        '''
+        """
         Check if database contains
         any MAJIC data
-        '''
+        """
         self.hasMajicDataProp = False
         self.hasMajicDataVoie = False
         self.hasMajicDataParcelle = False
@@ -1222,11 +1222,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                 u"<b>Pas de données MAJIC propriétaires</b> -> désactivation de la recherche de propriétaires")
 
     def setupSearchCombobox(self, combo, filterExpression=None, queryMode='qgis'):
-        '''
+        """
         Fil given combobox with data
         from sql query or QGIS layer query
         And add autocompletion
-        '''
+        """
         layer = None
         features = None
 
@@ -1314,9 +1314,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         return [layer, features]
 
     def refreshAutocomplete(self, key):
-        '''
+        """
         Refresh autocompletion while the users add more chars in line edit
-        '''
+        """
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get value
@@ -1492,11 +1492,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         QApplication.restoreOverrideCursor()
 
     def getFeaturesFromSqlQuery(self, layer, filterExpression=None, attributes='*', orderBy=None):
-        '''
+        """
         Get data from a db table,
         optionnally filtered by given expression
         and get corresponding QgsFeature objects
-        '''
+        """
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get connection parameters
@@ -1553,10 +1553,10 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         return features
 
     def getFeatureFromComboboxValue(self, combo):
-        '''
+        """
         Get the feature corresponding to
         the chosen combobox value
-        '''
+        """
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get widget
@@ -1572,9 +1572,9 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         QApplication.restoreOverrideCursor()
 
     def onCompleterActivated(self, key):
-        '''
+        """
         Triggered when the users chooses an item in the combobox completer popup
-        '''
+        """
         cb = self.searchComboBoxes[key]['widget']
         label = cb.currentText()
         li = cb.lineEdit()
@@ -1588,11 +1588,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             self.onSearchItemChoose(key, label, chosenValue)
 
     def onSearchItemChoose(self, key, label, value):
-        '''
+        """
         Select parcelles corresponding
         to chosen item in combo box
         (adresse, proprietaire)
-        '''
+        """
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
         # Get value
@@ -1637,10 +1637,10 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         QApplication.restoreOverrideCursor()
 
     def onNonSearchItemChoose(self, key):
-        '''
+        """
         Get feature from chosen item in combobox
         and optionnaly fill its children combobox
-        '''
+        """
         # get feature from the chosen value
         self.getFeatureFromComboboxValue(key)
 
@@ -1661,26 +1661,26 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
                         self.setupSearchCombobox(ckey, None, 'sql')
 
     def onNonSearchItemEdit(self, key):
-        '''
+        """
         Empty previous stored feature
         for the combobox every time
         the user edit its content
-        '''
+        """
         self.searchComboBoxes[key]['chosenFeature'] = None
 
     def onNonSearchItemReset(self, key):
-        '''
+        """
         Unchoose item in combobox
         which also trigger onNonSearchItemChoose above
-        '''
+        """
         self.searchComboBoxes[key]['chosenFeature'] = None
         self.searchComboBoxes[key]['widget'].setCurrentIndex(0)
 
     def onSearchItemReset(self, key):
-        '''
+        """
         Unchoose item in a searchable combobox
         which also trigger
-        '''
+        """
         self.searchComboBoxes[key]['chosenFeature'] = None
         self.searchComboBoxes[key]['widget'].setCurrentIndex(0)
         self.searchComboBoxes[key]['widget'].lineEdit().selectAll()
@@ -1688,17 +1688,17 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         self.searchComboBoxes[key]['widget'].lineEdit().setText(u'')
 
     def onSearchItemFocus(self, key):
-        '''
+        """
         Select all content on focus by click
-        '''
+        """
         self.searchComboBoxes[key]['widget'].lineEdit().selectAll()
         self.searchComboBoxes[key]['widget'].lineEdit().setFocus()
 
     def setZoomToChosenSearchCombobox(self, combo):
-        '''
+        """
         Zoom to the feature(s)
         selected in the give combobox
-        '''
+        """
         # Get widget
         searchCombo = self.searchComboBoxes[combo]
         # cb = searchCombo['widget']
@@ -1726,10 +1726,10 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             self.mc.refresh()
 
     def setCenterToChosenSearchCombobox(self, combo):
-        '''
+        """
         Center to the feature(s)
         chosen in the corresponding combobox
-        '''
+        """
         # Get widget
         searchCombo = self.searchComboBoxes[combo]
         # cb = searchCombo['widget']
@@ -1764,10 +1764,10 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             self.mc.refresh()
 
     def setSelectionToChosenSearchCombobox(self, combo):
-        '''
+        """
         Select the feature(s)
         corresponding to the chosen item
-        '''
+        """
         # Get widget
         searchCombo = self.searchComboBoxes[combo]
         # cb = searchCombo['widget']
@@ -1782,11 +1782,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             searchCombo['layer'].select(i)
 
     def setCenterToChosenItem(self, key):
-        '''
+        """
         Set map center corresponding
         to the chosen feature(s) for the
         last not null item in the list
-        '''
+        """
         w = None
         for item in self.zoomButtons[key]['comboboxes']:
             if self.searchComboBoxes[item]['chosenFeature'] \
@@ -1796,10 +1796,10 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             self.setCenterToChosenSearchCombobox(w)
 
     def setZoomToChosenItem(self, key):
-        '''
+        """
         Zoom to the chosen feature(s) for the
         last not null item in the list
-        '''
+        """
         w = None
         for item in self.zoomButtons[key]['comboboxes']:
             if self.searchComboBoxes[item]['chosenFeature'] \
@@ -1809,10 +1809,10 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             self.setZoomToChosenSearchCombobox(w)
 
     def setSelectionToChosenItem(self, key):
-        '''
+        """
         Select the feature(s) for the
         last non null item in the list
-        '''
+        """
         w = None
         for item in self.zoomButtons[key]['comboboxes']:
             if self.searchComboBoxes[item]['chosenFeature'] \
@@ -1822,11 +1822,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             self.setSelectionToChosenSearchCombobox(w)
 
     def exportProprietaire(self):
-        '''
+        """
         Export the selected proprietaire
         as PDF using the template composer
         filled with appropriate data
-        '''
+        """
         if not self.connector:
             return
 
@@ -1840,11 +1840,11 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             self.qc.updateLog(u'Aucune donnée trouvée pour ce propriétaire !')
 
     def exportParcelle(self, key):
-        '''
+        """
         Export the selected parcelle
         as PDF using the template composer
         filled with appropriate data
-        '''
+        """
         if not self.connector:
             return
 
@@ -1859,10 +1859,10 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')
 
     def onVisibilityChange(self, visible):
-        '''
+        """
         Fill commune combobox when the dock
         becomes visible
-        '''
+        """
         if visible:
             # fix_print_with_import
             print("visible")
@@ -1936,10 +1936,10 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
         self.getValuesFromSettings()
 
     def chooseDataPath(self, key):
-        '''
+        """
         Ask the user to select a folder
         and write down the path to appropriate field
-        '''
+        """
         if self.pathSelectors[key]['type'] == 'dir':
             ipath = QFileDialog.getExistingDirectory(
                 None,
@@ -1958,10 +1958,10 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
             self.pathSelectors[key]['input'].setText(str(ipath))
 
     def getValuesFromSettings(self):
-        '''
+        """
         Get majic file names and other options
         from settings and set corresponding inputs
-        '''
+        """
         s = QSettings()
         batiFileName = s.value("cadastre/batiFileName", 'REVBATI.800', type=str)
         if batiFileName:
@@ -2002,10 +2002,10 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
             self.inComposerTemplateFile.setText(composerTemplateFile)
 
     def applyInterface(self, key):
-        '''
+        """
         Help the user to select
         and apply personalized interface
-        '''
+        """
 
         # item = self.interfaceSelectors[key]
         iniPath = os.path.join(
@@ -2029,9 +2029,9 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
         )
 
     def onAccept(self):
-        '''
+        """
         Save options when pressing OK button
-        '''
+        """
 
         # Save Majic file names
         s = QSettings()
@@ -2054,10 +2054,10 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
         self.accept()
 
     def onReject(self):
-        '''
+        """
         Run some actions when
         the user closes the dialog
-        '''
+        """
         self.close()
 
 
@@ -2087,16 +2087,16 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
         self.buttonBox.accepted.connect(self.onAccept)
 
     def onAccept(self):
-        '''
+        """
         Save options when pressing OK button
-        '''
+        """
         self.accept()
 
     def onReject(self):
-        '''
+        """
         Run some actions when
         the user closes the dialog
-        '''
+        """
         self.close()
 
 
@@ -2176,9 +2176,9 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         self.setLocauxContent()
 
     def getCss(self):
-        '''
+        """
         Get CSS from CSS file
-        '''
+        """
         css = ''
         plugin_dir = str(Path(__file__).resolve().parent)
         with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), 'r') as f:
@@ -2186,10 +2186,10 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         self.css = css
 
     def checkMajicContent(self):
-        '''
+        """
         Check if database contains
         any MAJIC data
-        '''
+        """
         self.hasMajicDataProp = False
         sql = 'SELECT * FROM "proprietaire" LIMIT 1'
         if self.connectionParams['dbType'] == 'postgis':
@@ -2200,10 +2200,10 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 
     # @timing
     def setParcelleContent(self):
-        '''
+        """
         Get parcelle data
         and set the dialog content
-        '''
+        """
         if self.feature.fieldNameIndex('proprietaire') > 0:
             item = 'parcelle_majic'
         else:
@@ -2215,10 +2215,10 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 
     # @timing
     def setProprietairesContent(self):
-        '''
+        """
         Get proprietaires data
         and set the dialog content
-        '''
+        """
         if self.feature.fieldNameIndex('proprietaire') == -1:
             html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
         else:
@@ -2229,10 +2229,10 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 
     # @timing
     def setSubdivisionsContent(self):
-        '''
+        """
         Get subdivision data
         and set the dialog content
-        '''
+        """
         if self.feature.fieldNameIndex('proprietaire') == -1:
             html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
         else:
@@ -2243,10 +2243,10 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
 
     # @timing
     def setLocauxContent(self):
-        '''
+        """
         Get locaux data
         and set the dialog content
-        '''
+        """
         if self.feature.fieldNameIndex('proprietaire') == -1:
             html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
         else:
@@ -2258,10 +2258,10 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         self.locauxInfo.setText('%s' % html)
 
     def exportAsPDF(self, key):
-        '''
+        """
         Export the parcelle or proprietaire
         information as a PDF file
-        '''
+        """
         if not self.connector:
             return
 
@@ -2292,9 +2292,9 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
                     qe.exportAsPDF()
 
     def centerToParcelle(self):
-        '''
+        """
         Centre to parcelle feature
-        '''
+        """
         if self.feature:
             # first get scale
             scale = self.mc.scale()
@@ -2315,9 +2315,9 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
             self.mc.refresh()
 
     def zoomToParcelle(self):
-        '''
+        """
         Zoom to parcelle feature
-        '''
+        """
         if self.feature:
             extent = self.feature.geometry().boundingBox()
 
@@ -2333,19 +2333,19 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
             self.mc.refresh()
 
     def selectParcelle(self):
-        '''
+        """
         Zoom to parcelle feature
-        '''
+        """
         if self.layer and self.feature:
             self.layer.removeSelection()
             self.layer.select(self.feature.id())
 
     def selectParcellesProprietaire(self):
-        '''
+        """
         Select all parcelles from this parcelle proprietaire.
         Use search class tools.
         Needs refactoring
-        '''
+        """
         if not self.hasMajicDataProp:
             self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
             return
@@ -2378,16 +2378,16 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         qs.setSelectionToChosenSearchCombobox('proprietaire')
 
     def onAccept(self):
-        '''
+        """
         Save options when pressing OK button
-        '''
+        """
         self.accept()
 
     def onReject(self):
-        '''
+        """
         Run some actions when
         the user closes the dialog
-        '''
+        """
         self.connector.__del__()
         self.close()
 
@@ -2419,14 +2419,14 @@ class cadastre_message_dialog(QDialog, MESSAGE_FORM_CLASS):
         self.buttonBox.accepted.connect(self.onAccept)
 
     def onAccept(self):
-        '''
+        """
         Save options when pressing OK button
-        '''
+        """
         self.accept()
 
     def onReject(self):
-        '''
+        """
         Run some actions when
         the user closes the dialog
-        '''
+        """
         self.close()

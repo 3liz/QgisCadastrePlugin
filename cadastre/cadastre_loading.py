@@ -134,9 +134,9 @@ class cadastreLoading(QObject):
         self.qc.updateLog(u'%s s' % diff.seconds)
 
     def getGroupIndex(self, groupName):
-        '''
+        """
         Get a legend group index by its name
-        '''
+        """
         relationList = self.dialog.iface.legendInterface().groupLayerRelationship()
         i = 0
         for item in relationList:
@@ -147,10 +147,10 @@ class cadastreLoading(QObject):
         return 0
 
     def processLoading(self):
-        '''
+        """
         Load all the layers in QGIS
         and apply corresponding style
-        '''
+        """
         self.startTime = datetime.now()
         QApplication.setOverrideCursor(Qt.WaitCursor)
 
@@ -417,9 +417,9 @@ class cadastreLoading(QObject):
         QApplication.restoreOverrideCursor()
 
     def loadSqlLayer(self):
-        '''
+        """
         Load a vector layer from SQL and information given by the user
-        '''
+        """
         self.dialog.dbpluginclass.providerName()
         self.dialog.schema = str(self.dialog.liDbSchema.currentText())
 

@@ -209,16 +209,16 @@ class cadastre_menu(object):
         lr.layersRemoved.connect(self.checkIdentifyParcelleTool)
 
     def open_import_dialog(self):
-        '''
+        """
         Import dialog
-        '''
+        """
         dialog = cadastre_import_dialog(self.iface)
         dialog.exec_()
 
     def open_load_dialog(self):
-        '''
+        """
         Load dialog
-        '''
+        """
         dialog = cadastre_load_dialog(
             self.iface,
             self.cadastre_search_dialog
@@ -226,18 +226,18 @@ class cadastre_menu(object):
         dialog.exec_()
 
     def toggle_search_dialog(self):
-        '''
+        """
         Search dock widget
-        '''
+        """
         if self.cadastre_search_dialog.isVisible():
             self.cadastre_search_dialog.hide()
         else:
             self.cadastre_search_dialog.show()
 
     def export_view(self):
-        '''
+        """
         Export current view to PDF
-        '''
+        """
         # Load template from file
         s = QSettings()
         f = s.value("cadastre/composerTemplateFile", '', type=str)
@@ -286,16 +286,16 @@ class cadastre_menu(object):
             cadastre_common.openFile(temppath)
 
     def open_option_dialog(self):
-        '''
+        """
         Config dialog
-        '''
+        """
         dialog = cadastre_option_dialog(self.iface)
         dialog.exec_()
 
     def open_about_dialog(self):
-        '''
+        """
         About dialog
-        '''
+        """
         dialog = cadastre_about_dialog(self.iface)
         dialog.exec_()
 
@@ -321,11 +321,11 @@ class cadastre_menu(object):
         group.addAction(self.identifyParcelleAction)
 
     def checkIdentifyParcelleTool(self, layerIds=None):
-        '''
+        """
         When layers are removed from the project
         Check if the layer Parcelle remains
         If not deactivate Identify parcelle tool
-        '''
+        """
         # Find parcelle layer
         parcelleLayer = None
         try:
@@ -340,10 +340,10 @@ class cadastre_menu(object):
             return
 
     def setIndentifyParcelleTool(self):
-        '''
+        """
         Activite the identify tool
         for the layer geo_parcelle
-        '''
+        """
 
         # Find parcelle layer
         parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('parcelle_info')
@@ -364,10 +364,10 @@ class cadastre_menu(object):
         self.mapCanvas.setMapTool(self.identyParcelleTool)
 
     def getParcelleInfo(self, layer, feature):
-        '''
+        """
         Return information of the identified
         parcelle
-        '''
+        """
         parcelleDialog = cadastre_parcelle_dialog(
             self.iface,
             layer,
@@ -377,9 +377,9 @@ class cadastre_menu(object):
         parcelleDialog.show()
 
     def onProjectRead(self):
-        '''
+        """
         Refresh search dialog when new data has been loaded
-        '''
+        """
         if self.cadastre_search_dialog:
             self.cadastre_search_dialog.checkMajicContent()
             self.cadastre_search_dialog.clearComboboxes()
@@ -388,23 +388,23 @@ class cadastre_menu(object):
             self.checkIdentifyParcelleTool()
 
     def onNewProjectCreated(self):
-        '''
+        """
         Refresh search dialog when new data has been loaded
-        '''
+        """
         self.checkIdentifyParcelleTool()
         if self.cadastre_search_dialog:
             self.cadastre_search_dialog.checkMajicContent()
             self.cadastre_search_dialog.clearComboboxes()
 
     def open_help(self):
-        '''Opens the html help file content with default browser'''
+        """Opens the html help file content with default browser"""
         help_url = "http://3liz.github.io/QgisCadastrePlugin/"
         QDesktopServices.openUrl(QUrl(help_url))
 
     def open_message_dialog(self):
-        '''
+        """
         Display a message to the user
-        '''
+        """
         versionMessages = {
             '1.1.0': [
                 [

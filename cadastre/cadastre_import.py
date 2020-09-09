@@ -165,35 +165,35 @@ class cadastreImport(QObject):
         self.beginImport()
 
     def beginJobLog(self, stepNumber, title):
-        '''
+        """
         reinit progress bar
-        '''
+        """
         self.totalSteps = stepNumber
         self.step = 0
         self.dialog.stepLabel.setText('<b>%s</b>' % title)
         self.qc.updateLog('<h3>%s</h3>' % title)
 
     def updateProgressBar(self):
-        '''
+        """
         Update the progress bar
-        '''
+        """
         if self.go:
             self.step += 1
             self.dialog.pbProcess.setValue(int(self.step * 100 / self.totalSteps))
 
     def updateTimer(self):
-        '''
+        """
         Update the timer for each process
-        '''
+        """
         if self.go:
             b = datetime.now()
             diff = b - self.startTime
             self.qc.updateLog(u'%s s' % diff.seconds)
 
     def beginImport(self):
-        '''
+        """
         Process to run before importing data
-        '''
+        """
         # Log
         jobTitle = u'INITIALISATION'
         self.beginJobLog(2, jobTitle)
@@ -215,9 +215,9 @@ class cadastreImport(QObject):
         self.updateProgressBar()
 
     def installCadastreStructure(self):
-        '''
+        """
         Create the empty db structure
-        '''
+        """
         if not self.go:
             return False
 
@@ -264,11 +264,11 @@ class cadastreImport(QObject):
         self.updateTimer()
 
     def updateCadastreStructure(self):
-        '''
+        """
         Add some tables if they do not exists
         This method is run only if structure already exists
         and if each table is not already present
-        '''
+        """
         # List all the tables which have been created between plugin versions
         newTables = [
             'geo_tronroute',
@@ -435,19 +435,19 @@ class cadastreImport(QObject):
         return None
 
     def chunk(self, iterable, n=100000, padvalue=None):
-        '''
+        """
         Chunks an iterable (file, etc.)
         into pieces
-        '''
+        """
         from itertools import zip_longest
         return zip_longest(*[iter(iterable)] * n, fillvalue=padvalue)
 
     def importMajicIntoDatabase(self):
-        '''
+        """
         Method wich read each majic file
         and bulk import data intp temp tables
         Returns False if no file processed
-        '''
+        """
         processedFilesCount = 0
         majicFilesKey = []
         majicFilesFound = {}
@@ -591,10 +591,10 @@ class cadastreImport(QObject):
             self.go = False
 
     def importEdigeo(self):
-        '''
+        """
         Import EDIGEO data
         into database
-        '''
+        """
         if not self.go:
             return False
 
@@ -772,9 +772,9 @@ class cadastreImport(QObject):
         return None
 
     def endImport(self):
-        '''
+        """
         Actions done when import has finished
-        '''
+        """
         # Log
         jobTitle = u'FINALISATION'
         self.beginJobLog(1, jobTitle)
@@ -858,10 +858,10 @@ class cadastreImport(QObject):
     #
 
     def copyFilesToTemp(self, source, target):
-        '''
+        """
         Copy cadastre scripts
         into a temporary folder
-        '''
+        """
         if self.go:
 
             self.qc.updateLog(u'* Copie du répertoire %s' % source)
@@ -885,12 +885,12 @@ class cadastreImport(QObject):
         return None
 
     def listFilesInDirectory(self, path, extensionList=[], invert=False):
-        '''
+        """
         List all files from folder and subfolder
         for a specific extension if given ( via the list extensionList ).
         If invert is True, then get all files
         but those corresponding to the given extensions.
-        '''
+        """
         fileList = []
         for root, dirs, files in os.walk(path):
             for i in files:
@@ -903,10 +903,10 @@ class cadastreImport(QObject):
         return fileList
 
     def unzipFolderContent(self, path):
-        '''
+        """
         Scan content of specified path
         and unzip all content into a single folder
-        '''
+        """
         if self.go:
             QApplication.setOverrideCursor(Qt.WaitCursor)
             self.qc.updateLog(u'* Décompression des fichiers')
@@ -971,9 +971,9 @@ class cadastreImport(QObject):
                 QApplication.restoreOverrideCursor()
 
     def replaceParametersInString(self, string, replaceDict):
-        '''
+        """
         Replace all occurences in string
-        '''
+        """
 
         def replfunc(match):
             if match.group(0) in replaceDict:
@@ -986,10 +986,10 @@ class cadastreImport(QObject):
         return string
 
     def replaceParametersInScript(self, scriptPath, replaceDict):
-        '''
+        """
         Replace all parameters in sql scripts
         with given values
-        '''
+        """
 
         if self.go:
 
@@ -1017,9 +1017,9 @@ class cadastreImport(QObject):
         return None
 
     def executeSqlScript(self, scriptPath, divide=False, ignoreError=False):
-        '''
+        """
         Execute an SQL script file
-        '''
+        """
 
         if self.go:
 
@@ -1099,11 +1099,11 @@ class cadastreImport(QObject):
         return None
 
     def executeSqlQuery(self, sql, ignoreError=False):
-        '''
+        """
         Execute a SQL string query
         And commit
         NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
-        '''
+        """
         if self.go:
             QApplication.setOverrideCursor(Qt.WaitCursor)
 
@@ -1191,10 +1191,10 @@ class cadastreImport(QObject):
                             pass
 
     def importAllEdigeoToDatabase(self):
-        '''
+        """
         Loop through all THF files
         and import each one into database
-        '''
+        """
 
         if self.go:
 
@@ -1249,10 +1249,10 @@ class cadastreImport(QObject):
         QApplication.restoreOverrideCursor()
 
     def importEdigeoThfToDatabase(self, filename):
-        '''
+        """
         Import one edigeo THF files into database
         source : db_manager/dlg_import_vector.py
-        '''
+        """
         if self.go:
             # Get options
             targetSridOption = '-t_srs'
@@ -1355,11 +1355,11 @@ class cadastreImport(QObject):
         return None
 
     def importEdigeoVecToDatabase(self, path):
-        '''
+        """
         Get edigeo relations between objects
         from a .VEC file
         and add them in edigeo_rel table
-        '''
+        """
         if self.go:
             reg = '^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_[0-9]+)_(Objet_[0-9]+)'
             try:
@@ -1394,11 +1394,11 @@ class cadastreImport(QObject):
                         del c
 
     def updateMultipolygonFromVec(self, path, layerType='edigeo'):
-        '''
+        """
         Run the update multipolygon query
         for each VEC files on the given layer type
         (edigeo = import tables, cadastre = cadastre geo_* tables)
-        '''
+        """
         # Get SQL update queries
         sqlList = self.getUpdateMultipolygonFromVecQuery(path, layerType)
 
@@ -1409,14 +1409,14 @@ class cadastreImport(QObject):
             self.executeSqlQuery(sql)
 
     def getUpdateMultipolygonFromVecQuery(self, path, layerType='edigeo'):
-        '''
+        """
         EDIGEO ogr driver does not import multipolygon.
         This method is a patch : it parses the vec file
         and get WKT.
         Then the method build an SQL update query
         adapted on the given layer type
         (edigeo = import tables, cadastre = cadastre geo_* tables)
-        '''
+        """
         sqlList = []
 
         # Class wich get multipolygons
@@ -1479,9 +1479,9 @@ class cadastreImport(QObject):
         return sqlList
 
     def dropEdigeoRawData(self):
-        '''
+        """
         Drop Edigeo raw data tables
-        '''
+        """
 
         if self.go:
             # DROP edigeo import tables
