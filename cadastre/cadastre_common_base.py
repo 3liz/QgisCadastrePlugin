@@ -353,7 +353,6 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
     Get the list of "comptecommunal" for all cities
     for a owner given one single comptecommunal
     '''
-    cc = comptecommunal
 
     sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"
     sql += " FROM proprietaire p"

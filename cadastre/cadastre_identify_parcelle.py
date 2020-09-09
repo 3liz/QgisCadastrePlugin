@@ -51,7 +51,6 @@ class IdentifyParcelle(QgsMapToolIdentify):
 
     def canvasReleaseEvent(self, mouseEvent):
 
-        layerData = []
         layer = self.layer
 
         if not layer:

@@ -117,7 +117,7 @@ class cadastreExport(cadastreExportBase):
         paths = super().exportAsPDF()
 
         if self.isMulti:
-            info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir
+            # info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir
             openFolder = QDesktopServices()
             openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
 

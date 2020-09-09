@@ -419,15 +419,13 @@ class cadastre_menu(object):
                     'Validation des géométries',
                     'Certaines données EDIGEO contiennent des géométries invalides (polygones croisés dit "papillons", polygones non fermés, etc.). Cette version utilise une fonction de PostGIS qui tente de corriger ces invalidités. Il faut impérativement <b>utiliser une version récente de PostGIS</b> : 2.0.4 minimum pour la version 2, ou les version ultérieures (2.1 par exemple)'
                 ]
-            ]
-            ,
+            ],
             '1.4.0': [
                 [
                     'Modification de la structure',
                     'Pour cette nouvelle version 1.4.0 du plugin, la structure de la base de données a été légèrement modifiée par rapport à la 1.4.0. Pour pouvoir utiliser les fonctions du plugin Cadastre, vous devez donc impérativement <b>réimporter les données dans une base vide</b>. Les changements concernent les identifiants des tables parcelle, geo_parcelle, commune, local00, local10, pev, pevexoneration, pevtaxation, pevprincipale, pevprofessionnelle, pevdependances, ainsi que la création d\'une table parcelle_info pour consolider EDIGEO et MAJIC.'
                 ]
-            ]
-            ,
+            ],
             '1.8.1': [
                 [
                     'Spatialite: Correction de l\'affichage des locaux dans la fiche parcellaire',

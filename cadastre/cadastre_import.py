@@ -20,7 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 """
-import os, glob
+import os
+import glob
 import io
 import sys
 import re
@@ -298,8 +299,8 @@ class cadastreImport(QObject):
 
         # dict for parameters replacement
         replaceDict = self.replaceDict.copy()
-        mandatoryFilesKeys = ['[FICHIER_BATI]', '[FICHIER_FANTOIR]', '[FICHIER_NBATI]', '[FICHIER_PROP]']
-        missingMajicFiles = False
+        # mandatoryFilesKeys = ['[FICHIER_BATI]', '[FICHIER_FANTOIR]', '[FICHIER_NBATI]', '[FICHIER_PROP]']
+        # missingMajicFiles = False
 
         scriptList = []
         scriptList.append(
@@ -804,7 +805,7 @@ class cadastreImport(QObject):
             for rep in tempFolderList:
                 if os.path.exists(rep):
                     shutil.rmtree(rep)
-                    rmt = 1
+                    # rmt = 1
         except IOError as e:
             delmsg = u"<b>Erreur lors de la suppression des répertoires temporaires: %s</b>" % e
             self.qc.updateLog(delmsg)
@@ -933,7 +934,7 @@ class cadastreImport(QObject):
                         myzip.extractall(inner_folder)
                     try:
                         os.remove(filename)
-                    except OSError as e:
+                    except OSError:
                         self.qc.updateLog("<b>Erreur lors de la suppression de %s</b>" % str(filename))
                         pass  # in Windows, sometime file is not unlocked
                     i += 1
@@ -943,7 +944,7 @@ class cadastreImport(QObject):
                 tarFileListA = self.listFilesInDirectory(path, ['bz2'])
                 for z in tarFileListA:
                     with tarfile.open(z) as t:
-                        tar = t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
+                        t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
                         i += 1
                         t.close()
 
@@ -951,16 +952,16 @@ class cadastreImport(QObject):
                 tarFileListB = self.listFilesInDirectory(self.edigeoPlainDir, ['bz2'])
                 for z in tarFileListB:
                     with tarfile.open(z) as t:
-                        tar = t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
+                        t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
                         i += 1
                         t.close()
                     try:
                         os.remove(z)
-                    except OSError as e:
+                    except OSError:
                         self.qc.updateLog("<b>Erreur lors de la suppression de %s</b>" % str(z))
                         pass  # in Windows, sometime file is not unlocked
 
-            except IOError as e:
+            except IOError:
                 msg = u"<b>Erreur lors de l'extraction des fichiers EDIGEO</b>"
                 self.go = False
                 self.qc.updateLog(msg)
@@ -1118,7 +1119,7 @@ class cadastreImport(QObject):
                         DlgDbError.showError(e, self.dialog)
                         self.go = False
                         self.qc.updateLog(e.msg)
-                except UnicodeDecodeError as e:
+                except UnicodeDecodeError:
                     try:
                         c = self.connector._execute_and_commit(sql)
                     except BaseError as e:
@@ -1361,7 +1362,6 @@ class cadastreImport(QObject):
         '''
         if self.go:
             reg = '^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_[0-9]+)_(Objet_[0-9]+)'
-            l = None
             try:
                 with open(path) as inputFile:
                     # Get a list of RID relations combining a "Rel" and two "_Objet"

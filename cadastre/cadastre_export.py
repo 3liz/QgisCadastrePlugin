@@ -348,7 +348,7 @@ class cadastreExport:
                 if key in list(self.mainTables.keys()) \
                         and key not in list(self.contentKeeped.keys()) \
                         and len(data) < self.maxLineNumber:
-                    for l in range(self.maxLineNumber - len(data)):
+                    for _ in range(self.maxLineNumber - len(data)):
                         replaceDict = {}
                         for i in range(len(item['names'])):
                             replaceDict['$%s' % item['names'][i]] = u'&nbsp;'
