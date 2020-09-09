@@ -25,28 +25,14 @@ from qgis.core import QgsProcessingProvider
 
 from .algorithms.config import ConfigProjectAlgorithm
 
+
 class CadastreProvider(QgsProcessingProvider):
-
-    def __init__(self):
-        super().__init__()
-        self.alglist = []
-
-    def unload(self):
-        """
-        Unloads the provider. Any tear-down steps required by the provider
-        should be implemented here.
-        """
-        pass
 
     def loadAlgorithms(self):
         """
         Loads all algorithms belonging to this provider.
         """
-        # Load algorithms
-        self.alglist = [ConfigProjectAlgorithm()]
-
-        for alg in self.alglist:
-            self.addAlgorithm( alg )
+        self.addAlgorithm(ConfigProjectAlgorithm())
 
     def id(self):
         """
