@@ -8,7 +8,6 @@ sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/"))
 sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/plugins/"))
 sys.path.append('/srv/qgis/plugins')
 
-
 from qgis.gui import QgsMapCanvas, QgsLayerTreeMapCanvasBridge
 from qgis.core import QgsApplication, QgsProject, QgsFeatureRequest
 
@@ -21,27 +20,27 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '-P',
-    metavar=('\"Project file\"'),
+    metavar='\"Project file\"',
     help='Usage: Override QGS project file'
 )
 parser.add_argument(
     '-L',
-    metavar=('\"Parcelle layer name\"'),
+    metavar='\"Parcelle layer name\"',
     help='Usage: Override Parcelle layer name'
 )
 parser.add_argument(
     '-I',
-    metavar=('\"Parcelle ID\"'),
+    metavar='\"Parcelle ID\"',
     help='Usage: Override Parcelle ID'
 )
 parser.add_argument(
     '-T',
-    metavar=('\"Export type\"'),
+    metavar='\"Export type\"',
     help='Usage: Override Export type'
 )
 parser.add_argument(
     '-O',
-    metavar=('\"Output log file\"'),
+    metavar='\"Output log file\"',
     help='Usage: Override Output log file'
 )
 
@@ -60,21 +59,19 @@ target_dir = '/tmp/'
 # -O = Output log file ("/tmp/export_cadastre.log")
 output_log = '/tmp/export_cadastre.log'
 
-
 #### Setting variables using flags ####
-if("-P" in sys.argv):
+if "-P" in sys.argv:
     project_path = sys.argv[sys.argv.index("-P") + 1]
-if("-L" in sys.argv):
+if "-L" in sys.argv:
     parcelle_layer = sys.argv[sys.argv.index("-L") + 1]
-if("-I" in sys.argv):
+if "-I" in sys.argv:
     parcelle_id = sys.argv[sys.argv.index("-I") + 1]
-if("-T" in sys.argv):
+if "-T" in sys.argv:
     export_type = sys.argv[sys.argv.index("-T") + 1]
-if("-D" in sys.argv):
+if "-D" in sys.argv:
     target_dir = sys.argv[sys.argv.index("-D") + 1]
-if("-O" in sys.argv):
+if "-O" in sys.argv:
     output_log = sys.argv[sys.argv.index("-O") + 1]
-
 
 # Instantiate QGIS
 QgsApplication.setPrefixPath(qgisPrefixPath, True)
@@ -95,9 +92,9 @@ bridge.setCanvasLayers()
 layerList = p.mapLayersByName(parcelle_layer)
 if not layerList:
     layers = p.mapLayers()
-    for lname,layer in layers.items():
-        print(lname+' '+layer.name()+' '+parcelle_layer)
-    layerList = [ layer for lname,layer in layers.items() if layer.name() == parcelle_layer ]
+    for lname, layer in layers.items():
+        print(lname + ' ' + layer.name() + ' ' + parcelle_layer)
+    layerList = [layer for lname, layer in layers.items() if layer.name() == parcelle_layer]
 layer = layerList[0]
 
 # Get Feature
@@ -111,7 +108,7 @@ for f in it:
 
 # Get connecion params
 connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
-connector = cadastre_common.getConnectorFromUri( connectionParams )
+connector = cadastre_common.getConnectorFromUri(connectionParams)
 
 # Get compte communal
 comptecommunal = cadastre_common.getCompteCommunalFromParcelleId(
@@ -148,5 +145,3 @@ with open(output_log, 'w') as f:
 
 # Exit
 QgsApplication.exitQgis()
-
-
