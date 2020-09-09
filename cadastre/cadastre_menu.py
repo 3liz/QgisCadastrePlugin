@@ -29,7 +29,8 @@ from qgis.core import (
 )
 
 from .cadastre_identify_parcelle import IdentifyParcelle
-from .cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
+from .cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, \
+    cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
 from .processing.provider import CadastreProvider
 
 import configparser
@@ -37,6 +38,7 @@ from pathlib import Path
 import os.path
 import tempfile
 from time import time
+
 
 # ---------------------------------------------
 
@@ -109,13 +111,12 @@ class cadastre_menu(object):
         self.iface.addPluginToMenu("&Cadastre", self.version_action)
         self.iface.addPluginToMenu("&Cadastre", self.help_action)
 
-
         # Add cadastre toolbar
         self.toolbar = self.iface.addToolBar('&Cadastre')
 
         # open import dialog
         self.openImportAction = QAction(
-            QIcon(plugin_dir +"/icons/database.png"),
+            QIcon(plugin_dir + "/icons/database.png"),
             "Importer des données",
             self.iface.mainWindow()
         )
@@ -125,7 +126,7 @@ class cadastre_menu(object):
 
         # open load dialog
         self.openLoadAction = QAction(
-            QIcon(plugin_dir +"/icons/output.png"),
+            QIcon(plugin_dir + "/icons/output.png"),
             "Charger des données",
             self.iface.mainWindow()
         )
@@ -134,17 +135,17 @@ class cadastre_menu(object):
 
         # open search dialog
         self.openSearchAction = QAction(
-            QIcon(plugin_dir +"/icons/search.png"),
+            QIcon(plugin_dir + "/icons/search.png"),
             "Outils de recherche",
             self.iface.mainWindow()
         )
         self.openSearchAction.triggered.connect(self.toggle_search_dialog)
-        #~ self.openSearchAction.setCheckable(True)
+        # ~ self.openSearchAction.setCheckable(True)
         self.toolbar.addAction(self.openSearchAction)
 
         # export composer
         self.runExportAction = QAction(
-            QIcon(plugin_dir +"/icons/mActionSaveAsPDF.png"),
+            QIcon(plugin_dir + "/icons/mActionSaveAsPDF.png"),
             "Exporter la vue",
             self.iface.mainWindow()
         )
@@ -153,7 +154,7 @@ class cadastre_menu(object):
 
         # open Option dialog
         self.openOptionAction = QAction(
-            QIcon(plugin_dir +"/icons/config.png"),
+            QIcon(plugin_dir + "/icons/config.png"),
             "Configurer le plugin",
             self.iface.mainWindow()
         )
@@ -162,7 +163,7 @@ class cadastre_menu(object):
 
         # open About dialog
         self.openAboutAction = QAction(
-            QIcon(plugin_dir +"/icons/about.png"),
+            QIcon(plugin_dir + "/icons/about.png"),
             "À propos",
             self.iface.mainWindow()
         )
@@ -171,19 +172,19 @@ class cadastre_menu(object):
 
         # Create action for "Parcelle information"
         self.identifyParcelleAction = QAction(
-            QIcon(plugin_dir +"/icons/toolbar/get-parcelle-info.png"),
+            QIcon(plugin_dir + "/icons/toolbar/get-parcelle-info.png"),
             "Infos parcelle",
             self.iface.mainWindow()
         )
         self.identifyParcelleAction.setCheckable(True)
-        self.identifyParcelleAction.triggered.connect( self.setIndentifyParcelleTool )
-        self.toolbar.addAction( self.identifyParcelleAction )
+        self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
+        self.toolbar.addAction(self.identifyParcelleAction)
 
         self.setActionsExclusive()
 
         # Display About window on first use
         s = QSettings()
-        firstUse = s.value("cadastre/isFirstUse" , 1, type=int)
+        firstUse = s.value("cadastre/isFirstUse", 1, type=int)
         if firstUse == 1:
             s.setValue("cadastre/isFirstUse", 0)
             self.open_about_dialog()
@@ -191,12 +192,12 @@ class cadastre_menu(object):
         # Display some messages depending on version number
         mConfig = configparser.ConfigParser()
         metadataFile = plugin_dir + "/metadata.txt"
-        mConfig.read( metadataFile, encoding='utf-8' )
+        mConfig.read(metadataFile, encoding='utf-8')
         self.mConfig = mConfig
         myVersion = mConfig.get('general', 'version').replace('.', '_')
-        myVersionMsg = s.value("cadastre/version_%s" % myVersion , 1, type=int)
+        myVersionMsg = s.value("cadastre/version_%s" % myVersion, 1, type=int)
         if myVersionMsg == 1:
-            s.setValue("cadastre/version_%s" % myVersion , 0)
+            s.setValue("cadastre/version_%s" % myVersion, 0)
             self.open_message_dialog()
 
         # Project load or create : refresh search and identify tool
@@ -205,8 +206,7 @@ class cadastre_menu(object):
 
         # Delete layers from table when deleted from registry
         lr = QgsProject.instance()
-        lr.layersRemoved.connect( self.checkIdentifyParcelleTool )
-
+        lr.layersRemoved.connect(self.checkIdentifyParcelleTool)
 
     def open_import_dialog(self):
         '''
@@ -255,10 +255,10 @@ class cadastre_menu(object):
         d.setContent(template_content)
 
         c = QgsPrintLayout(QgsProject.instance())
-        c.loadFromTemplate(d, QgsReadWriteContext() )
+        c.loadFromTemplate(d, QgsReadWriteContext())
 
         # Set scale and extent
-        cm=c.referenceMap()
+        cm = c.referenceMap()
         canvas = self.iface.mapCanvas()
         extent = canvas.extent()
         scale = canvas.scale()
@@ -270,15 +270,15 @@ class cadastre_menu(object):
         # Export
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
         self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
-        temp = int(time()*100)
+        temp = int(time() * 100)
         temppath = os.path.join(tempDir, 'export_cadastre_%s.pdf' % temp)
 
         exporter = QgsLayoutExporter(c)
         exportersettings = QgsLayoutExporter.PdfExportSettings()
         exportersettings.dpi = 300
         exportersettings.forceVectorOutput = True
-        exportersettings.rasterizeWholeImage = False #rasterizeWholeImage = false
-        exporter.exportToPdf(temppath, exportersettings )
+        exportersettings.rasterizeWholeImage = False  # rasterizeWholeImage = false
+        exporter.exportToPdf(temppath, exportersettings)
 
         QApplication.restoreOverrideCursor()
 
@@ -292,14 +292,12 @@ class cadastre_menu(object):
         dialog = cadastre_option_dialog(self.iface)
         dialog.exec_()
 
-
     def open_about_dialog(self):
         '''
         About dialog
         '''
         dialog = cadastre_about_dialog(self.iface)
         dialog.exec_()
-
 
     def setActionsExclusive(self):
 
@@ -310,17 +308,17 @@ class cadastre_menu(object):
         tmpActionList = self.iface.attributesToolBar().actions()
         for action in tmpActionList:
             if isinstance(action, QWidgetAction):
-                actionList.extend( action.defaultWidget().actions() )
+                actionList.extend(action.defaultWidget().actions())
             else:
-                actionList.append( action )
+                actionList.append(action)
         # ... add other toolbars' action lists...
 
         # Build a group with actions from actionList and add your own action
-        group = QActionGroup( self.iface.mainWindow() )
+        group = QActionGroup(self.iface.mainWindow())
         group.setExclusive(True)
         for action in actionList:
-            group.addAction( action )
-        group.addAction( self.identifyParcelleAction )
+            group.addAction(action)
+        group.addAction(self.identifyParcelleAction)
 
     def checkIdentifyParcelleTool(self, layerIds=None):
         '''
@@ -359,7 +357,7 @@ class cadastre_menu(object):
             self.iface.actionPan().trigger()
             return
 
-        self.identyParcelleTool = IdentifyParcelle( self.mapCanvas, parcelleLayer )
+        self.identyParcelleTool = IdentifyParcelle(self.mapCanvas, parcelleLayer)
         self.identyParcelleTool.cadastreGeomIdentified.connect(self.getParcelleInfo)
 
         # The activate identify tool
@@ -412,11 +410,11 @@ class cadastre_menu(object):
                 [
                     'Compatibilité avec QGIS 2.6',
                     'La compatibilité n\'est pas assurée à 100 % avec la dernière version 2.6 de QGIS, notamment pour la création d\'une base Spatialite vide. Vous pouvez utiliser les outils de QGIS pour le faire.'
-                ] ,
+                ],
                 [
                     'Lien entre les parcelles EDIGEO et MAJIC',
                     'Pour cette nouvelle version du plugin, la structure de la base de données a été légèrement modifiée. Pour pouvoir utiliser les fonctions du plugin Cadastre, vous devez donc impérativement <b>réimporter les données dans une base vide</b>'
-                ] ,
+                ],
                 [
                     'Validation des géométries',
                     'Certaines données EDIGEO contiennent des géométries invalides (polygones croisés dit "papillons", polygones non fermés, etc.). Cette version utilise une fonction de PostGIS qui tente de corriger ces invalidités. Il faut impérativement <b>utiliser une version récente de PostGIS</b> : 2.0.4 minimum pour la version 2, ou les version ultérieures (2.1 par exemple)'
@@ -443,27 +441,25 @@ class cadastre_menu(object):
 
         message = '<h2>Version %s - notes concernant cette version</h2>' % version
         if version in versionMessages:
-            message+='<ul>'
+            message += '<ul>'
             for item in versionMessages[version]:
-                message+='<li><b>%s</b> - %s</li>' % (item[0], item[1])
-            message+='</ul>'
+                message += '<li><b>%s</b> - %s</li>' % (item[0], item[1])
+            message += '</ul>'
 
-        message+= '<h3>Changelog</h3>'
-        message+= '<p>'
+        message += '<h3>Changelog</h3>'
+        message += '<p>'
         i = 0
         for item in changelog.split('*'):
             if i == 0:
-                message+= '<b>%s</b><ul>' % item
+                message += '<b>%s</b><ul>' % item
             else:
-                message+= '<li>%s</li>' % item
-            i+=1
-        message+='</ul>'
-        message+= '</p>'
+                message += '<li>%s</li>' % item
+            i += 1
+        message += '</ul>'
+        message += '</p>'
 
         dialog = cadastre_message_dialog(self.iface, message)
         dialog.exec_()
-
-
 
     def unload(self):
 
@@ -483,4 +479,3 @@ class cadastre_menu(object):
 
         # Remove processing provider
         QgsApplication.processingRegistry().removeProvider(self.provider)
-

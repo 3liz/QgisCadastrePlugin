@@ -27,7 +27,6 @@ from qgis.core import (
     QgsMapSettings,
 )
 
-
 from .cadastre_export import cadastreExport as cadastreExportBase
 import cadastre.cadastre_common_base as cadastre_common
 
@@ -35,6 +34,7 @@ from qgis.PyQt.QtWidgets import QDialog
 
 from pathlib import Path
 from qgis.PyQt import uic
+
 PRINT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         str(Path(__file__).resolve().parent),
@@ -43,17 +43,20 @@ PRINT_FORM_CLASS, _ = uic.loadUiType(
     )
 )
 
+
 class cadastrePrintProgress(QDialog, PRINT_FORM_CLASS):
     def __init__(self, parent=None):
         super(cadastrePrintProgress, self).__init__(parent)
         # Set up the user interface
         self.setupUi(self)
 
+
 from typing import Generator, Callable
 from contextlib import contextmanager
 
+
 @contextmanager
-def printProgress(self, nb: int) -> Generator[Callable[[int], None] ,None, None]:
+def printProgress(self, nb: int) -> Generator[Callable[[int], None], None, None]:
     # Show progress dialog
     printProgress = cadastrePrintProgress()
     # Set progress bar
@@ -68,12 +71,12 @@ def printProgress(self, nb: int) -> Generator[Callable[[int], None] ,None, None]
 class cadastreExport(cadastreExportBase):
 
     def __init__(self, layer: QgsMapLayer, etype: str, comptecommunal: str,
-                 geo_parcelle: str=None, target_dir: str=None) -> None:
+                 geo_parcelle: str = None, target_dir: str = None) -> None:
 
         self.mProgress = printProgress
 
         super().__init__(QgsProject.instance(),
-                layer, etype, comptecommunal, geo_parcelle, target_dir)
+                         layer, etype, comptecommunal, geo_parcelle, target_dir)
 
         self.print_parcelle_page = True
 
@@ -83,7 +86,7 @@ class cadastreExport(cadastreExportBase):
         QgsMapRenderer or QgsMapSettings
         Different if context is server
         '''
-        #return self.iface.mapCanvas().mapSettings()
+        # return self.iface.mapCanvas().mapSettings()
         return super().getMapInstance()
 
     def getHtmlFromTemplate(self, tplPath, replaceDict):
@@ -119,5 +122,3 @@ class cadastreExport(cadastreExportBase):
             openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
 
         return paths
-
-

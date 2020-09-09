@@ -48,7 +48,6 @@ class Cadastre(object):
             if qVersion() > '4.3.3':
                 QCoreApplication.installTranslator(self.translator)
 
-
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
@@ -65,4 +64,3 @@ class Cadastre(object):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu(u"&Cadastre", self.action)
         self.iface.removeToolBarIcon(self.action)
-

@@ -32,6 +32,7 @@ from qgis.core import (
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector, DBConnector
 
+
 def hasSpatialiteSupport() -> bool:
     '''
     Check whether or not
@@ -53,11 +54,12 @@ def openFile(filename: str) -> None:
     if sys.platform == "win32":
         os.startfile(filename)
     else:
-        opener ="open" if sys.platform == "darwin" else "xdg-open"
+        opener = "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, filename])
 
 
-def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol: str='geom', sql: str='') -> QgsMapLayer:
+def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol: str = 'geom',
+                                   sql: str = '') -> QgsMapLayer:
     '''
     Get the layer from QGIS legend
     corresponding to a database
@@ -66,7 +68,7 @@ def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol:
     import re
     layer = None
     lr = project
-    for lid,l in list(lr.mapLayers().items()):
+    for lid, l in list(lr.mapLayers().items()):
         if not hasattr(l, 'providerType'):
             continue
         if hasattr(l, 'type') and l.type() != QgsMapLayer.VectorLayer:
@@ -81,18 +83,19 @@ def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol:
 
         reg = r'(\.| )?(%s)' % tableName
         if connectionParams and \
-            ( \
-                connectionParams['table'] == tableName or \
-                ( re.findall(reg, '%s' % connectionParams['table']) and re.findall(reg, '%s' % connectionParams['table'])[0] ) \
-            ) and \
-            connectionParams['geocol'] == geomCol:
-            #and connectionParams['sql'] == sql:
+                ( \
+                                connectionParams['table'] == tableName or \
+                                (re.findall(reg, '%s' % connectionParams['table']) and
+                                 re.findall(reg, '%s' % connectionParams['table'])[0]) \
+                        ) and \
+                connectionParams['geocol'] == geomCol:
+            # and connectionParams['sql'] == sql:
             return l
 
     return layer
 
 
-def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> Dict[str,str]:
+def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> Dict[str, str]:
     '''
     Get connection parameters
     from the layer datasource
@@ -109,22 +112,22 @@ def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> Dict[str,str]:
 
     # TODO Use immutable namedtuple
     connectionParams = {
-        'service' : uri.service(),
-        'dbname' : uri.database(),
-        'host' : uri.host(),
+        'service': uri.service(),
+        'dbname': uri.database(),
+        'host': uri.host(),
         'port': uri.port(),
-        'user' : uri.username(),
+        'user': uri.username(),
         'password': uri.password(),
-        'sslmode' : uri.sslMode(),
+        'sslmode': uri.sslMode(),
         'key': uri.keyColumn(),
-        'estimatedmetadata' : str(uri.useEstimatedMetadata()),
-        'checkPrimaryKeyUnicity' : '',
-        'srid' : uri.srid(),
+        'estimatedmetadata': str(uri.useEstimatedMetadata()),
+        'checkPrimaryKeyUnicity': '',
+        'srid': uri.srid(),
         'type': uri.wkbType(),
         'schema': uri.schema(),
-        'table' : uri.table(),
-        'geocol' : uri.geometryColumn(),
-        'sql' : uri.sql(),
+        'table': uri.table(),
+        'geocol': uri.geometryColumn(),
+        'sql': uri.sql(),
         'dbType': dbType
     }
 
@@ -145,7 +148,7 @@ def setSearchPath(sql: str, schema: str) -> str:
 
 
 def fetchDataFromSqlQuery(connector: 'DBConnector',
-        sql: str, schema: str=None) -> List[Any]:
+                          sql: str, schema: str = None) -> List[Any]:
     '''
     Execute a SQL query and
     return [header, data, rowCount]
@@ -157,9 +160,9 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
     rowCount = 0
     c = None
     ok = True
-    #print "run query"
+    # print "run query"
     try:
-        c = connector._execute(None,str(sql))
+        c = connector._execute(None, str(sql))
         data = []
         header = connector._get_cursor_columns(c)
         if header is None:
@@ -176,21 +179,21 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
 
     finally:
         if c:
-            #print "close connection"
+            # print "close connection"
             c.close()
             del c
 
     # Log errors
     if not ok:
         print(error_message)
-        QgsMessageLog.logMessage( "cadastre debug - error while fetching data from database" )
+        QgsMessageLog.logMessage("cadastre debug - error while fetching data from database")
         print(sql)
 
     # TODO: Return tuple
     return [header, data, rowCount, ok]
 
 
-def getConnectorFromUri(connectionParams: Dict[str,str]) -> 'DBConnector':
+def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
     '''
     Set connector property
     for the given database type
@@ -226,7 +229,7 @@ def getConnectorFromUri(connectionParams: Dict[str,str]) -> 'DBConnector':
     return connector
 
 
-def postgisToSpatialite(sql: str, targetSrid: str='2154') -> str:
+def postgisToSpatialite(sql: str, targetSrid: str = '2154') -> str:
     '''
     Convert postgis SQL statement
     into spatialite compatible
@@ -240,15 +243,15 @@ def postgisToSpatialite(sql: str, targetSrid: str='2154') -> str:
         {'in': r'with\(oids=.+\)', 'out': ''},
         {'in': r'comment on [^;]+;', 'out': ''},
         {'in': r'alter table ([^;]+) add primary key( )+\(([^;]+)\);',
-        'out': r'create index idx_\1_\3 on \1 (\3);'},
+         'out': r'create index idx_\1_\3 on \1 (\3);'},
         {'in': r'alter table ([^;]+) add constraint [^;]+ primary key( )+\(([^;]+)\);',
-        'out': r'create index idx_\1_\3 on \1 (\3);'},
+         'out': r'create index idx_\1_\3 on \1 (\3);'},
         {'in': r'alter table [^;]+drop column[^;]+;', 'out': ''},
         {'in': r'alter table [^;]+drop constraint[^;]+;', 'out': ''},
-        #~ {'in': r'^analyse [^;]+;', 'out': ''},
+        # ~ {'in': r'^analyse [^;]+;', 'out': ''},
         # replace
         {'in': r'truncate (bati|fanr|lloc|nbat|pdll|prop)',
-        'out': r'drop table \1;create table \1 (tmp text)'},
+         'out': r'drop table \1;create table \1 (tmp text)'},
         {'in': r'truncate ', 'out': 'delete from '},
         {'in': r'distinct on *\([a-z, ]+\)', 'out': 'distinct'},
         {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
@@ -258,13 +261,13 @@ def postgisToSpatialite(sql: str, targetSrid: str='2154') -> str:
         {'in': r"(to_char\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS TEXT)"},
         {'in': r"(to_number\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS float)"},
         {'in': r"(to_date\()([^']+) *, *'DDMMYYYY' *\)",
-        'out': r"date(substr(\2, 5, 4) || '-' || substr(\2, 3, 2) || '-' || substr(\2, 1, 2))"},
+         'out': r"date(substr(\2, 5, 4) || '-' || substr(\2, 3, 2) || '-' || substr(\2, 1, 2))"},
         {'in': r"(to_date\()([^']+) *, *'DD/MM/YYYY' *\)",
-        'out': r"date(substr(\2, 7, 4) || '-' || substr(\2, 4, 2) || '-' || substr(\2, 1, 2))"},
+         'out': r"date(substr(\2, 7, 4) || '-' || substr(\2, 4, 2) || '-' || substr(\2, 1, 2))"},
         {'in': r"(to_date\()([^']+) *, *'YYYYMMDD' *\)",
-        'out': r"date(substr(\2, 1, 4) || '-' || substr(\2, 5, 2) || '-' || substr(\2, 7, 2))"},
+         'out': r"date(substr(\2, 1, 4) || '-' || substr(\2, 5, 2) || '-' || substr(\2, 7, 2))"},
         {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",
-        'out': r"strftime('%d/%m/%Y', \2)"},
+         'out': r"strftime('%d/%m/%Y', \2)"},
         {'in': r"ST_MakeValid\(geom\)",
          'out': r"CASE WHEN ST_IsValid(geom) THEN geom ELSE ST_Buffer(geom,0) END"},
         {'in': r"ST_MakeValid\(p\.geom\)",
@@ -273,15 +276,15 @@ def postgisToSpatialite(sql: str, targetSrid: str='2154') -> str:
     ]
 
     for a in replaceDict:
-        r = re.compile(a['in'], re.IGNORECASE|re.MULTILINE)
+        r = re.compile(a['in'], re.IGNORECASE | re.MULTILINE)
         sql = r.sub(a['out'], sql)
 
     # index spatiaux
-    r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);',  re.IGNORECASE|re.MULTILINE)
+    r = re.compile(r'(create index [^;]+ ON )([^;]+)( USING +)(gist +)?\(([^;]+)\);', re.IGNORECASE | re.MULTILINE)
     sql = r.sub(r"SELECT createSpatialIndex('\2', '\5');", sql)
 
     # replace postgresql "update from" statement
-    r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE|re.MULTILINE)
+    r = re.compile(r'(update [^;=]+)(=)([^;=]+ FROM [^;]+)(;)', re.IGNORECASE | re.MULTILINE)
     sql = r.sub(r'\1=(SELECT \3);', sql)
 
     return sql
@@ -289,7 +292,7 @@ def postgisToSpatialite(sql: str, targetSrid: str='2154') -> str:
 
 def postgisToSpatialiteLocal10(sql: str, dataYear: str) -> str:
     # majic formatage : replace multiple column update for loca10
-    r = re.compile(r'update local10 set[^;]+;',  re.IGNORECASE|re.MULTILINE)
+    r = re.compile(r'update local10 set[^;]+;', re.IGNORECASE | re.MULTILINE)
     res = r.findall(sql)
     replaceBy = ''
     for statement in res:
@@ -330,9 +333,8 @@ def postgisToSpatialiteLocal10(sql: str, dataYear: str) -> str:
     return sql
 
 
-def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,str],
-        connector: 'DBConnector') -> Union[str,None]:
-
+def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str, str],
+                                    connector: 'DBConnector') -> Union[str, None]:
     comptecommunal = None
 
     sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
@@ -345,8 +347,8 @@ def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,
     return comptecommunal
 
 
-def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[str,str],
-        connector: 'DBConnector') -> List[str]:
+def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[str, str],
+                                    connector: 'DBConnector') -> List[str]:
     '''
     Get the list of "comptecommunal" for all cities
     for a owner given one single comptecommunal
@@ -354,11 +356,11 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
     cc = comptecommunal
 
     sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"
-    sql+= " FROM proprietaire p"
-    sql+= " WHERE 2>1"
-    sql+= " AND trim(p.ddenom) IN (SELECT trim(ddenom) FROM proprietaire WHERE comptecommunal = '%s')" % comptecommunal
-    sql+= " GROUP BY dnuper, ddenom, dlign4"
-    sql+= " ORDER BY ddenom"
+    sql += " FROM proprietaire p"
+    sql += " WHERE 2>1"
+    sql += " AND trim(p.ddenom) IN (SELECT trim(ddenom) FROM proprietaire WHERE comptecommunal = '%s')" % comptecommunal
+    sql += " GROUP BY dnuper, ddenom, dlign4"
+    sql += " ORDER BY ddenom"
 
     if connectionParams['dbType'] == 'postgis':
         sql = setSearchPath(sql, connectionParams['schema'])
@@ -366,7 +368,7 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
     if connectionParams['dbType'] == 'spatialite':
         sql = sql.replace('MyStringAgg', 'group_concat')
 
-    [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector,sql)
+    [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector, sql)
     ccs = []
     if ok:
         for line in data:
@@ -376,8 +378,8 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
     return ret
 
 
-def getItemHtml(item: str, feature, connectionParams: Dict[str,str],
-        connector: 'DBConnector') -> str:
+def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
+                connector: 'DBConnector') -> str:
     '''
     Build Html for a item (parcelle, proprietaires, etc.)
     based on SQL query
@@ -414,7 +416,7 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str,str],
     with open(os.path.join(plugin_dir, sqlfile)) as sqltemplate:
         sql = sqltemplate.read() % feature['geo_parcelle']
     if not sql:
-        html+= 'Impossible de lire le SQL dans le fichier %s' % sqlfile
+        html += 'Impossible de lire le SQL dans le fichier %s' % sqlfile
         return html
 
     if connectionParams['dbType'] == 'postgis':
@@ -425,13 +427,11 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str,str],
     # print sql
 
     if ok:
-        html+= '<h2>' + info['label']+ '</h2>'
+        html += '<h2>' + info['label'] + '</h2>'
         for line in data:
             # print info['label']
             # print line
             if line and len(line) > 0 and line[0]:
-                html+= '%s' % line[0].replace('100p', '100%')
+                html += '%s' % line[0].replace('100p', '100%')
 
     return html
-
-
