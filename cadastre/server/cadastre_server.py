@@ -25,11 +25,13 @@ from pathlib import Path
 
 from .cadastre_service import CadastreService
 
+
 class CadastreServer:
     """ Plugin for QGIS server
 
         This plugin loads Cadastre server service
     """
+
     def __init__(self, serverIface: 'QgsServerInterface') -> None:
         # Save reference to the QGIS server interface
         self.serverIface = serverIface
@@ -37,22 +39,21 @@ class CadastreServer:
         cachedirstr = os.getenv('QGIS_CADASTRE_CACHE_DIR')
         if not cachedirstr:
             # Create cache in /tmp/org.qgis.cadastre
-            cachedirstr = os.path.join(tempfile.gettempdir(),'org.qgis.cadastre')
+            cachedirstr = os.path.join(tempfile.gettempdir(), 'org.qgis.cadastre')
 
         self.cachedir = Path(cachedirstr)
         self.cachedir.mkdir(mode=0o750, parents=True, exist_ok=True)
 
-        QgsMessageLog.logMessage('Cache directory set to %s' % cachedirstr,'cadastre',Qgis.Info)
+        QgsMessageLog.logMessage('Cache directory set to %s' % cachedirstr, 'cadastre', Qgis.Info)
 
-        debug = os.getenv('QGIS_CADASTRE_DEBUG', '').lower() in ('1','yes','y','true')
+        debug = os.getenv('QGIS_CADASTRE_DEBUG', '').lower() in ('1', 'yes', 'y', 'true')
 
         reg = serverIface.serviceRegistry()
         reg.registerService(CadastreService(cachedir=self.cachedir, debug=debug))
 
-    def createService(self, debug: bool=False) -> CadastreService:
+    def createService(self, debug: bool = False) -> CadastreService:
         """ Create  a new service instance
 
             Used for testing
         """
         return CadastreService(self.cachedir, debug=debug)
-

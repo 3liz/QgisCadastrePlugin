@@ -40,12 +40,11 @@ from qgis.server import (QgsService,
 import cadastre.cadastre_common_base as cadastre_common
 from cadastre.cadastre_export import cadastreExport
 
-
 # Parcelle format for validation
 PARCELLE_FORMAT_RE = re.compile("^([A-Z0-9]+)*$")
 
 
-def write_json_response( data: Dict[str,str], response: QgsServerResponse, code: int=200) -> None:
+def write_json_response(data: Dict[str, str], response: QgsServerResponse, code: int = 200) -> None:
     """ Write data as json response
     """
     response.setStatusCode(code)
@@ -53,36 +52,35 @@ def write_json_response( data: Dict[str,str], response: QgsServerResponse, code:
     response.write(json.dumps(data))
 
 
-
 class CadastreError(Exception):
 
     def __init__(self, code: int, msg: str) -> None:
         super().__init__(msg)
-        self.msg  = msg
+        self.msg = msg
         self.code = code
-        QgsMessageLog.logMessage("Cadastre request error %s: %s" % (code,msg),"cadastre",Qgis.Critical)
+        QgsMessageLog.logMessage("Cadastre request error %s: %s" % (code, msg), "cadastre", Qgis.Critical)
 
     def formatResponse(self, response: QgsServerResponse) -> None:
         """ Format error response
         """
-        body = { 'status': 'fail', 'message': self.msg }
+        body = {'status': 'fail', 'message': self.msg}
         response.clear()
         write_json_response(body, response, self.code)
 
 
 # Immutable structure for holding resources values
 CadastreResources = namedtuple('CadastreResources',
-        ('layer','geo_parcelle','feature','type','layername',
-         'connector','connectionParams'))
+                               ('layer', 'geo_parcelle', 'feature', 'type', 'layername',
+                                'connector', 'connectionParams'))
 
 
 class CadastreService(QgsService):
 
-    def __init__(self, cachedir :Path, debug: bool=False) -> None:
+    def __init__(self, cachedir: Path, debug: bool = False) -> None:
         super().__init__()
 
         self.debugMode = debug
-        self.cachedir  = cachedir
+        self.cachedir = cachedir
 
     # QgsService inherited
 
@@ -109,7 +107,7 @@ class CadastreService(QgsService):
         params = request.parameters()
 
         try:
-            reqparam  = params.get('REQUEST','').lower()
+            reqparam = params.get('REQUEST', '').lower()
 
             if reqparam == 'getcapabilities':
                 self.get_capabilities(params, response, project)
@@ -127,19 +125,18 @@ class CadastreService(QgsService):
         except CadastreError as err:
             err.formatResponse(response)
         except Exception as exc:
-            QgsMessageLog.logMessage("Unhandled exception:\n%s" % traceback.format_exc(),"cadastre",Qgis.Critical)
-            err = CadastreError(500,"Internal 'cadastre' service error")
+            QgsMessageLog.logMessage("Unhandled exception:\n%s" % traceback.format_exc(), "cadastre", Qgis.Critical)
+            err = CadastreError(500, "Internal 'cadastre' service error")
             err.formatResponse(response)
 
-
-    def get_capabilities(self, params:Dict[str,str], response: QgsServerResponse, project: QgsProject) -> None:
+    def get_capabilities(self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject) -> None:
         """ Get cadastral capabilities based on config stored as project custom variables
         """
         # get project custom variables
         variables = project.customVariables()
 
         if 'cadastre_parcelle_layer_id' not in variables or \
-           'cadastre_parcelle_unique_field' not in variables:
+                'cadastre_parcelle_unique_field' not in variables:
             raise CadastreError(400, "Project has no cadastral capabilities")
 
         parcelle_layer_id = variables['cadastre_parcelle_layer_id']
@@ -149,7 +146,7 @@ class CadastreService(QgsService):
         if not player:
             raise CadastreError(404, "Parcel layer not available")
 
-        capabilities =  {
+        capabilities = {
             'parcelle': {
                 'id': player.id(),
                 'name': player.name(),
@@ -189,10 +186,9 @@ class CadastreService(QgsService):
             'status': 'success',
             'message': 'Capabilities',
             'data': capabilities
-        },response)
+        }, response)
 
-
-    def create_pdf(self, params:Dict[str,str], response: QgsServerResponse, project: QgsProject) -> None:
+    def create_pdf(self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject) -> None:
         """ Create a PDF from cadastral data
         """
         # Load ressources based on passed params
@@ -213,29 +209,29 @@ class CadastreService(QgsService):
             )
 
         if self.debugMode:
-            QgsMessageLog.logMessage( "Comptecommunal = %s" % comptecommunal,'cadastre',Qgis.Debug )
+            QgsMessageLog.logMessage("Comptecommunal = %s" % comptecommunal, 'cadastre', Qgis.Debug)
 
         # Export PDF
-        qex = cadastreExport(project, res.layer,res.type,comptecommunal,res.geo_parcelle)
+        qex = cadastreExport(project, res.layer, res.type, comptecommunal, res.geo_parcelle)
 
         paths = qex.exportAsPDF()
 
         if not paths:
-            raise CadastreError(424,'An error occured while generating the PDF')
+            raise CadastreError(424, 'An error occured while generating the PDF')
 
         if self.debugMode:
-            QgsMessageLog.logMessage( "exportAsPDF(), paths: %s" % paths,'cadastre', Qgis.Debug )
+            QgsMessageLog.logMessage("exportAsPDF(), paths: %s" % paths, 'cadastre', Qgis.Debug)
 
         tokens = []
-        for path in map(Path,paths):
+        for path in map(Path, paths):
             uid = uuid4()
 
             if self.debugMode:
-                QgsMessageLog.logMessage( "Item path: %s" % path )
+                QgsMessageLog.logMessage("Item path: %s" % path)
 
             newpath = self.cachedir / ('%s.pdf' % uid.hex)
             path.rename(newpath)
-            tokens.append( uid.hex )
+            tokens.append(uid.hex)
 
         write_json_response({
             'status': 'success',
@@ -248,45 +244,45 @@ class CadastreService(QgsService):
                 },
                 'tokens': tokens
             }
-        },response)
+        }, response)
 
-    def get_html(self, params:Dict[str,str], response: QgsServerResponse, project: QgsProject) -> None:
+    def get_html(self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject) -> None:
         # Load ressources based on passed params
         res = self.get_ressources(params, project)
 
-        getItemHtml = lambda n: cadastre_common.getItemHtml(n,res.feature,
-                                                              res.connectionParams,
-                                                              res.connector)
+        getItemHtml = lambda n: cadastre_common.getItemHtml(n, res.feature,
+                                                            res.connectionParams,
+                                                            res.connector)
         html = ''
-        html+= getItemHtml('parcelle_majic')
-        html+= getItemHtml('proprietaires')
-        html+= getItemHtml('subdivisions')
-        html+= getItemHtml('locaux')
-        html+= getItemHtml('locaux_detail')
+        html += getItemHtml('parcelle_majic')
+        html += getItemHtml('proprietaires')
+        html += getItemHtml('subdivisions')
+        html += getItemHtml('locaux')
+        html += getItemHtml('locaux_detail')
 
         write_json_response({
             'status': 'success',
             'message': 'HTML generated',
             'data': html
-        },response)
+        }, response)
 
-    def get_ressources(self, params: Dict[str,str], project: QgsProject) -> CadastreResources:
+    def get_ressources(self, params: Dict[str, str], project: QgsProject) -> CadastreResources:
         """ Find layer and feature corresponding to given parameters
         """
 
-        def get_param(name: str, allowed_values: Sequence[str]=None) -> str:
+        def get_param(name: str, allowed_values: Sequence[str] = None) -> str:
             v = params.get(name)
             if not v:
-                raise CadastreError(400,"Missing parameter '%s'" % name)
+                raise CadastreError(400, "Missing parameter '%s'" % name)
             v = v
             if allowed_values and v not in allowed_values:
-                raise CadastreError(400,"Invalid or missing value for '%s'" % name)
+                raise CadastreError(400, "Invalid or missing value for '%s'" % name)
             return v
 
         # Get layer and expression
-        player    = get_param('LAYER')
+        player = get_param('LAYER')
         pparcelle = get_param('PARCELLE')
-        ptype     = get_param('TYPE',('parcelle', 'proprietaire', 'fiche'))
+        ptype = get_param('TYPE', ('parcelle', 'proprietaire', 'fiche'))
 
         # Get feature
         if not PARCELLE_FORMAT_RE.match(pparcelle):
@@ -298,7 +294,7 @@ class CadastreService(QgsService):
         if len(lr) > 0:
             layer = lr[0]
         else:
-            raise CadastreError(404,"Layer '%s' not found" % player)
+            raise CadastreError(404, "Layer '%s' not found" % player)
 
         req = QgsFeatureRequest()
         req.setFilterExpression(' "geo_parcelle" = \'%s\' ' % pparcelle)
@@ -306,34 +302,34 @@ class CadastreService(QgsService):
         it = layer.getFeatures(req)
         feat = QgsFeature()
         if not it.nextFeature(feat):
-            raise CadastreError(404,"Feature not found for parcelle '%s' in layer '%s'" % (pparcelle,player))
+            raise CadastreError(404, "Feature not found for parcelle '%s' in layer '%s'" % (pparcelle, player))
 
         # Get layer connection parameters
         connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
-        connector = cadastre_common.getConnectorFromUri( connectionParams )
+        connector = cadastre_common.getConnectorFromUri(connectionParams)
 
-        return CadastreResources(geo_parcelle = pparcelle,
-                                 feature = feat,
-                                 type = ptype,
-                                 layer = layer,
-                                 layername = player,
-                                 connector = connector,
-                                 connectionParams = connectionParams)
+        return CadastreResources(geo_parcelle=pparcelle,
+                                 feature=feat,
+                                 type=ptype,
+                                 layer=layer,
+                                 layername=player,
+                                 connector=connector,
+                                 connectionParams=connectionParams)
 
-    def get_pdf(self, params: Dict[str,str], response: QgsServerResponse ) -> None:
+    def get_pdf(self, params: Dict[str, str], response: QgsServerResponse) -> None:
         """ Get PDF files previously exported
         """
         ptoken = params.get('TOKEN')
         if not ptoken:
-            raise CadastreError(400,"Missing parameter: token")
+            raise CadastreError(400, "Missing parameter: token")
 
         path = self.cachedir / ('%s.pdf' % ptoken)
 
         if self.debugMode:
-            QgsMessageLog.logMessage("GetPDF = path is %s" % path.as_posix(),'cadastre', Qgis.Debug)
+            QgsMessageLog.logMessage("GetPDF = path is %s" % path.as_posix(), 'cadastre', Qgis.Debug)
 
         if not path.exists():
-            raise CadastreError(404,"PDF not found")
+            raise CadastreError(404, "PDF not found")
 
         # Send PDF
         response.setHeader('Content-type', 'application/pdf')
@@ -342,5 +338,5 @@ class CadastreService(QgsService):
             response.write(path.read_bytes())
             path.unlink()
         except:
-            QgsMessageLog.logMessage("Error occured while reading PDF file",'cadastre',Qgis.Critical)
+            QgsMessageLog.logMessage("Error occured while reading PDF file", 'cadastre', Qgis.Critical)
             raise
