@@ -21,6 +21,7 @@
 """
 from __future__ import absolute_import
 
+
 def classFactory(iface):
     # load Cadastre class from file Cadastre
     from .cadastre_menu import cadastre_menu

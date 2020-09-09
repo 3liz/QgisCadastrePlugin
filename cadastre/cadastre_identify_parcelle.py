@@ -35,8 +35,8 @@ from qgis.gui import (
 )
 from .cadastre_cursor import Cursor
 
-class IdentifyParcelle(QgsMapToolIdentify):
 
+class IdentifyParcelle(QgsMapToolIdentify):
     cadastreGeomIdentified = pyqtSignal(QgsVectorLayer, QgsFeature)
 
     def __init__(self, canvas, layer):
@@ -66,28 +66,28 @@ class IdentifyParcelle(QgsMapToolIdentify):
             # There are no features - skip
             return
 
-        #~ layer.removeSelection()
+        # ~ layer.removeSelection()
 
         # Determine the location of the click in real-world coords
-        point = self.toLayerCoordinates( layer, mouseEvent.pos() )
-        pntGeom = QgsGeometry.fromPointXY( point )
-        pntBuff = pntGeom.buffer( ( self.canvas.mapUnitsPerPixel() * 2 ), 0 )
+        point = self.toLayerCoordinates(layer, mouseEvent.pos())
+        pntGeom = QgsGeometry.fromPointXY(point)
+        pntBuff = pntGeom.buffer((self.canvas.mapUnitsPerPixel() * 2), 0)
         rect = pntBuff.boundingBox()
-        rq = QgsFeatureRequest( rect )
+        rq = QgsFeatureRequest(rect)
         selectList = []
 
         # Take first feature
         feature = None
-        for feat in layer.getFeatures( rq ):
-            if feat.geometry().intersects( pntGeom ):
-                selectList.append( feat.id() )
+        for feat in layer.getFeatures(rq):
+            if feat.geometry().intersects(pntGeom):
+                selectList.append(feat.id())
                 feature = feat
                 break
 
-        #~ layer.setSelectedFeatures( selectList )
+        # ~ layer.setSelectedFeatures( selectList )
 
         # Send signal
         if not feature:
             return
 
-        self.cadastreGeomIdentified.emit( layer, feature )
+        self.cadastreGeomIdentified.emit(layer, feature)
