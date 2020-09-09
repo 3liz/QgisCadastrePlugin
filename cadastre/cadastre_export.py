@@ -124,17 +124,17 @@ class cadastreExport:
         self.dbType = self.connectionParams['dbType']
 
     def getMapInstance(self) -> QgsMapSettings:
-        '''
+        """
         Get instance of object needed to instantiate QgsComposition
         QgsMapRenderer or QgsMapSettings
         Different if context is server
-        '''
+        """
         return QgsMapSettings()
 
     def setComposerTemplates(self, comptecommunal):
-        '''
+        """
         Set parameters for given comptecommunal
-        '''
+        """
         # List of templates
         comptecommunalAbrev = comptecommunal[9:]
         self.composerTemplates = {
@@ -275,11 +275,11 @@ class cadastreExport:
                 self.contentKeeped[key] = ''
 
     def getContentForGivenItem(self, key, item, page=None):
-        '''
+        """
         Take content from template file
         corresponding to the key
         and assign data from item
-        '''
+        """
         # First check previous stored content
         if 'keepContent' in item and item['keepContent'] \
                 and self.contentKeeped[key]:
@@ -376,10 +376,10 @@ class cadastreExport:
         return content
 
     def getHtmlFromTemplate(self, tplPath, replaceDict):
-        '''
+        """
         Get the content of a template file
         and replace all variables with given data
-        '''
+        """
 
         def replfunc(match):
             return replaceDict[match.group(0)]
@@ -401,9 +401,9 @@ class cadastreExport:
             return msg
 
     def createComposition(self):
-        '''
+        """
         Create a print Layout
-        '''
+        """
         c = QgsPrintLayout(self.mProject)
         c.initializeDefaults()
         c.setUnits(QgsUnitTypes.LayoutMillimeters)
@@ -425,10 +425,10 @@ class cadastreExport:
         self.currentComposition = c
 
     def getPageNumberNeeded(self):
-        '''
+        """
         Calculate the minimum pages
         needed to fit all the data
-        '''
+        """
         # retrieve total data and get total count
         for key in list(self.lineCount.keys()):
             self.getContentForGivenItem(key, self.mainTables[key])
@@ -444,9 +444,9 @@ class cadastreExport:
             self.numPages += 1
 
     def addPageContent(self, page):
-        '''
+        """
         Add all needed item for a single page
-        '''
+        """
 
         # First get content for parent items
         for key, item in list(self.mainTables.items()):
@@ -461,9 +461,9 @@ class cadastreExport:
             self.buildComposerLabel(key, item, page)
 
     def buildComposerLabel(self, key, item, page):
-        '''
+        """
         Add a label to the print layout for an item and page
-        '''
+        """
         cl = QgsLayoutItemLabel(self.currentComposition)
 
         # 1st page is a map for parcelle
@@ -508,10 +508,10 @@ class cadastreExport:
         self.currentComposition.addLayoutItem(cl)
 
     def addParcelleMap(self):
-        '''
+        """
         Add content in the first page
         with a map and basic information
-        '''
+        """
         # First add headers
         for key, item in list(self.composerTemplates.items()):
             if 'sticky' in item:
@@ -565,11 +565,11 @@ class cadastreExport:
         self.currentComposition.addItem(cm)
 
     def exportItemAsPdf(self, comptecommunal, suffix=None):
-        '''
+        """
         Export one PDF file using the template composer
         filled with appropriate data
         for one "compte communal"
-        '''
+        """
         temppath = None
         # print("export pour le cc %s" % comptecommunal)
         # Set configuration
@@ -620,9 +620,9 @@ class cadastreExport:
         return temppath
 
     def exportAsPDF(self):
-        '''
+        """
         Run the PDF export
-        '''
+        """
         paths = []
         # Export as many pdf as compte communal
         if self.isMulti:

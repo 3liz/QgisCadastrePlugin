@@ -34,10 +34,10 @@ from db_manager.db_plugins.postgis.connector import PostGisDBConnector, DBConnec
 
 
 def hasSpatialiteSupport() -> bool:
-    '''
+    """
     Check whether or not
     spatialite support is ok
-    '''
+    """
     try:
         from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector  # NOQA
         return True
@@ -47,9 +47,9 @@ def hasSpatialiteSupport() -> bool:
 
 
 def openFile(filename: str) -> None:
-    '''
+    """
     Opens a file with default system app
-    '''
+    """
     import subprocess
     if sys.platform == "win32":
         os.startfile(filename)
@@ -60,11 +60,11 @@ def openFile(filename: str) -> None:
 
 def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol: str = 'geom',
                                    sql: str = '') -> QgsMapLayer:
-    '''
+    """
     Get the layer from QGIS legend
     corresponding to a database
     table name (postgis or sqlite)
-    '''
+    """
     import re
     layer = None
     lr = project
@@ -96,10 +96,10 @@ def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol:
 
 
 def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> Dict[str, str]:
-    '''
+    """
     Get connection parameters
     from the layer datasource
-    '''
+    """
     connectionParams = None
 
     if layer.providerType() == 'postgres':
@@ -135,9 +135,9 @@ def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> Dict[str, str]:
 
 
 def setSearchPath(sql: str, schema: str) -> str:
-    '''
+    """
     Set the search_path parameters if postgis database
-    '''
+    """
     prefix = 'SET search_path = "%s", public, pg_catalog;' % schema
     if re.search('^BEGIN;', sql):
         sql = sql.replace('BEGIN;', 'BEGIN;%s' % prefix)
@@ -149,11 +149,11 @@ def setSearchPath(sql: str, schema: str) -> str:
 
 def fetchDataFromSqlQuery(connector: 'DBConnector',
                           sql: str, schema: str = None) -> List[Any]:
-    '''
+    """
     Execute a SQL query and
     return [header, data, rowCount]
     NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
-    '''
+    """
     # print(sql)
     data = []
     header = []
@@ -194,11 +194,11 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
 
 
 def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
-    '''
+    """
     Set connector property
     for the given database type
     and parameters
-    '''
+    """
     connector = None
     uri = QgsDataSourceUri()
     if connectionParams['dbType'] == 'postgis':
@@ -230,11 +230,11 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
 
 
 def postgisToSpatialite(sql: str, targetSrid: str = '2154') -> str:
-    '''
+    """
     Convert postgis SQL statement
     into spatialite compatible
     statements
-    '''
+    """
 
     # delete some incompatible options
     # replace other by spatialite syntax
@@ -349,10 +349,10 @@ def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,
 
 def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[str, str],
                                     connector: 'DBConnector') -> List[str]:
-    '''
+    """
     Get the list of "comptecommunal" for all cities
     for a owner given one single comptecommunal
-    '''
+    """
 
     sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"
     sql += " FROM proprietaire p"
@@ -379,10 +379,10 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
 
 def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
                 connector: 'DBConnector') -> str:
-    '''
+    """
     Build Html for a item (parcelle, proprietaires, etc.)
     based on SQL query
-    '''
+    """
     html = ''
     plugin_dir = str(Path(__file__).resolve().parent)
 

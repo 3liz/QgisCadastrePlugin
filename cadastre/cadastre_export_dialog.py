@@ -81,19 +81,19 @@ class cadastreExport(cadastreExportBase):
         self.print_parcelle_page = True
 
     def getMapInstance(self) -> QgsMapSettings:
-        '''
+        """
         Get instance of object needed to instantiate QgsComposition
         QgsMapRenderer or QgsMapSettings
         Different if context is server
-        '''
+        """
         # return self.iface.mapCanvas().mapSettings()
         return super().getMapInstance()
 
     def getHtmlFromTemplate(self, tplPath, replaceDict):
-        '''
+        """
         Get the content of a template file
         and replace all variables with given data
-        '''
+        """
         QApplication.setOverrideCursor(Qt.WaitCursor)
         try:
             return super().getHtmlFromTemplate(tplPath, replaceDict)
