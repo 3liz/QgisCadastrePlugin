@@ -11,7 +11,7 @@ sys.path.append('/srv/qgis/plugins')
 from qgis.gui import QgsMapCanvas, QgsLayerTreeMapCanvasBridge
 from qgis.core import QgsApplication, QgsProject, QgsFeatureRequest
 
-from cadastre.cadastre_dialogs import cadastre_common
+from cadastre.cadastre_dialogs import CadastreCommon
 from cadastre.cadastre_export import cadastreExport
 
 import argparse
@@ -107,11 +107,11 @@ for f in it:
     break
 
 # Get connecion params
-connectionParams = cadastre_common.getConnectionParameterFromDbLayer(layer)
-connector = cadastre_common.getConnectorFromUri(connectionParams)
+connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
+connector = CadastreCommon.getConnectorFromUri(connectionParams)
 
 # Get compte communal
-comptecommunal = cadastre_common.getCompteCommunalFromParcelleId(
+comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
     feat['geo_parcelle'],
     connectionParams,
     connector
@@ -119,7 +119,7 @@ comptecommunal = cadastre_common.getCompteCommunalFromParcelleId(
 
 pmulti = 1
 if export_type == 'proprietaire' and pmulti == 1:
-    comptecommunal = cadastre_common.getProprietaireComptesCommunaux(
+    comptecommunal = CadastreCommon.getProprietaireComptesCommunaux(
         comptecommunal,
         connectionParams,
         connector

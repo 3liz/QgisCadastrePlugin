@@ -25,8 +25,8 @@ from __future__ import absolute_import
 
 def classFactory(iface):
     # load Cadastre class from file Cadastre
-    from .cadastre_menu import cadastre_menu
-    return cadastre_menu(iface)
+    from .cadastre_menu import CadastreMenu
+    return CadastreMenu(iface)
 
 
 def serverClassFactory(serverIface):  # pylint: disable=invalid-name
