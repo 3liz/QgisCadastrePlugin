@@ -48,7 +48,7 @@
           <item>
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="0">
-             <widget class="QLabel" name="label_8">
+             <widget class="QLabel" name="label_logo_ue">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -56,7 +56,7 @@
                </size>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://europa.eu/index_fr.htm&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;/&gt;&lt;img src=&quot;:/plugins/cadastre/images/logo_europe.png&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string/>
               </property>
               <property name="scaledContents">
                <bool>false</bool>
@@ -70,7 +70,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_9">
+             <widget class="QLabel" name="label_logo_feder">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -78,7 +78,7 @@
                </size>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.picardie-europe.eu/&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;/&gt;&lt;img src=&quot;:/plugins/cadastre/images/logo_feder.png&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string/>
               </property>
               <property name="scaledContents">
                <bool>false</bool>
@@ -92,7 +92,7 @@
              </widget>
             </item>
             <item row="0" column="3">
-             <widget class="QLabel" name="label_6">
+             <widget class="QLabel" name="label_logo_aduga">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -100,7 +100,7 @@
                </size>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.aduga.org/&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;/&gt;&lt;img src=&quot;:/plugins/cadastre/images/logo_aduga.png&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string/>
               </property>
               <property name="scaledContents">
                <bool>false</bool>
@@ -171,7 +171,7 @@
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="label_logo_picardie">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -179,7 +179,7 @@
                </size>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.picardie.fr/&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;/&gt;&lt;img src=&quot;:/plugins/cadastre/images/logo_picardie.png&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string/>
               </property>
               <property name="scaledContents">
                <bool>false</bool>
@@ -257,7 +257,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
-             <widget class="QLabel" name="label_12">
+             <widget class="QLabel" name="label_logo_3liz">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -265,7 +265,7 @@
                </size>
               </property>
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.3liz.com/&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;/&gt;&lt;img src=&quot;:/plugins/cadastre/images/logo_3liz.png&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string/>
               </property>
               <property name="scaledContents">
                <bool>false</bool>
@@ -435,8 +435,5 @@
  <tabstops>
   <tabstop>scrollArea</tabstop>
  </tabstops>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
  <connections/>
 </ui>

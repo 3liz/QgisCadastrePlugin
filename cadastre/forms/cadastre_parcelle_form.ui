@@ -126,10 +126,6 @@
               <property name="text">
                <string>Relevé parcellaire</string>
               </property>
-              <property name="icon">
-               <iconset resource="resource.qrc">
-                <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
-              </property>
              </widget>
             </item>
            </layout>
@@ -140,10 +136,6 @@
              <widget class="QPushButton" name="btExportProprietaire">
               <property name="text">
                <string>Relevé de propriété</string>
-              </property>
-              <property name="icon">
-               <iconset resource="resource.qrc">
-                <normaloff>:/plugins/cadastre/icons/releve.png</normaloff>:/plugins/cadastre/icons/releve.png</iconset>
               </property>
              </widget>
             </item>
@@ -163,10 +155,6 @@
               <property name="text">
                <string>Centrer</string>
               </property>
-              <property name="icon">
-               <iconset resource="resource.qrc">
-                <normaloff>:/plugins/cadastre/icons/centrer.png</normaloff>:/plugins/cadastre/icons/centrer.png</iconset>
-              </property>
              </widget>
             </item>
             <item>
@@ -174,20 +162,12 @@
               <property name="text">
                <string>Zoomer</string>
               </property>
-              <property name="icon">
-               <iconset resource="resource.qrc">
-                <normaloff>:/plugins/cadastre/icons/zoom.png</normaloff>:/plugins/cadastre/icons/zoom.png</iconset>
-              </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="btSelectionner">
               <property name="text">
                <string>Sélect.</string>
-              </property>
-              <property name="icon">
-               <iconset resource="resource.qrc">
-                <normaloff>:/plugins/cadastre/icons/select.png</normaloff>:/plugins/cadastre/icons/select.png</iconset>
               </property>
              </widget>
             </item>
@@ -199,10 +179,6 @@
              <widget class="QPushButton" name="btParcellesProprietaire">
               <property name="text">
                <string>Sélectionner les parcelles du propriétaire</string>
-              </property>
-              <property name="icon">
-               <iconset resource="resource.qrc">
-                <normaloff>:/plugins/cadastre/icons/select.png</normaloff>:/plugins/cadastre/icons/select.png</iconset>
               </property>
              </widget>
             </item>
@@ -232,8 +208,5 @@
   <tabstop>btSelectionner</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
  <connections/>
 </ui>

@@ -155,10 +155,6 @@
               <property name="text">
                <string>...</string>
               </property>
-              <property name="icon">
-               <iconset resource="resource.qrc">
-                <normaloff>:/plugins/cadastre/icons/open.png</normaloff>:/plugins/cadastre/icons/open.png</iconset>
-              </property>
              </widget>
             </item>
            </layout>
@@ -181,10 +177,6 @@
              <widget class="QToolButton" name="btTempDir">
               <property name="text">
                <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="resource.qrc">
-                <normaloff>:/plugins/cadastre/icons/open.png</normaloff>:/plugins/cadastre/icons/open.png</iconset>
               </property>
              </widget>
             </item>
@@ -278,8 +270,5 @@
   <tabstop>inSpatialiteTempStore</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
  <connections/>
 </ui>

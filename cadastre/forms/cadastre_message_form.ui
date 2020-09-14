@@ -54,8 +54,5 @@
  <tabstops>
   <tabstop>scrollArea</tabstop>
  </tabstops>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
  <connections/>
 </ui>
