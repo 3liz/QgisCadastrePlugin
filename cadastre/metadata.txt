@@ -40,3 +40,4 @@ deprecated=False
 
 # Activate server configuration
 server=True
+hasProcessingProvider=yes
