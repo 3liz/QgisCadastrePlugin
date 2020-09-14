@@ -6,13 +6,13 @@ ifndef FABRIC
 FABRIC:=$(shell [ -e .fabricrc ] && echo "fab -c .fabricrc" || echo "fab")
 endif
 
-VERSION=$(shell ./metadata_key ../metadata.txt version)
+VERSION=$(shell ./metadata_key ../cadastre/metadata.txt version)
 
 main:
 	echo "Makefile for packaging infra components: select a task"
 
 PACKAGE=qgis3_cadastre
-FILES = ../composers ../server ../forms ../icons ../interface ../scripts ../styles ../templates ../*.py ../*.qrc ../icon.png ../metadata.txt ../README.md ../CHANGELOG.md
+FILES = ../cadastre/composers ../cadastre/server ../cadastre/forms ../cadastre/icons ../cadastre/interface ../cadastre/scripts ../cadastre/styles ../cadastre/templates ../cadastre/*.py ../cadastre/icon.png ../cadastre/metadata.txt
 
 build2/cadastre:
 	@rm -rf build2/cadastre
