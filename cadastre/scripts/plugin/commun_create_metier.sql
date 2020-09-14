@@ -1655,17 +1655,15 @@ COMMENT ON COLUMN pevlissage.dnupev IS 'Numéro de PEV';
 COMMENT ON COLUMN pevlissage.pev    IS 'Code unique de PEV';
 COMMENT ON COLUMN pevlissage.mlbcom IS 'Quote-part de lissage de la commune';
 COMMENT ON COLUMN pevlissage.mlbsyn IS 'Quote-part de lissage du syndicat intercommunal';
-COMMENT ON COLUMN pevlissage.mlbcu  IS 'Quote-part de lissage de
-l’intercommunalité';
-COMMENT ON COLUMN pevlissage.mlbdep IS 'Quote-part de lissage du
-département';
+COMMENT ON COLUMN pevlissage.mlbcu  IS 'Quote-part de lissage de l’intercommunalité';
+COMMENT ON COLUMN pevlissage.mlbdep IS 'Quote-part de lissage du département';
 COMMENT ON COLUMN pevlissage.mlbts1 IS 'Quote-part de lissage de la TSE';
-COMMENT ON COLUMN pevlissage.mlbts2 IS 'Quote-part de lissage de la TSE
-autre';
+COMMENT ON COLUMN pevlissage.mlbts2 IS 'Quote-part de lissage de la TSE autre';
 COMMENT ON COLUMN pevlissage.mlbtas IS 'Quote-part de lissage de la TASA';
 COMMENT ON COLUMN pevlissage.mlbgem IS 'Quote-part de lissage GEMAPI';
 COMMENT ON COLUMN pevlissage.mlbtom IS 'Quote-part de lissage TEOM';
 COMMENT ON COLUMN pevlissage.tbfpas IS 'Pas de lissage du local';
+COMMENT ON COLUMN pevlissage.mlbtfc IS 'Quote-parte de lissage sur les friches commerciales (TFC)';
 COMMENT ON COLUMN pevlissage.lot IS 'Code de lot d''import';
 
 
