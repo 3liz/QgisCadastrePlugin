@@ -31,8 +31,8 @@ def classFactory(iface):
 
 def serverClassFactory(serverIface):  # pylint: disable=invalid-name
     """Load cadastreServer class from file cadastre.
-    :param iface: A QGIS Server interface instance.
-    :type iface: QgsServerInterface
+    :param serverIface: A QGIS Server interface instance.
+    :type serverIface: QgsServerInterface
     """
     #
     from .server.cadastre_server import CadastreServer
