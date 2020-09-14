@@ -29,7 +29,7 @@ from qgis.core import (
 )
 
 from .cadastre_identify_parcelle import IdentifyParcelle
-from .cadastre_dialogs import cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, \
+from .cadastre_dialogs import CadastreCommon, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, \
     cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
 from .processing.provider import CadastreProvider
 
@@ -42,7 +42,7 @@ from time import time
 
 # ---------------------------------------------
 
-class cadastre_menu(object):
+class CadastreMenu:
     def __init__(self, iface):
         self.iface = iface
         self.mapCanvas = iface.mapCanvas()
@@ -283,7 +283,7 @@ class cadastre_menu(object):
         QApplication.restoreOverrideCursor()
 
         if os.path.exists(temppath):
-            cadastre_common.openFile(temppath)
+            CadastreCommon.openFile(temppath)
 
     def open_option_dialog(self):
         """
@@ -329,8 +329,8 @@ class cadastre_menu(object):
         # Find parcelle layer
         parcelleLayer = None
         try:
-            from .cadastre_dialogs import cadastre_common
-            parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('parcelle_info')
+            from .cadastre_dialogs import CadastreCommon
+            parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps('parcelle_info')
         except:
             parcelleLayer = None
 
@@ -346,7 +346,7 @@ class cadastre_menu(object):
         """
 
         # Find parcelle layer
-        parcelleLayer = cadastre_common.getLayerFromLegendByTableProps('parcelle_info')
+        parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps('parcelle_info')
         if not parcelleLayer:
             QMessageBox.warning(
                 self.cadastre_search_dialog,
