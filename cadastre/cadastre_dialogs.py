@@ -35,6 +35,8 @@ from qgis.PyQt.QtWidgets import (
     QMessageBox
 )
 from qgis.PyQt.QtGui import (
+    QIcon,
+    QPixmap,
     QTextCursor,
 )
 from qgis.PyQt.QtCore import QSortFilterProxyModel
@@ -427,6 +429,11 @@ class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
         self.iface = iface
         super(cadastre_import_dialog, self).__init__(parent)
         self.setupUi(self)
+
+        # Images
+        plugin_dir = str(Path(__file__).resolve().parent)
+        self.btEdigeoSourceDir.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'open.png')))
+        self.btMajicSourceDir.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'open.png')))
 
         self.connectionDbList = []
         # common cadastre methods
@@ -910,6 +917,24 @@ class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
         self.iface = iface
         self.setupUi(self)
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
+
+        # Images
+        plugin_dir = str(Path(__file__).resolve().parent)
+        self.btExportParcelle.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
+        self.btResetCommune.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
+        self.btResetParcelle.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
+        self.btResetSection.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
+        self.btResetAdresse.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
+        self.btCentrerLieu.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'centrer.png')))
+        self.btZoomerLieu.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'zoom.png')))
+        self.btSelectionnerLieu.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'select.png')))
+        self.btExportProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
+        self.btExportParcelleProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
+        self.btResetProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
+        self.btResetParcelleProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
+        self.btCentrerProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'centrer.png')))
+        self.btZoomerProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'zoom.png')))
+        self.btSelectionnerProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'select.png')))
 
         # common cadastre methods
         from .cadastre_dialogs import CadastreCommon
@@ -1890,7 +1915,10 @@ class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
         self.iface = iface
         self.setupUi(self)
 
+        # Images
         self.plugin_dir = str(Path(__file__).resolve().parent)
+        self.btComposerTemplateFile.setIcon(QIcon(os.path.join(self.plugin_dir, 'forms', 'icons', 'open.png')))
+        self.btTempDir.setIcon(QIcon(os.path.join(self.plugin_dir, 'forms', 'icons', 'open.png')))
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -2086,6 +2114,14 @@ class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
         self.buttonBox.rejected.connect(self.onReject)
         self.buttonBox.accepted.connect(self.onAccept)
 
+        # Images
+        plugin_dir = str(Path(__file__).resolve().parent)
+        self.label_logo_ue.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_europe.png')))
+        self.label_logo_feder.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_feder.png')))
+        self.label_logo_picardie.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_picardie.png')))
+        self.label_logo_aduga.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_aduga.png')))
+        self.label_logo_3liz.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_3liz.png')))
+
     def onAccept(self):
         """
         Save options when pressing OK button
@@ -2124,6 +2160,15 @@ class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
         self.mc = iface.mapCanvas()
         self.setupUi(self)
         self.cadastre_search_dialog = cadastre_search_dialog
+
+        # Images
+        plugin_dir = str(Path(__file__).resolve().parent)
+        self.btCentrer.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'centrer.png')))
+        self.btZoomer.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'zoom.png')))
+        self.btSelectionner.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'select.png')))
+        self.btParcellesProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'select.png')))
+        self.btExportParcelle.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
+        self.btExportProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
 
         # common cadastre methods
         from .cadastre_dialogs import CadastreCommon
