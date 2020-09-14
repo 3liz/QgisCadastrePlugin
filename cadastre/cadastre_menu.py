@@ -47,15 +47,18 @@ class CadastreMenu:
         self.iface = iface
         self.mapCanvas = iface.mapCanvas()
         self.cadastre_search_dialog = None
-        self.provider = CadastreProvider()
+        self.provider = None
 
     def cadastre_add_submenu(self, submenu):
         self.iface.addPluginToMenu("&Cadastre", submenu.menuAction())
 
+    def initProcessing(self):
+        self.provider = CadastreProvider()
+        QgsApplication.processingRegistry().addProvider(self.provider)
+
     def initGui(self):
 
-        # Add procesing provider
-        QgsApplication.processingRegistry().addProvider(self.provider)
+        self.initProcessing()
 
         # Import Submenu
         plugin_dir = str(Path(__file__).resolve().parent)
