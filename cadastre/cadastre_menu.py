@@ -29,8 +29,8 @@ from qgis.core import (
 )
 
 from .cadastre_identify_parcelle import IdentifyParcelle
-from .cadastre_dialogs import CadastreCommon, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog, \
-    cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog
+from .cadastre_dialogs import CadastreCommon, CadastreSearchDialog, CadastreImportDialog, CadastreLoadDialog, \
+    CadastreOptionDialog, CadastreAboutDialog, CadastreParcelleDialog, CadastreMessageDialog
 from .processing.provider import CadastreProvider
 
 import configparser
@@ -71,7 +71,7 @@ class CadastreMenu:
         self.search_action = QAction(icon, "Outils de recherche", self.iface.mainWindow())
         self.search_action.triggered.connect(self.toggle_search_dialog)
         if not self.cadastre_search_dialog:
-            dialog = cadastre_search_dialog(self.iface)
+            dialog = CadastreSearchDialog(self.iface)
             self.cadastre_search_dialog = dialog
 
         # Load Submenu
@@ -215,14 +215,14 @@ class CadastreMenu:
         """
         Import dialog
         """
-        dialog = cadastre_import_dialog(self.iface)
+        dialog = CadastreImportDialog(self.iface)
         dialog.exec_()
 
     def open_load_dialog(self):
         """
         Load dialog
         """
-        dialog = cadastre_load_dialog(
+        dialog = CadastreLoadDialog(
             self.iface,
             self.cadastre_search_dialog
         )
@@ -292,14 +292,14 @@ class CadastreMenu:
         """
         Config dialog
         """
-        dialog = cadastre_option_dialog(self.iface)
+        dialog = CadastreOptionDialog(self.iface)
         dialog.exec_()
 
     def open_about_dialog(self):
         """
         About dialog
         """
-        dialog = cadastre_about_dialog(self.iface)
+        dialog = CadastreAboutDialog(self.iface)
         dialog.exec_()
 
     def setActionsExclusive(self):
@@ -371,7 +371,7 @@ class CadastreMenu:
         Return information of the identified
         parcelle
         """
-        parcelleDialog = cadastre_parcelle_dialog(
+        parcelleDialog = CadastreParcelleDialog(
             self.iface,
             layer,
             feature,
@@ -459,7 +459,7 @@ class CadastreMenu:
         message += '</ul>'
         message += '</p>'
 
-        dialog = cadastre_message_dialog(self.iface, message)
+        dialog = CadastreMessageDialog(self.iface, message)
         dialog.exec_()
 
     def unload(self):

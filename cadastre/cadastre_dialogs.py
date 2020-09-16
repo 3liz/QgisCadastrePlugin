@@ -424,10 +424,10 @@ IMPORT_FORM_CLASS, _ = uic.loadUiType(
 )
 
 
-class cadastre_import_dialog(QDialog, IMPORT_FORM_CLASS):
+class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
     def __init__(self, iface, parent=None):
         self.iface = iface
-        super(cadastre_import_dialog, self).__init__(parent)
+        super(CadastreImportDialog, self).__init__(parent)
         self.setupUi(self)
 
         # Images
@@ -753,9 +753,9 @@ LOAD_FORM_CLASS, _ = uic.loadUiType(
 )
 
 
-class cadastre_load_dialog(QDialog, LOAD_FORM_CLASS):
+class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
     def __init__(self, iface, cadastre_search_dialog, parent=None):
-        super(cadastre_load_dialog, self).__init__(parent)
+        super(CadastreLoadDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
         self.mc = self.iface.mapCanvas()
@@ -910,10 +910,10 @@ SEARCH_FORM_CLASS, _ = uic.loadUiType(
 )
 
 
-class cadastre_search_dialog(QDockWidget, SEARCH_FORM_CLASS):
+class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
     def __init__(self, iface, parent=None):
         # QDockWidget.__init__(self)
-        super(cadastre_search_dialog, self).__init__(parent)
+        super(CadastreSearchDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
@@ -1909,9 +1909,9 @@ OPTION_FORM_CLASS, _ = uic.loadUiType(
 )
 
 
-class cadastre_option_dialog(QDialog, OPTION_FORM_CLASS):
+class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
     def __init__(self, iface, parent=None):
-        super(cadastre_option_dialog, self).__init__(parent)
+        super(CadastreOptionDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
 
@@ -2103,9 +2103,9 @@ ABOUT_FORM_CLASS, _ = uic.loadUiType(
 )
 
 
-class cadastre_about_dialog(QDialog, ABOUT_FORM_CLASS):
+class CadastreAboutDialog(QDialog, ABOUT_FORM_CLASS):
     def __init__(self, iface, parent=None):
-        super(cadastre_about_dialog, self).__init__(parent)
+        super(CadastreAboutDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
 
@@ -2151,9 +2151,9 @@ PARCELLE_FORM_CLASS, _ = uic.loadUiType(
 )
 
 
-class cadastre_parcelle_dialog(QDialog, PARCELLE_FORM_CLASS):
+class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
     def __init__(self, iface, layer, feature, cadastre_search_dialog, parent=None):
-        super(cadastre_parcelle_dialog, self).__init__(parent)
+        super(CadastreParcelleDialog, self).__init__(parent)
         self.iface = iface
         self.feature = feature
         self.layer = layer
@@ -2450,9 +2450,9 @@ MESSAGE_FORM_CLASS, _ = uic.loadUiType(
 )
 
 
-class cadastre_message_dialog(QDialog, MESSAGE_FORM_CLASS):
+class CadastreMessageDialog(QDialog, MESSAGE_FORM_CLASS):
     def __init__(self, iface, message, parent=None):
-        super(cadastre_message_dialog, self).__init__(parent)
+        super(CadastreMessageDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
 
