@@ -20,7 +20,10 @@
  *                                                                         *
  ***************************************************************************/
 """
+from os.path import join
+from pathlib import Path
 
+from qgis.PyQt.QtGui import QIcon
 from qgis.core import QgsProcessingProvider
 
 from .algorithms.config import ConfigProjectAlgorithm
@@ -59,3 +62,7 @@ class CadastreProvider(QgsProcessingProvider):
         implementation returns the same string as name().
         """
         return self.tr('Outils d\'exploitation des données cadastrale français')
+
+    def icon(self):
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
+        return QIcon(join(plugin_dir, 'icon.png'))

@@ -20,7 +20,10 @@
  *                                                                         *
  ***************************************************************************/
 """
+from os.path import join
+from pathlib import Path
 
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import (QgsProcessing,
                        QgsProcessingAlgorithm,
@@ -174,3 +177,7 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
 
     def createInstance(self):
         return self.__class__()
+
+    def icon(self):
+        plugin_dir = str(Path(__file__).resolve().parent.parent.parent)
+        return QIcon(join(plugin_dir, 'icon.png'))
