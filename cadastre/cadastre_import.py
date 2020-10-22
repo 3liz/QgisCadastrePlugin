@@ -41,19 +41,6 @@ from db_manager.dlg_db_error import DlgDbError
 import sqlite3 as sqlite
 
 # Import ogr2ogr.py from processing plugin
-try:
-    from processing.algs.gdal.pyogr.ogr2ogr import main as ogr2ogr
-except ImportError:
-    pass
-try:
-    from processing.gdal.pyogr.ogr2ogr import main as ogr2ogr
-except ImportError:
-    pass
-try:
-    from .scripts.pyogr.ogr2ogr import main as ogr2ogr
-except ImportError:
-    pass
-
 from .scripts.pyogr.ogr2ogr import main as ogr2ogr
 
 from .cadastre_dialogs import CadastreCommon
