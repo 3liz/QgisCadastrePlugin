@@ -185,9 +185,9 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
 
     # Log errors
     if not ok:
-        #print(error_message)
+        print(error_message)
         QgsMessageLog.logMessage("cadastre debug - error while fetching data from database")
-        #print(sql)
+        # print(sql)
 
     # TODO: Return tuple
     return [header, data, rowCount, ok]
@@ -397,7 +397,7 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
             'label': 'Propriétaires'
         },
         'indivisions': {
-            'label': u'Détails'
+            'label': 'Détails'
         },
         'subdivisions': {
             'label': 'Subdivisions fiscales'
@@ -435,7 +435,7 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
             # print info['label']
             # print line
             if line and len(line) > 0 and line[0]:
-                if item == "indivisions" :
+                if item == "indivisions":
                     html += '<br>'
                 html += '%s' % line[0].replace('100p', '100%')
 

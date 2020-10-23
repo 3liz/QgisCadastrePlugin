@@ -15,8 +15,8 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
-from qgis.PyQt.QtCore import Qt, QSettings, QUrl, QKeySequence
-from qgis.PyQt.QtGui import QIcon, QDesktopServices
+from qgis.PyQt.QtCore import Qt, QSettings, QUrl
+from qgis.PyQt.QtGui import QIcon, QDesktopServices, QKeySequence
 from qgis.PyQt.QtWidgets import QApplication, QAction, QActionGroup, QMenu, QMessageBox, QWidgetAction
 from qgis.PyQt.QtXml import QDomDocument
 
@@ -129,7 +129,7 @@ class CadastreMenu:
 
         plugin_dir = str(Path(__file__).resolve().parent)
         for key in actions:
-            icon_path = os.path.join(plugin_dir, 'icon', actions[key][0])
+            icon_path = os.path.join(plugin_dir, 'icons', actions[key][0])
             icon = QIcon(icon_path)
             action = QAction(QIcon(icon), actions[key][1], self.iface.mainWindow())
             if actions[key][2] != "":
@@ -145,7 +145,7 @@ class CadastreMenu:
 
         self.menu = QMenu("&Cadastre")
         self.menu.setObjectName("Cadastre")
-        self.menu.setIcon(QIcon(plugin_dir, "icon.png"))
+        self.menu.setIcon(QIcon(os.path.join(plugin_dir, "icon.png")))
 
         # Add Cadastre to Extension menu
         self.menu.addAction(self.import_action)
@@ -263,7 +263,7 @@ class CadastreMenu:
             icon_file = "nosearch.png"
         else:
             icon_file = "search.png"
-        icon_path = os.path.join(plugin_dir, 'icon', icon_file)
+        icon_path = os.path.join(plugin_dir, 'icons', icon_file)
         self.search_action.setIcon(QIcon(icon_path))
 
     def export_view(self):

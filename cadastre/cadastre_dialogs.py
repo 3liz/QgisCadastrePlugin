@@ -2589,7 +2589,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
                 self.printInfosTab,
                 True
             ),
-            "~0": (),
+            # "~0": (),
             "copyPage": (
                 "copy.png",
                 "Copier la page courante dans le presse papier",
@@ -2604,7 +2604,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
                 self.copyInfosTabQc,
                 True
             ),
-            "~1": (),
+            # "~1": (),
             "savePage": (
                 "save.png",
                 "Enregistrer la page courante sous ...",
