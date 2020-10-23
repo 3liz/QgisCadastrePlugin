@@ -1,0 +1,48 @@
+os: linux
+dist: bionic
+language: python
+python: 3.7
+
+services:
+  - docker
+
+branches:
+  only:
+    - master
+    # tags with 1.1.1
+    - /^\d+\.\d+\.\d+$/
+
+jobs:
+  include:
+
+    - stage: Deploy
+      if: tag IS present
+      name: Create release
+      install:
+        - pip3 install qgis-plugin-ci==1.8.4
+      before_deploy:
+        - export RELEASE_TITLE="$TRAVIS_TAG"
+        - qgis-plugin-ci changelog $TRAVIS_TAG > ../release.md
+        - cat ../release.md
+      script:
+        - qgis-plugin-ci -v
+      deploy:
+        - provider: releases
+          edge: true
+          file: .
+          name: ${RELEASE_TITLE}
+          release_notes_file: ../release.md
+          token: ${GH_TOKEN}
+          on:
+            tags: true
+
+        - provider: script
+          script: >-
+            qgis-plugin-ci
+            release ${TRAVIS_TAG}
+            --github-token ${GH_TOKEN}
+            --osgeo-username ${OSGEO_USERNAME}
+            --osgeo-password ${OSGEO_PASSWORD}
+            --allow-uncommitted-changes
+          on:
+            tags: true

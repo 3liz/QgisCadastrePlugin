@@ -44,3 +44,11 @@ nosetests.xml
 *.pyc
 *.DS_Store
 
+__output__
+.cache
+.local
+
+# PyCharm
+.idea/
+
+cadastre.*.*.*.zip

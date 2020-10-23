@@ -1,6 +1,65 @@
 # CHANGELOG
 
-## Version 1.7.0
+### 1.9.1 (next)
+
+* Ajout de l'extraction d'informations Lots
+* Widget "Outils de Recherche" : Ajout de la boîte rapide informations propriétaires
+* Dialogue "infos parcelle" : Ajout des actions imprimer / copier /sauvegarder des infos des onglets
+* Révision barre d'outils (position actions) et réécriture code menu / barre d'outils
+* Fix - bug connexion (relevé parcellaire, première instanciation)
+
+### 1.9.0 - 07/09/2020
+
+* Documentation
+    * Support de QGIS 3.10 LTR #240
+    * Précisions sur les versions PostgreSQL et PostGIS supportées
+* Support du millésime MAJIC 2020 #239
+* Améliorations et corrections
+    * Suppression des doublons de communes et de sections dans les données EDIGEO #196
+    * Unités foncières : suppression des enregistrements sans comptes communaux #221
+    * Correction d'un bogue dans l'affichage des informations d'une parcelle si le nom de la voie est nul #207
+    * Correction d'un bogue affectant le chargement de la couche des parcelles si on utilise du filtrage sur le code de commune #229
+    * Maintenance sur le code Python
+
+### 1.8.1 - 21/10/2019
+
+Corrections de bugs essentiellement
+
+* Import - EDIGEO: amélioration des performances geo_batiment_parcelle
+* Import - MAJIC: correction bug d'encodage
+* Import MAJIC - garder vexen pour compatibilité Spatialite
+* Spatialite - Correction des identifiants parcelle, voie et local00 dans la table local10
+* Fiche parcellaire - résumé: ajout de coalesce sur l'adresse
+* [BUGFIX] Use of QgsMapLayer.VectorLayer in getLayerFromLegendByTableProps
+* suppression de code spécifique QGIS 2
+* Création couche parcelle_info OK
+
+### 1.8.0 - 20/09/2019
+
+**IMPORTANT**
+À partir de cette version seule la version QGIS LTR sera supportée. Pour cette version il s'agit de la version 3.4.x
+
+Nouveautés:
+
+* Prise en charge des évolutions MAJIC 2019 (voir #192 pour les détails). Noter la création de 2 nouvelles tables.
+* Précisions sur les versions QGIS, PostgreSQL / PostGIS et Spatialite supportées (#197)
+* Mise à jour de la documentation de la structure de la base de données (#204)
+
+
+### 1.7.1 - 06/06/2019
+
+* Refactorize code for server and Qgis 3+
+* Ajouts et mises à jour de tables domaine
+* Correction valeur compte communal
+* Ajout inspireid
+* Amélioration de plugin Server
+* Nouvelle table de nomenclature natvoi
+* Correction identifiants
+* trim code de nature de voie
+* [Serveur] Add GetCapabilities method to server CADASTRE service
+* Creation d'un provider QgsProcessing
+
+### 1.7.0
 
 * Fiche parcellaire - Ajout des informations des propriétaires, subdivisions et locaux
 * Fiche parcelle - Ajout de la surface spatiale bâtie
@@ -11,36 +70,36 @@
 * Fix - Correction d'un bug d'encodage
 * Divers - Ajout des derniers financeurs dans le dialogue "A propos"
 
-## Version 1.6.2
+### 1.6.2
 
 * Général - suppression de code inutile suite à la migration QGIS3
 * Import - Correction de parcelles en doublons dû au lien avec geo_subdsect
 * Export PDF - Correction d'un bug et restauration de l'affichage des propriétaires
 
-## Version 1.6.1
+### 1.6.1
 
 * Correction de bug sur l'interrogation de propriétaire suite à la gestion des dates en texte
 * Correction d'un bug d'encodage sur message d'erreur de requête SQL
 * Import - Utilisation d'entiers longs pour les surfaces de parcelle_info (corrige le bug pour les très grandes parcelles)
 * Import - Ajout du support du millésime 2018
 
-## Version 1.6.0
+### 1.6.0
 
 * Compatibilité du plugin avec QGIS 3. Les version compatibles avec QGIS 2 seront des versions de correction uniquement, avec un numéro en 1.5.*
 
-## Version 1.5.2
+### 1.5.2
 
 * Import - Transformation des champs date en texte pour le MAJIC, par respect de la donnée source
 * Correction d'un bug de la 1.5.1 avec QFileDialog, QFileInfo et BaseError manquant
 
-## Version 1.5.1
+### 1.5.1
 
 * Import - MAJIC : correction de bug si dates mauvaises (30 fév par ex)
 * Import - Support partiel des données EDIGEO en projection IGNF
 * Import - Correction d'un bug de non remplissage des parcelles si correspondance geo_subdsect manquant
 * Import - EDIGEO : conversion en date des champs de geo_subdsect seulement si format correct #120
 
-## Version 1.5.0
+### 1.5.0
 
 * Chargement - Ajout de couches via requête SQL
 * Import - Ajout de la nomenclature pour ccocac
@@ -58,11 +117,11 @@
 * Recherche - Réapplication de l'ordre dans les listes déroulantes (sections, parcelles)
 * BDD - Possibilité de se connecter avec un connexion utilisant un service PostgreSQL
 
-## Version 1.4.1
+### 1.4.1
 
 * Import/Chargement - correction de bug pour Spatialite sur génération parcelle_info
 
-## Version 1.4.0
+### 1.4.0
 
 * Menu - Suppression du menu Cadastre et déplacement dans le menu Extensions
 * Barre d'outil - Modification de l'icône d'identification (merci @pasqual )
@@ -93,7 +152,7 @@
 * Recherche - La recherche par commune et section utilise le lot pour éviter les doublons si plusieurs départements
 * Serveur - Ajout de la capacité "server" pour le plugin
 
-## Version 1.3.0
+### 1.3.0
 
 * Import - MAJIC : support du millésime 2015. La structure a été un peu modifiée. Il faut réaliser l'import dans un nouveau schéma PostGreSQL ou une nouvelle base de données Spatialite. Un script de migration de la structure est disponible pour PostGreSQL pour ceux qui préfèrent conserver le schéma actuel (faites une sauvegarde avant !) : /.qgis2/python/plugins/cadastre/scripts/plugin/updates/update_structure_postgis_from_1.2.0_to_1.3.0.sql
 * Import - Ajout d'un système de création des tables manquantes ( pour les montées de version )
@@ -101,7 +160,7 @@
 * Import - Éviter l'import des parcelles EDIGEO avec un idu NULL
 * Plugin - Suppression de la contrainte de version maximum de QGIS
 
-## Version 1.2.0
+### 1.2.0
 
 * Import - Amélioration des performances d'imports pour Spatialite
 * Import - Ajout d'une option pour activer/désactiver la validation des géométries
@@ -111,11 +170,11 @@
 * Identification parcelle - amélioration interne de l'outil (pas visible dans l'interface)
 * Import - Prise en compte des fichiers MAJIC sans contenus dans les premières lignes
 
-## Version 1.1.1
+### 1.1.1
 
 * Ajout de la compatibilité avec QGIS 2.8
 
-## Version 1.1.0
+### 1.1.0
 
 * Options - Ajout du menu Vue/Décorations dans l'interface Cadastre
 * Chargement - La couche Unités foncières est décochée par défaut
@@ -134,7 +193,7 @@
 * Import - EDIGEO : ajout de la table boulon_id
 * Chargement - correction du bug #38 : minidump sous Windows
 
-## Version 1.0.0
+### 1.0.0
 
 * Import - débogage import PostGreSQL sous Windows
 * Recherche - Meilleure gestion de la désactivation des modules de recherche
@@ -148,15 +207,15 @@
 * Import - meilleure gestion des imports EDIGEO via ogr2ogr.py au lieu de ogr2ogr.exe (compatibilité MAC + détection des erreurs)
 
 
-## Version 0.9.9
+### 0.9.9
 
 * Import - correction de certaines erreurs d'import des MULTIPOLYGONES (PostGreSQL et Spatialite)
 
-## Version 0.9.8.1
+### 0.9.8.1
 
 * Export - debug : suppression des 'print' dans le code
 
-## Version 0.9.8
+### 0.9.8
 
 * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.7...0.9.8
 * Export des relevés - améliorations de mises en forme des données
@@ -172,7 +231,7 @@
 * Export - Suppression de la mention "Expérimental"
 * Import - Import des MULTI-POLYGONES et correction de données existantes - bug #29
 
-## Version 0.9.7
+### 0.9.7
 
 * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.6...0.9.7
 * Documentation - ajout des liens vers la documentation en ligne - bug #3
@@ -188,7 +247,7 @@
 * Recherche - correction largeur listes déroulantes (windows) - bug #22
 * Export - ouverture des PDF compatible freeBSD - bug #21
 
-## Version 0.9.6
+### 0.9.6
 
 * Log détaillé : https://github.com/3liz/QgisCadastrePlugin/compare/0.9.5...0.9.6
 * Import - actualisation liste des tar.bz2 après décompression de zip
@@ -203,7 +262,7 @@
 * Import - remplacement CREATE TABLE IF NOT EXISTS - bug #13
 * Meilleur comportement des outils de recherche sur ouverture d'un (nouveau) projet
 
-## Version 0.9.5
+### 0.9.5
 
 * Chargement - bug #8: pas d'erreur si présence de couches plugin OpenLayers
 * Recherche/Identification - réactivation des outils sur chargement d'un projet Cadastre - #9
@@ -212,11 +271,11 @@
 * Import - Gestion des erreurs de suppression de fichier après extraction - bug #5
 * Import - modifications des scripts pour gestion arrondissements (ex: Marseille)
 
-## Version 0.9.4
+### 0.9.4
 
 * Import - bouton Créer une base Spatialite grisé si aucune connection dans QGIS
 
-## Version 0.9.3
+### 0.9.3
 
 * Documentation - ajout d'une documentation (avec copies d'écran)
 * Chargement - remplacement du panneau par une fenêtre
@@ -232,7 +291,7 @@
 * About - ajout du lien vers le dépôt Github
 * A propos - modification de l'ordre des financeurs
 
-## Version 0.9.2
+### 0.9.2
 
 * Import - suppression des indexes avant ajout Majic incrémental
 * Général - rédaction du README et metadata
@@ -245,7 +304,7 @@
 * Chargement - renommage des couches && fermeture des légendes
 * Recherche/Identification - désactivation des outils nécessitant MAJIC si pas de données
 
-## Version 0.9.1
+### 0.9.1
 
 * Chargement - ajout du style Orthophoto
 * Import - modification interface du choix du type de bdd
@@ -254,16 +313,16 @@
 * Toolbar - Ajout import/charger/recherche/about + modification icône
 * Styles - Classique : amélioration tsurf
 
-## Version 0.9.0
+### 0.9.0
 
 * Correction de régression de 0.8.9 : indentification parcelle et recherche propriétaire
 
-## Version 0.8.9
+### 0.8.9
 
 * Amélioration du support Spatialite : import, recherche, export
 * General - désactivation Spatialite si pyspatialite non présent
 
-## Version 0.8.8
+### 0.8.8
 
 * Import - ajout d'une option pour configurer le nombre de ligne INSERT max
 * Propriétaires - debug affichage vide pour les personnes morales
@@ -271,7 +330,7 @@
 * Indentification parcelle - textes en lecture seule + code section || dnupla
 * Import majic - Vérfication unicité des lotslocaux
 
-## Version 0.8.7
+### 0.8.7
 
 * Export - changement du calcul du revenu cadastral non bati + numéro voirie
 * Import - possibilité d'importer un fichier MAJIC seul
@@ -284,36 +343,35 @@
 * Chargement - Création d'un groupe 'Cadastre' et chargement des couches dans ce groupe
 * Chargement - mise à jour auto des listes déroulantes suite à un import
 
-## Version 0.8.6
+### 0.8.6
 
 * Recherche/Export - Ajout ccocom dans comptecommunal (dédoublonnage)
 * Import - MAJI : suppression des caractères non imprimables et de contrôle
 
-## Version 0.8.5
+### 0.8.5
 
 * Import - debug utilisation mémoire lors de la leture des fichiers majic volumineux
 * Recherche - suppression du bug si ouverture panneau avec couches hors cadastre
 * Recherche/Indenfitication - Correction du Zoom/Centrer si reprojection à la volée
 * Recherche - adaptation remplissage table voie pour gérer le multi-commune
 
-## Version 0.8.4
+### 0.8.4
 
 * Import - Modification dynamique de la projection des tables edigeo
 * Recherche - Amélioration recherche d'adresse via table voie (fantoir)
 * Chargement - utilisation de Times New Roman pour les étiquettes
 
-## Version 0.8.3
+### 0.8.3
 
 * Import - majic: suppressions de caractères \x00
 * Import - debug Windows sur chemins vers scripts contraintes
 
-## Version 0.8.2
+### 0.8.2
 
 * Import - debug du nom du schéma "a" précédemment écrit en dur (régression 0.8.1)
 * Import - utilisation du serial pour geo_commune, geo_parcelle et geo_section : évite les erreurs de rétablissement des clés primaires
 
-## Version 0.8.1
+### 0.8.1
 
 * Import - possibilité d'import vers une base de données distante
 * Import - possibilité d'importer en plusieurs passes
-
