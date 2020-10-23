@@ -22,6 +22,8 @@ from pathlib import Path
 
 from typing import Dict, List, Any, Union
 
+from qgis.PyQt.QtCore import QObject
+
 from qgis.core import (
     QgsProject,
     QgsMapLayer,
@@ -169,9 +171,7 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
             header = []
         if len(header) > 0:
             data = connector._fetchall(c)
-        rowCount = c.rowcount
-        if rowCount == -1:
-            rowCount = len(data)
+        rowCount = len(data)
 
     except BaseError as e:
         ok = False
