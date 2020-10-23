@@ -218,7 +218,13 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
                 connectionParams['password']
             )
 
-        connector = PostGisDBConnector(uri)
+        # we need a fake DBPlugin object
+        # with connetonName and providerName methods
+        obj = QObject()
+        obj.connectionName = lambda: 'fake'
+        obj.providerName = lambda: 'postgres'
+
+        connector = PostGisDBConnector(uri, obj)
 
     if connectionParams['dbType'] == 'spatialite':
         uri.setConnection('', '', connectionParams['dbname'], '', '')
