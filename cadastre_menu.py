@@ -38,8 +38,17 @@ from qgis.core import (
 )
 
 from .cadastre_identify_parcelle import IdentifyParcelle
-from .cadastre_dialogs import (cadastre_common, cadastre_search_dialog, cadastre_import_dialog, cadastre_load_dialog,
-                               cadastre_option_dialog, cadastre_about_dialog, cadastre_parcelle_dialog, cadastre_message_dialog)
+from .cadastre_dialogs import (
+    cadastre_common,
+    cadastre_search_dialog,
+    cadastre_import_dialog,
+    cadastre_load_dialog,
+    cadastre_option_dialog,
+    cadastre_about_dialog,
+    cadastre_parcelle_dialog,
+    cadastre_message_dialog
+)
+
 import configparser
 import os.path
 import tempfile
@@ -58,24 +67,75 @@ class cadastre_menu(object):
 
     def initGui(self):
 
-        actions = {"import_action" : ("database.png", u"Importer des données", "" , self.open_import_dialog, True),
-                   "search_action" : ("search.png", u"Outils de recherche", "" , self.toggle_search_dialog, True),
-                   "load_action" : ("output.png", u"Charger des données", "" , self.open_load_dialog, True),                   
-                   "export_action" : ("mActionSaveAsPDF.png", u"Exporter la vue", "" , self.export_view, True),
-                   "option_action" : ("config.png", u"Configurer le plugin", "" , self.open_option_dialog, True),                   
-                   "about_action" : ("about.png", u"À propos", "" , self.open_about_dialog, True), 
-                   "help_action" : ("about.png", u"Aide", "" , self.open_help, True),
-                   "version_action" : ("about.png", u"Notes de version", "" , self.open_message_dialog, True)                  
-                  }
+        actions = {
+            "import_action" : (
+                "database.png",
+                "Importer des données",
+                "" ,
+                self.open_import_dialog,
+                True
+            ),
+            "search_action" : (
+                "search.png",
+                "Outils de recherche",
+                "" ,
+                self.toggle_search_dialog,
+                True
+            ),
+            "load_action" : (
+                "output.png",
+                "Charger des données",
+                "" ,
+                self.open_load_dialog,
+                True
+            ),
+            "export_action" : (
+                "mActionSaveAsPDF.png",
+                "Exporter la vue",
+                "" ,
+                self.export_view,
+                True
+            ),
+            "option_action" : (
+                "config.png",
+                "Configurer le plugin",
+                "" ,
+                self.open_option_dialog,
+                True
+            ),
+            "about_action" : (
+                "about.png",
+                "À propos",
+                "" ,
+                self.open_about_dialog,
+                True
+            ),
+            "help_action" : (
+                "about.png",
+                "Aide",
+                "" ,
+                self.open_help,
+                True
+            ),
+            "version_action" : (
+                "about.png",
+                "Notes de version",
+                "" ,
+                self.open_message_dialog,
+                True
+            )
+        }
 
         for key in actions :
-            icon = QIcon("%s/icons/%s" % (os.path.dirname(__file__), actions[key][0]))
+            icon_path = os.path.join(os.path.dirname(__file__), 'icon', actions[key][0])
+            icon = QIcon(icon_path)
             action = QAction(QIcon(icon), actions[key][1],  self.iface.mainWindow())
-            if actions[key][2] != "" : action.setShortcut(QKeySequence(actions[key][2]))
+            if actions[key][2] != "" :
+                action.setShortcut(QKeySequence(actions[key][2]))
             setattr(self, key, action)
             action.setEnabled(actions[key][4])
             action.setObjectName(key)
-            action.triggered.connect(actions[key][3]) 
+            action.triggered.connect(actions[key][3])
 
 
         if not self.cadastre_search_dialog:
@@ -84,7 +144,7 @@ class cadastre_menu(object):
 
         self.menu = QMenu(u"&Cadastre")
         self.menu.setObjectName("Cadastre")
-        self.menu.setIcon(QIcon("%s/icon.png" % os.path.dirname(__file__)))
+        self.menu.setIcon(QIcon(os.path.join(os.path.dirname(__file__), "icon.png")))
 
         # Add Cadastre to Extension menu
         self.menu.addAction(self.import_action)
@@ -97,14 +157,14 @@ class cadastre_menu(object):
         self.menu.addAction(self.about_action)
         self.menu.addAction(self.version_action)
         self.menu.addAction(self.help_action)
-        
+
         menuBar = self.iface.mainWindow().menuBar()
         menu = menuBar
         for child in menuBar.children():
             if child.objectName()== "mPluginMenu" :
                menu =  child
                break
-        menu.addMenu(self.menu)        
+        menu.addMenu(self.menu)
 
         # Add cadastre toolbar
         self.toolbar = self.iface.addToolBar(u'&Cadastre')
@@ -112,14 +172,19 @@ class cadastre_menu(object):
 
         # Create action for "Parcelle information"
         self.identifyParcelleAction = QAction(
-            QIcon("%s/icons/toolbar/get-parcelle-info.png" % os.path.dirname(__file__)),
+            QIcon(os.path.join(
+                os.path.dirname(__file__),
+                "icons",
+                "toolbar",
+                "get-parcelle-info.png"
+            )),
             "Infos parcelle",
             self.iface.mainWindow()
         )
         self.identifyParcelleAction.setCheckable(True)
         self.identifyParcelleAction.triggered.connect( self.setIndentifyParcelleTool )
-           
-        
+
+
         self.toolbar.addAction(self.import_action)
         self.toolbar.addAction(self.load_action)
         self.toolbar.addSeparator()
@@ -158,9 +223,9 @@ class cadastre_menu(object):
         lr = QgsProject.instance()
         lr.layersRemoved.connect( self.checkIdentifyParcelleTool )
 
-        self.updateButton()
-        
-        self.cadastre_search_dialog.visibilityChanged.connect(self.updateButton)
+        self.updateSearchButton()
+
+        self.cadastre_search_dialog.visibilityChanged.connect(self.updateSearchButton)
 
 
     def open_import_dialog(self):
@@ -184,12 +249,23 @@ class cadastre_menu(object):
         '''
         Search dock widget
         '''
-        self.cadastre_search_dialog.hide() if self.cadastre_search_dialog.isVisible() else self.cadastre_search_dialog.show()
-        self.updateButton()
+        if self.cadastre_search_dialog.isVisible():
+            self.cadastre_search_dialog.hide()
+        else:
+            self.cadastre_search_dialog.show()
+        self.updateSearchButton()
 
-    def updateButton(self):
-        self.search_action.setIcon(QIcon("%s/icons/nosearch.png" % os.path.dirname(__file__))) if self.cadastre_search_dialog.isVisible() else  self.search_action.setIcon(QIcon("%s/icons/search.png" % os.path.dirname(__file__)))
-            
+    def updateSearchButton(self):
+        '''
+        Update search button icon
+        '''
+        if self.cadastre_search_dialog.isVisible():
+            icon_file = "nosearch.png"
+        else:
+            icon_file = "search.png"
+        icon_path = os.path.join(os.path.dirname(__file__), 'icon', icon_file)
+        self.search_action.setIcon(QIcon(icon_file))
+
     def export_view(self):
         '''
         Export current view to PDF
@@ -274,7 +350,8 @@ class cadastre_menu(object):
         # Build a group with actions from actionList and add your own action
         group = QActionGroup( self.iface.mainWindow() )
         group.setExclusive(True)
-        for action in actionList : group.addAction( action )
+        for action in actionList :
+            group.addAction( action )
         group.addAction( self.identifyParcelleAction )
 
     def checkIdentifyParcelleTool(self, layerIds=None):

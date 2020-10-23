@@ -29,6 +29,6 @@ FROM (
     AS line
     FROM  lots l
     LEFT JOIN proprietaire ON proprietaire.comptecommunal = l.comptecommunal
-	 WHERE l.parcelle = '%s'
+     WHERE l.parcelle = '%s'
     ORDER BY l.dnulot
 ) foo
