@@ -1826,9 +1826,9 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             searchCombo['layer'].select(i)
 
     def updateConnexionParams(self):
-        '''
+        """
         Update connection settings if broken
-        '''
+        """
         dbtable = self.searchComboBoxes['commune']['table']
         layer = CadastreCommon.getLayerFromLegendByTableProps(dbtable.replace('v_', ''))
         if not layer:
@@ -1847,10 +1847,10 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.connector = connector
 
     def setIdentifierToChosenItem(self, key):
-        '''
+        """
         Select the proprietaire(s)
         corresponding to the chosen item
-        '''
+        """
         w = None
         for item in self.zoomButtons[key]['comboboxes']:
             if self.searchComboBoxes[item]['chosenFeature'] and self.searchComboBoxes[item]['layer']:
@@ -1958,11 +1958,12 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 else:
                     self.qc.updateLog(u'Aucune parcelle sélectionnée !')
 
-    '''
-    Action for selected proprietaire(s)
-    print/copy in clipboard/save
-    '''
+
     def printInfosProprietaires(self):
+        """
+        Action for selected proprietaire(s)
+        print/copy in clipboard/save
+        """
 
         document = QTextDocument()
         document.setHtml(

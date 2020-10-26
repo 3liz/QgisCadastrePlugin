@@ -255,9 +255,9 @@ class CadastreMenu:
         self.updateSearchButton()
 
     def updateSearchButton(self):
-        '''
+        """
         Update search button icon
-        '''
+        """
         plugin_dir = str(Path(__file__).resolve().parent)
         if self.cadastre_search_dialog.isVisible():
             icon_file = "nosearch.png"
