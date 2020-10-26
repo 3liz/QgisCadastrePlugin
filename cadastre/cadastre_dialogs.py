@@ -1958,7 +1958,6 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 else:
                     self.qc.updateLog(u'Aucune parcelle sélectionnée !')
 
-
     def printInfosProprietaires(self):
         """
         Action for selected proprietaire(s)
@@ -2396,7 +2395,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.txtLog = QTextEdit(self)
         self.txtLog.setEnabled(False)
 
-        self.butActions = myPushButtonFunny(self)
+        self.butActions = MyPushButtonFunny(self)
         self.butActions.initPushButton(
             40, 24, 10, 0, "butActions", "", "Actions ...", True,
             QIcon(
@@ -2484,11 +2483,11 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         except:
             pass
 
-    '''
-    Action for selected proprietaire(s)
-    print/copy in clipboard/save
-    '''
     def setObj(self):
+        """
+        Action for selected proprietaire(s)
+        print/copy in clipboard/save
+        """
 
         index = self.tabWidget.currentIndex()
 
@@ -2913,9 +2912,9 @@ class CadastreMessageDialog(QDialog, MESSAGE_FORM_CLASS):
         self.close()
 
 
-class myPushButtonFunny(QPushButton):
+class MyPushButtonFunny(QPushButton):
     def __init__(self, *args):
-        super(myPushButtonFunny, self).__init__(*args)
+        super(MyPushButtonFunny, self).__init__(*args)
 
     def initPushButton(
             self, sizeWidth, sizeHeight, coordX, coordY, name, text,

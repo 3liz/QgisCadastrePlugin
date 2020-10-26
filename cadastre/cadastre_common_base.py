@@ -175,19 +175,14 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
 
     except BaseError as e:
         ok = False
-        error_message = e.msg
+        print(e.msg)
+        QgsMessageLog.logMessage("cadastre debug - error while fetching data from database")
 
     finally:
         if c:
             # print "close connection"
             c.close()
             del c
-
-    # Log errors
-    if not ok:
-        print(error_message)
-        QgsMessageLog.logMessage("cadastre debug - error while fetching data from database")
-        # print(sql)
 
     # TODO: Return tuple
     return [header, data, rowCount, ok]
