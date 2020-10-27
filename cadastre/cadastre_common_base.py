@@ -221,7 +221,7 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
 
         if Qgis.QGIS_VERSION_INT >= 31200:
             # we need a fake DBPlugin object
-            # with connetonName and providerName methods
+            # with connectionName and providerName methods
             obj = QObject()
             obj.connectionName = lambda: 'fake'
             obj.providerName = lambda: 'postgres'
