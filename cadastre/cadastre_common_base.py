@@ -22,7 +22,10 @@ from pathlib import Path
 
 from typing import Dict, List, Any, Union
 
+from qgis.PyQt.QtCore import QObject
+
 from qgis.core import (
+    Qgis,
     QgsProject,
     QgsMapLayer,
     QgsMessageLog,
@@ -169,9 +172,7 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
             header = []
         if len(header) > 0:
             data = connector._fetchall(c)
-        rowCount = c.rowcount
-        if rowCount == -1:
-            rowCount = len(data)
+        rowCount = len(data)
 
     except BaseError as e:
         ok = False
@@ -218,7 +219,16 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
                 connectionParams['password']
             )
 
-        connector = PostGisDBConnector(uri)
+        if Qgis.QGIS_VERSION_INT >= 31200:
+            # we need a fake DBPlugin object
+            # with connectionName and providerName methods
+            obj = QObject()
+            obj.connectionName = lambda: 'fake'
+            obj.providerName = lambda: 'postgres'
+
+            connector = PostGisDBConnector(uri, obj)
+        else:
+            connector = PostGisDBConnector(uri)
 
     if connectionParams['dbType'] == 'spatialite':
         uri.setConnection('', '', connectionParams['dbname'], '', '')
