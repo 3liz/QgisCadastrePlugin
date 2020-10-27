@@ -25,6 +25,7 @@ from typing import Dict, List, Any, Union
 from qgis.PyQt.QtCore import QObject
 
 from qgis.core import (
+    Qgis,
     QgsProject,
     QgsMapLayer,
     QgsMessageLog,
@@ -218,13 +219,16 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
                 connectionParams['password']
             )
 
-        # we need a fake DBPlugin object
-        # with connetonName and providerName methods
-        obj = QObject()
-        obj.connectionName = lambda: 'fake'
-        obj.providerName = lambda: 'postgres'
+        if Qgis.QGIS_VERSION_INT >= 31200:
+            # we need a fake DBPlugin object
+            # with connetonName and providerName methods
+            obj = QObject()
+            obj.connectionName = lambda: 'fake'
+            obj.providerName = lambda: 'postgres'
 
-        connector = PostGisDBConnector(uri, obj)
+            connector = PostGisDBConnector(uri, obj)
+        else:
+            connector = PostGisDBConnector(uri)
 
     if connectionParams['dbType'] == 'spatialite':
         uri.setConnection('', '', connectionParams['dbname'], '', '')
