@@ -1,4 +1,5 @@
 stages:
+- tests
 - build
 - deploy
 - release
@@ -8,6 +9,16 @@ variables:
     FACTORY_PACKAGE_NAME: qgis_cadastre
     FACTORY_PACKAGE_TYPE: plugin
     FACTORY_MANIFEST: ".lizcloud/factory.manifest"
+
+check_tag:
+  stage: tests
+  only:
+    - tags
+  tags:
+    - fabric
+  script:
+    - export TAG_NAME=${CI_COMMIT_REF_NAME:1}
+    - .lizcloud/check_tag.sh ${TAG_NAME}
 
 build_3:
   stage: build

@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 1.10.0 (next)
+### 1.10.0 - 28/10/2020
 
 * Ajout de l'extraction d'informations Lots
 * Widget "Outils de Recherche" : Ajout de la boîte rapide informations propriétaires
