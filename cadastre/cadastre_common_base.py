@@ -176,19 +176,14 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
 
     except BaseError as e:
         ok = False
-        error_message = e.msg
+        print(e.msg)
+        QgsMessageLog.logMessage("cadastre debug - error while fetching data from database")
 
     finally:
         if c:
             # print "close connection"
             c.close()
             del c
-
-    # Log errors
-    if not ok:
-        print(error_message)
-        QgsMessageLog.logMessage("cadastre debug - error while fetching data from database")
-        print(sql)
 
     # TODO: Return tuple
     return [header, data, rowCount, ok]
@@ -406,6 +401,9 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
         'proprietaires': {
             'label': 'Propriétaires'
         },
+        'indivisions': {
+            'label': 'Détails'
+        },
         'subdivisions': {
             'label': 'Subdivisions fiscales'
         },
@@ -420,6 +418,7 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
         }
     }
     info = infos[item]
+
     sqlfile = 'templates/parcelle_info_%s.sql' % item
     sql = ''
     with open(os.path.join(plugin_dir, sqlfile)) as sqltemplate:
@@ -441,6 +440,8 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
             # print info['label']
             # print line
             if line and len(line) > 0 and line[0]:
+                if item == "indivisions":
+                    html += '<br>'
                 html += '%s' % line[0].replace('100p', '100%')
 
     return html

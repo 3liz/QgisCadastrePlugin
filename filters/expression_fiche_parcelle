@@ -1,0 +1,5 @@
+concat(
+'/var/www/LIZMAP/release_3_2/temp/lizmap/www/fiche_cadastre_',
+ "geo_parcelle" ,
+'.html'
+)

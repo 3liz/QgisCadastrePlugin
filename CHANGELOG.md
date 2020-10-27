@@ -1,17 +1,25 @@
 # CHANGELOG
 
+### 1.9.1 (next)
+
+* Ajout de l'extraction d'informations Lots
+* Widget "Outils de Recherche" : Ajout de la boîte rapide informations propriétaires
+* Dialogue "infos parcelle" : Ajout des actions imprimer / copier /sauvegarder des infos des onglets
+* Révision barre d'outils (position actions) et réécriture code menu / barre d'outils
+* Fix - bug connexion (relevé parcellaire, première instanciation)
+
 ### 1.9.0 - 07/09/2020
 
 * Documentation
-	* Support de QGIS 3.10 LTR #240
-	* Précisions sur les versions PostgreSQL et PostGIS supportées
+    * Support de QGIS 3.10 LTR #240
+    * Précisions sur les versions PostgreSQL et PostGIS supportées
 * Support du millésime MAJIC 2020 #239
 * Améliorations et corrections
-	* Suppression des doublons de communes et de sections dans les données EDIGEO #196
-	* Unités foncières : suppression des enregistrements sans comptes communaux #221
-	* Correction d'un bogue dans l'affichage des informations d'une parcelle si le nom de la voie est nul #207
-	* Correction d'un bogue affectant le chargement de la couche des parcelles si on utilise du filtrage sur le code de commune #229
-	* Maintenance sur le code Python
+    * Suppression des doublons de communes et de sections dans les données EDIGEO #196
+    * Unités foncières : suppression des enregistrements sans comptes communaux #221
+    * Correction d'un bogue dans l'affichage des informations d'une parcelle si le nom de la voie est nul #207
+    * Correction d'un bogue affectant le chargement de la couche des parcelles si on utilise du filtrage sur le code de commune #229
+    * Maintenance sur le code Python
 
 ### 1.8.1 - 21/10/2019
 

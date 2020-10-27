@@ -26,7 +26,7 @@
          <x>0</x>
          <y>0</y>
          <width>382</width>
-         <height>580</height>
+         <height>586</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -176,6 +176,16 @@
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QPushButton" name="btIdentifierProprietaire">
+               <property name="toolTip">
+                <string>Identifier propriétaire(s)</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QPushButton" name="btCentrerLieu">
                <property name="toolTip">
@@ -398,5 +408,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>btSelectionnerProprietaire</tabstop>
   <tabstop>txtLog</tabstop>
  </tabstops>
+ <resources/>
  <connections/>
 </ui>

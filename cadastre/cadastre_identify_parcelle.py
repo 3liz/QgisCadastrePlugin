@@ -54,6 +54,7 @@ class IdentifyParcelle(QgsMapToolIdentify):
         layer = self.layer
 
         if not layer:
+            # Ignore if no layer
             return
 
         if layer.type() != QgsMapLayer.VectorLayer:
