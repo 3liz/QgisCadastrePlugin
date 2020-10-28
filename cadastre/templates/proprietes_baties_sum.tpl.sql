@@ -11,12 +11,12 @@ Coalesce(Sum(Cast(pt.gp_vlbaia * px.pexb / 100 AS numeric(10,2))) , 0) as gp_vlb
 Coalesce(Sum(Cast(pt.de_vlbaia * px.pexb / 100 AS numeric(10,2))) , 0) as de_vlbaia, sum(pt.de_bipevla) as de_bipevla,
 Coalesce(Sum(Cast(pt.re_vlbaia * px.pexb / 100 AS numeric(10,2))) , 0) as re_vlbaia, Coalesce(sum(pt.re_bipevla), 0)  as re_bipevla
 FROM
-parcelle p
-INNER JOIN local00 l ON l.parcelle = p.parcelle
-INNER JOIN local10 l10 ON l10.local00 = l.local00
-INNER JOIN pev ON pev.local10 = l10.local10
-LEFT JOIN pevexoneration px ON px.pev = pev.pev
-LEFT JOIN pevtaxation pt ON pt.pev = pev.pev
+$schema"parcelle" p
+INNER JOIN $schema"local00" l ON l.parcelle = p.parcelle
+INNER JOIN $schema"local10" l10 ON l10.local00 = l.local00
+INNER JOIN $schema"pev" pev ON pev.local10 = l10.local10
+LEFT JOIN $schema"pevexoneration" px ON px.pev = pev.pev
+LEFT JOIN $schema"pevtaxation" pt ON pt.pev = pev.pev
 WHERE 2>1
 $and
 

@@ -14,10 +14,10 @@ round(Cast(s.drcsuba * Cast(se.pexn / 100 AS numeric(10,2)) / 100 AS numeric) , 
 Cast(se.pexn / 100 AS numeric(10,2)) AS pourcentageexo, '' AS tc,
 p.dreflf AS lff
 
-FROM parcelle p
-INNER JOIN suf s ON p.parcelle = s.parcelle
-LEFT OUTER JOIN voie v ON v.voie = p.voie
-LEFT JOIN sufexoneration se ON s.suf = se.suf
+FROM $schema"parcelle" p
+INNER JOIN $schema"suf" s ON p.parcelle = s.parcelle
+LEFT OUTER JOIN $schema"voie" v ON v.voie = p.voie
+LEFT JOIN $schema"sufexoneration" se ON s.suf = se.suf
 WHERE 2>1
 $and
 ORDER BY p.parcelle, s.suf

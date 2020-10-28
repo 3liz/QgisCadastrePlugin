@@ -6,8 +6,8 @@ CASE WHEN length(Cast(sum(s.dcntsf) AS text)) > 0 THEN substring(Cast(sum(s.dcnt
 
 sum(s.drcsuba) AS sum_drcsuba
 
-FROM parcelle p
-INNER JOIN suf s ON p.parcelle = s.parcelle
+FROM $schema"parcelle" p
+INNER JOIN $schema"suf" s ON p.parcelle = s.parcelle
 --LEFT JOIN sufexoneration se ON s.suf = se.suf
 WHERE 2>1
 $and

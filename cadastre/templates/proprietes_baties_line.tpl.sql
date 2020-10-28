@@ -15,13 +15,13 @@ END AS revenucadastral,
 px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb, Cast(px.rcexba2 * px.pexb / 100 AS numeric(10,2)) AS fractionrcexo,
 px.pexb AS pourcentageexo, l10.gtauom AS txom, '' AS coefreduc
 FROM
-parcelle p
-INNER JOIN local00 l ON l.parcelle = p.parcelle
-INNER JOIN local10 l10 ON l10.local00 = l.local00
-INNER JOIN pev ON pev.local10 = l10.local10
-LEFT OUTER JOIN voie v ON v.voie = l.voie
-LEFT JOIN pevexoneration px ON px.pev = pev.pev
-LEFT JOIN pevtaxation pt ON pt.pev = pev.pev
+$schema"parcelle" p
+INNER JOIN $schema"local00" l ON l.parcelle = p.parcelle
+INNER JOIN $schema"local10" l10 ON l10.local00 = l.local00
+INNER JOIN $schema"pev" pev ON pev.local10 = l10.local10
+LEFT OUTER JOIN $schema"voie" v ON v.voie = l.voie
+LEFT JOIN $schema"pevexoneration" px ON px.pev = pev.pev
+LEFT JOIN $schema"pevtaxation" pt ON pt.pev = pev.pev
 WHERE 2>1
 $and
 ORDER BY p.parcelle, l.dnvoiri, v.natvoi, v.libvoi, bat, ent, niv
