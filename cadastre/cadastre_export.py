@@ -307,7 +307,7 @@ class cadastreExport:
 
             # Add schema to search_path if postgis
             if self.dbType == 'postgis':
-                sql = sql.replace('$schema', '"%s".' % self.connectionParams['schema'])
+                sql = sql.replace('$schema', '"{}".'.format(self.connectionParams['schema']))
             else:
                 sql = sql.replace('$schema', '')
             # Add where clause depending on etype
