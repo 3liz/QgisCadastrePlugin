@@ -178,6 +178,7 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
         ok = False
         print(e.msg)
         QgsMessageLog.logMessage("cadastre debug - error while fetching data from database")
+        print(sql)
 
     finally:
         if c:

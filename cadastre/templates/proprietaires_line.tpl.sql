@@ -7,8 +7,8 @@ CASE
   THEN ' Né(e) le ' || jdatnss || ' à ' || coalesce(p.dldnss, '')
   ELSE ''
 END AS nele
-FROM proprietaire p
-INNER JOIN ccodro ON ccodro.ccodro = p.ccodro
+FROM $schema"proprietaire" p
+INNER JOIN $schema"ccodro" cc ON cc.ccodro = p.ccodro
 WHERE 2>1
 $and
 
