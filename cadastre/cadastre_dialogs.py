@@ -37,8 +37,6 @@ from qgis.PyQt.QtWidgets import (
     QMenu,
     QMessageBox,
     QPushButton,
-    QGroupBox,
-    QTextBrowser,
     QTextEdit,
     QDialogButtonBox
 )
@@ -1893,88 +1891,14 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 feat = searchCombo['chosenFeature']
 
                 if feat:
-                    item = 'proprietaires'
 
-                    html = CadastreCommon.getItemHtml(item, feat, self.connectionParams, self.connector)
-                    html += CadastreCommon.getItemHtml('indivisions', feat, self.connectionParams, self.connector)
-
-                    plugin_dir = str(Path(__file__).resolve().parent)
-
-                    msgDlgBox = QMessageBox(self)
-
-                    msgDlgBox.setFixedSize(700, 320)
-                    msgDlgBox.setWindowTitle("Cadastre+, ID parcelle : %s" % feat['geo_parcelle'])
-                    msgDlgBox.setWindowIcon(QIcon(
-                        os.path.join(
-                            plugin_dir, 'forms', 'icons', "identify.png"
-                        )
-                    ))
-                    msgDlgBox.setIcon(QMessageBox.Information)
-
-                    groupBox1 = QGroupBox(msgDlgBox)
-                    groupBox1.setGeometry(0, 0, 680, 290)
-                    groupBox1.setFixedSize(680, 290)
-                    groupBox1.setObjectName("groupBox1")
-
-                    textEdit = QTextBrowser(groupBox1)
-                    textEdit.setMaximumSize(670, 280)
-                    textEdit.setMinimumSize(670, 280)
-                    textEdit.setGeometry(5, 5, 670, 280)
-                    textEdit.setReadOnly(True)
-                    textEdit.append(html)
-                    textEdit.setToolTip(feat['geo_parcelle'])
-
-                    self.textEdit = textEdit
-
-                    buttonPrintInfosProprietaires = QPushButton(msgDlgBox)
-                    buttonPrintInfosProprietaires.setObjectName("buttonPrintInfosProprietaires")
-                    buttonPrintInfosProprietaires.setIcon(QIcon(
-                        os.path.join(
-                            plugin_dir, 'icons', "print.png"
-                        )
-                    ))
-                    buttonPrintInfosProprietaires.setText(" &Imprimer ...")
-                    buttonPrintInfosProprietaires.setFixedSize(125, 25)
-
-                    buttonCopyInfosProprietaires = QPushButton(msgDlgBox)
-                    buttonCopyInfosProprietaires.setObjectName("buttonCopyInfosProprietaires")
-                    buttonCopyInfosProprietaires.setIcon(QIcon(
-                        os.path.join(
-                            plugin_dir, 'icons', "copy.png"
-                        )
-                    ))
-                    buttonCopyInfosProprietaires.setText(" &Copier")
-                    buttonCopyInfosProprietaires.setFixedSize(125, 25)
-
-                    buttonSaveInfosProprietaires = QPushButton(msgDlgBox)
-                    buttonSaveInfosProprietaires.setObjectName("buttonSaveInfosProprietaires")
-                    buttonSaveInfosProprietaires.setIcon(QIcon(
-                        os.path.join(
-                            plugin_dir, 'icons', "save.png"
-                        )
-                    ))
-                    buttonSaveInfosProprietaires.setText(" &Enregistrer sous ...")
-                    buttonSaveInfosProprietaires.setFixedSize(125, 25)
-
-                    buttonReject = QPushButton(msgDlgBox)
-                    buttonReject.setObjectName("CloseButton")
-                    buttonReject.setText("&Fermer")
-                    buttonReject.setFixedSize(125, 25)
-
-                    buttonPrintInfosProprietaires.clicked.connect(self.printInfosProprietaires)
-                    buttonCopyInfosProprietaires.clicked.connect(self.copyInfosProprietaires)
-                    buttonSaveInfosProprietaires.clicked.connect(self.saveInfosProprietaires)
-                    buttonReject.clicked.connect(msgDlgBox.reject)
-
-                    msgDlgBox.layout().addWidget(groupBox1, 0, 1, 1, 6)
-                    msgDlgBox.layout().addWidget(buttonPrintInfosProprietaires, 6, 1, 1, 1)
-                    msgDlgBox.layout().addWidget(buttonCopyInfosProprietaires, 6, 2, 1, 1)
-                    msgDlgBox.layout().addWidget(buttonSaveInfosProprietaires, 6, 3, 1, 1)
-                    msgDlgBox.layout().addWidget(buttonReject, 6, 6, 1, 1)
-
-                    msgDlgBox.setStandardButtons(msgDlgBox.NoButton)
-                    msgDlgBox.setModal(False)
-                    msgDlgBox.show()
+                    parcelle_dialog = CadastreParcelleDialog(
+                        self.iface,
+                        searchCombo['layer'],
+                        feat,
+                        self
+                    )
+                    parcelle_dialog.show()
 
                 else:
                     self.qc.updateLog(u'Aucune parcelle sélectionnée !')
