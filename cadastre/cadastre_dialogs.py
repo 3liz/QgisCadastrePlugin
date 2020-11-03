@@ -1458,26 +1458,29 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             sql += ' ORDER BY c.tex2, v.natvoi, v.libvoi'
 
         if key == 'proprietaire':
-            sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"  # , c.ccocom"
+            aggregMethod = 'string_agg' if self.dbType == 'postgis' else 'group_concat'
+            schema = connectionParams['schema']
+            searchByBirthName = self.cbSearchNameBirth.isChecked()
+            # search by common name by default
+            nameString = "COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomus),'')||' '||COALESCE(rtrim(dprnus),'')"
+            # if checkbox is checked
+            if searchByBirthName is True:
+                # search by birth name instead
+                nameString = "COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomlp),'')||' '||COALESCE(rtrim(dprnus),'')"
+            # To only use dnomlp and search people OR use dnomus field
+            sql = f"SELECT {nameString} AS nom_naissance_usage, {aggregMethod}(comptecommunal, ',') AS cc, dnuper"
             if self.dbType == 'postgis':
-                sql += ' FROM "{}"."proprietaire" p'.format(connectionParams['schema'])
+                sql += f' FROM "{schema}"."proprietaire" p'
             else:
                 sql += ' FROM proprietaire p'
-            # ~ sql+= ' INNER JOIN commune c ON c.ccocom = p.ccocom'
             sql += " WHERE 2>1"
             for sv in searchValues:
-                sql += " AND ddenom LIKE %s" % self.connector.quoteString('%' + sv + '%')
-            sql += ' GROUP BY dnuper, ddenom, dlign4'  # , c.ccocom'
-            sql += ' ORDER BY ddenom'  # , c.ccocom'
+                sql += f" AND nom_naissance_usage LIKE '%{sv}%'"
+            sql += ' GROUP BY dnuper, nom_naissance_usage, dlign4'  # , c.ccocom'
+            sql += ' ORDER BY nom_naissance_usage'  # , c.ccocom'
         self.dbType = connectionParams['dbType']
 
-        # Update aggregate function in SQL
-        if self.dbType == 'postgis':
-            sql = sql.replace('MyStringAgg', 'string_agg')
-        else:
-            sql = sql.replace('MyStringAgg', 'group_concat')
         # self.qc.updateLog(sql)
-
         sql += ' LIMIT 20'
 
         [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
