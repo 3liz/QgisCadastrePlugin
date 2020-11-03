@@ -1,3 +1,7 @@
+---- Les commentaires commençant par "-- " (2 tirets et un espace) seront affichés dans le log de progression
+---- et utilisé comme étape d'import. Ex: "-- FORMATAGE DONNEES : DEBUT" ci-dessous
+---- Pour écrire un commentaire non affiché, commencer par exemple par 4 tirets
+
 -- FORMATAGE DONNEES : DEBUT
 BEGIN;
 
@@ -32,21 +36,21 @@ CREATE INDEX idx_edigeorel_de ON [PREFIXE]edigeo_rel (de);
 CREATE INDEX idx_edigeorel_nom ON [PREFIXE]edigeo_rel (nom);
 
 -- geo_commune
--- pour éviter les doublons des données EDIGEO on sélectionne les communes avec le update_date le plus récent
+---- pour éviter les doublons des données EDIGEO on sélectionne les communes avec le update_date le plus récent
 INSERT INTO [PREFIXE]geo_commune
 ( geo_commune, annee, object_rid, idu, tex2, creat_date, update_dat, commune, geom, lot)
   SELECT
     '[DEPDIR]'||SUBSTRING(idu,1,8), '[ANNEE]',
-    object_rid, idu, tex2,  
-    to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), 
-    to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), 
+    object_rid, idu, tex2,
+    to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'),
+    to_date(to_char(update_date,'00000000'), 'YYYYMMDD'),
     '[DEPDIR]'||SUBSTRING(idu,1,3),
-    ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))), 
+    ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))),
     '[LOT]'
   FROM [PREFIXE]commune_id edi_commune
   WHERE ogc_fid = (
-    SELECT ogc_fid 
-    FROM [PREFIXE]commune_id 
+    SELECT ogc_fid
+    FROM [PREFIXE]commune_id
     WHERE idu = edi_commune.idu
     ORDER BY update_date DESC
     LIMIT 1
@@ -59,19 +63,19 @@ DELETE FROM [PREFIXE]geo_commune WHERE tex2 IS NULL or trim(tex2) = '';
 DELETE FROM [PREFIXE]commune WHERE ccocom IS NULL or trim(ccocom) = '';
 
 -- geo_section
--- pour éviter les doublons des données EDIGEO on sélectionne les sections avec le update_date le plus récent
+---- pour éviter les doublons des données EDIGEO on sélectionne les sections avec le update_date le plus récent
 INSERT INTO [PREFIXE]geo_section
 ( geo_section, annee, object_rid, idu, tex, geo_commune, creat_date, update_dat, geom, lot)
   SELECT
     '[DEPDIR]'||SUBSTRING(idu,1,8), '[ANNEE]',
-    object_rid, idu, tex, '[DEPDIR]'||SUBSTRING(idu,1,3), 
-    to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), 
-    to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), 
-    ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))), 
+    object_rid, idu, tex, '[DEPDIR]'||SUBSTRING(idu,1,3),
+    to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'),
+    to_date(to_char(update_date,'00000000'), 'YYYYMMDD'),
+    ST_Multi(ST_Union(ST_CollectionExtract(ST_MakeValid(geom),3))),
     '[LOT]'
   FROM [PREFIXE]section_id edi_section
   WHERE ogc_fid = (
-    SELECT ogc_fid FROM [PREFIXE]section_id 
+    SELECT ogc_fid FROM [PREFIXE]section_id
     WHERE idu = edi_section.idu
     ORDER BY update_date DESC
     LIMIT 1

@@ -1047,39 +1047,62 @@ class cadastreImport(QObject):
                 # self.qc.updateLog('|%s|' % sql)
                 self.executeSqlQuery(sql, ignoreError)
             else:
+                # Split all SQL into single queries
                 statements = sql.split(';')
                 self.totalSteps += len(statements)
                 self.updateProgressBar()
+                # Regex to find valid SQL queries
                 r = re.compile(
                     r'select |insert |update |delete |alter |create |drop |truncate |comment |copy |vacuum |analyze ',
                     re.IGNORECASE | re.MULTILINE)
+
+                # Loop through for each individual statement
                 for sqla in statements:
+                    # Break if an error has been raised before
                     if not self.go:
                         break
 
-                    cr = re.compile(r'-- (.+)', re.IGNORECASE | re.MULTILINE)
-                    ut = False
+                    # Regex to find comments which will be written in log
+                    cr = re.compile(r'^-- (.+)', re.IGNORECASE | re.MULTILINE)
+
+                    # Write comment taken from "-- some comment" lines
                     for comment in cr.findall(sqla):
+
+                        # Update timer before writing the comment
+                        # it will show the time taken by the previous statement
+                        self.updateTimer()
+
+                        # Write item. Ex: geo_borne_parcelle
                         self.qc.updateLog('  - %s' % comment.strip(' \n\r\t'))
-                        ut = True
+
                     # Do nothing if sql is only comment
                     if not r.search(sqla) or not len(sqla.split('~')) == 1:
                         continue
 
+                    # Get SQL query
                     sql = '%s' % sqla
                     # self.qc.updateLog('@@%s$$' % sql)
-                    self.updateProgressBar()
-                    # Avoid adding 2 times the same column for spatialite
-                    if self.dialog.dbType == 'spatialite' \
-                            and re.search(r'ADD COLUMN tempo_import', sqla, re.IGNORECASE):
-                        try:
-                            self.executeSqlQuery(sql, ignoreError)
-                        except:
-                            pass
-                    else:
-                        self.executeSqlQuery(sql, ignoreError)
-                    if ut:
-                        self.updateTimer()
+                    # self.updateProgressBar()
+
+                    # Spatialite performance adaptations
+                    # This is fragile as Sqlite perf evolves a lot through time & versions
+                    # Some queries runing fast earlier can perform poorly in some contexts
+                    # ex: https://github.com/3liz/QgisCadastrePlugin/issues/262
+                    avoid_query = False
+                    if self.dialog.dbType == 'spatialite':
+                        spatialite_avoid_list = [
+                            'geo_borne_annee_idx',
+                        ]
+                        for avoid_item in spatialite_avoid_list:
+                            if avoid_item in sql:
+                                avoid_query = True
+                    if avoid_query:
+                        # self.qc.updateLog('AVOID FOR SPATIALITE')
+                        continue
+
+                    # Execute query
+                    self.executeSqlQuery(sql, ignoreError)
+
                     self.updateProgressBar()
             QApplication.restoreOverrideCursor()
 
@@ -1101,7 +1124,6 @@ class cadastreImport(QObject):
                     c = self.connector._execute_and_commit(sql)
                 except BaseError as e:
                     if not ignoreError \
-                            and not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
                             and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                         DlgDbError.showError(e, self.dialog)
                         self.go = False
@@ -1111,7 +1133,6 @@ class cadastreImport(QObject):
                         c = self.connector._execute_and_commit(sql)
                     except BaseError as e:
                         if not ignoreError \
-                                and not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
                                 and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                             DlgDbError.showError(e, self.dialog)
                             self.go = False
@@ -1154,14 +1175,12 @@ class cadastreImport(QObject):
                     # Run query
                     c.executescript(sql)
                 except BaseError as e:
-                    if not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
-                            and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
+                    if not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                         self.go = False
                         self.qc.updateLog(u"<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
                         self.qc.updateLog(u"<b>Erreur </b> <p>%s</p>" % e.msg)
                 except sqlite.OperationalError as e:
-                    if not re.search(r'ADD COLUMN tempo_import', sql, re.IGNORECASE) \
-                            and not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
+                    if not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
                         self.go = False
                         self.qc.updateLog(u"<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
                         self.qc.updateLog(u"<b>Erreur </b> <p>%s</p>" % format(e))
