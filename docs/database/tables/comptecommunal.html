@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>comptecommunal - cadastre_2019 Database</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+  <!-- Code Mirror -->
+  <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+  <!-- Fonts -->
+  <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+  <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+  <!-- Salvattore -->
+  <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+  <!-- SchemaSpy -->
+  <link rel="stylesheet" href="../schemaSpy.css">
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="../bower/html5shiv/html5shiv.min.js"></script>
+  <script src="../bower/respond/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+			<li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+			<li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+			<li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+			<li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
+			<li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+			<li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Main content -->
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>comptecommunal</h1></br>
+		      </section>
+      <!-- Main content -->
+      <section class="content">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+			  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+              <h3 id="Columns" class="box-title">Columns</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+            <div class="box-body">
+				<div class="row">
+					<div id="button_group_one" class="col-md-3 col-sm-6"></div>
+					<div id="button_group_two" class="col-md-2 col-sm-4 pull-right text-right"></div>
+				</div>
+				<table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+				<thead align='left'>
+				<tr>
+				  <th>Column</th>
+				  <th>Type</th>
+				  <th>Size</th>
+				  <th title='Are nulls allowed?'>Nulls</th>
+				  <th title='Is column automatically updated?'>Auto</th>
+				  <th title='Default value'>Default</th>
+				  <th title='Columns in tables that reference this column'>Children</th>
+				  <th title='Columns in tables that are referenced by this column'>Parents</th>
+				  <th title='Comments' class="toggle"><span>Comments</span></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="comptecommunal">comptecommunal</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="geo_unite_fonciere.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='geo_unite_fonciere.html'>geo_unite_fonciere</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="local10.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='local10.html'>local10</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="lots.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='lots.html'>lots</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="parcelle.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='parcelle.html'>parcelle</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="parcelle_info.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='parcelle_info.html'>parcelle_info</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="pdl.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='pdl.html'>pdl</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="proprietaire.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='proprietaire.html'>proprietaire</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="suf.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='suf.html'>suf</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="v_geo_parcelle.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='v_geo_parcelle.html'>v_geo_parcelle</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="annee">annee</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ccodep">ccodep</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ccodir">ccodir</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ccocom">ccocom</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="dnupro">dnupro</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ajoutcoherence">ajoutcoherence</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="lot">lot</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+								</tbody>
+				</table>
+				<p title='8 columns'>Table contained <span id="recordNumber">31171</span> rows<p/>
+			</div>
+		</div>
+		<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-sitemap"></i>
+
+              <h3 id="Indexes" class="box-title">Indexes</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+			<div class="box-body">
+				<table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+				<thead>
+				 <tr>
+				  <th>Constraint Name</th>
+				  <th>Type</th>
+				  <th>Sort</th>
+				  <th>Column(s)</th>
+				 </tr>
+				</thead>
+				<tbody>
+				 <tr>
+				  <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> comptecommunal_pk</td>
+				  <td>Primary key</td>
+				  <td><span title='Ascending'>Asc</span></td>
+				  <td>comptecommunal</td>
+				 </tr>				 
+				</tbody>
+				</table>   			  
+			</div><!-- /.box-body -->
+		</div>
+				<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-code-fork"></i>
+
+              <h3 id="Relationships" class="box-title">Relationships</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+			<div class="box-body">	
+			<div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+			<h5>Close relationships within degrees of separation</h5>
+            <ul class="nav nav-tabs pull-left ui-sortable-handle">
+			  			              <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>			  			 
+			  			              <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>			  			 
+			  			              <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>			  			 
+            </ul>
+            <div class="tab-content no-padding">            
+				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="comptecommunal.html" title="comptecommunal" alt="" coords="5,5,339,309">
+</map>
+
+					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/comptecommunal.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="geo_unite_fonciere.html" title="geo_unite_fonciere" alt="" coords="383,743,601,919">
+<area shape="rect" id="node2" href="comptecommunal.html" title="comptecommunal" alt="" coords="5,1224,339,1528">
+<area shape="rect" id="node3" href="local10.html" title="local10" alt="" coords="897,5,1105,651">
+<area shape="rect" id="node4" href="parcelle.html" title="parcelle" alt="" coords="645,1080,853,1373">
+<area shape="rect" id="node6" href="pdl.html" title="pdl" alt="" coords="388,1015,596,1249">
+<area shape="rect" id="node5" href="lots.html" title="lots" alt="" coords="897,668,1105,1049">
+<area shape="rect" id="node7" href="parcelle_info.html" title="parcelle_info" alt="" coords="897,1436,1105,1759">
+<area shape="rect" id="node8" href="proprietaire.html" title="proprietaire" alt="" coords="645,1463,853,2049">
+<area shape="rect" id="node9" href="suf.html" title="suf" alt="" coords="897,1067,1105,1419">
+<area shape="rect" id="node10" href="v_geo_parcelle.html" title="v_geo_parcelle" alt="" coords="897,1857,1105,2068">
+</map>
+
+					<a name='diagram'><img id='oneimpliedDegreeImg' src='../diagrams/comptecommunal.implied1degrees.png' usemap='#oneDegreeRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="geo_batiment_parcelle.html" title="geo_batiment_parcelle" alt="" coords="897,1056,1136,1144">
+<area shape="rect" id="node2" href="parcelle.html" title="parcelle" alt="" coords="645,1059,853,1352">
+<area shape="rect" id="node12" href="comptecommunal.html" title="comptecommunal" alt="" coords="5,1609,339,1913">
+<area shape="rect" id="node14" href="voie.html" title="voie" alt="" coords="412,1547,572,1635">
+<area shape="rect" id="node25" href="gpdl.html" title="gpdl" alt="" coords="432,1271,552,1359">
+<area shape="rect" id="node30" href="pdl.html" title="pdl" alt="" coords="388,983,596,1217">
+<area shape="rect" id="node32" href="type_filiation.html" title="type_filiation" alt="" coords="407,1376,577,1464">
+<area shape="rect" id="node3" href="geo_borne_parcelle.html" title="geo_borne_parcelle" alt="" coords="907,529,1126,617">
+<area shape="rect" id="node4" href="geo_croix_parcelle.html" title="geo_croix_parcelle" alt="" coords="910,635,1123,723">
+<area shape="rect" id="node5" href="geo_numvoie_parcelle.html" title="geo_numvoie_parcelle" alt="" coords="898,740,1135,828">
+<area shape="rect" id="node6" href="geo_parcelle.html" title="geo_parcelle" alt="" coords="932,2329,1101,2417">
+<area shape="rect" id="node7" href="geo_indp.html" title="geo_indp" alt="" coords="677,2572,822,2660">
+<area shape="rect" id="node8" href="geo_subdsect.html" title="geo_subdsect" alt="" coords="660,2467,839,2555">
+<area shape="rect" id="node9" href="geo_subdfisc_parcelle.html" title="geo_subdfisc_parcelle" alt="" coords="898,845,1135,933">
+<area shape="rect" id="node10" href="geo_symblim_parcelle.html" title="geo_symblim_parcelle" alt="" coords="898,951,1135,1039">
+<area shape="rect" id="node11" href="geo_unite_fonciere.html" title="geo_unite_fonciere" alt="" coords="383,2955,601,3131">
+<area shape="rect" id="node13" href="local00.html" title="local00" alt="" coords="933,1560,1101,1648">
+<area shape="rect" id="node15" href="local10.html" title="local10" alt="" coords="1180,2613,1388,3259">
+<area shape="rect" id="node16" href="cbtabt.html" title="cbtabt" alt="" coords="954,3647,1079,3735">
+<area shape="rect" id="node17" href="ccoeva.html" title="ccoeva" alt="" coords="952,2699,1081,2787">
+<area shape="rect" id="node18" href="cconac.html" title="cconac" alt="" coords="949,3752,1085,3840">
+<area shape="rect" id="node19" href="cconlc.html" title="cconlc" alt="" coords="953,3015,1081,3103">
+<area shape="rect" id="node20" href="ccoplc.html" title="ccoplc" alt="" coords="953,2909,1080,2997">
+<area shape="rect" id="node21" href="dnatcg.html" title="dnatcg" alt="" coords="952,3436,1081,3524">
+<area shape="rect" id="node22" href="dnatlc.html" title="dnatlc" alt="" coords="955,3225,1079,3313">
+<area shape="rect" id="node23" href="dteloc.html" title="dteloc" alt="" coords="955,2804,1079,2892">
+<area shape="rect" id="node24" href="gimtom.html" title="gimtom" alt="" coords="950,3541,1083,3629">
+<area shape="rect" id="node26" href="hlmsem.html" title="hlmsem" alt="" coords="949,3331,1085,3419">
+<area shape="rect" id="node27" href="top48a.html" title="top48a" alt="" coords="953,3120,1081,3208">
+<area shape="rect" id="node28" href="lots.html" title="lots" alt="" coords="913,1161,1121,1543">
+<area shape="rect" id="node29" href="cconlo.html" title="cconlo" alt="" coords="685,1369,813,1457">
+<area shape="rect" id="node36" href="ctpdl.html" title="ctpdl" alt="" coords="112,1073,232,1161">
+<area shape="rect" id="node31" href="lotslocaux.html" title="lotslocaux" alt="" coords="1438,1560,1594,1648">
+<area shape="rect" id="node33" href="parcelle_info.html" title="parcelle_info" alt="" coords="913,1773,1121,2096">
+<area shape="rect" id="node34" href="proprietaire.html" title="proprietaire" alt="" coords="645,1863,853,2449">
+<area shape="rect" id="node38" href="ccodem.html" title="ccodem" alt="" coords="424,1829,560,1917">
+<area shape="rect" id="node39" href="ccodro.html" title="ccodro" alt="" coords="427,1724,557,1812">
+<area shape="rect" id="node40" href="ccogrm.html" title="ccogrm" alt="" coords="425,2251,559,2339">
+<area shape="rect" id="node41" href="ccoqua.html" title="ccoqua" alt="" coords="426,2040,558,2128">
+<area shape="rect" id="node42" href="dformjur.html" title="dformjur" alt="" coords="421,2777,563,2865">
+<area shape="rect" id="node43" href="dnatpr.html" title="dnatpr" alt="" coords="429,2145,555,2233">
+<area shape="rect" id="node44" href="gtoper.html" title="gtoper" alt="" coords="429,1935,555,2023">
+<area shape="rect" id="node45" href="gtyp3.html" title="gtyp3" alt="" coords="432,2356,552,2444">
+<area shape="rect" id="node46" href="gtyp4.html" title="gtyp4" alt="" coords="432,2461,552,2549">
+<area shape="rect" id="node47" href="gtyp5.html" title="gtyp5" alt="" coords="432,2567,552,2655">
+<area shape="rect" id="node48" href="gtyp6.html" title="gtyp6" alt="" coords="432,2672,552,2760">
+<area shape="rect" id="node35" href="parcellecomposante.html" title="parcellecomposante" alt="" coords="906,424,1127,512">
+<area shape="rect" id="node37" href="pev.html" title="pev" alt="" coords="1432,2616,1600,2704">
+<area shape="rect" id="node49" href="suf.html" title="suf" alt="" coords="913,55,1121,407">
+<area shape="rect" id="node50" href="cgrnum.html" title="cgrnum" alt="" coords="682,243,817,331">
+<area shape="rect" id="node51" href="cnatsp.html" title="cnatsp" alt="" coords="681,453,817,541">
+<area shape="rect" id="node52" href="dsgrpf.html" title="dsgrpf" alt="" coords="685,348,813,436">
+<area shape="rect" id="node53" href="gnexps.html" title="gnexps" alt="" coords="683,137,815,225">
+<area shape="rect" id="node54" href="sufexoneration.html" title="sufexoneration" alt="" coords="1191,5,1377,93">
+<area shape="rect" id="node55" href="suftaxation.html" title="suftaxation" alt="" coords="1205,111,1363,199">
+<area shape="rect" id="node56" href="v_geo_parcelle.html" title="v_geo_parcelle" alt="" coords="913,2435,1121,2645">
+</map>
+
+					<a name='diagram'><img id='twoimpliedDegreeImg' src='../diagrams/comptecommunal.implied2degrees.png' usemap='#twoDegreesRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+			  			</div>
+			</div>
+		  </div><!-- /.box-body -->
+		</div>
+	      </section>
+    
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div>
+      <div class="pull-right hidden-xs">
+        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+      </div>
+      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+<script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+<script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+<script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+<script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+<!-- SheetJS -->
+<script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+<!-- pdfmake -->
+<script src="../bower/pdfmake/pdfmake.min.js"></script>
+<script src="../bower/pdfmake/vfs_fonts.js"></script>
+<!-- SlimScroll -->
+<script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+<!-- Salvattore -->
+<script src="../bower/salvattore/salvattore.min.js"></script>
+<!-- AnchorJS -->
+<script src="../bower/anchor-js/anchor.min.js"></script>
+<!-- CodeMirror -->
+<script src="../bower/codemirror/codemirror.js"></script>
+<script src="../bower/codemirror/sql.js"></script>
+<!-- AdminLTE App -->
+<script src="../bower/admin-lte/dist/js/app.min.js"></script>
+<script src="table.js"></script>
+<script src="../schemaSpy.js"></script>
+</body>
+</html>

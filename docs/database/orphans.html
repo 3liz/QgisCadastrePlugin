@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>cadastre_2019 Database</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+  <!-- Code Mirror -->
+  <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+  <!-- Fonts -->
+  <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+  <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+  <!-- Salvattore -->
+  <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+  <!-- SchemaSpy -->
+  <link rel="stylesheet" href="schemaSpy.css">
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="bower/html5shiv/html5shiv.min.js"></script>
+  <script src="bower/respond/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+			<li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+			<li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+			<li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+			<li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
+			<li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+			<li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Main content -->
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>Utility Tables</h1>
+      </section>
+      <!-- Main content -->
+      <section class="content">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+              <i class="fa fa-code-fork"></i>
+              <h3 class="box-title">Orphan Tables</h3>
+            </div>			
+            <div class="box-body">
+			<div id="grid" data-columns>
+				<div class="item">
+					<img src='diagrams/orphans/bati.1degree.png' usemap='#bati' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/fanr.1degree.png' usemap='#fanr' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/lloc.1degree.png' usemap='#lloc' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/nbat.1degree.png' usemap='#nbat' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pdll.1degree.png' usemap='#pdll' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/prop.1degree.png' usemap='#prop' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/annul.1degree.png' usemap='#annul' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/carvoi.1degree.png' usemap='#carvoi' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/cbtabt.1degree.png' usemap='#cbtabt' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccoaff.1degree.png' usemap='#ccoaff' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccocac.1degree.png' usemap='#ccocac' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccodem.1degree.png' usemap='#ccodem' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccodro.1degree.png' usemap='#ccodro' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccoeva.1degree.png' usemap='#ccoeva' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccogrm.1degree.png' usemap='#ccogrm' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccolloc.1degree.png' usemap='#ccolloc' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/cconac.1degree.png' usemap='#cconac' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/cconad.1degree.png' usemap='#cconad' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/cconlc.1degree.png' usemap='#cconlc' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/cconlo.1degree.png' usemap='#cconlo' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccoplc.1degree.png' usemap='#ccoplc' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccoqua.1degree.png' usemap='#ccoqua' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ccthp.1degree.png' usemap='#ccthp' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/cgrnum.1degree.png' usemap='#cgrnum' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/cnatsp.1degree.png' usemap='#cnatsp' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/ctpdl.1degree.png' usemap='#ctpdl' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/detent.1degree.png' usemap='#detent' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/dmatgm.1degree.png' usemap='#dmatgm' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/dmatto.1degree.png' usemap='#dmatto' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/dnatcg.1degree.png' usemap='#dnatcg' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/dnatlc.1degree.png' usemap='#dnatlc' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/dnatpr.1degree.png' usemap='#dnatpr' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/drgpos.1degree.png' usemap='#drgpos' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/dsgrpf.1degree.png' usemap='#dsgrpf' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/dteloc.1degree.png' usemap='#dteloc' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/fburx.1degree.png' usemap='#fburx' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_can.1degree.png' usemap='#geo_can' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_copl.1degree.png' usemap='#geo_copl' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_dur.1degree.png' usemap='#geo_dur' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_indp.1degree.png' usemap='#geo_indp' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_inp.1degree.png' usemap='#geo_inp' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_map.1degree.png' usemap='#geo_map' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_palt.1degree.png' usemap='#geo_palt' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_ppln.1degree.png' usemap='#geo_ppln' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_qupl.1degree.png' usemap='#geo_qupl' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_sym.1degree.png' usemap='#geo_sym' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gimtom.1degree.png' usemap='#gimtom' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gnexpl.1degree.png' usemap='#gnexpl' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gnexps.1degree.png' usemap='#gnexps' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gnextl.1degree.png' usemap='#gnextl' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gnexts.1degree.png' usemap='#gnexts' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gpdl.1degree.png' usemap='#gpdl' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gtoper.1degree.png' usemap='#gtoper' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gtyp3.1degree.png' usemap='#gtyp3' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gtyp4.1degree.png' usemap='#gtyp4' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gtyp5.1degree.png' usemap='#gtyp5' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/gtyp6.1degree.png' usemap='#gtyp6' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/hlmsem.1degree.png' usemap='#hlmsem' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/indldnbat.1degree.png' usemap='#indldnbat' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/natvoi.1degree.png' usemap='#natvoi' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/natvoiriv.1degree.png' usemap='#natvoiriv' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/top48a.1degree.png' usemap='#top48a' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/typcom.1degree.png' usemap='#typcom' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/type_filiation.1degree.png' usemap='#type_filiation' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/typvoi.1degree.png' usemap='#typvoi' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/dformjur.1degree.png' usemap='#dformjur' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/edigeo_rel.1degree.png' usemap='#edigeo_rel' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_batiment_parcelle.1degree.png' usemap='#geo_batiment_parcelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_borne_parcelle.1degree.png' usemap='#geo_borne_parcelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_croix_parcelle.1degree.png' usemap='#geo_croix_parcelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_numvoie_parcelle.1degree.png' usemap='#geo_numvoie_parcelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_subdfisc_parcelle.1degree.png' usemap='#geo_subdfisc_parcelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_symblim_parcelle.1degree.png' usemap='#geo_symblim_parcelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_tline_commune.1degree.png' usemap='#geo_tline_commune' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_tpoint_commune.1degree.png' usemap='#geo_tpoint_commune' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_tsurf_commune.1degree.png' usemap='#geo_tsurf_commune' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_unite_fonciere.1degree.png' usemap='#geo_unite_fonciere' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/charge_id.1degree.png' usemap='#charge_id' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/commune_majic.1degree.png' usemap='#commune_majic' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_borne.1degree.png' usemap='#geo_borne' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_croix.1degree.png' usemap='#geo_croix' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/comptecommunal.1degree.png' usemap='#comptecommunal' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_lieudit.1degree.png' usemap='#geo_lieudit' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_numvoie.1degree.png' usemap='#geo_numvoie' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_subdfisc.1degree.png' usemap='#geo_subdfisc' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_tronfluv.1degree.png' usemap='#geo_tronfluv' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_tronroute.1degree.png' usemap='#geo_tronroute' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_voiep.1degree.png' usemap='#geo_voiep' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_zoncommuni.1degree.png' usemap='#geo_zoncommuni' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_batiment.1degree.png' usemap='#geo_batiment' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_symblim.1degree.png' usemap='#geo_symblim' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_tline.1degree.png' usemap='#geo_tline' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_tsurf.1degree.png' usemap='#geo_tsurf' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_tpoint.1degree.png' usemap='#geo_tpoint' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_commune.1degree.png' usemap='#geo_commune' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_section.1degree.png' usemap='#geo_section' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_ptcanv.1degree.png' usemap='#geo_ptcanv' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_subdsect.1degree.png' usemap='#geo_subdsect' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/parcellecomposante.1degree.png' usemap='#parcellecomposante' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_parcelle.1degree.png' usemap='#geo_parcelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/parcelle_info.1degree.png' usemap='#parcelle_info' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pdl.1degree.png' usemap='#pdl' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pevlissage.1degree.png' usemap='#pevlissage' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/lotslocaux.1degree.png' usemap='#lotslocaux' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/suftaxation.1degree.png' usemap='#suftaxation' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/sufexoneration.1degree.png' usemap='#sufexoneration' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/commune.1degree.png' usemap='#commune' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/geo_label.1degree.png' usemap='#geo_label' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/lots.1degree.png' usemap='#lots' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pevprofessionnelle.1degree.png' usemap='#pevprofessionnelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/local00.1degree.png' usemap='#local00' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/voie.1degree.png' usemap='#voie' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pevexoneration.1degree.png' usemap='#pevexoneration' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pevexoneration_imposable.1degree.png' usemap='#pevexoneration_imposable' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pevexoneration_imposee.1degree.png' usemap='#pevexoneration_imposee' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pevdependances.1degree.png' usemap='#pevdependances' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pevtaxation.1degree.png' usemap='#pevtaxation' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/suf.1degree.png' usemap='#suf' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pev.1degree.png' usemap='#pev' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/parcelle.1degree.png' usemap='#parcelle' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/pevprincipale.1degree.png' usemap='#pevprincipale' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/local10.1degree.png' usemap='#local10' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+				<div class="item">
+					<img src='diagrams/orphans/proprietaire.1degree.png' usemap='#proprietaire' style="max-width:100%;" border='0' alt='' align='top'></img>
+				</div>
+			</div>
+			<map id="bati" name="bati">
+<area shape="rect" id="node1" href="tables/bati.html" title="bati" alt="" coords="5,5,233,104">
+</map>
+<map id="fanr" name="fanr">
+<area shape="rect" id="node1" href="tables/fanr.html" title="fanr" alt="" coords="5,5,233,104">
+</map>
+<map id="lloc" name="lloc">
+<area shape="rect" id="node1" href="tables/lloc.html" title="lloc" alt="" coords="5,5,233,104">
+</map>
+<map id="nbat" name="nbat">
+<area shape="rect" id="node1" href="tables/nbat.html" title="nbat" alt="" coords="5,5,233,104">
+</map>
+<map id="pdll" name="pdll">
+<area shape="rect" id="node1" href="tables/pdll.html" title="pdll" alt="" coords="5,5,233,104">
+</map>
+<map id="prop" name="prop">
+<area shape="rect" id="node1" href="tables/prop.html" title="prop" alt="" coords="5,5,233,104">
+</map>
+<map id="annul" name="annul">
+<area shape="rect" id="node1" href="tables/annul.html" title="annul" alt="" coords="5,5,260,133">
+</map>
+<map id="carvoi" name="carvoi">
+<area shape="rect" id="node1" href="tables/carvoi.html" title="carvoi" alt="" coords="5,5,265,133">
+</map>
+<map id="cbtabt" name="cbtabt">
+<area shape="rect" id="node1" href="tables/cbtabt.html" title="cbtabt" alt="" coords="5,5,268,133">
+</map>
+<map id="ccoaff" name="ccoaff">
+<area shape="rect" id="node1" href="tables/ccoaff.html" title="ccoaff" alt="" coords="5,5,264,133">
+</map>
+<map id="ccocac" name="ccocac">
+<area shape="rect" id="node1" href="tables/ccocac.html" title="ccocac" alt="" coords="5,5,269,133">
+</map>
+<map id="ccodem" name="ccodem">
+<area shape="rect" id="node1" href="tables/ccodem.html" title="ccodem" alt="" coords="5,5,279,133">
+</map>
+<map id="ccodro" name="ccodro">
+<area shape="rect" id="node1" href="tables/ccodro.html" title="ccodro" alt="" coords="5,5,271,133">
+</map>
+<map id="ccoeva" name="ccoeva">
+<area shape="rect" id="node1" href="tables/ccoeva.html" title="ccoeva" alt="" coords="5,5,272,133">
+</map>
+<map id="ccogrm" name="ccogrm">
+<area shape="rect" id="node1" href="tables/ccogrm.html" title="ccogrm" alt="" coords="5,5,276,133">
+</map>
+<map id="ccolloc" name="ccolloc">
+<area shape="rect" id="node1" href="tables/ccolloc.html" title="ccolloc" alt="" coords="5,5,271,133">
+</map>
+<map id="cconac" name="cconac">
+<area shape="rect" id="node1" href="tables/cconac.html" title="cconac" alt="" coords="5,5,272,133">
+</map>
+<map id="cconad" name="cconad">
+<area shape="rect" id="node1" href="tables/cconad.html" title="cconad" alt="" coords="5,5,273,133">
+</map>
+<map id="cconlc" name="cconlc">
+<area shape="rect" id="node1" href="tables/cconlc.html" title="cconlc" alt="" coords="5,5,267,133">
+</map>
+<map id="cconlo" name="cconlo">
+<area shape="rect" id="node1" href="tables/cconlo.html" title="cconlo" alt="" coords="5,5,268,133">
+</map>
+<map id="ccoplc" name="ccoplc">
+<area shape="rect" id="node1" href="tables/ccoplc.html" title="ccoplc" alt="" coords="5,5,267,133">
+</map>
+<map id="ccoqua" name="ccoqua">
+<area shape="rect" id="node1" href="tables/ccoqua.html" title="ccoqua" alt="" coords="5,5,273,133">
+</map>
+<map id="ccthp" name="ccthp">
+<area shape="rect" id="node1" href="tables/ccthp.html" title="ccthp" alt="" coords="5,5,259,133">
+</map>
+<map id="cgrnum" name="cgrnum">
+<area shape="rect" id="node1" href="tables/cgrnum.html" title="cgrnum" alt="" coords="5,5,279,133">
+</map>
+<map id="cnatsp" name="cnatsp">
+<area shape="rect" id="node1" href="tables/cnatsp.html" title="cnatsp" alt="" coords="5,5,271,133">
+</map>
+<map id="ctpdl" name="ctpdl">
+<area shape="rect" id="node1" href="tables/ctpdl.html" title="ctpdl" alt="" coords="5,5,255,133">
+</map>
+<map id="detent" name="detent">
+<area shape="rect" id="node1" href="tables/detent.html" title="detent" alt="" coords="5,5,269,133">
+</map>
+<map id="dmatgm" name="dmatgm">
+<area shape="rect" id="node1" href="tables/dmatgm.html" title="dmatgm" alt="" coords="5,5,284,133">
+</map>
+<map id="dmatto" name="dmatto">
+<area shape="rect" id="node1" href="tables/dmatto.html" title="dmatto" alt="" coords="5,5,275,133">
+</map>
+<map id="dnatcg" name="dnatcg">
+<area shape="rect" id="node1" href="tables/dnatcg.html" title="dnatcg" alt="" coords="5,5,272,133">
+</map>
+<map id="dnatlc" name="dnatlc">
+<area shape="rect" id="node1" href="tables/dnatlc.html" title="dnatlc" alt="" coords="5,5,267,133">
+</map>
+<map id="dnatpr" name="dnatpr">
+<area shape="rect" id="node1" href="tables/dnatpr.html" title="dnatpr" alt="" coords="5,5,271,133">
+</map>
+<map id="drgpos" name="drgpos">
+<area shape="rect" id="node1" href="tables/drgpos.html" title="drgpos" alt="" coords="5,5,272,133">
+</map>
+<map id="dsgrpf" name="dsgrpf">
+<area shape="rect" id="node1" href="tables/dsgrpf.html" title="dsgrpf" alt="" coords="5,5,268,133">
+</map>
+<map id="dteloc" name="dteloc">
+<area shape="rect" id="node1" href="tables/dteloc.html" title="dteloc" alt="" coords="5,5,265,133">
+</map>
+<map id="fburx" name="fburx">
+<area shape="rect" id="node1" href="tables/fburx.html" title="fburx" alt="" coords="5,5,257,133">
+</map>
+<map id="geo_can" name="geo_can">
+<area shape="rect" id="node1" href="tables/geo_can.html" title="geo_can" alt="" coords="5,5,283,133">
+</map>
+<map id="geo_copl" name="geo_copl">
+<area shape="rect" id="node1" href="tables/geo_copl.html" title="geo_copl" alt="" coords="5,5,288,133">
+</map>
+<map id="geo_dur" name="geo_dur">
+<area shape="rect" id="node1" href="tables/geo_dur.html" title="geo_dur" alt="" coords="5,5,281,133">
+</map>
+<map id="geo_indp" name="geo_indp">
+<area shape="rect" id="node1" href="tables/geo_indp.html" title="geo_indp" alt="" coords="5,5,291,133">
+</map>
+<map id="geo_inp" name="geo_inp">
+<area shape="rect" id="node1" href="tables/geo_inp.html" title="geo_inp" alt="" coords="5,5,280,133">
+</map>
+<map id="geo_map" name="geo_map">
+<area shape="rect" id="node1" href="tables/geo_map.html" title="geo_map" alt="" coords="5,5,289,133">
+</map>
+<map id="geo_palt" name="geo_palt">
+<area shape="rect" id="node1" href="tables/geo_palt.html" title="geo_palt" alt="" coords="5,5,287,133">
+</map>
+<map id="geo_ppln" name="geo_ppln">
+<area shape="rect" id="node1" href="tables/geo_ppln.html" title="geo_ppln" alt="" coords="5,5,291,133">
+</map>
+<map id="geo_qupl" name="geo_qupl">
+<area shape="rect" id="node1" href="tables/geo_qupl.html" title="geo_qupl" alt="" coords="5,5,291,133">
+</map>
+<map id="geo_sym" name="geo_sym">
+<area shape="rect" id="node1" href="tables/geo_sym.html" title="geo_sym" alt="" coords="5,5,288,133">
+</map>
+<map id="gimtom" name="gimtom">
+<area shape="rect" id="node1" href="tables/gimtom.html" title="gimtom" alt="" coords="5,5,279,133">
+</map>
+<map id="gnexpl" name="gnexpl">
+<area shape="rect" id="node1" href="tables/gnexpl.html" title="gnexpl" alt="" coords="5,5,271,133">
+</map>
+<map id="gnexps" name="gnexps">
+<area shape="rect" id="node1" href="tables/gnexps.html" title="gnexps" alt="" coords="5,5,275,133">
+</map>
+<map id="gnextl" name="gnextl">
+<area shape="rect" id="node1" href="tables/gnextl.html" title="gnextl" alt="" coords="5,5,267,133">
+</map>
+<map id="gnexts" name="gnexts">
+<area shape="rect" id="node1" href="tables/gnexts.html" title="gnexts" alt="" coords="5,5,271,133">
+</map>
+<map id="gpdl" name="gpdl">
+<area shape="rect" id="node1" href="tables/gpdl.html" title="gpdl" alt="" coords="5,5,249,133">
+</map>
+<map id="gtoper" name="gtoper">
+<area shape="rect" id="node1" href="tables/gtoper.html" title="gtoper" alt="" coords="5,5,271,133">
+</map>
+<map id="gtyp3" name="gtyp3">
+<area shape="rect" id="node1" href="tables/gtyp3.html" title="gtyp3" alt="" coords="5,5,261,133">
+</map>
+<map id="gtyp4" name="gtyp4">
+<area shape="rect" id="node1" href="tables/gtyp4.html" title="gtyp4" alt="" coords="5,5,261,133">
+</map>
+<map id="gtyp5" name="gtyp5">
+<area shape="rect" id="node1" href="tables/gtyp5.html" title="gtyp5" alt="" coords="5,5,261,133">
+</map>
+<map id="gtyp6" name="gtyp6">
+<area shape="rect" id="node1" href="tables/gtyp6.html" title="gtyp6" alt="" coords="5,5,261,133">
+</map>
+<map id="hlmsem" name="hlmsem">
+<area shape="rect" id="node1" href="tables/hlmsem.html" title="hlmsem" alt="" coords="5,5,280,133">
+</map>
+<map id="indldnbat" name="indldnbat">
+<area shape="rect" id="node1" href="tables/indldnbat.html" title="indldnbat" alt="" coords="5,5,296,133">
+</map>
+<map id="natvoi" name="natvoi">
+<area shape="rect" id="node1" href="tables/natvoi.html" title="natvoi" alt="" coords="5,5,267,133">
+</map>
+<map id="natvoiriv" name="natvoiriv">
+<area shape="rect" id="node1" href="tables/natvoiriv.html" title="natvoiriv" alt="" coords="5,5,291,133">
+</map>
+<map id="top48a" name="top48a">
+<area shape="rect" id="node1" href="tables/top48a.html" title="top48a" alt="" coords="5,5,273,133">
+</map>
+<map id="typcom" name="typcom">
+<area shape="rect" id="node1" href="tables/typcom.html" title="typcom" alt="" coords="5,5,276,133">
+</map>
+<map id="type_filiation" name="type_filiation">
+<area shape="rect" id="node1" href="tables/type_filiation.html" title="type_filiation" alt="" coords="5,5,328,133">
+</map>
+<map id="typvoi" name="typvoi">
+<area shape="rect" id="node1" href="tables/typvoi.html" title="typvoi" alt="" coords="5,5,267,133">
+</map>
+<map id="dformjur" name="dformjur">
+<area shape="rect" id="node1" href="tables/dformjur.html" title="dformjur" alt="" coords="5,5,269,163">
+</map>
+<map id="edigeo_rel" name="edigeo_rel">
+<area shape="rect" id="node1" href="tables/edigeo_rel.html" title="edigeo_rel" alt="" coords="5,5,272,192">
+</map>
+<map id="geo_batiment_parcelle" name="geo_batiment_parcelle">
+<area shape="rect" id="node1" href="tables/geo_batiment_parcelle.html" title="geo_batiment_parcelle" alt="" coords="5,5,383,192">
+</map>
+<map id="geo_borne_parcelle" name="geo_borne_parcelle">
+<area shape="rect" id="node1" href="tables/geo_borne_parcelle.html" title="geo_borne_parcelle" alt="" coords="5,5,353,192">
+</map>
+<map id="geo_croix_parcelle" name="geo_croix_parcelle">
+<area shape="rect" id="node1" href="tables/geo_croix_parcelle.html" title="geo_croix_parcelle" alt="" coords="5,5,345,192">
+</map>
+<map id="geo_numvoie_parcelle" name="geo_numvoie_parcelle">
+<area shape="rect" id="node1" href="tables/geo_numvoie_parcelle.html" title="geo_numvoie_parcelle" alt="" coords="5,5,379,192">
+</map>
+<map id="geo_subdfisc_parcelle" name="geo_subdfisc_parcelle">
+<area shape="rect" id="node1" href="tables/geo_subdfisc_parcelle.html" title="geo_subdfisc_parcelle" alt="" coords="5,5,376,192">
+</map>
+<map id="geo_symblim_parcelle" name="geo_symblim_parcelle">
+<area shape="rect" id="node1" href="tables/geo_symblim_parcelle.html" title="geo_symblim_parcelle" alt="" coords="5,5,376,192">
+</map>
+<map id="geo_tline_commune" name="geo_tline_commune">
+<area shape="rect" id="node1" href="tables/geo_tline_commune.html" title="geo_tline_commune" alt="" coords="5,5,357,192">
+</map>
+<map id="geo_tpoint_commune" name="geo_tpoint_commune">
+<area shape="rect" id="node1" href="tables/geo_tpoint_commune.html" title="geo_tpoint_commune" alt="" coords="5,5,371,192">
+</map>
+<map id="geo_tsurf_commune" name="geo_tsurf_commune">
+<area shape="rect" id="node1" href="tables/geo_tsurf_commune.html" title="geo_tsurf_commune" alt="" coords="5,5,360,192">
+</map>
+<map id="geo_unite_fonciere" name="geo_unite_fonciere">
+<area shape="rect" id="node1" href="tables/geo_unite_fonciere.html" title="geo_unite_fonciere" alt="" coords="5,5,387,221">
+</map>
+<map id="charge_id" name="charge_id">
+<area shape="rect" id="node1" href="tables/charge_id.html" title="charge_id" alt="" coords="5,5,329,251">
+</map>
+<map id="commune_majic" name="commune_majic">
+<area shape="rect" id="node1" href="tables/commune_majic.html" title="commune_majic" alt="" coords="5,5,323,280">
+</map>
+<map id="geo_borne" name="geo_borne">
+<area shape="rect" id="node1" href="tables/geo_borne.html" title="geo_borne" alt="" coords="5,5,319,280">
+</map>
+<map id="geo_croix" name="geo_croix">
+<area shape="rect" id="node1" href="tables/geo_croix.html" title="geo_croix" alt="" coords="5,5,319,280">
+</map>
+<map id="comptecommunal" name="comptecommunal">
+<area shape="rect" id="node1" href="tables/comptecommunal.html" title="comptecommunal" alt="" coords="5,5,339,309">
+</map>
+<map id="geo_lieudit" name="geo_lieudit">
+<area shape="rect" id="node1" href="tables/geo_lieudit.html" title="geo_lieudit" alt="" coords="5,5,319,309">
+</map>
+<map id="geo_numvoie" name="geo_numvoie">
+<area shape="rect" id="node1" href="tables/geo_numvoie.html" title="geo_numvoie" alt="" coords="5,5,335,309">
+</map>
+<map id="geo_subdfisc" name="geo_subdfisc">
+<area shape="rect" id="node1" href="tables/geo_subdfisc.html" title="geo_subdfisc" alt="" coords="5,5,333,309">
+</map>
+<map id="geo_tronfluv" name="geo_tronfluv">
+<area shape="rect" id="node1" href="tables/geo_tronfluv.html" title="geo_tronfluv" alt="" coords="5,5,331,309">
+</map>
+<map id="geo_tronroute" name="geo_tronroute">
+<area shape="rect" id="node1" href="tables/geo_tronroute.html" title="geo_tronroute" alt="" coords="5,5,344,309">
+</map>
+<map id="geo_voiep" name="geo_voiep">
+<area shape="rect" id="node1" href="tables/geo_voiep.html" title="geo_voiep" alt="" coords="5,5,319,309">
+</map>
+<map id="geo_zoncommuni" name="geo_zoncommuni">
+<area shape="rect" id="node1" href="tables/geo_zoncommuni.html" title="geo_zoncommuni" alt="" coords="5,5,372,309">
+</map>
+<map id="geo_batiment" name="geo_batiment">
+<area shape="rect" id="node1" href="tables/geo_batiment.html" title="geo_batiment" alt="" coords="5,5,340,339">
+</map>
+<map id="geo_symblim" name="geo_symblim">
+<area shape="rect" id="node1" href="tables/geo_symblim.html" title="geo_symblim" alt="" coords="5,5,333,339">
+</map>
+<map id="geo_tline" name="geo_tline">
+<area shape="rect" id="node1" href="tables/geo_tline.html" title="geo_tline" alt="" coords="5,5,319,339">
+</map>
+<map id="geo_tsurf" name="geo_tsurf">
+<area shape="rect" id="node1" href="tables/geo_tsurf.html" title="geo_tsurf" alt="" coords="5,5,319,339">
+</map>
+<map id="geo_tpoint" name="geo_tpoint">
+<area shape="rect" id="node1" href="tables/geo_tpoint.html" title="geo_tpoint" alt="" coords="5,5,319,368">
+</map>
+<map id="geo_commune" name="geo_commune">
+<area shape="rect" id="node1" href="tables/geo_commune.html" title="geo_commune" alt="" coords="5,5,345,397">
+</map>
+<map id="geo_section" name="geo_section">
+<area shape="rect" id="node1" href="tables/geo_section.html" title="geo_section" alt="" coords="5,5,345,397">
+</map>
+<map id="geo_ptcanv" name="geo_ptcanv">
+<area shape="rect" id="node1" href="tables/geo_ptcanv.html" title="geo_ptcanv" alt="" coords="5,5,319,456">
+</map>
+<map id="geo_subdsect" name="geo_subdsect">
+<area shape="rect" id="node1" href="tables/geo_subdsect.html" title="geo_subdsect" alt="" coords="5,5,339,573">
+</map>
+<map id="parcellecomposante" name="parcellecomposante">
+<area shape="rect" id="node1" href="tables/parcellecomposante.html" title="parcellecomposante" alt="" coords="5,5,361,573">
+</map>
+<map id="geo_parcelle" name="geo_parcelle">
+<area shape="rect" id="node1" href="tables/geo_parcelle.html" title="geo_parcelle" alt="" coords="5,5,339,603">
+</map>
+<map id="parcelle_info" name="parcelle_info">
+<area shape="rect" id="node1" href="tables/parcelle_info.html" title="parcelle_info" alt="" coords="5,5,376,603">
+</map>
+<map id="pdl" name="pdl">
+<area shape="rect" id="node1" href="tables/pdl.html" title="pdl" alt="" coords="5,5,339,603">
+</map>
+<map id="pevlissage" name="pevlissage">
+<area shape="rect" id="node1" href="tables/pevlissage.html" title="pevlissage" alt="" coords="5,5,275,632">
+</map>
+<map id="lotslocaux" name="lotslocaux">
+<area shape="rect" id="node1" href="tables/lotslocaux.html" title="lotslocaux" alt="" coords="5,5,272,691">
+</map>
+<map id="suftaxation" name="suftaxation">
+<area shape="rect" id="node1" href="tables/suftaxation.html" title="suftaxation" alt="" coords="5,5,283,691">
+</map>
+<map id="sufexoneration" name="sufexoneration">
+<area shape="rect" id="node1" href="tables/sufexoneration.html" title="sufexoneration" alt="" coords="5,5,316,720">
+</map>
+<map id="commune" name="commune">
+<area shape="rect" id="node1" href="tables/commune.html" title="commune" alt="" coords="5,5,308,749">
+</map>
+<map id="geo_label" name="geo_label">
+<area shape="rect" id="node1" href="tables/geo_label.html" title="geo_label" alt="" coords="5,5,372,749">
+</map>
+<map id="lots" name="lots">
+<area shape="rect" id="node1" href="tables/lots.html" title="lots" alt="" coords="5,5,339,749">
+</map>
+<map id="pevprofessionnelle" name="pevprofessionnelle">
+<area shape="rect" id="node1" href="tables/pevprofessionnelle.html" title="pevprofessionnelle" alt="" coords="5,5,351,749">
+</map>
+<map id="local00" name="local00">
+<area shape="rect" id="node1" href="tables/local00.html" title="local00" alt="" coords="5,5,269,808">
+</map>
+<map id="voie" name="voie">
+<area shape="rect" id="node1" href="tables/voie.html" title="voie" alt="" coords="5,5,267,837">
+</map>
+<map id="pevexoneration" name="pevexoneration">
+<area shape="rect" id="node1" href="tables/pevexoneration.html" title="pevexoneration" alt="" coords="5,5,321,867">
+</map>
+<map id="pevexoneration_imposable" name="pevexoneration_imposable">
+<area shape="rect" id="node1" href="tables/pevexoneration_imposable.html" title="pevexoneration_imposable" alt="" coords="5,5,421,867">
+</map>
+<map id="pevexoneration_imposee" name="pevexoneration_imposee">
+<area shape="rect" id="node1" href="tables/pevexoneration_imposee.html" title="pevexoneration_imposee" alt="" coords="5,5,404,867">
+</map>
+<map id="pevdependances" name="pevdependances">
+<area shape="rect" id="node1" href="tables/pevdependances.html" title="pevdependances" alt="" coords="5,5,332,896">
+</map>
+<map id="pevtaxation" name="pevtaxation">
+<area shape="rect" id="node1" href="tables/pevtaxation.html" title="pevtaxation" alt="" coords="5,5,287,925">
+</map>
+<map id="suf" name="suf">
+<area shape="rect" id="node1" href="tables/suf.html" title="suf" alt="" coords="5,5,339,1101">
+</map>
+<map id="pev" name="pev">
+<area shape="rect" id="node1" href="tables/pev.html" title="pev" alt="" coords="5,5,272,1365">
+</map>
+<map id="parcelle" name="parcelle">
+<area shape="rect" id="node1" href="tables/parcelle.html" title="parcelle" alt="" coords="5,5,339,1483">
+</map>
+<map id="pevprincipale" name="pevprincipale">
+<area shape="rect" id="node1" href="tables/pevprincipale.html" title="pevprincipale" alt="" coords="5,5,301,1512">
+</map>
+<map id="local10" name="local10">
+<area shape="rect" id="node1" href="tables/local10.html" title="local10" alt="" coords="5,5,339,1776">
+</map>
+<map id="proprietaire" name="proprietaire">
+<area shape="rect" id="node1" href="tables/proprietaire.html" title="proprietaire" alt="" coords="5,5,339,2157">
+</map>
+
+			</div>
+		</div>			
+      </section>    
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div>
+      <div class="pull-right hidden-xs">
+        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+      </div>
+      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+<script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+<script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+<!-- SheetJS -->
+<script src="bower/js-xlsx/xlsx.full.min.js"></script>
+<!-- pdfmake -->
+<script src="bower/pdfmake/pdfmake.min.js"></script>
+<script src="bower/pdfmake/vfs_fonts.js"></script>
+<!-- SlimScroll -->
+<script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+<!-- Salvattore -->
+<script src="bower/salvattore/salvattore.min.js"></script>
+<!-- AnchorJS -->
+<script src="bower/anchor-js/anchor.min.js"></script>
+<!-- CodeMirror -->
+<script src="bower/codemirror/codemirror.js"></script>
+<script src="bower/codemirror/sql.js"></script>
+<!-- AdminLTE App -->
+<script src="bower/admin-lte/dist/js/app.min.js"></script>
+<script src=""></script>
+<script src="schemaSpy.js"></script>
+</body>
+</html>

@@ -4,19 +4,19 @@
  <head>
   <meta charset="utf-8"/>
   <title>Cadastre</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <link href="https://3liz.github.io/remarkable.css" rel="stylesheet"/>
-  <link href="icon.png" rel="icon" type="image/png" >
+  <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <link type="text/css" href="https://docs.3liz.org/remarkable.css" rel="stylesheet"/>
+  <link type="image/png" href="icon.png" rel="icon" >
  </head>
  <body>
  <header class="header-container" style="">
     <h1>Cadastre</h1>
  </header>
  <article>
- <p><a href="../">Up</a></p>
-<h1 id="plugin-cadastre-documentation-utilisateur">Plugin Cadastre - Documentation utilisateur</h1>
+<h1 id="documentation">Documentation</h1>
 <p><strong>Auteurs</strong> Michaël DOUCHIN - 3liz
 <strong>Résumé</strong> Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.</p>
+<p>La documentation de la base de données est disponible dans le dossier <a href="./database/">database</a>.</p>
 <p><img alt="Financeurs" src="MEDIA/cadastre_financeurs.png"></p>
 <h2 id="installation">Installation</h2>
 <p>Le plugin Cadastre est dans les dépôts officiels du projet QGIS. Pour l'installer, il faut :</p>
@@ -98,6 +98,10 @@
 <li>avoir créé au préalable <strong>une connexion QGIS</strong> via le menu <strong>Couches &gt; Ajouter une couche PostGIS</strong> vers cette base de données</li>
 </ul>
 <p>Pour les bases de données <strong>Spatialite</strong>, l'interface d'import permet de créer une base de données vide et la connexion QGIS liée si nécessaire.</p>
+<h4 id="remarque-sur-les-contraintes">Remarque sur les contraintes</h4>
+<p>Il n'existe actuellement aucune contrainte de clés étrangères sur les tables du schéma cadastre. Nous 
+proposerons à l'avenir un script qui permettra de les créer, lorsque les données le permettent (ce qui n'est 
+pas toujours le cas, comme des voies non référencées dans <code>voie</code> mais référencées dans <code>parcelle</code>).</p>
 <h3 id="les-etapes-dimportation">Les étapes d'importation</h3>
 <p>Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu <strong>Configurer le plugin</strong>. Ensuite, on ouvre la boite de dialogue</p>
 <ul>

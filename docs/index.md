@@ -3,10 +3,12 @@ Title: Cadastre
 Favicon: icon.png
 ...
 
-# Plugin Cadastre - Documentation utilisateur
+# Documentation
 
 **Auteurs** Michaël DOUCHIN - 3liz
 **Résumé** Ce document contient la documentation du plugin Cadastre pour le logiciel QGIS.
+
+La documentation de la base de données est disponible dans le dossier [database](./database/).
 
 ![Financeurs](MEDIA/cadastre_financeurs.png)
 
@@ -118,6 +120,12 @@ Pour les bases de données **PostGIS**, il faut :
 * avoir créé au préalable **une connexion QGIS** via le menu **Couches > Ajouter une couche PostGIS** vers cette base de données
 
 Pour les bases de données **Spatialite**, l'interface d'import permet de créer une base de données vide et la connexion QGIS liée si nécessaire.
+
+#### Remarque sur les contraintes
+
+Il n'existe actuellement aucune contrainte de clés étrangères sur les tables du schéma cadastre. Nous 
+proposerons à l'avenir un script qui permettra de les créer, lorsque les données le permettent (ce qui n'est 
+pas toujours le cas, comme des voies non référencées dans `voie` mais référencées dans `parcelle`).
 
 ### Les étapes d'importation
 

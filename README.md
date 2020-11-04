@@ -1,5 +1,4 @@
-Description
-===========
+##  Description
 
 Le plugin Cadastre a été conçu pour faciliter l'utilisation des données cadastrales dans QGIS. Plusieurs modules aident l'utilisateur à importer des données, les afficher dans QGIS, faire des recherches et imprimer les relevés :
 
@@ -10,33 +9,19 @@ Le plugin Cadastre a été conçu pour faciliter l'utilisation des données cada
 * Il est possible enfin d'exporter les données sous forme de **relevés parcellaires** et de **relevés de propriété**.
 
 
-Documentation
-==============
+## Documentation
 
-Utilisation
-------------
+### Utilisation et base de données
 
-Voir [docs/index.md](docs/index.md)
+Voir https://docs.3liz.org/QgisCadastrePlugin/
 
-Base de données
-----------------
+### Prérequis
 
-Documentation sur la structure des tables créées par le plugin
-
-* fichiers source: https://github.com/3liz/QgisCadastrePlugin-documentation
-* consulation: https://3liz.github.io/QgisCadastrePlugin-documentation/
-
-
-Prérequis
-=========
-
-* QGIS 3.10 LTR
+* De préférence, QGIS LTR 3.10, ou à défaut QGIS 3.4
 * PostgreSQL : >= 9.6 + PostGIS >= 1.5 et < 3.x
 * Spatialite : 4.3.0
 
-
-Financeurs
-==========
+## Financeurs
 
 La réalisation du plugin Cadastre a été financée par :
 
@@ -62,21 +47,18 @@ Les structures suivantes ont aidé 3liz pour la maintenance ou l'ajout de foncti
 - La **Métropole de Rennes** : ajout des supports 2019 et 2020 des millésimes MAJIC
 - le **Ministère de la Transition Écologique** : détails sur les propriétaires (indivisions)
 
-Conception
-==========
+## Conception
 
 Le plugin Cadastre a été conçu et développé par la Société **3LIZ**.
-Site internet : http://www.3liz.com
+Site internet : https://www.3liz.com
 
-Auteurs
-=======
+## Auteurs
 
 Michaël DOUCHIN
 e-mail: info@3liz.com
 twitter : https://twitter.com/kimaidou
 
-Contributeurs
-=============
+## Contributeurs
 
 * Landry BREUIL : @landryb , notamment pour ses tests sur de gros volumes de données, et les corrections sur certaines requêtes
 * @fred-V13 pour l'aide sur la migration du plugin vers QGIS 3
@@ -84,27 +66,21 @@ Contributeurs
 * Étienne ROUVIN : @EtienneRouvin
 * Christophe Masse
 
-Sources
-=======
+## Sources
 
 GitHub : https://github.com/3liz/QgisCadastrePlugin
 
-Licence
-=======
+## Licence
 
 GNU Public License (GPL) Version 2 ou supérieure
 
-
-
-Ressources
-==========
+## Ressources
 
 Les scripts d'import pour PostgreSQL proviennent de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciements aux contributeurs.
 Dépôt de sources :  https://adullact.net/scm/viewvc.php/trunk/data/pgsql/?root=opencadastre
 
 
-English short description
-==========================
+## English short description
 
 This plugin helps users to use french land registry data ("cadastre") in QGIS. It is only useful in France for people having access to Cadastre data.
 
