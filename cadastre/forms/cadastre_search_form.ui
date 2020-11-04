@@ -179,7 +179,7 @@
              <item>
               <widget class="QPushButton" name="btIdentifierProprietaire">
                <property name="toolTip">
-                <string>Identifier propriétaire(s)</string>
+                <string>Infos parcelle</string>
                </property>
                <property name="text">
                 <string/>
