@@ -861,6 +861,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         self.cadastre_search_dialog.checkMajicContent()
         self.cadastre_search_dialog.clearComboboxes()
         self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
+        self.cadastre_search_dialog.setupSearchCombobox('commune_proprietaire', None, 'sql')
         # self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
 
 
@@ -946,6 +947,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.btCentrerProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'centrer.png')))
         self.btZoomerProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'zoom.png')))
         self.btSelectionnerProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'select.png')))
+        self.btResetCommuneProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
 
         # common cadastre methods
         from .cadastre_dialogs import CadastreCommon
@@ -1089,6 +1091,27 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 'chosenFeature': None,
                 'connector': None,
                 'resetWidget': self.btResetParcelleProprietaire
+            },
+            'commune_proprietaire': {
+                'widget': self.liCommuneProprietaire,
+                'labelAttribute': 'tex2',
+                'table': 'geo_commune',
+                'geomCol': 'geom',
+                'sql': '',
+                'layer': None,
+                'request': None,
+                'attributes': ['ogc_fid', 'tex2', 'idu', 'geo_commune', 'geom', 'lot'],
+                'orderBy': ['tex2'],
+                'features': None,
+                'chosenFeature': None,
+                'resetWidget': self.btResetCommuneProprietaire,
+                'children': [
+                    {
+                        'key': 'section',
+                        'fkey': 'geo_commune',
+                        'getIfNoFeature': True
+                    }
+                ]
             }
         }
 
@@ -1182,6 +1205,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # setup some gui items
         self.setupSearchCombobox('commune', None, 'sql')
+        self.setupSearchCombobox('commune_proprietaire', None, 'sql')
         # self.setupSearchCombobox('section', None, 'sql')
 
         # Check majic content
@@ -1462,11 +1486,22 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             # determines if search by usage name or birth name
             searchByBirthName = self.cbSearchNameBirth.isChecked()
 
-            if self.dbType == 'postgis':
-                PGschema = connectionParams['schema']
+            # get commune code from combo
+            communeProprioCb = self.searchComboBoxes['commune_proprietaire']
+            cityJoin = ''
+            selectedCity = None
+            if 'chosenFeature' in communeProprioCb and communeProprioCb['chosenFeature'] is not None:
+                selectedCity = communeProprioCb['chosenFeature']['geo_commune']
+
+            if self.dbType == "postgis":
+                PGschema = connectionParams["schema"]
                 sqlFrom = "  FROM " + PGschema + ".proprietaire\r\n"
+                cityJoin = ' INNER JOIN "{}"."commune" commune ON commune.ccocom = proprio.ccocom\r\n'.format(connectionParams['schema'])
             else:
                 sqlFrom = "  FROM proprietaire\r\n"
+                cityJoin = " INNER JOIN commune ON commune.ccocom = proprio.ccocom\r\n"
+
+            selectedCity = '' if selectedCity is None else selectedCity
 
             if searchByBirthName is False:
                 # search by usage name
@@ -1480,14 +1515,16 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += "    END AS nom_usage\r\n"
                 sql += sqlFrom
                 sql += ")\r\n"
-                sql += "SELECT nom_usage, comptecommunal, dnuper\r\n"
+                sql += "SELECT nom_usage, comptecommunal, dnuper, geo_commune\r\n"
                 sql += "FROM proprio\r\n"
+                sql += cityJoin
                 sql += "WHERE 2>1\r\n"
 
                 for sv in searchValues:
                     sql += "AND nom_usage LIKE %s" % self.connector.quoteString('%' + sv + '%') + "\r\n"
 
-                sql += "GROUP BY ccocom, comptecommunal, dnuper, nom_usage\r\n"
+                sql += " AND commune.commune LIKE %s" % self.connector.quoteString('%' + selectedCity + '%')
+                sql += "GROUP BY proprio.ccocom, comptecommunal, dnuper, nom_usage, geo_commune\r\n"
                 sql += "ORDER BY nom_usage\r\n"
 
             elif searchByBirthName is True:
@@ -1502,14 +1539,16 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += "    END AS nom_naissance\r\n"
                 sql += sqlFrom
                 sql += ")\r\n"
-                sql += "SELECT nom_naissance, comptecommunal, dnuper\r\n"
+                sql += "SELECT nom_naissance, comptecommunal, dnuper, geo_commune\r\n"
                 sql += "FROM proprio\r\n"
+                sql += cityJoin
                 sql += "WHERE 2>1\r\n"
 
                 for sv in searchValues:
                     sql += "AND nom_naissance LIKE %s" % self.connector.quoteString('%' + sv + '%') + "\r\n"
 
-                sql += "GROUP BY ccocom, comptecommunal, dnuper, dnomus, dprnus, nom_naissance\r\n"
+                sql += " AND commune.commune LIKE %s" % self.connector.quoteString('%' + selectedCity + '%') + "\r\n"
+                sql += "GROUP BY proprio.ccocom, comptecommunal, dnuper, dnomus, dprnus, nom_naissance, geo_commune\r\n"
                 sql += "ORDER BY nom_naissance\r\n"
         sql += ' LIMIT 50'
 
