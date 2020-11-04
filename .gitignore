@@ -1,54 +1,17 @@
-.idea/
-
-*.py[cod]
-
-# C extensions
-*.so
-
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
-lib
-lib64
-
-# Installer logs
-pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-
-# Translations
-*.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-*.orig
-*.rej
-*~
-*.o
-*.swp
+# Python
+__pycache__/
 *.pyc
-*.DS_Store
+venv/
 
-__output__
-.cache
-.local
+# OS
+.DS_Store
 
-# PyCharm
+# IDE
 .idea/
 
-cadastre.*.*.*.zip
+# Plugins, QGIS-plugin-CI
+cadastre.*.zip
+
+# Temp files
+*~
+*.bak
