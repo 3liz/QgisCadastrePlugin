@@ -2282,6 +2282,13 @@ class CadastreAboutDialog(QDialog, ABOUT_FORM_CLASS):
 
         # Images
         plugin_dir = str(Path(__file__).resolve().parent)
+        self.label_logo_rennes_metropole.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_rennes_metropole.png')))
+        self.label_logo_mtes.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_mtes.png')))
+        self.label_logo_mtes_2.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_mtes_2.png')))
+        self.label_logo_asadefrance.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_asadefrance.png')))
+        self.label_logo_grandnarbonne.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_grandnarbonne.png')))
+        self.label_logo_datagences_bretagne.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_datagences_bretagne.png')))
+        self.label_logo_cd54.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_cd54.png')))
         self.label_logo_ue.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_europe.png')))
         self.label_logo_feder.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_feder.png')))
         self.label_logo_picardie.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_picardie.png')))

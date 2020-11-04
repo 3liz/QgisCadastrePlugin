@@ -25,10 +25,94 @@
         <x>0</x>
         <y>0</y>
         <width>610</width>
-        <height>940</height>
+        <height>1195</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QGroupBox" name="groupBox_8">
+         <property name="title">
+          <string>Contributeurs</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Les structures suivantes ont participé au code :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_logo_mtes">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="label_12">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;a href=&quot;https://www.ecologie.gouv.fr/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;Ministère de la Transition Écologique&lt;/a&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_7">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;a href=&quot;https://metropole.rennes.fr/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;Rennes Métropole&lt;/a&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_logo_rennes_metropole">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
@@ -36,9 +120,174 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Les évolutions 2020 du plugin Cadastre ont été financés par :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_logo_datagences_bretagne">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="label_23">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;a href=&quot;http://asadefrance.fr/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;ASA de France&lt;/a&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_logo_cd54">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="label_26">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;a href=&quot;https://www.datagences-bretagne.bzh/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;Agences d'Urbanisme de Bretagne&lt;/a&gt; et autres : &lt;a href=&quot;https://www.agam.org/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;AGAM&lt;/a&gt;, &lt;a href=&quot;http://www.ausb.org&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;AUSB&lt;/a&gt;, &lt;a href=&quot;http://www.aduga.org/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;ADUGA&lt;/a&gt;, &lt;a href=&quot;https://audat.org/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;AUDAT&lt;/a&gt;, &lt;a href=&quot;https://clermontmetropole.org/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;AUD CM&lt;/a&gt;, &lt;a href=&quot;http://www.agape-lorrainenord.eu/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;AGAPE LN&lt;/a&gt;, &lt;a href=&quot;http://www.boulogne-developpement.com/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;BMD CO&lt;/a&gt;</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLabel" name="label_22">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;a href=&quot;http://www.meurthe-et-moselle.fr/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;Conseil Départemental de Meuthe et Moselle&lt;/a&gt;</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_logo_asadefrance">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_logo_mtes_2">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_9">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;a href=&quot;https://www.ecologie.gouv.fr/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;Ministère de la Transition Écologique&lt;/a&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_logo_grandnarbonne">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="label_25">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;a href=&quot;https://www.legrandnarbonne.com/&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;Communauté d'Agglomération du Grand Narbonne&lt;/a&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>La réalisation du plugin Cadastre a été financée initialement par:</string>
+             <string>La réalisation du plugin Cadastre a été financée initialement par :</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -225,7 +474,7 @@
           <item>
            <widget class="QLabel" name="label_21">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les structures suivantes ont aidé 3liz pour la maintenance ou l'ajout de fonctionnalités:&lt;/p&gt;&lt;p&gt;- L'&lt;span style=&quot; font-weight:600;&quot;&gt;ADUGA&lt;/span&gt; : maintenace pour les millésimes MAJIC&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Ville de Megève&lt;/span&gt;: migration du plugin vers QGIS 3&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Communauté d'Agglomération du Soissonnais&lt;/span&gt; : amélioration de la recherche et de la fiche parcellaire&lt;/p&gt;&lt;p&gt;- Le &lt;span style=&quot; font-weight:600;&quot;&gt;Conseil départemental du Gard&lt;/span&gt; : ajout d'informations dans la fiche parcellaire&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les structures suivantes ont aidé 3liz pour la maintenance ou l'ajout de fonctionnalités:&lt;/p&gt;&lt;p&gt;- L'&lt;span style=&quot; font-weight:600;&quot;&gt;ADUGA&lt;/span&gt; : maintenace pour les millésimes MAJIC&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Ville de Megève&lt;/span&gt;: migration du plugin vers QGIS 3&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Communauté d'Agglomération du Soissonnais&lt;/span&gt; : amélioration de la recherche et de la fiche parcellaire&lt;/p&gt;&lt;p&gt;- Le &lt;span style=&quot; font-weight:600;&quot;&gt;Conseil départemental du Gard&lt;/span&gt; : ajout d'informations dans la fiche parcellaire&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Métropole de Rennes&lt;/span&gt; : ajout des supports 2019 et 2020 des millésimes MAJIC&lt;/p&gt;&lt;p&gt;- le &lt;span style=&quot; font-weight:600;&quot;&gt;Ministère de l'Écologie&lt;/span&gt; : détails sur les propriétaires (indivisions)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::RichText</enum>
@@ -435,5 +684,6 @@
  <tabstops>
   <tabstop>scrollArea</tabstop>
  </tabstops>
+ <resources/>
  <connections/>
 </ui>
