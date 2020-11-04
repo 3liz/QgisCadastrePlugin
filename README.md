@@ -45,12 +45,22 @@ La réalisation du plugin Cadastre a été financée par :
 * Le **Conseil Régional de Picardie** ( http://www.picardie.fr )
 * L'**Agence de Développement et d'Urbanisme du Grand Amiénois (ADUGA)** ( http://www.aduga.org )
 
+Les évolutions 2020 ont été soutenues par :
+
+* Le **Ministère de la Transition Écologie** ( https://www.ecologie.gouv.fr/ )
+* L'association **ASA de France** (http://asadefrance.fr/ )
+* La **Communauté d'Agglomération du Grand-Narbonne** ( https://www.legrandnarbonne.com/)
+* Les **Agences d'Urbanisme de Bretagne** ( https://www.datagences-bretagne.bzh/ ) et autres : AGAM, AUSB, ADUGA, AUDAT, AUD Clermont Métropole, AGAPE Lorraine Nord, Boulogne Développement
+* Le **Conseil Départemental de Meurthe et Moselle** ( http://www.meurthe-et-moselle.fr/ )
+
 Les structures suivantes ont aidé 3liz pour la maintenance ou l'ajout de fonctionnalités:
 
 - L'**ADUGA** : maintenance pour les nouveaux millésimes
 - La **Ville de Megève**: migration du plugin vers QGIS 3
 - La **Communauté d'Agglomération du Soissonnais** : amélioration de la recherche et ajout d'informations sur les fiches parcellaires
 - Le **Conseil départemental du Gard** : ajout d'informations dans la fiche parcellaire
+- La **Métropole de Rennes** : ajout des supports 2019 et 2020 des millésimes MAJIC
+- le **Ministère de la Transition Écologique** : détails sur les propriétaires (indivisions)
 
 Conception
 ==========
@@ -72,6 +82,7 @@ Contributeurs
 * @fred-V13 pour l'aide sur la migration du plugin vers QGIS 3
 * Maël REBOUX : @MaelREBOUX
 * Étienne ROUVIN : @EtienneRouvin
+* Christophe Masse
 
 Sources
 =======

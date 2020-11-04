@@ -1,9 +1,10 @@
 # CHANGELOG
 
-### 1.10.0 - 28/10/2020
+### 1.10.0 - 04/11/2020
 
-* Ajout de l'extraction d'informations Lots
-* Widget "Outils de Recherche" : Ajout de la boîte rapide informations propriétaires
+* Import - Optimisation de l'import Spatialite et de l'affichage du temps passé
+* Ajout de l'extraction de détails sur les propriétaires (indivisions)
+* Widget "Outils de Recherche" : Ajout du bouton Infos parcelle
 * Dialogue "infos parcelle" : Ajout des actions imprimer / copier /sauvegarder des infos des onglets
 * Révision barre d'outils (position actions) et réécriture code menu / barre d'outils
 * Fix - bug connexion (relevé parcellaire, première instanciation)
