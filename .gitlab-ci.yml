@@ -82,3 +82,48 @@ release_prod_2:
     - tags
   tags:
     - fabric
+
+issues:
+  stage: release
+  allow_failure: true
+  when: manual
+  only:
+    - tags
+  script:
+    # Lizmap-box
+    - >
+      curl
+      --header 'Content-Type:application/json'
+      --header "PRIVATE-TOKEN:${USER_TOKEN}"
+      --data '{
+      "id":70,
+      "assignee_ids":[77],
+      "labels":"qgis server",
+      "title":"Nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
+      "description":"Il existe une nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
+      --request POST https://projects.3liz.org/api/v4/projects/70/issues
+    # Infra-doc
+    - >
+      curl
+      --header 'Content-Type:application/json'
+      --header "PRIVATE-TOKEN:${USER_TOKEN}"
+      --data '{
+      "id":7,
+      "assignee_ids":[2],
+      "labels":"SAAS Qgis,release,infra-v2",
+      "title":"Nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
+      "description":"Il existe une nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
+      --request POST https://projects.3liz.org/api/v4/projects/7/issues
+    - >
+      curl
+      --header 'Content-Type:application/json'
+      --header "PRIVATE-TOKEN:${USER_TOKEN}"
+      --data '{
+      "id":7,
+      "assignee_ids":[5],
+      "labels":"SAAS Qgis,release,infra-v3",
+      "title":"Nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
+      "description":"Il existe une nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
+      --request POST https://projects.3liz.org/api/v4/projects/7/issues
+  tags:
+    - factory
