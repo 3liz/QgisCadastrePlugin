@@ -99,8 +99,8 @@ issues:
       "id":70,
       "assignee_ids":[77],
       "labels":"qgis server",
-      "title":"Nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
-      "description":"Il existe une nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
+      "title":"Nouvelle version QGIS Serveur '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
+      "description":"Il existe une nouvelle version pour QGIS Serveur de '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
       --request POST https://projects.3liz.org/api/v4/projects/70/issues
     # Infra-doc
     - >
@@ -111,8 +111,8 @@ issues:
       "id":7,
       "assignee_ids":[2],
       "labels":"SAAS Qgis,release,infra-v2",
-      "title":"Nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
-      "description":"Il existe une nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
+      "title":"Nouvelle version QGIS Serveur '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
+      "description":"Il existe une nouvelle version pour QGIS Serveur de '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
       --request POST https://projects.3liz.org/api/v4/projects/7/issues
     - >
       curl
@@ -122,8 +122,8 @@ issues:
       "id":7,
       "assignee_ids":[5],
       "labels":"SAAS Qgis,release,infra-v3",
-      "title":"Nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
-      "description":"Il existe une nouvelle version '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
+      "title":"Nouvelle version QGIS Serveur '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
+      "description":"Il existe une nouvelle version pour QGIS Serveur de '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
       --request POST https://projects.3liz.org/api/v4/projects/7/issues
   tags:
     - factory
