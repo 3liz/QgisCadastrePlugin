@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 1.10.1 - 05/11/2020
+
+* Ajout de la documentation de la base de données sur https://docs.3liz.org/QgisCadastrePlugin/
+* Petites corrections sur la publication de l'extension
+
 ### 1.10.0 - 04/11/2020
 
 * Import - Optimisation de l'import Spatialite et de l'affichage du temps passé
