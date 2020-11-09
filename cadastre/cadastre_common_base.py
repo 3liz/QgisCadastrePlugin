@@ -342,10 +342,10 @@ def postgisToSpatialiteLocal10(sql: str, dataYear: str) -> str:
 def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str, str],
                                     connector: 'DBConnector') -> Union[str, None]:
     comptecommunal = None
-
-    sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
+    sql = ''
     if connectionParams['dbType'] == 'postgis':
-        sql = setSearchPath(sql, connectionParams['schema'])
+        sql += setSearchPath(sql, connectionParams['schema'])
+    sql += "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
     [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector, sql)
     if ok:
         for line in data:
