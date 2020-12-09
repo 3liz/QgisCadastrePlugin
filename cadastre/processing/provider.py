@@ -23,8 +23,8 @@
 from os.path import join
 from pathlib import Path
 
-from qgis.PyQt.QtGui import QIcon
 from qgis.core import QgsProcessingProvider
+from qgis.PyQt.QtGui import QIcon
 
 from .algorithms.config import ConfigProjectAlgorithm
 

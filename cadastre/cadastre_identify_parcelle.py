@@ -21,18 +21,18 @@
  ***************************************************************************/
 """
 from __future__ import absolute_import
-from qgis.PyQt.QtCore import pyqtSignal
-from qgis.PyQt.QtGui import QCursor, QPixmap
+
 from qgis.core import (
-    QgsMapLayer,
-    QgsVectorLayer,
     QgsFeature,
     QgsFeatureRequest,
     QgsGeometry,
+    QgsMapLayer,
+    QgsVectorLayer,
 )
-from qgis.gui import (
-    QgsMapToolIdentify
-)
+from qgis.gui import QgsMapToolIdentify
+from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtGui import QCursor, QPixmap
+
 from .cadastre_cursor import Cursor
 
 

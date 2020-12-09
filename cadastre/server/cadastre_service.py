@@ -17,27 +17,26 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 """
 
-import traceback
 import json
 import re
+import traceback
 
 from collections import namedtuple
-from uuid import uuid4
 from pathlib import Path
-
 from typing import Dict, Sequence
+from uuid import uuid4
 
-from qgis.core import (Qgis,
-                       QgsMessageLog,
-                       QgsProject,
-                       QgsFeatureRequest,
-                       QgsFeature)
-
-from qgis.server import (QgsService,
-                         QgsServerRequest,
-                         QgsServerResponse)
+from qgis.core import (
+    Qgis,
+    QgsFeature,
+    QgsFeatureRequest,
+    QgsMessageLog,
+    QgsProject,
+)
+from qgis.server import QgsServerRequest, QgsServerResponse, QgsService
 
 import cadastre.cadastre_common_base as cadastre_common
+
 from cadastre.cadastre_export import cadastreExport
 
 # Parcelle format for validation

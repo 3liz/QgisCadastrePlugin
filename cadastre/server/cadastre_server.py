@@ -19,9 +19,10 @@ the Free Software Foundation; either version 2 of the License, or
 import os
 import tempfile
 
+from pathlib import Path
+
 from qgis.core import Qgis, QgsMessageLog
 from qgis.server import QgsServerInterface
-from pathlib import Path
 
 from .cadastre_service import CadastreService
 

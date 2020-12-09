@@ -17,73 +17,69 @@ the Free Software Foundation; either version 2 of the License, or
 """
 import os.path
 import re
+import sys
 import tempfile
-from qgis.PyQt.QtCore import (
-    Qt,
-    QSettings,
-    QRegExp,
-    QFileInfo,
-    QStringListModel,
-    QSize
+import unicodedata
+
+from pathlib import Path
+
+from qgis.core import (
+    QgsCoordinateReferenceSystem,
+    QgsCoordinateTransform,
+    QgsExpression,
+    QgsFeatureRequest,
+    QgsMapLayer,
+    QgsMapSettings,
+    QgsProject,
 )
+from qgis.PyQt.QtCore import (
+    QFileInfo,
+    QRegExp,
+    QSettings,
+    QSize,
+    QSortFilterProxyModel,
+    QStringListModel,
+    Qt,
+)
+from qgis.PyQt.QtGui import (
+    QIcon,
+    QKeySequence,
+    QPixmap,
+    QTextCursor,
+    QTextDocument,
+)
+from qgis.PyQt.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from qgis.PyQt.QtWidgets import (
     QAction,
-    QDialog,
-    QFileDialog,
     QApplication,
-    qApp,
     QCompleter,
+    QDialog,
+    QDialogButtonBox,
     QDockWidget,
+    QFileDialog,
     QMenu,
     QMessageBox,
     QPushButton,
     QTextEdit,
-    QDialogButtonBox
+    qApp,
 )
-from qgis.PyQt.QtPrintSupport import (
-    QPrintPreviewDialog,
-    QPrinter
-)
-
-from qgis.PyQt.QtGui import (
-    QKeySequence,
-    QTextCursor,
-    QTextDocument,
-    QPixmap,
-    QIcon
-)
-from qgis.PyQt.QtCore import QSortFilterProxyModel
-from qgis.core import (
-    QgsProject,
-    QgsExpression,
-    QgsMapLayer,
-    QgsFeatureRequest,
-    QgsCoordinateTransform,
-    QgsCoordinateReferenceSystem,
-    QgsMapSettings
-)
-
-import unicodedata
-
-import sys
-from pathlib import Path
 
 sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
 
-# db_manager scripts
-from db_manager.db_plugins.plugin import (
-    BaseError
-)
-from db_manager.db_plugins import createDbPlugin
-from db_manager.dlg_db_error import DlgDbError
+import time
 
 from functools import partial
+
+from db_manager.db_plugins import createDbPlugin
+
+# db_manager scripts
+from db_manager.db_plugins.plugin import BaseError
+from db_manager.dlg_db_error import DlgDbError
 
 # --------------------------------------------------------
 #        import - Import data from EDIGEO and MAJIC files
 # --------------------------------------------------------
 
-import time
 
 
 # Fonction qui permet de calculer le temps passé par une méthode
@@ -425,8 +421,9 @@ class CadastreCommon:
     getItemHtml = common_utils.getItemHtml
 
 
-from .cadastre_import import cadastreImport
 from qgis.PyQt import uic
+
+from .cadastre_import import cadastreImport
 
 IMPORT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(

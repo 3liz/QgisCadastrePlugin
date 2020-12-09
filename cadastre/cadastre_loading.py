@@ -24,18 +24,18 @@
 
 import os
 
-from qgis.PyQt.QtCore import Qt, QObject, QSettings, pyqtSignal
-from qgis.PyQt.QtWidgets import QApplication, QMessageBox
+from datetime import datetime
 
 from qgis.core import (
-    QgsProject,
     QgsExpression,
-    QgsMapLayer,
-    QgsVectorLayer,
     QgsFeatureRequest,
-    QgsLayerTreeLayer
+    QgsLayerTreeLayer,
+    QgsMapLayer,
+    QgsProject,
+    QgsVectorLayer,
 )
-from datetime import datetime
+from qgis.PyQt.QtCore import QObject, QSettings, Qt, pyqtSignal
+from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
 
 class cadastreLoading(QObject):

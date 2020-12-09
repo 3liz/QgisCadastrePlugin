@@ -21,9 +21,12 @@
 # DEALINGS IN THE SOFTWARE.
 ###############################################################################
 
-from osgeo import ogr, gdal
-from string import Template
 import tempfile
+
+from string import Template
+
+from osgeo import gdal, ogr
+
 
 def GeomType2Name( type ):
     if type == ogr.wkbUnknown:

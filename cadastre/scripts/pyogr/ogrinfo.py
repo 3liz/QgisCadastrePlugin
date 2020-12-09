@@ -37,8 +37,7 @@
 import sys
 
 try:
-    from osgeo import gdal
-    from osgeo import ogr
+    from osgeo import gdal, ogr
 except:
     import gdal
     import ogr

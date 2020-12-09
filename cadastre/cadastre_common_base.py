@@ -15,25 +15,26 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
-import sys
 import os
 import re
+import sys
+
 from pathlib import Path
-
-from typing import Dict, List, Any, Union
-
-from qgis.PyQt.QtCore import QObject
-
-from qgis.core import (
-    Qgis,
-    QgsProject,
-    QgsMapLayer,
-    QgsMessageLog,
-    QgsDataSourceUri,
-)
+from typing import Any, Dict, List, Union
 
 from db_manager.db_plugins.plugin import BaseError
-from db_manager.db_plugins.postgis.connector import PostGisDBConnector, DBConnector
+from db_manager.db_plugins.postgis.connector import (
+    DBConnector,
+    PostGisDBConnector,
+)
+from qgis.core import (
+    Qgis,
+    QgsDataSourceUri,
+    QgsMapLayer,
+    QgsMessageLog,
+    QgsProject,
+)
+from qgis.PyQt.QtCore import QObject
 
 
 def hasSpatialiteSupport() -> bool:
@@ -42,7 +43,9 @@ def hasSpatialiteSupport() -> bool:
     spatialite support is ok
     """
     try:
-        from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector  # NOQA
+        from db_manager.db_plugins.spatialite.connector import (
+            SpatiaLiteDBConnector,  # NOQA
+        )
         return True
     except ImportError:
         return False
@@ -229,7 +232,9 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
     if connectionParams['dbType'] == 'spatialite':
         uri.setConnection('', '', connectionParams['dbname'], '', '')
         if hasSpatialiteSupport():
-            from db_manager.db_plugins.spatialite.connector import SpatiaLiteDBConnector
+            from db_manager.db_plugins.spatialite.connector import (
+                SpatiaLiteDBConnector,
+            )
         connector = SpatiaLiteDBConnector(uri)
 
     return connector

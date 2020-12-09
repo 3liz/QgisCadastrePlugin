@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import sys, os
+import os
+import sys
 
 qgisPrefixPath = "/usr"
 os.environ["DISPLAY"] = ":99"
@@ -8,13 +9,13 @@ sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/"))
 sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/plugins/"))
 sys.path.append('/srv/qgis/plugins')
 
-from qgis.gui import QgsMapCanvas, QgsLayerTreeMapCanvasBridge
-from qgis.core import QgsApplication, QgsProject, QgsFeatureRequest
+import argparse
+
+from qgis.core import QgsApplication, QgsFeatureRequest, QgsProject
+from qgis.gui import QgsLayerTreeMapCanvasBridge, QgsMapCanvas
 
 from cadastre.cadastre_dialogs import CadastreCommon
 from cadastre.cadastre_export import cadastreExport
-
-import argparse
 
 # Variables
 parser = argparse.ArgumentParser()

@@ -15,40 +15,45 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
-from qgis.PyQt.QtCore import Qt, QSettings, QUrl
-from qgis.PyQt.QtGui import QIcon, QDesktopServices, QKeySequence
-from qgis.PyQt.QtWidgets import QApplication, QAction, QActionGroup, QMenu, QMessageBox, QWidgetAction
-from qgis.PyQt.QtXml import QDomDocument
+import configparser
+import os.path
+import tempfile
+
+from pathlib import Path
+from time import time
 
 from qgis.core import (
     QgsApplication,
+    QgsLayoutExporter,
+    QgsPrintLayout,
     QgsProject,
     QgsReadWriteContext,
-    QgsPrintLayout,
-    QgsLayoutExporter
 )
+from qgis.PyQt.QtCore import QSettings, Qt, QUrl
+from qgis.PyQt.QtGui import QDesktopServices, QIcon, QKeySequence
+from qgis.PyQt.QtWidgets import (
+    QAction,
+    QActionGroup,
+    QApplication,
+    QMenu,
+    QMessageBox,
+    QWidgetAction,
+)
+from qgis.PyQt.QtXml import QDomDocument
 
-from .cadastre_identify_parcelle import IdentifyParcelle
 from .cadastre_dialogs import (
+    CadastreAboutDialog,
     CadastreCommon,
-    CadastreSearchDialog,
     CadastreImportDialog,
     CadastreLoadDialog,
+    CadastreMessageDialog,
     CadastreOptionDialog,
-    CadastreAboutDialog,
     CadastreParcelleDialog,
-    CadastreMessageDialog
+    CadastreSearchDialog,
 )
+from .cadastre_identify_parcelle import IdentifyParcelle
 from .processing.provider import CadastreProvider
 
-import configparser
-from pathlib import Path
-import os.path
-import tempfile
-from time import time
-
-
-# ---------------------------------------------
 
 class CadastreMenu:
     def __init__(self, iface):

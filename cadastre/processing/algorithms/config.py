@@ -23,13 +23,15 @@
 from os.path import join
 from pathlib import Path
 
-from qgis.PyQt.QtGui import QIcon
+from qgis.core import (
+    QgsProcessing,
+    QgsProcessingAlgorithm,
+    QgsProcessingOutputNumber,
+    QgsProcessingParameterField,
+    QgsProcessingParameterVectorLayer,
+)
 from qgis.PyQt.QtCore import QCoreApplication
-from qgis.core import (QgsProcessing,
-                       QgsProcessingAlgorithm,
-                       QgsProcessingParameterVectorLayer,
-                       QgsProcessingParameterField,
-                       QgsProcessingOutputNumber)
+from qgis.PyQt.QtGui import QIcon
 
 
 class ConfigProjectAlgorithm(QgsProcessingAlgorithm):

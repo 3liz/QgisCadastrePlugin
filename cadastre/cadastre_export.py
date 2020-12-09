@@ -16,36 +16,36 @@ the Free Software Foundation; either version 2 of the License, or
 
 """
 import os
-import tempfile
 import re
-
-from qgis.PyQt.QtCore import Qt, QSettings, QRectF
-from qgis.PyQt.QtGui import QFont
-from qgis.core import (
-    QgsProject,
-    QgsExpression,
-    QgsMapLayer,
-    QgsVectorLayer,
-    QgsFeatureRequest,
-    QgsMapSettings,
-    QgsFillSymbol,
-    QgsPrintLayout,
-    QgsLayoutPoint,
-    QgsLayoutItemLabel,
-    QgsLayoutSize,
-    QgsUnitTypes,
-    QgsLayoutItemMap,
-    QgsLayoutExporter,
-    QgsLayoutItemPage,
-    QgsLayoutGridSettings,
-    QgsLayoutMeasurement
-)
-
-import cadastre.cadastre_common_base as cadastre_common
+import tempfile
 
 from contextlib import contextmanager
-from typing import Generator, Callable
 from pathlib import Path
+from typing import Callable, Generator
+
+from qgis.core import (
+    QgsExpression,
+    QgsFeatureRequest,
+    QgsFillSymbol,
+    QgsLayoutExporter,
+    QgsLayoutGridSettings,
+    QgsLayoutItemLabel,
+    QgsLayoutItemMap,
+    QgsLayoutItemPage,
+    QgsLayoutMeasurement,
+    QgsLayoutPoint,
+    QgsLayoutSize,
+    QgsMapLayer,
+    QgsMapSettings,
+    QgsPrintLayout,
+    QgsProject,
+    QgsUnitTypes,
+    QgsVectorLayer,
+)
+from qgis.PyQt.QtCore import QRectF, QSettings, Qt
+from qgis.PyQt.QtGui import QFont
+
+import cadastre.cadastre_common_base as cadastre_common
 
 
 @contextmanager

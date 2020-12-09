@@ -17,23 +17,17 @@ the Free Software Foundation; either version 2 of the License, or
 """
 import os.path
 
+from pathlib import Path
+
+from qgis.core import QgsMapLayer, QgsMapSettings, QgsProject
+from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt, QUrl
-from qgis.PyQt.QtWidgets import QApplication
 from qgis.PyQt.QtGui import QDesktopServices
+from qgis.PyQt.QtWidgets import QApplication, QDialog
 
-from qgis.core import (
-    QgsProject,
-    QgsMapLayer,
-    QgsMapSettings,
-)
-
-from .cadastre_export import cadastreExport as cadastreExportBase
 import cadastre.cadastre_common_base as cadastre_common
 
-from qgis.PyQt.QtWidgets import QDialog
-
-from pathlib import Path
-from qgis.PyQt import uic
+from .cadastre_export import cadastreExport as cadastreExportBase
 
 PRINT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -51,8 +45,8 @@ class cadastrePrintProgress(QDialog, PRINT_FORM_CLASS):
         self.setupUi(self)
 
 
-from typing import Generator, Callable
 from contextlib import contextmanager
+from typing import Callable, Generator
 
 
 @contextmanager
