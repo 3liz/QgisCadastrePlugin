@@ -35,6 +35,7 @@ from distutils import dir_util
 # db_manager scripts
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
+from qgis.core import Qgis, QgsMessageLog
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
@@ -869,23 +870,44 @@ class cadastreImport(QObject):
 
         return None
 
-    def listFilesInDirectory(self, path, extensionList=[], invert=False):
+    @staticmethod
+    def list_files_in_directory(path, extension_list=None, invert=False):
         """
         List all files from folder and subfolder
         for a specific extension if given ( via the list extensionList ).
         If invert is True, then get all files
         but those corresponding to the given extensions.
         """
-        fileList = []
+        if extension_list is None:
+            extension_list = []
+
+        file_list = []
         for root, dirs, files in os.walk(path):
             for i in files:
+                file_path = os.path.join(root, i)
                 if not invert:
-                    if os.path.splitext(i)[1][1:].lower() in extensionList:
-                        fileList.append(os.path.join(root, i))
+                    if os.path.splitext(i)[1][1:].lower() in extension_list:
+                        file_list.append(file_path)
+                    else:
+                        QgsMessageLog.logMessage(
+                            "Omission du fichier {} car il ne s'agit pas d'une extension \"{}\"".format(
+                                file_path, ', '.join(extension_list)
+                            ),
+                            'cadastre',
+                            Qgis.Info
+                        )
                 else:
-                    if os.path.splitext(i)[1][1:].lower() not in extensionList:
-                        fileList.append(os.path.join(root, i))
-        return fileList
+                    if os.path.splitext(i)[1][1:].lower() not in extension_list:
+                        file_list.append(file_path)
+                    else:
+                        QgsMessageLog.logMessage(
+                            "Omission du fichier {} car il s'agit d'une extension non souhaitée "
+                            "\"{}\"".format(file_path, ', '.join(extension_list)),
+                            'cadastre',
+                            Qgis.Info
+                        )
+
+        return file_list
 
     def unzipFolderContent(self, path):
         """
@@ -897,7 +919,7 @@ class cadastreImport(QObject):
             self.qc.updateLog(u'* Décompression des fichiers')
 
             # get all the zip files
-            zipFileList = self.listFilesInDirectory(path, ['zip'])
+            zipFileList = self.list_files_in_directory(path, ['zip'])
 
             # unzip all files
             import tarfile
@@ -926,7 +948,7 @@ class cadastreImport(QObject):
 
                 i = 0
                 # untar all tar.bz2 in source folder
-                tarFileListA = self.listFilesInDirectory(path, ['bz2'])
+                tarFileListA = self.list_files_in_directory(path, ['bz2'])
                 for z in tarFileListA:
                     with tarfile.open(z) as t:
                         t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
@@ -934,7 +956,7 @@ class cadastreImport(QObject):
                         t.close()
 
                 # untar all new tar.bz2 found in self.edigeoPlainDir
-                tarFileListB = self.listFilesInDirectory(self.edigeoPlainDir, ['bz2'])
+                tarFileListB = self.list_files_in_directory(self.edigeoPlainDir, ['bz2'])
                 for z in tarFileListB:
                     with tarfile.open(z) as t:
                         t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
@@ -1211,9 +1233,9 @@ class cadastreImport(QObject):
             self.dialog.subStepLabel.setText(u'Import des fichiers via ogr2ogr (*.thf)')
             self.qc.updateLog(u'  - Import des fichiers via ogr2ogr')
             # Get plain files in source directory
-            thfList1 = self.listFilesInDirectory(self.dialog.edigeoSourceDir, ['thf'])
+            thfList1 = self.list_files_in_directory(self.dialog.edigeoSourceDir, ['thf'])
             # Get files which have been uncompressed by plugin in temp folder
-            thfList2 = self.listFilesInDirectory(self.edigeoPlainDir, ['thf'])
+            thfList2 = self.list_files_in_directory(self.edigeoPlainDir, ['thf'])
             thfList = list(set(thfList1) | set(thfList2))
             self.step = 0
             self.totalSteps = len(thfList)
@@ -1229,9 +1251,9 @@ class cadastreImport(QObject):
             self.dialog.subStepLabel.setText(u'Import des relations (*.vec)')
             self.qc.updateLog(u'  - Import des relations (*.vec)')
             # Get plain files in source directory
-            vecList1 = self.listFilesInDirectory(self.dialog.edigeoSourceDir, ['vec'])
+            vecList1 = self.list_files_in_directory(self.dialog.edigeoSourceDir, ['vec'])
             # Get files which have been uncompressed by plugin in temp folder
-            vecList2 = self.listFilesInDirectory(self.edigeoPlainDir, ['vec'])
+            vecList2 = self.list_files_in_directory(self.edigeoPlainDir, ['vec'])
             vecList = list(set(vecList1) | set(vecList2))
             self.step = 0
             self.totalSteps = len(vecList)
