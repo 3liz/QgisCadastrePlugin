@@ -37,7 +37,7 @@ class CadastreProvider(QgsProcessingProvider):
         """
         self.addAlgorithm(ConfigProjectAlgorithm())
 
-    def id(self):
+    def id(self):  # NOQA
         """
         Returns the unique provider id, used for identifying the provider. This
         string should be a unique, short, character only string, eg "qgis" or

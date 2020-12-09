@@ -80,10 +80,10 @@ from db_manager.dlg_db_error import DlgDbError
 #        import - Import data from EDIGEO and MAJIC files
 # --------------------------------------------------------
 
-
-
 # Fonction qui permet de calculer le temps passé par une méthode
 # Pour l'activer, ajouter simplement le décorateur @timing sur la méthode.
+
+
 def timing(f):
     def wrap(*args):
         time1 = time.time()
