@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 1.10.2 - 10/12/2020
+
+* Correction sur la documentation 
+* Ajout d'une table de matières sur https://docs.3liz.org/QgisCadastrePlugin/
+* Afficher un message dans les logs si un fichier SQLite est manquant
+* Prévenir l'utilisateur sur les fichiers bz2 lors de l'import des fichiers Édigéo.
+
 ### 1.10.1 - 05/11/2020
 
 * Ajout de la documentation de la base de données sur https://docs.3liz.org/QgisCadastrePlugin/
