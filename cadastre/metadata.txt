@@ -14,7 +14,7 @@ about=This plugins helps users to use French land registry data, called Cadastre
   France for people having access to Cadastre data. Funded by : the European Union, Fonds Européen de Développement
   Régional de Picardie, Conseil Régional de Picardie, Agence de Développement et d'Urbanisme du Grand Amienois.
 
-version=1.10.1
+version=1.10.2
 
 author=3Liz
 email=info@3liz.com
