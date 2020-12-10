@@ -948,7 +948,9 @@ class cadastreImport(QObject):
 
                 i = 0
                 # untar all tar.bz2 in source folder
+                self.qc.updateLog('* Recherche des fichiers .bz2')
                 tarFileListA = self.list_files_in_directory(path, ['bz2'])
+                self.qc.updateLog("{} fichier(s) .bz2 dans {}".format(len(tarFileListA), path))
                 for z in tarFileListA:
                     with tarfile.open(z) as t:
                         t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
@@ -957,6 +959,7 @@ class cadastreImport(QObject):
 
                 # untar all new tar.bz2 found in self.edigeoPlainDir
                 tarFileListB = self.list_files_in_directory(self.edigeoPlainDir, ['bz2'])
+                self.qc.updateLog("{} fichier(s) .bz2 dans {}".format(len(tarFileListA), self.edigeoPlainDir))
                 for z in tarFileListB:
                     with tarfile.open(z) as t:
                         t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
