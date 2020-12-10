@@ -22,7 +22,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Union
 
-from db_manager.db_plugins.plugin import BaseError
+from db_manager.db_plugins.plugin import BaseError, ConnectionError
 from db_manager.db_plugins.postgis.connector import (
     DBConnector,
     PostGisDBConnector,
@@ -179,9 +179,12 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
 
     except BaseError as e:
         ok = False
-        print(e.msg)
-        QgsMessageLog.logMessage("cadastre debug - error while fetching data from database")
-        print(sql)
+        QgsMessageLog.logMessage(
+            "Error while fetching data from database : {}".format(str(e.msg)),
+            "cadastre",
+            Qgis.Critical
+        )
+        QgsMessageLog.logMessage(sql, "cadastre", Qgis.Info)
 
     finally:
         if c:
@@ -235,7 +238,15 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
             from db_manager.db_plugins.spatialite.connector import (
                 SpatiaLiteDBConnector,
             )
-        connector = SpatiaLiteDBConnector(uri)
+
+            # Il y a bug évident ici si il n'y pas le support spatialite, quid de SpatiaLiteDBConnector ?
+        try:
+            connector = SpatiaLiteDBConnector(uri)
+        except ConnectionError as e:
+            QgsMessageLog.logMessage(
+                "Erreur lors de la récupération du fichier SQLite : {}".format(str(e)),
+                'cadastre',
+                Qgis.Critical)
 
     return connector
 
