@@ -12,14 +12,15 @@ CREATE TABLE [PREFIXE]parcelle_info
   geo_section text,
   nomcommune text,
   codecommune text,
-  surface_geo integer,
+  surface_geo bigint,
+  contenance bigint,
   lot text
 );
 SELECT AddGeometryColumn ( current_schema::text, 'parcelle_info', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
 INSERT INTO [PREFIXE]parcelle_info
 SELECT gp.ogc_fid AS ogc_fid, geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
-c.tex2 AS nomcommune, c.idu AS codecommune, Cast(ST_Area(gp.geom) AS integer) AS surface_geo,
+c.tex2 AS nomcommune, c.idu AS codecommune, Cast(ST_Area(gp.geom) AS integer) AS surface_geo, gp.supf AS contenance, 
 gp.lot AS lot,
 gp.geom AS geom
 FROM [PREFIXE]geo_parcelle gp
@@ -42,6 +43,7 @@ COMMENT ON COLUMN parcelle_info.geo_section IS 'Code de la section (lien vers ta
 COMMENT ON COLUMN parcelle_info.nomcommune IS 'Nom de la commune';
 COMMENT ON COLUMN parcelle_info.codecommune IS 'Code de la commune à 3 chiffres';
 COMMENT ON COLUMN parcelle_info.surface_geo IS 'Surface de la parcelle, calculée spatialement';
+COMMENT ON COLUMN parcelle_info.contenance IS 'Surface cadastrale de la parcelle';
 COMMENT ON COLUMN parcelle_info.lot IS 'Lot utilisé pendant l''import';
 
 COMMIT;
