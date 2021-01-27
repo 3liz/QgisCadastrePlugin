@@ -1539,7 +1539,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
             if key == 'proprietaire':
                 # ~ label = '%s - %s | %s' % (line[3], line[2], line[0].strip())
-                label = '%s | %s' % (line[2], line[0].strip())
+                label = '%s | %s' % (line[1], line[0].strip())
                 val = {
                     'cc': ["'%s'" % a for a in line[1].split(',')],
                     'dnuper': line[2]
