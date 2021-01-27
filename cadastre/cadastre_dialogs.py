@@ -1458,30 +1458,60 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             sql += ' ORDER BY c.tex2, v.natvoi, v.libvoi'
 
         if key == 'proprietaire':
-            aggregMethod = 'string_agg' if self.dbType == 'postgis' else 'group_concat'
-            schema = connectionParams['schema']
-            searchByBirthName = self.cbSearchNameBirth.isChecked()
-            # search by common name by default
-            nameString = "COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomus),'')||' '||COALESCE(rtrim(dprnus),'')"
-            # if checkbox is checked
-            if searchByBirthName is True:
-                # search by birth name instead
-                nameString = "COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomlp),'')||' '||COALESCE(rtrim(dprnus),'')"
-            # To only use dnomlp and search people OR use dnomus field
-            sql = f"SELECT {nameString} AS nom_naissance_usage, {aggregMethod}(comptecommunal, ',') AS cc, dnuper"
-            if self.dbType == 'postgis':
-                sql += f' FROM "{schema}"."proprietaire" p'
-            else:
-                sql += ' FROM proprietaire p'
-            sql += " WHERE 2>1"
-            for sv in searchValues:
-                sql += f" AND nom_naissance_usage LIKE '%{sv}%'"
-            sql += ' GROUP BY dnuper, nom_naissance_usage, dlign4'  # , c.ccocom'
-            sql += ' ORDER BY nom_naissance_usage'  # , c.ccocom'
-        self.dbType = connectionParams['dbType']
 
-        # self.qc.updateLog(sql)
-        sql += ' LIMIT 20'
+            # determines if search by usage name or birth name
+            searchByBirthName = self.cbSearchNameBirth.isChecked()
+
+            if self.dbType == 'postgis':
+                PGschema = connectionParams['schema']
+                sqlFrom = "  FROM " + PGschema + ".proprietaire\r\n"
+            else:
+                sqlFrom = "  FROM proprietaire\r\n"
+
+            if searchByBirthName is False:
+                # search by usage name
+                sql = "/* search by usage name*/\r\n"
+                sql += "WITH proprio AS (\r\n"
+                sql += "  SELECT\r\n"
+                sql += "    ccocom, comptecommunal, dnuper, dnomus, dprnus,\r\n"
+                sql += "    CASE\r\n"
+                sql += "        WHEN gtoper = '1' THEN COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomus),'')||' '||COALESCE(rtrim(dprnus),'')\r\n"
+                sql += "        WHEN gtoper = '2' THEN trim(ddenom)\r\n"
+                sql += "    END AS nom_usage\r\n"
+                sql += sqlFrom
+                sql += ")\r\n"
+                sql += "SELECT nom_usage, comptecommunal, dnuper\r\n"
+                sql += "FROM proprio\r\n"
+                sql += "WHERE 2>1\r\n"
+
+                for sv in searchValues:
+                    sql += "AND nom_usage LIKE %s" % self.connector.quoteString('%' + sv + '%') + "\r\n"
+
+                sql += "GROUP BY ccocom, comptecommunal, dnuper, nom_usage\r\n"
+                sql += "ORDER BY nom_usage\r\n"
+
+            elif searchByBirthName is True:
+                # search by birth name
+                sql = "/* search by birth name*/\r\n"
+                sql += "WITH proprio AS (\r\n"
+                sql += "  SELECT\r\n"
+                sql += "    ccocom, comptecommunal, dnuper, dnomus, dprnus,\r\n"
+                sql += "    CASE\r\n"
+                sql += "        WHEN gtoper = '1' THEN COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomlp),'')||' '||COALESCE(rtrim(dprnlp),'')\r\n"
+                sql += "        WHEN gtoper = '2' THEN trim(ddenom)\r\n"
+                sql += "    END AS nom_naissance\r\n"
+                sql += sqlFrom
+                sql += ")\r\n"
+                sql += "SELECT nom_naissance, comptecommunal, dnuper\r\n"
+                sql += "FROM proprio\r\n"
+                sql += "WHERE 2>1\r\n"
+
+                for sv in searchValues:
+                    sql += "AND nom_naissance LIKE %s" % self.connector.quoteString('%' + sv + '%') + "\r\n"
+
+                sql += "GROUP BY ccocom, comptecommunal, dnuper, dnomus, dprnus, nom_naissance\r\n"
+                sql += "ORDER BY nom_naissance\r\n"
+        sql += ' LIMIT 50'
 
         [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
 
