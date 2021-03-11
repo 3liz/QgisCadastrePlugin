@@ -1458,27 +1458,60 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             sql += ' ORDER BY c.tex2, v.natvoi, v.libvoi'
 
         if key == 'proprietaire':
-            sql = " SELECT trim(ddenom) AS k, MyStringAgg(comptecommunal, ',') AS cc, dnuper"  # , c.ccocom"
+
+            # determines if search by usage name or birth name
+            searchByBirthName = self.cbSearchNameBirth.isChecked()
+
             if self.dbType == 'postgis':
-                sql += ' FROM "{}"."proprietaire" p'.format(connectionParams['schema'])
+                PGschema = connectionParams['schema']
+                sqlFrom = "  FROM " + PGschema + ".proprietaire\r\n"
             else:
-                sql += ' FROM proprietaire p'
-            # ~ sql+= ' INNER JOIN commune c ON c.ccocom = p.ccocom'
-            sql += " WHERE 2>1"
-            for sv in searchValues:
-                sql += " AND ddenom LIKE %s" % self.connector.quoteString('%' + sv + '%')
-            sql += ' GROUP BY dnuper, ddenom, dlign4'  # , c.ccocom'
-            sql += ' ORDER BY ddenom'  # , c.ccocom'
-        self.dbType = connectionParams['dbType']
+                sqlFrom = "  FROM proprietaire\r\n"
 
-        # Update aggregate function in SQL
-        if self.dbType == 'postgis':
-            sql = sql.replace('MyStringAgg', 'string_agg')
-        else:
-            sql = sql.replace('MyStringAgg', 'group_concat')
-        # self.qc.updateLog(sql)
+            if searchByBirthName is False:
+                # search by usage name
+                sql = "/* search by usage name*/\r\n"
+                sql += "WITH proprio AS (\r\n"
+                sql += "  SELECT\r\n"
+                sql += "    ccocom, comptecommunal, dnuper, dnomus, dprnus,\r\n"
+                sql += "    CASE\r\n"
+                sql += "        WHEN gtoper = '1' THEN COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomus),'')||' '||COALESCE(rtrim(dprnus),'')\r\n"
+                sql += "        WHEN gtoper = '2' THEN trim(ddenom)\r\n"
+                sql += "    END AS nom_usage\r\n"
+                sql += sqlFrom
+                sql += ")\r\n"
+                sql += "SELECT nom_usage, comptecommunal, dnuper\r\n"
+                sql += "FROM proprio\r\n"
+                sql += "WHERE 2>1\r\n"
 
-        sql += ' LIMIT 20'
+                for sv in searchValues:
+                    sql += "AND nom_usage LIKE %s" % self.connector.quoteString('%' + sv + '%') + "\r\n"
+
+                sql += "GROUP BY ccocom, comptecommunal, dnuper, nom_usage\r\n"
+                sql += "ORDER BY nom_usage\r\n"
+
+            elif searchByBirthName is True:
+                # search by birth name
+                sql = "/* search by birth name*/\r\n"
+                sql += "WITH proprio AS (\r\n"
+                sql += "  SELECT\r\n"
+                sql += "    ccocom, comptecommunal, dnuper, dnomus, dprnus,\r\n"
+                sql += "    CASE\r\n"
+                sql += "        WHEN gtoper = '1' THEN COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomlp),'')||' '||COALESCE(rtrim(dprnlp),'')\r\n"
+                sql += "        WHEN gtoper = '2' THEN trim(ddenom)\r\n"
+                sql += "    END AS nom_naissance\r\n"
+                sql += sqlFrom
+                sql += ")\r\n"
+                sql += "SELECT nom_naissance, comptecommunal, dnuper\r\n"
+                sql += "FROM proprio\r\n"
+                sql += "WHERE 2>1\r\n"
+
+                for sv in searchValues:
+                    sql += "AND nom_naissance LIKE %s" % self.connector.quoteString('%' + sv + '%') + "\r\n"
+
+                sql += "GROUP BY ccocom, comptecommunal, dnuper, dnomus, dprnus, nom_naissance\r\n"
+                sql += "ORDER BY nom_naissance\r\n"
+        sql += ' LIMIT 50'
 
         [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
 
@@ -1506,7 +1539,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
             if key == 'proprietaire':
                 # ~ label = '%s - %s | %s' % (line[3], line[2], line[0].strip())
-                label = '%s | %s' % (line[2], line[0].strip())
+                label = '%s | %s' % (line[1], line[0].strip())
                 val = {
                     'cc': ["'%s'" % a for a in line[1].split(',')],
                     'dnuper': line[2]
