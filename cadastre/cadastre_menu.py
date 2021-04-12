@@ -422,6 +422,7 @@ class CadastreMenu:
             self.cadastre_search_dialog.clearComboboxes()
             self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
             self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
+            self.cadastre_search_dialog.setupSearchCombobox('commune_proprietaire', None, 'sql')
             self.checkIdentifyParcelleTool()
 
     def onNewProjectCreated(self):
