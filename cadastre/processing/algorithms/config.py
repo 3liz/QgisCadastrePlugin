@@ -20,23 +20,20 @@
  *                                                                         *
  ***************************************************************************/
 """
-from os.path import join
-from pathlib import Path
 
 from qgis.core import (
     QgsProcessing,
-    QgsProcessingAlgorithm,
     QgsProcessingOutputNumber,
     QgsProcessingParameterField,
     QgsProcessingParameterVectorLayer,
 )
-from qgis.PyQt.QtCore import QCoreApplication
-from qgis.PyQt.QtGui import QIcon
+
+from cadastre.processing.algorithms.base import BaseProcessingAlgorithm
 
 
-class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
+class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
     """
-    Algorithm to set project varaibles for cadastre use
+    Algorithm to set project variables for cadastre use
     """
 
     COMMUNE_LAYER = 'COMMUNE_LAYER'
@@ -157,29 +154,9 @@ class ConfigProjectAlgorithm(QgsProcessingAlgorithm):
         """
         return self.tr('Configuration du projet')
 
-    def group(self):
-        """
-        Returns the name of the group this algorithm belongs to. This string
-        should be localised.
-        """
-        return self.tr('Outils')
-
-    def groupId(self):
-        """
-        Returns the unique ID of the group this algorithm belongs to. This
-        string should be fixed for the algorithm, and must not be localised.
-        The group id should be unique within each provider. Group id should
-        contain lowercase alphanumeric characters only and no spaces or other
-        formatting characters.
-        """
-        return 'tools'
-
-    def tr(self, string):
-        return QCoreApplication.translate('Processing', string)
-
-    def createInstance(self):
-        return self.__class__()
-
-    def icon(self):
-        plugin_dir = str(Path(__file__).resolve().parent.parent.parent)
-        return QIcon(join(plugin_dir, 'icon.png'))
+    def shortHelpString(self):
+        return (
+            'Ce traitement permet de configurer un projet QGIS pour de la publication sur le web avec '
+            'Lizmap https://github.com/3liz/lizmap-web-client/ et son module Cadastre '
+            'https://github.com/3liz/lizmap-cadastre-module\n'
+        )
