@@ -1,0 +1,37 @@
+name: ❄ Flake8
+
+on:
+  push:
+    paths:
+      - 'cadastre/**'
+  pull_request:
+    paths:
+      - 'cadastre/**'
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+    name: "Flake8"
+    steps:
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+          architecture: x64
+
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/requirements-dev.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python requirements
+        run: pip install -r requirements/requirements-dev.txt
+
+      - name: Run flake8
+        run: flake8
