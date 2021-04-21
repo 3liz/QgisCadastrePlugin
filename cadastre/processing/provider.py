@@ -27,6 +27,7 @@ from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
 
 from .algorithms.config import ConfigProjectAlgorithm
+from .algorithms.edigeo_downloader import EdigeoDownloader
 
 
 class CadastreProvider(QgsProcessingProvider):
@@ -36,6 +37,7 @@ class CadastreProvider(QgsProcessingProvider):
         Loads all algorithms belonging to this provider.
         """
         self.addAlgorithm(ConfigProjectAlgorithm())
+        self.addAlgorithm(EdigeoDownloader())
 
     def id(self):  # NOQA
         """

@@ -13,6 +13,7 @@ nav:
     - Accueil: index.md
     - Extension QGIS:
         - 'Installation': extension-qgis/installation.md
+        - 'Données': extension-qgis/donnees.md
         - 'Configuration': extension-qgis/configuration.md
         - 'Import': extension-qgis/import.md
         - 'Charger': extension-qgis/charger.md
