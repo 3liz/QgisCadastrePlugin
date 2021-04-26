@@ -10,6 +10,11 @@ venv/
 # IDE
 .idea/
 
+# Documentation
+build/
+docs/CHANGELOG.md
+docs/CONTRIBUTING.md
+
 # Plugins, QGIS-plugin-CI
 cadastre.*.zip
 

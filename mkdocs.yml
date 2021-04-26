@@ -1,0 +1,85 @@
+site_name: Cadastre
+site_author: 3Liz
+site_description: Extension QGIS pour l'utilisation des fichiers Cadastre en France
+site_url: https://docs.3liz.org/QgisCadastrePlugin/
+repo_url: https://github.com/3liz/QgisCadastrePlugin
+copyright: '<span class="copyleft">&copy;</span> 3Liz'
+
+docs_dir: docs
+site_dir: build
+
+nav:
+    - docs.3liz.org: '../'
+    - Accueil: index.md
+    - Extension QGIS:
+        - 'Installation': extension-qgis/installation.md
+        - 'Configuration': extension-qgis/configuration.md
+        - 'Import': extension-qgis/import.md
+        - 'Charger': extension-qgis/charger.md
+        - 'Interface': extension-qgis/interface.md
+        - 'Vidéos': extension-qgis/videos.md
+    - Module Lizmap:
+        - 'Installation': module-lizmap/installation.md
+        - 'Configuration': module-lizmap/configuration.md
+    - Contribution: contributing.md
+    - Changelog: changelog.md
+    - Base de données: database/index.html
+
+markdown_extensions:
+  # - git-revision-date:
+  - toc:
+      permalink: "#"
+  - meta:
+  - pymdownx.highlight:
+      linenums: true
+      linenums_style: pymdownx.inline
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
+  - pymdownx.tabbed:
+  - pymdownx.magiclink:
+  - pymdownx.tasklist:
+  - pymdownx.snippets:
+  - pymdownx.keys:
+  - attr_list:
+  - admonition:
+  - pymdownx.details:
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js
+  - https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css
+
+theme:
+  name: material
+  font: false
+  icon:
+    repo: fontawesome/brands/github-alt
+  language: 'fr'
+  logo: icon.png
+  favicon: icon.png
+  palette:
+    accent: deep-orange
+    primary: green
+    scheme: default
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/3LIZ_news
+
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/3liz
+
+    - icon: fontawesome/brands/github
+      link: https://github.com/3liz/
+
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/u/3liz

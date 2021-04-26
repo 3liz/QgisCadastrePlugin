@@ -1,4 +1,4 @@
-# CHANGELOG
+# Changelog
 
 ## 1.10.2 - 2020-12-10
 
