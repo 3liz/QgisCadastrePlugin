@@ -1,0 +1,1151 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Extension QGIS pour l'utilisation des fichiers Cadastre en France">
+      
+      
+      
+        <meta name="author" content="3Liz">
+      
+      
+        <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/extension-qgis/interface/">
+      
+      <link rel="icon" href="../../icon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Interface - Cadastre</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+    
+    
+    
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="deep-orange">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#interface" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cadastre" class="md-header__button md-logo" aria-label="Cadastre" data-md-component="logo">
+      
+  <img src="../../icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cadastre
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Interface
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/3liz/QgisCadastrePlugin/" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../" class="md-tabs__link">
+      docs.3liz.org
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      Accueil
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../installation/" class="md-tabs__link md-tabs__link--active">
+        Extension QGIS
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../module-lizmap/installation/" class="md-tabs__link">
+        Module Lizmap
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../contributing/" class="md-tabs__link">
+      Contribution
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../changelog/" class="md-tabs__link">
+      Changelog
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../database/" class="md-tabs__link">
+      Base de données
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cadastre" class="md-nav__button md-logo" aria-label="Cadastre" data-md-component="logo">
+      
+  <img src="../../icon.png" alt="logo">
+
+    </a>
+    Cadastre
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/3liz/QgisCadastrePlugin/" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        docs.3liz.org
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Accueil
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Extension QGIS
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Extension QGIS" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Extension QGIS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../import/" class="md-nav__link">
+        Import
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../charger/" class="md-nav__link">
+        Charger
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Interface
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#la-barre-doutil" class="md-nav__link">
+    La barre d'outil
+  </a>
+  
+    <nav class="md-nav" aria-label="La barre d'outil">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identifier-une-parcelle" class="md-nav__link">
+    Identifier une parcelle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exporter-la-vue" class="md-nav__link">
+    Exporter la vue
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#le-panneau-de-recherche" class="md-nav__link">
+    Le panneau de recherche
+  </a>
+  
+    <nav class="md-nav" aria-label="Le panneau de recherche">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#principe" class="md-nav__link">
+    Principe
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recherche-de-lieux" class="md-nav__link">
+    Recherche de lieux
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recherche-dadresse" class="md-nav__link">
+    Recherche d'adresse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recherche-de-proprietaires" class="md-nav__link">
+    Recherche de propriétaires
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilisation-du-plugin-quickfinder-pour-chercher-les-parcelles" class="md-nav__link">
+    Utilisation du plugin QuickFinder pour chercher les parcelles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-propos" class="md-nav__link">
+    À propos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes-de-version" class="md-nav__link">
+    Notes de version
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#les-parcelles" class="md-nav__link">
+    Les parcelles
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../videos/" class="md-nav__link">
+        Vidéos
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Module Lizmap
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Module Lizmap" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Module Lizmap
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../module-lizmap/installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../module-lizmap/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        Contribution
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database/" class="md-nav__link">
+        Base de données
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#la-barre-doutil" class="md-nav__link">
+    La barre d'outil
+  </a>
+  
+    <nav class="md-nav" aria-label="La barre d'outil">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identifier-une-parcelle" class="md-nav__link">
+    Identifier une parcelle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exporter-la-vue" class="md-nav__link">
+    Exporter la vue
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#le-panneau-de-recherche" class="md-nav__link">
+    Le panneau de recherche
+  </a>
+  
+    <nav class="md-nav" aria-label="Le panneau de recherche">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#principe" class="md-nav__link">
+    Principe
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recherche-de-lieux" class="md-nav__link">
+    Recherche de lieux
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recherche-dadresse" class="md-nav__link">
+    Recherche d'adresse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recherche-de-proprietaires" class="md-nav__link">
+    Recherche de propriétaires
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilisation-du-plugin-quickfinder-pour-chercher-les-parcelles" class="md-nav__link">
+    Utilisation du plugin QuickFinder pour chercher les parcelles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-propos" class="md-nav__link">
+    À propos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes-de-version" class="md-nav__link">
+    Notes de version
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#les-parcelles" class="md-nav__link">
+    Les parcelles
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/3liz/QgisCadastrePlugin/edit/master/docs/extension-qgis/interface.md" title="Editer cette page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="interface">Interface<a class="headerlink" href="#interface" title="Permanent link">#</a></h1>
+<h2 id="la-barre-doutil">La barre d'outil<a class="headerlink" href="#la-barre-doutil" title="Permanent link">#</a></h2>
+<p><img alt="alt" src="../../media/cadastre_toolbar.png" /></p>
+<p>La barre d'outil peut s'afficher ou se masquer à partir :</p>
+<ul>
+<li>du menu <strong>Vue &gt; Barres d'outils &gt; Cadastre</strong></li>
+<li>d'un clic droit à côté d'une des barres d'outils de QGIS, et sélectionner <strong>Cadastre</strong></li>
+</ul>
+<p>Elle contient :</p>
+<ul>
+<li>Un outil pour <strong>identifier une parcelle</strong> sur la carte</li>
+<li>Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Exporter la vue, 
+  Configurer, À propos</li>
+</ul>
+<p>Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir 
+apparaître une bulle d'information.</p>
+<h3 id="identifier-une-parcelle">Identifier une parcelle<a class="headerlink" href="#identifier-une-parcelle" title="Permanent link">#</a></h3>
+<p>Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC 
+dans la base de données. Sinon, seules les informations principales issues de l'EDIGEO seront affichées et 
+certains boutons d'action sont désactivés.</p>
+<p>Pour faire apparaître la fiche d'information d'une parcelle, il faut :</p>
+<ul>
+<li>activer l'outil <strong>Identifier une parcelle</strong> de la barre d'outil</li>
+<li><strong>Zoomer à une échelle</strong> pour laquelle les parcelles sont visibles (à partir de 1/20 000).</li>
+<li><strong>Cliquer sur une des parcelles</strong> de la carte.</li>
+</ul>
+<p>La fenêtre d'identification s'affiche alors,</p>
+<p><img alt="alt" src="../../media/cadastre_parcelle_info.png" /></p>
+<p>Elle présente plusieurs onglets :</p>
+<ul>
+<li>un onglet avec les <strong>informations générales de la parcelle</strong></li>
+<li>un onglet avec les <strong>propriétaires</strong> de la parcelle</li>
+<li>un onglet avec les <strong>subdivisions fiscales</strong></li>
+<li>un onglet avec les <strong>locaux</strong> et leurs informations détaillées</li>
+</ul>
+<p>Ainsi qu'une zone contenant des <strong>boutons d'action</strong> :</p>
+<ul>
+<li>2 boutons pour <strong>exporter</strong> le <strong>relevé parcellaire</strong> et le <strong>relevé de propriété</strong> au format PDF</li>
+<li>3 boutons pour <strong>interagir avec l'objet géométrique</strong> lié à la parcelle : centrer la carte sur la 
+    parcelle, zoomer sur la parcelle, ou sélectionner l'objet dans la couche</li>
+<li>Un dernier bouton pour <strong>sélectionner dans la couche toutes les parcelles du propriétaire</strong></li>
+</ul>
+<blockquote>
+<p>Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la 
+fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)</p>
+<p>Si vous n'avez pas de données MAJIC, seule les informations sur la parcelle (1er onglet) seront présentées.</p>
+</blockquote>
+<h3 id="exporter-la-vue">Exporter la vue<a class="headerlink" href="#exporter-la-vue" title="Permanent link">#</a></h3>
+<p>Dans la barre d'outil Cadastre, ainsi que dans le menu, vous pouvez exporter la vue courante de la carte en 
+PDF via le menu <strong>Exporter la vue</strong>.</p>
+<p>Cette fonctionnalité s'appuie sur un <strong>modèle de composeur d'impression</strong>, configurable dans les options du 
+plugin (voir ci-dessus). Si vous n'avez pas configuré de composeur personnalisé, celui installé par le plugin 
+est utilisé.</p>
+<blockquote>
+<p>Cette fonctionnalité est basique, et ne gère pas pour l'instant les composeurs complexes, avec des tables 
+attributaires et des configurations d'atlas.</p>
+</blockquote>
+<h2 id="le-panneau-de-recherche">Le panneau de recherche<a class="headerlink" href="#le-panneau-de-recherche" title="Permanent link">#</a></h2>
+<p><img alt="alt" src="../../media/cadastre_search_dialog.png" /></p>
+<h3 id="principe">Principe<a class="headerlink" href="#principe" title="Permanent link">#</a></h3>
+<p>Le panneau de recherche propose des outils pour rechercher des parcelles via 3 entrées principales</p>
+<ul>
+<li>une recherche par <strong>objet géographique</strong> : commune, section, adresse et parcelles</li>
+<li>une recherche par <strong>propriétaire</strong></li>
+</ul>
+<p>Les différentes recherches seront détaillées dans les sous-chapitres suivants.</p>
+<p>Pour afficher le panneau de recherche:</p>
+<ul>
+<li>Utiliser le menu <strong>Cadastre &gt; Outils de recherche</strong> ou cliquer sur l'<strong>icône loupe</strong> de la barre d'outils</li>
+</ul>
+<p>Une bulle d'information affiche la fonction des boutons au survol de la souris.</p>
+<blockquote>
+<p>Si la base de données ne contient aucune donnée MAJIC, alors les recherches par adresse et par propriétaire
+sont désactivés.</p>
+</blockquote>
+<h3 id="recherche-de-lieux">Recherche de lieux<a class="headerlink" href="#recherche-de-lieux" title="Permanent link">#</a></h3>
+<p>L'outil présente 3 listes déroulantes :</p>
+<ul>
+<li><strong>Commune</strong></li>
+<li><strong>Section</strong></li>
+<li><strong>Adresses</strong></li>
+<li><strong>Parcelles</strong></li>
+</ul>
+<p>Il est possible de <strong>sélectionner une entité</strong> dans les listes :</p>
+<ul>
+<li>soit <em>à la souris</em> en cliquant sur la flèche pour ouvrir la liste déroulante puis sélectionner un item.</li>
+<li>soit en <em>tapant les premières lettres</em> et en sélectionnant l'item choisi dans la liste d'autocomplétion qui 
+  s'affiche alors. Il faut avoir au préalable vider le contenu de la liste déroulante.</li>
+</ul>
+<p>Les listes déroulantes sont <strong>hiérarchiques</strong> :</p>
+<ul>
+<li>Lorsqu'on choisit une commune, la liste des sections est rafraîchie et ne montre que les sections de la 
+  commune choisie. La recherche d'adresse est aussi filtrée sur cette commune.</li>
+<li>lorsqu'on choisit une section, la liste des parcelles est rafraîchie et montre les parcelles sur la section.</li>
+</ul>
+<p>Des <strong>boutons d'actions</strong> sont positionnés sous les 3 listes déroulantes et permettent de lancer l'action 
+choisie sur le dernier objet sélectionné dans les 3 listes :</p>
+<ul>
+<li><em>Centrer sur l'objet</em> : la carte est déplacée vers l'objet sélectionné, mais l'échelle est conservée</li>
+<li><em>Zoomer sur l'objet</em> : la carte est déplacée et mise à l'échelle pour afficher l'objet sélectionné</li>
+<li><em>Sélectionner l'objet</em> : l'objet est sélectionné dans la couche de données correspondante (Communes, 
+  Sections ou Parcelles)</li>
+</ul>
+<p>À côté des listes, un bouton <strong>croix rouge</strong> permet de remettre la liste à son état initial, c'est-à-dire sans
+objet sélectionné. Par exemple, si on avait sélectionné une commune dans la première liste et une section 
+dans la seconde, on peut cliquer sur la croix rouge à côté de la section pour désélectionner la section dans 
+la liste. Ainsi si on utilise le bouton de Zoom, on zoomera sur la commune et non sur la section qui était 
+précédemment sélectionnée</p>
+<p>Si une parcelle a été sélectionnée dans la liste <strong>Parcelles</strong>, il est possible d'<strong>exporter le relevé 
+parcellaire</strong> en cliquant sur le bouton <em>icône PDF</em> situé en bas à droite du bloc de recherche de lieux. 
+Le <strong>PDF est généré et ouvert</strong> avec le lecteur PDF par défaut du système.</p>
+<h3 id="recherche-dadresse">Recherche d'adresse<a class="headerlink" href="#recherche-dadresse" title="Permanent link">#</a></h3>
+<blockquote>
+<p>Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données 
+FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC,
+vous pouvez le télécharger pour votre département ici (et relancer l'import Majic) : 
+<a href="http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits">http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits</a></p>
+</blockquote>
+<p>Pour lancer une <strong>recherche de parcelles par adresse</strong>, il suffit :</p>
+<ul>
+<li>d'<em>entrer l'adresse cherchée</em>, sans le numéro de rue dans la liste <strong>Adresse</strong>.</li>
+<li>de cliquer sur le <strong>bouton loupe</strong> situé à côté de la liste, ou d'appuyer sur la <strong>touche entrée</strong></li>
+</ul>
+<p>La recherche est effectuée et la liste déroulante où vous avez tapé l'adresse à chercher est maintenant 
+rafraîchie et contient l'ensemble des résultats trouvés. Si une commune était sélectionnée dans la liste des 
+communes, la recherche d'adresse ne renvoie que les voies de cette commune.</p>
+<p>Si des résultats ont été trouvés, on peut ensuite :</p>
+<ul>
+<li><strong>Sélectionner une adresse</strong> dans la liste déroulante via la souris. Cela <strong>rafraîchit la liste des 
+  parcelles</strong> située en dessous.</li>
+<li>cliquer sur les boutons de <strong>centrage, zoom et sélection</strong>. Chaque action est lancée sur <strong>l'ensemble des 
+  parcelles correspondantes</strong> à l'adresse choisie</li>
+<li>Sélectionner une des parcelles dans la liste déroulante <strong>Parcelles</strong> et réutiliser les boutons d'action.</li>
+<li>Si une parcelle est sélectionnée, le bouton avec une icône PDF permet d'<strong>exporter le relevé parcellaire</strong> 
+  pour cette parcelle</li>
+</ul>
+<p>Vous pouvez cliquer sur la croix rouge à côté de la recherche d'adresse pour désélectionner l'adresse choisie.</p>
+<h3 id="recherche-de-proprietaires">Recherche de propriétaires<a class="headerlink" href="#recherche-de-proprietaires" title="Permanent link">#</a></h3>
+<blockquote>
+<p>Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base</p>
+</blockquote>
+<p>Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences 
+suivantes :</p>
+<ul>
+<li>Un bouton est ajouté à côté de la liste des propriétaires pour <strong>exporter le relevé de propriété</strong> du 
+  propriétaire sélectionné dans la liste</li>
+<li>Le bouton d'<strong>export du relevé parcellaire</strong> est placé à côté de la liste <em>Parcelles</em></li>
+</ul>
+<p>Il est possible d'exporter le relevé de propriété pour les personnes qui ne possèdent pas de propriété non
+bâtie.</p>
+<h3 id="utilisation-du-plugin-quickfinder-pour-chercher-les-parcelles">Utilisation du plugin QuickFinder pour chercher les parcelles<a class="headerlink" href="#utilisation-du-plugin-quickfinder-pour-chercher-les-parcelles" title="Permanent link">#</a></h3>
+<p>Vous pouvez installer le plugin QuickFinder pour préparer et utiliser des recherches sur différentes couches
+cadastrales. Exemple de configuration intéressante :</p>
+<ul>
+<li>Ouvrir la boîte de dialogue de configuration du plugin : Menu <em>Extension / QuickFinder / Settings</em></li>
+<li>Aller à l'onglet <em>Project Search</em></li>
+<li>Cocher la case <em>Search in project layers</em></li>
+<li>À côté du champ <em>QuickFinder file</em>, cliquer sur le bouton avec une icône "page" pour créer un nouveau 
+  fichier (en anglais, au survol du bouton : <em>Create a new QuickFinder file</em>). Enregistrer le fichier dans le
+  répertoire du projet QGIS, et lui donner le même nom de fichier (par exemple "cadastre.qfts" pour un projet 
+  QGIS "cadastre.qgs")</li>
+<li>Cliquer sur le bouton "+" en vert pour ajouter une nouvelle recherche : cela ouvre une boite de dialogue 
+  <em>project search</em>. Configurer une recherche pour les parcelles :</li>
+<li><em>Search name</em> : Parcelles</li>
+<li><em>Layer</em>: Parcelles</li>
+<li><em>Field</em> : vous pouvez utiliser un champ, ou mieux une expression QGIS pour concaténer des informations, 
+    en cliquant sur le bouton "epsilon", par exemple :
+  <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Concat</span><span class="p">(</span>
+  <span class="s1">&#39;COM &#39;</span><span class="p">,</span> <span class="ss">&quot;codecommune&quot;</span><span class="p">,</span> <span class="s1">&#39; / &#39;</span><span class="p">,</span>
+  <span class="s1">&#39;SEC &#39;</span><span class="p">,</span> <span class="n">substr</span><span class="p">(</span><span class="ss">&quot;idu&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39; / &#39;</span><span class="p">,</span>
+  <span class="s1">&#39;PAR &#39;</span><span class="p">,</span> <span class="n">substr</span><span class="p">(</span><span class="ss">&quot;idu&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s1">&#39; / &#39;</span><span class="p">,</span>
+  <span class="s1">&#39;ADR &#39;</span><span class="p">,</span> <span class="ss">&quot;adresse&quot;</span><span class="p">,</span> <span class="s1">&#39; / &#39;</span><span class="p">,</span>
+  <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="ss">&quot;proprietaire&quot;</span><span class="p">,</span>
+  <span class="s1">&#39; @@&#39;</span><span class="p">,</span> <span class="ss">&quot;codecommune&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+  (la partie avec @@ et le codecommune à la fin sont utiles si vous publiez le cadastre sur internet vers 
+  l'application Lizmap. Cela permet de filtrer les données)</li>
+<li><em>Geometry storage</em> : wkt</li>
+<li><em>Priority</em> : 1</li>
+<li><em>record entries</em> : laisser coché, cela va lancer la création des données de recherche et leur stockage 
+    dans le fichier QuickFinder</li>
+</ul>
+<p>Une fois cette configuration effectuée, vous pouvez fermer les fenêtres QuickFinder, puis utiliser la barre 
+d'outil QuickFinder pour chercher des parcelles via leur code, le code commune, le code de section, ou bien 
+le nom des propriétaires.</p>
+<h2 id="a-propos">À propos<a class="headerlink" href="#a-propos" title="Permanent link">#</a></h2>
+<p>Le menu <strong>Cadastre &gt; À propos</strong> ouvre une fenêtre d'information sur le plugin Cadastre : financeurs, auteur,
+licence, dépôt de sources, etc.</p>
+<p>Cette fenêtre est automatiquement affichée lors de la première utilisation du plugin, mais pas les fois 
+suivantes.</p>
+<h2 id="notes-de-version">Notes de version<a class="headerlink" href="#notes-de-version" title="Permanent link">#</a></h2>
+<p>Le menu <strong>Cadastre &gt; Notes de version</strong> ouvre une fenêtre qui montre les changements effectués sur le plugin 
+Cadastre entre la version installée et la version précédente. Cette fenêtre est affichée automatiquement une 
+première fois lors de la montée de version.</p>
+<h2 id="les-parcelles">Les parcelles<a class="headerlink" href="#les-parcelles" title="Permanent link">#</a></h2>
+<p>Dans le modèle, plusieurs tables contiennent des informations sur les parcelles</p>
+<ul>
+<li>
+<p><strong>geo_parcelle</strong> : contient les parcelles EDIGEO</p>
+</li>
+<li>
+<p><strong>parcelle</strong> : contient les données MAJIC liées aux parcelles cadastrales</p>
+</li>
+<li>
+<p><strong>parcelle_info</strong> : contient une version consolidée des parcelles EDIGEO et MAJIC : la géométrie EDIGEO, et
+  les informations résumées de la parcelle, dont les propriétaires (information séparées par la barre 
+  verticale | si la parcelle a plusieurs propriétaires)</p>
+</li>
+</ul>
+<p>Les champs parcelle.parcelle et geo_parcelle.geo_parcelle peuvent être utilisés pour les jointures entre la 
+table parcelle et la table geo_parcelle</p>
+<p>L'identifiant <strong>geo_parcelle</strong> (ou parcelle) est unique et constitué comme suit :
+<em>Année (4) + Département (2) + Direction (1) + Commune (3) + Préfixe (3) + Secteur (2) + Numéro de plan (4)</em>
+soit <strong>19 caractères</strong></p>
+<p><img alt="alt" src="../../media/logo_3liz.png" /></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../charger/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Précédent
+              </span>
+              Charger
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../videos/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Suivant
+              </span>
+              Vidéos
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            <span class="copyleft">&copy;</span> 3Liz
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/3LIZ_news" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/company/3liz" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/3liz/" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://hub.docker.com/u/3liz" target="_blank" rel="noopener" title="hub.docker.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

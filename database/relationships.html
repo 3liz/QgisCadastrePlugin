@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>cadastre_2019 Database</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+  <!-- Code Mirror -->
+  <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+  <!-- Fonts -->
+  <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+  <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+  <!-- Salvattore -->
+  <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+  <!-- SchemaSpy -->
+  <link rel="stylesheet" href="schemaSpy.css">
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="bower/html5shiv/html5shiv.min.js"></script>
+  <script src="bower/respond/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+			<li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+			<li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+			<li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+			<li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
+			<li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+			<li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Main content -->
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>All Relationships</h1>
+      </section>
+      <!-- Main content -->
+      <section class="content">
+				<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-code-fork"></i>
+              <h3 class="box-title">Diagrams</h3>
+            </div>	
+			<div class="box-body">	
+			<div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+			<h5>By default only columns that are primary keys, foreign keys or indexes are shown.</h5>
+            <ul class="nav nav-tabs pull-left ui-sortable-handle">
+			  			              <li class="active"><a href="#compactimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact Implied</a></li>			  			 
+			  			              <li class=""><a href="#largeimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large Implied</a></li>			  			 
+            </ul>
+            <div class="tab-content no-padding">            
+				<div class="chart tab-pane active" id="compactimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+							<div class="alert alert-warning alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<h4><i class="icon fa fa-info-circle"></i> Implied Relationships</h4>
+								<p>No 'real' Foreign Key relationships were detected in the schema.<br>
+								Displayed relationships are implied by a column's name/type/size matching another table's primary key.</p>
+							</div> 
+																											<map id="compactImpliedRelationshipsDiagram" name="compactImpliedRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/annul.html" title="annul" alt="" coords="45,544,174,661">
+<area shape="rect" id="node2" href="tables/carvoi.html" title="carvoi" alt="" coords="42,409,177,527">
+<area shape="rect" id="node3" href="tables/cbtabt.html" title="cbtabt" alt="" coords="829,4281,967,4399">
+<area shape="rect" id="node4" href="tables/ccoaff.html" title="ccoaff" alt="" coords="1105,3901,1239,4019">
+<area shape="rect" id="node5" href="tables/ccocac.html" title="ccocac" alt="" coords="1103,4305,1241,4423">
+<area shape="rect" id="node6" href="tables/ccodem.html" title="ccodem" alt="" coords="293,1863,441,1980">
+<area shape="rect" id="node7" href="tables/ccodro.html" title="ccodro" alt="" coords="297,1728,437,1845">
+<area shape="rect" id="node8" href="tables/ccoeva.html" title="ccoeva" alt="" coords="827,3069,969,3187">
+<area shape="rect" id="node9" href="tables/ccogrm.html" title="ccogrm" alt="" coords="294,2401,439,2519">
+<area shape="rect" id="node10" href="tables/ccolloc.html" title="ccolloc" alt="" coords="1327,4367,1467,4484">
+<area shape="rect" id="node11" href="tables/cconac.html" title="cconac" alt="" coords="827,4416,969,4533">
+<area shape="rect" id="node12" href="tables/cconad.html" title="cconad" alt="" coords="1325,4937,1468,5055">
+<area shape="rect" id="node13" href="tables/cconlc.html" title="cconlc" alt="" coords="830,3473,966,3591">
+<area shape="rect" id="node14" href="tables/cconlo.html" title="cconlo" alt="" coords="555,553,693,671">
+<area shape="rect" id="node15" href="tables/ccoplc.html" title="ccoplc" alt="" coords="830,3339,966,3456">
+<area shape="rect" id="node16" href="tables/ccoqua.html" title="ccoqua" alt="" coords="295,2132,438,2249">
+<area shape="rect" id="node17" href="tables/ccthp.html" title="ccthp" alt="" coords="1108,4171,1236,4288">
+<area shape="rect" id="node18" href="tables/cgrnum.html" title="cgrnum" alt="" coords="550,4592,698,4709">
+<area shape="rect" id="node19" href="tables/cnatsp.html" title="cnatsp" alt="" coords="554,4861,694,4979">
+<area shape="rect" id="node20" href="tables/commune.html" title="commune" alt="" coords="278,515,455,837">
+<area shape="rect" id="node76" href="tables/indldnbat.html" title="indldnbat" alt="" coords="27,813,192,931">
+<area shape="rect" id="node101" href="tables/typcom.html" title="typcom" alt="" coords="37,275,182,392">
+<area shape="rect" id="node103" href="tables/typvoi.html" title="typvoi" alt="" coords="41,679,177,796">
+<area shape="rect" id="node21" href="tables/comptecommunal.html" title="comptecommunal" alt="" coords="5,1481,213,1599">
+<area shape="rect" id="node22" href="tables/ctpdl.html" title="ctpdl" alt="" coords="47,993,171,1111">
+<area shape="rect" id="node23" href="tables/detent.html" title="detent" alt="" coords="1327,5361,1466,5479">
+<area shape="rect" id="node24" href="tables/dformjur.html" title="dformjur" alt="" coords="296,3075,437,3192">
+<area shape="rect" id="node25" href="tables/dmatgm.html" title="dmatgm" alt="" coords="1320,5075,1473,5192">
+<area shape="rect" id="node26" href="tables/dmatto.html" title="dmatto" alt="" coords="1325,5215,1469,5332">
+<area shape="rect" id="node27" href="tables/dnatcg.html" title="dnatcg" alt="" coords="827,4012,969,4129">
+<area shape="rect" id="node28" href="tables/dnatlc.html" title="dnatlc" alt="" coords="830,3743,966,3860">
+<area shape="rect" id="node29" href="tables/dnatpr.html" title="dnatpr" alt="" coords="297,2267,437,2384">
+<area shape="rect" id="node30" href="tables/dsgrpf.html" title="dsgrpf" alt="" coords="555,4727,693,4844">
+<area shape="rect" id="node31" href="tables/dteloc.html" title="dteloc" alt="" coords="831,3204,965,3321">
+<area shape="rect" id="node32" href="tables/geo_batiment.html" title="geo_batiment" alt="" coords="536,2924,712,3100">
+<area shape="rect" id="node40" href="tables/geo_dur.html" title="geo_dur" alt="" coords="291,3209,442,3327">
+<area shape="rect" id="node33" href="tables/geo_batiment_parcelle.html" title="geo_batiment_parcelle" alt="" coords="772,2108,1024,2284">
+<area shape="rect" id="node83" href="tables/parcelle.html" title="parcelle" alt="" coords="520,1464,728,1757">
+<area shape="rect" id="node34" href="tables/geo_borne.html" title="geo_borne" alt="" coords="546,736,702,883">
+<area shape="rect" id="node35" href="tables/geo_borne_parcelle.html" title="geo_borne_parcelle" alt="" coords="787,700,1009,876">
+<area shape="rect" id="node36" href="tables/geo_can.html" title="geo_can" alt="" coords="291,4868,443,4985">
+<area shape="rect" id="node37" href="tables/geo_copl.html" title="geo_copl" alt="" coords="288,3515,445,3632">
+<area shape="rect" id="node38" href="tables/geo_croix.html" title="geo_croix" alt="" coords="549,900,699,1047">
+<area shape="rect" id="node39" href="tables/geo_croix_parcelle.html" title="geo_croix_parcelle" alt="" coords="791,893,1005,1069">
+<area shape="rect" id="node41" href="tables/geo_indp.html" title="geo_indp" alt="" coords="544,3617,704,3735">
+<area shape="rect" id="node42" href="tables/geo_inp.html" title="geo_inp" alt="" coords="292,3649,441,3767">
+<area shape="rect" id="node43" href="tables/geo_map.html" title="geo_map" alt="" coords="287,5272,446,5389">
+<area shape="rect" id="node44" href="tables/geo_numvoie.html" title="geo_numvoie" alt="" coords="537,1064,711,1211">
+<area shape="rect" id="node45" href="tables/geo_numvoie_parcelle.html" title="geo_numvoie_parcelle" alt="" coords="774,1087,1022,1263">
+<area shape="rect" id="node46" href="tables/geo_palt.html" title="geo_palt" alt="" coords="289,5137,445,5255">
+<area shape="rect" id="node47" href="tables/geo_parcelle.html" title="geo_parcelle" alt="" coords="813,2529,983,2823">
+<area shape="rect" id="node53" href="tables/geo_subdsect.html" title="geo_subdsect" alt="" coords="535,3365,713,3600">
+<area shape="rect" id="node48" href="tables/geo_ppln.html" title="geo_ppln" alt="" coords="287,5003,447,5120">
+<area shape="rect" id="node49" href="tables/geo_ptcanv.html" title="geo_ptcanv" alt="" coords="543,4996,705,5289">
+<area shape="rect" id="node54" href="tables/geo_sym.html" title="geo_sym" alt="" coords="288,5529,445,5647">
+<area shape="rect" id="node50" href="tables/geo_qupl.html" title="geo_qupl" alt="" coords="287,3380,447,3497">
+<area shape="rect" id="node51" href="tables/geo_subdfisc.html" title="geo_subdfisc" alt="" coords="537,1264,711,1411">
+<area shape="rect" id="node52" href="tables/geo_subdfisc_parcelle.html" title="geo_subdfisc_parcelle" alt="" coords="775,1503,1021,1679">
+<area shape="rect" id="node55" href="tables/geo_symblim.html" title="geo_symblim" alt="" coords="537,5307,711,5483">
+<area shape="rect" id="node56" href="tables/geo_symblim_parcelle.html" title="geo_symblim_parcelle" alt="" coords="775,2876,1021,3052">
+<area shape="rect" id="node57" href="tables/geo_tline.html" title="geo_tline" alt="" coords="549,5693,699,5869">
+<area shape="rect" id="node58" href="tables/geo_tline_commune.html" title="geo_tline_commune" alt="" coords="785,5664,1011,5811">
+<area shape="rect" id="node59" href="tables/geo_tpoint.html" title="geo_tpoint" alt="" coords="546,5887,702,6063">
+<area shape="rect" id="node60" href="tables/geo_tpoint_commune.html" title="geo_tpoint_commune" alt="" coords="778,5857,1018,6004">
+<area shape="rect" id="node61" href="tables/geo_tsurf.html" title="geo_tsurf" alt="" coords="549,5500,699,5676">
+<area shape="rect" id="node62" href="tables/geo_tsurf_commune.html" title="geo_tsurf_commune" alt="" coords="783,5471,1013,5617">
+<area shape="rect" id="node63" href="tables/geo_unite_fonciere.html" title="geo_unite_fonciere" alt="" coords="257,1328,476,1504">
+<area shape="rect" id="node64" href="tables/gimtom.html" title="gimtom" alt="" coords="824,4147,972,4264">
+<area shape="rect" id="node65" href="tables/gnexpl.html" title="gnexpl" alt="" coords="1102,4036,1242,4153">
+<area shape="rect" id="node66" href="tables/gnexps.html" title="gnexps" alt="" coords="552,4457,696,4575">
+<area shape="rect" id="node67" href="tables/gnextl.html" title="gnextl" alt="" coords="1329,4223,1465,4340">
+<area shape="rect" id="node68" href="tables/gnexts.html" title="gnexts" alt="" coords="1327,4656,1467,4773">
+<area shape="rect" id="node69" href="tables/gpdl.html" title="gpdl" alt="" coords="307,1557,426,1675">
+<area shape="rect" id="node70" href="tables/gtoper.html" title="gtoper" alt="" coords="297,1997,437,2115">
+<area shape="rect" id="node71" href="tables/gtyp3.html" title="gtyp3" alt="" coords="301,2536,432,2653">
+<area shape="rect" id="node72" href="tables/gtyp4.html" title="gtyp4" alt="" coords="301,2671,432,2788">
+<area shape="rect" id="node73" href="tables/gtyp5.html" title="gtyp5" alt="" coords="301,2805,432,2923">
+<area shape="rect" id="node74" href="tables/gtyp6.html" title="gtyp6" alt="" coords="301,2940,432,3057">
+<area shape="rect" id="node75" href="tables/hlmsem.html" title="hlmsem" alt="" coords="823,3877,973,3995">
+<area shape="rect" id="node77" href="tables/local00.html" title="local00" alt="" coords="826,13,970,248">
+<area shape="rect" id="node105" href="tables/voie.html" title="voie" alt="" coords="299,145,435,497">
+<area shape="rect" id="node78" href="tables/local10.html" title="local10" alt="" coords="1068,3045,1276,3691">
+<area shape="rect" id="node100" href="tables/top48a.html" title="top48a" alt="" coords="827,3608,969,3725">
+<area shape="rect" id="node79" href="tables/lots.html" title="lots" alt="" coords="794,301,1002,683">
+<area shape="rect" id="node86" href="tables/pdl.html" title="pdl" alt="" coords="263,905,471,1140">
+<area shape="rect" id="node80" href="tables/lotslocaux.html" title="lotslocaux" alt="" coords="1320,249,1473,484">
+<area shape="rect" id="node81" href="tables/natvoi.html" title="natvoi" alt="" coords="41,140,177,257">
+<area shape="rect" id="node82" href="tables/natvoiriv.html" title="natvoiriv" alt="" coords="29,5,189,123">
+<area shape="rect" id="node102" href="tables/type_filiation.html" title="type_filiation" alt="" coords="268,1193,465,1311">
+<area shape="rect" id="node84" href="tables/parcelle_info.html" title="parcelle_info" alt="" coords="794,1732,1002,2055">
+<area shape="rect" id="node96" href="tables/proprietaire.html" title="proprietaire" alt="" coords="520,2108,728,2695">
+<area shape="rect" id="node85" href="tables/parcellecomposante.html" title="parcellecomposante" alt="" coords="783,1280,1013,1485">
+<area shape="rect" id="node87" href="tables/pev.html" title="pev" alt="" coords="1325,3912,1469,4205">
+<area shape="rect" id="node88" href="tables/pevdependances.html" title="pevdependances" alt="" coords="1562,5189,1763,5483">
+<area shape="rect" id="node89" href="tables/pevexoneration.html" title="pevexoneration" alt="" coords="1567,3871,1758,4076">
+<area shape="rect" id="node90" href="tables/pevexoneration_imposable.html" title="pevexoneration_imposable" alt="" coords="1517,4093,1808,4299">
+<area shape="rect" id="node91" href="tables/pevexoneration_imposee.html" title="pevexoneration_imposee" alt="" coords="1526,4316,1799,4521">
+<area shape="rect" id="node92" href="tables/pevlissage.html" title="pevlissage" alt="" coords="1585,3707,1740,3853">
+<area shape="rect" id="node93" href="tables/pevprincipale.html" title="pevprincipale" alt="" coords="1575,4791,1750,5172">
+<area shape="rect" id="node94" href="tables/pevprofessionnelle.html" title="pevprofessionnelle" alt="" coords="1553,3320,1773,3496">
+<area shape="rect" id="node95" href="tables/pevtaxation.html" title="pevtaxation" alt="" coords="1582,3513,1743,3689">
+<area shape="rect" id="node97" href="tables/suf.html" title="suf" alt="" coords="794,4551,1002,4903">
+<area shape="rect" id="node98" href="tables/sufexoneration.html" title="sufexoneration" alt="" coords="1570,4539,1755,4773">
+<area shape="rect" id="node99" href="tables/suftaxation.html" title="suftaxation" alt="" coords="1093,3708,1251,3884">
+<area shape="rect" id="node104" href="tables/v_geo_parcelle.html" title="v_geo_parcelle" alt="" coords="794,2301,1002,2512">
+</map>
+
+					<a name='diagram'><img id='compactimpliedDegreeImg' src='diagrams/summary/relationships.implied.compact.png' usemap='#compactImpliedRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="largeimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+							<div class="alert alert-warning alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<h4><i class="icon fa fa-info-circle"></i> Implied Relationships</h4>
+								<p>No 'real' Foreign Key relationships were detected in the schema.<br>
+								Displayed relationships are implied by a column's name/type/size matching another table's primary key.</p>
+							</div> 
+																											<map id="largeImpliedRelationshipsDiagram" name="largeImpliedRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/annul.html" title="annul" alt="" coords="45,1557,174,1680">
+<area shape="rect" id="node2" href="tables/carvoi.html" title="carvoi" alt="" coords="42,1369,177,1492">
+<area shape="rect" id="node3" href="tables/cbtabt.html" title="cbtabt" alt="" coords="829,7221,967,7344">
+<area shape="rect" id="node4" href="tables/ccoaff.html" title="ccoaff" alt="" coords="1105,9847,1239,9969">
+<area shape="rect" id="node5" href="tables/ccocac.html" title="ccocac" alt="" coords="1103,10513,1241,10636">
+<area shape="rect" id="node6" href="tables/ccodem.html" title="ccodem" alt="" coords="293,4649,441,4772">
+<area shape="rect" id="node7" href="tables/ccodro.html" title="ccodro" alt="" coords="297,4509,437,4632">
+<area shape="rect" id="node8" href="tables/ccoeva.html" title="ccoeva" alt="" coords="827,5961,969,6084">
+<area shape="rect" id="node9" href="tables/ccogrm.html" title="ccogrm" alt="" coords="294,5209,439,5332">
+<area shape="rect" id="node10" href="tables/ccolloc.html" title="ccolloc" alt="" coords="1327,7884,1467,8007">
+<area shape="rect" id="node11" href="tables/cconac.html" title="cconac" alt="" coords="827,7361,969,7484">
+<area shape="rect" id="node12" href="tables/cconad.html" title="cconad" alt="" coords="1325,12581,1468,12704">
+<area shape="rect" id="node13" href="tables/cconlc.html" title="cconlc" alt="" coords="830,6381,966,6504">
+<area shape="rect" id="node14" href="tables/cconlo.html" title="cconlo" alt="" coords="555,1041,693,1164">
+<area shape="rect" id="node15" href="tables/ccoplc.html" title="ccoplc" alt="" coords="830,6241,966,6364">
+<area shape="rect" id="node16" href="tables/ccoqua.html" title="ccoqua" alt="" coords="295,4929,438,5052">
+<area shape="rect" id="node17" href="tables/ccthp.html" title="ccthp" alt="" coords="1108,10180,1236,10303">
+<area shape="rect" id="node18" href="tables/cgrnum.html" title="cgrnum" alt="" coords="550,7889,698,8012">
+<area shape="rect" id="node19" href="tables/cnatsp.html" title="cnatsp" alt="" coords="554,8169,694,8292">
+<area shape="rect" id="node20" href="tables/commune.html" title="commune" alt="" coords="278,1607,455,2345">
+<area shape="rect" id="node76" href="tables/indldnbat.html" title="indldnbat" alt="" coords="27,2125,192,2248">
+<area shape="rect" id="node101" href="tables/typcom.html" title="typcom" alt="" coords="37,1205,182,1328">
+<area shape="rect" id="node103" href="tables/typvoi.html" title="typvoi" alt="" coords="41,1793,177,1916">
+<area shape="rect" id="node21" href="tables/comptecommunal.html" title="comptecommunal" alt="" coords="5,4361,213,4660">
+<area shape="rect" id="node22" href="tables/ctpdl.html" title="ctpdl" alt="" coords="47,2856,171,2979">
+<area shape="rect" id="node23" href="tables/detent.html" title="detent" alt="" coords="1327,14023,1466,14145">
+<area shape="rect" id="node24" href="tables/dformjur.html" title="dformjur" alt="" coords="296,6475,437,6627">
+<area shape="rect" id="node25" href="tables/dmatgm.html" title="dmatgm" alt="" coords="1320,13452,1473,13575">
+<area shape="rect" id="node26" href="tables/dmatto.html" title="dmatto" alt="" coords="1325,13785,1469,13908">
+<area shape="rect" id="node27" href="tables/dnatcg.html" title="dnatcg" alt="" coords="827,6941,969,7064">
+<area shape="rect" id="node28" href="tables/dnatlc.html" title="dnatlc" alt="" coords="830,6661,966,6784">
+<area shape="rect" id="node29" href="tables/dnatpr.html" title="dnatpr" alt="" coords="297,5069,437,5192">
+<area shape="rect" id="node30" href="tables/dsgrpf.html" title="dsgrpf" alt="" coords="555,8029,693,8152">
+<area shape="rect" id="node31" href="tables/dteloc.html" title="dteloc" alt="" coords="831,6101,965,6224">
+<area shape="rect" id="node32" href="tables/geo_batiment.html" title="geo_batiment" alt="" coords="536,3948,712,4276">
+<area shape="rect" id="node40" href="tables/geo_dur.html" title="geo_dur" alt="" coords="291,4033,442,4156">
+<area shape="rect" id="node33" href="tables/geo_batiment_parcelle.html" title="geo_batiment_parcelle" alt="" coords="772,3365,1024,3547">
+<area shape="rect" id="node83" href="tables/parcelle.html" title="parcelle" alt="" coords="520,2459,728,3931">
+<area shape="rect" id="node34" href="tables/geo_borne.html" title="geo_borne" alt="" coords="546,1217,702,1487">
+<area shape="rect" id="node35" href="tables/geo_borne_parcelle.html" title="geo_borne_parcelle" alt="" coords="787,1612,1009,1793">
+<area shape="rect" id="node36" href="tables/geo_can.html" title="geo_can" alt="" coords="291,8260,443,8383">
+<area shape="rect" id="node37" href="tables/geo_copl.html" title="geo_copl" alt="" coords="288,6888,445,7011">
+<area shape="rect" id="node38" href="tables/geo_croix.html" title="geo_croix" alt="" coords="549,1504,699,1773">
+<area shape="rect" id="node39" href="tables/geo_croix_parcelle.html" title="geo_croix_parcelle" alt="" coords="791,1811,1005,1992">
+<area shape="rect" id="node41" href="tables/geo_indp.html" title="geo_indp" alt="" coords="544,7289,704,7412">
+<area shape="rect" id="node42" href="tables/geo_inp.html" title="geo_inp" alt="" coords="292,7032,441,7155">
+<area shape="rect" id="node43" href="tables/geo_map.html" title="geo_map" alt="" coords="287,8680,446,8803">
+<area shape="rect" id="node44" href="tables/geo_numvoie.html" title="geo_numvoie" alt="" coords="537,1791,711,2089">
+<area shape="rect" id="node45" href="tables/geo_numvoie_parcelle.html" title="geo_numvoie_parcelle" alt="" coords="774,2009,1022,2191">
+<area shape="rect" id="node46" href="tables/geo_palt.html" title="geo_palt" alt="" coords="289,8540,445,8663">
+<area shape="rect" id="node47" href="tables/geo_parcelle.html" title="geo_parcelle" alt="" coords="813,5153,983,5745">
+<area shape="rect" id="node53" href="tables/geo_subdsect.html" title="geo_subdsect" alt="" coords="535,6709,713,7272">
+<area shape="rect" id="node48" href="tables/geo_ppln.html" title="geo_ppln" alt="" coords="287,8400,447,8523">
+<area shape="rect" id="node49" href="tables/geo_ptcanv.html" title="geo_ptcanv" alt="" coords="543,8309,705,8755">
+<area shape="rect" id="node54" href="tables/geo_sym.html" title="geo_sym" alt="" coords="288,9264,445,9387">
+<area shape="rect" id="node50" href="tables/geo_qupl.html" title="geo_qupl" alt="" coords="287,6748,447,6871">
+<area shape="rect" id="node51" href="tables/geo_subdfisc.html" title="geo_subdfisc" alt="" coords="537,2107,711,2405">
+<area shape="rect" id="node52" href="tables/geo_subdfisc_parcelle.html" title="geo_subdfisc_parcelle" alt="" coords="775,2208,1021,2389">
+<area shape="rect" id="node55" href="tables/geo_symblim.html" title="geo_symblim" alt="" coords="537,8772,711,9100">
+<area shape="rect" id="node56" href="tables/geo_symblim_parcelle.html" title="geo_symblim_parcelle" alt="" coords="775,5763,1021,5944">
+<area shape="rect" id="node57" href="tables/geo_tline.html" title="geo_tline" alt="" coords="549,9837,699,10165">
+<area shape="rect" id="node58" href="tables/geo_tline_commune.html" title="geo_tline_commune" alt="" coords="785,9779,1011,9960">
+<area shape="rect" id="node59" href="tables/geo_tpoint.html" title="geo_tpoint" alt="" coords="546,9117,702,9475">
+<area shape="rect" id="node60" href="tables/geo_tpoint_commune.html" title="geo_tpoint_commune" alt="" coords="778,9059,1018,9240">
+<area shape="rect" id="node61" href="tables/geo_tsurf.html" title="geo_tsurf" alt="" coords="549,9492,699,9820">
+<area shape="rect" id="node62" href="tables/geo_tsurf_commune.html" title="geo_tsurf_commune" alt="" coords="783,9433,1013,9615">
+<area shape="rect" id="node63" href="tables/geo_unite_fonciere.html" title="geo_unite_fonciere" alt="" coords="257,4173,476,4384">
+<area shape="rect" id="node64" href="tables/gimtom.html" title="gimtom" alt="" coords="824,7081,972,7204">
+<area shape="rect" id="node65" href="tables/gnexpl.html" title="gnexpl" alt="" coords="1102,10040,1242,10163">
+<area shape="rect" id="node66" href="tables/gnexps.html" title="gnexps" alt="" coords="552,7749,696,7872">
+<area shape="rect" id="node67" href="tables/gnextl.html" title="gnextl" alt="" coords="1329,8420,1465,8543">
+<area shape="rect" id="node68" href="tables/gnexts.html" title="gnexts" alt="" coords="1327,7297,1467,7420">
+<area shape="rect" id="node69" href="tables/gpdl.html" title="gpdl" alt="" coords="307,3891,426,4013">
+<area shape="rect" id="node70" href="tables/gtoper.html" title="gtoper" alt="" coords="297,4789,437,4912">
+<area shape="rect" id="node71" href="tables/gtyp3.html" title="gtyp3" alt="" coords="301,5349,432,5472">
+<area shape="rect" id="node72" href="tables/gtyp4.html" title="gtyp4" alt="" coords="301,5489,432,5612">
+<area shape="rect" id="node73" href="tables/gtyp5.html" title="gtyp5" alt="" coords="301,5629,432,5752">
+<area shape="rect" id="node74" href="tables/gtyp6.html" title="gtyp6" alt="" coords="301,5769,432,5892">
+<area shape="rect" id="node75" href="tables/hlmsem.html" title="hlmsem" alt="" coords="823,6801,973,6924">
+<area shape="rect" id="node77" href="tables/local00.html" title="local00" alt="" coords="826,5,970,803">
+<area shape="rect" id="node105" href="tables/voie.html" title="voie" alt="" coords="299,763,435,1589">
+<area shape="rect" id="node78" href="tables/local10.html" title="local10" alt="" coords="1068,5479,1276,7244">
+<area shape="rect" id="node100" href="tables/top48a.html" title="top48a" alt="" coords="827,6521,969,6644">
+<area shape="rect" id="node79" href="tables/lots.html" title="lots" alt="" coords="794,856,1002,1595">
+<area shape="rect" id="node86" href="tables/pdl.html" title="pdl" alt="" coords="263,2533,471,3125">
+<area shape="rect" id="node80" href="tables/lotslocaux.html" title="lotslocaux" alt="" coords="1320,563,1473,1243">
+<area shape="rect" id="node81" href="tables/natvoi.html" title="natvoi" alt="" coords="41,1053,177,1176">
+<area shape="rect" id="node82" href="tables/natvoiriv.html" title="natvoiriv" alt="" coords="29,913,189,1036">
+<area shape="rect" id="node102" href="tables/type_filiation.html" title="type_filiation" alt="" coords="268,3749,465,3872">
+<area shape="rect" id="node84" href="tables/parcelle_info.html" title="parcelle_info" alt="" coords="794,3864,1002,4456">
+<area shape="rect" id="node96" href="tables/proprietaire.html" title="proprietaire" alt="" coords="520,4509,728,6656">
+<area shape="rect" id="node85" href="tables/parcellecomposante.html" title="parcellecomposante" alt="" coords="783,2407,1013,2969">
+<area shape="rect" id="node87" href="tables/pev.html" title="pev" alt="" coords="1325,9612,1469,10967">
+<area shape="rect" id="node88" href="tables/pevdependances.html" title="pevdependances" alt="" coords="1562,13660,1763,14545">
+<area shape="rect" id="node89" href="tables/pevexoneration.html" title="pevexoneration" alt="" coords="1567,8941,1758,9797">
+<area shape="rect" id="node90" href="tables/pevexoneration_imposable.html" title="pevexoneration_imposable" alt="" coords="1517,7195,1808,8051">
+<area shape="rect" id="node91" href="tables/pevexoneration_imposee.html" title="pevexoneration_imposee" alt="" coords="1526,8068,1799,8924">
+<area shape="rect" id="node92" href="tables/pevlissage.html" title="pevlissage" alt="" coords="1585,10747,1740,11368">
+<area shape="rect" id="node93" href="tables/pevprincipale.html" title="pevprincipale" alt="" coords="1575,12141,1750,13643">
+<area shape="rect" id="node94" href="tables/pevprofessionnelle.html" title="pevprofessionnelle" alt="" coords="1553,11385,1773,12124">
+<area shape="rect" id="node95" href="tables/pevtaxation.html" title="pevtaxation" alt="" coords="1582,9815,1743,10729">
+<area shape="rect" id="node97" href="tables/suf.html" title="suf" alt="" coords="794,7501,1002,8592">
+<area shape="rect" id="node98" href="tables/sufexoneration.html" title="sufexoneration" alt="" coords="1570,6468,1755,7177">
+<area shape="rect" id="node99" href="tables/suftaxation.html" title="suftaxation" alt="" coords="1093,10653,1251,11333">
+<area shape="rect" id="node104" href="tables/v_geo_parcelle.html" title="v_geo_parcelle" alt="" coords="794,4509,1002,5136">
+</map>
+
+					<a name='diagram'><img id='largeimpliedDegreeImg' src='diagrams/summary/relationships.implied.large.png' usemap='#largeImpliedRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+			  			</div>
+			</div>
+		  </div><!-- /.box-body -->
+		</div>
+		      </section>    
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div>
+      <div class="pull-right hidden-xs">
+        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+      </div>
+      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+<script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+<script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+<script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+<!-- SheetJS -->
+<script src="bower/js-xlsx/xlsx.full.min.js"></script>
+<!-- pdfmake -->
+<script src="bower/pdfmake/pdfmake.min.js"></script>
+<script src="bower/pdfmake/vfs_fonts.js"></script>
+<!-- SlimScroll -->
+<script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+<!-- Salvattore -->
+<script src="bower/salvattore/salvattore.min.js"></script>
+<!-- AnchorJS -->
+<script src="bower/anchor-js/anchor.min.js"></script>
+<!-- CodeMirror -->
+<script src="bower/codemirror/codemirror.js"></script>
+<script src="bower/codemirror/sql.js"></script>
+<!-- AdminLTE App -->
+<script src="bower/admin-lte/dist/js/app.min.js"></script>
+<script src="relationships.js"></script>
+<script src="schemaSpy.js"></script>
+</body>
+</html>

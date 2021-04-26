@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>local10 - cadastre_2019 Database</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+  <!-- Code Mirror -->
+  <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+  <!-- Fonts -->
+  <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+  <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+  <!-- Salvattore -->
+  <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+  <!-- SchemaSpy -->
+  <link rel="stylesheet" href="../schemaSpy.css">
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="../bower/html5shiv/html5shiv.min.js"></script>
+  <script src="../bower/respond/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+			<li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+			<li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+			<li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+			<li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
+			<li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+			<li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Main content -->
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>local10</h1></br>
+		<div class="box box-primary">
+            <div class="box-header with-border">
+              <i class="fa fa-file-text-o"></i>
+              <h3 id="Description" class="box-title">Description</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>			  
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body clearfix">
+				<p><p>Article identifiant du local</p></p>              
+            </div>
+            <!-- /.box-body -->
+		</div>
+		      </section>
+      <!-- Main content -->
+      <section class="content">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+			  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+              <h3 id="Columns" class="box-title">Columns</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+            <div class="box-body">
+				<div class="row">
+					<div id="button_group_one" class="col-md-3 col-sm-6"></div>
+					<div id="button_group_two" class="col-md-2 col-sm-4 pull-right text-right"></div>
+				</div>
+				<table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+				<thead align='left'>
+				<tr>
+				  <th>Column</th>
+				  <th>Type</th>
+				  <th>Size</th>
+				  <th title='Are nulls allowed?'>Nulls</th>
+				  <th title='Is column automatically updated?'>Auto</th>
+				  <th title='Default value'>Default</th>
+				  <th title='Columns in tables that reference this column'>Children</th>
+				  <th title='Columns in tables that are referenced by this column'>Parents</th>
+				  <th title='Comments' class="toggle"><span>Comments</span></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="local10">local10</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="lotslocaux.local10&#39;s name implies that it&#39;s a child of local10.local10, but it doesn&#39;t reference that column.">
+						<a href='lotslocaux.html'>lotslocaux</a><span class='relatedKey'>.local10</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="pev.local10&#39;s name implies that it&#39;s a child of local10.local10, but it doesn&#39;t reference that column.">
+						<a href='pev.html'>pev</a><span class='relatedKey'>.local10</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="annee">annee</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ccodep">ccodep</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>code département -</p></td>
+				</tr>
+				<tr>
+				 <td><span id="ccodir">ccodir</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>code direction -</p></td>
+				</tr>
+				<tr>
+				 <td><span id="ccocom">ccocom</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>code commune INSEE -</p></td>
+				</tr>
+				<tr>
+				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="invar">invar</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>numéro invariant -</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="local00">local00</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.local00&#39;s name implies that it&#39;s a child of local00.local00, but it doesn&#39;t reference that column.">
+						<a href='local00.html'>local00</a><span class='relatedKey'>.local00</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ccopre">ccopre</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ccosec">ccosec</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="dnupla">dnupla</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="parcelle">parcelle</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.parcelle&#39;s name implies that it&#39;s a child of parcelle.parcelle, but it doesn&#39;t reference that column.">
+						<a href='parcelle.html'>parcelle</a><span class='relatedKey'>.parcelle</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ccoriv">ccoriv</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="voie">voie</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column.">
+						<a href='voie.html'>voie</a><span class='relatedKey'>.voie</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="ccovoi">ccovoi</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="dnvoiri">dnvoiri</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gpdl">gpdl</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.gpdl&#39;s name implies that it&#39;s a child of gpdl.gpdl, but it doesn&#39;t reference that column.">
+						<a href='gpdl.html'>gpdl</a><span class='relatedKey'>.gpdl</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>indicateur d’appartenance à un lot de pdl - 1 = oui, sinon 0</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dsrpar">dsrpar</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>lettre de série rôle - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dnupro">dnupro</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>compte communal de propriétaire -</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="comptecommunal">comptecommunal</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
+						<a href='comptecommunal.html'>comptecommunal</a><span class='relatedKey'>.comptecommunal</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td><span id="jdatat">jdatat</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>date d’acte de mutation - jjmmaaaa</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dnufnl">dnufnl</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>compte communal de fonctionnaire logé - redevable de la tom</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccoeva">ccoeva</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.ccoeva&#39;s name implies that it&#39;s a child of ccoeva.ccoeva, but it doesn&#39;t reference that column.">
+						<a href='ccoeva.html'>ccoeva</a><span class='relatedKey'>.ccoeva</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>code évaluation - A B C D E T tableau 2.3.1</p></td>
+				</tr>
+				<tr>
+				 <td><span id="ccitlv">ccitlv</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>local imposable à la taxe sur les locaux vacants - indisponible</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dteloc">dteloc</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.dteloc&#39;s name implies that it&#39;s a child of dteloc.dteloc, but it doesn&#39;t reference that column.">
+						<a href='dteloc.html'>dteloc</a><span class='relatedKey'>.dteloc</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>type de local - 1 à 8 tableau 2.3.2</p></td>
+				</tr>
+				<tr>
+				 <td><span id="gtauom">gtauom</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>zone de ramassage des ordures ménagères - P RA RB RC RD ou blanc</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dcomrd">dcomrd</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Pourcentage de réduction sur tom -</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccoplc">ccoplc</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.ccoplc&#39;s name implies that it&#39;s a child of ccoplc.ccoplc, but it doesn&#39;t reference that column.">
+						<a href='ccoplc.html'>ccoplc</a><span class='relatedKey'>.ccoplc</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>Code de construction particulière - R U V W X Y Z ou blanc tabl. 2.3.3</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="cconlc">cconlc</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.cconlc&#39;s name implies that it&#39;s a child of cconlc.cconlc, but it doesn&#39;t reference that column.">
+						<a href='cconlc.html'>cconlc</a><span class='relatedKey'>.cconlc</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>Code nature de local - voir tableau 2.3.4</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dvltrt">dvltrt</span></td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Valeur locative totale retenue pour le local -</p></td>
+				</tr>
+				<tr>
+				 <td><span id="ccoape">ccoape</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Code NAF pour les locaux professionnels -</p></td>
+				</tr>
+				<tr>
+				 <td><span id="cc48lc">cc48lc</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Catégorie de loi de 48 -</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dloy48a">dloy48a</span></td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Loyer de 48 en valeur de l’année -</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="top48a">top48a</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.top48a&#39;s name implies that it&#39;s a child of top48a.top48a, but it doesn&#39;t reference that column.">
+						<a href='top48a.html'>top48a</a><span class='relatedKey'>.top48a</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>top taxation indiquant si la pev est impose au loyer ou a la vl - 1 = loyer o = vl</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dnatlc">dnatlc</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.dnatlc&#39;s name implies that it&#39;s a child of dnatlc.dnatlc, but it doesn&#39;t reference that column.">
+						<a href='dnatlc.html'>dnatlc</a><span class='relatedKey'>.dnatlc</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>Nature d occupation - A P V L T D tableau 2.3.6</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dnupas">dnupas</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>no passerelle TH/TP - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td><span id="gnexcf">gnexcf</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>code nature exo ecf - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dtaucf">dtaucf</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>taux exo ecf - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td><span id="cchpr">cchpr</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Top indiquant une mutation propriétaire - * ou blanc</p></td>
+				</tr>
+				<tr>
+				 <td><span id="jannat">jannat</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Année de construction -</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dnbniv">dnbniv</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Nombre de niveaux de la construction -</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="hlmsem">hlmsem</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.hlmsem&#39;s name implies that it&#39;s a child of hlmsem.hlmsem, but it doesn&#39;t reference that column.">
+						<a href='hlmsem.html'>hlmsem</a><span class='relatedKey'>.hlmsem</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>Local appartenant à hlm ou sem - 5 = hlm, 6 = sem, sinon blanc</p></td>
+				</tr>
+				<tr>
+				 <td><span id="postel">postel</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Local de Poste ou France Telecom - X, Y, Z, ou blanc</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dnatcg">dnatcg</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.dnatcg&#39;s name implies that it&#39;s a child of dnatcg.dnatcg, but it doesn&#39;t reference that column.">
+						<a href='dnatcg.html'>dnatcg</a><span class='relatedKey'>.dnatcg</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>Code nature du changement d’évaluation (depuis 2013)</p></td>
+				</tr>
+				<tr>
+				 <td><span id="jdatcgl">jdatcgl</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Date changement évaluation - JJMMSSAA (Depuis 2013)</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dnutbx">dnutbx</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>no gestionnaire déclarant taxe bureaux - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td><span id="dvltla">dvltla</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>VL totale du local actualisée - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td><span id="janloc">janloc</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Année de création du local - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td><span id="ccsloc">ccsloc</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Code cause création du local - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td><span id="fburx">fburx</span></td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Indicateur présence bureaux - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gimtom">gimtom</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.gimtom&#39;s name implies that it&#39;s a child of gimtom.gimtom, but it doesn&#39;t reference that column.">
+						<a href='gimtom.html'>gimtom</a><span class='relatedKey'>.gimtom</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>Indicateur imposition OM exploitable à partir de 2002 - D, E, V ou blanc</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="cbtabt">cbtabt</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.cbtabt&#39;s name implies that it&#39;s a child of cbtabt.cbtabt, but it doesn&#39;t reference that column.">
+						<a href='cbtabt.html'>cbtabt</a><span class='relatedKey'>.cbtabt</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>Code exonération HLM zone sensible - ZS, ZT ou blanc</p></td>
+				</tr>
+				<tr>
+				 <td><span id="jdtabt">jdtabt</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Année début d’exonération ZS -</p></td>
+				</tr>
+				<tr>
+				 <td><span id="jrtabt">jrtabt</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Année fin d’exonération ZS -</p></td>
+				</tr>
+				<tr>
+				 <td><span id="jacloc">jacloc</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Année d’achèvement du local - INDISPONIBLE</p></td>
+				</tr>
+				<tr>
+				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="cconac">cconac</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="local10.cconac&#39;s name implies that it&#39;s a child of cconac.cconac, but it doesn&#39;t reference that column.">
+						<a href='cconac.html'>cconac</a><span class='relatedKey'>.cconac</span>
+					</td>
+					<td class="constraint detail">
+						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td><p>Code NACE pour les locaux professionnels</p></td>
+				</tr>
+				<tr>
+				 <td><span id="toprev">toprev</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Top local révisé. 0 si non révisé, 1 si révisé.</p></td>
+				</tr>
+				<tr>
+				 <td><span id="ccoifp">ccoifp</span></td>
+				 <td>int4</td>
+				 <td>10</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td><p>Code IFP</p></td>
+				</tr>
+				<tr>
+				 <td><span id="lot">lot</span></td>
+				 <td>text</td>
+				 <td>2147483647</td>
+				 <td title='nullable'>√</td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+								</tbody>
+				</table>
+				<p title='58 columns'>Table contained <span id="recordNumber">57613</span> rows<p/>
+			</div>
+		</div>
+		<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-sitemap"></i>
+
+              <h3 id="Indexes" class="box-title">Indexes</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+			<div class="box-body">
+				<table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+				<thead>
+				 <tr>
+				  <th>Constraint Name</th>
+				  <th>Type</th>
+				  <th>Sort</th>
+				  <th>Column(s)</th>
+				 </tr>
+				</thead>
+				<tbody>
+				 <tr>
+				  <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> local10_pk</td>
+				  <td>Primary key</td>
+				  <td><span title='Ascending'>Asc</span></td>
+				  <td>local10</td>
+				 </tr>				 
+				 <tr>
+				  <td title='Indexed'>idx_local10_comptecommunal</td>
+				  <td>Performance</td>
+				  <td><span title='Ascending'>Asc</span></td>
+				  <td>comptecommunal</td>
+				 </tr>				 
+				 <tr>
+				  <td title='Indexed'>idx_local10_invar</td>
+				  <td>Performance</td>
+				  <td><span title='Ascending'>Asc</span></td>
+				  <td>invar</td>
+				 </tr>				 
+				 <tr>
+				  <td title='Indexed'>idx_local10_local00</td>
+				  <td>Performance</td>
+				  <td><span title='Ascending'>Asc</span></td>
+				  <td>local00</td>
+				 </tr>				 
+				 <tr>
+				  <td title='Indexed'>idxan_local10</td>
+				  <td>Performance</td>
+				  <td><span title='Ascending'>Asc</span></td>
+				  <td>annee</td>
+				 </tr>				 
+				</tbody>
+				</table>   			  
+			</div><!-- /.box-body -->
+		</div>
+				<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-code-fork"></i>
+
+              <h3 id="Relationships" class="box-title">Relationships</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+			<div class="box-body">	
+			<div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+			<h5>Close relationships within degrees of separation</h5>
+            <ul class="nav nav-tabs pull-left ui-sortable-handle">
+			  			              <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>			  			 
+			  			              <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>			  			 
+			  			              <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>			  			 
+            </ul>
+            <div class="tab-content no-padding">            
+				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="local10.html" title="local10" alt="" coords="5,5,339,1776">
+</map>
+
+					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/local10.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="local00.html" title="local00" alt="" coords="509,93,677,328">
+<area shape="rect" id="node2" href="parcelle.html" title="parcelle" alt="" coords="257,181,465,475">
+<area shape="rect" id="node3" href="voie.html" title="voie" alt="" coords="29,105,189,457">
+<area shape="rect" id="node10" href="comptecommunal.html" title="comptecommunal" alt="" coords="5,609,213,727">
+<area shape="rect" id="node15" href="gpdl.html" title="gpdl" alt="" coords="49,475,169,592">
+<area shape="rect" id="node4" href="local10.html" title="local10" alt="" coords="721,184,1055,1955">
+<area shape="rect" id="node5" href="cbtabt.html" title="cbtabt" alt="" coords="525,1812,662,1929">
+<area shape="rect" id="node6" href="ccoeva.html" title="ccoeva" alt="" coords="523,600,664,717">
+<area shape="rect" id="node7" href="cconac.html" title="cconac" alt="" coords="523,1947,664,2064">
+<area shape="rect" id="node8" href="cconlc.html" title="cconlc" alt="" coords="525,1004,661,1121">
+<area shape="rect" id="node9" href="ccoplc.html" title="ccoplc" alt="" coords="525,869,661,987">
+<area shape="rect" id="node11" href="dnatcg.html" title="dnatcg" alt="" coords="523,1543,664,1660">
+<area shape="rect" id="node12" href="dnatlc.html" title="dnatlc" alt="" coords="525,1273,661,1391">
+<area shape="rect" id="node13" href="dteloc.html" title="dteloc" alt="" coords="526,735,661,852">
+<area shape="rect" id="node14" href="gimtom.html" title="gimtom" alt="" coords="519,1677,667,1795">
+<area shape="rect" id="node16" href="hlmsem.html" title="hlmsem" alt="" coords="519,1408,668,1525">
+<area shape="rect" id="node17" href="top48a.html" title="top48a" alt="" coords="522,1139,665,1256">
+<area shape="rect" id="node18" href="lotslocaux.html" title="lotslocaux" alt="" coords="1105,5,1261,240">
+<area shape="rect" id="node19" href="pev.html" title="pev" alt="" coords="1099,257,1267,551">
+</map>
+
+					<a name='diagram'><img id='oneimpliedDegreeImg' src='../diagrams/local10.implied1degrees.png' usemap='#oneDegreeRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="geo_batiment_parcelle.html" title="geo_batiment_parcelle" alt="" coords="768,644,1007,732">
+<area shape="rect" id="node2" href="parcelle.html" title="parcelle" alt="" coords="516,879,724,1172">
+<area shape="rect" id="node10" href="comptecommunal.html" title="comptecommunal" alt="" coords="5,752,213,869">
+<area shape="rect" id="node12" href="voie.html" title="voie" alt="" coords="285,172,445,524">
+<area shape="rect" id="node23" href="gpdl.html" title="gpdl" alt="" coords="305,1001,425,1119">
+<area shape="rect" id="node27" href="pdl.html" title="pdl" alt="" coords="285,896,445,984">
+<area shape="rect" id="node29" href="type_filiation.html" title="type_filiation" alt="" coords="279,1136,450,1224">
+<area shape="rect" id="node3" href="geo_borne_parcelle.html" title="geo_borne_parcelle" alt="" coords="778,749,997,837">
+<area shape="rect" id="node4" href="geo_croix_parcelle.html" title="geo_croix_parcelle" alt="" coords="781,855,994,943">
+<area shape="rect" id="node5" href="geo_numvoie_parcelle.html" title="geo_numvoie_parcelle" alt="" coords="769,960,1006,1048">
+<area shape="rect" id="node6" href="geo_parcelle.html" title="geo_parcelle" alt="" coords="803,1065,972,1153">
+<area shape="rect" id="node7" href="geo_subdfisc_parcelle.html" title="geo_subdfisc_parcelle" alt="" coords="769,1171,1006,1259">
+<area shape="rect" id="node8" href="geo_symblim_parcelle.html" title="geo_symblim_parcelle" alt="" coords="769,1276,1006,1364">
+<area shape="rect" id="node9" href="geo_unite_fonciere.html" title="geo_unite_fonciere" alt="" coords="257,755,472,843">
+<area shape="rect" id="node11" href="local00.html" title="local00" alt="" coords="803,181,971,416">
+<area shape="rect" id="node48" href="annul.html" title="annul" alt="" coords="49,427,169,515">
+<area shape="rect" id="node49" href="carvoi.html" title="carvoi" alt="" coords="47,321,171,409">
+<area shape="rect" id="node50" href="indldnbat.html" title="indldnbat" alt="" coords="36,637,183,725">
+<area shape="rect" id="node51" href="natvoi.html" title="natvoi" alt="" coords="41,111,177,199">
+<area shape="rect" id="node52" href="natvoiriv.html" title="natvoiriv" alt="" coords="39,5,180,93">
+<area shape="rect" id="node53" href="typcom.html" title="typcom" alt="" coords="43,216,176,304">
+<area shape="rect" id="node54" href="typvoi.html" title="typvoi" alt="" coords="47,532,171,620">
+<area shape="rect" id="node13" href="local10.html" title="local10" alt="" coords="1051,1204,1384,2975">
+<area shape="rect" id="node14" href="cbtabt.html" title="cbtabt" alt="" coords="819,2912,956,3029">
+<area shape="rect" id="node15" href="ccoeva.html" title="ccoeva" alt="" coords="817,1700,958,1817">
+<area shape="rect" id="node16" href="cconac.html" title="cconac" alt="" coords="817,3047,958,3164">
+<area shape="rect" id="node17" href="cconlc.html" title="cconlc" alt="" coords="819,2104,955,2221">
+<area shape="rect" id="node18" href="ccoplc.html" title="ccoplc" alt="" coords="819,1969,955,2087">
+<area shape="rect" id="node19" href="dnatcg.html" title="dnatcg" alt="" coords="817,2643,958,2760">
+<area shape="rect" id="node20" href="dnatlc.html" title="dnatlc" alt="" coords="819,2373,955,2491">
+<area shape="rect" id="node21" href="dteloc.html" title="dteloc" alt="" coords="820,1835,955,1952">
+<area shape="rect" id="node22" href="gimtom.html" title="gimtom" alt="" coords="813,2777,961,2895">
+<area shape="rect" id="node24" href="hlmsem.html" title="hlmsem" alt="" coords="813,2508,962,2625">
+<area shape="rect" id="node25" href="top48a.html" title="top48a" alt="" coords="816,2239,959,2356">
+<area shape="rect" id="node26" href="lots.html" title="lots" alt="" coords="803,539,971,627">
+<area shape="rect" id="node28" href="lotslocaux.html" title="lotslocaux" alt="" coords="1434,477,1590,712">
+<area shape="rect" id="node30" href="parcelle_info.html" title="parcelle_info" alt="" coords="802,433,973,521">
+<area shape="rect" id="node31" href="proprietaire.html" title="proprietaire" alt="" coords="532,577,708,665">
+<area shape="rect" id="node32" href="parcellecomposante.html" title="parcellecomposante" alt="" coords="777,1417,998,1505">
+<area shape="rect" id="node33" href="pev.html" title="pev" alt="" coords="1428,2977,1596,3271">
+<area shape="rect" id="node34" href="ccoaff.html" title="ccoaff" alt="" coords="1153,2992,1281,3080">
+<area shape="rect" id="node35" href="ccocac.html" title="ccocac" alt="" coords="1153,3308,1282,3396">
+<area shape="rect" id="node36" href="ccthp.html" title="ccthp" alt="" coords="1153,3203,1281,3291">
+<area shape="rect" id="node37" href="gnexpl.html" title="gnexpl" alt="" coords="1153,3097,1281,3185">
+<area shape="rect" id="node38" href="pevdependances.html" title="pevdependances" alt="" coords="1675,2611,1874,2699">
+<area shape="rect" id="node39" href="pevexoneration.html" title="pevexoneration" alt="" coords="1680,2716,1869,2804">
+<area shape="rect" id="node40" href="pevexoneration_imposable.html" title="pevexoneration_imposable" alt="" coords="1640,2821,1909,2909">
+<area shape="rect" id="node41" href="pevexoneration_imposee.html" title="pevexoneration_imposee" alt="" coords="1647,2927,1903,3015">
+<area shape="rect" id="node42" href="pevlissage.html" title="pevlissage" alt="" coords="1697,3032,1852,3120">
+<area shape="rect" id="node43" href="pevprincipale.html" title="pevprincipale" alt="" coords="1687,3137,1862,3225">
+<area shape="rect" id="node44" href="pevprofessionnelle.html" title="pevprofessionnelle" alt="" coords="1668,3243,1881,3331">
+<area shape="rect" id="node45" href="pevtaxation.html" title="pevtaxation" alt="" coords="1694,3348,1855,3436">
+<area shape="rect" id="node46" href="suf.html" title="suf" alt="" coords="803,1523,971,1611">
+<area shape="rect" id="node47" href="v_geo_parcelle.html" title="v_geo_parcelle" alt="" coords="796,100,979,164">
+</map>
+
+					<a name='diagram'><img id='twoimpliedDegreeImg' src='../diagrams/local10.implied2degrees.png' usemap='#twoDegreesRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+			  			</div>
+			</div>
+		  </div><!-- /.box-body -->
+		</div>
+	      </section>
+    
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div>
+      <div class="pull-right hidden-xs">
+        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+      </div>
+      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+<script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+<script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+<script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+<script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+<!-- SheetJS -->
+<script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+<!-- pdfmake -->
+<script src="../bower/pdfmake/pdfmake.min.js"></script>
+<script src="../bower/pdfmake/vfs_fonts.js"></script>
+<!-- SlimScroll -->
+<script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+<!-- Salvattore -->
+<script src="../bower/salvattore/salvattore.min.js"></script>
+<!-- AnchorJS -->
+<script src="../bower/anchor-js/anchor.min.js"></script>
+<!-- CodeMirror -->
+<script src="../bower/codemirror/codemirror.js"></script>
+<script src="../bower/codemirror/sql.js"></script>
+<!-- AdminLTE App -->
+<script src="../bower/admin-lte/dist/js/app.min.js"></script>
+<script src="table.js"></script>
+<script src="../schemaSpy.js"></script>
+</body>
+</html>

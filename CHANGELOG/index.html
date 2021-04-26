@@ -1,0 +1,1341 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Extension QGIS pour l'utilisation des fichiers Cadastre en France">
+      
+      
+      
+        <meta name="author" content="3Liz">
+      
+      
+        <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/CHANGELOG/">
+      
+      <link rel="icon" href="../icon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Changelog - Cadastre</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4cae4f">
+        
+      
+    
+    
+    
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="deep-orange">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#changelog" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Cadastre" class="md-header__button md-logo" aria-label="Cadastre" data-md-component="logo">
+      
+  <img src="../icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cadastre
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Changelog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/3liz/QgisCadastrePlugin/" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../" class="md-tabs__link">
+      docs.3liz.org
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Accueil
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../extension-qgis/installation/" class="md-tabs__link">
+        Extension QGIS
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../module-lizmap/installation/" class="md-tabs__link">
+        Module Lizmap
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../contributing/" class="md-tabs__link">
+      Contribution
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../changelog/" class="md-tabs__link">
+      Changelog
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../database/" class="md-tabs__link">
+      Base de données
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Cadastre" class="md-nav__button md-logo" aria-label="Cadastre" data-md-component="logo">
+      
+  <img src="../icon.png" alt="logo">
+
+    </a>
+    Cadastre
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/3liz/QgisCadastrePlugin/" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        docs.3liz.org
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Accueil
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Extension QGIS
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Extension QGIS" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Extension QGIS
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extension-qgis/installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extension-qgis/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extension-qgis/import/" class="md-nav__link">
+        Import
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extension-qgis/charger/" class="md-nav__link">
+        Charger
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extension-qgis/interface/" class="md-nav__link">
+        Interface
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extension-qgis/videos/" class="md-nav__link">
+        Vidéos
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Module Lizmap
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Module Lizmap" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Module Lizmap
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-lizmap/installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-lizmap/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contribution
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database/" class="md-nav__link">
+        Base de données
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1102-2020-12-10" class="md-nav__link">
+    1.10.2 - 2020-12-10
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1101-2020-11-05" class="md-nav__link">
+    1.10.1 - 2020-11-05
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1100-2020-11-04" class="md-nav__link">
+    1.10.0 - 2020-11-04
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#190-2020-09-07" class="md-nav__link">
+    1.9.0 - 2020-09-07
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#181-2019-10-21" class="md-nav__link">
+    1.8.1 - 2019-10-21
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#180-2019-09-20" class="md-nav__link">
+    1.8.0 - 2019-09-20
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#171-2019-06-06" class="md-nav__link">
+    1.7.1 - 2019-06-06
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#170" class="md-nav__link">
+    1.7.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#162" class="md-nav__link">
+    1.6.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#161" class="md-nav__link">
+    1.6.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#160" class="md-nav__link">
+    1.6.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#152" class="md-nav__link">
+    1.5.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#151" class="md-nav__link">
+    1.5.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#150" class="md-nav__link">
+    1.5.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#141" class="md-nav__link">
+    1.4.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#140" class="md-nav__link">
+    1.4.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#130" class="md-nav__link">
+    1.3.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#120" class="md-nav__link">
+    1.2.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    1.1.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110" class="md-nav__link">
+    1.1.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100" class="md-nav__link">
+    1.0.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#099" class="md-nav__link">
+    0.9.9
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0981" class="md-nav__link">
+    0.9.8.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#098" class="md-nav__link">
+    0.9.8
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#097" class="md-nav__link">
+    0.9.7
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#096" class="md-nav__link">
+    0.9.6
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#095" class="md-nav__link">
+    0.9.5
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#094" class="md-nav__link">
+    0.9.4
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#093" class="md-nav__link">
+    0.9.3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#092" class="md-nav__link">
+    0.9.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#091" class="md-nav__link">
+    0.9.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#090" class="md-nav__link">
+    0.9.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#089" class="md-nav__link">
+    0.8.9
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#088" class="md-nav__link">
+    0.8.8
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#087" class="md-nav__link">
+    0.8.7
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#086" class="md-nav__link">
+    0.8.6
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#085" class="md-nav__link">
+    0.8.5
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#084" class="md-nav__link">
+    0.8.4
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#083" class="md-nav__link">
+    0.8.3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#082" class="md-nav__link">
+    0.8.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#081" class="md-nav__link">
+    0.8.1
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/3liz/QgisCadastrePlugin/edit/master/docs/CHANGELOG.md" title="Editer cette page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
+<h2 id="1102-2020-12-10">1.10.2 - 2020-12-10<a class="headerlink" href="#1102-2020-12-10" title="Permanent link">#</a></h2>
+<ul>
+<li>Correction sur la documentation </li>
+<li>Ajout d'une table de matières sur <a href="https://docs.3liz.org/QgisCadastrePlugin/">https://docs.3liz.org/QgisCadastrePlugin/</a></li>
+<li>Afficher un message dans les logs si un fichier SQLite est manquant</li>
+<li>Prévenir l'utilisateur sur les fichiers bz2 lors de l'import des fichiers Édigéo.</li>
+</ul>
+<h2 id="1101-2020-11-05">1.10.1 - 2020-11-05<a class="headerlink" href="#1101-2020-11-05" title="Permanent link">#</a></h2>
+<ul>
+<li>Ajout de la documentation de la base de données sur <a href="https://docs.3liz.org/QgisCadastrePlugin/">https://docs.3liz.org/QgisCadastrePlugin/</a></li>
+<li>Petites corrections sur la publication de l'extension</li>
+</ul>
+<h2 id="1100-2020-11-04">1.10.0 - 2020-11-04<a class="headerlink" href="#1100-2020-11-04" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - Optimisation de l'import Spatialite et de l'affichage du temps passé</li>
+<li>Ajout de l'extraction de détails sur les propriétaires (indivisions)</li>
+<li>Widget "Outils de Recherche" : Ajout du bouton Infos parcelle</li>
+<li>Dialogue "infos parcelle" : Ajout des actions imprimer / copier /sauvegarder des infos des onglets</li>
+<li>Révision barre d'outils (position actions) et réécriture code menu / barre d'outils</li>
+<li>Fix - bug connexion (relevé parcellaire, première instanciation)</li>
+</ul>
+<h2 id="190-2020-09-07">1.9.0 - 2020-09-07<a class="headerlink" href="#190-2020-09-07" title="Permanent link">#</a></h2>
+<ul>
+<li>Documentation<ul>
+<li>Support de QGIS 3.10 LTR #240</li>
+<li>Précisions sur les versions PostgreSQL et PostGIS supportées</li>
+</ul>
+</li>
+<li>Support du millésime MAJIC 2020 #239</li>
+<li>Améliorations et corrections<ul>
+<li>Suppression des doublons de communes et de sections dans les données EDIGEO #196</li>
+<li>Unités foncières : suppression des enregistrements sans comptes communaux #221</li>
+<li>Correction d'un bogue dans l'affichage des informations d'une parcelle si le nom de la voie est nul #207</li>
+<li>Correction d'un bogue affectant le chargement de la couche des parcelles si on utilise du filtrage sur le code de commune #229</li>
+<li>Maintenance sur le code Python</li>
+</ul>
+</li>
+</ul>
+<h2 id="181-2019-10-21">1.8.1 - 2019-10-21<a class="headerlink" href="#181-2019-10-21" title="Permanent link">#</a></h2>
+<p>Corrections de bugs essentiellement</p>
+<ul>
+<li>Import - EDIGEO: amélioration des performances geo_batiment_parcelle</li>
+<li>Import - MAJIC: correction bug d'encodage</li>
+<li>Import MAJIC - garder vexen pour compatibilité Spatialite</li>
+<li>Spatialite - Correction des identifiants parcelle, voie et local00 dans la table local10</li>
+<li>Fiche parcellaire - résumé: ajout de coalesce sur l'adresse</li>
+<li>[BUGFIX] Use of QgsMapLayer.VectorLayer in getLayerFromLegendByTableProps</li>
+<li>suppression de code spécifique QGIS 2</li>
+<li>Création couche parcelle_info OK</li>
+</ul>
+<h2 id="180-2019-09-20">1.8.0 - 2019-09-20<a class="headerlink" href="#180-2019-09-20" title="Permanent link">#</a></h2>
+<p><strong>IMPORTANT</strong>
+À partir de cette version seule la version QGIS LTR sera supportée. Pour cette version il s'agit de la version 3.4.x</p>
+<p>Nouveautés:</p>
+<ul>
+<li>Prise en charge des évolutions MAJIC 2019 (voir #192 pour les détails). Noter la création de 2 nouvelles tables.</li>
+<li>Précisions sur les versions QGIS, PostgreSQL / PostGIS et Spatialite supportées (#197)</li>
+<li>Mise à jour de la documentation de la structure de la base de données (#204)</li>
+</ul>
+<h2 id="171-2019-06-06">1.7.1 - 2019-06-06<a class="headerlink" href="#171-2019-06-06" title="Permanent link">#</a></h2>
+<ul>
+<li>Refactorize code for server and Qgis 3+</li>
+<li>Ajouts et mises à jour de tables domaine</li>
+<li>Correction valeur compte communal</li>
+<li>Ajout inspireid</li>
+<li>Amélioration de plugin Server</li>
+<li>Nouvelle table de nomenclature natvoi</li>
+<li>Correction identifiants</li>
+<li>trim code de nature de voie</li>
+<li>[Serveur] Add GetCapabilities method to server CADASTRE service</li>
+<li>Creation d'un provider QgsProcessing</li>
+</ul>
+<h2 id="170">1.7.0<a class="headerlink" href="#170" title="Permanent link">#</a></h2>
+<ul>
+<li>Fiche parcellaire - Ajout des informations des propriétaires, subdivisions et locaux</li>
+<li>Fiche parcelle - Ajout de la surface spatiale bâtie</li>
+<li>Export (version QGIS 2): Ajout d'un script python pour exporter les relevés PDF via ligne de commande</li>
+<li>Fix - Général: Amélioration de la récupération d'informations sur les couches (hôte, base de données, etc.)</li>
+<li>Fix - Import: Suppression de table temporaire ll si besoin</li>
+<li>Fix - Export: relevé de propriété: dédoublonnage des comptes communaux exportés en PDF</li>
+<li>Fix - Correction d'un bug d'encodage</li>
+<li>Divers - Ajout des derniers financeurs dans le dialogue "A propos"</li>
+</ul>
+<h2 id="162">1.6.2<a class="headerlink" href="#162" title="Permanent link">#</a></h2>
+<ul>
+<li>Général - suppression de code inutile suite à la migration QGIS3</li>
+<li>Import - Correction de parcelles en doublons dû au lien avec geo_subdsect</li>
+<li>Export PDF - Correction d'un bug et restauration de l'affichage des propriétaires</li>
+</ul>
+<h2 id="161">1.6.1<a class="headerlink" href="#161" title="Permanent link">#</a></h2>
+<ul>
+<li>Correction de bug sur l'interrogation de propriétaire suite à la gestion des dates en texte</li>
+<li>Correction d'un bug d'encodage sur message d'erreur de requête SQL</li>
+<li>Import - Utilisation d'entiers longs pour les surfaces de parcelle_info (corrige le bug pour les très grandes parcelles)</li>
+<li>Import - Ajout du support du millésime 2018</li>
+</ul>
+<h2 id="160">1.6.0<a class="headerlink" href="#160" title="Permanent link">#</a></h2>
+<ul>
+<li>Compatibilité du plugin avec QGIS 3. Les version compatibles avec QGIS 2 seront des versions de correction uniquement, avec un numéro en 1.5.*</li>
+</ul>
+<h2 id="152">1.5.2<a class="headerlink" href="#152" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - Transformation des champs date en texte pour le MAJIC, par respect de la donnée source</li>
+<li>Correction d'un bug de la 1.5.1 avec QFileDialog, QFileInfo et BaseError manquant</li>
+</ul>
+<h2 id="151">1.5.1<a class="headerlink" href="#151" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - MAJIC : correction de bug si dates mauvaises (30 fév par ex)</li>
+<li>Import - Support partiel des données EDIGEO en projection IGNF</li>
+<li>Import - Correction d'un bug de non remplissage des parcelles si correspondance geo_subdsect manquant</li>
+<li>Import - EDIGEO : conversion en date des champs de geo_subdsect seulement si format correct #120</li>
+</ul>
+<h2 id="150">1.5.0<a class="headerlink" href="#150" title="Permanent link">#</a></h2>
+<ul>
+<li>Chargement - Ajout de couches via requête SQL</li>
+<li>Import - Ajout de la nomenclature pour ccocac</li>
+<li>Import - Correction sur la table pivot geo_batiment_parcelle: restriction par intersection</li>
+<li>Rechercher - Déplacement de la recherche d'adresse sous celle par parcelle</li>
+<li>Chargement - correction d'un bug sur l'ajout dans les groupes Cadastre</li>
+<li>Import - Ajout du support de MAJIC 2017</li>
+<li>Recherche - Support de l'autocomplétion pour les adresses et les propriétaires</li>
+<li>Recherche - Intégration des adresses dans la recherche de lieux</li>
+<li>Import - Correction du bug de récupération des propriétés bâties</li>
+<li>Import/Identification - contournement du bug d'encodage sur requête pour QGIS 2.18.10 et &gt;</li>
+<li>Identification - correction du bug sur chargement de projet QGIS</li>
+<li>Import - Majic : import des propriétaires si et seulement si dnupro est non vide</li>
+<li>Import - Lieudits: utilisation de tous les champs tex</li>
+<li>Recherche - Réapplication de l'ordre dans les listes déroulantes (sections, parcelles)</li>
+<li>BDD - Possibilité de se connecter avec un connexion utilisant un service PostgreSQL</li>
+</ul>
+<h2 id="141">1.4.1<a class="headerlink" href="#141" title="Permanent link">#</a></h2>
+<ul>
+<li>Import/Chargement - correction de bug pour Spatialite sur génération parcelle_info</li>
+</ul>
+<h2 id="140">1.4.0<a class="headerlink" href="#140" title="Permanent link">#</a></h2>
+<ul>
+<li>Menu - Suppression du menu Cadastre et déplacement dans le menu Extensions</li>
+<li>Barre d'outil - Modification de l'icône d'identification (merci @pasqual )</li>
+<li>Structure bdd - Généralisation des codes départements et direction dans les identifiants</li>
+<li>Structure bdd - Parcelles: consolidation des infos propriétaires dans une nouvelle table parcelle_info</li>
+<li>Import - Correction d'un bug de remplissage de geo_sym si ptcanv_id.sym est NULL</li>
+<li>Import - MAJIC: Filtrage des données importées selon département et direction: on peut utiliser le fichier FANTOIR national</li>
+<li>Import - Ajout du support de MAJIC 2016</li>
+<li>Import - Edigeo : amélioration de la jointure de geo_parcelle ave geo_subdsect</li>
+<li>Import - Correction des doublons sur les parcelles (dus au lien geo_subdsect)</li>
+<li>Import - Edigeo: amélioration des performances pour tpoint, tline, tsurf</li>
+<li>Import - Augmentation de la limite max pour le code direction - fixes #94</li>
+<li>Import - Utilisation directe des fichiers sources sans copie préalable</li>
+<li>Import - Suppression des contraintes de taille dans les champs</li>
+<li>Import - Déplacement des scripts SQL d'import et nettoyage</li>
+<li>Import - Fantoir recommandé lors de l'import MAJIC &amp;&amp; lien de téléchargement ajouté</li>
+<li>Import - Correction des parcelles dupliquées si plusieurs sous-sections</li>
+<li>Import - correction du bug empêchant la création de base sqlite sous 2.16 - #83</li>
+<li>Chargement - Ajout du filtre par expression sur les communes (expérimental)</li>
+<li>Chargement - possibilité de charger seulement les couches principales</li>
+<li>Chargement - Séparation des étiquettes et des données en groupes &amp; désactivation des couches mineures</li>
+<li>Chargement - Mise à jour et amélioration des styles</li>
+<li>Chargement - Correction de bug sur QgsMapLayer non défini</li>
+<li>Chargement - Styles : masquage de la couche Tronçons de routes aux petites échelles</li>
+<li>Export - Ajout d'un nouveau menu pour exporter la vue courante en PDF</li>
+<li>Export - ajout d'une carte en 1ère page pour le relevé parcellaire</li>
+<li>Export - Ouverture automatique du répertoire après export PDF multiple</li>
+<li>Recherche - La recherche par commune et section utilise le lot pour éviter les doublons si plusieurs départements</li>
+<li>Serveur - Ajout de la capacité "server" pour le plugin</li>
+</ul>
+<h2 id="130">1.3.0<a class="headerlink" href="#130" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - MAJIC : support du millésime 2015. La structure a été un peu modifiée. Il faut réaliser l'import dans un nouveau schéma PostGreSQL ou une nouvelle base de données Spatialite. Un script de migration de la structure est disponible pour PostGreSQL pour ceux qui préfèrent conserver le schéma actuel (faites une sauvegarde avant !) : /.qgis2/python/plugins/cadastre/scripts/plugin/updates/update_structure_postgis_from_1.2.0_to_1.3.0.sql</li>
+<li>Import - Ajout d'un système de création des tables manquantes ( pour les montées de version )</li>
+<li>Edigeo - Ajout des objets TRONROUTE dans la table geo_tronroute</li>
+<li>Import - Éviter l'import des parcelles EDIGEO avec un idu NULL</li>
+<li>Plugin - Suppression de la contrainte de version maximum de QGIS</li>
+</ul>
+<h2 id="120">1.2.0<a class="headerlink" href="#120" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - Amélioration des performances d'imports pour Spatialite</li>
+<li>Import - Ajout d'une option pour activer/désactiver la validation des géométries</li>
+<li>Import - Suppression de l'outil de réparation des multipolygones sur une bdd déja importée (phase de transition terminée )</li>
+<li>Interface - pour l'interface Cadastre, ajout des boutons WMS/WFS - fixes #53</li>
+<li>Export - Debogage des exports PDF vides pour la 2.8 - fixes #60</li>
+<li>Identification parcelle - amélioration interne de l'outil (pas visible dans l'interface)</li>
+<li>Import - Prise en compte des fichiers MAJIC sans contenus dans les premières lignes</li>
+</ul>
+<h2 id="111">1.1.1<a class="headerlink" href="#111" title="Permanent link">#</a></h2>
+<ul>
+<li>Ajout de la compatibilité avec QGIS 2.8</li>
+</ul>
+<h2 id="110">1.1.0<a class="headerlink" href="#110" title="Permanent link">#</a></h2>
+<ul>
+<li>Options - Ajout du menu Vue/Décorations dans l'interface Cadastre</li>
+<li>Chargement - La couche Unités foncières est décochée par défaut</li>
+<li>Import - Ajout des scripts pyogr pour compatibilité QGIS 2.6</li>
+<li>Ajout d'une boite de dialogue d'information lors du 1er chargement. Visible via le menu Cadastre &gt; Notes de version</li>
+<li>Import/Recherche/Export - Modification du lien entre les parcelles EDIGEO et MAJIC (même identifiant unique pour les 2)</li>
+<li>Import - exhaustivité des données de propriétaire MAJIC - fix #47</li>
+<li>Import - Conserver l'orientation des symboles lors d'imports successifs - fix #46</li>
+<li>Import - Correction des géométries invalides - fix #43</li>
+<li>Import - Correction des multipolygones sous Windows - fixes #44</li>
+<li>Info parcelle - option de filtre commune pour le relevé de propriété - fix #42</li>
+<li>Chargement - Ajout des TRONROUTE_ID pour les étiquettes des noms voies - bug #40</li>
+<li>Chargement - Suppression des étiquettes abbérantes - fix #41</li>
+<li>Import - Ajout des unités foncières pour PostGIS (refonte de la requête)</li>
+<li>Import - MAJIC : ajout de la compatibilité des fichiers 2014</li>
+<li>Import - EDIGEO : ajout de la table boulon_id</li>
+<li>Chargement - correction du bug #38 : minidump sous Windows</li>
+</ul>
+<h2 id="100">1.0.0<a class="headerlink" href="#100" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - débogage import PostGreSQL sous Windows</li>
+<li>Recherche - Meilleure gestion de la désactivation des modules de recherche</li>
+<li>Import - MAJIC : possibilité de lancer l'import même si fichiers MAJIC manquants</li>
+<li>Import - Vérifications sur les données MAJIC avant import - bug #37</li>
+<li>Import - Meilleure gestion des chemins des fichiers sources</li>
+<li>Import - Création de bdd spatialite différente selon la version de spatialite - bug #30</li>
+<li>Export - Débogage de l'export PDF pour QGIS 2.4 - bug #36</li>
+<li>Import : MAJIC - arrêt de l'import si aucun fichier trouvé</li>
+<li>Import - Modifications mineures d'interface</li>
+<li>Import - meilleure gestion des imports EDIGEO via ogr2ogr.py au lieu de ogr2ogr.exe (compatibilité MAC + détection des erreurs)</li>
+</ul>
+<h2 id="099">0.9.9<a class="headerlink" href="#099" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - correction de certaines erreurs d'import des MULTIPOLYGONES (PostGreSQL et Spatialite)</li>
+</ul>
+<h2 id="0981">0.9.8.1<a class="headerlink" href="#0981" title="Permanent link">#</a></h2>
+<ul>
+<li>Export - debug : suppression des 'print' dans le code</li>
+</ul>
+<h2 id="098">0.9.8<a class="headerlink" href="#098" title="Permanent link">#</a></h2>
+<ul>
+<li>Log détaillé : <a href="https://github.com/3liz/QgisCadastrePlugin/compare/0.9.7...0.9.8">https://github.com/3liz/QgisCadastrePlugin/compare/0.9.7...0.9.8</a></li>
+<li>Export des relevés - améliorations de mises en forme des données</li>
+<li>Export - propriétaires : ajout de l'époux pour les femmes mariées EX: MME DURAND/Sophie Yvette EP DUPONT Jean</li>
+<li>Export - propriétaires : déplacement des dates et lieu de naissance à droite</li>
+<li>Export - Suppression des zéros au début du numéro de plan et de voirie</li>
+<li>Export - prop. baties : Suppression du code commune au début du numéro INVAR</li>
+<li>Export - Sommes prop. baties : Ajout de zéros si valeurs nulles (au lieu de cases vides)</li>
+<li>Export - prop. non baties : Séparation des HA A CA pour la contenance</li>
+<li>Export - prop. non baties : Calcul de la fraction exo si applicable</li>
+<li>Export - Sommes prop. non baties : Ajout de la somme des contenances</li>
+<li>Export - Pied de page : Ajout de la mention "Ce document est donné à titre indicatif..."</li>
+<li>Export - Suppression de la mention "Expérimental"</li>
+<li>Import - Import des MULTI-POLYGONES et correction de données existantes - bug #29</li>
+</ul>
+<h2 id="097">0.9.7<a class="headerlink" href="#097" title="Permanent link">#</a></h2>
+<ul>
+<li>Log détaillé : <a href="https://github.com/3liz/QgisCadastrePlugin/compare/0.9.6...0.9.7">https://github.com/3liz/QgisCadastrePlugin/compare/0.9.6...0.9.7</a></li>
+<li>Documentation - ajout des liens vers la documentation en ligne - bug #3</li>
+<li>Export - recupération infos parcelles : ajout du filtre par département - bug #27</li>
+<li>Export - correction du pourcentage exoneration pour les propriétés non baties - bug #26</li>
+<li>Import - validation préalable des entrées du formulaire d'import - bug #25</li>
+<li>Chargement - ajout des chemins SVG cadastre sans écraser les précédents - bug #19</li>
+<li>Identification - debogage outil si Parcelles n'est pas la couche active</li>
+<li>Export - nettoyage du nom du PDF exporté pour compatibilité Windows - bug #23</li>
+<li>Import - sup contrainte de type sur surface des parcelles - bug #20</li>
+<li>Import - suppression de la contrainte de longueur de champ pour l'attribut tex</li>
+<li>Chargement - gestion d'erreur si pas de table trouvée dans la bdd</li>
+<li>Recherche - correction largeur listes déroulantes (windows) - bug #22</li>
+<li>Export - ouverture des PDF compatible freeBSD - bug #21</li>
+</ul>
+<h2 id="096">0.9.6<a class="headerlink" href="#096" title="Permanent link">#</a></h2>
+<ul>
+<li>Log détaillé : <a href="https://github.com/3liz/QgisCadastrePlugin/compare/0.9.5...0.9.6">https://github.com/3liz/QgisCadastrePlugin/compare/0.9.5...0.9.6</a></li>
+<li>Import - actualisation liste des tar.bz2 après décompression de zip</li>
+<li>Documentation - mise à jour</li>
+<li>Recherche/export - meilleurs résultats si fantoir non importé - bug #18</li>
+<li>Export multiple - barre de progression et ouverture du dossier contenant</li>
+<li>Export - optimisation - bug #2</li>
+<li>Chargement - réutilisation du groupe Cadastre si présent - bug #14</li>
+<li>Identification - réinitialisation de l'outil identifier au chargement</li>
+<li>Spatialite - debogage base de données si chemin contient des espaces - bug #17</li>
+<li>Recherche - adresse/propriétaire : gestion des apostrophes - bug #12</li>
+<li>Import - remplacement CREATE TABLE IF NOT EXISTS - bug #13</li>
+<li>Meilleur comportement des outils de recherche sur ouverture d'un (nouveau) projet</li>
+</ul>
+<h2 id="095">0.9.5<a class="headerlink" href="#095" title="Permanent link">#</a></h2>
+<ul>
+<li>Chargement - bug #8: pas d'erreur si présence de couches plugin OpenLayers</li>
+<li>Recherche/Identification - réactivation des outils sur chargement d'un projet Cadastre - #9</li>
+<li>Recherche - Lieux : Liste des sections ordonnées par code</li>
+<li>Import - correction bug Spatialite import relations (*.vec) - bug #7</li>
+<li>Import - Gestion des erreurs de suppression de fichier après extraction - bug #5</li>
+<li>Import - modifications des scripts pour gestion arrondissements (ex: Marseille)</li>
+</ul>
+<h2 id="094">0.9.4<a class="headerlink" href="#094" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - bouton Créer une base Spatialite grisé si aucune connection dans QGIS</li>
+</ul>
+<h2 id="093">0.9.3<a class="headerlink" href="#093" title="Permanent link">#</a></h2>
+<ul>
+<li>Documentation - ajout d'une documentation (avec copies d'écran)</li>
+<li>Chargement - remplacement du panneau par une fenêtre</li>
+<li>Configurer - ajout d'un option pour le type de stockage temporaire de Spatialite</li>
+<li>Import - spatialite : remove disablespatialindex</li>
+<li>Import - Amélioration des imports consécutifs (indexes, erreurs spatialites, etc.)</li>
+<li>Majic - import récursif</li>
+<li>Général - ajout d'un menu d'aide et rédaction de l'aide</li>
+<li>Import - restriction des imports à 2012 et 2013</li>
+<li>Export - amélioration des calculs des sommes</li>
+<li>A propos - correction coquille</li>
+<li>Recherche/Export - gestion des propriétaires sur plusieurs communes</li>
+<li>About - ajout du lien vers le dépôt Github</li>
+<li>A propos - modification de l'ordre des financeurs</li>
+</ul>
+<h2 id="092">0.9.2<a class="headerlink" href="#092" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - suppression des indexes avant ajout Majic incrémental</li>
+<li>Général - rédaction du README et metadata</li>
+<li>Import - amélioration de l'import Spatialite</li>
+<li>A propos - ajout du remerciement aux auteurs d'OpenCadastre</li>
+<li>Général - affichage de la fenêtre 'A propos' à la 1ère utilisation</li>
+<li>Option - ajout de l'aide pour changer d'interface</li>
+<li>Import - amélioration des scripts</li>
+<li>Import - La Direction est bloquée : entier entre 0 et 5</li>
+<li>Chargement - renommage des couches &amp;&amp; fermeture des légendes</li>
+<li>Recherche/Identification - désactivation des outils nécessitant MAJIC si pas de données</li>
+</ul>
+<h2 id="091">0.9.1<a class="headerlink" href="#091" title="Permanent link">#</a></h2>
+<ul>
+<li>Chargement - ajout du style Orthophoto</li>
+<li>Import - modification interface du choix du type de bdd</li>
+<li>Import - les fichiers EDIGEO non zip/tar.bz2 sont bien pris en compte</li>
+<li>Import - Ajout d'un bouton pour créer une base de données Spatialite vide</li>
+<li>Toolbar - Ajout import/charger/recherche/about + modification icône</li>
+<li>Styles - Classique : amélioration tsurf</li>
+</ul>
+<h2 id="090">0.9.0<a class="headerlink" href="#090" title="Permanent link">#</a></h2>
+<ul>
+<li>Correction de régression de 0.8.9 : indentification parcelle et recherche propriétaire</li>
+</ul>
+<h2 id="089">0.8.9<a class="headerlink" href="#089" title="Permanent link">#</a></h2>
+<ul>
+<li>Amélioration du support Spatialite : import, recherche, export</li>
+<li>General - désactivation Spatialite si pyspatialite non présent</li>
+</ul>
+<h2 id="088">0.8.8<a class="headerlink" href="#088" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - ajout d'une option pour configurer le nombre de ligne INSERT max</li>
+<li>Propriétaires - debug affichage vide pour les personnes morales</li>
+<li>Recherche - ajout des stopwords pour les natvoi</li>
+<li>Indentification parcelle - textes en lecture seule + code section || dnupla</li>
+<li>Import majic - Vérfication unicité des lotslocaux</li>
+</ul>
+<h2 id="087">0.8.7<a class="headerlink" href="#087" title="Permanent link">#</a></h2>
+<ul>
+<li>Export - changement du calcul du revenu cadastral non bati + numéro voirie</li>
+<li>Import - possibilité d'importer un fichier MAJIC seul</li>
+<li>Import - Ajout des contraintes à la fin d'un import MAJIC seul</li>
+<li>Import - modification mineure nomenclature EDIGEO</li>
+<li>Import - Compatibilité avec les fichiers MAJIC 2013</li>
+<li>Import MAJIC - ajout de quelques colonnes (bati, nbat)</li>
+<li>Export - Calcul des sommes pour bati et nbat</li>
+<li>Recherche/export - ajout du lieu et date de naissance pour les propriétaires</li>
+<li>Chargement - Création d'un groupe 'Cadastre' et chargement des couches dans ce groupe</li>
+<li>Chargement - mise à jour auto des listes déroulantes suite à un import</li>
+</ul>
+<h2 id="086">0.8.6<a class="headerlink" href="#086" title="Permanent link">#</a></h2>
+<ul>
+<li>Recherche/Export - Ajout ccocom dans comptecommunal (dédoublonnage)</li>
+<li>Import - MAJI : suppression des caractères non imprimables et de contrôle</li>
+</ul>
+<h2 id="085">0.8.5<a class="headerlink" href="#085" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - debug utilisation mémoire lors de la leture des fichiers majic volumineux</li>
+<li>Recherche - suppression du bug si ouverture panneau avec couches hors cadastre</li>
+<li>Recherche/Indenfitication - Correction du Zoom/Centrer si reprojection à la volée</li>
+<li>Recherche - adaptation remplissage table voie pour gérer le multi-commune</li>
+</ul>
+<h2 id="084">0.8.4<a class="headerlink" href="#084" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - Modification dynamique de la projection des tables edigeo</li>
+<li>Recherche - Amélioration recherche d'adresse via table voie (fantoir)</li>
+<li>Chargement - utilisation de Times New Roman pour les étiquettes</li>
+</ul>
+<h2 id="083">0.8.3<a class="headerlink" href="#083" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - majic: suppressions de caractères \x00</li>
+<li>Import - debug Windows sur chemins vers scripts contraintes</li>
+</ul>
+<h2 id="082">0.8.2<a class="headerlink" href="#082" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - debug du nom du schéma "a" précédemment écrit en dur (régression 0.8.1)</li>
+<li>Import - utilisation du serial pour geo_commune, geo_parcelle et geo_section : évite les erreurs de rétablissement des clés primaires</li>
+</ul>
+<h2 id="081">0.8.1<a class="headerlink" href="#081" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - possibilité d'import vers une base de données distante</li>
+<li>Import - possibilité d'importer en plusieurs passes</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            <span class="copyleft">&copy;</span> 3Liz
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/3LIZ_news" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/company/3liz" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/3liz/" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://hub.docker.com/u/3liz" target="_blank" rel="noopener" title="hub.docker.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
