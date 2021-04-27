@@ -436,7 +436,7 @@ class CadastreMenu:
 
     def open_help(self):
         """Opens the html help file content with default browser"""
-        help_url = "http://3liz.github.io/QgisCadastrePlugin/"
+        help_url = "http://docs.3liz.org/QgisCadastrePlugin/"
         QDesktopServices.openUrl(QUrl(help_url))
 
     def open_message_dialog(self):
