@@ -11,10 +11,38 @@ Les tests unitaires sont en cours.
 [![❄ Flake8](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml)
 
 ```bash
-pip install -r requirements-dev.txt
+pip install -r requirements/requirements-dev.txt
 flake8
+```
+
+* Run tests in Docker
+
+```bash
+make start_tests
+make run_tests
+# Run a custom pattern
+cd .docker/ && ./exec_tests.sh test_*.py
+make stop_tests
+
+# All in one, but slower
 make tests
 ```
+
+* In your QGIS Desktop itself
+  * Open the QGIS console
+
+```python
+from qgis.utils import plugins
+plugins['cadastre'].run_tests()
+
+# Custom pattern
+plugins['cadastre'].run_tests('test_*.py')
+```
+
+* In your IDE, with linked QGIS library
+    * Setup your `QGIS_PREFIX_PATH` etc
+    * Right click on a test and launch it
+
 
 ## Documentation
 
