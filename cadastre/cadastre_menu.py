@@ -16,6 +16,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 """
 import configparser
+import os
 import os.path
 import tempfile
 
@@ -202,10 +203,13 @@ class CadastreMenu:
 
         self.setActionsExclusive()
 
+        # Disable some dialogs on CI : about and changelog
+        on_ci = os.getenv("QGIS_TESTING") == 'True'
+
         # Display About window on first use
         s = QSettings()
         firstUse = s.value("cadastre/isFirstUse", 1, type=int)
-        if firstUse == 1:
+        if firstUse == 1 and not on_ci:
             s.setValue("cadastre/isFirstUse", 0)
             self.open_about_dialog()
 
@@ -214,11 +218,12 @@ class CadastreMenu:
         metadataFile = plugin_dir + "/metadata.txt"
         mConfig.read(metadataFile, encoding='utf-8')
         self.mConfig = mConfig
-        myVersion = mConfig.get('general', 'version').replace('.', '_')
-        myVersionMsg = s.value("cadastre/version_%s" % myVersion, 1, type=int)
-        if myVersionMsg == 1:
-            s.setValue("cadastre/version_%s" % myVersion, 0)
-            self.open_message_dialog()
+        if not on_ci:
+            myVersion = mConfig.get('general', 'version').replace('.', '_')
+            myVersionMsg = s.value("cadastre/version_%s" % myVersion, 1, type=int)
+            if myVersionMsg == 1:
+                s.setValue("cadastre/version_%s" % myVersion, 0)
+                self.open_message_dialog()
 
         # Project load or create : refresh search and identify tool
         self.iface.projectRead.connect(self.onProjectRead)
@@ -515,3 +520,16 @@ class CadastreMenu:
 
         # Remove processing provider
         QgsApplication.processingRegistry().removeProvider(self.provider)
+
+    @staticmethod
+    def run_tests(pattern='test_*.py', package=None):
+        """Run the test inside QGIS."""
+        from pathlib import Path
+        try:
+            from cadastre.tests.runner import test_package
+            if package is None:
+                package = '{}.__init__'.format(Path(__file__).parent.name)
+            test_package(package, pattern)
+        except (AttributeError, ModuleNotFoundError):
+            message = 'Could not load tests. Are you using a production package?'
+            print(message)  # NOQA
