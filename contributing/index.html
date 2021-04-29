@@ -647,12 +647,52 @@ On your local, make a symlink with ln -s
 <p>Les tests unitaires sont en cours.</p>
 <p><a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml"><img alt="❄ Flake8" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg" /></a></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>pip install -r requirements-dev.txt
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>pip install -r requirements/requirements-dev.txt
 flake8
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>Run tests in Docker</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>make start_tests
+make run_tests
+<span class="c1"># Run a custom pattern</span>
+<span class="nb">cd</span> .docker/ <span class="o">&amp;&amp;</span> ./exec_tests.sh test_*.py
+make stop_tests
+
+<span class="c1"># All in one, but slower</span>
 make tests
 </code></pre></div>
 </td></tr></table>
+<ul>
+<li>In your QGIS Desktop itself</li>
+<li>Open the QGIS console</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="n">plugins</span>
+<span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;cadastre&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run_tests</span><span class="p">()</span>
+
+<span class="c1"># Custom pattern</span>
+<span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;cadastre&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run_tests</span><span class="p">(</span><span class="s1">&#39;test_*.py&#39;</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>In your IDE, with linked QGIS library<ul>
+<li>Setup your <code>QGIS_PREFIX_PATH</code> etc</li>
+<li>Right click on a test and launch it</li>
+</ul>
+</li>
+</ul>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">#</a></h2>
 <p>La documentation utilise <a href="https://www.mkdocs.org/">MkDocs</a> avec <a href="https://squidfunk.github.io/mkdocs-material/">Material</a> :</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
