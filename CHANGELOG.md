@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+* Ajout de la recherche d'un propriétaire 
+  * par nom d'usage ou de naissance
+  * par ville
+* Ajout d'un téléchargeur Edigéo communal
+* Ajout d'une infrastructure de tests
+* Correction d'un espace dans l'adresse dans les propriétés baties, non baties
+* Mise de la documentation au format MkDocs https://docs.3liz.org/QgisCadastrePlugin/
+* Intégration de la documentation du module Lizmap dans cette documentation
+
 ## 1.10.2 - 2020-12-10
 
 * Correction sur la documentation 
