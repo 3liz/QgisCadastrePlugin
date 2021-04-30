@@ -2,13 +2,11 @@ name: 🎳 Tests
 
 on:
   push:
-#    paths:
-#      - '**.sql'
-#      - '**.py'
+    paths:
+      - 'cadastre/**'
   pull_request:
-#    paths:
-#      - '**.sql'
-#      - '**.py'
+    paths:
+      - 'cadastre/**'
 
 jobs:
   test-qgis:
