@@ -10,33 +10,58 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Set env
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
     - uses: actions/checkout@v2
 
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v1
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2.2.2
       with:
-        python-version: 3.8
+        python-version: 3.9
+
+    - uses: actions/cache@v2.1.5
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements/packaging.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
 
     - name: Install qgis-plugin-ci
-      run: pip3 install qgis-plugin-ci==1.8.4
+      run: pip3 install -r requirements/packaging.txt
 
     - name : Get current changelog
-      run: qgis-plugin-ci changelog ${GITHUB_REF/refs\/tags\//} >> release.md
+      run: qgis-plugin-ci changelog ${{ env.RELEASE_VERSION }} >> release.md
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.BOT_HUB_TOKEN }}
+    - name: Create release on GitHub
+      uses: ncipollo/release-action@v1.8.4
       with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        body_path: release.md
+        bodyFile: release.md
+        token: ${{ secrets.BOT_HUB_TOKEN }}
 
     - name: Deploy plugin
       run: >-
         qgis-plugin-ci
-        release ${GITHUB_REF/refs\/tags\//}
+        release ${{ env.RELEASE_VERSION }}
         --github-token ${{ secrets.BOT_HUB_TOKEN }}
         --osgeo-username ${{ secrets.OSGEO_USERNAME }}
         --osgeo-password ${{ secrets.OSGEO_PASSWORD }}
+        --create-plugin-repo
+
+    - name: Tweet
+      uses: mugi111/tweet-trigger-release@v1.2
+      with:
+        consumer_key: ${{ secrets.TWITTER_CONSUMER_KEY }}
+        consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+        access_token_key: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
+        access_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+        tweet_body: "Nouvelle version de l'extension Cadastre ${{ env.RELEASE_VERSION }} 🇫🇷 pour #QGIS https://github.com/3liz/QgisCadastrePlugin/releases"
+
+    - name: Repository Dispatch
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.BOT_HUB_TOKEN }}
+        repository: 3liz/3liz.github.io
+        event-type: merge-plugins
+        client-payload: '{"name": "cadastre", "version": "${{ env.RELEASE_VERSION }}", "url": "https://github.com/3liz/QgisCadastrePlugin/releases/latest/download/plugins.xml"}'
