@@ -7,6 +7,7 @@ import processing
 from qgis._core import QgsProcessingMultiStepFeedback
 from qgis.core import (
     QgsProcessingOutputNumber,
+    QgsProcessingOutputString,
     QgsProcessingParameterDefinition,
     QgsProcessingParameterFolderDestination,
     QgsProcessingParameterString,
@@ -22,12 +23,16 @@ __email__ = "info@3liz.org"
 
 class EdigeoDownloader(BaseProcessingAlgorithm):
 
+    # INPUTS
     LISTE_CODE_INSEE = 'LISTE_CODE_INSEE'
     DATE = 'DATE'
     URL_TEMPLATE = 'URL_TEMPLATE'
     DOSSIER = 'DOSSIER'
+
+    # OUTPUTS
     NB_COMMUNES = 'NB_COMMUNES'
     NB_FEUILLES = 'NB_FEUILLES'
+    DEPARTEMENT = 'DEPARTEMENT'
 
     @classmethod
     def url(cls):
@@ -71,6 +76,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
 
         self.addOutput(QgsProcessingOutputNumber(self.NB_COMMUNES, 'Nombre de communes'))
         self.addOutput(QgsProcessingOutputNumber(self.NB_FEUILLES, 'Nombre de feuilles'))
+        self.addOutput(QgsProcessingOutputString(self.DEPARTEMENT, 'Départements, séparés par ","'))
 
     def processAlgorithm(self, parameters, context, feedback):
         communes = self.parameterAsString(parameters, self.LISTE_CODE_INSEE, context)
@@ -83,9 +89,11 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             os.makedirs(directory, exist_ok=True)
 
         communes = [c.strip() for c in communes.split(',')]
+        departements = []
         self.results = {
             self.NB_COMMUNES: len(communes),
             self.NB_FEUILLES: 0,
+            self.DEPARTEMENT: "",
         }
 
         multi_feedback = QgsProcessingMultiStepFeedback(len(communes), feedback)
@@ -101,6 +109,11 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
                 break
 
             multi_feedback.setCurrentStep(i)
+
+            if commune.departement not in departements:
+                departements.append(commune.departement)
+
+        self.results[self.DEPARTEMENT] = ','.join(departements)
 
         multi_feedback.pushInfo("\n")
         multi_feedback.pushInfo("\n")
