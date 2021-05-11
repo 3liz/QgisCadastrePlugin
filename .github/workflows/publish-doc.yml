@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'CHANGELOG.md'
+      - 'CONTRIBUTING.md'
+      - 'docs/**'
+      - 'mkdocs.yml'
 
 jobs:
   deploy:

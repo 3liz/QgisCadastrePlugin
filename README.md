@@ -1,3 +1,9 @@
+# Cadastre
+
+[![❄ Flake8](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml)
+[![🎳 Tests](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml)
+[![📖 Documentation](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml)
+
 ##  Description
 
 Le plugin Cadastre a été conçu pour faciliter l'utilisation des données cadastrales dans QGIS. Plusieurs modules aident l'utilisateur à importer des données, les afficher dans QGIS, faire des recherches et imprimer les relevés :
@@ -7,7 +13,6 @@ Le plugin Cadastre a été conçu pour faciliter l'utilisation des données cada
 * Un **panneau de recherche** offre la possibilité de rechercher des parcelles par adresse, propriétaire ou par situation (commune, section) et de naviguer vers ces parcelles cadastrales.
 * Un **outil d'identification** permet d'afficher les données liées à une parcelle en cliquant sur le polygone représentant la parcelle.
 * Il est possible enfin d'exporter les données sous forme de **relevés parcellaires** et de **relevés de propriété**.
-
 
 ## Documentation
 
@@ -55,8 +60,8 @@ Site internet : https://www.3liz.com
 ## Auteurs
 
 Michaël DOUCHIN
-e-mail: info@3liz.com
-twitter : https://twitter.com/kimaidou
+E-mail: info@3liz.com
+Twitter 🐦 : https://twitter.com/kimaidou
 
 ## Contributeurs
 

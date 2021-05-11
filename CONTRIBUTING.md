@@ -9,6 +9,7 @@ Le projet est hébergé sur GitHub
 Les tests unitaires sont en cours.
 
 [![❄ Flake8](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml)
+[![🎳 Tests](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml)
 
 ```bash
 pip install -r requirements/dev.txt
@@ -45,6 +46,8 @@ plugins['cadastre'].run_tests('test_*.py')
 
 
 ## Documentation
+
+[![📖 Documentation](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml)
 
 La documentation utilise [MkDocs](https://www.mkdocs.org/) avec [Material](https://squidfunk.github.io/mkdocs-material/) :
 
