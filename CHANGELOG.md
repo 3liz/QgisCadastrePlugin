@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* Ajout d'un bouton pour ouvrir l'aide depuis le menu principal d'aide de QGIS
 * Ajout de la recherche d'un propriétaire 
   * par nom d'usage ou de naissance
   * par ville

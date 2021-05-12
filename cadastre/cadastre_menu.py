@@ -62,6 +62,7 @@ class CadastreMenu:
         self.mapCanvas = iface.mapCanvas()
         self.cadastre_search_dialog = None
         self.provider = None
+        self.help_action_about_menu = None
 
     def cadastre_add_submenu(self, submenu):
         self.iface.addPluginToMenu("&Cadastre", submenu.menuAction())
@@ -73,6 +74,14 @@ class CadastreMenu:
     def initGui(self):
 
         self.initProcessing()
+
+        plugin_dir = str(Path(__file__).resolve().parent)
+        main_icon = QIcon(os.path.join(plugin_dir, "icon.png"))
+
+        # Open the online help
+        self.help_action_about_menu = QAction(main_icon, 'Cadastre', self.iface.mainWindow())
+        self.iface.pluginHelpMenu().addAction(self.help_action_about_menu)
+        self.help_action_about_menu.triggered.connect(self.open_help)
 
         actions = {
             "import_action": (
@@ -133,7 +142,6 @@ class CadastreMenu:
             )
         }
 
-        plugin_dir = str(Path(__file__).resolve().parent)
         for key in actions:
             icon_path = os.path.join(plugin_dir, 'icons', actions[key][0])
             icon = QIcon(icon_path)
@@ -151,7 +159,7 @@ class CadastreMenu:
 
         self.menu = QMenu("&Cadastre")
         self.menu.setObjectName("Cadastre")
-        self.menu.setIcon(QIcon(os.path.join(plugin_dir, "icon.png")))
+        self.menu.setIcon(main_icon)
 
         # Add Cadastre to Extension menu
         self.menu.addAction(self.import_action)
@@ -439,9 +447,10 @@ class CadastreMenu:
             self.cadastre_search_dialog.checkMajicContent()
             self.cadastre_search_dialog.clearComboboxes()
 
-    def open_help(self):
+    @staticmethod
+    def open_help():
         """Opens the html help file content with default browser"""
-        help_url = "http://docs.3liz.org/QgisCadastrePlugin/"
+        help_url = "https://docs.3liz.org/QgisCadastrePlugin/"
         QDesktopServices.openUrl(QUrl(help_url))
 
     def open_message_dialog(self):
@@ -503,6 +512,9 @@ class CadastreMenu:
         dialog.exec_()
 
     def unload(self):
+        if self.help_action_about_menu:
+            self.iface.pluginHelpMenu().removeAction(self.help_action_about_menu)
+            del self.help_action_about_menu
 
         self.iface.removePluginMenu("&Cadastre", self.import_action)
         self.iface.removePluginMenu("&Cadastre", self.load_action)
