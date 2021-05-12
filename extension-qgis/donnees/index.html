@@ -675,19 +675,27 @@
 <h2 id="edigeo">Edigéo<a class="headerlink" href="#edigeo" title="Permanent link">#</a></h2>
 <p>Les données sont disponibles en téléchargement sur <a href="https://cadastre.data.gouv.fr">https://cadastre.data.gouv.fr</a>
 Elles ne comportent pas de données sensibles.</p>
-<p>Il existe un traitement dans la boîte à outils Processing pour télécharger automatiquement les feuilles suivant
-une liste de code INSEE. Sinon, vous devez télécharger manuellement les fichiers, à l'échelle départemental par
-exemple.</p>
+<p>Il est possible de télécharger les données à l'échelle départementale ou alors communale.</p>
+<p>Dans l'extension QGIS, il existe, dans la boîte à outils <strong>Traitement</strong>, un téléchargeur pour les fichiers 
+Edigeo.</p>
+<p>Pour utiliser l'outil :</p>
 <ul>
 <li>
-<p>La liste des codes INSEE peut-être <code>25047</code> ou <code>25047,25602</code>.</p>
+<p>Un code INSEE ou une liste de code INSEE, exemple <code>25047</code> ou <code>25047,25602</code>.</p>
 </li>
 <li>
-<p>Le filtre est optionnel :</p>
+<p>Le filtre est <em>optionnel</em>. Il s'applique sur chacune des communes ci-dessus pour filtrer les feuilles :</p>
 </li>
-<li>S'il est vide, alors toutes les feuilles vont être téléchargées sur toutes les communes.</li>
-<li>Si <code>AB,AD</code>, toutes les feuilles sur toutes les communes qui contiennent <code>AB</code> ou <code>AD</code> vont être téléchargées.</li>
-<li>Si <code>AB,250470000D01</code>, toutes les feuilles <code>AB</code> ou la feuille <code>250470000D01</code> vont être téléchargées.</li>
+<li>S'il est vide, alors toutes les feuilles.</li>
+<li><code>AB,AD</code>, toutes les feuilles sur toutes les communes qui contiennent <code>AB</code> ou <code>AD</code>.</li>
+<li><code>256020000C,250470000D</code>, toutes les feuilles <code>0C</code> sur <code>25602</code> et <code>0D</code> sur <code>25047</code>.</li>
+<li><code>256020000C01,250470000D01</code>, uniquement les <strong>2</strong> feuilles.</li>
+<li>
+<p><code>25602,25047000AB</code>, toutes les feuilles de <code>25602</code> et les feuilles <code>AB</code> sur <code>25047</code></p>
+</li>
+<li>
+<p>La date est par défaut <code>latest</code> ou alors une date disponible sur <a href="https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise">https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise</a> selon le format <code>AAAA-MM-JJ</code>.</p>
+</li>
 </ul>
 <p><img alt="Télécharger Edigeo" src="../../processing/cadastre-telechargeur_edigeo_communal.jpg" /></p>
 <h2 id="magic">Magic<a class="headerlink" href="#magic" title="Permanent link">#</a></h2>
