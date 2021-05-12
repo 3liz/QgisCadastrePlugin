@@ -73,7 +73,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             'Dossier de destination'
         )
         self.set_tooltip_parameter(parameter, 'Dossier de destination pour les fichiers Edigeo')
-        self.addParameter(parameter)
+        self.addParameter(parameter, createOutput=True)
 
         parameter = QgsProcessingParameterString(
             self.DATE,
@@ -112,6 +112,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         communes = [c.strip() for c in communes.split(',')]
         departements = []
         self.results = {
+            self.DOSSIER: str(directory),
             self.NB_COMMUNES: len(communes),
             self.NB_FEUILLES: 0,
             self.DEPARTEMENTS: "",
