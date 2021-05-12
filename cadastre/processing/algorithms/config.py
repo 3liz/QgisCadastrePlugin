@@ -46,11 +46,6 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
     SUCCESS = 'SUCCESS'
 
     def initAlgorithm(self, config):
-        """
-        Here we define the inputs and output of the algorithm, along
-        with some other properties.
-        """
-
         self.addParameter(
             QgsProcessingParameterVectorLayer(
                 self.COMMUNE_LAYER,
@@ -109,10 +104,6 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
         self.addOutput(QgsProcessingOutputNumber(self.SUCCESS, self.tr('Succès')))
 
     def processAlgorithm(self, parameters, context, feedback):
-        """
-        Here is where the processing itself takes place.
-        """
-
         commune_layer = self.parameterAsVectorLayer(parameters, self.COMMUNE_LAYER, context)
         commune_unique_field = self.parameterAsString(parameters, self.COMMUNE_UNIQUE_FIELD, context)
 
@@ -138,20 +129,9 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
         return {self.SUCCESS: 1}
 
     def name(self):
-        """
-        Returns the algorithm name, used for identifying the algorithm. This
-        string should be fixed for the algorithm, and must not be localised.
-        The name should be unique within each provider. Names should contain
-        lowercase alphanumeric characters only and no spaces or other
-        formatting characters.
-        """
         return 'config_project'
 
     def displayName(self):
-        """
-        Returns the translated algorithm name, which should be used for any
-        user-visible display of the algorithm name.
-        """
         return self.tr('Configuration du projet')
 
     def shortHelpString(self):

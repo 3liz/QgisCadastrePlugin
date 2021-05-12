@@ -33,37 +33,17 @@ from .algorithms.edigeo_downloader import EdigeoDownloader
 class CadastreProvider(QgsProcessingProvider):
 
     def loadAlgorithms(self):
-        """
-        Loads all algorithms belonging to this provider.
-        """
         self.addAlgorithm(ConfigProjectAlgorithm())
         self.addAlgorithm(EdigeoDownloader())
 
     def id(self):  # NOQA
-        """
-        Returns the unique provider id, used for identifying the provider. This
-        string should be a unique, short, character only string, eg "qgis" or
-        "gdal". This string should not be localised.
-        """
         return 'cadastre'
 
     def name(self):
-        """
-        Returns the provider name, which is used to describe the provider
-        within the GUI.
-
-        This string should be short (e.g. "Lastools") and localised.
-        """
-        return self.tr('Cadastre')
+        return 'Cadastre'
 
     def longName(self):
-        """
-        Returns the a longer version of the provider name, which can include
-        extra details such as version numbers. E.g. "Lastools LIDAR tools
-        (version 2.2.1)". This string should be localised. The default
-        implementation returns the same string as name().
-        """
-        return self.tr('Outils d\'exploitation des données cadastrale français')
+        return 'Outils d\'exploitation des données cadastrale français'
 
     def icon(self):
         plugin_dir = str(Path(__file__).resolve().parent.parent)
