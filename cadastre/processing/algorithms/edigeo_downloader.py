@@ -154,6 +154,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             return False
 
         feedback.pushInfo("Téléchargement de l'index concernant {}".format(commune.insee))
+        feedback.pushDebugInfo(commune.url)
 
         params = {
             'URL': commune.url,
