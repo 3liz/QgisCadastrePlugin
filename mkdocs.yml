@@ -19,6 +19,7 @@ nav:
         - 'Charger': extension-qgis/charger.md
         - 'Interface': extension-qgis/interface.md
         - 'Vidéos': extension-qgis/videos.md
+        - 'Processing': processing/README.md
     - Module Lizmap:
         - 'Installation': module-lizmap/installation.md
         - 'Configuration': module-lizmap/configuration.md

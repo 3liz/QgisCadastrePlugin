@@ -11,6 +11,7 @@
 * Correction d'un espace dans l'adresse dans les propriétés baties, non baties
 * Mise de la documentation au format MkDocs https://docs.3liz.org/QgisCadastrePlugin/
 * Intégration de la documentation du module Lizmap dans cette documentation
+* Ajout de la documentation automatique concernant les traitements Processing
 
 ## 1.10.2 - 2020-12-10
 

@@ -11,3 +11,6 @@ stop_tests:
 	@cd .docker && ./stop.sh
 
 tests: start_tests run_tests stop_tests
+
+processing-doc:
+	cd .docker && ./processing_doc.sh

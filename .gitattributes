@@ -4,4 +4,5 @@
 .gitlab-ci.yml export-ignore
 .github        export-ignore
 tests          export-ignore
+cadastre/infra export-ignore
 cadastre/tests export-ignore
