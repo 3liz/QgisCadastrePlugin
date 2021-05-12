@@ -1,773 +1,707 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>pevexoneration_imposable - cadastre_2019 Database</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
-  <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
-  <!-- Code Mirror -->
-  <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
-  <!-- Fonts -->
-  <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
-  <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>pevexoneration_imposable - qgistest Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
 
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
-  <!-- Salvattore -->
-  <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
-  <!-- SchemaSpy -->
-  <link rel="stylesheet" href="../schemaSpy.css">
-  
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="../bower/html5shiv/html5shiv.min.js"></script>
-  <script src="../bower/respond/respond.min.js"></script>
-  <![endif]-->
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="../index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
-			<li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
-			<li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
-			<li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
-			<li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
-			<li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
-			<li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
 
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Main content -->
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-          <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>pevexoneration_imposable</h1></br>
-		<div class="box box-primary">
-            <div class="box-header with-border">
-              <i class="fa fa-file-text-o"></i>
-              <h3 id="Description" class="box-title">Description</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>			  
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>pevexoneration_imposable</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p>Article exonération de pev imposable</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Columns</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th title='Are nulls allowed?'>Nulls</th>
+                                    <th title='Is column automatically updated?'>Auto</th>
+                                    <th title='Default value'>Default</th>
+                                    <th title='Columns in tables that reference this column'>Children</th>
+                                    <th title='Columns in tables that are referenced by this column'>Parents</th>
+                                    <th title='Comments' class="toggle"><span>Comments</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><span id="pevexoneration_imposable">pevexoneration_imposable</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="annee">annee</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccodep">ccodep</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code département -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccodir">ccodir</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code direction -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccocom">ccocom</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code commune INSEE -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="invar">invar</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Numéro invariant -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="janbil">janbil</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Année d’immobilisation - servie pour ets. industriels</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnupev">dnupev</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Numéro de pev -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="pev">pev</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="pevexoneration_imposable.pev&#39;s name implies that it&#39;s a child of pev.pev, but it doesn&#39;t reference that column."><a href='pev.html'>pev</a><span class='relatedKey'>.pev</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnuexb">dnuexb</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Numéro d’ordre de l’article - 001 à 015</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccolloc">ccolloc</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="pevexoneration_imposable.ccolloc&#39;s name implies that it&#39;s a child of ccolloc.ccolloc, but it doesn&#39;t reference that column."><a href='ccolloc.html'>ccolloc</a><span class='relatedKey'>.ccolloc</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Code de collectivité locale accordant l’exonération - C D R TC tableau 2.3.9</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="pexb">pexb</span></td>
+                                    <td>numeric</td>
+                                    <td>5,2</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Taux d’exonération accordée - 999V99</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gnextl">gnextl</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="pevexoneration_imposable.gnextl&#39;s name implies that it&#39;s a child of gnextl.gnextl, but it doesn&#39;t reference that column."><a href='gnextl.html'>gnextl</a><span class='relatedKey'>.gnextl</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Nature d’exonération temporaire (et permanente pour ets. Industriels) - tableau des codes 2.3.10 et 2.3.8</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="jandeb">jandeb</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>année de début d’exonération -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="janimp">janimp</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>année de retour à imposition -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="vecdif">vecdif</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>montant saisi de l’EC bénéficiant exo - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="vecdifa">vecdifa</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>vecdif multiplié par coeff - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="fcexb">fcexb</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Fraction EC exonérée - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="fcexba">fcexba</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>fcexb multiplié par coeff - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="rcexba">rcexba</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>revenu cadastral exonéré - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dvldif2">dvldif2</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Montant de VL exonérée (valeur 70) -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dvldif2a">dvldif2a</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Montant de VL exonérée (valeur de l’année) -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="fcexb2">fcexb2</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Fraction de VL exonérée (valeur 70) -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="fcexba2">fcexba2</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Fraction de VL exonérée (valeur de l’année) -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="rcexba2">rcexba2</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Revenu cadastral exonéré (valeur de l’année) -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="valplaf">valplaf</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Montant du planchonnement sur la base exonérée neutralisée</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="lot">lot</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="5,5,409,867">
+</map>
+                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/pevexoneration_imposable.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="192,5,596,867">
+<area shape="rect" id="node2" href="ccolloc.html" target="_top" title="ccolloc" alt="" coords="7,301,146,419">
+<area shape="rect" id="node3" href="gnextl.html" target="_top" title="gnextl" alt="" coords="5,436,148,553">
+<area shape="rect" id="node4" href="pev.html" target="_top" title="pev" alt="" coords="7,20,146,284">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/pevexoneration_imposable.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="pev.html" target="_top" title="pev" alt="" coords="199,1249,338,1513">
+<area shape="rect" id="node2" href="ccoaff.html" target="_top" title="ccoaff" alt="" coords="12,1235,147,1323">
+<area shape="rect" id="node3" href="ccocac.html" target="_top" title="ccocac" alt="" coords="11,1551,147,1639">
+<area shape="rect" id="node4" href="ccthp.html" target="_top" title="ccthp" alt="" coords="12,1445,147,1533">
+<area shape="rect" id="node5" href="gnexpl.html" target="_top" title="gnexpl" alt="" coords="11,1340,148,1428">
+<area shape="rect" id="node6" href="local10.html" target="_top" title="local10" alt="" coords="5,1129,153,1217">
+<area shape="rect" id="node7" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="479,1411,693,1499">
+<area shape="rect" id="node8" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="483,111,689,199">
+<area shape="rect" id="node9" href="ccolloc.html" target="_top" title="ccolloc" alt="" coords="199,272,338,389">
+<area shape="rect" id="node10" href="gnextl.html" target="_top" title="gnextl" alt="" coords="197,571,340,688">
+<area shape="rect" id="node11" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="384,216,788,1077">
+<area shape="rect" id="node12" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="447,1095,725,1183">
+<area shape="rect" id="node13" href="pevlissage.html" target="_top" title="pevlissage" alt="" coords="504,1516,668,1604">
+<area shape="rect" id="node14" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="490,1621,682,1709">
+<area shape="rect" id="node15" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="471,1200,701,1288">
+<area shape="rect" id="node16" href="pevtaxation.html" target="_top" title="pevtaxation" alt="" coords="497,1305,675,1393">
+<area shape="rect" id="node17" href="sufexoneration.html" target="_top" title="sufexoneration" alt="" coords="485,5,687,93">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/pevexoneration_imposable.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body clearfix">
-				<p><p>Article exonération de pev imposable</p></p>              
-            </div>
-            <!-- /.box-body -->
-		</div>
-		      </section>
-      <!-- Main content -->
-      <section class="content">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-			  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-              <h3 id="Columns" class="box-title">Columns</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-            <div class="box-body">
-				<div class="row">
-					<div id="button_group_one" class="col-md-3 col-sm-6"></div>
-					<div id="button_group_two" class="col-md-2 col-sm-4 pull-right text-right"></div>
-				</div>
-				<table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
-				<thead align='left'>
-				<tr>
-				  <th>Column</th>
-				  <th>Type</th>
-				  <th>Size</th>
-				  <th title='Are nulls allowed?'>Nulls</th>
-				  <th title='Is column automatically updated?'>Auto</th>
-				  <th title='Default value'>Default</th>
-				  <th title='Columns in tables that reference this column'>Children</th>
-				  <th title='Columns in tables that are referenced by this column'>Parents</th>
-				  <th title='Comments' class="toggle"><span>Comments</span></th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr>
-				 <td><span id="pevexoneration_imposable">pevexoneration_imposable</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="annee">annee</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="ccodep">ccodep</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code département -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccodir">ccodir</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code direction -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccocom">ccocom</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code commune INSEE -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="invar">invar</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Numéro invariant -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="janbil">janbil</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Année d’immobilisation - servie pour ets. industriels</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnupev">dnupev</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Numéro de pev -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="pev">pev</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="pevexoneration_imposable.pev&#39;s name implies that it&#39;s a child of pev.pev, but it doesn&#39;t reference that column.">
-						<a href='pev.html'>pev</a><span class='relatedKey'>.pev</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="dnuexb">dnuexb</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Numéro d’ordre de l’article - 001 à 015</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccolloc">ccolloc</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="pevexoneration_imposable.ccolloc&#39;s name implies that it&#39;s a child of ccolloc.ccolloc, but it doesn&#39;t reference that column.">
-						<a href='ccolloc.html'>ccolloc</a><span class='relatedKey'>.ccolloc</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Code de collectivité locale accordant l’exonération - C D R TC tableau 2.3.9</p></td>
-				</tr>
-				<tr>
-				 <td><span id="pexb">pexb</span></td>
-				 <td>numeric</td>
-				 <td>5,2</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Taux d’exonération accordée - 999V99</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gnextl">gnextl</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="pevexoneration_imposable.gnextl&#39;s name implies that it&#39;s a child of gnextl.gnextl, but it doesn&#39;t reference that column.">
-						<a href='gnextl.html'>gnextl</a><span class='relatedKey'>.gnextl</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Nature d’exonération temporaire (et permanente pour ets. Industriels) - tableau des codes 2.3.10 et 2.3.8</p></td>
-				</tr>
-				<tr>
-				 <td><span id="jandeb">jandeb</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>année de début d’exonération -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="janimp">janimp</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>année de retour à imposition -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="vecdif">vecdif</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>montant saisi de l’EC bénéficiant exo - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="vecdifa">vecdifa</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>vecdif multiplié par coeff - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="fcexb">fcexb</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Fraction EC exonérée - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="fcexba">fcexba</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>fcexb multiplié par coeff - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="rcexba">rcexba</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>revenu cadastral exonéré - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dvldif2">dvldif2</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Montant de VL exonérée (valeur 70) -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dvldif2a">dvldif2a</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Montant de VL exonérée (valeur de l’année) -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="fcexb2">fcexb2</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Fraction de VL exonérée (valeur 70) -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="fcexba2">fcexba2</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Fraction de VL exonérée (valeur de l’année) -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="rcexba2">rcexba2</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Revenu cadastral exonéré (valeur de l’année) -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="valplaf">valplaf</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Montant du planchonnement sur la base exonérée neutralisée</p></td>
-				</tr>
-				<tr>
-				 <td><span id="lot">lot</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-								</tbody>
-				</table>
-				<p title='27 columns'>Table contained <span id="recordNumber">32727</span> rows<p/>
-			</div>
-		</div>
-		<div class="box box-primary">		
-			<div class="box-header with-border">
-              <i class="fa fa-sitemap"></i>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
 
-              <h3 id="Indexes" class="box-title">Indexes</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-			<div class="box-body">
-				<table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
-				<thead>
-				 <tr>
-				  <th>Constraint Name</th>
-				  <th>Type</th>
-				  <th>Sort</th>
-				  <th>Column(s)</th>
-				 </tr>
-				</thead>
-				<tbody>
-				 <tr>
-				  <td title='Indexed'>idx_pevexoneration_imposable_pev</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>pev</td>
-				 </tr>				 
-				 <tr>
-				  <td title='Indexed'>idxan_pevexoneration_imposable</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>annee</td>
-				 </tr>				 
-				</tbody>
-				</table>   			  
-			</div><!-- /.box-body -->
-		</div>
-				<div class="box box-primary">		
-			<div class="box-header with-border">
-              <i class="fa fa-code-fork"></i>
-
-              <h3 id="Relationships" class="box-title">Relationships</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-			<div class="box-body">	
-			<div class="nav-tabs-custom" style="cursor: move;">
-            <!-- Tabs within a box -->
-			<h5>Close relationships within degrees of separation</h5>
-            <ul class="nav nav-tabs pull-left ui-sortable-handle">
-			  			              <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>			  			 
-			  			              <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>			  			 
-			  			              <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>			  			 
-            </ul>
-            <div class="tab-content no-padding">            
-				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="pevexoneration_imposable.html" title="pevexoneration_imposable" alt="" coords="5,5,421,867">
-</map>
-
-					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/pevexoneration_imposable.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-				<div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pevexoneration_imposable.html" title="pevexoneration_imposable" alt="" coords="217,20,633,881">
-<area shape="rect" id="node2" href="ccolloc.html" title="ccolloc" alt="" coords="19,316,159,433">
-<area shape="rect" id="node3" href="gnextl.html" title="gnextl" alt="" coords="21,451,157,568">
-<area shape="rect" id="node4" href="pev.html" title="pev" alt="" coords="5,5,173,299">
-</map>
-
-					<a name='diagram'><img id='oneimpliedDegreeImg' src='../diagrams/pevexoneration_imposable.implied1degrees.png' usemap='#oneDegreeRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-				<div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pev.html" title="pev" alt="" coords="225,1249,393,1543">
-<area shape="rect" id="node2" href="ccoaff.html" title="ccoaff" alt="" coords="29,1264,157,1352">
-<area shape="rect" id="node3" href="ccocac.html" title="ccocac" alt="" coords="29,1580,158,1668">
-<area shape="rect" id="node4" href="ccthp.html" title="ccthp" alt="" coords="29,1475,157,1563">
-<area shape="rect" id="node5" href="gnexpl.html" title="gnexpl" alt="" coords="29,1369,157,1457">
-<area shape="rect" id="node6" href="local10.html" title="local10" alt="" coords="5,1159,181,1247">
-<area shape="rect" id="node7" href="pevdependances.html" title="pevdependances" alt="" coords="546,1411,745,1499">
-<area shape="rect" id="node8" href="pevexoneration.html" title="pevexoneration" alt="" coords="551,111,740,199">
-<area shape="rect" id="node9" href="ccolloc.html" title="ccolloc" alt="" coords="239,272,379,389">
-<area shape="rect" id="node10" href="gnextl.html" title="gnextl" alt="" coords="241,571,377,688">
-<area shape="rect" id="node11" href="pevexoneration_imposable.html" title="pevexoneration_imposable" alt="" coords="437,216,853,1077">
-<area shape="rect" id="node12" href="pevexoneration_imposee.html" title="pevexoneration_imposee" alt="" coords="517,1095,773,1183">
-<area shape="rect" id="node13" href="pevlissage.html" title="pevlissage" alt="" coords="568,1516,723,1604">
-<area shape="rect" id="node14" href="pevprincipale.html" title="pevprincipale" alt="" coords="558,1621,733,1709">
-<area shape="rect" id="node15" href="pevprofessionnelle.html" title="pevprofessionnelle" alt="" coords="539,1200,752,1288">
-<area shape="rect" id="node16" href="pevtaxation.html" title="pevtaxation" alt="" coords="565,1305,726,1393">
-<area shape="rect" id="node17" href="sufexoneration.html" title="sufexoneration" alt="" coords="553,5,738,93">
-</map>
-
-					<a name='diagram'><img id='twoimpliedDegreeImg' src='../diagrams/pevexoneration_imposable.implied2degrees.png' usemap='#twoDegreesRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-			  			</div>
-			</div>
-		  </div><!-- /.box-body -->
-		</div>
-	      </section>
-    
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div>
-      <div class="pull-right hidden-xs">
-        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
-        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
-      </div>
-      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
-<script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
-<script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
-<!-- SheetJS -->
-<script src="../bower/js-xlsx/xlsx.full.min.js"></script>
-<!-- pdfmake -->
-<script src="../bower/pdfmake/pdfmake.min.js"></script>
-<script src="../bower/pdfmake/vfs_fonts.js"></script>
-<!-- SlimScroll -->
-<script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
-<!-- Salvattore -->
-<script src="../bower/salvattore/salvattore.min.js"></script>
-<!-- AnchorJS -->
-<script src="../bower/anchor-js/anchor.min.js"></script>
-<!-- CodeMirror -->
-<script src="../bower/codemirror/codemirror.js"></script>
-<script src="../bower/codemirror/sql.js"></script>
-<!-- AdminLTE App -->
-<script src="../bower/admin-lte/dist/js/app.min.js"></script>
-<script src="table.js"></script>
-<script src="../schemaSpy.js"></script>
-</body>
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="table.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
 </html>

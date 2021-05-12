@@ -15,13 +15,12 @@ fanr
 edigeo_rel
 drgpos
 commune_majic
-charge_id
 bati
+proprietaire
 pevprincipale
 pevdependances
 geo_ptcanv
 commune
-parcelle_info
 sufexoneration
 pevexoneration_imposee
 pevexoneration_imposable
@@ -39,11 +38,11 @@ suftaxation
 pevtaxation
 pevprofessionnelle
 pevlissage
+parcelle_info
 geo_unite_fonciere
 geo_tsurf_commune
 geo_tpoint_commune
 geo_tline_commune
-proprietaire
 lots
 geo_tsurf
 geo_tpoint

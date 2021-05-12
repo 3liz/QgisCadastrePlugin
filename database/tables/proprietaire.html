@@ -1,1646 +1,1551 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>proprietaire - cadastre_2019 Database</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
-  <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
-  <!-- Code Mirror -->
-  <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
-  <!-- Fonts -->
-  <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
-  <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>proprietaire - qgistest Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
 
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
-  <!-- Salvattore -->
-  <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
-  <!-- SchemaSpy -->
-  <link rel="stylesheet" href="../schemaSpy.css">
-  
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="../bower/html5shiv/html5shiv.min.js"></script>
-  <script src="../bower/respond/respond.min.js"></script>
-  <![endif]-->
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="../index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
-			<li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
-			<li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
-			<li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
-			<li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
-			<li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
-			<li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
 
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Main content -->
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-          <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>proprietaire</h1></br>
-		<div class="box box-primary">
-            <div class="box-header with-border">
-              <i class="fa fa-file-text-o"></i>
-              <h3 id="Description" class="box-title">Description</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>			  
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>proprietaire</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p>Propriétaire</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Columns</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th title='Are nulls allowed?'>Nulls</th>
+                                    <th title='Is column automatically updated?'>Auto</th>
+                                    <th title='Default value'>Default</th>
+                                    <th title='Columns in tables that reference this column'>Children</th>
+                                    <th title='Columns in tables that are referenced by this column'>Parents</th>
+                                    <th title='Comments' class="toggle"><span>Comments</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="proprietaire">proprietaire</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="annee">annee</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccodep">ccodep</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>code département -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccodir">ccodir</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>code direction -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="ccocom">ccocom</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>code commune INSEE -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnupro">dnupro</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>compte communal - cgroup groupe de compte communal + * A B .. -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="comptecommunal">comptecommunal</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column."><a href='comptecommunal.html'>comptecommunal</a><span class='relatedKey'>.comptecommunal</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnulp">dnulp</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>numéro de libellé partiel - 01 à 06</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccocif">ccocif</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>code cdif -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnuper">dnuper</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>numéro de personne dans le cdif - Il s’agit du numéro de personne</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccodro">ccodro</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.ccodro&#39;s name implies that it&#39;s a child of ccodro.ccodro, but it doesn&#39;t reference that column."><a href='ccodro.html'>ccodro</a><span class='relatedKey'>.ccodro</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>code du droit réel ou particulier - Nouveau code en 2009 : C (fiduciaire)</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccodem">ccodem</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.ccodem&#39;s name implies that it&#39;s a child of ccodem.ccodem, but it doesn&#39;t reference that column."><a href='ccodem.html'>ccodem</a><span class='relatedKey'>.ccodem</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>code du démembrement/indivision - C S L I V</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="gdesip">gdesip</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>indicateur du destinataire de l’avis d’imposition - 1 = oui, 0 = non</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtoper">gtoper</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.gtoper&#39;s name implies that it&#39;s a child of gtoper.gtoper, but it doesn&#39;t reference that column."><a href='gtoper.html'>gtoper</a><span class='relatedKey'>.gtoper</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>indicateur de personne physique ou morale - 1 = physique, 2 = morale</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccoqua">ccoqua</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.ccoqua&#39;s name implies that it&#39;s a child of ccoqua.ccoqua, but it doesn&#39;t reference that column."><a href='ccoqua.html'>ccoqua</a><span class='relatedKey'>.ccoqua</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Code qualité de personne physique - 1, 2 ou 3</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="gnexcf">gnexcf</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>code exo ecf - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dtaucf">dtaucf</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>taux exo ecf - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dnatpr">dnatpr</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.dnatpr&#39;s name implies that it&#39;s a child of dnatpr.dnatpr, but it doesn&#39;t reference that column."><a href='dnatpr.html'>dnatpr</a><span class='relatedKey'>.dnatpr</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Code nature de personne physique ou morale - Voir $ 2.2.7</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccogrm">ccogrm</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.ccogrm&#39;s name implies that it&#39;s a child of ccogrm.ccogrm, but it doesn&#39;t reference that column."><a href='ccogrm.html'>ccogrm</a><span class='relatedKey'>.ccogrm</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Code groupe de personne morale - 0 à 9 - 0A à 9A</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dsglpm">dsglpm</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>sigle de personne morale -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dforme">dforme</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>forme juridique abrégée majic2 X Données Générales -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ddenom">ddenom</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Dénomination de personne physique ou morale -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtyp3">gtyp3</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.gtyp3&#39;s name implies that it&#39;s a child of gtyp3.gtyp3, but it doesn&#39;t reference that column."><a href='gtyp3.html'>gtyp3</a><span class='relatedKey'>.gtyp3</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>type de la 3eme ligne d’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dlign3">dlign3</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>3eme ligne d’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtyp4">gtyp4</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.gtyp4&#39;s name implies that it&#39;s a child of gtyp4.gtyp4, but it doesn&#39;t reference that column."><a href='gtyp4.html'>gtyp4</a><span class='relatedKey'>.gtyp4</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Type de la 4eme ligne d’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dlign4">dlign4</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>4eme ligne d’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtyp5">gtyp5</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.gtyp5&#39;s name implies that it&#39;s a child of gtyp5.gtyp5, but it doesn&#39;t reference that column."><a href='gtyp5.html'>gtyp5</a><span class='relatedKey'>.gtyp5</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>type de la 5eme ligne d’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dlign5">dlign5</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>5eme ligne d’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtyp6">gtyp6</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.gtyp6&#39;s name implies that it&#39;s a child of gtyp6.gtyp6, but it doesn&#39;t reference that column."><a href='gtyp6.html'>gtyp6</a><span class='relatedKey'>.gtyp6</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>type de la 6eme ligne d’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dlign6">dlign6</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>6eme ligne d’adresse X Codification de l’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccopay">ccopay</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>code de pays étranger et TOM - non servi pour France métropole et Dom</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccodep1a2">ccodep1a2</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code département de l’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccodira">ccodira</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code direction de l’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccocom_adr">ccocom_adr</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code commune de l’adresse -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccovoi">ccovoi</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code majic2 de la voie -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccoriv">ccoriv</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code rivoli de la voie -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnvoiri">dnvoiri</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>numéro de voirie -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dindic">dindic</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>indice de répétition de voirie -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccopos">ccopos</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code postal X Dénomination formatée de personne physique -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnirpp">dnirpp</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>zone à blanc - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dqualp">dqualp</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Qualité abrégée - M, MME ou MLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnomlp">dnomlp</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Nom d’usage -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dprnlp">dprnlp</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Prénoms associés au nom d’usage -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="jdatnss">jdatnss</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>date de naissance - sous la forme jj/mm/aaaa</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dldnss">dldnss</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>lieu de naissance -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="epxnee">epxnee</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>mention du complément - EPX ou NEE si complément</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnomcp">dnomcp</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Nom complément -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dprncp">dprncp</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Prénoms associés au complément -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="topcdi">topcdi</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>top transalp - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="oriard">oriard</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>origine adresse - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="fixard">fixard</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>pérennité adresse - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="datadr">datadr</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>date adresse - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="topdec">topdec</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>origine décès - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="datdec">datdec</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>date de décès - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dsiren">dsiren</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>numéro siren -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccmm">ccmm</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>création compte cadastral - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="topja">topja</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>indic jeune agriculteur - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="datja">datja</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>date jeune agriculteur - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="anospi">anospi</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>ano transalp - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="cblpmo">cblpmo</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>code blocage caractère personne morale - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="gtodge">gtodge</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>top appartenance à la DGE - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="gpctf">gpctf</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>top paiement centralisé à la taxe foncière - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="gpctsb">gpctsb</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>top paiement centralisé à la TSBCS - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="jmodge">jmodge</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>mois d’entrée à la DGE - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="jandge">jandge</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>année d’entrée à la DGE - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="jantfc">jantfc</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>année d’entrée paiement TF - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="jantbc">jantbc</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>année d’entrée paiement TSBCS - INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dformjur">dformjur</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="proprietaire.dformjur&#39;s name implies that it&#39;s a child of dformjur.dformjur, but it doesn&#39;t reference that column."><a href='dformjur.html'>dformjur</a><span class='relatedKey'>.dformjur</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Forme juridique (Depuis 2013)</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnomus">dnomus</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Nom d&rsquo;usage (Depuis 2015)</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dprnus">dprnus</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Prénom d&rsquo;usage (Depuis 2015)</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="lot">lot</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-sitemap"></i>
+                            <h3 id="Indexes" class="box-title">Indexes</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>Constraint Name</th>
+                                    <th>Type</th>
+                                    <th>Sort</th>
+                                    <th>Column(s)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> proprietaire_pk</td>
+                                    <td>Primary key</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>proprietaire</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idx_proprietaire_ccocom</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>ccocom</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idx_proprietaire_ccodro</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>ccodro</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idx_proprietaire_comptecommunal</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>comptecommunal</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="proprietaire.html" target="_top" title="proprietaire" alt="" coords="5,5,340,2157">
+</map>
+                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/proprietaire.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="proprietaire.html" target="_top" title="proprietaire" alt="" coords="275,177,609,2329">
+<area shape="rect" id="node2" href="ccodem.html" target="_top" title="ccodem" alt="" coords="45,275,191,392">
+<area shape="rect" id="node3" href="ccodro.html" target="_top" title="ccodro" alt="" coords="49,140,187,257">
+<area shape="rect" id="node4" href="ccogrm.html" target="_top" title="ccogrm" alt="" coords="47,813,189,931">
+<area shape="rect" id="node5" href="ccoqua.html" target="_top" title="ccoqua" alt="" coords="48,544,188,661">
+<area shape="rect" id="node6" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,5,231,123">
+<area shape="rect" id="node7" href="dformjur.html" target="_top" title="dformjur" alt="" coords="41,2145,195,2263">
+<area shape="rect" id="node8" href="dnatpr.html" target="_top" title="dnatpr" alt="" coords="49,679,187,796">
+<area shape="rect" id="node9" href="gtoper.html" target="_top" title="gtoper" alt="" coords="50,409,186,527">
+<area shape="rect" id="node10" href="gtyp3.html" target="_top" title="gtyp3" alt="" coords="53,948,183,1065">
+<area shape="rect" id="node11" href="gtyp4.html" target="_top" title="gtyp4" alt="" coords="53,1083,183,1200">
+<area shape="rect" id="node12" href="gtyp5.html" target="_top" title="gtyp5" alt="" coords="53,1217,183,1335">
+<area shape="rect" id="node13" href="gtyp6.html" target="_top" title="gtyp6" alt="" coords="53,1352,183,1469">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/proprietaire.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="geo_unite_fonciere.html" target="_top" title="geo_unite_fonciere" alt="" coords="328,151,556,239">
+<area shape="rect" id="node2" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,202,231,319">
+<area shape="rect" id="node3" href="local10.html" target="_top" title="local10" alt="" coords="867,111,1015,199">
+<area shape="rect" id="node4" href="parcelle.html" target="_top" title="parcelle" alt="" coords="653,189,801,277">
+<area shape="rect" id="node6" href="pdl.html" target="_top" title="pdl" alt="" coords="373,257,511,345">
+<area shape="rect" id="node5" href="lots.html" target="_top" title="lots" alt="" coords="872,249,1011,337">
+<area shape="rect" id="node7" href="proprietaire.html" target="_top" title="proprietaire" alt="" coords="275,454,609,2606">
+<area shape="rect" id="node8" href="ccodem.html" target="_top" title="ccodem" alt="" coords="45,519,191,637">
+<area shape="rect" id="node9" href="ccodro.html" target="_top" title="ccodro" alt="" coords="49,385,187,502">
+<area shape="rect" id="node10" href="ccogrm.html" target="_top" title="ccogrm" alt="" coords="47,1058,189,1175">
+<area shape="rect" id="node11" href="ccoqua.html" target="_top" title="ccoqua" alt="" coords="48,789,188,906">
+<area shape="rect" id="node12" href="dformjur.html" target="_top" title="dformjur" alt="" coords="41,2422,195,2539">
+<area shape="rect" id="node13" href="dnatpr.html" target="_top" title="dnatpr" alt="" coords="49,923,187,1041">
+<area shape="rect" id="node14" href="gtoper.html" target="_top" title="gtoper" alt="" coords="50,654,186,771">
+<area shape="rect" id="node15" href="gtyp3.html" target="_top" title="gtyp3" alt="" coords="53,1193,183,1310">
+<area shape="rect" id="node16" href="gtyp4.html" target="_top" title="gtyp4" alt="" coords="53,1327,183,1445">
+<area shape="rect" id="node17" href="gtyp5.html" target="_top" title="gtyp5" alt="" coords="53,1462,183,1579">
+<area shape="rect" id="node18" href="gtyp6.html" target="_top" title="gtyp6" alt="" coords="53,1597,183,1714">
+<area shape="rect" id="node19" href="suf.html" target="_top" title="suf" alt="" coords="872,354,1011,442">
+<area shape="rect" id="node20" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="845,14,1037,78">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/proprietaire.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body clearfix">
-				<p><p>Propriétaire</p></p>              
-            </div>
-            <!-- /.box-body -->
-		</div>
-		      </section>
-      <!-- Main content -->
-      <section class="content">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-			  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-              <h3 id="Columns" class="box-title">Columns</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-            <div class="box-body">
-				<div class="row">
-					<div id="button_group_one" class="col-md-3 col-sm-6"></div>
-					<div id="button_group_two" class="col-md-2 col-sm-4 pull-right text-right"></div>
-				</div>
-				<table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
-				<thead align='left'>
-				<tr>
-				  <th>Column</th>
-				  <th>Type</th>
-				  <th>Size</th>
-				  <th title='Are nulls allowed?'>Nulls</th>
-				  <th title='Is column automatically updated?'>Auto</th>
-				  <th title='Default value'>Default</th>
-				  <th title='Columns in tables that reference this column'>Children</th>
-				  <th title='Columns in tables that are referenced by this column'>Parents</th>
-				  <th title='Comments' class="toggle"><span>Comments</span></th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="proprietaire">proprietaire</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="parcelle_info.proprietaire&#39;s name implies that it&#39;s a child of proprietaire.proprietaire, but it doesn&#39;t reference that column.">
-						<a href='parcelle_info.html'>parcelle_info</a><span class='relatedKey'>.proprietaire</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="annee">annee</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="ccodep">ccodep</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>code département -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccodir">ccodir</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>code direction -</p></td>
-				</tr>
-				<tr>
-				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="ccocom">ccocom</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>code commune INSEE -</p></td>
-				</tr>
-				<tr>
-				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="dnupro">dnupro</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>compte communal - cgroup groupe de compte communal + * A B .. -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="comptecommunal">comptecommunal</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.comptecommunal&#39;s name implies that it&#39;s a child of comptecommunal.comptecommunal, but it doesn&#39;t reference that column.">
-						<a href='comptecommunal.html'>comptecommunal</a><span class='relatedKey'>.comptecommunal</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="dnulp">dnulp</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>numéro de libellé partiel - 01 à 06</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccocif">ccocif</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>code cdif -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnuper">dnuper</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>numéro de personne dans le cdif - Il s’agit du numéro de personne</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccodro">ccodro</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.ccodro&#39;s name implies that it&#39;s a child of ccodro.ccodro, but it doesn&#39;t reference that column.">
-						<a href='ccodro.html'>ccodro</a><span class='relatedKey'>.ccodro</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>code du droit réel ou particulier - Nouveau code en 2009 : C (fiduciaire)</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccodem">ccodem</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.ccodem&#39;s name implies that it&#39;s a child of ccodem.ccodem, but it doesn&#39;t reference that column.">
-						<a href='ccodem.html'>ccodem</a><span class='relatedKey'>.ccodem</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>code du démembrement/indivision - C S L I V</p></td>
-				</tr>
-				<tr>
-				 <td><span id="gdesip">gdesip</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>indicateur du destinataire de l’avis d’imposition - 1 = oui, 0 = non</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtoper">gtoper</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.gtoper&#39;s name implies that it&#39;s a child of gtoper.gtoper, but it doesn&#39;t reference that column.">
-						<a href='gtoper.html'>gtoper</a><span class='relatedKey'>.gtoper</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>indicateur de personne physique ou morale - 1 = physique, 2 = morale</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccoqua">ccoqua</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.ccoqua&#39;s name implies that it&#39;s a child of ccoqua.ccoqua, but it doesn&#39;t reference that column.">
-						<a href='ccoqua.html'>ccoqua</a><span class='relatedKey'>.ccoqua</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Code qualité de personne physique - 1, 2 ou 3</p></td>
-				</tr>
-				<tr>
-				 <td><span id="gnexcf">gnexcf</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>code exo ecf - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dtaucf">dtaucf</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>taux exo ecf - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dnatpr">dnatpr</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.dnatpr&#39;s name implies that it&#39;s a child of dnatpr.dnatpr, but it doesn&#39;t reference that column.">
-						<a href='dnatpr.html'>dnatpr</a><span class='relatedKey'>.dnatpr</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Code nature de personne physique ou morale - Voir $ 2.2.7</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="ccogrm">ccogrm</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.ccogrm&#39;s name implies that it&#39;s a child of ccogrm.ccogrm, but it doesn&#39;t reference that column.">
-						<a href='ccogrm.html'>ccogrm</a><span class='relatedKey'>.ccogrm</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Code groupe de personne morale - 0 à 9 - 0A à 9A</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dsglpm">dsglpm</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>sigle de personne morale -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dforme">dforme</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>forme juridique abrégée majic2 X Données Générales -</p></td>
-				</tr>
-				<tr>
-				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="ddenom">ddenom</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Dénomination de personne physique ou morale -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtyp3">gtyp3</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.gtyp3&#39;s name implies that it&#39;s a child of gtyp3.gtyp3, but it doesn&#39;t reference that column.">
-						<a href='gtyp3.html'>gtyp3</a><span class='relatedKey'>.gtyp3</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>type de la 3eme ligne d’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dlign3">dlign3</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>3eme ligne d’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtyp4">gtyp4</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.gtyp4&#39;s name implies that it&#39;s a child of gtyp4.gtyp4, but it doesn&#39;t reference that column.">
-						<a href='gtyp4.html'>gtyp4</a><span class='relatedKey'>.gtyp4</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Type de la 4eme ligne d’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dlign4">dlign4</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>4eme ligne d’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtyp5">gtyp5</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.gtyp5&#39;s name implies that it&#39;s a child of gtyp5.gtyp5, but it doesn&#39;t reference that column.">
-						<a href='gtyp5.html'>gtyp5</a><span class='relatedKey'>.gtyp5</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>type de la 5eme ligne d’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dlign5">dlign5</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>5eme ligne d’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="gtyp6">gtyp6</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.gtyp6&#39;s name implies that it&#39;s a child of gtyp6.gtyp6, but it doesn&#39;t reference that column.">
-						<a href='gtyp6.html'>gtyp6</a><span class='relatedKey'>.gtyp6</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>type de la 6eme ligne d’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dlign6">dlign6</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>6eme ligne d’adresse X Codification de l’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccopay">ccopay</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>code de pays étranger et TOM - non servi pour France métropole et Dom</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccodep1a2">ccodep1a2</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code département de l’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccodira">ccodira</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code direction de l’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccocom_adr">ccocom_adr</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code commune de l’adresse -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccovoi">ccovoi</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code majic2 de la voie -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccoriv">ccoriv</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code rivoli de la voie -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnvoiri">dnvoiri</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>numéro de voirie -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dindic">dindic</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>indice de répétition de voirie -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccopos">ccopos</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code postal X Dénomination formatée de personne physique -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnirpp">dnirpp</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>zone à blanc - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dqualp">dqualp</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Qualité abrégée - M, MME ou MLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnomlp">dnomlp</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Nom d’usage -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dprnlp">dprnlp</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Prénoms associés au nom d’usage -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="jdatnss">jdatnss</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>date de naissance - sous la forme jj/mm/aaaa</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dldnss">dldnss</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>lieu de naissance -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="epxnee">epxnee</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>mention du complément - EPX ou NEE si complément</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnomcp">dnomcp</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Nom complément -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dprncp">dprncp</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Prénoms associés au complément -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="topcdi">topcdi</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>top transalp - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="oriard">oriard</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>origine adresse - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="fixard">fixard</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>pérennité adresse - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="datadr">datadr</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>date adresse - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="topdec">topdec</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>origine décès - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="datdec">datdec</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>date de décès - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dsiren">dsiren</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>numéro siren -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccmm">ccmm</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>création compte cadastral - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="topja">topja</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>indic jeune agriculteur - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="datja">datja</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>date jeune agriculteur - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="anospi">anospi</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>ano transalp - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="cblpmo">cblpmo</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>code blocage caractère personne morale - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="gtodge">gtodge</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>top appartenance à la DGE - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="gpctf">gpctf</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>top paiement centralisé à la taxe foncière - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="gpctsb">gpctsb</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>top paiement centralisé à la TSBCS - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="jmodge">jmodge</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>mois d’entrée à la DGE - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="jandge">jandge</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>année d’entrée à la DGE - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="jantfc">jantfc</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>année d’entrée paiement TF - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="jantbc">jantbc</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>année d’entrée paiement TSBCS - INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dformjur">dformjur</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="proprietaire.dformjur&#39;s name implies that it&#39;s a child of dformjur.dformjur, but it doesn&#39;t reference that column.">
-						<a href='dformjur.html'>dformjur</a><span class='relatedKey'>.dformjur</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Forme juridique (Depuis 2013)</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnomus">dnomus</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Nom d'usage (Depuis 2015)</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dprnus">dprnus</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Prénom d'usage (Depuis 2015)</p></td>
-				</tr>
-				<tr>
-				 <td><span id="lot">lot</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-								</tbody>
-				</table>
-				<p title='71 columns'>Table contained <span id="recordNumber">51479</span> rows<p/>
-			</div>
-		</div>
-		<div class="box box-primary">		
-			<div class="box-header with-border">
-              <i class="fa fa-sitemap"></i>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
 
-              <h3 id="Indexes" class="box-title">Indexes</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-			<div class="box-body">
-				<table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
-				<thead>
-				 <tr>
-				  <th>Constraint Name</th>
-				  <th>Type</th>
-				  <th>Sort</th>
-				  <th>Column(s)</th>
-				 </tr>
-				</thead>
-				<tbody>
-				 <tr>
-				  <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> proprietaire_pk</td>
-				  <td>Primary key</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>proprietaire</td>
-				 </tr>				 
-				 <tr>
-				  <td title='Indexed'>idx_proprietaire_ccocom</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>ccocom</td>
-				 </tr>				 
-				 <tr>
-				  <td title='Indexed'>idx_proprietaire_ccodro</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>ccodro</td>
-				 </tr>				 
-				 <tr>
-				  <td title='Indexed'>idx_proprietaire_comptecommunal</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>comptecommunal</td>
-				 </tr>				 
-				 <tr>
-				  <td title='Indexed'>idxan_proprietaire</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>annee</td>
-				 </tr>				 
-				 <tr>
-				  <td title='Indexed'>proprietaire_ddenom_idx</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>ddenom</td>
-				 </tr>				 
-				 <tr>
-				  <td title='Indexed'>proprietaire_dnupro_idx</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>dnupro</td>
-				 </tr>				 
-				</tbody>
-				</table>   			  
-			</div><!-- /.box-body -->
-		</div>
-				<div class="box box-primary">		
-			<div class="box-header with-border">
-              <i class="fa fa-code-fork"></i>
-
-              <h3 id="Relationships" class="box-title">Relationships</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-			<div class="box-body">	
-			<div class="nav-tabs-custom" style="cursor: move;">
-            <!-- Tabs within a box -->
-			<h5>Close relationships within degrees of separation</h5>
-            <ul class="nav nav-tabs pull-left ui-sortable-handle">
-			  			              <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>			  			 
-			  			              <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>			  			 
-			  			              <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>			  			 
-            </ul>
-            <div class="tab-content no-padding">            
-				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="proprietaire.html" title="proprietaire" alt="" coords="5,5,339,2157">
-</map>
-
-					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/proprietaire.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-				<div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="parcelle_info.html" title="parcelle_info" alt="" coords="635,5,843,328">
-<area shape="rect" id="node2" href="comptecommunal.html" title="comptecommunal" alt="" coords="5,65,213,183">
-<area shape="rect" id="node3" href="proprietaire.html" title="proprietaire" alt="" coords="257,213,591,2365">
-<area shape="rect" id="node4" href="ccodem.html" title="ccodem" alt="" coords="35,335,183,452">
-<area shape="rect" id="node5" href="ccodro.html" title="ccodro" alt="" coords="39,200,179,317">
-<area shape="rect" id="node6" href="ccogrm.html" title="ccogrm" alt="" coords="37,873,182,991">
-<area shape="rect" id="node7" href="ccoqua.html" title="ccoqua" alt="" coords="38,604,181,721">
-<area shape="rect" id="node8" href="dformjur.html" title="dformjur" alt="" coords="39,2181,180,2299">
-<area shape="rect" id="node9" href="dnatpr.html" title="dnatpr" alt="" coords="39,739,179,856">
-<area shape="rect" id="node10" href="gtoper.html" title="gtoper" alt="" coords="39,469,179,587">
-<area shape="rect" id="node11" href="gtyp3.html" title="gtyp3" alt="" coords="44,1008,175,1125">
-<area shape="rect" id="node12" href="gtyp4.html" title="gtyp4" alt="" coords="44,1143,175,1260">
-<area shape="rect" id="node13" href="gtyp5.html" title="gtyp5" alt="" coords="44,1277,175,1395">
-<area shape="rect" id="node14" href="gtyp6.html" title="gtyp6" alt="" coords="44,1412,175,1529">
-</map>
-
-					<a name='diagram'><img id='oneimpliedDegreeImg' src='../diagrams/proprietaire.implied1degrees.png' usemap='#oneDegreeRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-				<div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="geo_unite_fonciere.html" title="geo_unite_fonciere" alt="" coords="257,5,472,93">
-<area shape="rect" id="node2" href="comptecommunal.html" title="comptecommunal" alt="" coords="5,252,213,369">
-<area shape="rect" id="node3" href="local10.html" title="local10" alt="" coords="909,180,1085,268">
-<area shape="rect" id="node4" href="parcelle.html" title="parcelle" alt="" coords="595,327,771,415">
-<area shape="rect" id="node5" href="voie.html" title="voie" alt="" coords="285,396,445,484">
-<area shape="rect" id="node7" href="pdl.html" title="pdl" alt="" coords="285,255,445,343">
-<area shape="rect" id="node6" href="lots.html" title="lots" alt="" coords="913,75,1081,163">
-<area shape="rect" id="node8" href="parcelle_info.html" title="parcelle_info" alt="" coords="893,472,1101,795">
-<area shape="rect" id="node9" href="proprietaire.html" title="proprietaire" alt="" coords="516,645,849,2797">
-<area shape="rect" id="node10" href="ccodem.html" title="ccodem" alt="" coords="291,744,439,861">
-<area shape="rect" id="node11" href="ccodro.html" title="ccodro" alt="" coords="295,609,435,727">
-<area shape="rect" id="node12" href="ccogrm.html" title="ccogrm" alt="" coords="292,1283,437,1400">
-<area shape="rect" id="node13" href="ccoqua.html" title="ccoqua" alt="" coords="293,1013,436,1131">
-<area shape="rect" id="node14" href="dformjur.html" title="dformjur" alt="" coords="294,2613,435,2731">
-<area shape="rect" id="node15" href="dnatpr.html" title="dnatpr" alt="" coords="295,1148,435,1265">
-<area shape="rect" id="node16" href="gtoper.html" title="gtoper" alt="" coords="295,879,435,996">
-<area shape="rect" id="node17" href="gtyp3.html" title="gtyp3" alt="" coords="299,1417,430,1535">
-<area shape="rect" id="node18" href="gtyp4.html" title="gtyp4" alt="" coords="299,1552,430,1669">
-<area shape="rect" id="node19" href="gtyp5.html" title="gtyp5" alt="" coords="299,1687,430,1804">
-<area shape="rect" id="node20" href="gtyp6.html" title="gtyp6" alt="" coords="299,1821,430,1939">
-<area shape="rect" id="node21" href="suf.html" title="suf" alt="" coords="913,285,1081,373">
-<area shape="rect" id="node22" href="v_geo_parcelle.html" title="v_geo_parcelle" alt="" coords="906,391,1089,455">
-</map>
-
-					<a name='diagram'><img id='twoimpliedDegreeImg' src='../diagrams/proprietaire.implied2degrees.png' usemap='#twoDegreesRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-			  			</div>
-			</div>
-		  </div><!-- /.box-body -->
-		</div>
-	      </section>
-    
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div>
-      <div class="pull-right hidden-xs">
-        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
-        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
-      </div>
-      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
-<script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
-<script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
-<!-- SheetJS -->
-<script src="../bower/js-xlsx/xlsx.full.min.js"></script>
-<!-- pdfmake -->
-<script src="../bower/pdfmake/pdfmake.min.js"></script>
-<script src="../bower/pdfmake/vfs_fonts.js"></script>
-<!-- SlimScroll -->
-<script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
-<!-- Salvattore -->
-<script src="../bower/salvattore/salvattore.min.js"></script>
-<!-- AnchorJS -->
-<script src="../bower/anchor-js/anchor.min.js"></script>
-<!-- CodeMirror -->
-<script src="../bower/codemirror/codemirror.js"></script>
-<script src="../bower/codemirror/sql.js"></script>
-<!-- AdminLTE App -->
-<script src="../bower/admin-lte/dist/js/app.min.js"></script>
-<script src="table.js"></script>
-<script src="../schemaSpy.js"></script>
-</body>
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="table.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
 </html>

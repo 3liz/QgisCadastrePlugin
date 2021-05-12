@@ -1,372 +1,346 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>geo_batiment_parcelle - cadastre_2019 Database</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
-  <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
-  <!-- Code Mirror -->
-  <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
-  <!-- Fonts -->
-  <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
-  <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>geo_batiment_parcelle - qgistest Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
 
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
-  <!-- Salvattore -->
-  <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
-  <!-- SchemaSpy -->
-  <link rel="stylesheet" href="../schemaSpy.css">
-  
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="../bower/html5shiv/html5shiv.min.js"></script>
-  <script src="../bower/respond/respond.min.js"></script>
-  <![endif]-->
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="../index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
-			<li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
-			<li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
-			<li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
-			<li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
-			<li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
-			<li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
 
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Main content -->
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-          <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>geo_batiment_parcelle</h1></br>
-		<div class="box box-primary">
-            <div class="box-header with-border">
-              <i class="fa fa-file-text-o"></i>
-              <h3 id="Description" class="box-title">Description</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>			  
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>geo_batiment_parcelle</h1><p><span id="recordNumber">179</span> rows</p><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p>Lien subdivision fiscale - parcelle</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Columns</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th title='Are nulls allowed?'>Nulls</th>
+                                    <th title='Is column automatically updated?'>Auto</th>
+                                    <th title='Default value'>Default</th>
+                                    <th title='Columns in tables that reference this column'>Children</th>
+                                    <th title='Columns in tables that are referenced by this column'>Parents</th>
+                                    <th title='Comments' class="toggle"><span>Comments</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="geo_batiment_parcelle">geo_batiment_parcelle</span></td>
+                                    <td>serial</td>
+                                    <td>10</td>
+                                    <td title=''></td>
+                                    <td title='Automatically updated by the database'>√</td>
+                                    <td>nextval(&#39;cadastre.geo_batiment_parcelle_geo_batiment_parcelle_seq&#39;::regclass)</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Identifiant</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="annee">annee</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Année</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="geo_batiment">geo_batiment</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="geo_batiment_parcelle.geo_batiment&#39;s name implies that it&#39;s a child of geo_batiment.geo_batiment, but it doesn&#39;t reference that column."><a href='geo_batiment.html'>geo_batiment</a><span class='relatedKey'>.geo_batiment</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Bâtiment</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="geo_parcelle">geo_parcelle</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="geo_batiment_parcelle.geo_parcelle&#39;s name implies that it&#39;s a child of parcelle.parcelle, but it doesn&#39;t reference that column."><a href='parcelle.html'>parcelle</a><span class='relatedKey'>.parcelle</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Parcelle</p></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-sitemap"></i>
+                            <h3 id="Indexes" class="box-title">Indexes</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>Constraint Name</th>
+                                    <th>Type</th>
+                                    <th>Sort</th>
+                                    <th>Column(s)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> geo_batiment_parcelle_pk</td>
+                                    <td>Primary key</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>geo_batiment_parcelle</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="geo_batiment_parcelle.html" target="_top" title="geo_batiment_parcelle" alt="" coords="5,5,373,192">
+</map>
+                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/geo_batiment_parcelle.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="geo_batiment_parcelle.html" target="_top" title="geo_batiment_parcelle" alt="" coords="244,27,612,213">
+<area shape="rect" id="node2" href="geo_batiment.html" target="_top" title="geo_batiment" alt="" coords="7,5,198,181">
+<area shape="rect" id="node3" href="parcelle.html" target="_top" title="parcelle" alt="" coords="5,199,200,463">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/geo_batiment_parcelle.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="geo_batiment.html" target="_top" title="geo_batiment" alt="" coords="507,67,698,243">
+<area shape="rect" id="node2" href="geo_dur.html" target="_top" title="geo_dur" alt="" coords="295,99,441,187">
+<area shape="rect" id="node3" href="geo_batiment_parcelle.html" target="_top" title="geo_batiment_parcelle" alt="" coords="744,5,1112,192">
+<area shape="rect" id="node4" href="parcelle.html" target="_top" title="parcelle" alt="" coords="505,733,700,997">
+<area shape="rect" id="node12" href="voie.html" target="_top" title="voie" alt="" coords="299,1380,437,1468">
+<area shape="rect" id="node14" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,679,231,767">
+<area shape="rect" id="node15" href="gpdl.html" target="_top" title="gpdl" alt="" coords="305,1125,431,1213">
+<area shape="rect" id="node17" href="pdl.html" target="_top" title="pdl" alt="" coords="299,548,437,636">
+<area shape="rect" id="node18" href="type_filiation.html" target="_top" title="type_filiation" alt="" coords="275,883,461,971">
+<area shape="rect" id="node5" href="geo_borne_parcelle.html" target="_top" title="geo_borne_parcelle" alt="" coords="813,736,1043,824">
+<area shape="rect" id="node6" href="geo_croix_parcelle.html" target="_top" title="geo_croix_parcelle" alt="" coords="816,841,1040,929">
+<area shape="rect" id="node7" href="geo_numvoie_parcelle.html" target="_top" title="geo_numvoie_parcelle" alt="" coords="801,947,1055,1035">
+<area shape="rect" id="node8" href="geo_parcelle.html" target="_top" title="geo_parcelle" alt="" coords="838,1052,1018,1140">
+<area shape="rect" id="node9" href="geo_subdfisc_parcelle.html" target="_top" title="geo_subdfisc_parcelle" alt="" coords="804,1193,1052,1281">
+<area shape="rect" id="node10" href="geo_symblim_parcelle.html" target="_top" title="geo_symblim_parcelle" alt="" coords="802,525,1054,613">
+<area shape="rect" id="node11" href="local00.html" target="_top" title="local00" alt="" coords="858,1335,998,1423">
+<area shape="rect" id="node13" href="local10.html" target="_top" title="local10" alt="" coords="1156,1335,1304,1423">
+<area shape="rect" id="node16" href="lots.html" target="_top" title="lots" alt="" coords="859,209,997,297">
+<area shape="rect" id="node19" href="parcelle_info.html" target="_top" title="parcelle_info" alt="" coords="836,631,1020,719">
+<area shape="rect" id="node20" href="parcellecomposante.html" target="_top" title="parcellecomposante" alt="" coords="807,315,1049,403">
+<area shape="rect" id="node21" href="suf.html" target="_top" title="suf" alt="" coords="859,420,997,508">
+<area shape="rect" id="node22" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="832,1440,1024,1504">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/geo_batiment_parcelle.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body clearfix">
-				<p><p>Lien subdivision fiscale - parcelle</p></p>              
-            </div>
-            <!-- /.box-body -->
-		</div>
-		      </section>
-      <!-- Main content -->
-      <section class="content">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-			  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-              <h3 id="Columns" class="box-title">Columns</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-            <div class="box-body">
-				<div class="row">
-					<div id="button_group_one" class="col-md-3 col-sm-6"></div>
-					<div id="button_group_two" class="col-md-2 col-sm-4 pull-right text-right"></div>
-				</div>
-				<table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
-				<thead align='left'>
-				<tr>
-				  <th>Column</th>
-				  <th>Type</th>
-				  <th>Size</th>
-				  <th title='Are nulls allowed?'>Nulls</th>
-				  <th title='Is column automatically updated?'>Auto</th>
-				  <th title='Default value'>Default</th>
-				  <th title='Columns in tables that reference this column'>Children</th>
-				  <th title='Columns in tables that are referenced by this column'>Parents</th>
-				  <th title='Comments' class="toggle"><span>Comments</span></th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="geo_batiment_parcelle">geo_batiment_parcelle</span></td>
-				 <td>serial</td>
-				 <td>10</td>
-				 <td title=''></td>
-				 <td title='Automatically updated by the database'>√</td>
-				 <td>nextval(&#39;cadastre.geo_batiment_parcelle_geo_batiment_parcelle_seq&#39;::regclass)</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Identifiant</p></td>
-				</tr>
-				<tr>
-				 <td><span id="annee">annee</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Année</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="geo_batiment">geo_batiment</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="geo_batiment_parcelle.geo_batiment&#39;s name implies that it&#39;s a child of geo_batiment.geo_batiment, but it doesn&#39;t reference that column.">
-						<a href='geo_batiment.html'>geo_batiment</a><span class='relatedKey'>.geo_batiment</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Bâtiment</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="geo_parcelle">geo_parcelle</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="geo_batiment_parcelle.geo_parcelle&#39;s name implies that it&#39;s a child of parcelle.parcelle, but it doesn&#39;t reference that column.">
-						<a href='parcelle.html'>parcelle</a><span class='relatedKey'>.parcelle</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Parcelle</p></td>
-				</tr>
-								</tbody>
-				</table>
-				<p title='4 columns'>Table contained <span id="recordNumber">36104</span> rows<p/>
-			</div>
-		</div>
-		<div class="box box-primary">		
-			<div class="box-header with-border">
-              <i class="fa fa-sitemap"></i>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
 
-              <h3 id="Indexes" class="box-title">Indexes</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-			<div class="box-body">
-				<table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
-				<thead>
-				 <tr>
-				  <th>Constraint Name</th>
-				  <th>Type</th>
-				  <th>Sort</th>
-				  <th>Column(s)</th>
-				 </tr>
-				</thead>
-				<tbody>
-				 <tr>
-				  <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> geo_batiment_parcelle_pk</td>
-				  <td>Primary key</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>geo_batiment_parcelle</td>
-				 </tr>				 
-				</tbody>
-				</table>   			  
-			</div><!-- /.box-body -->
-		</div>
-				<div class="box box-primary">		
-			<div class="box-header with-border">
-              <i class="fa fa-code-fork"></i>
-
-              <h3 id="Relationships" class="box-title">Relationships</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-			<div class="box-body">	
-			<div class="nav-tabs-custom" style="cursor: move;">
-            <!-- Tabs within a box -->
-			<h5>Close relationships within degrees of separation</h5>
-            <ul class="nav nav-tabs pull-left ui-sortable-handle">
-			  			              <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>			  			 
-			  			              <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>			  			 
-			  			              <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>			  			 
-            </ul>
-            <div class="tab-content no-padding">            
-				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="geo_batiment_parcelle.html" title="geo_batiment_parcelle" alt="" coords="5,5,383,192">
-</map>
-
-					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/geo_batiment_parcelle.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-				<div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="geo_batiment_parcelle.html" title="geo_batiment_parcelle" alt="" coords="257,27,635,213">
-<area shape="rect" id="node2" href="geo_batiment.html" title="geo_batiment" alt="" coords="21,5,197,181">
-<area shape="rect" id="node3" href="parcelle.html" title="parcelle" alt="" coords="5,199,213,492">
-</map>
-
-					<a name='diagram'><img id='oneimpliedDegreeImg' src='../diagrams/geo_batiment_parcelle.implied1degrees.png' usemap='#oneDegreeRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-				<div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="geo_batiment.html" title="geo_batiment" alt="" coords="485,67,661,243">
-<area shape="rect" id="node2" href="geo_dur.html" title="geo_dur" alt="" coords="271,99,409,187">
-<area shape="rect" id="node3" href="geo_batiment_parcelle.html" title="geo_batiment_parcelle" alt="" coords="721,5,1099,192">
-<area shape="rect" id="node4" href="parcelle.html" title="parcelle" alt="" coords="469,744,677,1037">
-<area shape="rect" id="node12" href="voie.html" title="voie" alt="" coords="260,1335,420,1423">
-<area shape="rect" id="node14" href="comptecommunal.html" title="comptecommunal" alt="" coords="5,805,211,893">
-<area shape="rect" id="node15" href="gpdl.html" title="gpdl" alt="" coords="280,1063,400,1151">
-<area shape="rect" id="node17" href="pdl.html" title="pdl" alt="" coords="260,537,420,625">
-<area shape="rect" id="node18" href="type_filiation.html" title="type_filiation" alt="" coords="255,923,425,1011">
-<area shape="rect" id="node5" href="geo_borne_parcelle.html" title="geo_borne_parcelle" alt="" coords="801,772,1019,860">
-<area shape="rect" id="node6" href="geo_croix_parcelle.html" title="geo_croix_parcelle" alt="" coords="803,877,1017,965">
-<area shape="rect" id="node7" href="geo_numvoie_parcelle.html" title="geo_numvoie_parcelle" alt="" coords="791,983,1029,1071">
-<area shape="rect" id="node8" href="geo_parcelle.html" title="geo_parcelle" alt="" coords="825,1088,995,1176">
-<area shape="rect" id="node9" href="geo_subdfisc_parcelle.html" title="geo_subdfisc_parcelle" alt="" coords="791,525,1029,613">
-<area shape="rect" id="node10" href="geo_symblim_parcelle.html" title="geo_symblim_parcelle" alt="" coords="791,631,1029,719">
-<area shape="rect" id="node11" href="local00.html" title="local00" alt="" coords="826,1335,994,1423">
-<area shape="rect" id="node13" href="local10.html" title="local10" alt="" coords="1143,1335,1319,1423">
-<area shape="rect" id="node16" href="lots.html" title="lots" alt="" coords="826,209,994,297">
-<area shape="rect" id="node19" href="parcelle_info.html" title="parcelle_info" alt="" coords="825,1229,995,1317">
-<area shape="rect" id="node20" href="parcellecomposante.html" title="parcellecomposante" alt="" coords="799,315,1021,403">
-<area shape="rect" id="node21" href="suf.html" title="suf" alt="" coords="826,420,994,508">
-<area shape="rect" id="node22" href="v_geo_parcelle.html" title="v_geo_parcelle" alt="" coords="819,1440,1001,1504">
-</map>
-
-					<a name='diagram'><img id='twoimpliedDegreeImg' src='../diagrams/geo_batiment_parcelle.implied2degrees.png' usemap='#twoDegreesRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-			  			</div>
-			</div>
-		  </div><!-- /.box-body -->
-		</div>
-	      </section>
-    
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div>
-      <div class="pull-right hidden-xs">
-        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
-        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
-      </div>
-      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
-<script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
-<script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
-<!-- SheetJS -->
-<script src="../bower/js-xlsx/xlsx.full.min.js"></script>
-<!-- pdfmake -->
-<script src="../bower/pdfmake/pdfmake.min.js"></script>
-<script src="../bower/pdfmake/vfs_fonts.js"></script>
-<!-- SlimScroll -->
-<script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
-<!-- Salvattore -->
-<script src="../bower/salvattore/salvattore.min.js"></script>
-<!-- AnchorJS -->
-<script src="../bower/anchor-js/anchor.min.js"></script>
-<!-- CodeMirror -->
-<script src="../bower/codemirror/codemirror.js"></script>
-<script src="../bower/codemirror/sql.js"></script>
-<!-- AdminLTE App -->
-<script src="../bower/admin-lte/dist/js/app.min.js"></script>
-<script src="table.js"></script>
-<script src="../schemaSpy.js"></script>
-</body>
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="table.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
 </html>

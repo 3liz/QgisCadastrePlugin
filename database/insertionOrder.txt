@@ -75,11 +75,11 @@ geo_tline
 geo_tpoint
 geo_tsurf
 lots
-proprietaire
 geo_tline_commune
 geo_tpoint_commune
 geo_tsurf_commune
 geo_unite_fonciere
+parcelle_info
 pevlissage
 pevprofessionnelle
 pevtaxation
@@ -97,13 +97,12 @@ pevexoneration
 pevexoneration_imposable
 pevexoneration_imposee
 sufexoneration
-parcelle_info
 commune
 geo_ptcanv
 pevdependances
 pevprincipale
+proprietaire
 bati
-charge_id
 commune_majic
 drgpos
 edigeo_rel

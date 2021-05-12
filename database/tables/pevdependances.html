@@ -1,809 +1,765 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>pevdependances - cadastre_2019 Database</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
-  <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
-  <!-- Code Mirror -->
-  <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
-  <!-- Fonts -->
-  <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
-  <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>pevdependances - qgistest Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
 
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
-  <!-- Salvattore -->
-  <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
-  <!-- SchemaSpy -->
-  <link rel="stylesheet" href="../schemaSpy.css">
-  
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="../bower/html5shiv/html5shiv.min.js"></script>
-  <script src="../bower/respond/respond.min.js"></script>
-  <![endif]-->
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="../index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
-			<li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
-			<li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
-			<li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
-			<li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
-			<li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
-			<li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
 
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Main content -->
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-          <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>pevdependances</h1></br>
-		<div class="box box-primary">
-            <div class="box-header with-border">
-              <i class="fa fa-file-text-o"></i>
-              <h3 id="Description" class="box-title">Description</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>			  
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>pevdependances</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p>Article descriptif de dépendance. Bati enregistrement 60</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Columns</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th title='Are nulls allowed?'>Nulls</th>
+                                    <th title='Is column automatically updated?'>Auto</th>
+                                    <th title='Default value'>Default</th>
+                                    <th title='Columns in tables that reference this column'>Children</th>
+                                    <th title='Columns in tables that are referenced by this column'>Parents</th>
+                                    <th title='Comments' class="toggle"><span>Comments</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="pevdependances">pevdependances</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="annee">annee</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccodep">ccodep</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code département -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccodir">ccodir</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code direction -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="ccocom">ccocom</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code commune INSEE -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="invar">invar</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Numéro invariant -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnupev">dnupev</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Numéro de pev -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="pev">pev</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="pevdependances.pev&#39;s name implies that it&#39;s a child of pev.pev, but it doesn&#39;t reference that column."><a href='pev.html'>pev</a><span class='relatedKey'>.pev</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnudes">dnudes</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Numéro d’ordre de descriptif - 001, 002</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dsudep">dsudep</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Surface réelle de la dépendance -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="cconad">cconad</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="pevdependances.cconad&#39;s name implies that it&#39;s a child of cconad.cconad, but it doesn&#39;t reference that column."><a href='cconad.html'>cconad</a><span class='relatedKey'>.cconad</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Nature de dépendance - cf tableau des codes</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="asitet">asitet</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Localisation (bat, esc, niv) -</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dmatgm">dmatgm</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="pevdependances.dmatgm&#39;s name implies that it&#39;s a child of dmatgm.dmatgm, but it doesn&#39;t reference that column."><a href='dmatgm.html'>dmatgm</a><span class='relatedKey'>.dmatgm</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Matériaux des gros murs - 0 à 9 cf art 40</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dmatto">dmatto</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="pevdependances.dmatto&#39;s name implies that it&#39;s a child of dmatto.dmatto, but it doesn&#39;t reference that column."><a href='dmatto.html'>dmatto</a><span class='relatedKey'>.dmatto</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Matériaux des toitures - 0 à 4 cf art 40</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="detent">detent</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="pevdependances.detent&#39;s name implies that it&#39;s a child of detent.detent, but it doesn&#39;t reference that column."><a href='detent.html'>detent</a><span class='relatedKey'>.detent</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>état d&rsquo;entretien - 1 à 5 cf art 40</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="geaulc">geaulc</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Présence d&rsquo;eau - O = oui, N = non</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="gelelc">gelelc</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Présence d’électricité - O = oui, N = non</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="gchclc">gchclc</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Présence du chauffage central - O = oui, N = non</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnbbai">dnbbai</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Nombre de baignoires -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnbdou">dnbdou</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Nombre de douches -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnblav">dnblav</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Nombre de lavabos -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dnbwc">dnbwc</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Nombre de WC -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="deqtlc">deqtlc</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Equivalence superficielle des -</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dcimlc">dcimlc</span></td>
+                                    <td>numeric</td>
+                                    <td>2,1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Coefficient de pondération - 1,0 - 0,2 à 0,6</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dcetde">dcetde</span></td>
+                                    <td>numeric</td>
+                                    <td>3,2</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Coefficient d entretien - 9V99</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dcspde">dcspde</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Coefficient de situation particulière - S9V99 de -0,10 à +0,10  &ndash; INDISPONIBLE</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dcspdea">dcspdea</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Coefficient de situation particulière</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="lot">lot</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-sitemap"></i>
+                            <h3 id="Indexes" class="box-title">Indexes</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>Constraint Name</th>
+                                    <th>Type</th>
+                                    <th>Sort</th>
+                                    <th>Column(s)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> pevdependances_pk</td>
+                                    <td>Primary key</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>pevdependances</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="5,5,328,896">
+</map>
+                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/pevdependances.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="200,67,523,957">
+<area shape="rect" id="node2" href="cconad.html" target="_top" title="cconad" alt="" coords="11,287,151,404">
+<area shape="rect" id="node3" href="detent.html" target="_top" title="detent" alt="" coords="11,691,150,808">
+<area shape="rect" id="node4" href="dmatgm.html" target="_top" title="dmatgm" alt="" coords="5,421,156,539">
+<area shape="rect" id="node5" href="dmatto.html" target="_top" title="dmatto" alt="" coords="9,556,152,673">
+<area shape="rect" id="node6" href="pev.html" target="_top" title="pev" alt="" coords="11,5,150,269">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/pevdependances.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="pev.html" target="_top" title="pev" alt="" coords="203,336,342,600">
+<area shape="rect" id="node2" href="ccoaff.html" target="_top" title="ccoaff" alt="" coords="12,321,147,409">
+<area shape="rect" id="node3" href="ccocac.html" target="_top" title="ccocac" alt="" coords="11,637,147,725">
+<area shape="rect" id="node4" href="ccthp.html" target="_top" title="ccthp" alt="" coords="12,532,147,620">
+<area shape="rect" id="node5" href="gnexpl.html" target="_top" title="gnexpl" alt="" coords="11,427,148,515">
+<area shape="rect" id="node6" href="local10.html" target="_top" title="local10" alt="" coords="5,216,153,304">
+<area shape="rect" id="node7" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="392,743,715,1633">
+<area shape="rect" id="node8" href="cconad.html" target="_top" title="cconad" alt="" coords="203,635,343,752">
+<area shape="rect" id="node9" href="detent.html" target="_top" title="detent" alt="" coords="203,1141,342,1259">
+<area shape="rect" id="node10" href="dmatgm.html" target="_top" title="dmatgm" alt="" coords="197,784,348,901">
+<area shape="rect" id="node11" href="dmatto.html" target="_top" title="dmatto" alt="" coords="201,948,344,1065">
+<area shape="rect" id="node12" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="450,5,657,93">
+<area shape="rect" id="node13" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="407,111,699,199">
+<area shape="rect" id="node14" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="415,216,692,304">
+<area shape="rect" id="node15" href="pevlissage.html" target="_top" title="pevlissage" alt="" coords="471,321,635,409">
+<area shape="rect" id="node16" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="457,637,649,725">
+<area shape="rect" id="node17" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="438,427,669,515">
+<area shape="rect" id="node18" href="pevtaxation.html" target="_top" title="pevtaxation" alt="" coords="464,532,643,620">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/pevdependances.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body clearfix">
-				<p><p>Article descriptif de dépendance. Bati enregistrement 60</p></p>              
-            </div>
-            <!-- /.box-body -->
-		</div>
-		      </section>
-      <!-- Main content -->
-      <section class="content">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-			  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-              <h3 id="Columns" class="box-title">Columns</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-            <div class="box-body">
-				<div class="row">
-					<div id="button_group_one" class="col-md-3 col-sm-6"></div>
-					<div id="button_group_two" class="col-md-2 col-sm-4 pull-right text-right"></div>
-				</div>
-				<table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
-				<thead align='left'>
-				<tr>
-				  <th>Column</th>
-				  <th>Type</th>
-				  <th>Size</th>
-				  <th title='Are nulls allowed?'>Nulls</th>
-				  <th title='Is column automatically updated?'>Auto</th>
-				  <th title='Default value'>Default</th>
-				  <th title='Columns in tables that reference this column'>Children</th>
-				  <th title='Columns in tables that are referenced by this column'>Parents</th>
-				  <th title='Comments' class="toggle"><span>Comments</span></th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr>
-				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="pevdependances">pevdependances</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title=''></td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="annee">annee</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="ccodep">ccodep</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code département -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccodir">ccodir</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code direction -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="ccocom">ccocom</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Code commune INSEE -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="invar">invar</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Numéro invariant -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnupev">dnupev</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Numéro de pev -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="pev">pev</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="pevdependances.pev&#39;s name implies that it&#39;s a child of pev.pev, but it doesn&#39;t reference that column.">
-						<a href='pev.html'>pev</a><span class='relatedKey'>.pev</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-				<tr>
-				 <td><span id="dnudes">dnudes</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Numéro d’ordre de descriptif - 001, 002</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dsudep">dsudep</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Surface réelle de la dépendance -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="cconad">cconad</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="pevdependances.cconad&#39;s name implies that it&#39;s a child of cconad.cconad, but it doesn&#39;t reference that column.">
-						<a href='cconad.html'>cconad</a><span class='relatedKey'>.cconad</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Nature de dépendance - cf tableau des codes</p></td>
-				</tr>
-				<tr>
-				 <td><span id="asitet">asitet</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Localisation (bat, esc, niv) -</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dmatgm">dmatgm</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="pevdependances.dmatgm&#39;s name implies that it&#39;s a child of dmatgm.dmatgm, but it doesn&#39;t reference that column.">
-						<a href='dmatgm.html'>dmatgm</a><span class='relatedKey'>.dmatgm</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Matériaux des gros murs - 0 à 9 cf art 40</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="dmatto">dmatto</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="pevdependances.dmatto&#39;s name implies that it&#39;s a child of dmatto.dmatto, but it doesn&#39;t reference that column.">
-						<a href='dmatto.html'>dmatto</a><span class='relatedKey'>.dmatto</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>Matériaux des toitures - 0 à 4 cf art 40</p></td>
-				</tr>
-				<tr>
-				 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="detent">detent</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				   <tr>
-					<td title="pevdependances.detent&#39;s name implies that it&#39;s a child of detent.detent, but it doesn&#39;t reference that column.">
-						<a href='detent.html'>detent</a><span class='relatedKey'>.detent</span>
-					</td>
-					<td class="constraint detail">
-						Implied Constraint <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
-					</td>
-				   </tr>
-				  </table>					 
-				 </td>
-				 <td><p>état d'entretien - 1 à 5 cf art 40</p></td>
-				</tr>
-				<tr>
-				 <td><span id="geaulc">geaulc</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Présence d'eau - O = oui, N = non</p></td>
-				</tr>
-				<tr>
-				 <td><span id="gelelc">gelelc</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Présence d’électricité - O = oui, N = non</p></td>
-				</tr>
-				<tr>
-				 <td><span id="gchclc">gchclc</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Présence du chauffage central - O = oui, N = non</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnbbai">dnbbai</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Nombre de baignoires -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnbdou">dnbdou</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Nombre de douches -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnblav">dnblav</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Nombre de lavabos -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dnbwc">dnbwc</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Nombre de WC -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="deqtlc">deqtlc</span></td>
-				 <td>int4</td>
-				 <td>10</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Equivalence superficielle des -</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dcimlc">dcimlc</span></td>
-				 <td>numeric</td>
-				 <td>2,1</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Coefficient de pondération - 1,0 - 0,2 à 0,6</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dcetde">dcetde</span></td>
-				 <td>numeric</td>
-				 <td>3,2</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Coefficient d entretien - 9V99</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dcspde">dcspde</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Coefficient de situation particulière - S9V99 de -0,10 à +0,10 -- INDISPONIBLE</p></td>
-				</tr>
-				<tr>
-				 <td><span id="dcspdea">dcspdea</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td><p>Coefficient de situation particulière</p></td>
-				</tr>
-				<tr>
-				 <td><span id="lot">lot</span></td>
-				 <td>text</td>
-				 <td>2147483647</td>
-				 <td title='nullable'>√</td>
-				 <td title=''></td>
-				 <td>null</td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>				 
-				 </td>
-				 <td>
-				  <table border='0' cellspacing='0' cellpadding='0'>
-				  </table>					 
-				 </td>
-				 <td></td>
-				</tr>
-								</tbody>
-				</table>
-				<p title='28 columns'>Table contained <span id="recordNumber">33990</span> rows<p/>
-			</div>
-		</div>
-		<div class="box box-primary">		
-			<div class="box-header with-border">
-              <i class="fa fa-sitemap"></i>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
 
-              <h3 id="Indexes" class="box-title">Indexes</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-			<div class="box-body">
-				<table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
-				<thead>
-				 <tr>
-				  <th>Constraint Name</th>
-				  <th>Type</th>
-				  <th>Sort</th>
-				  <th>Column(s)</th>
-				 </tr>
-				</thead>
-				<tbody>
-				 <tr>
-				  <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> pevdependances_pk</td>
-				  <td>Primary key</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>pevdependances</td>
-				 </tr>				 
-				 <tr>
-				  <td title='Indexed'>idxan_pevdependances</td>
-				  <td>Performance</td>
-				  <td><span title='Ascending'>Asc</span></td>
-				  <td>annee</td>
-				 </tr>				 
-				</tbody>
-				</table>   			  
-			</div><!-- /.box-body -->
-		</div>
-				<div class="box box-primary">		
-			<div class="box-header with-border">
-              <i class="fa fa-code-fork"></i>
-
-              <h3 id="Relationships" class="box-title">Relationships</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>	
-			<div class="box-body">	
-			<div class="nav-tabs-custom" style="cursor: move;">
-            <!-- Tabs within a box -->
-			<h5>Close relationships within degrees of separation</h5>
-            <ul class="nav nav-tabs pull-left ui-sortable-handle">
-			  			              <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>			  			 
-			  			              <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>			  			 
-			  			              <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>			  			 
-            </ul>
-            <div class="tab-content no-padding">            
-				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="pevdependances.html" title="pevdependances" alt="" coords="5,5,332,896">
-</map>
-
-					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/pevdependances.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-				<div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pevdependances.html" title="pevdependances" alt="" coords="217,96,544,987">
-<area shape="rect" id="node2" href="cconad.html" title="cconad" alt="" coords="18,316,161,433">
-<area shape="rect" id="node3" href="detent.html" title="detent" alt="" coords="20,720,159,837">
-<area shape="rect" id="node4" href="dmatgm.html" title="dmatgm" alt="" coords="13,451,166,568">
-<area shape="rect" id="node5" href="dmatto.html" title="dmatto" alt="" coords="17,585,161,703">
-<area shape="rect" id="node6" href="pev.html" title="pev" alt="" coords="5,5,173,299">
-</map>
-
-					<a name='diagram'><img id='oneimpliedDegreeImg' src='../diagrams/pevdependances.implied1degrees.png' usemap='#oneDegreeRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-				<div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">					
-					<map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pev.html" title="pev" alt="" coords="225,321,393,615">
-<area shape="rect" id="node2" href="ccoaff.html" title="ccoaff" alt="" coords="29,336,157,424">
-<area shape="rect" id="node3" href="ccocac.html" title="ccocac" alt="" coords="29,652,158,740">
-<area shape="rect" id="node4" href="ccthp.html" title="ccthp" alt="" coords="29,547,157,635">
-<area shape="rect" id="node5" href="gnexpl.html" title="gnexpl" alt="" coords="29,441,157,529">
-<area shape="rect" id="node6" href="local10.html" title="local10" alt="" coords="5,231,181,319">
-<area shape="rect" id="node7" href="pevdependances.html" title="pevdependances" alt="" coords="437,743,764,1633">
-<area shape="rect" id="node8" href="cconad.html" title="cconad" alt="" coords="238,635,381,752">
-<area shape="rect" id="node9" href="detent.html" title="detent" alt="" coords="240,1141,379,1259">
-<area shape="rect" id="node10" href="dmatgm.html" title="dmatgm" alt="" coords="233,784,386,901">
-<area shape="rect" id="node11" href="dmatto.html" title="dmatto" alt="" coords="237,948,381,1065">
-<area shape="rect" id="node12" href="pevexoneration.html" title="pevexoneration" alt="" coords="506,5,695,93">
-<area shape="rect" id="node13" href="pevexoneration_imposable.html" title="pevexoneration_imposable" alt="" coords="466,111,735,199">
-<area shape="rect" id="node14" href="pevexoneration_imposee.html" title="pevexoneration_imposee" alt="" coords="473,216,729,304">
-<area shape="rect" id="node15" href="pevlissage.html" title="pevlissage" alt="" coords="523,321,678,409">
-<area shape="rect" id="node16" href="pevprincipale.html" title="pevprincipale" alt="" coords="513,637,688,725">
-<area shape="rect" id="node17" href="pevprofessionnelle.html" title="pevprofessionnelle" alt="" coords="494,427,707,515">
-<area shape="rect" id="node18" href="pevtaxation.html" title="pevtaxation" alt="" coords="520,532,681,620">
-</map>
-
-					<a name='diagram'><img id='twoimpliedDegreeImg' src='../diagrams/pevdependances.implied2degrees.png' usemap='#twoDegreesRelationshipsDiagramImplied' class='diagram' border='0' alt='' align='left'></a>							
-				</div>
-			  			</div>
-			</div>
-		  </div><!-- /.box-body -->
-		</div>
-	      </section>
-    
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div>
-      <div class="pull-right hidden-xs">
-        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
-        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
-      </div>
-      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
-<script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
-<script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
-<script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
-<!-- SheetJS -->
-<script src="../bower/js-xlsx/xlsx.full.min.js"></script>
-<!-- pdfmake -->
-<script src="../bower/pdfmake/pdfmake.min.js"></script>
-<script src="../bower/pdfmake/vfs_fonts.js"></script>
-<!-- SlimScroll -->
-<script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
-<!-- Salvattore -->
-<script src="../bower/salvattore/salvattore.min.js"></script>
-<!-- AnchorJS -->
-<script src="../bower/anchor-js/anchor.min.js"></script>
-<!-- CodeMirror -->
-<script src="../bower/codemirror/codemirror.js"></script>
-<script src="../bower/codemirror/sql.js"></script>
-<!-- AdminLTE App -->
-<script src="../bower/admin-lte/dist/js/app.min.js"></script>
-<script src="table.js"></script>
-<script src="../schemaSpy.js"></script>
-</body>
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="table.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
 </html>

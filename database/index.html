@@ -1,1259 +1,1359 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>cadastre_2019 Database</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
-  <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
-  <!-- Code Mirror -->
-  <link rel="stylesheet" href="bower/codemirror/codemirror.css">
-  <!-- Fonts -->
-  <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
-  <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>qgistest Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
 
-  <!-- Theme style -->
-  <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
-  <!-- Salvattore -->
-  <link rel="stylesheet" href="bower/salvattore/salvattore.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
-  <!-- SchemaSpy -->
-  <link rel="stylesheet" href="schemaSpy.css">
-  
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="bower/html5shiv/html5shiv.min.js"></script>
-  <script src="bower/respond/respond.min.js"></script>
-  <![endif]-->
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
-			<li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
-			<li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
-			<li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
-			<li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
-			<li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
-			<li><a href="routines.html" title="Procedures and functions">Routines</a></li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
 
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Main content -->
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-          <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>Tables</h1></br>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="callout callout-info">
-					<h4>SchemaSpy Analysis of cadastre_2019</h4>
-					<p>Generated on ven. sept. 20 17:37 CEST 2019</p>
-				</div>
-			</div>
-		</div>
-
-
-        <a href="cadastre_2019.cadastre.xml" title="XML Representation">XML Representation</a></br>
-		<a href="insertionOrder.txt" title="Useful for loading data into a database">Insertion Order</a>
-        <a href="deletionOrder.txt" title="Useful for purging data from a database">Deletion Order</a>	
-      </section>
-      <!-- Main content -->
-      <section class="content">
-		  <div class="row">
-			<div class="col-md-2 col-sm-4 col-xs-12">
-			  <div class="info-box">
-				  <span class="info-box-icon bg-aqua"><i class="fa fa-table"></i></span>
-				  <div class="info-box-content">
-					  <span class="info-box-text">TABLES</span>
-					  <span class="info-box-number">123</span>
-				  </div>
-				  <!-- /.info-box-content -->
-			  </div>
-			  <!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-			<div class="col-md-2 col-sm-4 col-xs-12">
-			  <div class="info-box">
-				  <span class="info-box-icon bg-teal"><i class="fa fa-table"></i></span>
-				  <div class="info-box-content">
-					  <span class="info-box-text">VIEWS</span>
-					  <span class="info-box-number">1</span>
-				  </div>
-				  <!-- /.info-box-content -->
-			  </div>
-			  <!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-
-			<div class="col-md-2 col-sm-4 col-xs-12">
-			  <div class="info-box">
-				  <span class="info-box-icon bg-green"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
-
-				  <div class="info-box-content">
-					  <span class="info-box-text">COLUMNS</span>
-					  <span class="info-box-number">1121</span>
-				  </div>
-				  <!-- /.info-box-content -->
-			  </div>
-			  <!-- /.info-box -->
-			</div>
-		  <!-- /.col -->
-			<div class="col-md-2 col-sm-4 col-xs-12">
-			  <div class="info-box">
-				  <span class="info-box-icon bg-yellow"><i class="ion ion-key"></i></span>
-
-				  <div class="info-box-content">
-					  <span class="info-box-text">Constraints</span>
-					  <span class="info-box-number">0</span>
-				  </div>
-				  <!-- /.info-box-content -->
-			  </div>
-			  <!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-			<div class="col-md-2 col-sm-4 col-xs-12">
-			  <div class="info-box">
-				  <span class="info-box-icon bg-red-active"><i class="fa fa-question" aria-hidden="true"></i></span>
-
-				  <div class="info-box-content">
-					  <span class="info-box-text">Anomalies</span>
-					  <span class="info-box-number">157</span>
-				  </div>
-				  <!-- /.info-box-content -->
-			  </div>
-			  <!-- /.info-box -->
-			</div>
-		  	<!-- /.col -->
-			<div class="col-md-2 col-sm-4 col-xs-12">
-				<div class="info-box">
-					<span class="info-box-icon bg-navy"><i class="fa fa-file-code-o" aria-hidden="true"></i></span>
-
-					<div class="info-box-content">
-						<span class="info-box-text">Routines</span>
-						<span class="info-box-number">0</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-		</div>
-		<div class="box box-primary">		
-			<div class="box-header with-border">
-			  <h3 class="box-title">Database Properties</h3>
-			  <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>			  
-			</div><!-- /.box-header -->
-			<div class="box-body">
-			  <p>Database Type: PostgreSQL - 9.6.15</p>			  
-			</div><!-- /.box-body -->
-		</div>
-		<div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Tables</h3>			  
-			  <span class="label label-primary pull-right"><i class="fa fa-database fa-2x"></i></span>
-            </div><!-- /.box-header -->
-            <div class="box-body">
-			<div class="row">
-				<div id="button_group_one" class="col-md-3 col-sm-6"></div>
-				<div id="button_group_two" class="col-md-2 col-sm-4 pull-right text-right"></div>
-			</div>
-            <table id="database_objects" class="table table-bordered table-striped dataTable" role="grid">
-				<thead>
-					<tr>
-					  <th valign="bottom">Table / View</th>
-					  <th align="right" valign="bottom">Children</th>
-					  <th align="right" valign="bottom">Parents</th>
-					  <th align="right" valign="bottom">Columns</th>
-					  <th align="right" valign="bottom">Rows</th>
-					  <th align="right" valign="bottom">Type</th>
-					  <th class="toggle">Comments</th>
-					</tr>
-				</thead>
-				<tbody>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pev.html">pev</a></td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">44</td>
-				  <td class="detail" align="right">63989</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article descriptif de pev</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/indldnbat.html">indldnbat</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/detent.html">detent</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/cnatsp.html">cnatsp</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">153</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/dmatgm.html">dmatgm</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">71</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/dnatlc.html">dnatlc</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">6</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/typvoi.html">typvoi</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ctpdl.html">ctpdl</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">6</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gpdl.html">gpdl</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/dnatcg.html">dnatcg</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">12</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_indp.html">geo_indp</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_borne.html">geo_borne</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">7</td>
-				  <td class="detail" align="right">956</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Borne située en limite de propriété et représentée par un symbole ponctuel.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_parcelle.html">geo_parcelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">18</td>
-				  <td class="detail" align="right">32155</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Portion de section cadastrale disposant de caractéristiques propres au regard notamment de son échelle, sa qualité, son mode de confection. Une section a au moins une subdivision de section. Cet objet correspond à la feuille cadastrale.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccodro.html">ccodro</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">25</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_copl.html">geo_copl</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">7</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/suf.html">suf</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">7</td>
-				  <td class="detail" align="right">35</td>
-				  <td class="detail" align="right">33502</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article descriptif de suf</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/cconlo.html">cconlo</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">6</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_tline.html">geo_tline</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">27823</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Détail topographique linéaire représenté par un signe conventionnel de type linéaire permettant de documenter le plan cadastral et d'en améliorer la lisibilité.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_tpoint_commune.html">geo_tpoint_commune</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">536</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien tpoint - commune</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/charge_id.html">charge_id</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">6</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_subdfisc.html">geo_subdfisc</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">790</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Partie d'une parcelle ayant une seule nature de culture ou de propriété et constituant une unité au regard de la fiscalité directe locale.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_map.html">geo_map</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/commune.html">commune</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">23</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Commune (Fantoir)</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/suftaxation.html">suftaxation</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">21</td>
-				  <td class="detail" align="right">33502</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article taxation de suf</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccthp.html">ccthp</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">13</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_unite_fonciere.html">geo_unite_fonciere</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">20503</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Regroupe les unités foncières, c est a dire la fusion de parcelles adjacentes d un même propriétaire</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pevexoneration.html">pevexoneration</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">27</td>
-				  <td class="detail" align="right">32727</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article exonération de pev imposable</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_palt.html">geo_palt</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/top48a.html">top48a</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gnextl.html">gnextl</a></td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">108</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/cbtabt.html">cbtabt</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_subdsect.html">geo_subdsect</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">17</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Portion de section cadastrale disposant de caractéristiques propres au regard notamment de son échelle, sa qualité, son mode de confection. Une section a au moins une subdivision de section. Cet objet correspond à la feuille cadastrale.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_tronfluv.html">geo_tronfluv</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">675</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Élément surfacique (fermé) utilisé pour tous les cours d'eau et les rivages de mers. Un libellé y est associé.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/prop.html">prop</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_tsurf.html">geo_tsurf</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">2004</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Détail topographique surfacique représenté par un signe conventionnel de type surfacique permettant de documenter le plan cadastral et d'en améliorer la lisibilité</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccoeva.html">ccoeva</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">6</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gnexts.html">gnexts</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">18</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccoplc.html">ccoplc</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pdll.html">pdll</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pevtaxation.html">pevtaxation</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">29</td>
-				  <td class="detail" align="right">63989</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article taxation de pev</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gtoper.html">gtoper</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccogrm.html">ccogrm</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">20</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_batiment.html">geo_batiment</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">36247</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Construction assise sur une ou plusieurs parcelles cadastrales.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccoaff.html">ccoaff</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">10</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/cgrnum.html">cgrnum</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">13</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/local10.html">local10</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">16</td>
-				  <td class="detail" align="right">58</td>
-				  <td class="detail" align="right">57613</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article identifiant du local</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/natvoiriv.html">natvoiriv</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">36</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_ppln.html">geo_ppln</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">25</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/lots.html">lots</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">23</td>
-				  <td class="detail" align="right">36420</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article descriptif du lot</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_label.html">geo_label</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">23</td>
-				  <td class="detail" align="right">57425</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Libellés</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/dformjur.html">dformjur</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">277</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccoqua.html">ccoqua</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_commune.html">geo_commune</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">11</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Territoire contenant un nombre entier de subdivisions de section cadastrales</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_borne_parcelle.html">geo_borne_parcelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">1252</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien borne - parcelle</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/carvoi.html">carvoi</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/typcom.html">typcom</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/lloc.html">lloc</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pevexoneration_imposee.html">pevexoneration_imposee</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">27</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article exonération de pev imposée</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_voiep.html">geo_voiep</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">569</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Élément ponctuel permettant la gestion de l'ensemble immobilier auquel est associé son libellé.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pevprofessionnelle.html">pevprofessionnelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">23</td>
-				  <td class="detail" align="right">4135</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article descriptif professionnel</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/local00.html">local00</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">25</td>
-				  <td class="detail" align="right">57613</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article identifiant du local</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccocac.html">ccocac</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">49</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/dteloc.html">dteloc</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pevdependances.html">pevdependances</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">28</td>
-				  <td class="detail" align="right">33990</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article descriptif de dépendance. Bati enregistrement 60</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_ptcanv.html">geo_ptcanv</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">13</td>
-				  <td class="detail" align="right">987</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Objet ponctuel servant d'appui aux opérations de lever des plans..</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_sym.html">geo_sym</a></td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">53</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/cconac.html">cconac</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">732</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/cconad.html">cconad</a></td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">20</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/dsgrpf.html">dsgrpf</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">27</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/dnatpr.html">dnatpr</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_tline_commune.html">geo_tline_commune</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">14011</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien tline - commune</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_croix_parcelle.html">geo_croix_parcelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">41</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien croix - parcelle</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/dmatto.html">dmatto</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">42</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_lieudit.html">geo_lieudit</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">453</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Ensemble de parcelles entières comportant une même dénomination géographique résultant de l'usage.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_numvoie.html">geo_numvoie</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">15612</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Numéro correspondant à l'adresse de la parcelle.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_symblim_parcelle.html">geo_symblim_parcelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">32730</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien symblim - parcelle</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_section.html">geo_section</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">11</td>
-				  <td class="detail" align="right">189</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Partie du plan cadastral correspondant à une portion du territoire communal et comportant, suivant le cas, une ou plusieurs subdivisions de section</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/fanr.html">fanr</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/annul.html">annul</a></td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_inp.html">geo_inp</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_tronroute.html">geo_tronroute</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Élément surfacique (fermé) utilisé pour tous les tronçons de routes. Un libellé y est associé.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pevlissage.html">pevlissage</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">19</td>
-				  <td class="detail" align="right">4063</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Descriptif des quotes-parts de lissage (locaux révisés). Bati enregistrement 52</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccodem.html">ccodem</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/drgpos.html">drgpos</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">10</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pevexoneration_imposable.html">pevexoneration_imposable</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">27</td>
-				  <td class="detail" align="right">32727</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article exonération de pev imposable</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_zoncommuni.html">geo_zoncommuni</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">1858</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Voie du domaine non cadastré (ou passant sur des parcelles non figurées au plan) représentée par un élément linéaire correspondant à son axe.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_can.html">geo_can</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">12</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/parcellecomposante.html">parcellecomposante</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">17</td>
-				  <td class="detail" align="right">378</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Parcelle composante de la pdl autre que la parcelle de référence</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/voie.html">voie</a></td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">7</td>
-				  <td class="detail" align="right">26</td>
-				  <td class="detail" align="right">1956</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Voie (Fantoir)</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_symblim.html">geo_symblim</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">22577</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Symbole de limite de propriété représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d'en améliorer la lisibilité.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/sufexoneration.html">sufexoneration</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">22</td>
-				  <td class="detail" align="right">34619</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article exonération de suf</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/nbat.html">nbat</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gnexpl.html">gnexpl</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/commune_majic.html">commune_majic</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">7</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Commune (MAJIC - introduit depuis le millésime 2015). Cet article contient le code INSEE associé au libellé de la commune.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_croix.html">geo_croix</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">7</td>
-				  <td class="detail" align="right">42</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Borne située en limite de propriété et représentée par un symbole ponctuel.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_tpoint.html">geo_tpoint</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">10</td>
-				  <td class="detail" align="right">606</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Détail topographique ponctuel représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d'en améliorer la lisibilité.</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/parcelle_info.html">parcelle_info</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">18</td>
-				  <td class="detail" align="right">32155</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Table de parcelles consolidées, proposant les géométries et les informations MAJIC principales, dont les propriétaires</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_dur.html">geo_dur</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gnexps.html">gnexps</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">10</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/ccolloc.html">ccolloc</a></td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/parcelle.html">parcelle</a></td>
-				  <td class="detail" align="right">15</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">48</td>
-				  <td class="detail" align="right">32132</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article descriptif de parcelle</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pdl.html">pdl</a></td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">18</td>
-				  <td class="detail" align="right">1975</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Propriétés divisées en lots</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/pevprincipale.html">pevprincipale</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">49</td>
-				  <td class="detail" align="right">38584</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article descriptif partie principale habitation</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/natvoi.html">natvoi</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">189</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/lotslocaux.html">lotslocaux</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">21</td>
-				  <td class="detail" align="right">36131</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Article descriptif du lot</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_batiment_parcelle.html">geo_batiment_parcelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">36104</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien subdivision fiscale - parcelle</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/cconlc.html">cconlc</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">30</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_qupl.html">geo_qupl</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/type_filiation.html">type_filiation</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">3</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gtyp4.html">gtyp4</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/comptecommunal.html">comptecommunal</a></td>
-				  <td class="detail" align="right">9</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">8</td>
-				  <td class="detail" align="right">31171</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gtyp5.html">gtyp5</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">6</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/hlmsem.html">hlmsem</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gtyp6.html">gtyp6</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">7</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/fburx.html">fburx</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_tsurf_commune.html">geo_tsurf_commune</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">613</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien tsurf - commune</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/bati.html">bati</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/edigeo_rel.html">edigeo_rel</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/proprietaire.html">proprietaire</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">12</td>
-				  <td class="detail" align="right">71</td>
-				  <td class="detail" align="right">51479</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Propriétaire</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_subdfisc_parcelle.html">geo_subdfisc_parcelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">772</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien subdivision fiscale - parcelle</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gimtom.html">gimtom</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/geo_numvoie_parcelle.html">geo_numvoie_parcelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">4</td>
-				  <td class="detail" align="right">5908</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"><p>Lien subdivision fiscale - parcelle</p></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/gtyp3.html">gtyp3</a></td>
-				  <td class="detail" align="right">1</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">2</td>
-				  <td class="detail" align="right">Table</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				 <tr class="tbl even" valign="top">  <td class="detail"><a href="tables/v_geo_parcelle.html">v_geo_parcelle</a></td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">5</td>
-				  <td class="detail" align="right">20</td>
-				  <td class="detail" align="right">0</td>
-				  <td class="detail" align="right">View</td>
-				  <td class="comment detail" style="display: table-cell;"></td>
-				  </tr>
-				  			</table>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Tables</h1><br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="callout callout-info">
+                                <h4>SchemaSpy Analysis of qgistest</h4>
+                                <p>Generated on Wed May 12 07:05 GMT 2021</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="qgistest.cadastre.xml" title="XML Representation">XML Representation</a><br />
+                    <a href="insertionOrder.txt" title="Useful for loading data into a database">Insertion Order</a>
+                    <a href="deletionOrder.txt" title="Useful for purging data from a database">Deletion Order</a>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-4 col-xs-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-aqua"><i class="fa fa-table"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">TABLES</span>
+                                    <span class="info-box-number">122</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-2 col-sm-4 col-xs-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-teal"><i class="fa fa-table"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">VIEWS</span>
+                                    <span class="info-box-number">1</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-2 col-sm-4 col-xs-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-green"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">COLUMNS</span>
+                                    <span class="info-box-number">1109</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-2 col-sm-4 col-xs-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-yellow"><i class="ion ion-key"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Constraints</span>
+                                    <span class="info-box-number">0</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-2 col-sm-4 col-xs-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-red-active"><i class="fa fa-question" aria-hidden="true"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Anomalies</span>
+                                    <span class="info-box-number">156</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-2 col-sm-4 col-xs-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-navy"><i class="fa fa-file-code-o" aria-hidden="true"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Routines</span>
+                                    <span class="info-box-number">0</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Database Properties</h3>
+                            <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <p>Database Type: PostgreSQL - 11.11 (Ubuntu 11.11-1.pgdg20.04+1)</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Tables</h3>
+                            <span class="label label-primary pull-right"><i class="fa fa-database fa-2x"></i></span>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="database_objects" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead>
+                                    <tr>
+                                        <th valign="bottom">Table / View</th>
+                                        <th align="right" valign="bottom">Children</th>
+                                        <th align="right" valign="bottom">Parents</th>
+                                        <th align="right" valign="bottom">Columns</th>
+                                        <th align="right" valign="bottom">Rows</th>
+                                        <th align="right" valign="bottom">Type</th>
+                                        <th class="toggle">Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pev.html">pev</a></td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">44</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article descriptif de pev</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/indldnbat.html">indldnbat</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/cnatsp.html">cnatsp</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">153</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/detent.html">detent</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/dnatlc.html">dnatlc</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">6</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/dmatgm.html">dmatgm</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">71</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/typvoi.html">typvoi</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ctpdl.html">ctpdl</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">6</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gpdl.html">gpdl</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/dnatcg.html">dnatcg</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">12</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_indp.html">geo_indp</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_borne.html">geo_borne</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">7</td>
+                                        <td class="detail" align="right">581</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Borne située en limite de propriété et représentée par un symbole ponctuel.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_parcelle.html">geo_parcelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">18</td>
+                                        <td class="detail" align="right">250</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Portion de section cadastrale disposant de caractéristiques propres au regard notamment de son échelle, sa qualité, son mode de confection. Une section a au moins une subdivision de section. Cet objet correspond à la feuille cadastrale.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccodro.html">ccodro</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">25</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_copl.html">geo_copl</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">7</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/suf.html">suf</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">7</td>
+                                        <td class="detail" align="right">35</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article descriptif de suf</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/cconlo.html">cconlo</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">6</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_tline.html">geo_tline</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">10</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Détail topographique linéaire représenté par un signe conventionnel de type linéaire permettant de documenter le plan cadastral et d&rsquo;en améliorer la lisibilité.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_tpoint_commune.html">geo_tpoint_commune</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">25</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien tpoint - commune</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_subdfisc.html">geo_subdfisc</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">64</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Partie d&rsquo;une parcelle ayant une seule nature de culture ou de propriété et constituant une unité au regard de la fiscalité directe locale.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_map.html">geo_map</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/commune.html">commune</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">23</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Commune (Fantoir)</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/suftaxation.html">suftaxation</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">21</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article taxation de suf</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccthp.html">ccthp</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">13</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_unite_fonciere.html">geo_unite_fonciere</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Regroupe les unités foncières, c est a dire la fusion de parcelles adjacentes d un même propriétaire</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pevexoneration.html">pevexoneration</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">27</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article exonération de pev imposable</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_palt.html">geo_palt</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/top48a.html">top48a</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gnextl.html">gnextl</a></td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">110</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/cbtabt.html">cbtabt</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_subdsect.html">geo_subdsect</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">17</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Portion de section cadastrale disposant de caractéristiques propres au regard notamment de son échelle, sa qualité, son mode de confection. Une section a au moins une subdivision de section. Cet objet correspond à la feuille cadastrale.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_tronfluv.html">geo_tronfluv</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">6</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Élément surfacique (fermé) utilisé pour tous les cours d&rsquo;eau et les rivages de mers. Un libellé y est associé.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/prop.html">prop</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_tsurf.html">geo_tsurf</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Détail topographique surfacique représenté par un signe conventionnel de type surfacique permettant de documenter le plan cadastral et d&rsquo;en améliorer la lisibilité</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccoeva.html">ccoeva</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">6</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gnexts.html">gnexts</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">19</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccoplc.html">ccoplc</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pdll.html">pdll</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pevtaxation.html">pevtaxation</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">29</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article taxation de pev</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gtoper.html">gtoper</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccogrm.html">ccogrm</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">20</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_batiment.html">geo_batiment</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">11</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Construction assise sur une ou plusieurs parcelles cadastrales.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccoaff.html">ccoaff</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">10</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/cgrnum.html">cgrnum</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">13</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/local10.html">local10</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">16</td>
+                                        <td class="detail" align="right">58</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article identifiant du local</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/natvoiriv.html">natvoiriv</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">36</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_ppln.html">geo_ppln</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">25</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/lots.html">lots</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">23</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article descriptif du lot</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_label.html">geo_label</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">23</td>
+                                        <td class="detail" align="right">1539</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Libellés</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/dformjur.html">dformjur</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">277</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccoqua.html">ccoqua</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_commune.html">geo_commune</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">11</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Territoire contenant un nombre entier de subdivisions de section cadastrales</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_borne_parcelle.html">geo_borne_parcelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">4303</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien borne - parcelle</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/carvoi.html">carvoi</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/typcom.html">typcom</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/lloc.html">lloc</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pevexoneration_imposee.html">pevexoneration_imposee</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">27</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article exonération de pev imposée</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_voiep.html">geo_voiep</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Élément ponctuel permettant la gestion de l&rsquo;ensemble immobilier auquel est associé son libellé.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pevprofessionnelle.html">pevprofessionnelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">23</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article descriptif professionnel</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/local00.html">local00</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">25</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article identifiant du local</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccocac.html">ccocac</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">49</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/dteloc.html">dteloc</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pevdependances.html">pevdependances</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">28</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article descriptif de dépendance. Bati enregistrement 60</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_ptcanv.html">geo_ptcanv</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">13</td>
+                                        <td class="detail" align="right">19</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Objet ponctuel servant d&rsquo;appui aux opérations de lever des plans..</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_sym.html">geo_sym</a></td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">53</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/cconac.html">cconac</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">732</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/cconad.html">cconad</a></td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">20</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/dsgrpf.html">dsgrpf</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">27</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/dnatpr.html">dnatpr</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_tline_commune.html">geo_tline_commune</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">68</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien tline - commune</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_croix_parcelle.html">geo_croix_parcelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien croix - parcelle</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/dmatto.html">dmatto</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">42</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_lieudit.html">geo_lieudit</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Ensemble de parcelles entières comportant une même dénomination géographique résultant de l&rsquo;usage.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_numvoie.html">geo_numvoie</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Numéro correspondant à l&rsquo;adresse de la parcelle.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_symblim_parcelle.html">geo_symblim_parcelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">97</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien symblim - parcelle</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_section.html">geo_section</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">11</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Partie du plan cadastral correspondant à une portion du territoire communal et comportant, suivant le cas, une ou plusieurs subdivisions de section</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/fanr.html">fanr</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/annul.html">annul</a></td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_inp.html">geo_inp</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_tronroute.html">geo_tronroute</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Élément surfacique (fermé) utilisé pour tous les tronçons de routes. Un libellé y est associé.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pevlissage.html">pevlissage</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">20</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Descriptif des quotes-parts de lissage (locaux révisés). Bati enregistrement 52</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccodem.html">ccodem</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/drgpos.html">drgpos</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">10</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pevexoneration_imposable.html">pevexoneration_imposable</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">27</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article exonération de pev imposable</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_zoncommuni.html">geo_zoncommuni</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">12</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Voie du domaine non cadastré (ou passant sur des parcelles non figurées au plan) représentée par un élément linéaire correspondant à son axe.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_can.html">geo_can</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">12</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/parcellecomposante.html">parcellecomposante</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">17</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Parcelle composante de la pdl autre que la parcelle de référence</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/voie.html">voie</a></td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">7</td>
+                                        <td class="detail" align="right">26</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Voie (Fantoir)</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_symblim.html">geo_symblim</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Symbole de limite de propriété représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d&rsquo;en améliorer la lisibilité.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/sufexoneration.html">sufexoneration</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">23</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article exonération de suf</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/nbat.html">nbat</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gnexpl.html">gnexpl</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/commune_majic.html">commune_majic</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">7</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Commune (MAJIC - introduit depuis le millésime 2015). Cet article contient le code INSEE associé au libellé de la commune.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_croix.html">geo_croix</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">7</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Borne située en limite de propriété et représentée par un symbole ponctuel.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_tpoint.html">geo_tpoint</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">10</td>
+                                        <td class="detail" align="right">6</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Détail topographique ponctuel représenté par un signe conventionnel de type ponctuel permettant de documenter le plan cadastral et d&rsquo;en améliorer la lisibilité.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/parcelle_info.html">parcelle_info</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">10</td>
+                                        <td class="detail" align="right">250</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Table de parcelles consolidées, proposant les géométries et les informations MAJIC principales, dont les propriétaires</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_dur.html">geo_dur</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gnexps.html">gnexps</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">10</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/ccolloc.html">ccolloc</a></td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/parcelle.html">parcelle</a></td>
+                                        <td class="detail" align="right">15</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">48</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article descriptif de parcelle</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pdl.html">pdl</a></td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">18</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Propriétés divisées en lots</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/pevprincipale.html">pevprincipale</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">49</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article descriptif partie principale habitation</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/natvoi.html">natvoi</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">189</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/lotslocaux.html">lotslocaux</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">21</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Article descriptif du lot</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_batiment_parcelle.html">geo_batiment_parcelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">179</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien subdivision fiscale - parcelle</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/cconlc.html">cconlc</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">30</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_qupl.html">geo_qupl</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/type_filiation.html">type_filiation</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gtyp4.html">gtyp4</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/comptecommunal.html">comptecommunal</a></td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">8</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gtyp5.html">gtyp5</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">6</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/hlmsem.html">hlmsem</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gtyp6.html">gtyp6</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">7</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/fburx.html">fburx</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_tsurf_commune.html">geo_tsurf_commune</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">17</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien tsurf - commune</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/bati.html">bati</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/edigeo_rel.html">edigeo_rel</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/proprietaire.html">proprietaire</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">12</td>
+                                        <td class="detail" align="right">71</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Propriétaire</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_subdfisc_parcelle.html">geo_subdfisc_parcelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">215</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien subdivision fiscale - parcelle</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gimtom.html">gimtom</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/geo_numvoie_parcelle.html">geo_numvoie_parcelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">26</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Lien subdivision fiscale - parcelle</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/gtyp3.html">gtyp3</a></td>
+                                        <td class="detail" align="right">1</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/v_geo_parcelle.html">v_geo_parcelle</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">5</td>
+                                        <td class="detail" align="right">20</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">View</td>
+                                        <td class="comment detail" style="display: table-cell;"></td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div><!-- /.box-body -->
+                </section>
+                <!-- /.content -->
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
             </div>
-            <!-- /.box-body -->
-          </div>			
-      </section>
-      <!-- /.content -->
-	  <script>
-          var config = {
-	          pagination: true
-          }
-	  </script>    
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div>
-      <div class="pull-right hidden-xs">
-        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
-        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
-      </div>
-      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="bower/datatables.net/jquery.dataTables.min.js"></script>
-<script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
-<script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
-<script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
-<script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
-<!-- SheetJS -->
-<script src="bower/js-xlsx/xlsx.full.min.js"></script>
-<!-- pdfmake -->
-<script src="bower/pdfmake/pdfmake.min.js"></script>
-<script src="bower/pdfmake/vfs_fonts.js"></script>
-<!-- SlimScroll -->
-<script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
-<!-- Salvattore -->
-<script src="bower/salvattore/salvattore.min.js"></script>
-<!-- AnchorJS -->
-<script src="bower/anchor-js/anchor.min.js"></script>
-<!-- CodeMirror -->
-<script src="bower/codemirror/codemirror.js"></script>
-<script src="bower/codemirror/sql.js"></script>
-<!-- AdminLTE App -->
-<script src="bower/admin-lte/dist/js/app.min.js"></script>
-<script src="main.js"></script>
-<script src="schemaSpy.js"></script>
-</body>
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="main.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
 </html>
