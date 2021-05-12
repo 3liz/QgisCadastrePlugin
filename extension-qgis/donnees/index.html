@@ -681,13 +681,16 @@ Edigeo.</p>
 <p>Pour utiliser l'outil :</p>
 <ul>
 <li>Un code INSEE ou une liste de code INSEE, exemple <code>25047</code> ou <code>25047,25602</code>.</li>
-<li>Le filtre est <em>optionnel</em>. Il s'applique sur chacune des communes ci-dessus pour filtrer les feuilles :</li>
+<li>Le filtre est <em>optionnel</em>. Il s'applique sur chacune des communes ci-dessus pour filtrer les feuilles :<ul>
 <li>S'il est vide, alors toutes les feuilles.</li>
 <li><code>AB,AD</code>, toutes les feuilles sur toutes les communes qui contiennent <code>AB</code> ou <code>AD</code>.</li>
 <li><code>256020000C,250470000D</code>, toutes les feuilles <code>0C</code> sur <code>25602</code> et <code>0D</code> sur <code>25047</code>.</li>
 <li><code>256020000C01,250470000D01</code>, uniquement les <strong>2</strong> feuilles.</li>
 <li><code>25602,25047000AB</code>, toutes les feuilles de <code>25602</code> et les feuilles <code>AB</code> sur <code>25047</code></li>
-<li>La date est par défaut <code>latest</code> ou alors une date disponible sur <a href="https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise">https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise</a> selon le format <code>AAAA-MM-JJ</code>.</li>
+</ul>
+</li>
+<li>La date est par défaut <code>latest</code> ou alors une date disponible sur 
+  <a href="https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise">https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise</a> selon le format <code>AAAA-MM-JJ</code>.</li>
 </ul>
 <p><img alt="Télécharger Edigeo" src="../../processing/cadastre-telechargeur_edigeo_communal.jpg" /></p>
 <h2 id="magic">Magic<a class="headerlink" href="#magic" title="Permanent link">#</a></h2>
