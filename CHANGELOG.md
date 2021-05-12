@@ -12,6 +12,7 @@
 * Mise de la documentation au format MkDocs https://docs.3liz.org/QgisCadastrePlugin/
 * Intégration de la documentation du module Lizmap dans cette documentation
 * Ajout de la documentation automatique concernant les traitements Processing
+* Ajout de la documentation concernant la base de données avec SchémaSpy
 
 ## 1.10.2 - 2020-12-10
 

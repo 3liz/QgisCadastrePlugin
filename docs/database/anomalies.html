@@ -1,876 +1,866 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>cadastre_2019 Database</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
-  <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
-  <!-- Code Mirror -->
-  <link rel="stylesheet" href="bower/codemirror/codemirror.css">
-  <!-- Fonts -->
-  <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
-  <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>qgistest Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
 
-  <!-- Theme style -->
-  <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
-  <!-- Salvattore -->
-  <link rel="stylesheet" href="bower/salvattore/salvattore.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
-  <!-- SchemaSpy -->
-  <link rel="stylesheet" href="schemaSpy.css">
-  
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="bower/html5shiv/html5shiv.min.js"></script>
-  <script src="bower/respond/respond.min.js"></script>
-  <![endif]-->
-</head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="index.html" class="navbar-brand"><b>cadastre_2019</b> Database</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Anomalies</h1><br />
+                    <div class="callout callout-warning">
+                        <p>Things that might not be 'quite right' about your database and schema</p>
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-6"> <!-- Implied Relationship -->
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Columns whose name and type imply a relationship to another table's primary key</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <table id="implied_constraint" class="table table-bordered table-striped dataTable" role="grid">
+                                        <thead align='left'>
+                                            <tr>
+                                                <th>Child Column</th>
+                                                <th>Implied Parent Column</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><a href='tables/commune.html'>commune</a>.[annul]</td>
+                                                <td><a href='tables/annul.html'>annul</a>.[annul]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/commune.html'>commune</a>.[carvoi]</td>
+                                                <td><a href='tables/carvoi.html'>carvoi</a>.[carvoi]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/commune.html'>commune</a>.[indldnbat]</td>
+                                                <td><a href='tables/indldnbat.html'>indldnbat</a>.[indldnbat]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/commune.html'>commune</a>.[typcom]</td>
+                                                <td><a href='tables/typcom.html'>typcom</a>.[typcom]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/commune.html'>commune</a>.[typvoi]</td>
+                                                <td><a href='tables/typvoi.html'>typvoi</a>.[typvoi]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_batiment.html'>geo_batiment</a>.[geo_dur]</td>
+                                                <td><a href='tables/geo_dur.html'>geo_dur</a>.[geo_dur]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_batiment_parcelle.html'>geo_batiment_parcelle</a>.[geo_batiment]</td>
+                                                <td><a href='tables/geo_batiment.html'>geo_batiment</a>.[geo_batiment]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_batiment_parcelle.html'>geo_batiment_parcelle</a>.[geo_parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_borne_parcelle.html'>geo_borne_parcelle</a>.[geo_borne]</td>
+                                                <td><a href='tables/geo_borne.html'>geo_borne</a>.[geo_borne]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_borne_parcelle.html'>geo_borne_parcelle</a>.[geo_parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_croix_parcelle.html'>geo_croix_parcelle</a>.[geo_croix]</td>
+                                                <td><a href='tables/geo_croix.html'>geo_croix</a>.[geo_croix]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_croix_parcelle.html'>geo_croix_parcelle</a>.[geo_parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_numvoie_parcelle.html'>geo_numvoie_parcelle</a>.[geo_numvoie]</td>
+                                                <td><a href='tables/geo_numvoie.html'>geo_numvoie</a>.[geo_numvoie]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_numvoie_parcelle.html'>geo_numvoie_parcelle</a>.[geo_parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_parcelle.html'>geo_parcelle</a>.[geo_indp]</td>
+                                                <td><a href='tables/geo_indp.html'>geo_indp</a>.[geo_indp]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_parcelle.html'>geo_parcelle</a>.[geo_parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_parcelle.html'>geo_parcelle</a>.[geo_subdsect]</td>
+                                                <td><a href='tables/geo_subdsect.html'>geo_subdsect</a>.[geo_subdsect]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_can]</td>
+                                                <td><a href='tables/geo_can.html'>geo_can</a>.[geo_can]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_map]</td>
+                                                <td><a href='tables/geo_map.html'>geo_map</a>.[geo_map]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_palt]</td>
+                                                <td><a href='tables/geo_palt.html'>geo_palt</a>.[geo_palt]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_ppln]</td>
+                                                <td><a href='tables/geo_ppln.html'>geo_ppln</a>.[geo_ppln]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_sym]</td>
+                                                <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_subdfisc_parcelle.html'>geo_subdfisc_parcelle</a>.[geo_parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_subdfisc_parcelle.html'>geo_subdfisc_parcelle</a>.[geo_subdfisc]</td>
+                                                <td><a href='tables/geo_subdfisc.html'>geo_subdfisc</a>.[geo_subdfisc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_subdsect.html'>geo_subdsect</a>.[geo_copl]</td>
+                                                <td><a href='tables/geo_copl.html'>geo_copl</a>.[geo_copl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_subdsect.html'>geo_subdsect</a>.[geo_inp]</td>
+                                                <td><a href='tables/geo_inp.html'>geo_inp</a>.[geo_inp]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_subdsect.html'>geo_subdsect</a>.[geo_qupl]</td>
+                                                <td><a href='tables/geo_qupl.html'>geo_qupl</a>.[geo_qupl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_symblim.html'>geo_symblim</a>.[geo_sym]</td>
+                                                <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_symblim_parcelle.html'>geo_symblim_parcelle</a>.[geo_parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_symblim_parcelle.html'>geo_symblim_parcelle</a>.[geo_symblim]</td>
+                                                <td><a href='tables/geo_symblim.html'>geo_symblim</a>.[geo_symblim]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_tline.html'>geo_tline</a>.[geo_sym]</td>
+                                                <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_tline_commune.html'>geo_tline_commune</a>.[geo_tline]</td>
+                                                <td><a href='tables/geo_tline.html'>geo_tline</a>.[geo_tline]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_tpoint.html'>geo_tpoint</a>.[geo_sym]</td>
+                                                <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_tpoint_commune.html'>geo_tpoint_commune</a>.[geo_tpoint]</td>
+                                                <td><a href='tables/geo_tpoint.html'>geo_tpoint</a>.[geo_tpoint]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_tsurf.html'>geo_tsurf</a>.[geo_sym]</td>
+                                                <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_tsurf_commune.html'>geo_tsurf_commune</a>.[geo_tsurf]</td>
+                                                <td><a href='tables/geo_tsurf.html'>geo_tsurf</a>.[geo_tsurf]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_unite_fonciere.html'>geo_unite_fonciere</a>.[comptecommunal]</td>
+                                                <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local00.html'>local00</a>.[parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local00.html'>local00</a>.[voie]</td>
+                                                <td><a href='tables/voie.html'>voie</a>.[voie]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[cbtabt]</td>
+                                                <td><a href='tables/cbtabt.html'>cbtabt</a>.[cbtabt]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[ccoeva]</td>
+                                                <td><a href='tables/ccoeva.html'>ccoeva</a>.[ccoeva]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[cconac]</td>
+                                                <td><a href='tables/cconac.html'>cconac</a>.[cconac]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[cconlc]</td>
+                                                <td><a href='tables/cconlc.html'>cconlc</a>.[cconlc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[ccoplc]</td>
+                                                <td><a href='tables/ccoplc.html'>ccoplc</a>.[ccoplc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[comptecommunal]</td>
+                                                <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[dnatcg]</td>
+                                                <td><a href='tables/dnatcg.html'>dnatcg</a>.[dnatcg]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[dnatlc]</td>
+                                                <td><a href='tables/dnatlc.html'>dnatlc</a>.[dnatlc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[dteloc]</td>
+                                                <td><a href='tables/dteloc.html'>dteloc</a>.[dteloc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[gimtom]</td>
+                                                <td><a href='tables/gimtom.html'>gimtom</a>.[gimtom]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[gpdl]</td>
+                                                <td><a href='tables/gpdl.html'>gpdl</a>.[gpdl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[hlmsem]</td>
+                                                <td><a href='tables/hlmsem.html'>hlmsem</a>.[hlmsem]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[local00]</td>
+                                                <td><a href='tables/local00.html'>local00</a>.[local00]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[top48a]</td>
+                                                <td><a href='tables/top48a.html'>top48a</a>.[top48a]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/local10.html'>local10</a>.[voie]</td>
+                                                <td><a href='tables/voie.html'>voie</a>.[voie]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lots.html'>lots</a>.[cconlo]</td>
+                                                <td><a href='tables/cconlo.html'>cconlo</a>.[cconlo]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lots.html'>lots</a>.[comptecommunal]</td>
+                                                <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lots.html'>lots</a>.[parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lots.html'>lots</a>.[pdl]</td>
+                                                <td><a href='tables/pdl.html'>pdl</a>.[pdl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lotslocaux.html'>lotslocaux</a>.[local00]</td>
+                                                <td><a href='tables/local00.html'>local00</a>.[local00]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lotslocaux.html'>lotslocaux</a>.[local10]</td>
+                                                <td><a href='tables/local10.html'>local10</a>.[local10]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lotslocaux.html'>lotslocaux</a>.[lots]</td>
+                                                <td><a href='tables/lots.html'>lots</a>.[lots]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[comptecommunal]</td>
+                                                <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[gpdl]</td>
+                                                <td><a href='tables/gpdl.html'>gpdl</a>.[gpdl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[pdl]</td>
+                                                <td><a href='tables/pdl.html'>pdl</a>.[pdl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[type_filiation]</td>
+                                                <td><a href='tables/type_filiation.html'>type_filiation</a>.[type_filiation]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[voie]</td>
+                                                <td><a href='tables/voie.html'>voie</a>.[voie]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/parcelle_info.html'>parcelle_info</a>.[geo_parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/parcellecomposante.html'>parcellecomposante</a>.[parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/parcellecomposante.html'>parcellecomposante</a>.[pdl]</td>
+                                                <td><a href='tables/pdl.html'>pdl</a>.[pdl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pdl.html'>pdl</a>.[comptecommunal]</td>
+                                                <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pdl.html'>pdl</a>.[ctpdl]</td>
+                                                <td><a href='tables/ctpdl.html'>ctpdl</a>.[ctpdl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pdl.html'>pdl</a>.[parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pev.html'>pev</a>.[ccoaff]</td>
+                                                <td><a href='tables/ccoaff.html'>ccoaff</a>.[ccoaff]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pev.html'>pev</a>.[ccocac]</td>
+                                                <td><a href='tables/ccocac.html'>ccocac</a>.[ccocac]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pev.html'>pev</a>.[ccthp]</td>
+                                                <td><a href='tables/ccthp.html'>ccthp</a>.[ccthp]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pev.html'>pev</a>.[gnexpl]</td>
+                                                <td><a href='tables/gnexpl.html'>gnexpl</a>.[gnexpl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pev.html'>pev</a>.[local10]</td>
+                                                <td><a href='tables/local10.html'>local10</a>.[local10]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevdependances.html'>pevdependances</a>.[cconad]</td>
+                                                <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevdependances.html'>pevdependances</a>.[detent]</td>
+                                                <td><a href='tables/detent.html'>detent</a>.[detent]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevdependances.html'>pevdependances</a>.[dmatgm]</td>
+                                                <td><a href='tables/dmatgm.html'>dmatgm</a>.[dmatgm]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevdependances.html'>pevdependances</a>.[dmatto]</td>
+                                                <td><a href='tables/dmatto.html'>dmatto</a>.[dmatto]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevdependances.html'>pevdependances</a>.[pev]</td>
+                                                <td><a href='tables/pev.html'>pev</a>.[pev]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration.html'>pevexoneration</a>.[ccolloc]</td>
+                                                <td><a href='tables/ccolloc.html'>ccolloc</a>.[ccolloc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration.html'>pevexoneration</a>.[gnextl]</td>
+                                                <td><a href='tables/gnextl.html'>gnextl</a>.[gnextl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration.html'>pevexoneration</a>.[pev]</td>
+                                                <td><a href='tables/pev.html'>pev</a>.[pev]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a>.[ccolloc]</td>
+                                                <td><a href='tables/ccolloc.html'>ccolloc</a>.[ccolloc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a>.[gnextl]</td>
+                                                <td><a href='tables/gnextl.html'>gnextl</a>.[gnextl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a>.[pev]</td>
+                                                <td><a href='tables/pev.html'>pev</a>.[pev]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a>.[ccolloc]</td>
+                                                <td><a href='tables/ccolloc.html'>ccolloc</a>.[ccolloc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a>.[gnextl]</td>
+                                                <td><a href='tables/gnextl.html'>gnextl</a>.[gnextl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a>.[pev]</td>
+                                                <td><a href='tables/pev.html'>pev</a>.[pev]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevlissage.html'>pevlissage</a>.[pev]</td>
+                                                <td><a href='tables/pev.html'>pev</a>.[pev]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dep1_cconad]</td>
+                                                <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dep2_cconad]</td>
+                                                <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dep3_cconad]</td>
+                                                <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dep4_cconad]</td>
+                                                <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[detent]</td>
+                                                <td><a href='tables/detent.html'>detent</a>.[detent]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dmatgm]</td>
+                                                <td><a href='tables/dmatgm.html'>dmatgm</a>.[dmatgm]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dmatto]</td>
+                                                <td><a href='tables/dmatto.html'>dmatto</a>.[dmatto]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[pev]</td>
+                                                <td><a href='tables/pev.html'>pev</a>.[pev]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprofessionnelle.html'>pevprofessionnelle</a>.[pev]</td>
+                                                <td><a href='tables/pev.html'>pev</a>.[pev]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevtaxation.html'>pevtaxation</a>.[pev]</td>
+                                                <td><a href='tables/pev.html'>pev</a>.[pev]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[ccodem]</td>
+                                                <td><a href='tables/ccodem.html'>ccodem</a>.[ccodem]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[ccodro]</td>
+                                                <td><a href='tables/ccodro.html'>ccodro</a>.[ccodro]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[ccogrm]</td>
+                                                <td><a href='tables/ccogrm.html'>ccogrm</a>.[ccogrm]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[ccoqua]</td>
+                                                <td><a href='tables/ccoqua.html'>ccoqua</a>.[ccoqua]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[comptecommunal]</td>
+                                                <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[dformjur]</td>
+                                                <td><a href='tables/dformjur.html'>dformjur</a>.[dformjur]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[dnatpr]</td>
+                                                <td><a href='tables/dnatpr.html'>dnatpr</a>.[dnatpr]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtoper]</td>
+                                                <td><a href='tables/gtoper.html'>gtoper</a>.[gtoper]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtyp3]</td>
+                                                <td><a href='tables/gtyp3.html'>gtyp3</a>.[gtyp3]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtyp4]</td>
+                                                <td><a href='tables/gtyp4.html'>gtyp4</a>.[gtyp4]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtyp5]</td>
+                                                <td><a href='tables/gtyp5.html'>gtyp5</a>.[gtyp5]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtyp6]</td>
+                                                <td><a href='tables/gtyp6.html'>gtyp6</a>.[gtyp6]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/suf.html'>suf</a>.[cgrnum]</td>
+                                                <td><a href='tables/cgrnum.html'>cgrnum</a>.[cgrnum]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/suf.html'>suf</a>.[cnatsp]</td>
+                                                <td><a href='tables/cnatsp.html'>cnatsp</a>.[cnatsp]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/suf.html'>suf</a>.[comptecommunal]</td>
+                                                <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/suf.html'>suf</a>.[dsgrpf]</td>
+                                                <td><a href='tables/dsgrpf.html'>dsgrpf</a>.[dsgrpf]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/suf.html'>suf</a>.[gnexps]</td>
+                                                <td><a href='tables/gnexps.html'>gnexps</a>.[gnexps]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/suf.html'>suf</a>.[parcelle]</td>
+                                                <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/suf.html'>suf</a>.[pdl]</td>
+                                                <td><a href='tables/pdl.html'>pdl</a>.[pdl]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/sufexoneration.html'>sufexoneration</a>.[ccolloc]</td>
+                                                <td><a href='tables/ccolloc.html'>ccolloc</a>.[ccolloc]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/sufexoneration.html'>sufexoneration</a>.[gnexts]</td>
+                                                <td><a href='tables/gnexts.html'>gnexts</a>.[gnexts]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/sufexoneration.html'>sufexoneration</a>.[suf]</td>
+                                                <td><a href='tables/suf.html'>suf</a>.[suf]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/suftaxation.html'>suftaxation</a>.[suf]</td>
+                                                <td><a href='tables/suf.html'>suf</a>.[suf]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/voie.html'>voie</a>.[annul]</td>
+                                                <td><a href='tables/annul.html'>annul</a>.[annul]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/voie.html'>voie</a>.[carvoi]</td>
+                                                <td><a href='tables/carvoi.html'>carvoi</a>.[carvoi]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/voie.html'>voie</a>.[indldnbat]</td>
+                                                <td><a href='tables/indldnbat.html'>indldnbat</a>.[indldnbat]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/voie.html'>voie</a>.[natvoi]</td>
+                                                <td><a href='tables/natvoi.html'>natvoi</a>.[natvoi]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/voie.html'>voie</a>.[natvoiriv]</td>
+                                                <td><a href='tables/natvoiriv.html'>natvoiriv</a>.[natvoiriv]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/voie.html'>voie</a>.[typcom]</td>
+                                                <td><a href='tables/typcom.html'>typcom</a>.[typcom]</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/voie.html'>voie</a>.[typvoi]</td>
+                                                <td><a href='tables/typvoi.html'>typvoi</a>.[typvoi]</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6"> <!-- Tables without indexes -->
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Tables without indexes</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <table id="un_indexed_table" class="table table-bordered table-striped dataTable" role="grid">
+                                        <thead align='left'>
+                                            <tr>
+                                                <th>Table</th>
+                                                <th>Rows</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><a href='tables/bati.html'>bati</a></td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/fanr.html'>fanr</a></td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lloc.html'>lloc</a></td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/nbat.html'>nbat</a></td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pdll.html'>pdll</a></td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a></td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a></td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/prop.html'>prop</a></td>
+                                                <td>0</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6"> <!-- Tables that contain a single column -->
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Tables that contain a single column</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <table id="single_column_table" class="table table-bordered table-striped dataTable" role="grid">
+                                        <thead align='left'>
+                                            <tr>
+                                                <th>Table</th>
+                                                <th>Column</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><a href='tables/bati.html'>bati</a></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/fanr.html'>fanr</a></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/lloc.html'>lloc</a></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/nbat.html'>nbat</a></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pdll.html'>pdll</a></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/prop.html'>prop</a></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6"> <!-- Tables with incrementing column names, potentially indicating denormalization -->
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Tables with incrementing column names, potentially indicating denormalization</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <table id="inc_column_table" class="table table-bordered table-striped dataTable" role="grid">
+                                        <thead align='left'>
+                                            <tr>
+                                                <th>Table</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><a href='tables/geo_label.html'>geo_label</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/geo_parcelle.html'>geo_parcelle</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration.html'>pevexoneration</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevlissage.html'>pevlissage</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprincipale.html'>pevprincipale</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/pevprofessionnelle.html'>pevprofessionnelle</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href='tables/proprietaire.html'>proprietaire</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6"> <!-- Columns whose default value is the word 'NULL' or 'null', but the SQL NULL value may have been intended -->
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title" title="Columns whose default value is the word 'NULL' or 'null', but the SQL NULL value may have been intende">Columns whose default value is the word 'NULL' or 'null'</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <table id="null_string_table" class="table table-bordered table-striped dataTable" role="grid">
+                                        <thead align='left'>
+                                            <tr>
+                                                <th>Table</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="3">Anomaly not detected</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
         </div>
+        <!-- ./wrapper -->
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
-			<li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
-			<li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
-			<li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
-			<li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
-			<li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
-			<li><a href="routines.html" title="Procedures and functions">Routines</a></li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
-
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Main content -->
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-          <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>Anomalies</h1></br>
-		<div class="callout callout-warning">        
-			<p>Things that might not be 'quite right' about your database and schema</p>
-		</div>		
-      </section>
-      <!-- Main content -->
-      <section class="content">
-	  <div class="row">
-		<div class="col-md-6"> <!-- Implied Relationship -->
-			<div class="box box-success">
-				<div class="box-header with-border">
-				  <h3 class="box-title">Columns whose name and type imply a relationship to another table's primary key</h3>
-				  <div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				  </div>
-				</div>	
-				<div class="box-body">
-					<table id="implied_constraints" class="table table-bordered table-striped dataTable" role="grid">
-					<thead align='left'>
-					<tr>
-					  <th>Child Column</th>					  
-					  <th>Implied Parent Column</th>						  
-					</tr>
-					</thead>
-					<tbody>
-									<tr>
-					 <td><a href='tables/commune.html'>commune</a>.[annul]</td>
-					 <td><a href='tables/annul.html'>annul</a>.[annul]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/commune.html'>commune</a>.[carvoi]</td>
-					 <td><a href='tables/carvoi.html'>carvoi</a>.[carvoi]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/commune.html'>commune</a>.[indldnbat]</td>
-					 <td><a href='tables/indldnbat.html'>indldnbat</a>.[indldnbat]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/commune.html'>commune</a>.[typcom]</td>
-					 <td><a href='tables/typcom.html'>typcom</a>.[typcom]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/commune.html'>commune</a>.[typvoi]</td>
-					 <td><a href='tables/typvoi.html'>typvoi</a>.[typvoi]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_batiment.html'>geo_batiment</a>.[geo_dur]</td>
-					 <td><a href='tables/geo_dur.html'>geo_dur</a>.[geo_dur]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_batiment_parcelle.html'>geo_batiment_parcelle</a>.[geo_batiment]</td>
-					 <td><a href='tables/geo_batiment.html'>geo_batiment</a>.[geo_batiment]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_batiment_parcelle.html'>geo_batiment_parcelle</a>.[geo_parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_borne_parcelle.html'>geo_borne_parcelle</a>.[geo_borne]</td>
-					 <td><a href='tables/geo_borne.html'>geo_borne</a>.[geo_borne]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_borne_parcelle.html'>geo_borne_parcelle</a>.[geo_parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_croix_parcelle.html'>geo_croix_parcelle</a>.[geo_croix]</td>
-					 <td><a href='tables/geo_croix.html'>geo_croix</a>.[geo_croix]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_croix_parcelle.html'>geo_croix_parcelle</a>.[geo_parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_numvoie_parcelle.html'>geo_numvoie_parcelle</a>.[geo_numvoie]</td>
-					 <td><a href='tables/geo_numvoie.html'>geo_numvoie</a>.[geo_numvoie]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_numvoie_parcelle.html'>geo_numvoie_parcelle</a>.[geo_parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_parcelle.html'>geo_parcelle</a>.[geo_indp]</td>
-					 <td><a href='tables/geo_indp.html'>geo_indp</a>.[geo_indp]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_parcelle.html'>geo_parcelle</a>.[geo_parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_parcelle.html'>geo_parcelle</a>.[geo_subdsect]</td>
-					 <td><a href='tables/geo_subdsect.html'>geo_subdsect</a>.[geo_subdsect]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_can]</td>
-					 <td><a href='tables/geo_can.html'>geo_can</a>.[geo_can]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_map]</td>
-					 <td><a href='tables/geo_map.html'>geo_map</a>.[geo_map]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_palt]</td>
-					 <td><a href='tables/geo_palt.html'>geo_palt</a>.[geo_palt]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_ppln]</td>
-					 <td><a href='tables/geo_ppln.html'>geo_ppln</a>.[geo_ppln]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_ptcanv.html'>geo_ptcanv</a>.[geo_sym]</td>
-					 <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_subdfisc_parcelle.html'>geo_subdfisc_parcelle</a>.[geo_parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_subdfisc_parcelle.html'>geo_subdfisc_parcelle</a>.[geo_subdfisc]</td>
-					 <td><a href='tables/geo_subdfisc.html'>geo_subdfisc</a>.[geo_subdfisc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_subdsect.html'>geo_subdsect</a>.[geo_copl]</td>
-					 <td><a href='tables/geo_copl.html'>geo_copl</a>.[geo_copl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_subdsect.html'>geo_subdsect</a>.[geo_inp]</td>
-					 <td><a href='tables/geo_inp.html'>geo_inp</a>.[geo_inp]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_subdsect.html'>geo_subdsect</a>.[geo_qupl]</td>
-					 <td><a href='tables/geo_qupl.html'>geo_qupl</a>.[geo_qupl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_symblim.html'>geo_symblim</a>.[geo_sym]</td>
-					 <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_symblim_parcelle.html'>geo_symblim_parcelle</a>.[geo_parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_symblim_parcelle.html'>geo_symblim_parcelle</a>.[geo_symblim]</td>
-					 <td><a href='tables/geo_symblim.html'>geo_symblim</a>.[geo_symblim]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_tline.html'>geo_tline</a>.[geo_sym]</td>
-					 <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_tline_commune.html'>geo_tline_commune</a>.[geo_tline]</td>
-					 <td><a href='tables/geo_tline.html'>geo_tline</a>.[geo_tline]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_tpoint.html'>geo_tpoint</a>.[geo_sym]</td>
-					 <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_tpoint_commune.html'>geo_tpoint_commune</a>.[geo_tpoint]</td>
-					 <td><a href='tables/geo_tpoint.html'>geo_tpoint</a>.[geo_tpoint]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_tsurf.html'>geo_tsurf</a>.[geo_sym]</td>
-					 <td><a href='tables/geo_sym.html'>geo_sym</a>.[geo_sym]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_tsurf_commune.html'>geo_tsurf_commune</a>.[geo_tsurf]</td>
-					 <td><a href='tables/geo_tsurf.html'>geo_tsurf</a>.[geo_tsurf]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_unite_fonciere.html'>geo_unite_fonciere</a>.[comptecommunal]</td>
-					 <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local00.html'>local00</a>.[parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local00.html'>local00</a>.[voie]</td>
-					 <td><a href='tables/voie.html'>voie</a>.[voie]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[cbtabt]</td>
-					 <td><a href='tables/cbtabt.html'>cbtabt</a>.[cbtabt]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[ccoeva]</td>
-					 <td><a href='tables/ccoeva.html'>ccoeva</a>.[ccoeva]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[cconac]</td>
-					 <td><a href='tables/cconac.html'>cconac</a>.[cconac]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[cconlc]</td>
-					 <td><a href='tables/cconlc.html'>cconlc</a>.[cconlc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[ccoplc]</td>
-					 <td><a href='tables/ccoplc.html'>ccoplc</a>.[ccoplc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[comptecommunal]</td>
-					 <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[dnatcg]</td>
-					 <td><a href='tables/dnatcg.html'>dnatcg</a>.[dnatcg]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[dnatlc]</td>
-					 <td><a href='tables/dnatlc.html'>dnatlc</a>.[dnatlc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[dteloc]</td>
-					 <td><a href='tables/dteloc.html'>dteloc</a>.[dteloc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[gimtom]</td>
-					 <td><a href='tables/gimtom.html'>gimtom</a>.[gimtom]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[gpdl]</td>
-					 <td><a href='tables/gpdl.html'>gpdl</a>.[gpdl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[hlmsem]</td>
-					 <td><a href='tables/hlmsem.html'>hlmsem</a>.[hlmsem]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[local00]</td>
-					 <td><a href='tables/local00.html'>local00</a>.[local00]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[top48a]</td>
-					 <td><a href='tables/top48a.html'>top48a</a>.[top48a]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/local10.html'>local10</a>.[voie]</td>
-					 <td><a href='tables/voie.html'>voie</a>.[voie]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/lots.html'>lots</a>.[cconlo]</td>
-					 <td><a href='tables/cconlo.html'>cconlo</a>.[cconlo]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/lots.html'>lots</a>.[comptecommunal]</td>
-					 <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/lots.html'>lots</a>.[parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/lots.html'>lots</a>.[pdl]</td>
-					 <td><a href='tables/pdl.html'>pdl</a>.[pdl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/lotslocaux.html'>lotslocaux</a>.[local00]</td>
-					 <td><a href='tables/local00.html'>local00</a>.[local00]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/lotslocaux.html'>lotslocaux</a>.[local10]</td>
-					 <td><a href='tables/local10.html'>local10</a>.[local10]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/lotslocaux.html'>lotslocaux</a>.[lots]</td>
-					 <td><a href='tables/lots.html'>lots</a>.[lots]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[comptecommunal]</td>
-					 <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[gpdl]</td>
-					 <td><a href='tables/gpdl.html'>gpdl</a>.[gpdl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[pdl]</td>
-					 <td><a href='tables/pdl.html'>pdl</a>.[pdl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[type_filiation]</td>
-					 <td><a href='tables/type_filiation.html'>type_filiation</a>.[type_filiation]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[voie]</td>
-					 <td><a href='tables/voie.html'>voie</a>.[voie]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle_info.html'>parcelle_info</a>.[comptecommunal]</td>
-					 <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle_info.html'>parcelle_info</a>.[geo_parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle_info.html'>parcelle_info</a>.[proprietaire]</td>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[proprietaire]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcelle_info.html'>parcelle_info</a>.[voie]</td>
-					 <td><a href='tables/voie.html'>voie</a>.[voie]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcellecomposante.html'>parcellecomposante</a>.[parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/parcellecomposante.html'>parcellecomposante</a>.[pdl]</td>
-					 <td><a href='tables/pdl.html'>pdl</a>.[pdl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pdl.html'>pdl</a>.[comptecommunal]</td>
-					 <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pdl.html'>pdl</a>.[ctpdl]</td>
-					 <td><a href='tables/ctpdl.html'>ctpdl</a>.[ctpdl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pdl.html'>pdl</a>.[parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pev.html'>pev</a>.[ccoaff]</td>
-					 <td><a href='tables/ccoaff.html'>ccoaff</a>.[ccoaff]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pev.html'>pev</a>.[ccocac]</td>
-					 <td><a href='tables/ccocac.html'>ccocac</a>.[ccocac]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pev.html'>pev</a>.[ccthp]</td>
-					 <td><a href='tables/ccthp.html'>ccthp</a>.[ccthp]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pev.html'>pev</a>.[gnexpl]</td>
-					 <td><a href='tables/gnexpl.html'>gnexpl</a>.[gnexpl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pev.html'>pev</a>.[local10]</td>
-					 <td><a href='tables/local10.html'>local10</a>.[local10]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevdependances.html'>pevdependances</a>.[cconad]</td>
-					 <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevdependances.html'>pevdependances</a>.[detent]</td>
-					 <td><a href='tables/detent.html'>detent</a>.[detent]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevdependances.html'>pevdependances</a>.[dmatgm]</td>
-					 <td><a href='tables/dmatgm.html'>dmatgm</a>.[dmatgm]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevdependances.html'>pevdependances</a>.[dmatto]</td>
-					 <td><a href='tables/dmatto.html'>dmatto</a>.[dmatto]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevdependances.html'>pevdependances</a>.[pev]</td>
-					 <td><a href='tables/pev.html'>pev</a>.[pev]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration.html'>pevexoneration</a>.[ccolloc]</td>
-					 <td><a href='tables/ccolloc.html'>ccolloc</a>.[ccolloc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration.html'>pevexoneration</a>.[gnextl]</td>
-					 <td><a href='tables/gnextl.html'>gnextl</a>.[gnextl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration.html'>pevexoneration</a>.[pev]</td>
-					 <td><a href='tables/pev.html'>pev</a>.[pev]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a>.[ccolloc]</td>
-					 <td><a href='tables/ccolloc.html'>ccolloc</a>.[ccolloc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a>.[gnextl]</td>
-					 <td><a href='tables/gnextl.html'>gnextl</a>.[gnextl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a>.[pev]</td>
-					 <td><a href='tables/pev.html'>pev</a>.[pev]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a>.[ccolloc]</td>
-					 <td><a href='tables/ccolloc.html'>ccolloc</a>.[ccolloc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a>.[gnextl]</td>
-					 <td><a href='tables/gnextl.html'>gnextl</a>.[gnextl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a>.[pev]</td>
-					 <td><a href='tables/pev.html'>pev</a>.[pev]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevlissage.html'>pevlissage</a>.[pev]</td>
-					 <td><a href='tables/pev.html'>pev</a>.[pev]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dep1_cconad]</td>
-					 <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dep2_cconad]</td>
-					 <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dep3_cconad]</td>
-					 <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dep4_cconad]</td>
-					 <td><a href='tables/cconad.html'>cconad</a>.[cconad]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[detent]</td>
-					 <td><a href='tables/detent.html'>detent</a>.[detent]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dmatgm]</td>
-					 <td><a href='tables/dmatgm.html'>dmatgm</a>.[dmatgm]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[dmatto]</td>
-					 <td><a href='tables/dmatto.html'>dmatto</a>.[dmatto]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a>.[pev]</td>
-					 <td><a href='tables/pev.html'>pev</a>.[pev]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprofessionnelle.html'>pevprofessionnelle</a>.[pev]</td>
-					 <td><a href='tables/pev.html'>pev</a>.[pev]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevtaxation.html'>pevtaxation</a>.[pev]</td>
-					 <td><a href='tables/pev.html'>pev</a>.[pev]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[ccodem]</td>
-					 <td><a href='tables/ccodem.html'>ccodem</a>.[ccodem]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[ccodro]</td>
-					 <td><a href='tables/ccodro.html'>ccodro</a>.[ccodro]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[ccogrm]</td>
-					 <td><a href='tables/ccogrm.html'>ccogrm</a>.[ccogrm]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[ccoqua]</td>
-					 <td><a href='tables/ccoqua.html'>ccoqua</a>.[ccoqua]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[comptecommunal]</td>
-					 <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[dformjur]</td>
-					 <td><a href='tables/dformjur.html'>dformjur</a>.[dformjur]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[dnatpr]</td>
-					 <td><a href='tables/dnatpr.html'>dnatpr</a>.[dnatpr]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtoper]</td>
-					 <td><a href='tables/gtoper.html'>gtoper</a>.[gtoper]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtyp3]</td>
-					 <td><a href='tables/gtyp3.html'>gtyp3</a>.[gtyp3]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtyp4]</td>
-					 <td><a href='tables/gtyp4.html'>gtyp4</a>.[gtyp4]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtyp5]</td>
-					 <td><a href='tables/gtyp5.html'>gtyp5</a>.[gtyp5]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a>.[gtyp6]</td>
-					 <td><a href='tables/gtyp6.html'>gtyp6</a>.[gtyp6]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/suf.html'>suf</a>.[cgrnum]</td>
-					 <td><a href='tables/cgrnum.html'>cgrnum</a>.[cgrnum]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/suf.html'>suf</a>.[cnatsp]</td>
-					 <td><a href='tables/cnatsp.html'>cnatsp</a>.[cnatsp]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/suf.html'>suf</a>.[comptecommunal]</td>
-					 <td><a href='tables/comptecommunal.html'>comptecommunal</a>.[comptecommunal]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/suf.html'>suf</a>.[dsgrpf]</td>
-					 <td><a href='tables/dsgrpf.html'>dsgrpf</a>.[dsgrpf]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/suf.html'>suf</a>.[gnexps]</td>
-					 <td><a href='tables/gnexps.html'>gnexps</a>.[gnexps]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/suf.html'>suf</a>.[parcelle]</td>
-					 <td><a href='tables/parcelle.html'>parcelle</a>.[parcelle]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/suf.html'>suf</a>.[pdl]</td>
-					 <td><a href='tables/pdl.html'>pdl</a>.[pdl]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/sufexoneration.html'>sufexoneration</a>.[ccolloc]</td>
-					 <td><a href='tables/ccolloc.html'>ccolloc</a>.[ccolloc]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/sufexoneration.html'>sufexoneration</a>.[gnexts]</td>
-					 <td><a href='tables/gnexts.html'>gnexts</a>.[gnexts]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/sufexoneration.html'>sufexoneration</a>.[suf]</td>
-					 <td><a href='tables/suf.html'>suf</a>.[suf]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/suftaxation.html'>suftaxation</a>.[suf]</td>
-					 <td><a href='tables/suf.html'>suf</a>.[suf]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/voie.html'>voie</a>.[annul]</td>
-					 <td><a href='tables/annul.html'>annul</a>.[annul]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/voie.html'>voie</a>.[carvoi]</td>
-					 <td><a href='tables/carvoi.html'>carvoi</a>.[carvoi]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/voie.html'>voie</a>.[indldnbat]</td>
-					 <td><a href='tables/indldnbat.html'>indldnbat</a>.[indldnbat]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/voie.html'>voie</a>.[natvoi]</td>
-					 <td><a href='tables/natvoi.html'>natvoi</a>.[natvoi]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/voie.html'>voie</a>.[natvoiriv]</td>
-					 <td><a href='tables/natvoiriv.html'>natvoiriv</a>.[natvoiriv]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/voie.html'>voie</a>.[typcom]</td>
-					 <td><a href='tables/typcom.html'>typcom</a>.[typcom]</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/voie.html'>voie</a>.[typvoi]</td>
-					 <td><a href='tables/typvoi.html'>typvoi</a>.[typvoi]</td>
-					</tr>				
-													</tbody>
-					</table>				
-				</div>
-			</div>	
-		</div>	
-		<div class="col-md-6"> <!-- Tables without indexes -->
-			<div class="box box-danger">
-				<div class="box-header with-border">
-				  <h3 class="box-title">Tables without indexes</h3>
-				  <div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				  </div>
-				</div>	
-				<div class="box-body">
-					<table id="un_indexed_tables" class="table table-bordered table-striped dataTable" role="grid">
-					<thead align='left'>
-					<tr>
-					  <th>Table</th>
-					  <th>Rows</th>		
-				  					</tr>
-					</thead>
-					<tbody>
-									<tr>
-					 <td><a href='tables/bati.html'>bati</a></td>
-					 <td>0</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/fanr.html'>fanr</a></td>
-					 <td>0</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/lloc.html'>lloc</a></td>
-					 <td>0</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/nbat.html'>nbat</a></td>
-					 <td>0</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pdll.html'>pdll</a></td>
-					 <td>0</td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/prop.html'>prop</a></td>
-					 <td>0</td>
-					</tr>				
-													</tbody>
-					</table>				
-				</div>
-			</div>			
-		</div>
-		<div class="col-md-6"> <!-- Tables that contain a single column -->
-			<div class="box box-info">
-				<div class="box-header with-border">
-				  <h3 class="box-title">Tables that contain a single column</h3>
-				  <div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				  </div>
-				</div>	
-				<div class="box-body">
-					<table id="un_indexed_tables" class="table table-bordered table-striped dataTable" role="grid">
-					<thead align='left'>
-					<tr>
-					  <th>Table</th>					  
-					  <th>Column</th>					  
-					</tr>
-					</thead>
-					<tbody>
-									<tr>
-					 <td><a href='tables/bati.html'>bati</a></td>
-					 <td></td>					 
-					</tr>				
-									<tr>
-					 <td><a href='tables/fanr.html'>fanr</a></td>
-					 <td></td>					 
-					</tr>				
-									<tr>
-					 <td><a href='tables/lloc.html'>lloc</a></td>
-					 <td></td>					 
-					</tr>				
-									<tr>
-					 <td><a href='tables/nbat.html'>nbat</a></td>
-					 <td></td>					 
-					</tr>				
-									<tr>
-					 <td><a href='tables/pdll.html'>pdll</a></td>
-					 <td></td>					 
-					</tr>				
-									<tr>
-					 <td><a href='tables/prop.html'>prop</a></td>
-					 <td></td>					 
-					</tr>				
-													</tbody>
-					</table>				
-				</div>
-			</div>			
-		</div>
-		<div class="col-md-6"> <!-- Tables with incrementing column names, potentially indicating denormalization -->
-			<div class="box box-danger">
-				<div class="box-header with-border">
-				  <h3 class="box-title">Tables with incrementing column names, potentially indicating denormalization</h3>
-				  <div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				  </div>
-				</div>	
-				<div class="box-body">
-					<table id="un_indexed_tables" class="table table-bordered table-striped dataTable" role="grid">
-					<thead align='left'>
-					<tr>
-					  <th>Table</th>				  
-					</tr>
-					</thead>
-					<tbody>
-									<tr>
-					 <td><a href='tables/geo_label.html'>geo_label</a></td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/geo_parcelle.html'>geo_parcelle</a></td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration.html'>pevexoneration</a></td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration_imposable.html'>pevexoneration_imposable</a></td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevexoneration_imposee.html'>pevexoneration_imposee</a></td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevlissage.html'>pevlissage</a></td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprincipale.html'>pevprincipale</a></td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/pevprofessionnelle.html'>pevprofessionnelle</a></td>
-					</tr>				
-									<tr>
-					 <td><a href='tables/proprietaire.html'>proprietaire</a></td>
-					</tr>				
-													</tbody>
-					</table>				
-				</div>
-			</div>			
-		</div>	
-		<div class="col-md-6"> <!-- Columns whose default value is the word 'NULL' or 'null', but the SQL NULL value may have been intended -->
-			<div class="box box-primary">
-				<div class="box-header with-border">
-				  <h3 class="box-title" title="Columns whose default value is the word 'NULL' or 'null', but the SQL NULL value may have been intende">Columns whose default value is the word 'NULL' or 'null'</h3>
-				  <div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				  </div>
-				</div>	
-				<div class="box-body">
-					<table id="un_indexed_tables" class="table table-bordered table-striped dataTable" role="grid">
-					<thead align='left'>
-					<tr>
-					  <th>Table</th>				  
-					</tr>
-					</thead>
-					<tbody>
-									<tr><td colspan="3">Anomaly not detected</td></tr>
-									</tbody>
-					</table>				
-				</div>
-			</div>			
-		</div>			
-	 </div>
-	 </section>    
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div>
-      <div class="pull-right hidden-xs">
-        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
-        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
-      </div>
-      <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.0.0</a></strong>
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="bower/datatables.net/jquery.dataTables.min.js"></script>
-<script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
-<script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
-<script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
-<script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
-<!-- SheetJS -->
-<script src="bower/js-xlsx/xlsx.full.min.js"></script>
-<!-- pdfmake -->
-<script src="bower/pdfmake/pdfmake.min.js"></script>
-<script src="bower/pdfmake/vfs_fonts.js"></script>
-<!-- SlimScroll -->
-<script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
-<!-- Salvattore -->
-<script src="bower/salvattore/salvattore.min.js"></script>
-<!-- AnchorJS -->
-<script src="bower/anchor-js/anchor.min.js"></script>
-<!-- CodeMirror -->
-<script src="bower/codemirror/codemirror.js"></script>
-<script src="bower/codemirror/sql.js"></script>
-<!-- AdminLTE App -->
-<script src="bower/admin-lte/dist/js/app.min.js"></script>
-<script src="anomalies.js"></script>
-<script src="schemaSpy.js"></script>
-</body>
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="anomalies.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
 </html>

@@ -23,6 +23,7 @@ nav:
     - Module Lizmap:
         - 'Installation': module-lizmap/installation.md
         - 'Configuration': module-lizmap/configuration.md
+    - Base de données: database/index.html
     - Contribution: contributing.md
     - Changelog: changelog.md
     - Base de données: database/index.html
