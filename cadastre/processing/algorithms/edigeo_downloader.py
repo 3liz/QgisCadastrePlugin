@@ -6,7 +6,6 @@ import processing
 
 from qgis.core import (
     QgsProcessingMultiStepFeedback,
-    QgsProcessingOutputFolder,
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
     QgsProcessingParameterDefinition,
@@ -50,16 +49,22 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
     def initAlgorithm(self, config):
         parameter = QgsProcessingParameterString(
             self.LISTE_CODE_INSEE,
-            'Liste des code INSEE à télécharger, séparés par ","',
+            'Liste des code INSEE à télécharger',
             # defaultValue='25047,05046'
         )
+        self.set_tooltip_parameter(parameter, 'séparés par ","')
         self.addParameter(parameter)
 
         parameter = QgsProcessingParameterString(
             self.FILTRE,
-            'Filtre sur les feuilles séparés par "," peut-être "050170000C03,AB" qui '
-            'téléchargent toutes les feuilles AB et 050170000C03',
-            # defaultValue='050170000C03,AB'
+            'Filtre sur les feuilles',
+            # defaultValue='050170000C03,AB',
+            optional=True,
+        )
+        self.set_tooltip_parameter(
+            parameter,
+            'séparés par ",", peut-être "050170000C03,AB" qui téléchargent toutes les feuilles AB et '
+            '050170000C03'
         )
         self.addParameter(parameter)
 
@@ -67,6 +72,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             self.DOSSIER,
             'Dossier de destination'
         )
+        self.set_tooltip_parameter(parameter, 'Dossier de destination pour les fichiers Edigeo')
         self.addParameter(parameter)
 
         parameter = QgsProcessingParameterString(
@@ -74,6 +80,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             'Date, disponible sur le site cadastre.data.gouv.fr (exemple "2021-02-01")',
             defaultValue='latest',
         )
+        self.set_tooltip_parameter(parameter, 'Par défaut "latest"')
         self.addParameter(parameter)
 
         parameter = QgsProcessingParameterString(
@@ -81,6 +88,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             'URL modèle, avec {date}, {departement}, {commune}',
             defaultValue=self.url(),
         )
+        self.set_tooltip_parameter(parameter, 'À ne changer que si l\'URL change')
         parameter.setFlags(parameter.flags() | QgsProcessingParameterDefinition.FlagAdvanced)
         self.addParameter(parameter)
 
@@ -205,3 +213,6 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             'https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise\n'
             'L\'URL ne doit pas être changé, sauf si l\'API de cadastre.gouv.fr change.'
         )
+
+    def helpUrl(self):
+        return "https://docs.3liz.org/QgisCadastrePlugin/extension-qgis/donnees/#edigeo"

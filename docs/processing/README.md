@@ -49,11 +49,11 @@ L'URL ne doit pas être changé, sauf si l'API de cadastre.gouv.fr change.
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-LISTE_CODE_INSEE|Liste des code INSEE à télécharger, séparés par ","|String||✓|||
-FILTRE|Filtre sur les feuilles séparés par "," peut-être "050170000C03,AB" qui téléchargent toutes les feuilles AB et 050170000C03|String||✓|||
-DOSSIER|Dossier de destination|FolderDestination||✓|||
-DATE|Date, disponible sur le site cadastre.data.gouv.fr (exemple "2021-02-01")|String||✓||Default: latest <br> |
-URL_TEMPLATE|URL modèle, avec {date}, {departement}, {commune}|String||✓|✓|Default: https://cadastre.data.gouv.fr/data/dgfip-pci-vecteur/{date}/edigeo/feuilles/{departement}/{commune}/ <br> |
+LISTE_CODE_INSEE|Liste des code INSEE à télécharger|String|séparés par ","|✓|||
+FILTRE|Filtre sur les feuilles|String|séparés par ",", peut-être "050170000C03,AB" qui téléchargent toutes les feuilles AB et 050170000C03||||
+DOSSIER|Dossier de destination|FolderDestination|Dossier de destination pour les fichiers Edigeo|✓|||
+DATE|Date, disponible sur le site cadastre.data.gouv.fr (exemple "2021-02-01")|String|Par défaut "latest"|✓||Default: latest <br> |
+URL_TEMPLATE|URL modèle, avec {date}, {departement}, {commune}|String|À ne changer que si l'URL change|✓|✓|Default: https://cadastre.data.gouv.fr/data/dgfip-pci-vecteur/{date}/edigeo/feuilles/{departement}/{commune}/ <br> |
 
 
 #### Outputs
