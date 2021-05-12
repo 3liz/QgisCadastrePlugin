@@ -883,19 +883,19 @@ L'URL ne doit pas être changé, sauf si l'API de cadastre.gouv.fr change.</p>
 <tbody>
 <tr>
 <td align="center">LISTE_CODE_INSEE</td>
-<td align="center">Liste des code INSEE à télécharger, séparés par ","</td>
+<td align="center">Liste des code INSEE à télécharger</td>
 <td align="center">String</td>
-<td align="center"></td>
+<td align="center">séparés par ","</td>
 <td align="center">✓</td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>
 <tr>
 <td align="center">FILTRE</td>
-<td align="center">Filtre sur les feuilles séparés par "," peut-être "050170000C03,AB" qui téléchargent toutes les feuilles AB et 050170000C03</td>
+<td align="center">Filtre sur les feuilles</td>
 <td align="center">String</td>
+<td align="center">séparés par ",", peut-être "050170000C03,AB" qui téléchargent toutes les feuilles AB et 050170000C03</td>
 <td align="center"></td>
-<td align="center">✓</td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>
@@ -903,7 +903,7 @@ L'URL ne doit pas être changé, sauf si l'API de cadastre.gouv.fr change.</p>
 <td align="center">DOSSIER</td>
 <td align="center">Dossier de destination</td>
 <td align="center">FolderDestination</td>
-<td align="center"></td>
+<td align="center">Dossier de destination pour les fichiers Edigeo</td>
 <td align="center">✓</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -912,7 +912,7 @@ L'URL ne doit pas être changé, sauf si l'API de cadastre.gouv.fr change.</p>
 <td align="center">DATE</td>
 <td align="center">Date, disponible sur le site cadastre.data.gouv.fr (exemple "2021-02-01")</td>
 <td align="center">String</td>
-<td align="center"></td>
+<td align="center">Par défaut "latest"</td>
 <td align="center">✓</td>
 <td align="center"></td>
 <td align="center">Default: latest <br></td>
@@ -921,7 +921,7 @@ L'URL ne doit pas être changé, sauf si l'API de cadastre.gouv.fr change.</p>
 <td align="center">URL_TEMPLATE</td>
 <td align="center" commune="commune">URL modèle, avec {date}, {departement},</td>
 <td align="center">String</td>
-<td align="center"></td>
+<td align="center">À ne changer que si l'URL change</td>
 <td align="center">✓</td>
 <td align="center">✓</td>
 <td align="center">Default: <a href="https://cadastre.data.gouv.fr/data/dgfip-pci-vecteur/{date}/edigeo/feuilles/{departement}/{commune}/">https://cadastre.data.gouv.fr/data/dgfip-pci-vecteur/{date}/edigeo/feuilles/{departement}/{commune}/</a> <br></td>

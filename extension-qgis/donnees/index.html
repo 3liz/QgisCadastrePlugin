@@ -678,6 +678,18 @@ Elles ne comportent pas de données sensibles.</p>
 <p>Il existe un traitement dans la boîte à outils Processing pour télécharger automatiquement les feuilles suivant
 une liste de code INSEE. Sinon, vous devez télécharger manuellement les fichiers, à l'échelle départemental par
 exemple.</p>
+<ul>
+<li>
+<p>La liste des codes INSEE peut-être <code>25047</code> ou <code>25047,25602</code>.</p>
+</li>
+<li>
+<p>Le filtre est optionnel :</p>
+</li>
+<li>S'il est vide, alors toutes les feuilles vont être téléchargées sur toutes les communes.</li>
+<li>Si <code>AB,AD</code>, toutes les feuilles sur toutes les communes qui contiennent <code>AB</code> ou <code>AD</code> vont être téléchargées.</li>
+<li>Si <code>AB,250470000D01</code>, toutes les feuilles <code>AB</code> ou la feuille <code>250470000D01</code> vont être téléchargées.</li>
+</ul>
+<p><img alt="Télécharger Edigeo" src="../../processing/cadastre-telechargeur_edigeo_communal.jpg" /></p>
 <h2 id="magic">Magic<a class="headerlink" href="#magic" title="Permanent link">#</a></h2>
 <p>Il faut y avoir un accès. Ce sont des données sensibles.</p>
 <h2 id="openmagic">OpenMagic<a class="headerlink" href="#openmagic" title="Permanent link">#</a></h2>
