@@ -140,3 +140,6 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
             'Lizmap https://github.com/3liz/lizmap-web-client/ et son module Cadastre '
             'https://github.com/3liz/lizmap-cadastre-module\n'
         )
+
+    def helpUrl(self) -> str:
+        return "https://docs.3liz.org/QgisCadastrePlugin/processing/#configuration-du-projet"
