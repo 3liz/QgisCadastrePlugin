@@ -70,8 +70,16 @@ class Parser:
         # TODO : Provide a simple regex looking for "(.*).tar.bz2"
         return r'<a href="(.*)">edigeo-([a-zA-Z0-9\-]+)\.tar\.bz2<\/a>\s+(\d{2})-(\w+)-(\d{4})\s.*\s\s(\d*)K'
 
-    def __init__(self, file_path: Union[Path, str], commune: Commune):
+    def __init__(
+            self, file_path: Union[Path, str], commune: Commune, feuille_filter: Union[str, list, None] = None):
         self._count = None
+
+        self.feuille_filter = None
+        if isinstance(feuille_filter, str):
+            self.feuille_filter = feuille_filter.split(',')
+        elif isinstance(feuille_filter, list):
+            self.feuille_filter = feuille_filter
+
         if isinstance(file_path, str):
             file_path = Path(file_path)
 
@@ -98,5 +106,12 @@ class Parser:
             if not len(results):
                 continue
 
-            self.commune.feuilles.append(Feuille(*results[0]))
+            if self.feuille_filter:
+                for one_filter in self.feuille_filter:
+                    if one_filter in results[0][1]:
+                        self.commune.feuilles.append(Feuille(*results[0]))
+                        break
+            else:
+                self.commune.feuilles.append(Feuille(*results[0]))
+
         self._count = len(self.feuilles)

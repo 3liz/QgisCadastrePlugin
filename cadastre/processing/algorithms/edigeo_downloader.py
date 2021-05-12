@@ -26,6 +26,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
 
     # INPUTS
     LISTE_CODE_INSEE = 'LISTE_CODE_INSEE'
+    FILTRE = 'FILTRE'
     DATE = 'DATE'
     URL_TEMPLATE = 'URL_TEMPLATE'
     DOSSIER = 'DOSSIER'
@@ -51,6 +52,14 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             self.LISTE_CODE_INSEE,
             'Liste des code INSEE à télécharger, séparés par ","',
             # defaultValue='25047,05046'
+        )
+        self.addParameter(parameter)
+
+        parameter = QgsProcessingParameterString(
+            self.FILTRE,
+            'Filtre sur les feuilles séparés par "," peut-être "050170000C03,AB" qui '
+            'téléchargent toutes les feuilles AB et 050170000C03',
+            # defaultValue='050170000C03,AB'
         )
         self.addParameter(parameter)
 
@@ -81,6 +90,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
 
     def processAlgorithm(self, parameters, context, feedback):
         communes = self.parameterAsString(parameters, self.LISTE_CODE_INSEE, context)
+        filtre = self.parameterAsString(parameters, self.FILTRE, context)
         date = self.parameterAsString(parameters, self.DATE, context)
         url = self.parameterAsString(parameters, self.URL_TEMPLATE, context)
         directory = Path(self.parameterAsString(parameters, self.DOSSIER, context))
@@ -88,6 +98,8 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         if not directory.exists():
             feedback.pushDebugInfo("Création du répertoire {}".format(directory))
             os.makedirs(directory, exist_ok=True)
+
+        filtre = [c.strip() for c in filtre.split(',')]
 
         communes = [c.strip() for c in communes.split(',')]
         departements = []
@@ -102,7 +114,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         for i, commune_insee in enumerate(communes):
 
             commune = Commune(commune_insee, date=date, base_url=url)
-            if not self.download_commune(directory, commune, multi_feedback, context):
+            if not self.download_commune(directory, commune, filtre, multi_feedback, context):
                 multi_feedback.reportError("Erreur sur la commune {}".format(commune.insee))
                 break
 
@@ -125,7 +137,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         multi_feedback.pushInfo("\n")
         return self.results
 
-    def download_commune(self, directory: Path, commune: Commune, feedback, context) -> bool:
+    def download_commune(self, directory: Path, commune: Commune, filtre: list, feedback, context) -> bool:
         """ Télécharger une commune. """
         commune_directory = directory.joinpath(commune.insee)
         if commune_directory.exists():
@@ -145,7 +157,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             feedback=feedback,
             is_child_algorithm=True,
         )
-        parser = Parser(data['OUTPUT'], commune)
+        parser = Parser(data['OUTPUT'], commune, feuille_filter=filtre)
         parser.parse()
         feedback.pushInfo("  {} feuilles".format(parser.count))
         for feuille in parser.feuilles:
