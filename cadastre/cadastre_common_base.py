@@ -154,7 +154,7 @@ def setSearchPath(sql: str, schema: str) -> str:
 
 
 def fetchDataFromSqlQuery(connector: 'DBConnector',
-                          sql: str, schema: str = None) -> List[Any]:
+                          sql: str, schema: str = None, with_header: bool = True) -> List[Any]:
     """
     Execute a SQL query and
     return [header, data, rowCount]
@@ -169,11 +169,13 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
     # print "run query"
     try:
         c = connector._execute(None, str(sql))
-        data = []
-        header = connector._get_cursor_columns(c)
-        if header is None:
-            header = []
-        if len(header) > 0:
+        if with_header:
+            header = connector._get_cursor_columns(c)
+            if header is None:
+                header = []
+            if len(header) > 0:
+                data = connector._fetchall(c)
+        else:
             data = connector._fetchall(c)
         rowCount = len(data)
 
@@ -362,10 +364,11 @@ def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,
     sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
     if connectionParams['dbType'] == 'postgis':
         sql = setSearchPath(sql, connectionParams['schema'])
-    [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector, sql)
+    _, data, _, ok = fetchDataFromSqlQuery(connector, sql, with_header=False)
     if ok:
         for line in data:
             comptecommunal = line[0]
+            break
     return comptecommunal
 
 
@@ -389,7 +392,7 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
     if connectionParams['dbType'] == 'spatialite':
         sql = sql.replace('MyStringAgg', 'group_concat')
 
-    [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector, sql)
+    _, data, _, ok = fetchDataFromSqlQuery(connector, sql, with_header=False)
     ccs = []
     if ok:
         for line in data:
@@ -448,7 +451,7 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
         sql = setSearchPath(sql, connectionParams['schema'])
     if connectionParams['dbType'] == 'spatialite':
         sql = postgisToSpatialite(sql, connectionParams['srid'])
-    [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector, sql)
+    _, data, _, ok = fetchDataFromSqlQuery(connector, sql, with_header=False)
     # print sql
 
     if ok:
