@@ -21,6 +21,7 @@ nav:
         - 'Vidéos': extension-qgis/videos.md
         - 'Processing': processing/README.md
     - Module Lizmap:
+        - 'Index': module-lizmap/index.md
         - 'Installation': module-lizmap/installation.md
         - 'Configuration': module-lizmap/configuration.md
     - Base de données: database/index.html
