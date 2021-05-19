@@ -69,7 +69,7 @@ class cadastreImport(QObject):
             if self.sourceAuth == 'IGNF':
                 sqlsearch = '%%AUTHORITY["IGNF","%s"]%%' % self.sourceSrid.upper()
                 sql = "SELECT auth_srid FROM spatial_ref_sys WHERE auth_name='IGNF' AND  srtext LIKE '%s' LIMIT 1" % sqlsearch
-                [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(self.connector, sql)
+                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.connector, sql)
                 if rowCount == 1:
                     for line in data:
                         self.sourceSrid = str(line[0])

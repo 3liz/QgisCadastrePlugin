@@ -328,7 +328,7 @@ class cadastreExport:
             # Run SQL only if data has not already been defined
             if data is None:
                 # print(sql)
-                [header, data, rowCount, ok] = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+                data, rowCount, ok = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
 
             # Page no defined = means the query is here to
             # get line count and whole data for proprietes_baties & proprietes_non_baties
