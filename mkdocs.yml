@@ -29,6 +29,10 @@ nav:
     - Changelog: changelog.md
     - Base de données: database/index.html
 
+plugins:
+  - search
+  - git-revision-date-localized
+
 markdown_extensions:
   # - git-revision-date:
   - toc:
