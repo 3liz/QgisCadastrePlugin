@@ -273,7 +273,7 @@ class CadastreCommon:
                 sql = 'SELECT * FROM "%s" LIMIT 1' % searchTable
                 if self.dialog.dbType == 'postgis':
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.dialog.schema, searchTable)
-                [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if ok and rowCount >= 1:
                     hasData = True
 
@@ -281,7 +281,7 @@ class CadastreCommon:
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableParcelle
                 if self.dialog.dbType == 'postgis':
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.dialog.schema, majicTableParcelle)
-                [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if ok and rowCount >= 1:
                     hasMajicData = True
                     hasMajicDataParcelle = True
@@ -290,7 +290,7 @@ class CadastreCommon:
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableProp
                 if self.dialog.dbType == 'postgis':
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.dialog.schema, majicTableProp)
-                [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if ok and rowCount >= 1:
                     hasMajicData = True
                     hasMajicDataProp = True
@@ -299,7 +299,7 @@ class CadastreCommon:
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableVoie
                 if self.dialog.dbType == 'postgis':
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.dialog.schema, majicTableVoie)
-                [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if ok and rowCount >= 1:
                     hasMajicData = True
                     hasMajicDataVoie = True
@@ -329,7 +329,7 @@ class CadastreCommon:
         if self.dialog.dbType == 'spatialite':
             sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='%s'" % tableName
 
-        [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+        data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
         if ok and rowCount >= 1:
             tableExists = True
 
@@ -1258,7 +1258,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql = 'SELECT * FROM "{}" LIMIT 1'.format(majicTableProp)
                 if is_postgis:
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.connectionParams['schema'], majicTableProp)
-                [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
                 if ok and rowCount >= 1:
                     self.hasMajicDataProp = True
 
@@ -1266,7 +1266,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql = 'SELECT * FROM "{}" LIMIT 1'.format(majicTableVoie)
                 if is_postgis:
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.connectionParams['schema'], majicTableVoie)
-                [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
                 if ok and rowCount >= 1:
                     self.hasMajicDataVoie = True
 
@@ -1274,7 +1274,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql = 'SELECT * FROM "{}" LIMIT 1'.format(majicTableParcelle)
                 if is_postgis:
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.connectionParams['schema'], majicTableParcelle)
-                [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
                 if ok and rowCount >= 1:
                     self.hasMajicDataParcelle = True
 
@@ -1552,7 +1552,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += "ORDER BY nom_naissance\r\n"
         sql += ' LIMIT 50'
 
-        [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+        data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
 
         # Write message in log
         msg = u"%s résultats correpondent à '%s'" % (rowCount, searchValue)
@@ -1662,7 +1662,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # Get data
         # self.qc.updateLog(sql)
-        [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+        data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
 
         # Get features
         features = []
@@ -2691,7 +2691,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         sql = 'SELECT * FROM "proprietaire" LIMIT 1'
         if self.connectionParams['dbType'] == 'postgis':
             sql = 'SELECT * FROM "{}"."proprietaire" LIMIT 1'.format(self.connectionParams['schema'])
-        [header, data, rowCount, ok] = CadastreCommon.fetchDataFromSqlQuery(self.connector, sql)
+        data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.connector, sql)
         if ok and rowCount >= 1:
             self.hasMajicDataProp = True
 

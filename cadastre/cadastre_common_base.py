@@ -154,28 +154,20 @@ def setSearchPath(sql: str, schema: str) -> str:
 
 
 def fetchDataFromSqlQuery(connector: 'DBConnector',
-                          sql: str, schema: str = None) -> List[Any]:
+                          sql: str) -> List[Any]:
     """
-    Execute a SQL query and
-    return [header, data, rowCount]
+    Execute an SQL query and
+    return [data, rowCount, ok]
     NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
     """
-    # print(sql)
     data = []
-    header = []
-    rowCount = 0
+    row_count = 0
     c = None
     ok = True
-    # print "run query"
     try:
         c = connector._execute(None, str(sql))
-        data = []
-        header = connector._get_cursor_columns(c)
-        if header is None:
-            header = []
-        if len(header) > 0:
-            data = connector._fetchall(c)
-        rowCount = len(data)
+        data = connector._fetchall(c)
+        row_count = len(data)
 
     except BaseError as e:
         ok = False
@@ -188,12 +180,10 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
 
     finally:
         if c:
-            # print "close connection"
             c.close()
             del c
 
-    # TODO: Return tuple
-    return [header, data, rowCount, ok]
+    return [data, row_count, ok]
 
 
 def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
@@ -362,10 +352,11 @@ def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,
     sql = "SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'" % parcelleId
     if connectionParams['dbType'] == 'postgis':
         sql = setSearchPath(sql, connectionParams['schema'])
-    [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector, sql)
+    data, _, ok = fetchDataFromSqlQuery(connector, sql)
     if ok:
         for line in data:
             comptecommunal = line[0]
+            break
     return comptecommunal
 
 
@@ -389,7 +380,7 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
     if connectionParams['dbType'] == 'spatialite':
         sql = sql.replace('MyStringAgg', 'group_concat')
 
-    [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector, sql)
+    data, _, ok = fetchDataFromSqlQuery(connector, sql)
     ccs = []
     if ok:
         for line in data:
@@ -448,7 +439,7 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
         sql = setSearchPath(sql, connectionParams['schema'])
     if connectionParams['dbType'] == 'spatialite':
         sql = postgisToSpatialite(sql, connectionParams['srid'])
-    [header, data, rowCount, ok] = fetchDataFromSqlQuery(connector, sql)
+    data, _, ok = fetchDataFromSqlQuery(connector, sql)
     # print sql
 
     if ok:
