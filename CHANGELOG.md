@@ -2,17 +2,19 @@
 
 ## Unreleased
 
+* Correction d'un espace dans l'adresse dans les propriétés baties, non baties
+* Correction d'une erreur SQL lors de la consultation des infos parcelle sur QGIS 3.16
 * Ajout d'un bouton pour ouvrir l'aide depuis le menu principal d'aide de QGIS
 * Ajout de la recherche d'un propriétaire 
   * par nom d'usage ou de naissance
   * par ville
-* Ajout d'un téléchargeur Edigéo communal
+* Ajout d'un téléchargeur Edigéo communal dans la boite à outils Processing
+* Documentation https://docs.3liz.org/QgisCadastrePlugin/
+  * Mise de la documentation au format MkDocs 
+  * Intégration de la documentation du module Lizmap
+  * Ajout de la documentation automatique concernant les traitements Processing
+  * Ajout de la documentation concernant la base de données avec SchémaSpy
 * Ajout d'une infrastructure de tests
-* Correction d'un espace dans l'adresse dans les propriétés baties, non baties
-* Mise de la documentation au format MkDocs https://docs.3liz.org/QgisCadastrePlugin/
-* Intégration de la documentation du module Lizmap dans cette documentation
-* Ajout de la documentation automatique concernant les traitements Processing
-* Ajout de la documentation concernant la base de données avec SchémaSpy
 
 ## 1.10.2 - 2020-12-10
 
