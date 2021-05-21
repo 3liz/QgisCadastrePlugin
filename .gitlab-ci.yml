@@ -83,47 +83,14 @@ release_prod_2:
   tags:
     - fabric
 
-issues:
+tickets:
   stage: release
-  allow_failure: true
   when: manual
   only:
     - tags
+  image:
+    name: registry.snap.lizlan:5000/infra/ci-tools:latest
   script:
-    # Lizmap-box
-    - >
-      curl
-      --header 'Content-Type:application/json'
-      --header "PRIVATE-TOKEN:${USER_TOKEN}"
-      --data '{
-      "id":70,
-      "assignee_ids":[77],
-      "labels":"qgis server",
-      "title":"Nouvelle version QGIS Serveur '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
-      "description":"Il existe une nouvelle version pour QGIS Serveur de '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
-      --request POST https://projects.3liz.org/api/v4/projects/70/issues
-    # Infra-doc
-    - >
-      curl
-      --header 'Content-Type:application/json'
-      --header "PRIVATE-TOKEN:${USER_TOKEN}"
-      --data '{
-      "id":7,
-      "assignee_ids":[2],
-      "labels":"SAAS Qgis,release,infra-v2",
-      "title":"Nouvelle version QGIS Serveur '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
-      "description":"Il existe une nouvelle version pour QGIS Serveur de '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
-      --request POST https://projects.3liz.org/api/v4/projects/7/issues
-    - >
-      curl
-      --header 'Content-Type:application/json'
-      --header "PRIVATE-TOKEN:${USER_TOKEN}"
-      --data '{
-      "id":7,
-      "assignee_ids":[5],
-      "labels":"SAAS Qgis,release,infra-v3",
-      "title":"Nouvelle version QGIS Serveur '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"'",
-      "description":"Il existe une nouvelle version pour QGIS Serveur de '"${FACTORY_PRODUCT_NAME}"' : '"${CI_COMMIT_REF_NAME}"' 👍"}'
-      --request POST https://projects.3liz.org/api/v4/projects/7/issues
+    - create_ticket.py
   tags:
-    - factory
+    - factory-plain
