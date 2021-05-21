@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.11.0 - 2020-05-21
+
 * Correction d'un espace dans l'adresse dans les propriétés baties, non baties
 * Correction d'une erreur SQL lors de la consultation des infos parcelle sur QGIS 3.16 bureautique et serveur
 * Ajout du support QGIS 3.16
