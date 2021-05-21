@@ -3,7 +3,8 @@
 ## Unreleased
 
 * Correction d'un espace dans l'adresse dans les propriétés baties, non baties
-* Correction d'une erreur SQL lors de la consultation des infos parcelle sur QGIS 3.16
+* Correction d'une erreur SQL lors de la consultation des infos parcelle sur QGIS 3.16 bureautique et serveur
+* Ajout du support QGIS 3.16
 * Ajout d'un bouton pour ouvrir l'aide depuis le menu principal d'aide de QGIS
 * Ajout de la recherche d'un propriétaire 
   * par nom d'usage ou de naissance
