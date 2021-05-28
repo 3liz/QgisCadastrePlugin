@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Sauvegarde et restoration des paramètres de la dernière base utilisée dans l'interface graphique
+
 ## 1.11.0 - 2020-05-21
 
 * Correction d'un espace dans l'adresse dans les propriétés baties, non baties
