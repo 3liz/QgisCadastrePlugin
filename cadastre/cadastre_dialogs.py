@@ -31,11 +31,11 @@ from qgis.core import (
     QgsMapLayer,
     QgsMapSettings,
     QgsProject,
+    QgsSettings,
 )
 from qgis.PyQt.QtCore import (
     QFileInfo,
     QRegExp,
-    QSettings,
     QSize,
     QSortFilterProxyModel,
     QStringListModel,
@@ -111,7 +111,7 @@ class CadastreCommon:
         # default auth id for layers
         self.defaultAuthId = '2154'
 
-    # Bind as class propertis for compatibility
+    # Bind as class properties for compatibility
     hasSpatialiteSupport = common_utils.hasSpatialiteSupport
     openFile = common_utils.openFile
 
@@ -245,7 +245,7 @@ class CadastreCommon:
     def checkDatabaseForExistingStructure(self):
         """
         Search among a database / schema
-        if there are alreaday Cadastre structure tables
+        if there are already Cadastre structure tables
         in it
         """
         hasStructure = False
@@ -404,7 +404,7 @@ class CadastreCommon:
 
         # Create QGIS connexion
         baseKey = "/SpatiaLite/connections/"
-        settings = QSettings()
+        settings = QgsSettings()
         myName = os.path.basename(ipath)
         baseKey += myName
         myFi = QFileInfo(ipath)
@@ -450,7 +450,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         from .cadastre_dialogs import CadastreCommon
         self.qc = CadastreCommon(self)
 
-        # first disable database specifi tabs
+        # first disable database specific tabs
         self.databaseSpecificOptions.setTabEnabled(0, False)
         self.databaseSpecificOptions.setTabEnabled(1, False)
 
@@ -599,7 +599,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         get values from QGIS settings
         and set input fields appropriately
         """
-        s = QSettings()
+        s = QgsSettings()
         for k, v in list(self.sList.items()):
             value = s.value("cadastre/%s" % k, '', type=str)
             if value and value != 'None' and v['widget']:
@@ -735,7 +735,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         Store cadastre settings in QGIS
         """
         # store chosen data in QGIS settings
-        s = QSettings()
+        s = QgsSettings()
         s.setValue("cadastre/dataVersion", str(self.dataVersion))
         s.setValue("cadastre/dataYear", int(self.dataYear))
         s.setValue("cadastre/majicSourceDir", self.majicSourceDir)
@@ -2225,7 +2225,7 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         Get majic file names and other options
         from settings and set corresponding inputs
         """
-        s = QSettings()
+        s = QgsSettings()
         batiFileName = s.value("cadastre/batiFileName", 'REVBATI.800', type=str)
         if batiFileName:
             self.inMajicBati.setText(batiFileName)
@@ -2297,7 +2297,7 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         """
 
         # Save Majic file names
-        s = QSettings()
+        s = QgsSettings()
         s.setValue("cadastre/batiFileName", self.inMajicBati.text().strip(' \t\n\r'))
         s.setValue("cadastre/fantoirFileName", self.inMajicFantoir.text().strip(' \t\n\r'))
         s.setValue("cadastre/lotlocalFileName", self.inMajicLotlocal.text().strip(' \t\n\r'))
