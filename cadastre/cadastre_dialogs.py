@@ -21,6 +21,7 @@ import sys
 import tempfile
 import unicodedata
 
+from collections import namedtuple
 from pathlib import Path
 
 from qgis.core import (
@@ -137,6 +138,34 @@ class CadastreCommon:
             self.dialog.step += 1
             self.dialog.pbProcess.setValue(int(self.dialog.step * 100 / self.dialog.totalSteps))
             qApp.processEvents()
+
+    def load_default_values(self):
+        """ Try to load values in the UI which are stored in QGIS settings.
+
+        The function will return as soon as it is missing a value in the QGIS Settings.
+        The order is DB Type, connection name and then the schema.
+        """
+        settings = QgsSettings()
+        WidgetSettings = namedtuple('WidgetSettings', ('ui', 'settings'))
+        widgets = [
+            WidgetSettings('liDbType', 'databaseType'),
+            WidgetSettings('liDbConnection', 'connection'),
+            WidgetSettings('liDbSchema', 'schema'),
+        ]
+        is_postgis = settings.value("cadastre/databaseType", type=str, defaultValue='') == 'postgis'
+        for widget in widgets:
+
+            if widget.settings == 'schema' and not is_postgis:
+                return
+
+            if not hasattr(self.dialog, widget.ui):
+                return
+            value = settings.value("cadastre/" + widget.settings, type=str, defaultValue='')
+            combo = getattr(self.dialog, widget.ui)
+            index = combo.findText(value, Qt.MatchFixedString)
+            if not index:
+                return
+            combo.setCurrentIndex(index)
 
     def updateConnectionList(self):
         """
@@ -613,6 +642,10 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
                 if v['wType'] == 'crs':
                     v['widget'].setCrs(QgsCoordinateReferenceSystem(value))
 
+        # self.sLists does not provide database type, connection name
+        # load_default_values will do
+        self.qc.load_default_values()
+
     def createSchema(self):
         QApplication.setOverrideCursor(Qt.WaitCursor)
         try:
@@ -736,6 +769,14 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         """
         # store chosen data in QGIS settings
         s = QgsSettings()
+        database_type = self.liDbType.currentText().lower()
+        s.setValue("cadastre/databaseType", database_type)
+        s.setValue("cadastre/connection", self.liDbConnection.currentText())
+        if database_type == "postgis":
+            schema = self.liDbSchema.currentText()
+        else:
+            schema = ''
+        s.setValue("cadastre/schema", schema)
         s.setValue("cadastre/dataVersion", str(self.dataVersion))
         s.setValue("cadastre/dataYear", int(self.dataYear))
         s.setValue("cadastre/majicSourceDir", self.majicSourceDir)
@@ -808,6 +849,8 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
 
         self.rejected.connect(self.onClose)
         self.buttonBox.rejected.connect(self.onClose)
+
+        self.qc.load_default_values()
 
     def onClose(self):
         """
