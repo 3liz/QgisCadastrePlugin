@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.11.1 - 2020-06-01
+
 * Sauvegarde et restoration des paramètres de la dernière base utilisée dans l'interface graphique
 
 ## 1.11.0 - 2020-05-21
