@@ -698,21 +698,38 @@
                 
                 <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h1>
 <h2 id="dans-qgis">Dans QGIS<a class="headerlink" href="#dans-qgis" title="Permanent link">#</a></h2>
-<p>Pour utiliser le module cadastre dans lizmap il vous faut configurer un projet QGIS:</p>
+<p>Pour utiliser le module cadastre dans Lizmap Web Client il vous faut d'abord configurer un <strong>projet QGIS</strong>:</p>
 <ul>
-<li>Vous aurez besoin de l'extension QGIS <a href="https://github.com/3liz/QgisCadastrePlugin">Cadastre</a> sur votre QGIS Bureau via l'installateur d'extension ainsi que sur votre serveur QGIS dans un dossier nommé <code>cadastre</code>.</li>
-<li>Il faut ensuite un projet QGIS configuré avec cette extension:</li>
 <li>
-<p>Utilisez l'outil de chargement des couches, il configurera notamment les variables dans le projet ainsi que les couches recquisent.</p>
+<p>Vous aurez besoin d'installer l'extension QGIS <a href="https://github.com/3liz/QgisCadastrePlugin">Cadastre</a> sur votre QGIS Bureautique via le gestionnaire d'extensions, ainsi que sur votre serveur QGIS Server dans un dossier nommé <code>cadastre</code>.</p>
+</li>
+<li>
+<p>Il faut ensuite créer un projet QGIS contenant les données cadastrale, et le configurer avec cette extension:</p>
+</li>
+<li>
+<p>Utilisez l'outil de <strong>chargement des couches</strong>, il configurera notamment les <strong>variables</strong> dans le projet ainsi que les couches requises.</p>
 <p><img alt="Project Properties" src="../media/load_data.png" /></p>
 </li>
 <li>
-<p>Dans les propriétés du projet, onglet <code>QGIS Server</code>, il faut publier en WFS les couches <code>Communes</code>, <code>Parcelles</code> et <code>Sections</code>.</p>
+<p>Dans les <strong>propriétés du projet</strong>, onglet <code>QGIS Server</code>, il faut publier en WFS les couches <code>Communes</code>, <code>Parcelles</code> et <code>Sections</code>.</p>
 <p><img alt="Plubication WFS" src="../media/wfs_properties.png" /></p>
 </li>
 <li>
-<p>Créer la configuration lizmap via le plugin Lizmap. Il faut obligatoirement dans l'onglet table attributaire ajouter la couche <code>Parcelles</code>.</p>
+<p>Enfin vous devez créer ou modifier la configuration <strong>lizmap</strong> via le plugin Lizmap pour QGIS:</p>
+</li>
+<li>
+<p>Il faut obligatoirement ajouter la couche <code>Parcelles</code> dans l'onglet <strong>table attributaire</strong>. Pour les performances, pensez à cocher aussi la case "Limiter les données à l'emprise courante"</p>
 <p><img alt="Table attributaire" src="../media/table_attr.png" /></p>
+</li>
+<li>
+<p>Vous devez activer la <strong>popup</strong> pour la couche des <code>Parcelles</code>, via l'onglet <code>Couches</code> du plugin Lizmap. <strong>ATTENTION</strong> Selon le public visé, vous devrez adapter les champs visibles dans la popup de Lizmap, notamment les champs <code>proprietaire</code> et <code>proprietaire_infos</code> qui contiennent des données sensible issues des fichiers MAJIC.</p>
+<ul>
+<li>Si vous utilisez la popup <strong>Auto</strong> de Lizmap, désactiver le WMS pour les champs souhaités dans l'onglet <code>Champs</code> des propriétés de la couche (tout à droite du tableau)</li>
+<li>Si vous utilisez la popup <strong>QGIS</strong>, adaptez la configuration en supprimant le contenu HTML non souhaités, visible dans l'onglet <code>Affichage</code> (ou <code>Infobulle</code>) des propriétés de la couche, groupe <code>Infobulle HTML</code></li>
+</ul>
+</li>
+<li>
+<p>A noter que depuis la version <strong>1.6.0</strong> du module Cadastre, lorsque l'utilisateur a <strong>le droit de voir les données de propriétaires</strong>, le contenu détaillé des informations de la parcelle est <strong>affiché sous le contenu de la popup</strong>. Les onglets correspondent à ceux visibles dans QGIS lorsqu'on affiche le détail d'une parcelle: <strong>Parcelle, Propriétaires, Subdivisions fiscales, Locaux, Locaux : informations détaillées</strong>. Vous pouvez donc afficher moins d'information dans la popup, par exemple seulement le code de la parcelle et la commune</p>
 </li>
 </ul>
 <h2 id="dans-lizmap">Dans Lizmap<a class="headerlink" href="#dans-lizmap" title="Permanent link">#</a></h2>
@@ -731,7 +748,7 @@
 <div class="md-source-date">
   <small>
     
-      Dernière mise à jour: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">26 avril 2021</span>
+      Dernière mise à jour: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">3 juin 2021</span>
       
     
   </small>
