@@ -200,11 +200,17 @@ class CadastreService(QgsService):
             res.connector
         )
         pmulti = 1
+        all_cities = params.get('ALLCITIES', 'f').lower()
+        if all_cities in ['t', 'true', '1']:
+            all_cities = True
+        else:
+            all_cities = False
         if res.type == 'proprietaire' and pmulti == 1:
             comptecommunal = cadastre_common.getProprietaireComptesCommunaux(
                 comptecommunal,
                 res.connectionParams,
-                res.connector
+                res.connector,
+                all_cities
             )
 
         if self.debugMode:

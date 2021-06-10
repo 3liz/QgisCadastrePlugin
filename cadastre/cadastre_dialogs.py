@@ -2820,11 +2820,12 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
                 self.connector
             )
             if comptecommunal:
-                if key == 'proprietaire' and self.cbExportAllCities.isChecked():
+                if key == 'proprietaire':
                     comptecommunal = CadastreCommon.getProprietaireComptesCommunaux(
                         comptecommunal,
                         self.connectionParams,
-                        self.connector
+                        self.connector,
+                        self.cbExportAllCities.isChecked()
                     )
                 if self.layer:
                     qe = cadastreExport(
