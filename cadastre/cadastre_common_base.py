@@ -361,7 +361,7 @@ def getCompteCommunalFromParcelleId(parcelleId: str, connectionParams: Dict[str,
 
 
 def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[str, str],
-                                    connector: 'DBConnector') -> List[str]:
+                                    connector: 'DBConnector', allCities: bool = True) -> List[str]:
     """
     Get the list of "comptecommunal" for all cities
     for a owner given one single comptecommunal
@@ -371,6 +371,8 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
     sql += " FROM proprietaire p"
     sql += " WHERE 2>1"
     sql += " AND trim(p.ddenom) IN (SELECT trim(ddenom) FROM proprietaire WHERE comptecommunal = '%s')" % comptecommunal
+    if not allCities:
+        sql += " AND substr(comptecommunal, 1, 6) = substr('%s', 1, 6)" % comptecommunal
     sql += " GROUP BY dnuper, ddenom, dlign4"
     sql += " ORDER BY ddenom"
 
