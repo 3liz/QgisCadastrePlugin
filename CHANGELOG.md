@@ -2,11 +2,16 @@
 
 ## Unreleased
 
-## 1.11.1 - 2020-06-01
+## 1.12.0 - 2021-06-21
+
+* Correction de l'export propriétaire à une commune
+* Mise à jour de la documentation sur le module Lizmap
+
+## 1.11.1 - 2021-06-01
 
 * Sauvegarde et restoration des paramètres de la dernière base utilisée dans l'interface graphique
 
-## 1.11.0 - 2020-05-21
+## 1.11.0 - 2021-05-21
 
 * Correction d'un espace dans l'adresse dans les propriétés baties, non baties
 * Correction d'une erreur SQL lors de la consultation des infos parcelle sur QGIS 3.16 bureautique et serveur
