@@ -24,6 +24,7 @@ from pathlib import Path
 from time import time
 
 from qgis.core import (
+    Qgis,
     QgsApplication,
     QgsLayoutExporter,
     QgsPrintLayout,
@@ -79,9 +80,10 @@ class CadastreMenu:
         main_icon = QIcon(os.path.join(plugin_dir, "icon.png"))
 
         # Open the online help
-        self.help_action_about_menu = QAction(main_icon, 'Cadastre', self.iface.mainWindow())
-        self.iface.pluginHelpMenu().addAction(self.help_action_about_menu)
-        self.help_action_about_menu.triggered.connect(self.open_help)
+        if Qgis.QGIS_VERSION_INT >= 31000:
+            self.help_action_about_menu = QAction(main_icon, 'Cadastre', self.iface.mainWindow())
+            self.iface.pluginHelpMenu().addAction(self.help_action_about_menu)
+            self.help_action_about_menu.triggered.connect(self.open_help)
 
         actions = {
             "import_action": (
@@ -512,7 +514,7 @@ class CadastreMenu:
         dialog.exec_()
 
     def unload(self):
-        if self.help_action_about_menu:
+        if Qgis.QGIS_VERSION_INT >= 31000 and self.help_action_about_menu:
             self.iface.pluginHelpMenu().removeAction(self.help_action_about_menu)
             del self.help_action_about_menu
 

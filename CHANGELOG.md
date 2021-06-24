@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.12.1 - 2021-06-24
+
+* Correction du chargement de l'extension avec QGIS < 3.10
+
 ## 1.12.0 - 2021-06-21
 
 * Correction de l'export propriétaire à une commune
