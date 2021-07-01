@@ -28,9 +28,14 @@ avec l'extension **Cadastre**:
 Vous devez maintenant créer ou modifier la configuration **lizmap** via le plugin Lizmap pour QGIS:
 
 * Il faut obligatoirement ajouter la couche `Parcelles` dans l'onglet **table attributaire**.
-Pour les performances, pensez à cocher aussi la case "Limiter les données à l'emprise courante"
 
-![Table attributaire](media/table_attr.png)
+    - Pour les performances, pensez à cocher la case "Limiter les données à l'emprise courante" en bas de la fenêtre pour l'onglet table attributaire
+
+![Table attributaire](media/table_attributaire.png)
+
+    - Pour les performances, vous pouvez aussi cocher "Masquer la couche dans la liste" pour la configuration de la couche Parcelles. La fonction de sélection sera active mais la couche Parcelles n'apparaîtra pas dans la liste des table attributaires disponibles.
+
+![Configuration Table attributaire de la couche Parcelles](media/table_attributaire_parcelles.png)
 
 * La couche `Parcelles` ne doit pas être dans un groupe qui a l'option `Groupe comme une couche` activée
 dans l'onglet `Couches` de Lizmap.
