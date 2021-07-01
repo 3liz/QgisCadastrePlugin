@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/module-lizmap/configuration/">
       
       <link rel="icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.8">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.9">
     
     
       
@@ -766,10 +766,18 @@ avec l'extension <strong>Cadastre</strong>:</p>
 <h3 id="configurer-la-publication-avec-le-plugin-lizmap">Configurer la publication avec le plugin Lizmap<a class="headerlink" href="#configurer-la-publication-avec-le-plugin-lizmap" title="Permanent link">#</a></h3>
 <p>Vous devez maintenant créer ou modifier la configuration <strong>lizmap</strong> via le plugin Lizmap pour QGIS:</p>
 <ul>
-<li>Il faut obligatoirement ajouter la couche <code>Parcelles</code> dans l'onglet <strong>table attributaire</strong>.
-Pour les performances, pensez à cocher aussi la case "Limiter les données à l'emprise courante"</li>
+<li>
+<p>Il faut obligatoirement ajouter la couche <code>Parcelles</code> dans l'onglet <strong>table attributaire</strong>.</p>
+<ul>
+<li>Pour les performances, pensez à cocher la case "Limiter les données à l'emprise courante" en bas de la fenêtre pour l'onglet table attributaire</li>
 </ul>
-<p><img alt="Table attributaire" src="../media/table_attr.png" /></p>
+</li>
+</ul>
+<p><img alt="Table attributaire" src="../media/table_attributaire.png" /></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>- Pour les performances, vous pouvez aussi cocher &quot;Masquer la couche dans la liste&quot; pour la configuration de la couche Parcelles. La fonction de sélection sera active mais la couche Parcelles n&#39;apparaîtra pas dans la liste des table attributaires disponibles.
+</code></pre></div>
+</td></tr></table>
+<p><img alt="Configuration Table attributaire de la couche Parcelles" src="../media/table_attributaire_parcelles.png" /></p>
 <ul>
 <li>
 <p>La couche <code>Parcelles</code> ne doit pas être dans un groupe qui a l'option <code>Groupe comme une couche</code> activée
@@ -822,7 +830,7 @@ Nous conseillons de ne pas touchez aux droits liés à Lizmap ici, sauf si vous 
 <div class="md-source-date">
   <small>
     
-      Dernière mise à jour: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 3, 2021</span>
+      Dernière mise à jour: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 23, 2021</span>
       
     
   </small>
@@ -946,10 +954,10 @@ Nous conseillons de ne pas touchez aux droits liés à Lizmap ici, sauf si vous 
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.76f349be.min.js"></script>
+      <script src="../../assets/javascripts/bundle.82b56eb2.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
