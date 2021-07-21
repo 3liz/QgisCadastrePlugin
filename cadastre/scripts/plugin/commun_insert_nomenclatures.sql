@@ -521,6 +521,7 @@ INSERT INTO cconad VALUES ('PS', 'Piscine');
 INSERT INTO cconad VALUES ('RS', 'Remise');
 INSERT INTO cconad VALUES ('SR', 'Serre');
 INSERT INTO cconad VALUES ('TT', 'Toiture-terrasse');
+
 -- nomenclature ctpdl (pdl)
 INSERT INTO ctpdl VALUES ('BND', 'Libellé BND');
 INSERT INTO ctpdl VALUES ('CL', 'Libellé CL');
@@ -528,6 +529,7 @@ INSERT INTO ctpdl VALUES ('CV', 'Libellé CV');
 INSERT INTO ctpdl VALUES ('TF', 'Libellé TF');
 INSERT INTO ctpdl VALUES ('CLV', 'Libellé CLV');
 INSERT INTO ctpdl VALUES ('MP', 'Libellé MP');
+
 -- nomenclature cconlo (lots)
 INSERT INTO cconlo VALUES ('1', 'lot non bâti');
 INSERT INTO cconlo VALUES ('2', 'lot bâti');
@@ -535,11 +537,12 @@ INSERT INTO cconlo VALUES ('3', 'lot mixte');
 INSERT INTO cconlo VALUES ('4', 'assise de pdl');
 INSERT INTO cconlo VALUES ('5', 'lot particulier');
 INSERT INTO cconlo VALUES ('6', 'lot multi-communes');
+
 -- nomenclature ccodro (proprietaire)
 INSERT INTO ccodro VALUES ('P', 'Propriétaire');
 INSERT INTO ccodro VALUES ('U', 'Usufruitier (associé avec N)');
 INSERT INTO ccodro VALUES ('N', 'Nu-propriétaire (associé avec U)');
-INSERT INTO ccodro VALUES ('B', 'Bailleur à construction (associé avec R) ou réel solidaire (associé à Z)');
+INSERT INTO ccodro VALUES ('B', 'Bailleur à construction (associé avec R)');
 INSERT INTO ccodro VALUES ('R', 'Preneur à construction (associé avec B)');
 INSERT INTO ccodro VALUES ('F', 'Foncier (associé avec D ou T)');
 INSERT INTO ccodro VALUES ('T', 'Ténuyer (associé avec F)');
@@ -560,6 +563,8 @@ INSERT INTO ccodro VALUES ('X', 'La Poste, propriétaire et occupant');
 INSERT INTO ccodro VALUES ('Y', 'La Poste, occupant et non propriétaire');
 INSERT INTO ccodro VALUES ('C', 'Fiduciaire');
 INSERT INTO ccodro VALUES ('M', 'Occupant d''une parcelle appartenant au département de Mayotte ou à l''État (associé à P).');
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
+-- 2021
 INSERT INTO ccodro VALUES ('Z', 'Preneur de bail solidaire (associé à B)');
 
 -- nomenclature ccodem (proprietaire)
