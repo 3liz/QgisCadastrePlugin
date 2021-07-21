@@ -346,10 +346,10 @@
                <number>2012</number>
               </property>
               <property name="maximum">
-               <number>2020</number>
+               <number>2021</number>
               </property>
               <property name="value">
-               <number>2020</number>
+               <number>2021</number>
               </property>
              </widget>
             </item>
@@ -369,10 +369,10 @@
                <number>2012</number>
               </property>
               <property name="maximum">
-               <number>2020</number>
+               <number>2021</number>
               </property>
               <property name="value">
-               <number>2020</number>
+               <number>2021</number>
               </property>
              </widget>
             </item>
