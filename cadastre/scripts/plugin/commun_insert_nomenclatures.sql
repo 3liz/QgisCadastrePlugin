@@ -388,7 +388,7 @@ INSERT INTO gnextl VALUES ('AK', 'Exonération de 20 ans pour les logements inte
 INSERT INTO gnextl VALUES ('AL', 'Exo de 15 ans pour logements sociaux (AC)');
 INSERT INTO gnextl VALUES ('AM', 'Addition de construction – Ville de Paris – art. 1383 du CGI');
 INSERT INTO gnextl VALUES ('AP', 'Exonération annuelle pour installation antipollution');
-INSERT INTO gnextl VALUES ('AQ', 'Exonération de 15 ans pour addition de construction antérieure au 01/01/1973');
+INSERT INTO gnextl VALUES ('AQ', 'Addition de construction exonération de 2 ans droits acquis');
 INSERT INTO gnextl VALUES ('AS', 'Abattement de 30% pour les locaux sociaux situés dans les DOM et équipés contre les risques naturels');
 INSERT INTO gnextl VALUES ('AT', 'Exonération de 30 ans pour les logements sociaux respectant certains critères de qualité environnementale (addition de construction).');
 INSERT INTO gnextl VALUES ('AU', 'Exonération de 25 ans pour les logements financés au moyen de prêts aidés par l''Etat (addition de construction)');
@@ -403,6 +403,7 @@ INSERT INTO gnextl VALUES ('BH', 'Locaux à usage de bureau transformés en habi
 INSERT INTO gnextl VALUES ('BS', 'Abattement de 30 % pour les logements faisant l’objet d’un bail réel solidaire');
 INSERT INTO gnextl VALUES ('BU', 'Entreprises situées dans un bassin à redynamiser ou dans une zone de développement prioritaire, de droit.');
 INSERT INTO gnextl VALUES ('CE', 'Abattement de 5 ans pour cession relevant de l’article 1388 sexies du CGI (Mayotte)');
+INSERT INTO gnextl VALUES ('CV', 'Entreprises situées dans les zones ZRVC (zone de revitalisation des centresvilles)');
 INSERT INTO gnextl VALUES ('D', 'Personne âgée et non imposable à l’impôt sur le revenu'); 
 INSERT INTO gnextl VALUES ('DF', 'Exonération pour bâtiment déshydratation des fourrages.');
 INSERT INTO gnextl VALUES ('DO', 'Exonération spécifique des DOM prévue à l’article 330 de l’annexe II au CGI');
@@ -439,6 +440,7 @@ INSERT INTO gnextl VALUES ('LY', 'Prorogation de 10 ans de l’exonération « L
 INSERT INTO gnextl VALUES ('MA', 'Minoration de 60 % de la valeur locative des locaux d’habitation situés à Mayotte');
 INSERT INTO gnextl VALUES ('MB', 'Boutiques et magasins situés hors d’un ensemble commercial dont la surface est inférieure à 400 m² – art. 1388 quinquies C du CGI');
 INSERT INTO gnextl VALUES ('MS', 'Maison de santé');
+INSERT INTO gnextl VALUES ('MU', 'Abattement de 50 % sur les modèles U');
 INSERT INTO gnextl VALUES ('ND', 'Droit commun (2 ans) - construction nouvelle');
 INSERT INTO gnextl VALUES ('NI', 'Non imposable');
 INSERT INTO gnextl VALUES ('NE', 'Exonération de 20 ans en faveur des logements sociaux qui respectent un certain nombre de normes environnementales pour constructions nouvelles');
@@ -447,7 +449,7 @@ INSERT INTO gnextl VALUES ('NG', 'Exonération à durée variable pour contrat d
 INSERT INTO gnextl VALUES ('NK', 'Exonération de 20 ans pour les logements intermédiaires loués dans les conditions de l’article 279-0 bis A (construction nouvelle) – art. 1384-0 A du CGI');
 INSERT INTO gnextl VALUES ('NL', 'Exonération de 15 ans pour logements sociaux (CN)');
 INSERT INTO gnextl VALUES ('NM', 'Construction nouvelle – Ville de Paris – art. 1383 du CGI');
-INSERT INTO gnextl VALUES ('NQ', 'Exonération de 15 ans pour construction nouvelle antérieure au 01/01/1973');
+INSERT INTO gnextl VALUES ('NQ', 'Construction nouvelle exonération de 2 ans droits acquis');
 INSERT INTO gnextl VALUES ('NT', 'Exonération de 30 ans pour les logements sociaux respectant certains critères de qualité environnementale (construction nouvelle).');
 INSERT INTO gnextl VALUES ('NU', 'Exonération de 25 ans pour les logements financés au moyen de prêts aidés par l''Etat (construction nouvelle)');
 INSERT INTO gnextl VALUES ('NV', 'Exonération de 25 ans pour les logements financés au moyen de prêts aidés par l''Etat (construction nouvelle)');
@@ -468,6 +470,7 @@ INSERT INTO gnextl VALUES ('RF', 'Requalification de copropriétés dégradées 
 INSERT INTO gnextl VALUES ('RI', 'Recherche industrielle');
 INSERT INTO gnextl VALUES ('RM', 'Exonération pour les locaux achevés avant la mise en place d’un plan de prévention des risques miniers. Article 1383 G ter du CGI');
 INSERT INTO gnextl VALUES ('RQ', 'Local achevé avant la mise en place d''un plan de prévention des risques technologiques. Article 1383 G du CGI.');
+INSERT INTO gnextl VALUES ('RR', 'Commerces en milieu rural');
 INSERT INTO gnextl VALUES ('RT', 'Abattement de 25 % pour les locaux faisant l’objet d’une convention ou d''un contrat de résidence temporaire – art. 1388 quinquies A du CGI');
 INSERT INTO gnextl VALUES ('RW', 'Local achevé avant le 01/01/1989 ayant fait l''objet de dépenses destinées à économiser l''énergie. Article 1383-O B du CGI.');
 INSERT INTO gnextl VALUES ('UM', 'Exonération de 5 ans pour les usines de méthanisation - art. 1387 A du CGI');
@@ -480,7 +483,6 @@ INSERT INTO gnextl VALUES ('ZT', 'Logement topé ZUS');
 INSERT INTO gnextl VALUES ('AX', 'Longue durée (10 ans) - addition de construction');
 INSERT INTO gnextl VALUES ('CD', 'Exonération permanente des parts communale et départementale (biens d''une région situés dans une autre région)');
 INSERT INTO gnextl VALUES ('CR', 'Exonération permanente des parts communale et régionale (biens d''un département situés dans un autre département)');
-INSERT INTO gnextl VALUES ('CV', 'Contrat de ville');
 INSERT INTO gnextl VALUES ('DR', 'Exonération permanente des parts départementale et régionale (biens d''une commune situés dans une autre commune)');
 INSERT INTO gnextl VALUES ('EB', 'Economiquement faible - type B');
 INSERT INTO gnextl VALUES ('EP', 'Exonération permanente');
