@@ -217,7 +217,7 @@ INSERT INTO ccolloc VALUES ('C', 'Commune');
 INSERT INTO ccolloc VALUES ('GC', 'Groupement de communes');
 INSERT INTO ccolloc VALUES ('TS', 'TSE (taxe spéciale d’équipement)');
 INSERT INTO ccolloc VALUES ('A', 'Taxe additionnelle');
--- valeurs obsolètes mais existant toujours en base
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
 INSERT INTO ccolloc VALUES ('TC', 'Toutes collectivités');
 INSERT INTO ccolloc VALUES ('D', 'Département');
 INSERT INTO ccolloc VALUES ('R', 'Région');
@@ -241,7 +241,7 @@ INSERT INTO gnexts VALUES ('PR', 'Résineux – Plantation et semis, futaies, ta
 INSERT INTO gnexts VALUES ('TA', 'Exonération des terres agricoles (groupes de cultures 1 à 6, 8 et 9)');
 INSERT INTO gnexts VALUES ('TU', 'Exonération pour terrains nouvellement plantés en arbres truffiers – art. 1395 B-II du CGI');
 INSERT INTO gnexts VALUES ('VG', 'Vergers, cultures fruitières d’arbres et d’arbustes, vignes');
--- valeurs obsolètes mais existant toujours en base
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
 INSERT INTO gnexts VALUES ('TR', 'Exonération pour plantation de truffiers (sur délibération)');
 INSERT INTO gnexts VALUES ('HP', 'Exonération temporaire (exonération totale en zone naturelle)');
 INSERT INTO gnexts VALUES ('HR', 'Exonération temporaire (exonération de 50% sur proposition de la CCID)');
@@ -355,9 +355,13 @@ INSERT INTO gnexpl VALUES ('DR', 'Exonération permanente des parts département
 INSERT INTO gnexpl VALUES ('EP', 'Exonération permanente');
 INSERT INTO gnexpl VALUES ('NI', 'Non imposable');
 INSERT INTO gnexpl VALUES ('PP', 'Exonération de pev secondaire de bien indivis');
-INSERT INTO gnexpl VALUES ('DM', 'exonération des parts intercommunale, départementale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
-INSERT INTO gnexpl VALUES ('CM', 'exonération des parts communale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
 INSERT INTO gnexpl VALUES ('GM', 'transfert de propriétés bâties par l’État aux grands ports maritimes affectés à un service public ou d’utilité générale et non productifs de revenus');
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
+-- 2021
+INSERT INTO gnexpl VALUES ('CM', 'exonération des parts communale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
+INSERT INTO gnexpl VALUES ('DM', 'exonération des parts intercommunale, départementale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
+
+
 
 -- nomenclature pour ccthp (Occupation du local)
 INSERT INTO ccthp VALUES ('B', 'Locaux meublés à usage d’habitation faisant l’objet de locations occasionnelles permanentes ou saisonnières (TH)');
@@ -479,7 +483,7 @@ INSERT INTO gnextl VALUES ('ZL', 'Transformation local commercial en habitation'
 INSERT INTO gnextl VALUES ('ZQ', 'Abattement de 30 % pour les locaux d’habitation situés dans les immeubles collectifs issus de la transformation de locaux industriels ou commerciaux dans le périmètre des quartiers prioritaires de la politique de la ville');
 INSERT INTO gnextl VALUES ('ZR', 'Exonération de 15 ans pour locaux situés dans une zone de revitalisation rurale art. 1383 E du CGI');
 INSERT INTO gnextl VALUES ('ZT', 'Logement topé ZUS');
--- valeurs obsolètes mais existant toujours en base
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
 INSERT INTO gnextl VALUES ('AX', 'Longue durée (10 ans) - addition de construction');
 INSERT INTO gnextl VALUES ('CD', 'Exonération permanente des parts communale et départementale (biens d''une région situés dans une autre région)');
 INSERT INTO gnextl VALUES ('CR', 'Exonération permanente des parts communale et régionale (biens d''un département situés dans un autre département)');
