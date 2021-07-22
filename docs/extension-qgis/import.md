@@ -7,7 +7,7 @@ Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MA
 
 ## Principe
 
-Le plugin permet l'import de données **MAJIC de 2012 à 2020 et des données EDIGEO**. Il est possible 
+Le plugin permet l'import de données **MAJIC de 2012 à 2021 et des données EDIGEO**. Il est possible 
 d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
 Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour 
@@ -94,9 +94,9 @@ On configure ensuite les options :
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
-    - Seuls les formats de 2012 à 2020 sont pris en compte
+    - Seuls les formats de 2012 à 2021 sont pris en compte
 
-* Choisir le **millésime des données**, par exemple 2020
+* Choisir le **millésime des données**, par exemple 2021
 
 * Choisir le **Lot** : utilisez par exemple le code INSEE de la commune.
 
