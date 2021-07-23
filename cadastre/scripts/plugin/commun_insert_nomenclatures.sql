@@ -217,7 +217,7 @@ INSERT INTO ccolloc VALUES ('C', 'Commune');
 INSERT INTO ccolloc VALUES ('GC', 'Groupement de communes');
 INSERT INTO ccolloc VALUES ('TS', 'TSE (taxe spéciale d’équipement)');
 INSERT INTO ccolloc VALUES ('A', 'Taxe additionnelle');
--- valeurs obsolètes mais existant toujours en base
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
 INSERT INTO ccolloc VALUES ('TC', 'Toutes collectivités');
 INSERT INTO ccolloc VALUES ('D', 'Département');
 INSERT INTO ccolloc VALUES ('R', 'Région');
@@ -241,7 +241,7 @@ INSERT INTO gnexts VALUES ('PR', 'Résineux – Plantation et semis, futaies, ta
 INSERT INTO gnexts VALUES ('TA', 'Exonération des terres agricoles (groupes de cultures 1 à 6, 8 et 9)');
 INSERT INTO gnexts VALUES ('TU', 'Exonération pour terrains nouvellement plantés en arbres truffiers – art. 1395 B-II du CGI');
 INSERT INTO gnexts VALUES ('VG', 'Vergers, cultures fruitières d’arbres et d’arbustes, vignes');
--- valeurs obsolètes mais existant toujours en base
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
 INSERT INTO gnexts VALUES ('TR', 'Exonération pour plantation de truffiers (sur délibération)');
 INSERT INTO gnexts VALUES ('HP', 'Exonération temporaire (exonération totale en zone naturelle)');
 INSERT INTO gnexts VALUES ('HR', 'Exonération temporaire (exonération de 50% sur proposition de la CCID)');
@@ -355,9 +355,13 @@ INSERT INTO gnexpl VALUES ('DR', 'Exonération permanente des parts département
 INSERT INTO gnexpl VALUES ('EP', 'Exonération permanente');
 INSERT INTO gnexpl VALUES ('NI', 'Non imposable');
 INSERT INTO gnexpl VALUES ('PP', 'Exonération de pev secondaire de bien indivis');
-INSERT INTO gnexpl VALUES ('DM', 'exonération des parts intercommunale, départementale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
-INSERT INTO gnexpl VALUES ('CM', 'exonération des parts communale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
 INSERT INTO gnexpl VALUES ('GM', 'transfert de propriétés bâties par l’État aux grands ports maritimes affectés à un service public ou d’utilité générale et non productifs de revenus');
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
+-- 2021
+INSERT INTO gnexpl VALUES ('CM', 'exonération des parts communale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
+INSERT INTO gnexpl VALUES ('DM', 'exonération des parts intercommunale, départementale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
+
+
 
 -- nomenclature pour ccthp (Occupation du local)
 INSERT INTO ccthp VALUES ('B', 'Locaux meublés à usage d’habitation faisant l’objet de locations occasionnelles permanentes ou saisonnières (TH)');
@@ -388,7 +392,7 @@ INSERT INTO gnextl VALUES ('AK', 'Exonération de 20 ans pour les logements inte
 INSERT INTO gnextl VALUES ('AL', 'Exo de 15 ans pour logements sociaux (AC)');
 INSERT INTO gnextl VALUES ('AM', 'Addition de construction – Ville de Paris – art. 1383 du CGI');
 INSERT INTO gnextl VALUES ('AP', 'Exonération annuelle pour installation antipollution');
-INSERT INTO gnextl VALUES ('AQ', 'Exonération de 15 ans pour addition de construction antérieure au 01/01/1973');
+INSERT INTO gnextl VALUES ('AQ', 'Addition de construction exonération de 2 ans droits acquis');
 INSERT INTO gnextl VALUES ('AS', 'Abattement de 30% pour les locaux sociaux situés dans les DOM et équipés contre les risques naturels');
 INSERT INTO gnextl VALUES ('AT', 'Exonération de 30 ans pour les logements sociaux respectant certains critères de qualité environnementale (addition de construction).');
 INSERT INTO gnextl VALUES ('AU', 'Exonération de 25 ans pour les logements financés au moyen de prêts aidés par l''Etat (addition de construction)');
@@ -403,6 +407,7 @@ INSERT INTO gnextl VALUES ('BH', 'Locaux à usage de bureau transformés en habi
 INSERT INTO gnextl VALUES ('BS', 'Abattement de 30 % pour les logements faisant l’objet d’un bail réel solidaire');
 INSERT INTO gnextl VALUES ('BU', 'Entreprises situées dans un bassin à redynamiser ou dans une zone de développement prioritaire, de droit.');
 INSERT INTO gnextl VALUES ('CE', 'Abattement de 5 ans pour cession relevant de l’article 1388 sexies du CGI (Mayotte)');
+INSERT INTO gnextl VALUES ('CV', 'Entreprises situées dans les zones ZRVC (zone de revitalisation des centresvilles)');
 INSERT INTO gnextl VALUES ('D', 'Personne âgée et non imposable à l’impôt sur le revenu'); 
 INSERT INTO gnextl VALUES ('DF', 'Exonération pour bâtiment déshydratation des fourrages.');
 INSERT INTO gnextl VALUES ('DO', 'Exonération spécifique des DOM prévue à l’article 330 de l’annexe II au CGI');
@@ -439,6 +444,7 @@ INSERT INTO gnextl VALUES ('LY', 'Prorogation de 10 ans de l’exonération « L
 INSERT INTO gnextl VALUES ('MA', 'Minoration de 60 % de la valeur locative des locaux d’habitation situés à Mayotte');
 INSERT INTO gnextl VALUES ('MB', 'Boutiques et magasins situés hors d’un ensemble commercial dont la surface est inférieure à 400 m² – art. 1388 quinquies C du CGI');
 INSERT INTO gnextl VALUES ('MS', 'Maison de santé');
+INSERT INTO gnextl VALUES ('MU', 'Abattement de 50 % sur les modèles U');
 INSERT INTO gnextl VALUES ('ND', 'Droit commun (2 ans) - construction nouvelle');
 INSERT INTO gnextl VALUES ('NI', 'Non imposable');
 INSERT INTO gnextl VALUES ('NE', 'Exonération de 20 ans en faveur des logements sociaux qui respectent un certain nombre de normes environnementales pour constructions nouvelles');
@@ -447,7 +453,7 @@ INSERT INTO gnextl VALUES ('NG', 'Exonération à durée variable pour contrat d
 INSERT INTO gnextl VALUES ('NK', 'Exonération de 20 ans pour les logements intermédiaires loués dans les conditions de l’article 279-0 bis A (construction nouvelle) – art. 1384-0 A du CGI');
 INSERT INTO gnextl VALUES ('NL', 'Exonération de 15 ans pour logements sociaux (CN)');
 INSERT INTO gnextl VALUES ('NM', 'Construction nouvelle – Ville de Paris – art. 1383 du CGI');
-INSERT INTO gnextl VALUES ('NQ', 'Exonération de 15 ans pour construction nouvelle antérieure au 01/01/1973');
+INSERT INTO gnextl VALUES ('NQ', 'Construction nouvelle exonération de 2 ans droits acquis');
 INSERT INTO gnextl VALUES ('NT', 'Exonération de 30 ans pour les logements sociaux respectant certains critères de qualité environnementale (construction nouvelle).');
 INSERT INTO gnextl VALUES ('NU', 'Exonération de 25 ans pour les logements financés au moyen de prêts aidés par l''Etat (construction nouvelle)');
 INSERT INTO gnextl VALUES ('NV', 'Exonération de 25 ans pour les logements financés au moyen de prêts aidés par l''Etat (construction nouvelle)');
@@ -468,6 +474,7 @@ INSERT INTO gnextl VALUES ('RF', 'Requalification de copropriétés dégradées 
 INSERT INTO gnextl VALUES ('RI', 'Recherche industrielle');
 INSERT INTO gnextl VALUES ('RM', 'Exonération pour les locaux achevés avant la mise en place d’un plan de prévention des risques miniers. Article 1383 G ter du CGI');
 INSERT INTO gnextl VALUES ('RQ', 'Local achevé avant la mise en place d''un plan de prévention des risques technologiques. Article 1383 G du CGI.');
+INSERT INTO gnextl VALUES ('RR', 'Commerces en milieu rural');
 INSERT INTO gnextl VALUES ('RT', 'Abattement de 25 % pour les locaux faisant l’objet d’une convention ou d''un contrat de résidence temporaire – art. 1388 quinquies A du CGI');
 INSERT INTO gnextl VALUES ('RW', 'Local achevé avant le 01/01/1989 ayant fait l''objet de dépenses destinées à économiser l''énergie. Article 1383-O B du CGI.');
 INSERT INTO gnextl VALUES ('UM', 'Exonération de 5 ans pour les usines de méthanisation - art. 1387 A du CGI');
@@ -476,11 +483,10 @@ INSERT INTO gnextl VALUES ('ZL', 'Transformation local commercial en habitation'
 INSERT INTO gnextl VALUES ('ZQ', 'Abattement de 30 % pour les locaux d’habitation situés dans les immeubles collectifs issus de la transformation de locaux industriels ou commerciaux dans le périmètre des quartiers prioritaires de la politique de la ville');
 INSERT INTO gnextl VALUES ('ZR', 'Exonération de 15 ans pour locaux situés dans une zone de revitalisation rurale art. 1383 E du CGI');
 INSERT INTO gnextl VALUES ('ZT', 'Logement topé ZUS');
--- valeurs obsolètes mais existant toujours en base
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
 INSERT INTO gnextl VALUES ('AX', 'Longue durée (10 ans) - addition de construction');
 INSERT INTO gnextl VALUES ('CD', 'Exonération permanente des parts communale et départementale (biens d''une région situés dans une autre région)');
 INSERT INTO gnextl VALUES ('CR', 'Exonération permanente des parts communale et régionale (biens d''un département situés dans un autre département)');
-INSERT INTO gnextl VALUES ('CV', 'Contrat de ville');
 INSERT INTO gnextl VALUES ('DR', 'Exonération permanente des parts départementale et régionale (biens d''une commune situés dans une autre commune)');
 INSERT INTO gnextl VALUES ('EB', 'Economiquement faible - type B');
 INSERT INTO gnextl VALUES ('EP', 'Exonération permanente');
@@ -515,6 +521,7 @@ INSERT INTO cconad VALUES ('PS', 'Piscine');
 INSERT INTO cconad VALUES ('RS', 'Remise');
 INSERT INTO cconad VALUES ('SR', 'Serre');
 INSERT INTO cconad VALUES ('TT', 'Toiture-terrasse');
+
 -- nomenclature ctpdl (pdl)
 INSERT INTO ctpdl VALUES ('BND', 'Libellé BND');
 INSERT INTO ctpdl VALUES ('CL', 'Libellé CL');
@@ -522,6 +529,7 @@ INSERT INTO ctpdl VALUES ('CV', 'Libellé CV');
 INSERT INTO ctpdl VALUES ('TF', 'Libellé TF');
 INSERT INTO ctpdl VALUES ('CLV', 'Libellé CLV');
 INSERT INTO ctpdl VALUES ('MP', 'Libellé MP');
+
 -- nomenclature cconlo (lots)
 INSERT INTO cconlo VALUES ('1', 'lot non bâti');
 INSERT INTO cconlo VALUES ('2', 'lot bâti');
@@ -529,11 +537,12 @@ INSERT INTO cconlo VALUES ('3', 'lot mixte');
 INSERT INTO cconlo VALUES ('4', 'assise de pdl');
 INSERT INTO cconlo VALUES ('5', 'lot particulier');
 INSERT INTO cconlo VALUES ('6', 'lot multi-communes');
+
 -- nomenclature ccodro (proprietaire)
 INSERT INTO ccodro VALUES ('P', 'Propriétaire');
 INSERT INTO ccodro VALUES ('U', 'Usufruitier (associé avec N)');
 INSERT INTO ccodro VALUES ('N', 'Nu-propriétaire (associé avec U)');
-INSERT INTO ccodro VALUES ('B', 'Bailleur à construction (associé avec R) ou réel solidaire (associé à Z)');
+INSERT INTO ccodro VALUES ('B', 'Bailleur à construction (associé avec R)');
 INSERT INTO ccodro VALUES ('R', 'Preneur à construction (associé avec B)');
 INSERT INTO ccodro VALUES ('F', 'Foncier (associé avec D ou T)');
 INSERT INTO ccodro VALUES ('T', 'Ténuyer (associé avec F)');
@@ -554,6 +563,8 @@ INSERT INTO ccodro VALUES ('X', 'La Poste, propriétaire et occupant');
 INSERT INTO ccodro VALUES ('Y', 'La Poste, occupant et non propriétaire');
 INSERT INTO ccodro VALUES ('C', 'Fiduciaire');
 INSERT INTO ccodro VALUES ('M', 'Occupant d''une parcelle appartenant au département de Mayotte ou à l''État (associé à P).');
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
+-- 2021
 INSERT INTO ccodro VALUES ('Z', 'Preneur de bail solidaire (associé à B)');
 
 -- nomenclature ccodem (proprietaire)
@@ -1002,6 +1013,7 @@ INSERT INTO geo_sym VALUES ('81', 'borne limite de commune');
 INSERT INTO geo_sym VALUES ('98', 'objet ponctuel/linéaire divers');
 
 -- nomenclatures Forme juridique (depuis 2013) : dformjur
+INSERT INTO dformjur VALUES ('0000', Null, '0000 : Organisme de placement collectif en valeurs mobilières sans personnalité morale');
 INSERT INTO dformjur VALUES ('1000', Null, 'Entrepreneur individuel');
 INSERT INTO dformjur VALUES ('1100', Null, 'Artisan-commerçant');
 INSERT INTO dformjur VALUES ('1200', Null, 'Commerçant');
@@ -1046,6 +1058,7 @@ INSERT INTO dformjur VALUES ('5306', 'SCOM', 'Société en commandite simple');
 INSERT INTO dformjur VALUES ('5307', 'SCOM', 'Société en commandite simple coopérative');
 INSERT INTO dformjur VALUES ('5308', 'SCOM', 'Société en commandite par actions');
 INSERT INTO dformjur VALUES ('5309', 'SCOM', 'Société en commandite par actions coopérative');
+INSERT INTO dformjur VALUES ('5310', 'SLP', 'Société en libre partenariat');
 INSERT INTO dformjur VALUES ('5370', 'SCOM', 'Société de participations financières de profession libérale société en commandite par action');
 INSERT INTO dformjur VALUES ('5385', 'SCOM', 'Société d''exercice libéral en commandite par actions');
 INSERT INTO dformjur VALUES ('5410', 'SARL', 'SARL nationale');
@@ -1066,7 +1079,6 @@ INSERT INTO dformjur VALUES ('5459', 'SARL', 'SARL union de sociétés coopérat
 INSERT INTO dformjur VALUES ('5460', 'SARL', 'Autre SARL coopérative');
 INSERT INTO dformjur VALUES ('5470', 'SARL', 'Société de participations financières de profession libérale société à responsabilité limitée');
 INSERT INTO dformjur VALUES ('5485', 'SLRL', 'Société d''exercice libéral à responsabilité limitée');
-INSERT INTO dformjur VALUES ('5498', 'EURL', 'SARL unipersonnelle');
 INSERT INTO dformjur VALUES ('5499', 'SARL', 'Société à responsabilité limitée (sans autre indication)');
 INSERT INTO dformjur VALUES ('5505', 'SA', 'SA à participation ouvrière à conseil d''administration');
 INSERT INTO dformjur VALUES ('5510', 'SA', 'SA nationale à conseil d''administration');
@@ -1119,7 +1131,6 @@ INSERT INTO dformjur VALUES ('5670', 'SA', 'Société de participations financi�
 INSERT INTO dformjur VALUES ('5685', 'SA', 'Société d''exercice libéral à forme anonyme à directoire');
 INSERT INTO dformjur VALUES ('5699', 'SA', 'SA à directoire (s.a.i.)');
 INSERT INTO dformjur VALUES ('5710', 'SAS', 'SAS, société par actions simplifiée');
-INSERT INTO dformjur VALUES ('5720', 'SAS', 'Société par actions simplifiée à associé unique ou société par actions simplifiée unipersonnelle');
 INSERT INTO dformjur VALUES ('5770', 'SAS', 'Société de participations financières de profession libérale société par actions simplifiée');
 INSERT INTO dformjur VALUES ('5785', 'SAS', 'Société d''exercice libéral par action simplifiée');
 INSERT INTO dformjur VALUES ('5800', 'SE', 'Société européenne');
@@ -1170,7 +1181,6 @@ INSERT INTO dformjur VALUES ('6576', 'SCP', 'SCP de vétérinaires');
 INSERT INTO dformjur VALUES ('6577', 'SCP', 'SCP de géomètres experts');
 INSERT INTO dformjur VALUES ('6578', 'SCP', 'SCP d''architectes');
 INSERT INTO dformjur VALUES ('6585', 'SC', 'Autre société civile professionnelle');
-INSERT INTO dformjur VALUES ('6588', 'SCM', 'Société civile laitière');
 INSERT INTO dformjur VALUES ('6589', 'CCM', 'Société civile de moyens');
 INSERT INTO dformjur VALUES ('6595', 'CCAM', 'Caisse locale de crédit mutuel');
 INSERT INTO dformjur VALUES ('6596', 'SCEA', 'Caisse de crédit agricole mutuel');
@@ -1253,8 +1263,8 @@ INSERT INTO dformjur VALUES ('8190', Null, 'Autre régime de prévoyance sociale
 INSERT INTO dformjur VALUES ('8210', 'MUT', 'Mutuelle');
 INSERT INTO dformjur VALUES ('8250', 'MUT', 'Assurance mutuelle agricole');
 INSERT INTO dformjur VALUES ('8290', 'MUT', 'Autre organisme mutualiste');
-INSERT INTO dformjur VALUES ('8310', 'COME', 'Comité central d''entreprise');
-INSERT INTO dformjur VALUES ('8311', 'COME', 'Comité d''établissement');
+INSERT INTO dformjur VALUES ('8310', 'COME', 'Comité central économique d''entreprise');
+INSERT INTO dformjur VALUES ('8311', 'COME', 'Comité social économique d''établissement');
 INSERT INTO dformjur VALUES ('8410', 'OPRO', 'Syndicat de salariés');
 INSERT INTO dformjur VALUES ('8420', 'OPRO', 'Syndicat patronal');
 INSERT INTO dformjur VALUES ('8450', 'OPRO', 'Ordre professionnel ou assimilé');
@@ -1279,6 +1289,11 @@ INSERT INTO dformjur VALUES ('9970', 'GCS', 'Groupement de coopération sanitair
 INSERT INTO dformjur VALUES ('F001', Null, 'Les copropriétaires');
 INSERT INTO dformjur VALUES ('F002', Null, 'Les associés de sci');
 INSERT INTO dformjur VALUES ('F003', Null, 'Professionnels très pauvres du foncier');
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
+-- 2021
+INSERT INTO dformjur VALUES ('5498', 'EURL', 'SARL unipersonnelle');
+INSERT INTO dformjur VALUES ('5720', 'SAS', 'Société par actions simplifiée à associé unique ou société par actions simplifiée unipersonnelle');
+INSERT INTO dformjur VALUES ('6588', 'SCM', 'Société civile laitière');
 
 
 -- nomenclatures Code catégorie du local (depuis 2017) : ccocac
