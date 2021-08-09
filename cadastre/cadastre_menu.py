@@ -49,12 +49,12 @@ from .cadastre_dialogs import (
     CadastreMessageDialog,
     CadastreOptionDialog,
     CadastreParcelleDialog,
-    CadastreSearchDialog,
 )
 from .cadastre_identify_parcelle import IdentifyParcelle
 from .cadastre_load_dialog import CadastreLoadDialog
 from .import_dialog import CadastreImportDialog
 from .processing.provider import CadastreProvider
+from .search_dialog import CadastreSearchDialog
 
 
 class CadastreMenu:
