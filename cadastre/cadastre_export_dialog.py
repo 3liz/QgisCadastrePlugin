@@ -27,7 +27,7 @@ from qgis.PyQt.QtWidgets import QApplication, QDialog
 
 import cadastre.cadastre_common_base as cadastre_common
 
-from .cadastre_export import cadastreExport as cadastreExportBase
+from .cadastre_export import CadastreExport as cadastreExportBase
 
 PRINT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -62,7 +62,7 @@ def printProgress(self, nb: int) -> Generator[Callable[[int], None], None, None]
     yield progress
 
 
-class cadastreExport(cadastreExportBase):
+class CadastreExport(cadastreExportBase):
 
     def __init__(self, layer: QgsMapLayer, etype: str, comptecommunal: str,
                  geo_parcelle: str = None, target_dir: str = None) -> None:

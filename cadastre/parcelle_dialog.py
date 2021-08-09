@@ -29,7 +29,7 @@ from functools import partial
 # db_manager scripts
 from qgis.PyQt import uic
 
-from .cadastre_export_dialog import cadastreExport
+from .cadastre_export_dialog import CadastreExport
 from .dialog_common import CadastreCommon
 
 # --------------------------------------------------------
@@ -439,7 +439,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
                         self.cbExportAllCities.isChecked()
                     )
                 if self.layer:
-                    qe = cadastreExport(
+                    qe = CadastreExport(
                         self.layer,
                         key,
                         comptecommunal,

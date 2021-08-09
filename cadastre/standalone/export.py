@@ -14,7 +14,7 @@ import argparse
 from qgis.core import QgsApplication, QgsFeatureRequest, QgsProject
 from qgis.gui import QgsLayerTreeMapCanvasBridge, QgsMapCanvas
 
-from cadastre.cadastre_export import cadastreExport
+from cadastre.cadastre_export import CadastreExport
 from cadastre.dialog_common import CadastreCommon
 
 # Variables
@@ -128,7 +128,7 @@ if export_type == 'proprietaire' and pmulti == 1:
 
 # Export PDF
 print(target_dir)
-qex = cadastreExport(
+qex = CadastreExport(
     p,
     layer,
     export_type,

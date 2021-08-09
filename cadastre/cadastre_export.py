@@ -55,7 +55,7 @@ def _printProgress(self, nb: int) -> Generator[Callable[[int], None], None, None
     yield (lambda step: None)
 
 
-class cadastreExport:
+class CadastreExport:
 
     def __init__(self, project: QgsProject, layer: QgsMapLayer, etype: str, comptecommunal: str,
                  geo_parcelle: str = None, target_dir: str = None) -> None:

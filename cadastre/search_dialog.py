@@ -33,7 +33,7 @@ from functools import partial
 # db_manager scripts
 from qgis.PyQt import uic
 
-from .cadastre_export import cadastreExport
+from .cadastre_export import CadastreExport
 from .custom_qcompleter import CustomQCompleter
 from .dialog_common import CadastreCommon
 from .parcelle_dialog import CadastreParcelleDialog
@@ -1221,7 +1221,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         cc = self.searchComboBoxes['proprietaire']['id']
         if cc:
             layer = self.searchComboBoxes['proprietaire']['layer']
-            qex = cadastreExport(layer, 'proprietaire', cc)
+            qex = CadastreExport(layer, 'proprietaire', cc)
             qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune donnée trouvée pour ce propriétaire !')
@@ -1243,7 +1243,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         if feat:
             comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(feat['geo_parcelle'],
                                                                             self.connectionParams, self.connector)
-            qex = cadastreExport(layer, 'parcelle', comptecommunal, feat['geo_parcelle'])
+            qex = CadastreExport(layer, 'parcelle', comptecommunal, feat['geo_parcelle'])
             qex.exportAsPDF()
         else:
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')

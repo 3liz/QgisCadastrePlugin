@@ -37,7 +37,7 @@ from qgis.server import QgsServerRequest, QgsServerResponse, QgsService
 
 import cadastre.cadastre_common_base as cadastre_common
 
-from cadastre.cadastre_export import cadastreExport
+from cadastre.cadastre_export import CadastreExport
 
 # Parcelle format for validation
 PARCELLE_FORMAT_RE = re.compile("^([A-Z0-9]+)*$")
@@ -213,7 +213,7 @@ class CadastreService(QgsService):
             QgsMessageLog.logMessage("Comptecommunal = %s" % comptecommunal, 'cadastre', Qgis.Debug)
 
         # Export PDF
-        qex = cadastreExport(project, res.layer, res.type, comptecommunal, res.geo_parcelle)
+        qex = CadastreExport(project, res.layer, res.type, comptecommunal, res.geo_parcelle)
 
         paths = qex.exportAsPDF()
 
