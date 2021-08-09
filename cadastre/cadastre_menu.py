@@ -46,7 +46,6 @@ from qgis.PyQt.QtXml import QDomDocument
 from .cadastre_dialogs import (
     CadastreAboutDialog,
     CadastreCommon,
-    CadastreImportDialog,
     CadastreLoadDialog,
     CadastreMessageDialog,
     CadastreOptionDialog,
@@ -54,6 +53,7 @@ from .cadastre_dialogs import (
     CadastreSearchDialog,
 )
 from .cadastre_identify_parcelle import IdentifyParcelle
+from .import_dialog import CadastreImportDialog
 from .processing.provider import CadastreProvider
 
 
