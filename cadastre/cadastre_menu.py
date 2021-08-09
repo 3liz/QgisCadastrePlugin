@@ -43,8 +43,8 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.PyQt.QtXml import QDomDocument
 
+from .about_dialog import CadastreAboutDialog
 from .cadastre_dialogs import (
-    CadastreAboutDialog,
     CadastreCommon,
     CadastreMessageDialog,
     CadastreParcelleDialog,
