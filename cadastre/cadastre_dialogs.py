@@ -30,13 +30,7 @@ from qgis.core import (
     QgsProject,
     QgsSettings,
 )
-from qgis.PyQt.QtCore import (
-    QRegExp,
-    QSize,
-    QSortFilterProxyModel,
-    QStringListModel,
-    Qt,
-)
+from qgis.PyQt.QtCore import QSize, Qt
 from qgis.PyQt.QtGui import QIcon, QKeySequence, QPixmap, QTextDocument
 from qgis.PyQt.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from qgis.PyQt.QtWidgets import (
@@ -61,50 +55,8 @@ from functools import partial
 # db_manager scripts
 from qgis.PyQt import uic
 
+from .custom_qcompleter import CustomQCompleter
 from .dialog_common import CadastreCommon
-
-
-# Custom completer (to allow completion when string found anywhere
-class CustomQCompleter(QCompleter):
-    """
-    adapted from: http://stackoverflow.com/a/7767999/2156909
-    """
-
-    def __init__(self, *args):  # parent=None):
-        super(CustomQCompleter, self).__init__(*args)
-        self.local_completion_prefix = ""
-        self.source_model = None
-        self.filterProxyModel = QSortFilterProxyModel(self)
-        self.usingOriginalModel = False
-
-    def setModel(self, model):
-        self.source_model = model
-        self.filterProxyModel = QSortFilterProxyModel(self)
-        self.filterProxyModel.setSourceModel(self.source_model)
-        super(CustomQCompleter, self).setModel(self.filterProxyModel)
-        self.usingOriginalModel = True
-
-    def updateModel(self):
-        if not self.usingOriginalModel:
-            self.filterProxyModel.setSourceModel(self.source_model)
-
-        pattern = QRegExp(self.local_completion_prefix,
-                          Qt.CaseInsensitive,
-                          QRegExp.FixedString
-                          )
-
-        self.filterProxyModel.setFilterRegExp(pattern)
-
-    def splitPath(self, path):
-        self.local_completion_prefix = path
-        self.updateModel()
-        if self.filterProxyModel.rowCount() == 0:
-            self.usingOriginalModel = False
-            self.filterProxyModel.setSourceModel(QStringListModel([path]))
-            return [path]
-
-        return []
-
 
 # ---------------------------------------------------------
 #        search - search for data among database ans export
