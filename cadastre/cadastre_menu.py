@@ -47,12 +47,12 @@ from .cadastre_dialogs import (
     CadastreAboutDialog,
     CadastreCommon,
     CadastreMessageDialog,
-    CadastreOptionDialog,
     CadastreParcelleDialog,
 )
 from .cadastre_identify_parcelle import IdentifyParcelle
 from .cadastre_load_dialog import CadastreLoadDialog
 from .import_dialog import CadastreImportDialog
+from .options_dialog import CadastreOptionDialog
 from .processing.provider import CadastreProvider
 from .search_dialog import CadastreSearchDialog
 
