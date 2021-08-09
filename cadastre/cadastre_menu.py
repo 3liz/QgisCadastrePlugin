@@ -43,16 +43,16 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.PyQt.QtXml import QDomDocument
 
-from .about_dialog import CadastreAboutDialog
-from .cadastre_identify_parcelle import IdentifyParcelle
-from .cadastre_load_dialog import CadastreLoadDialog
-from .dialog_common import CadastreCommon
-from .import_dialog import CadastreImportDialog
-from .message_dialog import CadastreMessageDialog
-from .options_dialog import CadastreOptionDialog
-from .parcelle_dialog import CadastreParcelleDialog
-from .processing.provider import CadastreProvider
-from .search_dialog import CadastreSearchDialog
+from cadastre.cadastre_identify_parcelle import IdentifyParcelle
+from cadastre.dialogs.about_dialog import CadastreAboutDialog
+from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
+from cadastre.dialogs.dialog_common import CadastreCommon
+from cadastre.dialogs.import_dialog import CadastreImportDialog
+from cadastre.dialogs.message_dialog import CadastreMessageDialog
+from cadastre.dialogs.options_dialog import CadastreOptionDialog
+from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
+from cadastre.dialogs.search_dialog import CadastreSearchDialog
+from cadastre.processing.provider import CadastreProvider
 
 
 class CadastreMenu:
@@ -379,7 +379,7 @@ class CadastreMenu:
         # Find parcelle layer
         parcelleLayer = None
         try:
-            from .dialog_common import CadastreCommon
+            from cadastre.dialogs.dialog_common import CadastreCommon
             parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps('parcelle_info')
         except:
             parcelleLayer = None

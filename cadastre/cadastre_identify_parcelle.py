@@ -33,7 +33,7 @@ from qgis.gui import QgsMapToolIdentify
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.PyQt.QtGui import QCursor, QPixmap
 
-from .cadastre_cursor import Cursor
+from cadastre.cadastre_cursor import Cursor
 
 
 class IdentifyParcelle(QgsMapToolIdentify):

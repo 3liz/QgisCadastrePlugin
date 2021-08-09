@@ -4,8 +4,8 @@ __email__ = "info@3liz.org"
 
 import os.path
 import re
-import sys
 
+from functools import partial
 from pathlib import Path
 
 from qgis.core import (
@@ -15,6 +15,7 @@ from qgis.core import (
     QgsMapSettings,
     QgsProject,
 )
+from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon, QTextDocument
 from qgis.PyQt.QtPrintSupport import QPrinter, QPrintPreviewDialog
@@ -25,27 +26,14 @@ from qgis.PyQt.QtWidgets import (
     QFileDialog,
 )
 
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
-
-
-from functools import partial
-
-# db_manager scripts
-from qgis.PyQt import uic
-
-from .cadastre_export import CadastreExport
-from .custom_qcompleter import CustomQCompleter
-from .dialog_common import CadastreCommon
-from .parcelle_dialog import CadastreParcelleDialog
-
-# ---------------------------------------------------------
-#        search - search for data among database ans export
-# ---------------------------------------------------------
-
+from cadastre.cadastre_export import CadastreExport
+from cadastre.dialogs.custom_qcompleter import CustomQCompleter
+from cadastre.dialogs.dialog_common import CadastreCommon
+from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
 
 SEARCH_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        str(Path(__file__).resolve().parent),
+        str(Path(__file__).resolve().parent.parent),
         'forms',
         'cadastre_search_form.ui'
     )
@@ -53,6 +41,9 @@ SEARCH_FORM_CLASS, _ = uic.loadUiType(
 
 
 class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
+
+    """ Search for data among database ans export. """
+
     def __init__(self, iface, parent=None):
         # QDockWidget.__init__(self)
         super(CadastreSearchDialog, self).__init__(parent)
@@ -61,7 +52,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
 
         # Images
-        plugin_dir = str(Path(__file__).resolve().parent)
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
         self.btExportParcelle.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
         self.btResetCommune.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
         self.btResetParcelle.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
@@ -81,7 +72,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.btResetCommuneProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'delete.png')))
 
         # common cadastre methods
-        from .dialog_common import CadastreCommon
+        from cadastre.dialogs.dialog_common import CadastreCommon
         self.qc = CadastreCommon(self)
 
         # database properties
@@ -366,7 +357,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.hasMajicDataVoie = False
         self.hasMajicDataParcelle = False
 
-        from .dialog_common import CadastreCommon
+        from cadastre.dialogs.dialog_common import CadastreCommon
         aLayer = CadastreCommon.getLayerFromLegendByTableProps('geo_commune')
         if aLayer:
             self.connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(aLayer)
@@ -1116,7 +1107,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             )
         )
 
-        plugin_dir = str(Path(__file__).resolve().parent)
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
 
         printer = QPrinter()
         printer.setPageSize(QPrinter.A4)
@@ -1143,7 +1134,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.qc.updateLog('Texte copié dans le presse papier !')
 
     def saveInfosProprietaires(self):
-        plugin_dir = str(Path(__file__).resolve().parent)
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
 
         dlgFile = QFileDialog(self, "Enregistrer sous ...")
         dlgFile.setNameFilters(("All (*.htm*)", "HTML (*.html)", "HTM (*.htm)"))

@@ -24,7 +24,7 @@ from pathlib import Path
 from qgis.core import Qgis, QgsMessageLog
 from qgis.server import QgsServerInterface
 
-from .cadastre_service import CadastreService
+from cadastre.server.cadastre_service import CadastreService
 
 
 class CadastreServer:

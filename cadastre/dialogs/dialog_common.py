@@ -4,41 +4,32 @@ __email__ = "info@3liz.org"
 
 import os.path
 import re
-import sys
 import unicodedata
 
 from collections import namedtuple
 from pathlib import Path
 
+from db_manager.db_plugins import createDbPlugin
+from db_manager.db_plugins.plugin import BaseError
+from db_manager.dlg_db_error import DlgDbError
 from qgis.core import QgsMapLayer, QgsProject, QgsSettings
 from qgis.PyQt.QtCore import QFileInfo, Qt
 from qgis.PyQt.QtGui import QTextCursor
 from qgis.PyQt.QtWidgets import QApplication, QFileDialog, qApp
 
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
-
-
-from db_manager.db_plugins import createDbPlugin
-
-# db_manager scripts
-from db_manager.db_plugins.plugin import BaseError
-from db_manager.dlg_db_error import DlgDbError
-
 import cadastre.cadastre_common_base as common_utils
-
-# --------------------------------------------------------
-#        import - Import data from EDIGEO and MAJIC files
-# --------------------------------------------------------
 
 
 class CadastreCommon:
+
+    """ Import data from EDIGEO and MAJIC files. """
 
     def __init__(self, dialog):
 
         self.dialog = dialog
 
         # plugin directory path
-        self.plugin_dir = str(Path(__file__).resolve().parent)
+        self.plugin_dir = str(Path(__file__).resolve().parent.parent)
 
         # default auth id for layers
         self.defaultAuthId = '2154'

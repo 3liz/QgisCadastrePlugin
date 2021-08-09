@@ -27,11 +27,11 @@ from qgis.PyQt.QtWidgets import QApplication, QDialog
 
 import cadastre.cadastre_common_base as cadastre_common
 
-from .cadastre_export import CadastreExport as cadastreExportBase
+from cadastre.cadastre_export import CadastreExport as cadastreExportBase
 
 PRINT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        str(Path(__file__).resolve().parent),
+        str(Path(__file__).resolve().parent.parent),
         'forms',
         'cadastre_print_form.ui'
     )

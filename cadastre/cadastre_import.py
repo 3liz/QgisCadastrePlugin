@@ -32,14 +32,13 @@ import tempfile
 from datetime import datetime
 from distutils import dir_util
 
-# db_manager scripts
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
 from qgis.core import Qgis, QgsMessageLog
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
-from .dialog_common import CadastreCommon
+from cadastre.dialogs.dialog_common import CadastreCommon
 
 # Import ogr2ogr.py from the script folder
 from .scripts.pyogr.ogr2ogr import main as ogr2ogr

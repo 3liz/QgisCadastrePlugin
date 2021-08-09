@@ -2,11 +2,6 @@ __copyright__ = "Copyright 2021, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
-import os.path
-import sys
-
-from pathlib import Path
-
 from qgis.PyQt.QtCore import (
     QRegExp,
     QSortFilterProxyModel,
@@ -14,8 +9,6 @@ from qgis.PyQt.QtCore import (
     Qt,
 )
 from qgis.PyQt.QtWidgets import QCompleter
-
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
 
 
 class CustomQCompleter(QCompleter):

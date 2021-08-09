@@ -26,8 +26,8 @@ from pathlib import Path
 from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
 
-from .algorithms.config import ConfigProjectAlgorithm
-from .algorithms.edigeo_downloader import EdigeoDownloader
+from cadastre.processing.algorithms.config import ConfigProjectAlgorithm
+from cadastre.processing.algorithms.edigeo_downloader import EdigeoDownloader
 
 
 class CadastreProvider(QgsProcessingProvider):

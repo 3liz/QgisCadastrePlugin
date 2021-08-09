@@ -3,31 +3,24 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
-import sys
 
+from functools import partial
 from pathlib import Path
 
+from db_manager.db_plugins.plugin import BaseError
+from db_manager.dlg_db_error import DlgDbError
 from qgis.core import QgsCoordinateReferenceSystem, QgsSettings
+from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox
 
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
-
-
-from functools import partial
-
-# db_manager scripts
-from db_manager.db_plugins.plugin import BaseError
-from db_manager.dlg_db_error import DlgDbError
-from qgis.PyQt import uic
-
-from .cadastre_import import cadastreImport
-from .dialog_common import CadastreCommon
+from cadastre.cadastre_import import cadastreImport
+from cadastre.dialogs.dialog_common import CadastreCommon
 
 IMPORT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        str(Path(__file__).resolve().parent),
+        str(Path(__file__).resolve().parent.parent),
         'forms',
         'cadastre_import_form.ui'
     )
@@ -41,7 +34,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.setupUi(self)
 
         # Images
-        plugin_dir = str(Path(__file__).resolve().parent)
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
         self.btEdigeoSourceDir.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'open.png')))
         self.btMajicSourceDir.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'open.png')))
 

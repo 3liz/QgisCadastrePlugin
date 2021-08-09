@@ -3,28 +3,18 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
-import sys
 import tempfile
 
 from pathlib import Path
 
 from qgis.core import QgsSettings
+from qgis.PyQt import uic
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QFileDialog, QMessageBox
 
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
-
-
-# db_manager scripts
-from qgis.PyQt import uic
-
-# --------------------------------------------------------
-#        Option - Let the user configure options
-# --------------------------------------------------------
-
 OPTION_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        str(Path(__file__).resolve().parent),
+        str(Path(__file__).resolve().parent.parent),
         'forms',
         'cadastre_option_form.ui'
     )
@@ -32,13 +22,16 @@ OPTION_FORM_CLASS, _ = uic.loadUiType(
 
 
 class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
+
+    """ Let the user configure options. """
+
     def __init__(self, iface, parent=None):
         super(CadastreOptionDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
 
         # Images
-        self.plugin_dir = str(Path(__file__).resolve().parent)
+        self.plugin_dir = str(Path(__file__).resolve().parent.parent)
         self.btComposerTemplateFile.setIcon(QIcon(os.path.join(self.plugin_dir, 'forms', 'icons', 'open.png')))
         self.btTempDir.setIcon(QIcon(os.path.join(self.plugin_dir, 'forms', 'icons', 'open.png')))
 

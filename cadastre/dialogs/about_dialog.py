@@ -3,27 +3,16 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
-import sys
 
 from pathlib import Path
 
+from qgis.PyQt import uic
 from qgis.PyQt.QtGui import QPixmap
 from qgis.PyQt.QtWidgets import QDialog
 
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
-
-
-# db_manager scripts
-from qgis.PyQt import uic
-
-# --------------------------------------------------------
-#        About - Let the user display the about dialog
-# --------------------------------------------------------
-
-
 ABOUT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        str(Path(__file__).resolve().parent),
+        str(Path(__file__).resolve().parent.parent),
         'forms',
         'cadastre_about_form.ui'
     )
@@ -31,6 +20,9 @@ ABOUT_FORM_CLASS, _ = uic.loadUiType(
 
 
 class CadastreAboutDialog(QDialog, ABOUT_FORM_CLASS):
+
+    """ About - Let the user display the about dialog. """
+
     def __init__(self, iface, parent=None):
         super(CadastreAboutDialog, self).__init__(parent)
         self.iface = iface
@@ -42,7 +34,7 @@ class CadastreAboutDialog(QDialog, ABOUT_FORM_CLASS):
         self.buttonBox.accepted.connect(self.onAccept)
 
         # Images
-        plugin_dir = str(Path(__file__).resolve().parent)
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
         self.label_logo_rennes_metropole.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_rennes_metropole.png')))
         self.label_logo_mtes.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_mtes.png')))
         self.label_logo_mtes_2.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_mtes_2.png')))

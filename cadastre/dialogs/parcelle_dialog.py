@@ -3,11 +3,12 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
-import sys
 
+from functools import partial
 from pathlib import Path
 
 from qgis.core import QgsCoordinateTransform, QgsMapSettings, QgsProject
+from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon, QKeySequence, QTextDocument
 from qgis.PyQt.QtPrintSupport import QPrinter, QPrintPreviewDialog
@@ -21,25 +22,12 @@ from qgis.PyQt.QtWidgets import (
     QTextEdit,
 )
 
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
-
-
-from functools import partial
-
-# db_manager scripts
-from qgis.PyQt import uic
-
-from .cadastre_export_dialog import CadastreExport
-from .dialog_common import CadastreCommon
-
-# --------------------------------------------------------
-#        Parcelle - Show parcelle information
-# --------------------------------------------------------
-
+from cadastre.dialogs.cadastre_export_dialog import CadastreExport
+from cadastre.dialogs.dialog_common import CadastreCommon
 
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        str(Path(__file__).resolve().parent),
+        str(Path(__file__).resolve().parent.parent),
         'forms',
         'cadastre_parcelle_form.ui'
     )
@@ -47,10 +35,13 @@ PARCELLE_FORM_CLASS, _ = uic.loadUiType(
 
 
 class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
+
+    """ Show parcelle information. """
+
     def __init__(self, iface, layer, feature, cadastre_search_dialog, parent=None):
         super(CadastreParcelleDialog, self).__init__(parent)
 
-        plugin_dir = str(Path(__file__).resolve().parent)
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
 
         self.iface = iface
         self.feature = feature
@@ -69,7 +60,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.txtLog = QTextEdit(self)
         self.txtLog.setEnabled(False)
 
-        from .custom_qpush_button import CustomPushButton
+        from cadastre.dialogs.custom_qpush_button import CustomPushButton
         self.butActions = CustomPushButton(self)
         self.butActions.initPushButton(
             40, 24, 10, 0, "butActions", "", "Actions ...", True,
@@ -90,7 +81,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.btExportProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
 
         # common cadastre methods
-        from .dialog_common import CadastreCommon
+        from cadastre.dialogs.dialog_common import CadastreCommon
         self.qc = CadastreCommon(self)
 
         # Get connection parameters
@@ -299,7 +290,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
     def builderContextMenu(self, obj, actions):
         contextMnu = QMenu()
 
-        plugin_dir = str(Path(__file__).resolve().parent)
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
         for key in actions:
             icon = os.path.join(plugin_dir, "icons", actions[key][0])
             if key.startswith("~"):
@@ -330,8 +321,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         """
         Get CSS from CSS file
         """
-        css = ''
-        plugin_dir = str(Path(__file__).resolve().parent)
+        plugin_dir = str(Path(__file__).resolve().parent.parent)
         with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), 'r') as f:
             css = f.read()
         self.css = css

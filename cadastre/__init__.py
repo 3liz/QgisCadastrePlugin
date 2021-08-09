@@ -25,7 +25,7 @@ from __future__ import absolute_import
 
 def classFactory(iface):
     # load Cadastre class from file Cadastre
-    from .cadastre_menu import CadastreMenu
+    from cadastre.cadastre_menu import CadastreMenu
     return CadastreMenu(iface)
 
 
@@ -35,5 +35,5 @@ def serverClassFactory(serverIface):  # pylint: disable=invalid-name
     :type serverIface: QgsServerInterface
     """
     #
-    from .server.cadastre_server import CadastreServer
+    from cadastre.server.cadastre_server import CadastreServer
     return CadastreServer(serverIface)

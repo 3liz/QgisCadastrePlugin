@@ -3,22 +3,17 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
-import sys
 
 from pathlib import Path
 
+from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
 
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
-
-# db_manager scripts
-from qgis.PyQt import uic
-
-from .cadastre_loading import cadastreLoading
+from cadastre.cadastre_loading import cadastreLoading
 
 LOAD_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        str(Path(__file__).resolve().parent),
+        str(Path(__file__).resolve().parent.parent),
         'forms',
         'cadastre_load_form.ui'
     )
@@ -26,6 +21,9 @@ LOAD_FORM_CLASS, _ = uic.loadUiType(
 
 
 class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
+
+    """ Load data from database. """
+
     def __init__(self, iface, cadastre_search_dialog, parent=None):
         super(CadastreLoadDialog, self).__init__(parent)
         self.iface = iface
@@ -35,7 +33,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         self.cadastre_search_dialog = cadastre_search_dialog
 
         # common cadastre methods
-        from .dialog_common import CadastreCommon
+        from cadastre.dialogs.dialog_common import CadastreCommon
         self.qc = CadastreCommon(self)
         self.ql = cadastreLoading(self)
 

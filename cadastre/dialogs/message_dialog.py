@@ -3,19 +3,15 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
-import sys
 
 from pathlib import Path
 
-from qgis.PyQt.QtWidgets import QDialog
-
-sys.path.append(os.path.join(str(Path(__file__).resolve().parent), 'forms'))
-
 from qgis.PyQt import uic
+from qgis.PyQt.QtWidgets import QDialog
 
 MESSAGE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
-        str(Path(__file__).resolve().parent),
+        str(Path(__file__).resolve().parent.parent),
         'forms',
         'cadastre_message_form.ui'
     )
@@ -23,6 +19,9 @@ MESSAGE_FORM_CLASS, _ = uic.loadUiType(
 
 
 class CadastreMessageDialog(QDialog, MESSAGE_FORM_CLASS):
+
+    """ Displays a message to the user. """
+
     def __init__(self, iface, message, parent=None):
         super(CadastreMessageDialog, self).__init__(parent)
         self.iface = iface
