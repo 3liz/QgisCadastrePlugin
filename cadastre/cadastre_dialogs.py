@@ -27,7 +27,7 @@ from qgis.core import (
     QgsProject,
     QgsSettings,
 )
-from qgis.PyQt.QtCore import QSize, Qt
+from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon, QKeySequence, QPixmap, QTextDocument
 from qgis.PyQt.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from qgis.PyQt.QtWidgets import (
@@ -38,7 +38,6 @@ from qgis.PyQt.QtWidgets import (
     QFileDialog,
     QMenu,
     QMessageBox,
-    QPushButton,
     QTextEdit,
 )
 
@@ -337,7 +336,8 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.txtLog = QTextEdit(self)
         self.txtLog.setEnabled(False)
 
-        self.butActions = MyPushButtonFunny(self)
+        from .custom_qpush_button import CustomPushButton
+        self.butActions = CustomPushButton(self)
         self.butActions.initPushButton(
             40, 24, 10, 0, "butActions", "", "Actions ...", True,
             QIcon(
@@ -853,35 +853,3 @@ class CadastreMessageDialog(QDialog, MESSAGE_FORM_CLASS):
         the user closes the dialog
         """
         self.close()
-
-
-class MyPushButtonFunny(QPushButton):
-    def __init__(self, *args):
-        super(MyPushButtonFunny, self).__init__(*args)
-
-    def initPushButton(
-            self, sizeWidth, sizeHeight, coordX, coordY, name, text,
-            toolTip, isGeom, icon, iconWidth, iconHeight, isStyleSheeted):
-        self.setMinimumSize(sizeWidth, sizeHeight)
-        self.setMaximumSize(sizeWidth, sizeHeight)
-        self.iconWidth = iconWidth
-        self.iconHeight = iconHeight
-        self.selfFocused = False
-        self.subMenuVisble = False
-
-        if isGeom:
-            self.setGeometry(coordX, coordY, sizeWidth, sizeHeight)
-
-        if icon != "":
-            self.setIcon(QIcon(icon))
-            self.setIconSize(QSize(self.iconWidth, self.iconHeight))
-
-        self.setToolTip(toolTip)
-
-        if isStyleSheeted:
-            self.setStyleSheet(" QPushButton {border-width: 0px; border-radius: 10px;  border-color: beige;}")
-
-        self.setObjectName(name)
-
-        if text != "":
-            self.setText(text)
