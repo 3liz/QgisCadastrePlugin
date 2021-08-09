@@ -14,8 +14,8 @@ import argparse
 from qgis.core import QgsApplication, QgsFeatureRequest, QgsProject
 from qgis.gui import QgsLayerTreeMapCanvasBridge, QgsMapCanvas
 
-from cadastre.cadastre_dialogs import CadastreCommon
 from cadastre.cadastre_export import cadastreExport
+from cadastre.dialog_common import CadastreCommon
 
 # Variables
 parser = argparse.ArgumentParser()

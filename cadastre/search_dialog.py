@@ -33,9 +33,10 @@ from functools import partial
 # db_manager scripts
 from qgis.PyQt import uic
 
-from .cadastre_dialogs import CadastreParcelleDialog, cadastreExport
+from .cadastre_export import cadastreExport
 from .custom_qcompleter import CustomQCompleter
 from .dialog_common import CadastreCommon
+from .parcelle_dialog import CadastreParcelleDialog
 
 # ---------------------------------------------------------
 #        search - search for data among database ans export

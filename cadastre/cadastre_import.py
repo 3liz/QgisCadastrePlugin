@@ -39,7 +39,7 @@ from qgis.core import Qgis, QgsMessageLog
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
-from .cadastre_dialogs import CadastreCommon
+from .dialog_common import CadastreCommon
 
 # Import ogr2ogr.py from the script folder
 from .scripts.pyogr.ogr2ogr import main as ogr2ogr
