@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Ajout du support MAJIC 2021
+* Refactorisation du code interne à l'extension
+* Mise à jour de la documentation https://docs.3liz.org/QgisCadastrePlugin/
+
 ## 1.12.1 - 2021-06-24
 
 * Correction du chargement de l'extension avec QGIS < 3.10
