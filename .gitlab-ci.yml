@@ -1,5 +1,4 @@
 stages:
-- tests
 - build
 - deploy
 - release
@@ -10,18 +9,10 @@ variables:
     FACTORY_PACKAGE_TYPE: plugin
     FACTORY_MANIFEST: ".lizcloud/factory.manifest"
 
-check_tag:
-  stage: tests
-  only:
-    - tags
-  tags:
-    - fabric
-  script:
-    - .lizcloud/check_tag.sh ${CI_COMMIT_REF_NAME}
-
 build_3:
   stage: build
   script:
+    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
     - make -C .lizcloud -f factory.mk package
   environment:
     name: snap
@@ -34,6 +25,7 @@ build_3:
 deploy_snap_3:
   stage: deploy
   script:
+    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
     - $FACTORY_SCRIPTS/deploy-package $FACTORY_PACKAGE_NAME
   environment:
     name: snap
@@ -43,6 +35,7 @@ deploy_snap_3:
 release_prod_3:
   stage: release
   script:
+    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
     - $FACTORY_SCRIPTS/release-package $FACTORY_PACKAGE_NAME
   environment:
     name: production
@@ -56,6 +49,7 @@ release_prod_3:
 build_2:
   stage: build
   script:
+    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
     - make  -C .lizcloud -f fabric.mk package
   environment:
     name: snap
@@ -65,6 +59,7 @@ build_2:
 deploy_snap_2:
   stage: deploy
   script:
+    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
     - sudo -u fabric fab snap deploy:qgis3_cadastre,force=true
   environment:
     name: snap
@@ -74,6 +69,7 @@ deploy_snap_2:
 release_prod_2:
   stage: release
   script:
+    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
     - sudo -u fabric fab prod release:qgis3_cadastre
   environment:
     name: production
