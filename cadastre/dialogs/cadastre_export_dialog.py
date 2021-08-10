@@ -28,6 +28,7 @@ from qgis.PyQt.QtWidgets import QApplication, QDialog
 import cadastre.cadastre_common_base as cadastre_common
 
 from cadastre.cadastre_export import CadastreExport as cadastreExportBase
+from cadastre.tools import set_window_title
 
 PRINT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -43,6 +44,7 @@ class cadastrePrintProgress(QDialog, PRINT_FORM_CLASS):
         super(cadastrePrintProgress, self).__init__(parent)
         # Set up the user interface
         self.setupUi(self)
+        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
 
 
 from contextlib import contextmanager

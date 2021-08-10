@@ -10,6 +10,7 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
 
 from cadastre.cadastre_loading import cadastreLoading
+from cadastre.tools import set_window_title
 
 LOAD_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -28,6 +29,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         super(CadastreLoadDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
+        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
         self.mc = self.iface.mapCanvas()
 
         self.cadastre_search_dialog = cadastre_search_dialog

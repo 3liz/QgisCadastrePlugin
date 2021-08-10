@@ -24,6 +24,7 @@ from qgis.PyQt.QtWidgets import (
 
 from cadastre.dialogs.cadastre_export_dialog import CadastreExport
 from cadastre.dialogs.dialog_common import CadastreCommon
+from cadastre.tools import set_window_title
 
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -48,6 +49,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.layer = layer
         self.mc = iface.mapCanvas()
         self.setupUi(self)
+        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
         self.cadastre_search_dialog = cadastre_search_dialog
         self.setWindowIcon(QIcon(
             os.path.join(

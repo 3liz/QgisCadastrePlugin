@@ -17,6 +17,7 @@ from qgis.PyQt.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox
 
 from cadastre.cadastre_import import cadastreImport
 from cadastre.dialogs.dialog_common import CadastreCommon
+from cadastre.tools import set_window_title
 
 IMPORT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
@@ -32,6 +33,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.iface = iface
         super(CadastreImportDialog, self).__init__(parent)
         self.setupUi(self)
+        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
 
         # Images
         plugin_dir = str(Path(__file__).resolve().parent.parent)

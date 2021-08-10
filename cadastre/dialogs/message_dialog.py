@@ -9,6 +9,8 @@ from pathlib import Path
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
 
+from cadastre.tools import set_window_title
+
 MESSAGE_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         str(Path(__file__).resolve().parent.parent),
@@ -26,6 +28,7 @@ class CadastreMessageDialog(QDialog, MESSAGE_FORM_CLASS):
         super(CadastreMessageDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
+        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
 
         self.teMessage.setText(message)
 

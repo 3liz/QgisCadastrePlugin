@@ -10,6 +10,8 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtGui import QPixmap
 from qgis.PyQt.QtWidgets import QDialog
 
+from cadastre.tools import set_window_title
+
 ABOUT_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(
         str(Path(__file__).resolve().parent.parent),
@@ -27,6 +29,8 @@ class CadastreAboutDialog(QDialog, ABOUT_FORM_CLASS):
         super(CadastreAboutDialog, self).__init__(parent)
         self.iface = iface
         self.setupUi(self)
+
+        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
