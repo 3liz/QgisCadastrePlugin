@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.13.1 - 2021-08-10
+
+* Correction d'un chemin dans le script standalone concernant l'export
+
 ## 1.13.0 - 2021-08-10
 
 * Ajout du support MAJIC 2021 (Contribution de Maël Reboux)

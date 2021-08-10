@@ -1,6 +1,15 @@
 #!/usr/bin/env python
+
+__copyright__ = "Copyright 2021, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
+
 import os
 import sys
+
+"""
+Script used by Lizmap Web Client to make a asynchrone call from PHP.
+"""
 
 qgisPrefixPath = "/usr"
 os.environ["DISPLAY"] = ":99"
@@ -107,7 +116,7 @@ for f in it:
     feat = f
     break
 
-# Get connecion params
+# Get connection params
 connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
 connector = CadastreCommon.getConnectorFromUri(connectionParams)
 
