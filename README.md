@@ -45,12 +45,13 @@ Les évolutions 2020 ont été soutenues par :
 
 Les structures suivantes ont aidé 3liz pour la maintenance ou l'ajout de fonctionnalités:
 
-- L'**ADUGA** : maintenance pour les nouveaux millésimes
-- La **Ville de Megève**: migration du plugin vers QGIS 3
-- La **Communauté d'Agglomération du Soissonnais** : amélioration de la recherche et ajout d'informations sur les fiches parcellaires
-- Le **Conseil départemental du Gard** : ajout d'informations dans la fiche parcellaire
-- La **Métropole de Rennes** : ajout des supports 2019 et 2020 des millésimes MAJIC
-- le **Ministère de la Transition Écologique** : détails sur les propriétaires (indivisions)
+- L'**[ADUGA](https://www.aduga.org/)** : maintenance pour les nouveaux millésimes
+- La **[Ville de Megève](https://mairie.megeve.fr/)**: migration du plugin vers QGIS 3
+- La **[Communauté d'Agglomération du Soissonnais](http://agglo.grandsoissons.com/accueil-3.html)** : amélioration de la recherche et ajout d'informations sur les fiches parcellaires
+- Le **[Conseil départemental du Gard](https://www.gard.fr/accueil.html)** : ajout d'informations dans la fiche parcellaire
+- La **[Métropole de Rennes](https://metropole.rennes.fr/)** : ajout des supports 2019 et 2020 des millésimes MAJIC
+- le **[Ministère de la Transition Écologique](https://www.ecologie.gouv.fr/)** : détails sur les propriétaires (indivisions)
+- La **[Métropole de Brest Océane](https://www.brest.fr/brestfr-accueil-1575.html)** : enrichissement de la recherche de propriétaires (par nom d'usage, par nom de naissance, par commune)
 
 ## Conception
 
