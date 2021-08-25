@@ -122,7 +122,7 @@
           <item>
            <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>Les évolutions 2020 du plugin Cadastre ont été financés par :</string>
+             <string>Les évolutions 2020 de l'extension Cadastre ont été financés par :</string>
             </property>
            </widget>
           </item>
@@ -287,7 +287,7 @@
           <item>
            <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>La réalisation du plugin Cadastre a été financée initialement par :</string>
+             <string>La réalisation de l'extension Cadastre a été financée initialement par :</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -474,7 +474,7 @@
           <item>
            <widget class="QLabel" name="label_21">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les structures suivantes ont aidé 3liz pour la maintenance ou l'ajout de fonctionnalités:&lt;/p&gt;&lt;p&gt;- L'&lt;span style=&quot; font-weight:600;&quot;&gt;ADUGA&lt;/span&gt; : maintenace pour les millésimes MAJIC&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Ville de Megève&lt;/span&gt;: migration du plugin vers QGIS 3&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Communauté d'Agglomération du Soissonnais&lt;/span&gt; : amélioration de la recherche et de la fiche parcellaire&lt;/p&gt;&lt;p&gt;- Le &lt;span style=&quot; font-weight:600;&quot;&gt;Conseil départemental du Gard&lt;/span&gt; : ajout d'informations dans la fiche parcellaire&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Métropole de Rennes&lt;/span&gt; : ajout des supports 2019 et 2020 des millésimes MAJIC&lt;/p&gt;&lt;p&gt;- le &lt;span style=&quot; font-weight:600;&quot;&gt;Ministère de l'Écologie&lt;/span&gt; : détails sur les propriétaires (indivisions)&lt;/p&gt; - La &lt;span style=&quot; font-weight:600;&quot;&gt;Métropole de Brest Océane&lt;/span&gt; : enrichissement de la recherche de propriétaires (par nom d'usage, par nom de naissance, par commune)&lt;/p&gt;&lt;p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les structures suivantes ont aidé 3Liz pour la maintenance ou l'ajout de fonctionnalités:&lt;/p&gt;&lt;p&gt;- L'&lt;span style=&quot; font-weight:600;&quot;&gt;ADUGA&lt;/span&gt; : maintenace pour les millésimes MAJIC&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Ville de Megève&lt;/span&gt;: migration de l'extension vers QGIS 3&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Communauté d'Agglomération du Soissonnais&lt;/span&gt; : amélioration de la recherche et de la fiche parcellaire&lt;/p&gt;&lt;p&gt;- Le &lt;span style=&quot; font-weight:600;&quot;&gt;Conseil départemental du Gard&lt;/span&gt; : ajout d'informations dans la fiche parcellaire&lt;/p&gt;&lt;p&gt;- La &lt;span style=&quot; font-weight:600;&quot;&gt;Métropole de Rennes&lt;/span&gt; : ajout des supports 2019 et 2020 des millésimes MAJIC&lt;/p&gt;&lt;p&gt;- le &lt;span style=&quot; font-weight:600;&quot;&gt;Ministère de l'Écologie&lt;/span&gt; : détails sur les propriétaires (indivisions)&lt;/p&gt; - La &lt;span style=&quot; font-weight:600;&quot;&gt;Métropole de Brest Océane&lt;/span&gt; : enrichissement de la recherche de propriétaires (par nom d'usage, par nom de naissance, par commune)&lt;/p&gt;&lt;p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::RichText</enum>
@@ -496,7 +496,7 @@
           <item>
            <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>Le plugin Cadastre a été conçu et développé par la Société 3liz</string>
+             <string>L'extension Cadastre a été conçu et développé par la Société 3Liz</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -530,7 +530,7 @@
             <item>
              <widget class="QLabel" name="label_11">
               <property name="text">
-               <string>&lt;a href=&quot;http://www.3liz.com&quot; style=&quot;color:#7BA11A;text-decoration:none;&quot;&gt;Libérez vos SIG !&lt;/a&gt;</string>
+               <string>&lt;a href=&quot;https://www.3liz.com&quot; style=&quot;color:#7BA11A;text-decoration:none;&quot;&gt;Libérez vos SIG !&lt;/a&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -560,7 +560,7 @@
             <item row="0" column="1">
              <widget class="QLabel" name="label_14">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;mailto:info@3liz.com?subject=Plugin cadastre - A propos&quot;&gt;&lt;span style=&quot; color:#7ba11a;&quot;&gt;info@3liz.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;mailto:info@3liz.com?subject=Extension cadastre - A propos&quot;&gt;&lt;span style=&quot; color:#7ba11a;&quot;&gt;info@3liz.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="openExternalLinks">
                <bool>true</bool>
@@ -643,7 +643,7 @@
             <item>
              <widget class="QLabel" name="label_17">
               <property name="text">
-               <string>Les scripts d'import pour PostGreSQL proviennent initialement de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans ce plugin. Nos remerciement aux contributeurs.</string>
+               <string>Les scripts d'import pour PostGreSQL proviennent initialement de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans cette extension. Nos remerciement aux contributeurs.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
