@@ -324,7 +324,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Get CSS from CSS file
         """
         plugin_dir = str(Path(__file__).resolve().parent.parent)
-        with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), 'r') as f:
+        with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), 'r', encoding='utf8') as f:
             css = f.read()
         self.css = css
 

@@ -165,7 +165,7 @@ def ogr2vrt(infile,
     vrt += '</OGRVRTDataSource>\n'
 
     if outfile is not None:
-        f = open(outfile, "w")
+        f = open(outfile, "w", encoding='utf8')
         f.write(vrt)
         f.close()
 

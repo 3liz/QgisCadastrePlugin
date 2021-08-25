@@ -297,7 +297,7 @@ class CadastreMenu:
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
         template_content = None
-        with open(f, 'rt', encoding="utf-8") as ff:
+        with open(f, 'rt', encoding='utf8') as ff:
             template_content = ff.read()
         if not template_content:
             return

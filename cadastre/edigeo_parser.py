@@ -95,7 +95,7 @@ class Parser:
         return self.commune.feuilles
 
     def parse(self):
-        with self.file_path.open(mode="r", encoding="utf-8") as f:
+        with self.file_path.open(mode="r", encoding='utf8') as f:
             content = f.readlines()
 
         for line in content:

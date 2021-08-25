@@ -430,8 +430,7 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
     info = infos[item]
 
     sqlfile = 'templates/parcelle_info_%s.sql' % item
-    sql = ''
-    with open(os.path.join(plugin_dir, sqlfile)) as sqltemplate:
+    with open(os.path.join(plugin_dir, sqlfile), encoding='utf8') as sqltemplate:
         sql = sqltemplate.read() % feature['geo_parcelle']
     if not sql:
         html += 'Impossible de lire le SQL dans le fichier %s' % sqlfile

@@ -463,7 +463,7 @@ class cadastreImport(QObject):
                         if table == 'fanr':
                             continue
                         # Get depdir : first line with content
-                        with open(fpath) as fin:
+                        with open(fpath, encoding='utf8') as fin:
                             for a in fin:
                                 if len(a) < 4:
                                     continue
@@ -1011,7 +1011,7 @@ class cadastreImport(QObject):
 
                 data = self.replaceParametersInString(data, replaceDict)
                 # data = data.encode('utf-8')
-                with open(scriptPath, 'w') as fout:
+                with open(scriptPath, 'w', encoding='utf8') as fout:
                     fout.write(data)
 
             except IOError as e:
@@ -1391,7 +1391,7 @@ class cadastreImport(QObject):
         if self.go:
             reg = '^RID[a-zA-z]{1}[a-zA-z]{1}[0-9]{2}:(Rel_.+)_(Objet_[0-9]+)_(Objet_[0-9]+)'
             try:
-                with open(path) as inputFile:
+                with open(path, encoding='utf8') as inputFile:
                     # Get a list of RID relations combining a "Rel" and two "_Objet"
                     l = [a[0] for a in [re.findall(r'%s' % reg, line) for line in inputFile] if a]
             except:

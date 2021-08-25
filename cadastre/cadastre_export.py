@@ -301,7 +301,7 @@ class CadastreExport:
             # Load SQL query and get data
             # Get sql file
             sqlFile = tplPath + '.sql'
-            fin = open(sqlFile, 'rt', encoding='utf-8')
+            fin = open(sqlFile, 'rt', encoding='utf8')
             sql = fin.read()
             fin.close()
 
@@ -389,8 +389,7 @@ class CadastreExport:
         regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
 
         try:
-            data = ''
-            with open(tplPath, 'rt', encoding='utf-8') as fin:
+            with open(tplPath, 'rt', encoding='utf8') as fin:
                 data = fin.read()
             data = regex.sub(replfunc, data)
             return data

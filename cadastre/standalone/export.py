@@ -149,7 +149,7 @@ paths = qex.exportAsPDF()
 print(paths)
 
 # Add path into file
-with open(output_log, 'w') as f:
+with open(output_log, 'w', encoding='utf8') as f:
     for path in paths:
         f.write(path)
 
