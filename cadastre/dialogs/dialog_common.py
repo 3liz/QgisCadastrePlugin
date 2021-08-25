@@ -74,19 +74,25 @@ class CadastreCommon:
             WidgetSettings('liDbConnection', 'connection'),
             WidgetSettings('liDbSchema', 'schema'),
         ]
-        is_postgis = settings.value("cadastre/databaseType", type=str, defaultValue='') == 'postgis'
+        # Default to PostGIS ticket #302
+        is_postgis = settings.value("cadastre/databaseType", type=str, defaultValue='postgis') == 'postgis'
         for widget in widgets:
-
+            # Widgets are ordered by hierarchy, so we quit the loop as soon as a value is not correct
             if widget.settings == 'schema' and not is_postgis:
                 return
 
             if not hasattr(self.dialog, widget.ui):
                 return
+
             value = settings.value("cadastre/" + widget.settings, type=str, defaultValue='')
+            if not value:
+                return
+
             combo = getattr(self.dialog, widget.ui)
             index = combo.findText(value, Qt.MatchFixedString)
             if not index:
                 return
+
             combo.setCurrentIndex(index)
 
     def updateConnectionList(self):
