@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/">
       
       <link rel="icon" href="icon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.f7f47774.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.be71726b.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.3f5d1f46.min.css">
@@ -282,7 +282,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -347,9 +349,53 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Accueil
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Accueil
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequis" class="md-nav__link">
+    Prérequis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#financeurs" class="md-nav__link">
+    Financeurs
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -615,6 +661,8 @@
             
             
               
+                
+              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -625,6 +673,35 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequis" class="md-nav__link">
+    Prérequis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#financeurs" class="md-nav__link">
+    Financeurs
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -645,6 +722,54 @@
 <p>Ce document contient la documentation de <a href="extension-qgis/installation/">l'extension Cadastre</a> pour le logiciel QGIS
 ainsi que la documentation du <a href="module-lizmap/installation/">module Cadastre</a> pour 
 <a href="https://github.com/3liz/lizmap-web-client/">Lizmap</a>.</p>
+<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
+<p>L'extension Cadastre a été conçu pour faciliter l'utilisation des données cadastrales dans QGIS.
+Plusieurs modules aident l'utilisateur à importer des données, les afficher dans QGIS, faire des recherches
+et imprimer les relevés :</p>
+<ul>
+<li>L'<strong>import de données cadastrales</strong>, MAJIC et EDIGEO, dans une base de données <strong>PostgreSQL/PostGIS</strong> ou <strong>Sqlite/Spatialite</strong>.</li>
+<li>Un <strong>module de chargement</strong> permet d'ajouter automatiquement l'ensemble des couches cadastrales dans QGIS, avec la possibilité de choisir le style appliqué.</li>
+<li>Un <strong>panneau de recherche</strong> offre la possibilité de rechercher des parcelles par adresse, propriétaire ou par situation (commune, section) et de naviguer vers ces parcelles cadastrales.</li>
+<li>Un <strong>outil d'identification</strong> permet d'afficher les données liées à une parcelle en cliquant sur le polygone représentant la parcelle.</li>
+<li>Il est possible enfin d'exporter les données sous forme de <strong>relevés parcellaires</strong> et de <strong>relevés de propriété</strong>.</li>
+</ul>
+<h2 id="prerequis">Prérequis<a class="headerlink" href="#prerequis" title="Permanent link">#</a></h2>
+<ul>
+<li>De préférence, QGIS LTR 3.10, ou à défaut QGIS 3.4</li>
+<li>PostgreSQL : &gt;= 9.6 + PostGIS &gt;= 1.5 et &lt; 3.x</li>
+<li>Spatialite : 4.3.0</li>
+</ul>
+<h2 id="financeurs">Financeurs<a class="headerlink" href="#financeurs" title="Permanent link">#</a></h2>
+<p>La réalisation de l'extension Cadastre a été financée par :</p>
+<ul>
+<li>L'<strong><a href="http://europa.eu/">Union Européenne</a></strong></li>
+<li>Le <strong><a href="http://www.picardie-europe.eu">Fonds Européen de Développement Régional de Picardie</a></strong></li>
+<li>Le <strong><a href="http://www.picardie.fr">Conseil Régional de Picardie</a></strong></li>
+<li>L'<strong><a href="http://www.aduga.org">Agence de Développement et d'Urbanisme du Grand Amiénois (ADUGA)</a></strong></li>
+</ul>
+<p>Les évolutions 2020 ont été soutenues par :</p>
+<ul>
+<li>Le <strong><a href="https://www.ecologie.gouv.fr/">Ministère de la Transition Écologie</a></strong></li>
+<li>L'association <strong><a href="http://asadefrance.fr/">ASA de France</a></strong></li>
+<li>La <strong><a href="https://www.legrandnarbonne.com/">Communauté d'Agglomération du Grand-Narbonne</a></strong></li>
+<li>Les <strong><a href="https://www.datagences-bretagne.bzh/">Agences d'Urbanisme de Bretagne</a></strong> et autres : AGAM, AUSB, ADUGA, AUDAT, AUD Clermont Métropole, AGAPE Lorraine Nord, Boulogne Développement</li>
+<li>Le <strong><a href="http://www.meurthe-et-moselle.fr/">Conseil Départemental de Meurthe et Moselle</a></strong></li>
+</ul>
+<p>Les structures suivantes ont aidé 3Liz pour la maintenance ou l'ajout de fonctionnalités:</p>
+<ul>
+<li>L'<strong><a href="https://www.aduga.org/">ADUGA</a></strong> : maintenance pour les nouveaux millésimes</li>
+<li>La <strong><a href="https://mairie.megeve.fr/">Ville de Megève</a></strong> : migration du plugin vers QGIS 3</li>
+<li>La <strong><a href="http://agglo.grandsoissons.com/accueil-3.html">Communauté d'Agglomération du Soissonnais</a></strong> : amélioration de la recherche et ajout d'informations sur les fiches parcellaires</li>
+<li>Le <strong><a href="https://www.gard.fr/accueil.html">Conseil départemental du Gard</a></strong> : ajout d'informations dans la fiche parcellaire</li>
+<li>La <strong><a href="https://metropole.rennes.fr/">Métropole de Rennes</a></strong> : ajout des supports 2019 et 2020 des millésimes MAJIC</li>
+<li>le <strong><a href="https://www.ecologie.gouv.fr/">Ministère de la Transition Écologique</a></strong> : détails sur les propriétaires (indivisions)</li>
+</ul>
+<p>Les évolutions 2021 ont été soutenues par :</p>
+<ul>
+<li>La <strong><a href="https://metropole.rennes.fr/">Métropole de Rennes</a></strong> : ajout du support MAJIC 2021</li>
+<li>La <strong><a href="https://www.brest.fr/brestfr-accueil-1575.html">Métropole de Brest Océane</a></strong> : enrichissement de la recherche de propriétaires (par nom d'usage, par nom de naissance, par commune)</li>
+<li>La société <strong><a href="https://www.elements.green/">Éléments</a></strong> pour le téléchargeur Édigéo</li>
+</ul>
 <p><img alt="Financeurs" src="media/cadastre_financeurs.png" /></p>
                 
                   
@@ -654,7 +779,7 @@ ainsi que la documentation du <a href="module-lizmap/installation/">module Cadas
 <div class="md-source-date">
   <small>
     
-      Dernière mise à jour: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 26, 2021</span>
+      Dernière mise à jour: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 25, 2021</span>
       
     
   </small>
@@ -764,10 +889,10 @@ ainsi que la documentation du <a href="module-lizmap/installation/">module Cadas
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.29db7785.min.js"></script>
+      <script src="assets/javascripts/bundle.56a63758.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
