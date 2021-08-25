@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 1.13.2 - 2021-08-25
+
+* Mise à jour de https://docs.3liz.org/QgisCadastrePlugin/ pour les financeurs de l'extension
+* Correction d'une erreur si l'extension est utilisée pour la première fois
+* Correction d'une erreur possible pour ouvrir les fichiers en UTF-8 par défaut
+
 ## 1.13.1 - 2021-08-10
 
 * Correction d'un chemin dans le script standalone concernant l'export
