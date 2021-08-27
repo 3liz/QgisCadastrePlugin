@@ -56,7 +56,7 @@ Les structures suivantes ont aidé 3Liz pour la maintenance ou l'ajout de foncti
 Les évolutions 2021 ont été soutenues par :
 
 - La **[Métropole de Rennes](https://metropole.rennes.fr/)** : ajout du support MAJIC 2021
-- La **[Métropole de Brest Océane](https://www.brest.fr/brestfr-accueil-1575.html)** : enrichissement de la recherche de propriétaires (par nom d'usage, par nom de naissance, par commune)
+- La **[Métropole de Brest](https://www.brest.fr/brestfr-accueil-1575.html)** : enrichissement de la recherche de propriétaires (par nom d'usage, par nom de naissance, par commune)
 - La société **[Éléments](https://www.elements.green/)** pour le téléchargeur Édigéo
 
 ![Financeurs](media/cadastre_financeurs.png)
