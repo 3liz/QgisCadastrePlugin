@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Corrections orthographiques
+
 ## 1.13.2 - 2021-08-25
 
 * Mise à jour de https://docs.3liz.org/QgisCadastrePlugin/ pour les financeurs de l'extension

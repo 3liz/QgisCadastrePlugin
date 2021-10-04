@@ -49,7 +49,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
     def initAlgorithm(self, config):
         parameter = QgsProcessingParameterString(
             self.LISTE_CODE_INSEE,
-            'Liste des code INSEE à télécharger',
+            'Liste des codes INSEE à télécharger',
             # defaultValue='25047,05046'
         )
         self.set_tooltip_parameter(parameter, 'séparés par ","')
