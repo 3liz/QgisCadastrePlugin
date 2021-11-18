@@ -25,6 +25,7 @@ from qgis.PyQt.QtWidgets import (
     QDockWidget,
     QFileDialog,
 )
+from qgis.utils import OverrideCursor
 
 from cadastre.cadastre_export import CadastreExport
 from cadastre.dialogs.custom_qcompleter import CustomQCompleter
@@ -315,7 +316,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 control.clicked.connect(slot)
 
         # export buttons
-        self.btExportProprietaire.clicked.connect(self.exportProprietaire)
+        self.btExportProprietaire.clicked.connect(self.export_proprietaire)
         self.exportParcelleButtons = {
             'parcelle': self.btExportParcelle,
             'parcelle_proprietaire': self.btExportParcelleProprietaire
@@ -1196,7 +1197,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         if w:
             self.setSelectionToChosenSearchCombobox(w)
 
-    def exportProprietaire(self):
+    def export_proprietaire(self):
         """
         Export the selected proprietaire
         as PDF using the template composer
@@ -1210,12 +1211,25 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # Search proprietaire by dnuper
         cc = self.searchComboBoxes['proprietaire']['id']
-        if cc:
-            layer = self.searchComboBoxes['proprietaire']['layer']
-            qex = CadastreExport(layer, 'proprietaire', cc)
-            qex.exportAsPDF()
-        else:
-            self.qc.updateLog(u'Aucune donnée trouvée pour ce propriétaire !')
+        if not cc:
+            self.qc.updateLog('Aucune donnée trouvée pour ce propriétaire !')
+            return
+
+        layer = self.searchComboBoxes['proprietaire']['layer']
+        qex = CadastreExport(QgsProject.instance(), layer, 'proprietaire', cc)
+
+        with OverrideCursor(Qt.WaitCursor):
+            exports = qex.export_as_pdf()
+
+        if not len(exports):
+            self.qc.updateLog('Problème lors de l\'export')
+            return
+
+        parent = Path(exports[0]).parent.absolute()
+        self.iface.messageBar().pushSuccess(
+            "Export PDF",
+            "L'export PDF a été fait avec succès dans <a href=\"{0}\">{0}</a>".format(parent)
+        )
 
     def exportParcelle(self, key):
         """
@@ -1235,7 +1249,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(feat['geo_parcelle'],
                                                                             self.connectionParams, self.connector)
             qex = CadastreExport(layer, 'parcelle', comptecommunal, feat['geo_parcelle'])
-            qex.exportAsPDF()
+            qex.export_as_pdf()
         else:
             self.qc.updateLog(u'Aucune parcelle sélectionnée !')
 

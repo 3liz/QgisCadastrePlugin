@@ -110,7 +110,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         }
         for key, item in list(exportButtons.items()):
             control = item
-            slot = partial(self.exportAsPDF, key)
+            slot = partial(self.export_as_pdf, key)
             control.clicked.connect(slot)
 
         # Parcelle action button
@@ -401,7 +401,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.locauxInfo.setStyleSheet(self.css)
         self.locauxInfo.setText('%s' % html)
 
-    def exportAsPDF(self, key):
+    def export_as_pdf(self, key):
         """
         Export the parcelle or proprietaire
         information as a PDF file
@@ -437,7 +437,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
                         comptecommunal,
                         self.feature['geo_parcelle']
                     )
-                    qe.exportAsPDF()
+                    qe.export_as_pdf()
 
     def centerToParcelle(self):
         """

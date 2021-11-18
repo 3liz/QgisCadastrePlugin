@@ -215,13 +215,13 @@ class CadastreService(QgsService):
         # Export PDF
         qex = CadastreExport(project, res.layer, res.type, comptecommunal, res.geo_parcelle)
 
-        paths = qex.exportAsPDF()
+        paths = qex.export_as_pdf()
 
         if not paths:
             raise CadastreError(424, 'An error occured while generating the PDF')
 
         if self.debugMode:
-            QgsMessageLog.logMessage("exportAsPDF(), paths: %s" % paths, 'cadastre', Qgis.Debug)
+            QgsMessageLog.logMessage("export_as_pdf(), paths: %s" % paths, 'cadastre', Qgis.Debug)
 
         tokens = []
         for path in map(Path, paths):

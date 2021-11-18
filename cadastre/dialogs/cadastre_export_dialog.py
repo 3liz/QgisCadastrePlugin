@@ -108,9 +108,9 @@ class CadastreExport(cadastreExportBase):
 
         return temppath
 
-    def exportAsPDF(self):
+    def export_as_pdf(self):
 
-        paths = super().exportAsPDF()
+        paths = super().export_as_pdf()
 
         if self.isMulti:
             # info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir

@@ -21,9 +21,10 @@ import tempfile
 
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Callable, Generator
+from typing import Callable, Generator, List
 
 from qgis.core import (
+    Qgis,
     QgsExpression,
     QgsFeatureRequest,
     QgsFillSymbol,
@@ -37,6 +38,7 @@ from qgis.core import (
     QgsLayoutSize,
     QgsMapLayer,
     QgsMapSettings,
+    QgsMessageLog,
     QgsPrintLayout,
     QgsProject,
     QgsUnitTypes,
@@ -565,7 +567,7 @@ class CadastreExport:
         cm.setBackgroundEnabled(True)
         self.currentComposition.addItem(cm)
 
-    def exportItemAsPdf(self, comptecommunal, suffix=None):
+    def exportItemAsPdf(self, comptecommunal, suffix=None) -> str:
         """
         Export one PDF file using the template composer
         filled with appropriate data
@@ -604,6 +606,7 @@ class CadastreExport:
             # print temp
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
+            QgsMessageLog.logMessage('Export PDF vers {}'.format(temppath), 'cadastre', Qgis.Info)
             # print("export temppath %s" % temppath)
 
             # Export as pdf
@@ -620,7 +623,7 @@ class CadastreExport:
 
         return temppath
 
-    def exportAsPDF(self):
+    def export_as_pdf(self) -> List:
         """
         Run the PDF export
         """

@@ -145,7 +145,7 @@ qex = CadastreExport(
     feat['geo_parcelle'],
     target_dir
 )
-paths = qex.exportAsPDF()
+paths = qex.export_as_pdf()
 print(paths)
 
 # Add path into file
