@@ -3,6 +3,8 @@
 ## Unreleased
 
 * Corrections orthographiques
+* Amélioration du message d'erreur s'il n'y a pas assez de mémoire sur l'ordinateur
+* Amélioration de la documentation concernant les paramètres au niveau global de l'extension
 
 ## 1.13.2 - 2021-08-25
 
