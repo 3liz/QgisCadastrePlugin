@@ -278,10 +278,10 @@ SELECT
 
         '<h4>Taxation</h4>' ||
         '<p>' ||
-        '<b>Commune: </b>' ||  co_bipevla ||
-        '<br/><b>Intercommunalité: </b>' ||  gp_bipevla ||
-        '<br/><b>Département: </b>' ||  de_bipevla ||
-        '<br/><b>Région: </b>' ||  re_bipevla ||
+        '<b>Commune: </b>' ||  Coalesce(co_bipevla, '') ||
+        '<br/><b>Intercommunalité: </b>' ||  Coalesce(gp_bipevla, '') ||
+        '<br/><b>Département: </b>' ||  Coalesce(de_bipevla, '') ||
+        '<br/><b>Région: </b>' ||  Coalesce(re_bipevla, '') ||
         '</p>' ||
 
         '<h3>Parties d''évaluation</h3>' ||
@@ -311,7 +311,7 @@ SELECT
             '<th>Code droit</th>' ||
             '<th>Code démembrement</th>' ||
         '</tr>' ||
-        l10_proprietaires ||
+        Coalesce(l10_proprietaires, '') ||
         '</table>' ||
         '</p>'
 

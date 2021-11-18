@@ -206,14 +206,14 @@ string_agg(
 
         '<h4>Taxation</h4>' ||
         '<p>' ||
-        '<b>Commune: </b>' ||  co_bipevla ||
-        '<br/><b>Intercommunalité: </b>' ||  gp_bipevla ||
-        '<br/><b>Département: </b>' ||  de_bipevla ||
-        '<br/><b>Région: </b>' ||  re_bipevla ||
+        '<b>Commune: </b>' ||  Coalesce(co_bipevla, '') ||
+        '<br/><b>Intercommunalité: </b>' ||  Coalesce(gp_bipevla, '') ||
+        '<br/><b>Département: </b>' ||  Coalesce(de_bipevla, '') ||
+        '<br/><b>Région: </b>' ||  Coalesce(re_bipevla, '') ||
         '</p>' ||
 
         '<h3>Description détaillée</h3>' ||
-        'Le local contient ' || nb_pev || ' parties.'
+        'Le local contient ' || nb_pev || ' parties.' ||
         '<p>__________________________<br/> ' ||
         replace(infos_pev,  '@',  '<br/>__________________________</p><p>__________________________<br/>') ||
         '<br/>__________________________' ||
@@ -221,7 +221,7 @@ string_agg(
 
         '<h3>Propriétaires</h3>' ||
         '<p>' ||
-        replace(l10_proprietaires,  '|', '<p/><p>') ||
+        replace( Coalesce(l10_proprietaires, ''),  '|', '<p/><p>') ||
         '</p>'
 
     )

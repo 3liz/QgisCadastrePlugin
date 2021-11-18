@@ -3,6 +3,8 @@
 ## Unreleased
 
 * Corrections orthographiques
+* Correction sur les "Locaux : Informations détaillées"
+* Correction des exports PDF depuis le panneau de recherche
 * Amélioration du message d'erreur s'il n'y a pas assez de mémoire sur l'ordinateur
 * Amélioration de la documentation concernant les paramètres au niveau global de l'extension
 
