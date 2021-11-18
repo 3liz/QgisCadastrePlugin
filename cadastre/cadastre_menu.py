@@ -44,6 +44,7 @@ from qgis.PyQt.QtWidgets import (
 from qgis.PyQt.QtXml import QDomDocument
 
 from cadastre.cadastre_identify_parcelle import IdentifyParcelle
+from cadastre.definitions import URL_DOCUMENTATION
 from cadastre.dialogs.about_dialog import CadastreAboutDialog
 from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
 from cadastre.dialogs.dialog_common import CadastreCommon
@@ -450,8 +451,7 @@ class CadastreMenu:
     @staticmethod
     def open_help():
         """Opens the html help file content with default browser"""
-        help_url = "https://docs.3liz.org/QgisCadastrePlugin/"
-        QDesktopServices.openUrl(QUrl(help_url))
+        QDesktopServices.openUrl(QUrl(URL_DOCUMENTATION))
 
     def open_message_dialog(self):
         """

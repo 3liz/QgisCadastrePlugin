@@ -13,6 +13,7 @@ from qgis.core import (
     QgsProcessingParameterString,
 )
 
+from cadastre.definitions import URL_DOCUMENTATION
 from cadastre.edigeo_parser import Commune, Parser
 from cadastre.processing.algorithms.base import BaseProcessingAlgorithm
 
@@ -217,4 +218,4 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         )
 
     def helpUrl(self):
-        return "https://docs.3liz.org/QgisCadastrePlugin/extension-qgis/donnees/#edigeo"
+        return "{}/extension-qgis/donnees/#edigeo".format(URL_DOCUMENTATION)

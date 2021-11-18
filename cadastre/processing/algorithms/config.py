@@ -28,6 +28,7 @@ from qgis.core import (
     QgsProcessingParameterVectorLayer,
 )
 
+from cadastre.definitions import URL_DOCUMENTATION
 from cadastre.processing.algorithms.base import BaseProcessingAlgorithm
 
 
@@ -142,4 +143,4 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
         )
 
     def helpUrl(self) -> str:
-        return "https://docs.3liz.org/QgisCadastrePlugin/processing/#configuration-du-projet"
+        return "{}/processing/#configuration-du-projet".format(URL_DOCUMENTATION)
