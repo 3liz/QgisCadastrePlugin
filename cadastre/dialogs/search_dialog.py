@@ -1221,8 +1221,10 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         with OverrideCursor(Qt.WaitCursor):
             exports = qex.export_as_pdf()
 
-        if not len(exports):
-            self.qc.updateLog('Problème lors de l\'export')
+        if not exports:
+            self.qc.updateLog('Problème lors de l\'export PDF')
+            self.iface.messageBar().pushCritical(
+                "Export PDF", "Erreur lors de l'export PDF")
             return
 
         parent = Path(exports[0]).parent.absolute()
@@ -1243,15 +1245,34 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         if not self.connector:
             return
 
-        feat = self.searchComboBoxes[key]['chosenFeature']
+        feature = self.searchComboBoxes[key]['chosenFeature']
         layer = self.searchComboBoxes[key]['layer']
-        if feat:
-            comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(feat['geo_parcelle'],
-                                                                            self.connectionParams, self.connector)
-            qex = CadastreExport(layer, 'parcelle', comptecommunal, feat['geo_parcelle'])
-            qex.export_as_pdf()
-        else:
-            self.qc.updateLog(u'Aucune parcelle sélectionnée !')
+        if not feature:
+            self.qc.updateLog('Aucune parcelle sélectionnée !')
+            return
+
+        compte_communal = CadastreCommon.getCompteCommunalFromParcelleId(
+            feature['geo_parcelle'],
+            self.connectionParams,
+            self.connector
+        )
+        qex = CadastreExport(
+            QgsProject.instance(), layer, 'parcelle', compte_communal, feature['geo_parcelle'])
+
+        with OverrideCursor(Qt.WaitCursor):
+            exports = qex.export_as_pdf()
+
+        if not exports:
+            self.qc.updateLog('Problème lors de l\'export PDF')
+            self.iface.messageBar().pushCritical(
+                "Export PDF", "Erreur lors de l'export PDF")
+            return
+
+        parent = Path(exports[0]).parent.absolute()
+        self.iface.messageBar().pushSuccess(
+            "Export PDF",
+            "L'export PDF a été fait avec succès dans <a href=\"{0}\">{0}</a>".format(parent)
+        )
 
     def onVisibilityChange(self, visible):
         """
