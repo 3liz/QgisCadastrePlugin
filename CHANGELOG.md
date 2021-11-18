@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.13.3 - 2021-11-18
+
 * Corrections orthographiques
 * Correction sur les "Locaux : Informations détaillées"
 * Correction des exports PDF depuis le panneau de recherche
