@@ -38,7 +38,7 @@ from qgis.core import Qgis, QgsMessageLog
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
-from cadastre.definitions import URL_FANTOIR, URL_DOCUMENTATION
+from cadastre.definitions import URL_DOCUMENTATION, URL_FANTOIR
 from cadastre.dialogs.dialog_common import CadastreCommon
 
 # Import ogr2ogr.py from the script folder
