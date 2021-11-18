@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/extension-qgis/configuration/">
       
       <link rel="icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.db9e7362.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a57b2b03.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -435,6 +435,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table des matières">
   
   
@@ -463,8 +465,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#modele-de-composition-pour-lexport-de-la-vue-cartographique" class="md-nav__link">
-    Modèle de composition pour l'export de la vue cartographique
+  <a href="#modele-de-mise-en-page-pour-lexport-de-la-vue-cartographique" class="md-nav__link">
+    Modèle de mise en page pour l'export de la vue cartographique
   </a>
   
 </li>
@@ -716,6 +718,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table des matières">
   
   
@@ -744,8 +748,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#modele-de-composition-pour-lexport-de-la-vue-cartographique" class="md-nav__link">
-    Modèle de composition pour l'export de la vue cartographique
+  <a href="#modele-de-mise-en-page-pour-lexport-de-la-vue-cartographique" class="md-nav__link">
+    Modèle de mise en page pour l'export de la vue cartographique
   </a>
   
 </li>
@@ -782,50 +786,50 @@
                 
                 
                 <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h1>
-<p>Avant d'importer les premières données cadastrales dans la base de données, il faut au préalable configurer le
-plugin :</p>
+<p>Avant d'importer les premières données cadastrales dans la base de données, il faut au préalable configurer
+l'extension :</p>
 <ul>
-<li>Menu <strong>Cadastre &gt; Configurer le plugin</strong> ou l'icône <strong>outils</strong> de la barre d'outil Cadastre</li>
+<li>Menu <strong>Cadastre ➡ Configurer le plugin</strong> ou l'icône <strong>outils</strong> de la barre d'outil Cadastre.</li>
 </ul>
 <p><img alt="alt" src="../../media/cadastre_option_dialog.png" /></p>
 <h2 id="interface">Interface<a class="headerlink" href="#interface" title="Permanent link">#</a></h2>
-<p>Les 2 boutons <strong>Interface Cadastre</strong> et <strong>Interface QGIS</strong> permettent d'ouvrir une aide pour appliquer une 
+<p>Les deux boutons <strong>Interface Cadastre</strong> et <strong>Interface QGIS</strong> permettent d'ouvrir une aide pour appliquer une
 interface simplifiée adaptée à une utilisation de consultation du Cadastre.</p>
-<p>À ce jour, QGIS ne permet pas de modifier dynamiquement l'interface via un plugin. Nous incorporerons cette 
-fonctionnalité lorsque ce sera possible. En attendant, il faut donc le faire manuellement, comme expliqué dans 
+<p>À ce jour, QGIS ne permet pas de modifier dynamiquement l'interface via une extension. Nous incorporerons cette
+fonctionnalité lorsque ce sera possible. En attendant, il faut donc le faire manuellement, comme expliqué dans
 la fenêtre d'aide.</p>
 <h2 id="nom-des-fichiers-majic">Nom des fichiers MAJIC<a class="headerlink" href="#nom-des-fichiers-majic" title="Permanent link">#</a></h2>
-<p>Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail. En effet,
-les conventions de nommage peuvent changer d'un département à l'autre. Souvent, les fichiers se terminent par 
-une extension relative au département et à la direction, par exemple .800 pour les fichiers du département de 
-la Somme.</p>
+<p>Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail.</p>
+<p>En effet, les conventions de nommage peuvent changer d'un département à l'autre. Souvent, les fichiers se
+terminent par une extension relative au département et à la direction, par exemple <code>.800</code> pour les fichiers
+du département de la Somme.</p>
 <p><strong>Il est important de bien configurer ces noms de fichiers avant votre premier import.</strong></p>
-<p>Si le plugin ne trouve pas les fichiers MAJIC pendant l'import, alors que vous aviez spécifié le bon 
+<p>Si l'extension ne trouve pas les fichiers MAJIC pendant l'import, alors que vous aviez spécifié le bon
 répertoire d'import, un message vous avertira et vous proposera d'annuler l'import.</p>
-<h2 id="modele-de-composition-pour-lexport-de-la-vue-cartographique">Modèle de composition pour l'export de la vue cartographique<a class="headerlink" href="#modele-de-composition-pour-lexport-de-la-vue-cartographique" title="Permanent link">#</a></h2>
-<p>Vous pouvez choisir ici le modèle de composeur d'impression qui sera utilisé dans la fonction <strong>Export la 
-vue</strong>. Un modèle est fourni dans le répertoire <em>composeur</em> du plugin, et sera utilisé si vous ne proposez pas
-le vôtre.</p>
+<h2 id="modele-de-mise-en-page-pour-lexport-de-la-vue-cartographique">Modèle de mise en page pour l'export de la vue cartographique<a class="headerlink" href="#modele-de-mise-en-page-pour-lexport-de-la-vue-cartographique" title="Permanent link">#</a></h2>
+<p>Vous pouvez choisir ici le modèle de mise en page d'impression qui sera utilisé dans la fonction <strong>Export la
+vue</strong>. Un modèle est fourni dans le répertoire <code>composeur</code> de l'extension et sera utilisé si vous ne proposez
+pas le vôtre.</p>
 <p>Pour l'instant, le modèle gère un bloc de carte, mais pas les blocs de table attributaire.</p>
 <h2 id="repertoire-temporaire">Répertoire temporaire<a class="headerlink" href="#repertoire-temporaire" title="Permanent link">#</a></h2>
-<p>Vous pouvez choisir le répertoire dans lequel les scripts seront copiés, et les fichiers décompressés. 
-Choisissez un répertoire contenant assez de place pour stocker les fichiers temporaires, surtout si vous 
+<p>Vous pouvez choisir le répertoire dans lequel les scripts seront copiés et les fichiers décompressés.</p>
+<p>Choisissez un répertoire contenant assez de place pour stocker les fichiers temporaires, surtout si vous
 souhaitez charger des données volumineuses.</p>
 <p>Ce répertoire est aussi celui dans lequel les <strong>relevés parcellaires</strong> et les <strong>relevés de propriété</strong> seront
 exportés.</p>
 <h2 id="performances">Performances<a class="headerlink" href="#performances" title="Permanent link">#</a></h2>
-<p>Vous pouvez modifier dans ce groupe les options suivantes pour adapter le plugin aux performances de votre 
+<p>Vous pouvez modifier dans ce groupe les options suivantes pour adapter l'extension aux performances de votre
 matériel :</p>
 <ul>
 <li>
-<p><strong>Taille maximum des requêtes INSERT</strong> : C'est le nombre total de requêtes <code>INSERT</code> lancées dans un groupe de 
-  modification (BEGIN/COMMIT). Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère 
-  et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du 
+<p><strong>Taille maximum des requêtes INSERT</strong> : C'est le nombre total de requêtes <code>INSERT</code> lancées dans un groupe de
+  modification (<code>BEGIN/COMMIT</code>). Vous pouvez baisser le chiffre jusqu'à 10000 si vous avez une machine légère
+  et un gros volume de données à importer. Plus le chiffre est bas, plus l'import initial peut prendre du
   temps.</p>
 </li>
 <li>
-<p><strong>Stockage temporaire</strong> : Le mode <em>MEMORY</em> est plus rapide, mais nécessite assez de mémoire vive pour 
-  stocker les données à traiter. Le mode <em>DEFAULT</em> est plus lent et adapté à des ordinateurs avec peu de 
+<p><strong>Stockage temporaire</strong> : Le mode <em>MEMORY</em> est plus rapide, mais nécessite assez de mémoire vive pour
+  stocker les données à traiter. Le mode <em>DEFAULT</em> est plus lent et adapté à des ordinateurs avec peu de
   mémoire vive.</p>
 </li>
 </ul>
@@ -837,7 +841,7 @@ matériel :</p>
 <div class="md-source-date">
   <small>
     
-      Dernière mise à jour: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 26, 2021</span>
+      Dernière mise à jour: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 18, 2021</span>
       
     
   </small>
@@ -964,10 +968,10 @@ matériel :</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.1e84347e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b1047164.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
