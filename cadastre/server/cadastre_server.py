@@ -25,6 +25,7 @@ from qgis.core import Qgis, QgsMessageLog
 from qgis.server import QgsServerInterface
 
 from cadastre.server.cadastre_service import CadastreService
+from cadastre.server.tools import version
 
 
 class CadastreServer:
@@ -33,23 +34,23 @@ class CadastreServer:
         This plugin loads Cadastre server service
     """
 
-    def __init__(self, serverIface: 'QgsServerInterface') -> None:
-        # Save reference to the QGIS server interface
-        self.serverIface = serverIface
+    def __init__(self, server_iface: QgsServerInterface) -> None:
 
-        cachedirstr = os.getenv('QGIS_CADASTRE_CACHE_DIR')
-        if not cachedirstr:
+        QgsMessageLog.logMessage('Init server version "{}"'.format(version()), 'cadastre', Qgis.Info)
+
+        cache_dir_str = os.getenv('QGIS_CADASTRE_CACHE_DIR')
+        if not cache_dir_str:
             # Create cache in /tmp/org.qgis.cadastre
-            cachedirstr = os.path.join(tempfile.gettempdir(), 'org.qgis.cadastre')
+            cache_dir_str = os.path.join(tempfile.gettempdir(), 'org.qgis.cadastre')
 
-        self.cachedir = Path(cachedirstr)
+        self.cachedir = Path(cache_dir_str)
         self.cachedir.mkdir(mode=0o750, parents=True, exist_ok=True)
 
-        QgsMessageLog.logMessage('Cache directory set to %s' % cachedirstr, 'cadastre', Qgis.Info)
+        QgsMessageLog.logMessage('Cache directory set to {}'.format(cache_dir_str), 'cadastre', Qgis.Info)
 
         debug = os.getenv('QGIS_CADASTRE_DEBUG', '').lower() in ('1', 'yes', 'y', 'true')
 
-        reg = serverIface.serviceRegistry()
+        reg = server_iface.serviceRegistry()
         reg.registerService(CadastreService(cachedir=self.cachedir, debug=debug))
 
     def createService(self, debug: bool = False) -> CadastreService:
