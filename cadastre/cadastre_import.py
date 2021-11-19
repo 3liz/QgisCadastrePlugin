@@ -878,6 +878,10 @@ class cadastreImport(QObject):
 
         self.updateProgressBar()
         self.updateTimer()
+        if os.getenv("QGIS_TESTING") == 'True':
+            # We don't want QMessagebox in test
+            return True
+
         QMessageBox.information(self.dialog, "Cadastre", msg)
 
         return None

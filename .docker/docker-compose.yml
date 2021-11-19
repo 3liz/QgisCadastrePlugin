@@ -1,0 +1,41 @@
+version: '3.9'
+
+networks:
+  qgis_plugin_network:
+
+services:
+  db:
+    profiles:
+      - "qgis"
+      - "db"
+    image: 3liz/postgis:13-3
+    hostname: db
+    container_name: postgis
+    networks:
+      qgis_plugin_network:
+    environment:
+      POSTGRES_DB: "gis"
+      POSTGRES_USER: "docker"
+      POSTGRES_PASSWORD: "docker"
+      POSTGRES_HOST: "db"
+    volumes:
+      - ../${PLUGIN_NAME}:/tests_directory/${PLUGIN_NAME}
+    ports:
+      - "35432:5432"
+    healthcheck:
+      test: "exit 0"
+
+  qgis:
+    profiles:
+      - "qgis"
+    image: qgis/qgis:release-3_16
+    container_name: qgis
+    networks:
+      qgis_plugin_network:
+    volumes:
+      # - /tmp/.X11-unix:/tmp/.X11-unix
+      - ../${PLUGIN_NAME}:/tests_directory/${PLUGIN_NAME}
+    environment:
+      # - DISPLAY=unix$DISPLAY
+      - DISPLAY=:99
+      - QGIS_TESTING=True

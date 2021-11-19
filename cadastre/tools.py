@@ -10,6 +10,20 @@ from pathlib import Path
 from qgis.utils import pluginMetadata
 
 
+def plugin_path(*args) -> Path:
+    """Return the path to the plugin root folder."""
+    path = Path(__file__).resolve().parent
+    for item in args:
+        path = path.joinpath(item)
+
+    return path
+
+
+def plugin_test_data_path(*args) -> Path:
+    """Return the path to the plugin test data folder."""
+    return plugin_path("tests", "fixtures", *args)
+
+
 def timing(f):
     """
     Fonction qui permet de calculer le temps passé par une méthode
