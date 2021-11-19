@@ -64,41 +64,43 @@ def openFile(filename: str) -> None:
         subprocess.call([opener, filename])
 
 
-def getLayerFromLegendByTableProps(project: QgsProject, tableName: str, geomCol: str = 'geom',
-                                   sql: str = '') -> QgsMapLayer:
+def getLayerFromLegendByTableProps(
+        project: QgsProject, table_name: str, geom_col: str = 'geom', sql: str = ''
+            ) -> Union[None, QgsMapLayer]:
     """
     Get the layer from QGIS legend
     corresponding to a database
     table name (postgis or sqlite)
     """
-    import re
-    layer = None
-    lr = project
-    for lid, l in list(lr.mapLayers().items()):
-        if not hasattr(l, 'providerType'):
+    _ = sql
+    for _, layer in list(project.mapLayers().items()):
+
+        if not hasattr(layer, 'providerType'):
             continue
-        if hasattr(l, 'type') and l.type() != QgsMapLayer.VectorLayer:
+
+        if hasattr(layer, 'type') and layer.type() != QgsMapLayer.VectorLayer:
             # Ignore this layer as it's not a vector
             # QgsMapLayer.VectorLayer is an equivalent to QgsMapLayerType.VectorLayer since 3.8
             continue
-        if not l.providerType() in ('postgres', 'spatialite'):
+
+        if not layer.providerType() in ('postgres', 'spatialite'):
             # Ignore this layer as it's not a postgres or spatialite vector layer
             continue
 
-        connectionParams = getConnectionParameterFromDbLayer(l)
+        connection_params = getConnectionParameterFromDbLayer(layer)
 
-        reg = r'(\.| )?(%s)' % tableName
-        if connectionParams and \
+        reg = r'(\.| )?(%s)' % table_name
+        if connection_params and \
                 ( \
-                                connectionParams['table'] == tableName or \
-                                (re.findall(reg, '%s' % connectionParams['table']) and
-                                 re.findall(reg, '%s' % connectionParams['table'])[0]) \
+                                connection_params['table'] == table_name or \
+                                (re.findall(reg, '%s' % connection_params['table']) and
+                                 re.findall(reg, '%s' % connection_params['table'])[0]) \
                         ) and \
-                connectionParams['geocol'] == geomCol:
+                connection_params['geocol'] == geom_col:
             # and connectionParams['sql'] == sql:
-            return l
+            return layer
 
-    return layer
+    return None
 
 
 def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> Dict[str, str]:
