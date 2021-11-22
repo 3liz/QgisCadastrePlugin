@@ -16,6 +16,8 @@ pip install -r requirements/dev.txt
 flake8
 ```
 
+La variable d'environnement `CI=true` permet d'éviter certaines QMessageBox.
+
 * Run tests in Docker
 
 ```bash
@@ -42,7 +44,7 @@ plugins['cadastre'].run_tests('test_*.py')
 
 * In your IDE, with linked QGIS library
     * Setup your `QGIS_PREFIX_PATH` etc
-    * Right click on a test and launch it
+    * Right-click on a test and launch it
 
 
 ## Documentation

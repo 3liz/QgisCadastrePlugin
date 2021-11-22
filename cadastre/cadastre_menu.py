@@ -213,7 +213,7 @@ class CadastreMenu:
         self.setActionsExclusive()
 
         # Disable some dialogs on CI : about and changelog
-        on_ci = os.getenv("QGIS_TESTING") == 'True'
+        on_ci = os.getenv("CI", "").lower() == 'true'
 
         # Display About window on first use
         s = QSettings()

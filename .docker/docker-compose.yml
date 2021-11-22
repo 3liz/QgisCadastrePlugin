@@ -38,4 +38,4 @@ services:
     environment:
       # - DISPLAY=unix$DISPLAY
       - DISPLAY=:99
-      - QGIS_TESTING=True
+      - CI=True
