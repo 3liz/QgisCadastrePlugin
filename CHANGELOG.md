@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Ajout du financeur de la métropole de Clermont-Ferrand
+
 ## 1.13.3 - 2021-11-18
 
 * Corrections orthographiques

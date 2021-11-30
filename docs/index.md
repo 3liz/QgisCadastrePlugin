@@ -58,5 +58,7 @@ Les évolutions 2021 ont été soutenues par :
 - La **[Métropole de Rennes](https://metropole.rennes.fr/)** : ajout du support MAJIC 2021
 - La **[Métropole de Brest](https://www.brest.fr/brestfr-accueil-1575.html)** : enrichissement de la recherche de propriétaires (par nom d'usage, par nom de naissance, par commune)
 - La société **[Éléments](https://www.elements.green/)** pour le téléchargeur Édigéo
+- La **[Métropole de Clermont-Ferrand](https://www.clermontmetropole.eu)** :
+  maintenance sur l'extension, travail exploratoire sur le remplacement d'ancien code concernant le DBManager et amélioration du code
 
 ![Financeurs](media/cadastre_financeurs.png)
