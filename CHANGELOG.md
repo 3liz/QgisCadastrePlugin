@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Ajout du financeur de la métropole de Clermont-Ferrand
+* Correction d'une régression suite à la version 1.13.3 sur les champs `*_bipevla`
 
 ## 1.13.3 - 2021-11-18
 

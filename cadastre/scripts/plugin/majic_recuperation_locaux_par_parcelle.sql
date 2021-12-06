@@ -206,10 +206,10 @@ string_agg(
 
         '<h4>Taxation</h4>' ||
         '<p>' ||
-        '<b>Commune: </b>' ||  Coalesce(co_bipevla, '') ||
-        '<br/><b>Intercommunalité: </b>' ||  Coalesce(gp_bipevla, '') ||
-        '<br/><b>Département: </b>' ||  Coalesce(de_bipevla, '') ||
-        '<br/><b>Région: </b>' ||  Coalesce(re_bipevla, '') ||
+        '<b>Commune: </b>' ||  Coalesce(co_bipevla, 0) ||
+        '<br/><b>Intercommunalité: </b>' ||  Coalesce(gp_bipevla, 0) ||
+        '<br/><b>Département: </b>' ||  Coalesce(de_bipevla, 0) ||
+        '<br/><b>Région: </b>' ||  Coalesce(re_bipevla, 0) ||
         '</p>' ||
 
         '<h3>Description détaillée</h3>' ||
