@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Amélioration du message d'erreur sur le fichier n'est pas décompressable, ticket #339
+
 ## 1.13.4 - 2021-12-06
 
 * Ajout du financeur de la métropole de Clermont-Ferrand

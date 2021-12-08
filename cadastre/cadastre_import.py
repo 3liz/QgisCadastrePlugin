@@ -993,6 +993,11 @@ class cadastreImport(QObject):
                         pass  # in Windows, sometime file is not unlocked
                     i += 1
 
+                error_message = (
+                    "<b>Erreur</b> lors de l'ouverture du fichier {}. Un re-téléchargement du dossier "
+                    "EDIGEO peut résoudre le problème"
+                )
+
                 i = 0
                 # untar all tar.bz2 in source folder
                 self.qc.updateLog('* Recherche des fichiers .bz2')
@@ -1000,7 +1005,15 @@ class cadastreImport(QObject):
                 self.qc.updateLog("{} fichier(s) .bz2 dans {}".format(len(tarFileListA), path))
                 for z in tarFileListA:
                     with tarfile.open(z) as t:
-                        t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
+                        try:
+                            t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
+                        except tarfile.ReadError:
+                            # Issue GitHub #339
+                            self.go = False
+                            t.close()
+                            error = error_message.format(z)
+                            self.qc.updateLog(error)
+                            return error
                         i += 1
                         t.close()
 
@@ -1009,7 +1022,15 @@ class cadastreImport(QObject):
                 self.qc.updateLog("{} fichier(s) .bz2 dans {}".format(len(tarFileListA), self.edigeoPlainDir))
                 for z in tarFileListB:
                     with tarfile.open(z) as t:
-                        t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
+                        try:
+                            t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
+                        except tarfile.ReadError:
+                            # Issue GitHub #339
+                            self.go = False
+                            t.close()
+                            error = error_message.format(z)
+                            self.qc.updateLog(error)
+                            return error
                         i += 1
                         t.close()
                     try:
@@ -1019,7 +1040,7 @@ class cadastreImport(QObject):
                         pass  # in Windows, sometime file is not unlocked
 
             except IOError:
-                msg = u"<b>Erreur lors de l'extraction des fichiers EDIGEO</b>"
+                msg = "<b>Erreur lors de l'extraction des fichiers EDIGEO</b>"
                 self.go = False
                 self.qc.updateLog(msg)
                 return msg
