@@ -37,26 +37,49 @@ class TestImportData(unittest.TestCase):
         self.assertIn(schema, connection.schemas())
 
         # Set the path for edigeo
-        dialog.inEdigeoSourceDir.setText(str(plugin_test_data_path('edigeo')))
+        dialog.inEdigeoSourceDir.setText(str(plugin_test_data_path('edigeo', '13029')))
 
         # Set CRS
         crs = QgsCoordinateReferenceSystem("EPSG:2154")
         dialog.inEdigeoSourceProj.setCrs(crs)
         dialog.inEdigeoTargetProj.setCrs(crs)
 
+        # Set MAJIC
+        dialog.inMajicSourceDir.setText(str(plugin_test_data_path('majic', '13029')))
+
         # Set lot
         dialog.inEdigeoLot.setText('1')
 
         # Set departement
-        dialog.inEdigeoDepartement.setText('25')
+        dialog.inEdigeoDepartement.setText('13')
 
         # Set direction
-        dialog.inEdigeoDirection.setValue(0)
+        dialog.inEdigeoDirection.setValue(2)
+
+        # Version
+        dialog.inDataVersion.setValue(2019)
+
+        # Year
+        dialog.inDataYear.setValue(2019)
 
         # Import
         dialog.btProcessImport.click()
 
-        # Check we have a town
+        # Check we have a town in edigeo
         results = connection.executeSql('SELECT "geo_commune", "tex2" FROM cadastre.geo_commune;')
-        self.assertEqual("250354", results[0][0])
-        self.assertEqual("LUXIOL", results[0][1])
+        self.assertEqual(1, len(results))
+        row = results[0]
+        self.assertEqual("132029", row[0])
+        self.assertEqual("CORNILLON-CONFOUX", row[1])
+
+        # Check we have a town in majic
+        results = connection.executeSql('SELECT * FROM cadastre.commune_majic;')
+        self.assertEqual(1, len(results))
+        row = results[0]
+        self.assertEqual("132029", row[0])  # commune
+        self.assertEqual("2019", row[1])  # annee
+        self.assertEqual("13", row[2])  # ccodep
+        self.assertEqual("2", row[3])  # ccodir
+        self.assertEqual("029", row[4])  # ccocom
+        self.assertEqual("CORNILLON-CONFOUX", row[5])  # libcom
+        self.assertEqual("1", row[6])  # lot
