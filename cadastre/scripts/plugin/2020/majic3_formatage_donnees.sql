@@ -750,9 +750,9 @@ SELECT
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
-  SUBSTRING(tmp,17,30) AS libcom,
+  trim(SUBSTRING(tmp,17)) AS libcom,
   '[LOT]' as lot
-FROM [PREFIXE]bati WHERE trim(SUBSTRING(tmp,31,2))='' AND trim(SUBSTRING(tmp,4,3)) != '';
+FROM [PREFIXE]bati WHERE trim(SUBSTRING(tmp,7,10))='' AND trim(SUBSTRING(tmp,4,3)) != '';
 
 
 -- Traitement: proprietaire

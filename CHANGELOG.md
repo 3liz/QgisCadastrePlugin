@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Amélioration du message d'erreur sur le fichier n'est pas décompressable, ticket #339
+* Correction de la table `commune_majic` pour les millésimes 2019 à 2021
 
 ## 1.13.4 - 2021-12-06
 
