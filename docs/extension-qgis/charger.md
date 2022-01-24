@@ -18,8 +18,8 @@ Il faut d'abord indiquer au plugin où récupérer les données :
 
 Puis on peut choisir un **thème** à utiliser pour la symbologie des couches :
 
-* **Classique** : un thème proche du rendu de cadastre.gouv.fr
-* **Orthophoto** : un thème adapté à un affichage par dessus un fond orthophoto.
+* **Classique** : un thème proche du rendu de https://cadastre.gouv.fr
+* **Orthophoto** : un thème adapté à un affichage par-dessus un fond orthophoto.
 
 ## Couches et filtres
 
@@ -54,7 +54,7 @@ Enfin, cliquez sur le bouton **Charger les données** pour lancer le chargement.
 ## Charger une couche à partir d'une requête.
 
 L'onglet **Charger une requête** vous donne la possibilité d'utiliser une requête SQL pour récupérer des 
-données de la base. Pour cela, il faut bien connaître le modèle de la base de données, et les spécificités
+données de la base. Pour cela, il faut bien connaître le modèle de la base de données et les spécificités
 des données MAJIC. Cette fonctionnalité vise à évoluer pour proposer une liste de requêtes intéressantes pour 
 l'exploitation des données cadastrales.
 

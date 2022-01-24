@@ -2,7 +2,7 @@
 
 ## Edigéo
 
-Les données sont disponibles en téléchargement sur https://cadastre.data.gouv.fr
+Les données sont disponibles en téléchargement sur https://cadastre.data.gouv.fr.
 Elles ne comportent pas de données sensibles.
 
 Il est possible de télécharger les données à l'échelle départementale ou alors communale.
@@ -30,4 +30,4 @@ Il faut y avoir un accès. Ce sont des données sensibles.
 
 ## OpenMagic
 
-Ces données ne sont pas supportés par l'extension. N'hésitez pas à nous contacter.
+Ces données ne sont pas supportées par l'extension. N'hésitez pas à nous contacter.

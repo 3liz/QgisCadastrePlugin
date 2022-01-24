@@ -7,7 +7,7 @@
 La barre d'outil peut s'afficher ou se masquer à partir :
 
 * du menu **Vue > Barres d'outils > Cadastre**
-* d'un clic droit à côté d'une des barres d'outils de QGIS, et sélectionner **Cadastre**
+* d'un clic droit à côté d'une des barres d'outils de QGIS et sélectionner **Cadastre**
 
 Elle contient :
 
@@ -45,9 +45,9 @@ Ainsi qu'une zone contenant des **boutons d'action** :
 
 * 2 boutons pour **exporter** au format PDF :
   - le **relevé parcellaire**
-  - le **relevé de propriété** avec une option pour réalisé un export sur toutes les communes ou seulement à la commune de la parcelle
+  - le **relevé de propriété** avec une option pour réaliser un export sur toutes les communes ou seulement à la commune de la parcelle
 * 3 boutons pour **interagir avec l'objet géométrique** lié à la parcelle : centrer la carte sur la
-  parcelle, zoomer sur la parcelle, ou sélectionner l'objet dans la couche
+  parcelle, zoomer sur la parcelle ou sélectionner l'objet dans la couche
 * Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
 
 
@@ -165,7 +165,7 @@ Vous pouvez cliquer sur la croix rouge à côté de la recherche d'adresse pour 
 
 > Ce bloc de recherche ne fonctionne pas si aucune donnée MAJIC n'est présente dans la base
 
-Le principe et le fonctionnement est le même que pour la recherche par adresse, avec les différences
+Le principe et le fonctionnement sont le même que pour la recherche par adresse, avec les différences
 suivantes :
 
 * Un bouton est ajouté à côté de la liste des propriétaires pour **exporter le relevé de propriété** du
@@ -185,7 +185,7 @@ cadastrales. Exemple de configuration intéressante :
 * Cocher la case *Search in project layers*
 * À côté du champ *QuickFinder file*, cliquer sur le bouton avec une icône "page" pour créer un nouveau
   fichier (en anglais, au survol du bouton : *Create a new QuickFinder file*). Enregistrer le fichier dans le
-  répertoire du projet QGIS, et lui donner le même nom de fichier (par exemple "cadastre.qfts" pour un projet
+  répertoire du projet QGIS, et lui donner le même nom de fichier (par exemple `cadastre.qfts` pour un projet
   QGIS "cadastre.qgs")
 * Cliquer sur le bouton "+" en vert pour ajouter une nouvelle recherche : cela ouvre une boite de dialogue
   *project search*. Configurer une recherche pour les parcelles :
@@ -237,7 +237,7 @@ Dans le modèle, plusieurs tables contiennent des informations sur les parcelles
 * **parcelle** : contient les données MAJIC liées aux parcelles cadastrales
 
 * **parcelle_info** : contient une version consolidée des parcelles EDIGEO et MAJIC : la géométrie EDIGEO, et
-  les informations résumées de la parcelle, dont les propriétaires (information séparées par la barre
+  les informations résumées de la parcelle, dont les propriétaires (information séparée par la barre
   verticale | si la parcelle a plusieurs propriétaires)
 
 Les champs parcelle.parcelle et geo_parcelle.geo_parcelle peuvent être utilisés pour les jointures entre la

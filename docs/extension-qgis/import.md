@@ -11,7 +11,7 @@ Le plugin permet l'import de données **MAJIC de 2012 à 2021 et des données ED
 d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
 Le plugin utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour 
-votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de 
+votre utilisation. Par exemple, le lot peut être le code d'une commune ou l'acronyme d'une communauté de
 commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.
 
 Vous pouvez par exemple importer les données dans cet ordre :
@@ -44,7 +44,7 @@ base de données.
 
 Pour les bases de données **PostGIS**, il faut :
 
-* avoir créé **une base de données** sur laquelle on a les droits en écriture, et activer l'extension PostGIS.
+* avoir créé **une base de données** sur laquelle on a les droits en écriture et activer l'extension PostGIS.
 * avoir créé au préalable **une connexion QGIS** via le menu **Couches > Ajouter une couche PostGIS** vers 
   cette base de données
 
@@ -135,7 +135,7 @@ INSERT INTO spatial_ref_sys values (
 );
 ```
 
-Attention, il est important d'utiliser un code qui est <= 998999, car PostGIS place des contraintes sur le 
+Attention, il est important d'utiliser un code qui est ≤ 998999, car PostGIS place des contraintes sur le
 SRID. Nous avons utilisé ici 998999, qui est le maximum possible.
 La liste des caractéristiques des projections peut être trouvée à ce lien : 
 http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql (voir discussion Géorézo : https://georezo.net/forum/viewtopic.php?pid=268134).

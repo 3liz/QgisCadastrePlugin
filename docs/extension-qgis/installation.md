@@ -1,6 +1,6 @@
 # Installation
 
-Le plugin Cadastre est dans les dépôts officiels du projet QGIS. Pour l'installer, il faut :
+L'extension Cadastre est dans les dépôts officiels du projet QGIS. Pour l'installer, il faut :
 
 * **Lancer QGIS**
 * Menu **Extension > Installer/Gérer les extensions**

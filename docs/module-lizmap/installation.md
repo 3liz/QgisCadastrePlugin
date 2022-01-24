@@ -22,9 +22,12 @@ set_rights.sh
 
 ## Installation manuelle dans lizmap 3.3 ou 3.4 sans Composer
 
-* Télécharger l'archive ZIP de la dernière version du module cadastre dans [la page des releases de Github](https://github.com/3liz/lizmap-cadastre-module/releases).
-* Extraire l'archive et copier le répertoire `cadastre` dans le répertoire `lizmap/lizmap-modules/` de l'application Lizmap Web Client.
-* Éditer le fichier `lizmap/var/config/localconfig.ini.php` et modifier la section `[modules]` en ajoutant la ligne `cadastre.access=2` sous la section:
+* Télécharger l'archive ZIP de la dernière version du module cadastre dans
+  [la page des releases de Github](https://github.com/3liz/lizmap-cadastre-module/releases).
+* Extraire l'archive et copier le répertoire `cadastre` dans le répertoire `lizmap/lizmap-modules/` de l'application
+  Lizmap Web Client.
+* Éditer le fichier `lizmap/var/config/localconfig.ini.php` et modifier la section `[modules]` en ajoutant la ligne
+  `cadastre.access=2` sous la section :
 
 ```ini
 [modules]
