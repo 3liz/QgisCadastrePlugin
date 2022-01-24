@@ -138,8 +138,8 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
     def shortHelpString(self):
         return (
             'Ce traitement permet de configurer un projet QGIS pour de la publication sur le web avec '
-            'Lizmap https://github.com/3liz/lizmap-web-client/ et son module Cadastre '
-            'https://github.com/3liz/lizmap-cadastre-module\n'
+            '<a href="https://github.com/3liz/lizmap-web-client/">Lizmap Web Client</a> et son '
+            '<a href="https://github.com/3liz/lizmap-cadastre-module">module Cadastre</a>.\n'
         )
 
     def helpUrl(self) -> str:
