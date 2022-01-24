@@ -70,7 +70,8 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingParameterVectorLayer(
                 self.SECTION_LAYER,
                 self.tr('La couche sections'),
-                [QgsProcessing.TypeVectorPolygon]
+                [QgsProcessing.TypeVectorPolygon],
+                defaultValue='Sections',
             )
         )
 
@@ -88,7 +89,8 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingParameterVectorLayer(
                 self.PARCELLE_LAYER,
                 self.tr('La couche parcelles'),
-                [QgsProcessing.TypeVectorPolygon]
+                [QgsProcessing.TypeVectorPolygon],
+                defaultValue='Parcelles',
             )
         )
 
