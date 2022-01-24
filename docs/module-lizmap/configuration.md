@@ -7,7 +7,7 @@
 Pour utiliser le module cadastre dans **Lizmap Web Client** il vous faut d'abord configurer un **projet QGIS** :
 
 * Vous aurez besoin d'installer l'extension QGIS [Cadastre](https://github.com/3liz/QgisCadastrePlugin)
-sur votre QGIS Bureautique via le gestionnaire d'extensions, ainsi que sur votre serveur QGIS Server
+sur votre QGIS Bureautique via le gestionnaire d'extensions, ainsi que sur votre serveur QGIS Serveur
 dans un dossier nommé `cadastre`.
 
 * Il faut ensuite créer un projet QGIS contenant les données cadastrales, et le configurer
@@ -18,14 +18,14 @@ avec l'extension **Cadastre** :
 
     ![Project Properties](media/load_data.png)
 
-    - Dans les **propriétés du projet**, onglet `QGIS Server`, il faut publier en WFS les couches
+    - Dans les **propriétés du projet**, onglet `QGIS Serveur`, il faut publier en WFS les couches
   `Communes`, `Parcelles` et `Sections`.
 
     ![Plubication WFS](media/wfs_properties.png)
 
 ### Configurer la publication avec le plugin Lizmap
 
-Vous devez maintenant créer ou modifier la configuration **lizmap** via le plugin Lizmap pour QGIS :
+Vous devez maintenant créer ou modifier la configuration **lizmap** via l'extension Lizmap pour QGIS :
 
 * Il faut obligatoirement ajouter la couche `Parcelles` dans l'onglet **table attributaire**.
 
