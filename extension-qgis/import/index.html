@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/extension-qgis/import/">
       
       <link rel="icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.cd566b2a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6e60f8b8.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -797,7 +797,7 @@
 <p>Le plugin permet l'import de données <strong>MAJIC de 2012 à 2021 et des données EDIGEO</strong>. Il est possible 
 d'importer des données de manière incrémentale, <strong>étape par étape</strong>, ou bien d'importer <strong>en une seule fois</strong>.</p>
 <p>Le plugin utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un <strong>ensemble de données cohérent</strong> pour 
-votre utilisation. Par exemple, le lot peut être le code d'une commune, ou l'acronyme d'une communauté de 
+votre utilisation. Par exemple, le lot peut être le code d'une commune ou l'acronyme d'une communauté de
 commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.</p>
 <p>Vous pouvez par exemple importer les données dans cet ordre :</p>
 <ul>
@@ -826,7 +826,7 @@ modification de longueur de champs, etc).</p>
 base de données.</p>
 <p>Pour les bases de données <strong>PostGIS</strong>, il faut :</p>
 <ul>
-<li>avoir créé <strong>une base de données</strong> sur laquelle on a les droits en écriture, et activer l'extension PostGIS.</li>
+<li>avoir créé <strong>une base de données</strong> sur laquelle on a les droits en écriture et activer l'extension PostGIS.</li>
 <li>avoir créé au préalable <strong>une connexion QGIS</strong> via le menu <strong>Couches &gt; Ajouter une couche PostGIS</strong> vers 
   cette base de données</li>
 </ul>
@@ -933,7 +933,7 @@ suivante pour IGNF:GUAD48UTM20:</p>
 );
 </code></pre></div>
 </td></tr></table>
-<p>Attention, il est important d'utiliser un code qui est &lt;= 998999, car PostGIS place des contraintes sur le 
+<p>Attention, il est important d'utiliser un code qui est ≤ 998999, car PostGIS place des contraintes sur le
 SRID. Nous avons utilisé ici 998999, qui est le maximum possible.
 La liste des caractéristiques des projections peut être trouvée à ce lien : 
 <a href="http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql">http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql</a> (voir discussion Géorézo : <a href="https://georezo.net/forum/viewtopic.php?pid=268134">https://georezo.net/forum/viewtopic.php?pid=268134</a>).
@@ -946,7 +946,7 @@ SRID par 998999.</p>
   <small>
     
       Dernière mise à jour:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 26, 2021</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 24, 2022</span>
       
     
   </small>
@@ -1077,7 +1077,7 @@ SRID par 998999.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.01de222e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.960e086b.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       

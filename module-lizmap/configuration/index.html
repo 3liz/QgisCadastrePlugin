@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/module-lizmap/configuration/">
       
       <link rel="icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.cd566b2a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6e60f8b8.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -779,7 +779,7 @@
 <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h1>
 <h2 id="dans-qgis">Dans QGIS<a class="headerlink" href="#dans-qgis" title="Permanent link">#</a></h2>
 <h3 id="configurer-le-projet-qgis">Configurer le projet QGIS<a class="headerlink" href="#configurer-le-projet-qgis" title="Permanent link">#</a></h3>
-<p>Pour utiliser le module cadastre dans <strong>Lizmap Web Client</strong> il vous faut d'abord configurer un <strong>projet QGIS</strong>:</p>
+<p>Pour utiliser le module cadastre dans <strong>Lizmap Web Client</strong> il vous faut d'abord configurer un <strong>projet QGIS</strong> :</p>
 <ul>
 <li>
 <p>Vous aurez besoin d'installer l'extension QGIS <a href="https://github.com/3liz/QgisCadastrePlugin">Cadastre</a>
@@ -788,7 +788,7 @@ dans un dossier nommé <code>cadastre</code>.</p>
 </li>
 <li>
 <p>Il faut ensuite créer un projet QGIS contenant les données cadastrales, et le configurer
-avec l'extension <strong>Cadastre</strong>:</p>
+avec l'extension <strong>Cadastre</strong> :</p>
 <ul>
 <li>Utilisez l'outil de <strong>chargement des couches</strong>, il configurera notamment les <strong>variables</strong> dans le projet
   ainsi que les couches requises.</li>
@@ -802,17 +802,22 @@ avec l'extension <strong>Cadastre</strong>:</p>
 </li>
 </ul>
 <h3 id="configurer-la-publication-avec-le-plugin-lizmap">Configurer la publication avec le plugin Lizmap<a class="headerlink" href="#configurer-la-publication-avec-le-plugin-lizmap" title="Permanent link">#</a></h3>
-<p>Vous devez maintenant créer ou modifier la configuration <strong>lizmap</strong> via le plugin Lizmap pour QGIS:</p>
+<p>Vous devez maintenant créer ou modifier la configuration <strong>lizmap</strong> via le plugin Lizmap pour QGIS :</p>
 <ul>
 <li>
 <p>Il faut obligatoirement ajouter la couche <code>Parcelles</code> dans l'onglet <strong>table attributaire</strong>.</p>
 <ul>
-<li>Pour les performances, pensez à cocher la case "Limiter les données à l'emprise courante" en bas de la fenêtre pour l'onglet table attributaire</li>
+<li>Pour les performances, pensez à cocher la case "Limiter les données à l'emprise courante" en bas de la fenêtre
+  pour l'onglet table attributaire</li>
 </ul>
 </li>
 </ul>
 <p><img alt="Table attributaire" src="../media/table_attributaire.png" /></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>- Pour les performances, vous pouvez aussi cocher &quot;Masquer la couche dans la liste&quot; pour la configuration de la couche Parcelles. La fonction de sélection sera active mais la couche Parcelles n&#39;apparaîtra pas dans la liste des table attributaires disponibles.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>- Pour les performances, vous pouvez aussi cocher &quot;Masquer la couche dans la liste&quot; pour la configuration de la
+  couche Parcelles. La fonction de sélection sera active mais la couche Parcelles n&#39;apparaîtra pas dans la liste des
+  tables attributaires disponibles.
 </code></pre></div>
 </td></tr></table>
 <p><img alt="Configuration Table attributaire de la couche Parcelles" src="../media/table_attributaire_parcelles.png" /></p>
@@ -838,35 +843,35 @@ visible dans l'onglet <code>Affichage</code> (ou <code>Infobulle</code>) des pro
 </ul>
 </li>
 <li>
-<p>A noter que depuis la version <strong>1.6.0</strong> du module Cadastre, lorsque l'utilisateur a
+<p>À noter que depuis la version <strong>1.6.0</strong> du module Cadastre, lorsque l'utilisateur a
 <strong>le droit de voir les données de propriétaires</strong>, le contenu détaillé des informations de la parcelle est
 <strong>affiché sous le contenu de la popup</strong>. Les onglets correspondent à ceux visibles dans QGIS lorsqu'on
-affiche le détail d'une parcelle: <strong>Parcelle, Propriétaires, Subdivisions fiscales, Locaux,
+affiche le détail d'une parcelle : <strong>Parcelle, Propriétaires, Subdivisions fiscales, Locaux,
 Locaux : informations détaillées</strong>. Vous pouvez donc afficher moins d'information dans la popup,
 par exemple seulement le code de la parcelle et la commune</p>
 </li>
 </ul>
 <h2 id="dans-lizmap-web-client">Dans Lizmap Web Client<a class="headerlink" href="#dans-lizmap-web-client" title="Permanent link">#</a></h2>
 <p>Maintenant vous devez configurer les droits d'accès à l'outil via l'interface d'administration.
-Le module a créé:</p>
+Le module a créé :</p>
 <ul>
 <li>un groupe d'utilisateurs <code>Cadastre Lizmap</code> (identifiant <code>cadastre_lizmap</code>)</li>
 <li>2 sujets de droit : <code>Accéder aux données de propriétaires</code> et <code>Utiliser le panneau de recherche</code></li>
 </ul>
 <p>Vous pouvez mettre certains utilisateurs dans ce groupe <code>Cadastre Lizmap</code>. Ils auront alors accès
 au panneau de recherche par localisation <strong>ET</strong> par nom de propriétaires. <strong>Vous devez bien faire
-attention de n'accorder le droit <code>Accéder aux données de propriétaires</code> qu'aux personnes habititées !</strong>.</p>
+attention de n'accorder le droit <code>Accéder aux données de propriétaires</code> qu'aux personnes habilitées !</strong>.</p>
 <p>Vous pouvez modifier plus finement les droits via le bouton <code>Changer les droits des groupes</code> situés
 dans le menu <code>Groupes d'utilisateurs pour les droits</code> de l'interface d'administration de Lizmap Web Client.
 <em>Attention, cette page modifie fortement les droits par défaut des groupes d'utilisateurs.
-Nous conseillons de ne pas touchez aux droits liés à Lizmap ici, sauf si vous maîtrisez ce que vous faites.</em></p>
+Nous conseillons de ne pas toucher aux droits liés à Lizmap ici, sauf si vous maîtrisez ce que vous faites.</em></p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Dernière mise à jour:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 23, 2021</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 24, 2022</span>
       
     
   </small>
@@ -997,7 +1002,7 @@ Nous conseillons de ne pas touchez aux droits liés à Lizmap ici, sauf si vous 
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.01de222e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.960e086b.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       

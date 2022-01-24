@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/">
       
       <link rel="icon" href="icon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.cd566b2a.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.6e60f8b8.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.e6a45f82.min.css">
@@ -762,15 +762,18 @@ Plusieurs modules aident l'utilisateur à importer des données, les afficher da
 et imprimer les relevés :</p>
 <ul>
 <li>L'<strong>import de données cadastrales</strong>, MAJIC et EDIGEO, dans une base de données <strong>PostgreSQL/PostGIS</strong> ou <strong>Sqlite/Spatialite</strong>.</li>
-<li>Un <strong>module de chargement</strong> permet d'ajouter automatiquement l'ensemble des couches cadastrales dans QGIS, avec la possibilité de choisir le style appliqué.</li>
-<li>Un <strong>panneau de recherche</strong> offre la possibilité de rechercher des parcelles par adresse, propriétaire ou par situation (commune, section) et de naviguer vers ces parcelles cadastrales.</li>
-<li>Un <strong>outil d'identification</strong> permet d'afficher les données liées à une parcelle en cliquant sur le polygone représentant la parcelle.</li>
+<li>Un <strong>module de chargement</strong> permet d'ajouter automatiquement l'ensemble des couches cadastrales dans QGIS, avec la
+  possibilité de choisir le style appliqué.</li>
+<li>Un <strong>panneau de recherche</strong> offre la possibilité de rechercher des parcelles par adresse, propriétaire ou par situation
+  (commune, section) et de naviguer vers ces parcelles cadastrales.</li>
+<li>Un <strong>outil d'identification</strong> permet d'afficher les données liées à une parcelle en cliquant sur le polygone représentant
+  la parcelle.</li>
 <li>Il est possible enfin d'exporter les données sous forme de <strong>relevés parcellaires</strong> et de <strong>relevés de propriété</strong>.</li>
 </ul>
 <h2 id="prerequis">Prérequis<a class="headerlink" href="#prerequis" title="Permanent link">#</a></h2>
 <ul>
 <li>De préférence, QGIS LTR 3.10, ou à défaut QGIS 3.4</li>
-<li>PostgreSQL : &gt;= 9.6 + PostGIS &gt;= 1.5 et &lt; 3.x</li>
+<li>PostgreSQL : ≥ 9.6 + PostGIS ≥ 1.5 et &lt; 3.x</li>
 <li>Spatialite : 4.3.0</li>
 </ul>
 <h2 id="financeurs">Financeurs<a class="headerlink" href="#financeurs" title="Permanent link">#</a></h2>
@@ -786,14 +789,16 @@ et imprimer les relevés :</p>
 <li>Le <strong><a href="https://www.ecologie.gouv.fr/">Ministère de la Transition Écologie</a></strong></li>
 <li>L'association <strong><a href="http://asadefrance.fr/">ASA de France</a></strong></li>
 <li>La <strong><a href="https://www.legrandnarbonne.com/">Communauté d'Agglomération du Grand-Narbonne</a></strong></li>
-<li>Les <strong><a href="https://www.datagences-bretagne.bzh/">Agences d'Urbanisme de Bretagne</a></strong> et autres : AGAM, AUSB, ADUGA, AUDAT, AUD Clermont Métropole, AGAPE Lorraine Nord, Boulogne Développement</li>
+<li>Les <strong><a href="https://www.datagences-bretagne.bzh/">Agences d'Urbanisme de Bretagne</a></strong> et autres : AGAM, AUSB, ADUGA, AUDAT,
+  AUD Clermont Métropole, AGAPE Lorraine Nord, Boulogne Développement</li>
 <li>Le <strong><a href="http://www.meurthe-et-moselle.fr/">Conseil Départemental de Meurthe et Moselle</a></strong></li>
 </ul>
 <p>Les structures suivantes ont aidé 3Liz pour la maintenance ou l'ajout de fonctionnalités:</p>
 <ul>
 <li>L'<strong><a href="https://www.aduga.org/">ADUGA</a></strong> : maintenance pour les nouveaux millésimes</li>
 <li>La <strong><a href="https://mairie.megeve.fr/">Ville de Megève</a></strong> : migration du plugin vers QGIS 3</li>
-<li>La <strong><a href="http://agglo.grandsoissons.com/accueil-3.html">Communauté d'Agglomération du Soissonnais</a></strong> : amélioration de la recherche et ajout d'informations sur les fiches parcellaires</li>
+<li>La <strong><a href="http://agglo.grandsoissons.com/accueil-3.html">Communauté d'Agglomération du Soissonnais</a></strong> : amélioration de la
+  recherche et ajout d'informations sur les fiches parcellaires</li>
 <li>Le <strong><a href="https://www.gard.fr/accueil.html">Conseil départemental du Gard</a></strong> : ajout d'informations dans la fiche parcellaire</li>
 <li>La <strong><a href="https://metropole.rennes.fr/">Métropole de Rennes</a></strong> : ajout des supports 2019 et 2020 des millésimes MAJIC</li>
 <li>le <strong><a href="https://www.ecologie.gouv.fr/">Ministère de la Transition Écologique</a></strong> : détails sur les propriétaires (indivisions)</li>
@@ -801,7 +806,8 @@ et imprimer les relevés :</p>
 <p>Les évolutions 2021 ont été soutenues par :</p>
 <ul>
 <li>La <strong><a href="https://metropole.rennes.fr/">Métropole de Rennes</a></strong> : ajout du support MAJIC 2021</li>
-<li>La <strong><a href="https://www.brest.fr/brestfr-accueil-1575.html">Métropole de Brest</a></strong> : enrichissement de la recherche de propriétaires (par nom d'usage, par nom de naissance, par commune)</li>
+<li>La <strong><a href="https://www.brest.fr/brestfr-accueil-1575.html">Métropole de Brest</a></strong> : enrichissement de la recherche de propriétaires
+  (par nom d'usage, par nom de naissance, par commune)</li>
 <li>La société <strong><a href="https://www.elements.green/">Éléments</a></strong> pour le téléchargeur Édigéo</li>
 <li>La <strong><a href="https://www.clermontmetropole.eu">Métropole de Clermont-Ferrand</a></strong> :
   maintenance sur l'extension, travail exploratoire sur le remplacement d'ancien code concernant le DBManager et amélioration du code</li>
@@ -813,7 +819,7 @@ et imprimer les relevés :</p>
   <small>
     
       Dernière mise à jour:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 30, 2021</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 24, 2022</span>
       
     
   </small>
@@ -929,7 +935,7 @@ et imprimer les relevés :</p>
     <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "assets/javascripts/workers/search.22074ed6.min.js"}</script>
     
     
-      <script src="assets/javascripts/bundle.01de222e.min.js"></script>
+      <script src="assets/javascripts/bundle.960e086b.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
