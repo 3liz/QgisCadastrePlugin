@@ -23,6 +23,7 @@
 """
 
 import os
+import unicodedata
 
 from datetime import datetime
 
@@ -356,6 +357,22 @@ class cadastreLoading(QObject):
                 i = i + 1
         return 0
 
+    @staticmethod
+    def short_name(name: str) -> str:
+        """ Clean layer/group name to build the short name for WMS. """
+        nfkd_form = unicodedata.normalize('NFKD', name)
+        only_ascii = nfkd_form.encode('ASCII', 'ignore').decode()
+        only_ascii = only_ascii.replace('-', '_')
+        only_ascii = only_ascii.replace(' ', '_')
+        only_ascii = only_ascii.replace("'", '_')
+        only_ascii = only_ascii.replace(",", '_')
+        only_ascii = only_ascii.replace('(', '')
+        only_ascii = only_ascii.replace(')', '')
+
+        only_ascii = only_ascii.strip('_')
+        lower_name = only_ascii.lower()
+        return lower_name
+
     def processLoading(self):
         """
         Load all the layers in QGIS
@@ -431,7 +448,7 @@ class cadastreLoading(QObject):
         else:
             self.qc.updateLog(u'Filtrage à partir des communes, expression invalide : %s' % cExp.parserErrorString())
 
-        # Loop throuhg qgisQastreLayerList and load each corresponding table
+        # Loop through qgisCadastreLayerList and load each corresponding table
         for item in self.qgisCadastreLayerList:
 
             if item['label'] not in self.mainLayers and self.dialog.cbMainLayersOnly.isChecked():
@@ -513,7 +530,9 @@ class cadastreLoading(QObject):
                 uniqueCol
             )
 
-            vlayer = QgsVectorLayer(alayerUri.uri(), item['label'], providerName)
+            layer_name = item['label']
+            vlayer = QgsVectorLayer(alayerUri.uri(), layer_name, providerName)
+            vlayer.setShortName(self.short_name(layer_name))
 
             # apply style
             qmlPath = os.path.join(
@@ -539,26 +558,41 @@ class cadastreLoading(QObject):
         self.updateTimer()
 
         # Create a group "Cadastre" and move all layers into it
-        self.qc.updateLog(u'Ajout des couches dans le groupe Cadastre')
+        self.qc.updateLog('Ajout des couches dans le groupe Cadastre')
         root = QgsProject.instance().layerTreeRoot()
-        g1 = root.findGroup(u"Cadastre")
+        g1 = root.findGroup("Cadastre")
         if g1:
-            gf = root.findGroup(u"Fond")
+            name = "Fond"
+            gf = root.findGroup(name)
             if not gf:
-                gf = g1.addGroup("Fond")
+                gf = g1.addGroup(name)
+                gf.setCustomProperty("wmsShortName", self.short_name(name))
 
-            ge = root.findGroup(u'Étiquettes cadastre')
+            name = "Étiquettes cadastre"
+            ge = root.findGroup(name)
             if not ge:
-                ge = gf.addGroup(u'Étiquettes cadastre')
+                ge = gf.addGroup(name)
+                ge.setCustomProperty("wmsShortName", self.short_name(name))
 
-            gd = root.findGroup(u"Données cadastre")
+            name = "Données cadastre"
+            gd = root.findGroup(name)
             if not gd:
-                gd = gf.addGroup(u"Données cadastre")
+                gd = gf.addGroup(name)
+                gd.setCustomProperty("wmsShortName", self.short_name(name))
         else:
             g1 = root.insertGroup(0, "Cadastre")
-            gf = g1.addGroup("Fond")
-            ge = gf.addGroup(u'Étiquettes cadastre')
-            gd = gf.addGroup(u'Données cadastre')
+
+            name = "Fond"
+            gf = g1.addGroup(name)
+            gf.setCustomProperty("wmsShortName", self.short_name(name))
+
+            name = 'Étiquettes cadastre'
+            ge = gf.addGroup(name)
+            ge.setCustomProperty("wmsShortName", self.short_name(name))
+
+            name = "Données cadastre"
+            gd = gf.addGroup(name)
+            gd.setCustomProperty("wmsShortName", self.short_name(name))
 
         variables = QgsProject.instance().customVariables()
         for layer in qgisCadastreLayers:
@@ -589,7 +623,7 @@ class cadastreLoading(QObject):
             # Do not expand layer legend
             nodeLayer.setExpanded(False)
 
-            # set varaibles
+            # set variables
             if layer.name() in self.variableLayers:
                 varlayer = self.variableLayers[layer.name()]
                 variables['cadastre_' + varlayer['var_key'] + '_layer_id'] = layer.id()

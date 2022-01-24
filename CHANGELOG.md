@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Ajout des noms courts sur les couches et les groupes pour rendre le projet valide par défaut lors d'une publication
+  sur Lizmap
+
 ## 1.13.5 - 2021-12-14
 
 * Amélioration du message d'erreur sur le fichier n'est pas être décompressé, ticket #339
