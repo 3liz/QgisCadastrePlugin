@@ -4,7 +4,6 @@ Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MA
 
 ![alt](../media/cadastre_import_dialog.png)
 
-
 ## Principe
 
 Le plugin permet l'import de données **MAJIC de 2012 à 2021 et des données EDIGEO**. Il est possible 
@@ -81,8 +80,12 @@ On configure ensuite les options :
 
 * Choisir la **projection source** des fichiers EDIGEO et la **projection cible** désirée
 
-* Choisir le **numéro du Département**, par exemple : 80 pour la Somme
-* Choisir le **numéro de la Direction**, par exemple : 0
+* Choisir le **numéro du Département**, par exemple :
+  * 80 pour la Somme
+  * 97 pour la Guadeloupe
+* Choisir le **numéro de la Direction**, par exemple :
+  * 0
+  * 1 pour la Guadeloupe
 
 * Choisir le répertoire contenant **les fichiers MAJIC**
 
@@ -114,18 +117,25 @@ Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fe
 > Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin
 > n'intègre pas de bouton pour annuler un import en cours.
 
+## Outre-mer
 
-## Projections IGNF
+Pour l'import des communes en France d'outre-mer, il faut découper le code du département pour avoir la direction.
+Par exemple, concernant le département de la Guadeloupe, code INSEE `971`, dans l'extension Cadastre, le code du
+département est `97` et la direction est `1`.
 
-Si votre donnée EDIGEO est en projection IGNF, par exemple pour la Guadeloupe, IGNF:GUAD48UTM20 (Guadeloupe 
+La projection des données **EDIGEO** peut se lire dans le fichier `*.GEO`.
+
+### Projections IGNF
+
+Si votre donnée EDIGEO est en projection IGNF, par exemple pour la Guadeloupe, `IGNF:GUAD48UTM20` (Guadeloupe 
 Ste Anne), et que vous souhaitez importer les données dans PostgreSQL, il faut au préalable ajouter dans votre
-table public.spatial_ref_sys la définition de la projection IGNF. Si vous utilisez à la place l'équivalent 
-EPSG (par exemple ici EPSG:2970), vous risquez un décalage des données lors de la reprojection.
+table `public.spatial_ref_sys` la définition de la projection **IGNF**. Si vous utilisez à la place l'équivalent 
+**EPSG** (par exemple ici `EPSG:2970`), vous risquez un décalage des données lors de la reprojection.
 
 Vous pouvez ajouter dans votre base de données la définition via une requête, par exemple avec la requête 
-suivante pour IGNF:GUAD48UTM20:
+suivante pour `IGNF:GUAD48UTM20`:
 
-```
+```sql
 INSERT INTO spatial_ref_sys values (
     998999,
     'IGNF',
@@ -136,10 +146,12 @@ INSERT INTO spatial_ref_sys values (
 ```
 
 Attention, il est important d'utiliser un code qui est ≤ 998999, car PostGIS place des contraintes sur le
-SRID. Nous avons utilisé ici 998999, qui est le maximum possible.
+SRID. Nous avons utilisé ici `998999`, qui est le maximum possible.
+
 La liste des caractéristiques des projections peut être trouvée à ce lien : 
 http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql (voir discussion Géorézo : https://georezo.net/forum/viewtopic.php?pid=268134).
-Attention, il faut extraire de ce fichier la commande INSERT qui correspond à votre code IGNF, et remplacer le
-SRID par 998999.
 
-Ensuite, dans la projection source, vous pouvez utiliser IGNF:GUAD48UTM20 au lieu du code EPSG correspondant.
+Attention, il faut extraire de ce fichier la commande `INSERT` qui correspond à votre code `IGNF`, et remplacer le
+SRID par `998999`.
+
+Ensuite, dans la projection source, vous pouvez utiliser `IGNF:GUAD48UTM20` au lieu du code EPSG correspondant.
