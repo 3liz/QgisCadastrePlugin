@@ -4,6 +4,7 @@
 
 * Ajout des noms courts sur les couches et les groupes pour rendre le projet valide par défaut lors d'une publication
   sur Lizmap
+* Mise à jour de https://docs.3liz.org
 
 ## 1.13.5 - 2021-12-14
 
