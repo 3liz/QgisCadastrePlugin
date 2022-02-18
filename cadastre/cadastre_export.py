@@ -125,6 +125,9 @@ class CadastreExport:
         self.connector = cadastre_common.getConnectorFromUri(self.connectionParams)
         self.dbType = self.connectionParams['dbType']
 
+        # Variable created in set_composer_templates
+        self.main_tables = {}
+
     def getMapInstance(self) -> QgsMapSettings:
         """
         Get instance of object needed to instantiate QgsComposition
@@ -133,12 +136,12 @@ class CadastreExport:
         """
         return QgsMapSettings()
 
-    def setComposerTemplates(self, comptecommunal):
+    def set_composer_templates(self, compte_communal):
         """
         Set parameters for given comptecommunal
         """
         # List of templates
-        comptecommunalAbrev = comptecommunal[9:]
+        compte_communal_abrev = compte_communal[9:]
         self.composerTemplates = {
             'header1': {
                 'names': ['annee', 'ccodep', 'ccodir', 'ccocom', 'libcom'],
@@ -147,8 +150,8 @@ class CadastreExport:
                 'type': 'sql',
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND comptecommunal = '%s'" % comptecommunal
+                    'proprietaire': " AND comptecommunal = '{}'".format(compte_communal),
+                    'parcelle': " AND comptecommunal = '{}'".format(compte_communal),
                 },
                 'sticky': True
             },
@@ -165,7 +168,7 @@ class CadastreExport:
                 'position': [218.5, 2.5, 75, 7.5], 'align': [128, 2],
                 'keepContent': True,
                 'type': 'properties',
-                'source': [comptecommunalAbrev],
+                'source': [compte_communal_abrev],
                 'sticky': True
             },
             'proprietaires': {
@@ -190,8 +193,8 @@ class CadastreExport:
                 'keepContent': True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND l10.comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND p.parcelle = '%s'" % self.geo_parcelle
+                    'proprietaire': " AND l10.comptecommunal = '{}'".format(compte_communal),
+                    'parcelle': " AND p.parcelle = '{}'".format(self.geo_parcelle)
                 }
             },
             'proprietes_non_baties': {
@@ -208,8 +211,8 @@ class CadastreExport:
                 'keepContent': True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND p.comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND p.parcelle = '%s'" % self.geo_parcelle
+                    'proprietaire': " AND p.comptecommunal = '{}'".format(compte_communal),
+                    'parcelle': " AND p.parcelle = '{}'".format(self.geo_parcelle)
                 },
                 'bgcolor': Qt.transparent
             },
@@ -218,22 +221,22 @@ class CadastreExport:
                 'position': [3.5, 208, 288, 4], 'align': [128, 4],
                 'keepContent': True,
                 'type': 'properties',
-                'source': [u"Ce document est donné à titre indicatif - Il n'a pas de valeur légale"],
+                'source': ["Ce document est donné à titre indicatif - Il n'a pas de valeur légale"],
                 'bgcolor': Qt.white,
                 'htmlState': 0,
                 'font': QFont('sans-serif', 4, 1, True),
                 'sticky': True
             }
         }
-        self.mainTables = {
+        self.main_tables = {
             'proprietaires_line': {
                 'names': ['mainprop', 'epousede', 'adrprop', 'nele'],
                 'type': 'sql',
                 'keepContent': True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND comptecommunal = '%s'" % comptecommunal
+                    'proprietaire': " AND comptecommunal = '{}'".format(compte_communal),
+                    'parcelle': " AND comptecommunal = '{}'".format(compte_communal)
                 }
             },
             'proprietes_baties_line': {
@@ -243,8 +246,8 @@ class CadastreExport:
                 'type': 'sql',
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': u" AND l10.comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND p.parcelle = '%s'" % self.geo_parcelle
+                    'proprietaire': " AND l10.comptecommunal = '{}'".format(compte_communal),
+                    'parcelle': " AND p.parcelle = '{}'".format(self.geo_parcelle)
                 }
             },
             'proprietes_non_baties_line': {
@@ -253,8 +256,8 @@ class CadastreExport:
                           'revenucadastral', 'coll', 'natexo', 'anret', 'fractionrcexo', 'pourcentageexo', 'tc', 'lff'],
                 'type': 'sql',
                 'and': {
-                    'proprietaire': u" AND p.comptecommunal = '%s'" % comptecommunal,
-                    'parcelle': u" AND p.parcelle = '%s'" % self.geo_parcelle
+                    'proprietaire': " AND p.comptecommunal = '{}'".format(compte_communal),
+                    'parcelle': " AND p.parcelle = '{}'".format(self.geo_parcelle)
                 }
             }
 
@@ -272,7 +275,7 @@ class CadastreExport:
         for key, item in list(self.composerTemplates.items()):
             if 'keepContent' in item and item['keepContent']:
                 self.contentKeeped[key] = ''
-        for key, item in list(self.mainTables.items()):
+        for key, item in list(self.main_tables.items()):
             if 'keepContent' in item and item['keepContent']:
                 self.contentKeeped[key] = ''
 
@@ -316,8 +319,7 @@ class CadastreExport:
             sql = sql.replace('$and', item['and'][self.etype])
 
             # Limit results if asked
-            if page and key in list(self.mainTables.keys()) \
-                    and key in list(self.lineCount.keys()):
+            if page and key in self.main_tables.keys() and key in self.lineCount.keys():
                 offset = int((page - 1) * self.maxLineNumber)
                 # ~ sql+= " LIMIT %s" % self.maxLineNumber
                 # ~ sql+= " OFFSET %s" % offset
@@ -349,8 +351,7 @@ class CadastreExport:
                     content += self.getHtmlFromTemplate(tplPath, replaceDict)
 
                 # fill empty data to have full size table
-                if key in list(self.mainTables.keys()) \
-                        and key not in list(self.contentKeeped.keys()) \
+                if key in self.main_tables.keys() and key not in self.contentKeeped.keys() \
                         and len(data) < self.maxLineNumber:
                     for _ in range(self.maxLineNumber - len(data)):
                         replaceDict = {}
@@ -368,7 +369,7 @@ class CadastreExport:
         elif item['type'] == 'parent':
             replaceDict = {}
             for i in range(len(item['names'])):
-                replaceDict['$' + item['names'][i]] = self.mainTables[item['source']]['content']
+                replaceDict['$' + item['names'][i]] = self.main_tables[item['source']]['content']
             content = self.getHtmlFromTemplate(tplPath, replaceDict)
 
         # Keep somme content globally
@@ -434,7 +435,7 @@ class CadastreExport:
         """
         # retrieve total data and get total count
         for key in list(self.lineCount.keys()):
-            self.getContentForGivenItem(key, self.mainTables[key])
+            self.getContentForGivenItem(key, self.main_tables[key])
         self.numPages = max(
             [
                 1 + int(self.lineCount['proprietes_baties_line']['count'] / self.maxLineNumber),
@@ -452,8 +453,8 @@ class CadastreExport:
         """
 
         # First get content for parent items
-        for key, item in list(self.mainTables.items()):
-            self.mainTables[key]['content'] = self.getContentForGivenItem(
+        for key, item in list(self.main_tables.items()):
+            self.main_tables[key]['content'] = self.getContentForGivenItem(
                 key,
                 item,
                 page
@@ -576,7 +577,7 @@ class CadastreExport:
         temppath = None
         # print("export pour le cc %s" % comptecommunal)
         # Set configuration
-        self.setComposerTemplates(comptecommunal)
+        self.set_composer_templates(comptecommunal)
 
         # Create the composition
         self.createComposition()
