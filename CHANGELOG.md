@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Ajout d'une clé primaire à la table geo_label
+* Modification de la clé primaire de la table geo_batiment et geo_subdsect pour être de type entier
 * Ajout des noms courts sur les couches et les groupes pour rendre le projet valide par défaut lors d'une publication
   sur Lizmap
 * Mise à jour de https://docs.3liz.org
@@ -59,12 +61,12 @@
 * Correction d'une erreur SQL lors de la consultation des infos parcelle sur QGIS 3.16 bureautique et serveur
 * Ajout du support QGIS 3.16
 * Ajout d'un bouton pour ouvrir l'aide depuis le menu principal d'aide de QGIS
-* Ajout de la recherche d'un propriétaire 
+* Ajout de la recherche d'un propriétaire
   * par nom d'usage ou de naissance
   * par ville
 * Ajout d'un téléchargeur Edigéo communal dans la boite à outils Processing
 * Documentation https://docs.3liz.org/QgisCadastrePlugin/
-  * Mise de la documentation au format MkDocs 
+  * Mise de la documentation au format MkDocs
   * Intégration de la documentation du module Lizmap
   * Ajout de la documentation automatique concernant les traitements Processing
   * Ajout de la documentation concernant la base de données avec SchémaSpy
@@ -72,7 +74,7 @@
 
 ## 1.10.2 - 2020-12-10
 
-* Correction sur la documentation 
+* Correction sur la documentation
 * Ajout d'une table de matières sur https://docs.3liz.org/QgisCadastrePlugin/
 * Afficher un message dans les logs si un fichier SQLite est manquant
 * Prévenir l'utilisateur sur les fichiers bz2 lors de l'import des fichiers Édigéo.
