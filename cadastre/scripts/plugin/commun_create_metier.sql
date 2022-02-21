@@ -998,7 +998,8 @@ CREATE TABLE geo_batiment
   tex text,
   creat_date date,
   update_dat date,
-  lot text
+  lot text,
+  ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_batiment', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 

@@ -33,7 +33,7 @@ ALTER TABLE [PREFIXE]geo_voiep ADD CONSTRAINT geo_voiep_pk PRIMARY KEY (geo_voie
 ALTER TABLE [PREFIXE]geo_numvoie ADD CONSTRAINT geo_numvoie_pk PRIMARY KEY (geo_numvoie );
 ALTER TABLE [PREFIXE]geo_numvoie_parcelle ADD CONSTRAINT geo_numvoie_parcelle_pk PRIMARY KEY (geo_numvoie_parcelle );
 ALTER TABLE [PREFIXE]geo_lieudit ADD CONSTRAINT geo_lieudit_pk PRIMARY KEY (geo_lieudit );
-ALTER TABLE [PREFIXE]geo_batiment ADD CONSTRAINT geo_batiment_pk PRIMARY KEY (geo_batiment );
+ALTER TABLE [PREFIXE]geo_batiment ADD CONSTRAINT geo_batiment_pk PRIMARY KEY (ogc_fid );
 ALTER TABLE [PREFIXE]geo_batiment_parcelle ADD CONSTRAINT geo_batiment_parcelle_pk PRIMARY KEY (geo_batiment_parcelle );
 ALTER TABLE [PREFIXE]geo_zoncommuni ADD CONSTRAINT geo_zoncommuni_pk PRIMARY KEY (geo_zoncommuni );
 ALTER TABLE [PREFIXE]geo_tronfluv ADD CONSTRAINT geo_tronfluv_pk PRIMARY KEY (geo_tronfluv );
