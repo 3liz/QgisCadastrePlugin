@@ -25,7 +25,7 @@ ALTER TABLE [PREFIXE]commune_majic ADD CONSTRAINT commune_majic_pk PRIMARY KEY  
 ALTER TABLE [PREFIXE]voie ADD CONSTRAINT voie_pk PRIMARY KEY  (voie);
 ALTER TABLE [PREFIXE]geo_commune ADD CONSTRAINT geo_commune_pk PRIMARY KEY (ogc_fid);
 ALTER TABLE [PREFIXE]geo_section ADD CONSTRAINT geo_section_pk PRIMARY KEY (ogc_fid);
-ALTER TABLE [PREFIXE]geo_subdsect ADD CONSTRAINT geo_subdsect_pk PRIMARY KEY (geo_subdsect);
+ALTER TABLE [PREFIXE]geo_subdsect ADD CONSTRAINT geo_subdsect_pk PRIMARY KEY (ogc_fid);
 ALTER TABLE [PREFIXE]geo_parcelle ADD CONSTRAINT geo_parcelle_pk PRIMARY KEY (ogc_fid);
 ALTER TABLE [PREFIXE]geo_subdfisc ADD CONSTRAINT geo_subdfisc_pk PRIMARY KEY (geo_subdfisc );
 ALTER TABLE [PREFIXE]geo_subdfisc_parcelle ADD CONSTRAINT geo_subdfisc_parcelle_pk PRIMARY KEY (geo_subdfisc_parcelle );
