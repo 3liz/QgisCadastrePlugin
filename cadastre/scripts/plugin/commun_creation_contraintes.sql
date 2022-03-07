@@ -25,7 +25,7 @@ ALTER TABLE [PREFIXE]commune_majic ADD CONSTRAINT commune_majic_pk PRIMARY KEY  
 ALTER TABLE [PREFIXE]voie ADD CONSTRAINT voie_pk PRIMARY KEY  (voie);
 ALTER TABLE [PREFIXE]geo_commune ADD CONSTRAINT geo_commune_pk PRIMARY KEY (ogc_fid);
 ALTER TABLE [PREFIXE]geo_section ADD CONSTRAINT geo_section_pk PRIMARY KEY (ogc_fid);
-ALTER TABLE [PREFIXE]geo_subdsect ADD CONSTRAINT geo_subdsect_pk PRIMARY KEY (geo_subdsect);
+ALTER TABLE [PREFIXE]geo_subdsect ADD CONSTRAINT geo_subdsect_pk PRIMARY KEY (ogc_fid);
 ALTER TABLE [PREFIXE]geo_parcelle ADD CONSTRAINT geo_parcelle_pk PRIMARY KEY (ogc_fid);
 ALTER TABLE [PREFIXE]geo_subdfisc ADD CONSTRAINT geo_subdfisc_pk PRIMARY KEY (geo_subdfisc );
 ALTER TABLE [PREFIXE]geo_subdfisc_parcelle ADD CONSTRAINT geo_subdfisc_parcelle_pk PRIMARY KEY (geo_subdfisc_parcelle );
@@ -33,7 +33,7 @@ ALTER TABLE [PREFIXE]geo_voiep ADD CONSTRAINT geo_voiep_pk PRIMARY KEY (geo_voie
 ALTER TABLE [PREFIXE]geo_numvoie ADD CONSTRAINT geo_numvoie_pk PRIMARY KEY (geo_numvoie );
 ALTER TABLE [PREFIXE]geo_numvoie_parcelle ADD CONSTRAINT geo_numvoie_parcelle_pk PRIMARY KEY (geo_numvoie_parcelle );
 ALTER TABLE [PREFIXE]geo_lieudit ADD CONSTRAINT geo_lieudit_pk PRIMARY KEY (geo_lieudit );
-ALTER TABLE [PREFIXE]geo_batiment ADD CONSTRAINT geo_batiment_pk PRIMARY KEY (geo_batiment );
+ALTER TABLE [PREFIXE]geo_batiment ADD CONSTRAINT geo_batiment_pk PRIMARY KEY (ogc_fid );
 ALTER TABLE [PREFIXE]geo_batiment_parcelle ADD CONSTRAINT geo_batiment_parcelle_pk PRIMARY KEY (geo_batiment_parcelle );
 ALTER TABLE [PREFIXE]geo_zoncommuni ADD CONSTRAINT geo_zoncommuni_pk PRIMARY KEY (geo_zoncommuni );
 ALTER TABLE [PREFIXE]geo_tronfluv ADD CONSTRAINT geo_tronfluv_pk PRIMARY KEY (geo_tronfluv );
@@ -51,6 +51,7 @@ ALTER TABLE [PREFIXE]geo_tline ADD CONSTRAINT geo_tline_pk PRIMARY KEY (geo_tlin
 ALTER TABLE [PREFIXE]geo_tline_commune ADD CONSTRAINT geo_tline_commune_pk PRIMARY KEY (geo_tline_commune );
 ALTER TABLE [PREFIXE]geo_tsurf ADD CONSTRAINT geo_tsurf_pk PRIMARY KEY (geo_tsurf );
 ALTER TABLE [PREFIXE]geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_pk PRIMARY KEY (geo_tsurf_commune );
+ALTER TABLE [PREFIXE]geo_label ADD CONSTRAINT geo_label_pk PRIMARY KEY (ogc_fid );
 ALTER TABLE [PREFIXE]geo_unite_fonciere ADD CONSTRAINT geo_unite_fonciere_pk PRIMARY KEY (id);
 
 --~ -- création clé étrangère;

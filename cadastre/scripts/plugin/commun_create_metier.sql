@@ -883,7 +883,8 @@ CREATE TABLE geo_subdsect
   dred date,
   creat_date date,
   update_dat date,
-  lot text
+  lot text,
+  ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_subdsect', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
@@ -998,7 +999,8 @@ CREATE TABLE geo_batiment
   tex text,
   creat_date date,
   update_dat date,
-  lot text
+  lot text,
+  ogc_fid serial NOT NULL
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_batiment', 'geom', 2154 , 'MULTIPOLYGON', 2 );
 
