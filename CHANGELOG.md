@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* Correction de la recherche par propriétaire lorsque le schema Postgres nécessite des doubles quotes
 * Ajout d'une clé primaire à la table geo_label
 * Modification de la clé primaire de la table geo_batiment et geo_subdsect pour être de type entier
 * Ajout des noms courts sur les couches et les groupes pour rendre le projet valide par défaut lors d'une publication

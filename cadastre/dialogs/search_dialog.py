@@ -617,8 +617,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 selectedCity = communeProprioCb['chosenFeature']['geo_commune']
 
             if self.dbType == "postgis":
-                PGschema = connectionParams["schema"]
-                sqlFrom = "  FROM " + PGschema + ".proprietaire\r\n"
+                sqlFrom = '  FROM "{}".proprietaire\r\n'.format(connectionParams['schema'])
                 cityJoin = ' INNER JOIN "{}"."commune" commune ON commune.ccocom = proprio.ccocom\r\n'.format(connectionParams['schema'])
             else:
                 sqlFrom = "  FROM proprietaire\r\n"
