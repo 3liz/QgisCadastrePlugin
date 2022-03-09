@@ -1,8 +1,10 @@
 import unittest
+
 import psycopg2
 
 from qgis.core import QgsCoordinateReferenceSystem, QgsProviderRegistry
 from qgis.utils import iface
+
 from cadastre.dialogs.import_dialog import CadastreImportDialog
 from cadastre.tools import plugin_test_data_path
 
