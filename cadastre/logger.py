@@ -18,7 +18,8 @@ class Logger:
 
     @staticmethod
     def debug(message: str):
-        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.Debug)
+        # We could add an env variable if we log or not ?
+        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.Info)
 
     @staticmethod
     def info(message: str):

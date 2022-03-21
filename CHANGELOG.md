@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Fix a regression on the server side about logging
+
 ## 1.14.0 - 2022-03-09
 
 * Ajout de la colonne `contenance` à la table `parcelle_info` même lorsqu'il n'y a pas de données MAJIC
