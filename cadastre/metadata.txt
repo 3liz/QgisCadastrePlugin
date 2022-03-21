@@ -1,4 +1,3 @@
-# Mandatory items:
 [general]
 
 name=cadastre
@@ -14,16 +13,17 @@ about=This plugins helps users to use French land registry data, called Cadastre
   France for people having access to Cadastre data. Funded by : the European Union, Fonds Européen de Développement
   Régional de Picardie, Conseil Régional de Picardie, Agence de Développement et d'Urbanisme du Grand Amienois.
 
-version=master
 
 author=3Liz
 email=info@3liz.com
 
-# end of mandatory metadata
+# Done by qgis-plugin-ci
+version=master
+changelog=
+commitNumber=
+commitSha1=
+dateTime=
 
-# Optional items:
-
-changelog=changelog
 
 # tags are comma separated with spaces allowed
 tags=cadastre, france, majic, edigeo, import
