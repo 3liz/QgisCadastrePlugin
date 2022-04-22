@@ -59,18 +59,24 @@ from cadastre.processing.provider import CadastreProvider
 class CadastreMenu:
     def __init__(self, iface):
         self.iface = iface
-        self.mapCanvas = iface.mapCanvas()
         self.cadastre_search_dialog = None
         self.provider = None
         self.help_action_about_menu = None
+        if not self.iface:
+            # If QGIS is headless, there isn't iface set, on qgis_process for instance
+            return
+
+        self.mapCanvas = iface.mapCanvas()
 
     def cadastre_add_submenu(self, submenu):
         self.iface.addPluginToMenu("&Cadastre", submenu.menuAction())
 
+    # noinspection PyPep8Naming
     def initProcessing(self):
         self.provider = CadastreProvider()
         QgsApplication.processingRegistry().addProvider(self.provider)
 
+    # noinspection PyPep8Naming
     def initGui(self):
 
         self.initProcessing()

@@ -2,9 +2,11 @@
 
 ## Unreleased
 
+* Correction d'une erreur Python si l'utilisateur utilise QGIS Process
+
 ## 1.14.1 - 2022-03-21
 
-* Fix a regression on the server side about logging
+* Correction d'une régression côté serveur pour le logging
 
 ## 1.14.0 - 2022-03-09
 
