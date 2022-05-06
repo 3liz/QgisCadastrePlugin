@@ -42,6 +42,11 @@ class CadastreCommon:
         """
         Update the log
         """
+        if os.getenv("CI", "").lower() == 'true':
+            # Running headless, hack to see logs
+            print(msg)
+            return
+
         t = self.dialog.txtLog
         t.ensureCursorVisible()
         prefix = '<span style="font-weight:normal;">'

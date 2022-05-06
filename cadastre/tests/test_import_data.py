@@ -33,17 +33,17 @@ Cornillon = TestCase(
 
 # RemireMontjoly = TestCase(
 #     insee='97309',
-#     commune='CORNILLON-CONFOUX',
-#     epsg='EPSG:4235',
+#     commune='REMIRE MONTJOLY',
+#     epsg='EPSG:32620',
 #     has_majic=False,
 #     lot='1',
 #     dept='97',
-#     ccocom='029',
-#     ccodir='3',
-#     direction='2',
-#     version='2019',
-#     year='2019',
-#     geo_commune='132029',
+#     ccocom=None,
+#     ccodir=None,
+#     direction='3',
+#     version='2021',
+#     year='2021',
+#     geo_commune='973309',
 # )
 
 TEST_SCHEMA = 'cadastre'
@@ -106,6 +106,8 @@ class TestImportData(unittest.TestCase):
         # Set MAJIC
         if test_case.has_majic:
             dialog.inMajicSourceDir.setText(str(plugin_test_data_path('majic', test_case.insee)))
+        else:
+            dialog.inMajicSourceDir.setText("")
 
         # Set lot
         dialog.inEdigeoLot.setText(test_case.lot)
