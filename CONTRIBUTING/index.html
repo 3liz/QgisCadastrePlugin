@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/CONTRIBUTING/">
       
       <link rel="icon" href="../icon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.14">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3de6f41f.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -692,23 +692,22 @@
 <p>Les tests unitaires sont en cours.</p>
 <p><a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml"><img alt="❄ Flake8" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg" /></a>
 <a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml"><img alt="🎳 Tests" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml/badge.svg" /></a></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>pip install -r requirements/dev.txt
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>pip install -r requirements/dev.txt
 flake8
-</code></pre></div>
-</td></tr></table>
+</code></pre></div></td></tr></table></div>
 <p>La variable d'environnement <code>CI=true</code> permet d'éviter certaines QMessageBox.</p>
 <ul>
 <li>Run tests in Docker</li>
 </ul>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
 <span class="normal">5</span>
 <span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>make start_tests
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code>make start_tests
 make run_tests
 <span class="c1"># Run a custom pattern</span>
 <span class="nb">cd</span> .docker/ <span class="o">&amp;&amp;</span> ./exec_tests.sh test_*.py
@@ -716,23 +715,21 @@ make stop_tests
 
 <span class="c1"># All in one, but slower</span>
 make tests
-</code></pre></div>
-</td></tr></table>
+</code></pre></div></td></tr></table></div>
 <ul>
 <li>In your QGIS Desktop itself</li>
 <li>Open the QGIS console</li>
 </ul>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="n">plugins</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">qgis.utils</span> <span class="kn">import</span> <span class="n">plugins</span>
 <span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;cadastre&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run_tests</span><span class="p">()</span>
 
 <span class="c1"># Custom pattern</span>
 <span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;cadastre&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run_tests</span><span class="p">(</span><span class="s1">&#39;test_*.py&#39;</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
+</code></pre></div></td></tr></table></div>
 <ul>
 <li>In your IDE, with linked QGIS library<ul>
 <li>Setup your <code>QGIS_PREFIX_PATH</code> etc</li>
@@ -743,18 +740,17 @@ make tests
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">#</a></h2>
 <p><a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml"><img alt="📖 Documentation" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml/badge.svg" /></a></p>
 <p>La documentation utilise <a href="https://www.mkdocs.org/">MkDocs</a> avec <a href="https://squidfunk.github.io/mkdocs-material/">Material</a> :</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>pip install -r requirements/doc.txt
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>pip install -r requirements/doc.txt
 mkdocs serve
-</code></pre></div>
-</td></tr></table>
+</code></pre></div></td></tr></table></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Dernière mise à jour:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 22, 2022</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 9, 2022</span>
       
     
   </small>
@@ -850,7 +846,7 @@ mkdocs serve
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../assets/javascripts/bundle.c2e1ee47.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       

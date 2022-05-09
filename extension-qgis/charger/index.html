@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://docs.3liz.org/QgisCadastrePlugin/extension-qgis/charger/">
       
       <link rel="icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.14">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.120efc48.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3de6f41f.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
           
           
@@ -841,14 +841,13 @@ l'exploitation des données cadastrales.</p>
 <p>La requête suivante retourne par exemple pour chaque code de parcelle la date de l'acte (on suppose que le 
 schéma est cadastre). Vous pouvez ensuite utiliser une jointure QGIS pour faire le lien avec la couche 
 <code>Parcelles</code> :</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>SELECT p.parcelle, p.jdatat AS date_acte
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>SELECT p.parcelle, p.jdatat AS date_acte
 FROM cadastre.parcelle p
-</code></pre></div>
-</td></tr></table>
+</code></pre></div></td></tr></table></div>
 <p>La requête suivante renvoie toutes les parcelles appartenant à des collectivités locales, avec la géométrie 
 et les noms des propriétaires</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
 <span class="normal"> 4</span>
@@ -863,7 +862,7 @@ et les noms des propriétaires</p>
 <span class="normal">13</span>
 <span class="normal">14</span>
 <span class="normal">15</span>
-<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>SELECT gp.geo_parcelle,
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code>SELECT gp.geo_parcelle,
 string_agg(
    trim(
       concat(
@@ -879,8 +878,7 @@ JOIN cadastre.parcelle p ON gp.geo_parcelle = p.parcelle
 JOIN cadastre.proprietaire pr ON p.comptecommunal = pr.comptecommunal
 WHERE pr.dnatpr = &#39;CLL&#39;
 GROUP BY gp.geo_parcelle, gp.geom
-</code></pre></div>
-</td></tr></table>
+</code></pre></div></td></tr></table></div>
 
   <hr>
 <div class="md-source-file">
@@ -1018,7 +1016,7 @@ GROUP BY gp.geo_parcelle, gp.geom
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c2e1ee47.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
