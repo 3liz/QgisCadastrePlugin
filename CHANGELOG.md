@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.14.2 - 2022-05-10
+
 * Correction de l'import Edigeo si les parcelles sont trop grandes (en Guyane par exemple, ticket https://github.com/3liz/QgisCadastrePlugin/issues/206)
 * Correction d'une erreur Python si l'utilisateur utilise QGIS Process
 
