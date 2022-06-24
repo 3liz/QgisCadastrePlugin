@@ -23,14 +23,35 @@ la mise à jour des extensions côté serveur.
 
 * dans `lizmap/my-packages`, créer le fichier `composer.json` s'il n'existe pas
   déjà, en copiant le fichier `composer.json.dist`, qui s'y trouve.
-* en ligne de commande, dans le répertoire `lizmap/my-packages/`, tapez :
-  `composer require "lizmap/lizmap-cadastre-module"`
-* puis dans le répertoire `lizmap/install/`, lancer les commandes suivantes :
 
 ```bash
+cd lizmap/my-packages/
+cp -n composer.json.dist composer.json
+```
+
+
+* en ligne de commande, dans le répertoire `lizmap/my-packages/`, tapez :
+
+```bash
+composer require "lizmap/lizmap-cadastre-module"
+```
+
+* puis dans le répertoire `lizmap/install/` :
+
+Si vous utilisez Lizmap 3.6 ou plus, lancez d'abord les commandes :
+
+
+```bash
+php configurator.php cadastre
+```
+
+Enfin pour lizmap 3.4 à 3.6 et plus, lancez les scripts d'installation :
+
+```bash
+cd ../install
 php installer.php
-clean_vartmp.sh
-set_rights.sh
+./clean_vartmp.sh
+./set_rights.sh
 ```
 
 ### Installation manuelle dans lizmap 3.3 ou 3.4 sans Composer
@@ -51,6 +72,6 @@ cadastre.access=2
 
 ```bash
 php installer.php
-clean_vartmp.sh
-set_rights.sh
+./clean_vartmp.sh
+./set_rights.sh
 ```
