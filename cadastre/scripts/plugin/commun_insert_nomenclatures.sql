@@ -284,8 +284,10 @@ INSERT INTO cconlc VALUES ('CB', 'Local divers');
 INSERT INTO cconlc VALUES ('CD', 'Dépendance commerciale');
 INSERT INTO cconlc VALUES ('CH', 'Chantier');
 INSERT INTO cconlc VALUES ('CM', 'Commerce avec boutique');
+INSERT INTO cconlc VALUES ('DA', 'Dépendance d''appartement');
 INSERT INTO cconlc VALUES ('DC', 'Dépendance lieux communs');
 INSERT INTO cconlc VALUES ('DE', 'Dépendance bâtie isolée');
+INSERT INTO cconlc VALUES ('DM', 'Dépendance de maison');
 INSERT INTO cconlc VALUES ('LC', 'Local commun');
 INSERT INTO cconlc VALUES ('MA', 'Maison');
 INSERT INTO cconlc VALUES ('ME', 'Maison exceptionnelle');
@@ -361,8 +363,6 @@ INSERT INTO gnexpl VALUES ('GM', 'transfert de propriétés bâties par l’Éta
 INSERT INTO gnexpl VALUES ('CM', 'exonération des parts communale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
 INSERT INTO gnexpl VALUES ('DM', 'exonération des parts intercommunale, départementale, TSE et TEOM pour un immeuble appartenant à une commune et situé sur le territoire d’une autre commune appartenant à la métropole de Lyon');
 
-
-
 -- nomenclature pour ccthp (Occupation du local)
 INSERT INTO ccthp VALUES ('B', 'Locaux meublés à usage d’habitation faisant l’objet de locations occasionnelles permanentes ou saisonnières (TH)');
 INSERT INTO ccthp VALUES ('D', 'Division fiscale (CFE) ou local démoli (TH)');
@@ -404,7 +404,7 @@ INSERT INTO gnextl VALUES ('BD', 'Entreprises situées dans un bassin à redynam
 développement prioritaire, sur délibération.');
 INSERT INTO gnextl VALUES ('BE', 'Local situé dans un bassin d''emploi à redynamiser. Article 1383 H du CGI.');
 INSERT INTO gnextl VALUES ('BH', 'Locaux à usage de bureau transformés en habitation principale');
-INSERT INTO gnextl VALUES ('BS', 'Abattement de 30 % pour les logements faisant l’objet d’un bail réel solidaire');
+INSERT INTO gnextl VALUES ('BS', 'Abattement de 30 % à 100% pour les logements faisant l’objet d’un bail réel solidaire');
 INSERT INTO gnextl VALUES ('BU', 'Entreprises situées dans un bassin à redynamiser ou dans une zone de développement prioritaire, de droit.');
 INSERT INTO gnextl VALUES ('CE', 'Abattement de 5 ans pour cession relevant de l’article 1388 sexies du CGI (Mayotte)');
 INSERT INTO gnextl VALUES ('CV', 'Entreprises situées dans les zones ZRVC (zone de revitalisation des centresvilles)');
@@ -417,7 +417,7 @@ INSERT INTO gnextl VALUES ('EE', 'Exonération économiquement faible (ECF) de t
 INSERT INTO gnextl VALUES ('EF', 'Exonération économiquement faible (ECF) de type F');
 INSERT INTO gnextl VALUES ('EI', 'Exonération pour les jeunes entreprises innovantes');
 INSERT INTO gnextl VALUES ('EN', 'Exonération entreprise nouvelle.');
-INSERT INTO gnextl VALUES ('ES', 'Équipements souterrains indissociables des casiers des installations de stockage de déchets non dangereux');
+INSERT INTO gnextl VALUES ('ES', 'Exonération de 90 à 100% de souvrages d''un centre de stockage réversible en couche géologique profonde de déchets radioactifs (art 1382 G du CGI');
 INSERT INTO gnextl VALUES ('EW', 'Exonération ECF de droits acquis');
 INSERT INTO gnextl VALUES ('E1', 'Exonération ECF de droit commun – 100 % – 1ère année');
 INSERT INTO gnextl VALUES ('E2', 'Exonération ECF de droit commun – 100 % – 2 e année');
@@ -444,7 +444,7 @@ INSERT INTO gnextl VALUES ('LY', 'Prorogation de 10 ans de l’exonération « L
 INSERT INTO gnextl VALUES ('MA', 'Minoration de 60 % de la valeur locative des locaux d’habitation situés à Mayotte');
 INSERT INTO gnextl VALUES ('MB', 'Boutiques et magasins situés hors d’un ensemble commercial dont la surface est inférieure à 400 m² – art. 1388 quinquies C du CGI');
 INSERT INTO gnextl VALUES ('MS', 'Maison de santé');
-INSERT INTO gnextl VALUES ('MU', 'Abattement de 50 % sur les modèles U');
+INSERT INTO gnextl VALUES ('MU', 'Abattement de 50 % sur les modèles U (restitué pour info)');
 INSERT INTO gnextl VALUES ('ND', 'Droit commun (2 ans) - construction nouvelle');
 INSERT INTO gnextl VALUES ('NI', 'Non imposable');
 INSERT INTO gnextl VALUES ('NE', 'Exonération de 20 ans en faveur des logements sociaux qui respectent un certain nombre de normes environnementales pour constructions nouvelles');
@@ -476,7 +476,7 @@ INSERT INTO gnextl VALUES ('RM', 'Exonération pour les locaux achevés avant la
 INSERT INTO gnextl VALUES ('RQ', 'Local achevé avant la mise en place d''un plan de prévention des risques technologiques. Article 1383 G du CGI.');
 INSERT INTO gnextl VALUES ('RR', 'Commerces en milieu rural');
 INSERT INTO gnextl VALUES ('RT', 'Abattement de 25 % pour les locaux faisant l’objet d’une convention ou d''un contrat de résidence temporaire – art. 1388 quinquies A du CGI');
-INSERT INTO gnextl VALUES ('RW', 'Local achevé avant le 01/01/1989 ayant fait l''objet de dépenses destinées à économiser l''énergie. Article 1383-O B du CGI.');
+INSERT INTO gnextl VALUES ('RW', 'Exonération de 50 à 100% pour les locaux ayant fait l''objet de dépenses destinées à économiser l''énergie. Article 1383-O B et 1383-O B du CGI.');
 INSERT INTO gnextl VALUES ('UM', 'Exonération de 5 ans pour les usines de méthanisation - art. 1387 A du CGI');
 INSERT INTO gnextl VALUES ('ZD', 'Abattement zone franche DOM');
 INSERT INTO gnextl VALUES ('ZL', 'Transformation local commercial en habitation');
@@ -508,11 +508,8 @@ INSERT INTO cconad VALUES ('TR', 'Terrasse');
 INSERT INTO cconad VALUES ('BC', 'Bûcher');
 INSERT INTO cconad VALUES ('BD', 'Buanderie');
 INSERT INTO cconad VALUES ('BX', 'Box');
-INSERT INTO cconad VALUES ('CD', 'Chambre de domestique');
 INSERT INTO cconad VALUES ('CL', 'Cellier');
 INSERT INTO cconad VALUES ('DC', 'Dépendance de local commun');
-INSERT INTO cconad VALUES ('GC', 'Grenier/cave');
-INSERT INTO cconad VALUES ('GP', 'Garage/parking');
 INSERT INTO cconad VALUES ('JH', 'Jardin d''hiver');
 INSERT INTO cconad VALUES ('PA', 'Elément de pur agrément');
 INSERT INTO cconad VALUES ('PI', 'Pièce indépendante');
@@ -520,6 +517,10 @@ INSERT INTO cconad VALUES ('PK', 'Parking');
 INSERT INTO cconad VALUES ('PS', 'Piscine');
 INSERT INTO cconad VALUES ('RS', 'Remise');
 INSERT INTO cconad VALUES ('SR', 'Serre');
+-- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
+INSERT INTO cconad VALUES ('CD', 'Chambre de domestique');
+INSERT INTO cconad VALUES ('GC', 'Grenier/cave');
+INSERT INTO cconad VALUES ('GP', 'Garage/parking');
 INSERT INTO cconad VALUES ('TT', 'Toiture-terrasse');
 
 -- nomenclature ctpdl (pdl)
