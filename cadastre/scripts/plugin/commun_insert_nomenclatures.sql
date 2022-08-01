@@ -417,7 +417,7 @@ INSERT INTO gnextl VALUES ('EE', 'Exonération économiquement faible (ECF) de t
 INSERT INTO gnextl VALUES ('EF', 'Exonération économiquement faible (ECF) de type F');
 INSERT INTO gnextl VALUES ('EI', 'Exonération pour les jeunes entreprises innovantes');
 INSERT INTO gnextl VALUES ('EN', 'Exonération entreprise nouvelle.');
-INSERT INTO gnextl VALUES ('ES', 'Exonération de 90 à 100% de souvrages d''un centre de stockage réversible en couche géologique profonde de déchets radioactifs (art 1382 G du CGI');
+INSERT INTO gnextl VALUES ('ES', 'Exonération de 90 à 100% des ouvrages d''un centre de stockage réversible en couche géologique profonde de déchets radioactifs (art 1382 G du CGI');
 INSERT INTO gnextl VALUES ('EW', 'Exonération ECF de droits acquis');
 INSERT INTO gnextl VALUES ('E1', 'Exonération ECF de droit commun – 100 % – 1ère année');
 INSERT INTO gnextl VALUES ('E2', 'Exonération ECF de droit commun – 100 % – 2 e année');
