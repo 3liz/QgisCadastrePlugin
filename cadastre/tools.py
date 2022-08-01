@@ -80,11 +80,14 @@ def next_git_tag():
 
 def set_window_title() -> str:
     """ Set the window title if on a dev version. """
-    version = pluginMetadata('cadastre', 'version')
-    if version != 'master':
-        return ''
+    try:
+      version = pluginMetadata('cadastre', 'version')
+      if version != 'master':
+          return ''
 
-    # return 'branch {}, commit {}, next {}'.format(
-    #     version, current_git_hash(), next_git_tag())
+      # return 'branch {}, commit {}, next {}'.format(
+      #     version, current_git_hash(), next_git_tag())
 
-    return 'next {}'.format(next_git_tag())
+      return 'next {}'.format(next_git_tag())
+    except:
+      return "[no git tag]"
