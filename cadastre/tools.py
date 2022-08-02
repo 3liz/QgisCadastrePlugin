@@ -70,9 +70,15 @@ def next_git_tag():
         universal_newlines=True,
         encoding='utf8'
     )
-    tag = git_show.communicate()[0].partition('\n')[0]
+    try:
+        tag = git_show.communicate()[0].partition('\n')[0]
+    except IndexError:
+        # Issue #374
+        return "[no git tag]"
+
     if not tag:
         return 'next'
+
     versions = tag.split('.')
     text = '{}.{}.{}-pre'.format(versions[0], versions[1], int(versions[2]) + 1)
     return text
@@ -80,14 +86,11 @@ def next_git_tag():
 
 def set_window_title() -> str:
     """ Set the window title if on a dev version. """
-    try:
-      version = pluginMetadata('cadastre', 'version')
-      if version != 'master':
-          return ''
+    version = pluginMetadata('cadastre', 'version')
+    if version != 'master':
+        return ''
 
-      # return 'branch {}, commit {}, next {}'.format(
-      #     version, current_git_hash(), next_git_tag())
+    # return 'branch {}, commit {}, next {}'.format(
+    #     version, current_git_hash(), next_git_tag())
 
-      return 'next {}'.format(next_git_tag())
-    except:
-      return "[no git tag]"
+    return 'next {}'.format(next_git_tag())
