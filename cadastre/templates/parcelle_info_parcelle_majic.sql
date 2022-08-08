@@ -6,6 +6,14 @@ SELECT
     '<tr><th>Date de l''acte</th> <td>' || COALESCE(Cast(p.jdatat AS text), '') || '</td></tr>' ||
     '<tr><th>Surface cadastrale (contenance)</th> <td>' || p.dcntpa || ' m²</td></tr>' ||
     '<tr><th>Surface géographique</th> <td>' || round(ST_Area(gp.geom)) || ' m²</td></tr>' ||
+
+    '<tr><th>Parcelle bâtie</th><td>' ||
+    CASE
+        WHEN coalesce(p.gparbat, '0') = '1' THEN 'Oui'
+        ELSE 'Non'
+    END
+    ||
+    '</td></tr>' ||
     '<tr><th>Surface bâtie</th><td>' || coalesce(sum(round(ST_Area(b.geom))), 0) || ' m²</td></tr>' ||
     '<tr><th>Pourcentage du bâti</th><td>' || coalesce(round(100 * sum(ST_Area(b.geom)) / ST_Area(gp.geom)), 0) || '</td></tr>' ||
 
@@ -34,5 +42,6 @@ LEFT OUTER JOIN voie v
     ON v.voie = p.voie
 WHERE 2>1
 AND parcelle = '%s'
-GROUP BY p.ccosec, p.dnupla, c.libcom, p.jdatat, p.dcntpa, gp.geom, v.libvoi, p.dnvoiri, v.natvoi, p.cconvo, p.dvoilib, p.gurbpa
+GROUP BY p.ccosec, p.dnupla, c.libcom, p.jdatat, p.dcntpa,
+gp.geom, v.libvoi, p.dnvoiri, v.natvoi, p.cconvo, p.dvoilib, p.gurbpa, p.gparbat
 LIMIT 1
