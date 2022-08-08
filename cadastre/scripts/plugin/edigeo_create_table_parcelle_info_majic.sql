@@ -14,6 +14,7 @@ CREATE TABLE [PREFIXE]parcelle_info
   codecommune text,
   surface_geo bigint,
   contenance bigint,
+  parcelle_batie text,
   adresse text,
   urbain text,
   code text,
@@ -39,6 +40,10 @@ CREATE INDEX jj ON [PREFIXE]voie (voie );
 INSERT INTO [PREFIXE]parcelle_info
 SELECT gp.ogc_fid AS ogc_fid, gp.geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
 c.libcom AS nomcommune, c.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS bigint) AS surface_geo, p.dcntpa AS contenance,
+CASE
+    WHEN coalesce(p.gparbat, '0') = '1' THEN 'Oui'
+    ELSE 'Non'
+END AS parcelle_batie,
 CASE
         WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
         ELSE ltrim(p.cconvo, '0') || p.dvoilib
@@ -85,7 +90,10 @@ LEFT OUTER JOIN [PREFIXE]proprietaire pr ON p.comptecommunal = pr.comptecommunal
 LEFT OUTER JOIN [PREFIXE]ccodro ON ccodro.ccodro = pr.ccodro
 LEFT OUTER JOIN [PREFIXE]commune c ON p.ccocom = c.ccocom AND c.ccodep = p.ccodep
 LEFT OUTER JOIN [PREFIXE]voie v ON v.voie = p.voie
-GROUP BY gp.geo_parcelle, gp.ogc_fid, gp.idu, gp.tex, gp.geo_section, gp.lot, c.libcom, c.ccocom, gp.geom, p.dcntpa, v.libvoi, p.dnvoiri, v.natvoi, p.comptecommunal, p.cconvo, p.voie, p.dvoilib, p.gurbpa, ccosec, dnupla
+GROUP BY gp.geo_parcelle, gp.ogc_fid, gp.idu, gp.tex, gp.geo_section, gp.lot,
+c.libcom, c.ccocom, gp.geom, p.dcntpa, v.libvoi, p.dnvoiri, v.natvoi,
+p.comptecommunal, p.cconvo, p.voie, p.dvoilib, p.gurbpa, p.gparbat,
+ccosec, dnupla
 ;
 
 
@@ -119,6 +127,7 @@ COMMENT ON COLUMN parcelle_info.nomcommune IS 'Nom de la commune';
 COMMENT ON COLUMN parcelle_info.codecommune IS 'Code de la commune à 3 chiffres, ex: 021';
 COMMENT ON COLUMN parcelle_info.surface_geo IS 'Surface de la parcelle, calculée spatialement';
 COMMENT ON COLUMN parcelle_info.contenance IS 'Contenance de la parcelle (information MAJIC)';
+COMMENT ON COLUMN parcelle_info.parcelle_batie IS 'Indique si la parcelle est bâtie ou non (issu du champ parcelle.gparbat)';
 COMMENT ON COLUMN parcelle_info.adresse IS 'Adresse de la parcelle';
 COMMENT ON COLUMN parcelle_info.urbain IS 'Déclare si la parcelle est urbaine ou non';
 COMMENT ON COLUMN parcelle_info.code IS 'Code de la parcelle (6 caractères, ex: AB0001)';

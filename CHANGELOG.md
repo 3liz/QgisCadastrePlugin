@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* Identification de la parcelle (MAJIC): ajout du statut 'Parcelle bâtie' dans la fiche (issue du champ `gparbat`).
+  Cette modification ne nécessite pas de réimport pour être fonctionnelle.
+* Table `parcelle_info`: ajout du champ `parcelle_batie` (Oui/Non) à partir du champ `gparbat` (MAJIC).
+  Cette modification nécessite un réimport des données, ou un remplacement manuel de la table `parcelle_info`.
+
 ## 1.15.0 - 2022-08-02
 
 * Support du MAJIC 2022
