@@ -1503,6 +1503,12 @@ On your local, make a symlink with ln -s
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<ul>
+<li>Identification de la parcelle (MAJIC): ajout du statut 'Parcelle bâtie' dans la fiche (issue du champ <code>gparbat</code>).
+  Cette modification ne nécessite pas de réimport pour être fonctionnelle.</li>
+<li>Table <code>parcelle_info</code>: ajout du champ <code>parcelle_batie</code> (Oui/Non) à partir du champ <code>gparbat</code> (MAJIC).
+  Cette modification nécessite un réimport des données, ou un remplacement manuel de la table <code>parcelle_info</code>.</li>
+</ul>
 <h2 id="1150-2022-08-02">1.15.0 - 2022-08-02<a class="headerlink" href="#1150-2022-08-02" title="Permanent link">#</a></h2>
 <ul>
 <li>Support du MAJIC 2022</li>
