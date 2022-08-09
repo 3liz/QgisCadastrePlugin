@@ -9,7 +9,7 @@ else
   PROFILE="db"
 fi
 
-docker-compose --profile ${PROFILE} up -d --force-recreate --remove-orphans
+docker compose --profile ${PROFILE} up -d --force-recreate --remove-orphans
 echo "Wait 10 seconds"
 sleep 10
 if [ "$WITH_QGIS" = with-qgis ]; then
