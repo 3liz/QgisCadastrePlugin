@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Export des relevés - Ajout d'une option "Les relevés sont destinés à des tiers" 
+  qui permet de ne pas faire figurer la date et le lieu de naissance des propriétaires dans les PDF.
 
 ## 1.15.1 - 2022-08-12
 

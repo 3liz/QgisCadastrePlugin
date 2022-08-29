@@ -60,7 +60,7 @@ def _printProgress(self, nb: int) -> Generator[Callable[[int], None], None, None
 class CadastreExport:
 
     def __init__(self, project: QgsProject, layer: QgsMapLayer, etype: str, comptecommunal: str,
-                 geo_parcelle: str = None, target_dir: str = None) -> None:
+                 geo_parcelle: str = None, target_dir: str = None, for_third_party: bool = False) -> None:
 
         self.plugin_dir = str(Path(__file__).resolve().parent)
 
@@ -80,6 +80,11 @@ class CadastreExport:
 
         # type of export : proprietaire or parcelle
         self.etype = etype
+
+        # third party export
+        # If true, remove some sensitive fields
+        # For example date and location of birth
+        self.for_third_party = for_third_party
 
         # id of the parcelle
         self.geo_parcelle = geo_parcelle
@@ -292,6 +297,7 @@ class CadastreExport:
 
         content = ''
         replaceDict = ''
+
         # Build template file path
         tplPath = os.path.join(
             self.plugin_dir,
@@ -315,6 +321,12 @@ class CadastreExport:
                 sql = sql.replace('$schema', '"{}".'.format(self.connectionParams['schema']))
             else:
                 sql = sql.replace('$schema', '')
+
+            # Add the for_third_party values
+            # only useful for proprietaire
+            # to empty sensitive data (date and location of birth)
+            sql = sql.replace('$for_third_party', str(self.for_third_party))
+
             # Add where clause depending on etype
             sql = sql.replace('$and', item['and'][self.etype])
 
@@ -326,9 +338,10 @@ class CadastreExport:
                 # Get data from previous fetched full data
                 data = self.lineCount[key]['data'][offset:self.maxLineNumber + offset]
 
-            # Run SQL
+            # Convert PostgreSQL syntax to SQLite
             if self.dbType == 'spatialite':
                 sql = cadastre_common.postgisToSpatialite(sql)
+
             # Run SQL only if data has not already been defined
             if data is None:
                 # print(sql)

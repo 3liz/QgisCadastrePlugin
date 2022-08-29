@@ -49,6 +49,11 @@ parser.add_argument(
     help='Usage: Override Export type'
 )
 parser.add_argument(
+    '-S',
+    metavar='\"For third-party\"',
+    help='Usage: Specify the export is for third-party and must be simplified: use true or false'
+)
+parser.add_argument(
     '-O',
     metavar='\"Output log file\"',
     help='Usage: Override Output log file'
@@ -64,6 +69,8 @@ parcelle_layer = 'Parcelles'
 parcelle_id = '2018300189000EY0670'
 # -T = Export type ("proprietaire")
 export_type = 'parcelle'
+# -S = For third party ("True")
+for_third_party = False
 # -D = Target directory for PDF ("/tmp/")
 target_dir = '/tmp/'
 # -O = Output log file ("/tmp/export_cadastre.log")
@@ -78,6 +85,10 @@ if "-I" in sys.argv:
     parcelle_id = sys.argv[sys.argv.index("-I") + 1]
 if "-T" in sys.argv:
     export_type = sys.argv[sys.argv.index("-T") + 1]
+if "-S" in sys.argv:
+    _for_third_party = sys.argv[sys.argv.index("-S") + 1]
+    if _for_third_party.lower() == 'true':
+        for_third_party = True
 if "-D" in sys.argv:
     target_dir = sys.argv[sys.argv.index("-D") + 1]
 if "-O" in sys.argv:
@@ -143,7 +154,8 @@ qex = CadastreExport(
     export_type,
     comptecommunal,
     feat['geo_parcelle'],
-    target_dir
+    target_dir,
+    for_third_party
 )
 paths = qex.export_as_pdf()
 print(paths)
