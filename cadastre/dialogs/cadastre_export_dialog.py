@@ -67,12 +67,12 @@ def printProgress(self, nb: int) -> Generator[Callable[[int], None], None, None]
 class CadastreExport(cadastreExportBase):
 
     def __init__(self, layer: QgsMapLayer, etype: str, comptecommunal: str,
-                 geo_parcelle: str = None, target_dir: str = None) -> None:
+                 geo_parcelle: str = None, target_dir: str = None, for_third_party: bool = False) -> None:
 
         self.mProgress = printProgress
 
         super().__init__(QgsProject.instance(),
-                         layer, etype, comptecommunal, geo_parcelle, target_dir)
+                         layer, etype, comptecommunal, geo_parcelle, target_dir, for_third_party)
 
         self.print_parcelle_page = True
 

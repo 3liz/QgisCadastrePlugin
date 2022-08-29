@@ -25,8 +25,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>382</width>
-         <height>586</height>
+         <width>436</width>
+         <height>573</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -229,7 +229,6 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QGridLayout" name="gridLayout_2">
-             <!--commune proprietaire label-->
              <item row="1" column="0">
               <widget class="QLabel" name="label_19">
                <property name="text">
@@ -237,7 +236,6 @@
                </property>
               </widget>
              </item>
-             <!--reset commune proprietaire-->
              <item row="1" column="2">
               <widget class="QToolButton" name="btResetCommuneProprietaire">
                <property name="toolTip">
@@ -248,7 +246,6 @@
                </property>
               </widget>
              </item>
-             <!--commune priprietaire combo-->
              <item row="1" column="1">
               <widget class="QComboBox" name="liCommuneProprietaire">
                <property name="sizePolicy">
@@ -272,17 +269,16 @@
                </property>
               </widget>
              </item>
-             <!--Checkbox-->
-            <item row="0" column="1">
-             <widget class="QCheckBox" name="cbSearchNameBirth">
-              <property name="text">
-               <string>Rechercher par nom de naissance</string>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="cbSearchNameBirth">
+               <property name="text">
+                <string>Rechercher par nom de naissance</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
              <item row="3" column="1">
               <widget class="QComboBox" name="liParcelleProprietaire">
                <property name="sizePolicy">
@@ -394,6 +390,28 @@
               </widget>
              </item>
             </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="grpOptions">
+          <property name="title">
+           <string>Options</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QCheckBox" name="cbForThirdParty">
+             <property name="toolTip">
+              <string>Lorsque cette case est cochée, les dates et lieux de naissance des propriétaires ne sont pas exportés dans les relevés PDF.</string>
+             </property>
+             <property name="text">
+              <string>Les relevés sont destinés à des tiers</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>

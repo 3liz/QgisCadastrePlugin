@@ -1215,7 +1215,16 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             return
 
         layer = self.searchComboBoxes['proprietaire']['layer']
-        qex = CadastreExport(QgsProject.instance(), layer, 'proprietaire', cc)
+
+        # If export are for third-party persons
+        # we need to remove sensitive data
+        for_third_party = self.cbForThirdParty.isChecked()
+
+        qex = CadastreExport(
+            QgsProject.instance(), layer, 'proprietaire', cc,
+            None, None,
+            for_third_party
+        )
 
         with OverrideCursor(Qt.WaitCursor):
             exports = qex.export_as_pdf()
@@ -1250,13 +1259,21 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             self.qc.updateLog('Aucune parcelle sélectionnée !')
             return
 
+        # Get id of the owner
         compte_communal = CadastreCommon.getCompteCommunalFromParcelleId(
             feature['geo_parcelle'],
             self.connectionParams,
             self.connector
         )
+
+        # If export are for third-party persons
+        # we need to remove sensitive data
+        for_third_party = self.cbForThirdParty.isChecked()
         qex = CadastreExport(
-            QgsProject.instance(), layer, 'parcelle', compte_communal, feature['geo_parcelle'])
+            QgsProject.instance(), layer, 'parcelle',
+            compte_communal, feature['geo_parcelle'],
+            None, for_third_party
+        )
 
         with OverrideCursor(Qt.WaitCursor):
             exports = qex.export_as_pdf()

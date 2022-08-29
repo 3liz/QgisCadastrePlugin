@@ -120,35 +120,6 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QPushButton" name="btExportParcelle">
-              <property name="text">
-               <string>Relevé parcellaire</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QPushButton" name="btExportProprietaire">
-              <property name="text">
-               <string>Relevé de propriété</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="cbExportAllCities">
-              <property name="text">
-               <string>Exporter pour toutes les communes</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <widget class="QPushButton" name="btCentrer">
@@ -187,6 +158,60 @@
          </layout>
         </widget>
        </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Export</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="cbForThirdParty">
+            <property name="toolTip">
+             <string>Lorsque cette case est cochée, les dates et lieux de naissance des propriétaires ne sont pas exportés dans les relevés PDF.</string>
+            </property>
+            <property name="text">
+             <string>Les relevés sont destinés à des tiers</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="btExportParcelle">
+              <property name="text">
+               <string>Relevé parcellaire</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QPushButton" name="btExportProprietaire">
+              <property name="text">
+               <string>Relevé de propriété</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbExportAllCities">
+              <property name="toolTip">
+               <string>Cocher cette case permet d'exporter le relevé de propriété pour toutes les communes. Cela peut être très long !</string>
+              </property>
+              <property name="text">
+               <string>Exporter pour toutes les communes</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -208,5 +233,6 @@
   <tabstop>btSelectionner</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
+ <resources/>
  <connections/>
 </ui>

@@ -21,3 +21,6 @@ cadastre.*.zip
 # Temp files
 *~
 *.bak
+
+# VSCode
+*.code-workspace

@@ -103,6 +103,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.rejected.connect(self.onReject)
         self.buttonBox.rejected.connect(self.onReject)
         self.buttonBox.accepted.connect(self.onAccept)
+
         # Export buttons
         exportButtons = {
             'parcelle': self.btExportParcelle,
@@ -416,6 +417,9 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
             return
 
+        # Check if PDF must be exported for a third party or not
+        for_third_party = self.cbForThirdParty.isChecked()
+
         if self.feature:
             comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
                 self.feature['geo_parcelle'],
@@ -435,7 +439,9 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
                         self.layer,
                         key,
                         comptecommunal,
-                        self.feature['geo_parcelle']
+                        self.feature['geo_parcelle'],
+                        None,
+                        for_third_party
                     )
                     qe.export_as_pdf()
 
