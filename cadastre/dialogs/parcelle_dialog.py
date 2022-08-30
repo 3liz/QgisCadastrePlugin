@@ -418,7 +418,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             return
 
         # Check if PDF must be exported for a third party or not
-        for_third_party = self.cbForThirdParty.isChecked()
+        for_third_party = self.combo_for_third_party.isChecked()
 
         if self.feature:
             comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
