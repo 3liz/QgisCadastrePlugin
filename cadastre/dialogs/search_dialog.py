@@ -1218,7 +1218,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # If export are for third-party persons
         # we need to remove sensitive data
-        for_third_party = self.cbForThirdParty.isChecked()
+        for_third_party = self.combo_for_third_party.isChecked()
 
         qex = CadastreExport(
             QgsProject.instance(), layer, 'proprietaire', cc,
@@ -1268,7 +1268,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # If export are for third-party persons
         # we need to remove sensitive data
-        for_third_party = self.cbForThirdParty.isChecked()
+        for_third_party = self.combo_for_third_party.isChecked()
         qex = CadastreExport(
             QgsProject.instance(), layer, 'parcelle',
             compte_communal, feature['geo_parcelle'],

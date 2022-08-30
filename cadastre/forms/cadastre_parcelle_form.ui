@@ -165,7 +165,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QCheckBox" name="cbForThirdParty">
+           <widget class="QCheckBox" name="combo_for_third_party">
             <property name="toolTip">
              <string>Lorsque cette case est cochée, les dates et lieux de naissance des propriétaires ne sont pas exportés dans les relevés PDF.</string>
             </property>
