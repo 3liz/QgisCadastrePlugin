@@ -48,6 +48,10 @@ class cadastreLoading(QObject):
 
         self.startTime = datetime.now()
 
+        # Disabled because of an issue in selection with Lizmap Web Client
+        # https://github.com/3liz/lizmap-web-client/issues/2985
+        self.set_short_names = False
+
         # common cadastre methods
         self.qc = self.dialog.qc
         self.defaultThemeDir = 'classique'
@@ -532,7 +536,8 @@ class cadastreLoading(QObject):
 
             layer_name = item['label']
             vlayer = QgsVectorLayer(alayerUri.uri(), layer_name, providerName)
-            vlayer.setShortName(self.short_name(layer_name))
+            if self.set_short_names:
+                vlayer.setShortName(self.short_name(layer_name))
 
             # apply style
             qmlPath = os.path.join(
@@ -566,33 +571,39 @@ class cadastreLoading(QObject):
             gf = root.findGroup(name)
             if not gf:
                 gf = g1.addGroup(name)
-                gf.setCustomProperty("wmsShortName", self.short_name(name))
+                if self.set_short_names:
+                    gf.setCustomProperty("wmsShortName", self.short_name(name))
 
             name = "Étiquettes cadastre"
             ge = root.findGroup(name)
             if not ge:
                 ge = gf.addGroup(name)
-                ge.setCustomProperty("wmsShortName", self.short_name(name))
+                if self.set_short_names:
+                    ge.setCustomProperty("wmsShortName", self.short_name(name))
 
             name = "Données cadastre"
             gd = root.findGroup(name)
             if not gd:
                 gd = gf.addGroup(name)
-                gd.setCustomProperty("wmsShortName", self.short_name(name))
+                if self.set_short_names:
+                    gd.setCustomProperty("wmsShortName", self.short_name(name))
         else:
             g1 = root.insertGroup(0, "Cadastre")
 
             name = "Fond"
             gf = g1.addGroup(name)
-            gf.setCustomProperty("wmsShortName", self.short_name(name))
+            if self.set_short_names:
+                gf.setCustomProperty("wmsShortName", self.short_name(name))
 
             name = 'Étiquettes cadastre'
             ge = gf.addGroup(name)
-            ge.setCustomProperty("wmsShortName", self.short_name(name))
+            if self.set_short_names:
+                ge.setCustomProperty("wmsShortName", self.short_name(name))
 
             name = "Données cadastre"
             gd = gf.addGroup(name)
-            gd.setCustomProperty("wmsShortName", self.short_name(name))
+            if self.set_short_names:
+                gd.setCustomProperty("wmsShortName", self.short_name(name))
 
         variables = QgsProject.instance().customVariables()
         for layer in qgisCadastreLayers:
