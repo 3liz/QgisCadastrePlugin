@@ -326,6 +326,8 @@ class CadastreMenu:
 
         # Export
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        if not tempDir or not os.path.exists(tempDir):
+            tempDir = tempfile.gettempdir()
         self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
         temp = int(time() * 100)
         temppath = os.path.join(tempDir, 'export_cadastre_%s.pdf' % temp)

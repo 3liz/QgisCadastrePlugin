@@ -80,6 +80,8 @@ class cadastreImport(QObject):
         # create temporary directories
         s = QSettings()
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        if not tempDir or not os.path.exists(tempDir):
+            tempDir = tempfile.gettempdir()
         self.pScriptDir = tempfile.mkdtemp('', 'cad_p_script_', tempDir)
         self.edigeoPlainDir = tempfile.mkdtemp('', 'cad_edigeo_plain_', tempDir)
         self.replaceDict = {

@@ -128,8 +128,10 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         if propFileName:
             self.inMajicProp.setText(propFileName)
         tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
-        if tempDir:
+        if tempDir and os.path.exists(tempDir):
             self.inTempDir.setText(tempDir)
+        else:
+            self.inTempDir.setText(tempfile.gettempdir())
         maxInsertRows = s.value("cadastre/maxInsertRows", 100000, type=int)
         if maxInsertRows:
             self.inMaxInsertRows.setValue(maxInsertRows)
