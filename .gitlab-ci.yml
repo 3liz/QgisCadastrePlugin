@@ -15,7 +15,7 @@ variables:
 version:
   stage: tests
   image:
-    name: registry.snap.lizlan:5000/infra/ci-tools:latest
+    name: $REGISTRY_URI/infra/ci-tools:latest
   script:
     - version-helper
   tags:
@@ -28,7 +28,7 @@ package-zip:
   dependencies:
     - version
   stage: build
-  image: registry.snap.lizlan:5000/qgis-plugin-ci:latest
+  image: $REGISTRY_URI/qgis-plugin-ci:latest
   script:
     - >
       qgis-plugin-ci
@@ -141,7 +141,7 @@ tickets:
   only:
     - tags
   image:
-    name: registry.snap.lizlan:5000/infra/ci-tools:latest
+    name: $REGISTRY_URI/infra/ci-tools:latest
   script:
     - create_ticket.py
   tags:
