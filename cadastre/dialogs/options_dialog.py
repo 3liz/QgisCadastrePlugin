@@ -127,8 +127,8 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         propFileName = s.value("cadastre/propFileName", 'REVPROP.800', type=str)
         if propFileName:
             self.inMajicProp.setText(propFileName)
-        tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
-        if tempDir and os.path.exists(tempDir):
+        tempDir = s.value("cadastre/tempDir", type=str)
+        if tempDir and Path(tempDir).exists():
             self.inTempDir.setText(tempDir)
         else:
             self.inTempDir.setText(tempfile.gettempdir())

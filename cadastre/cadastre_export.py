@@ -113,8 +113,8 @@ class CadastreExport:
 
         # target directory for saving
         s = QSettings()
-        tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
-        if not tempDir or not os.path.exists(tempDir):
+        tempDir = s.value("cadastre/tempDir", type=str)
+        if not tempDir or not Path(tempDir).exists():
             tempDir = tempfile.gettempdir()
         if not target_dir or not os.path.exists(target_dir):
             self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
