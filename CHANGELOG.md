@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.16.1 - 2022-10-19
+
+* Correction d'un bug si le dossier de stockage temporaire dans les préférences n'existait plus
+
 ## 1.16.0 - 2022-09-05
 
 * Export des relevés - Ajout d'une option "Les relevés sont destinés à des tiers" 
