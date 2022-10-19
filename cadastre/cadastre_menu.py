@@ -325,7 +325,9 @@ class CadastreMenu:
             cm.setScale(scale)
 
         # Export
-        tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        tempDir = s.value("cadastre/tempDir", type=str)
+        if not tempDir or not Path(tempDir).exists():
+            tempDir = tempfile.gettempdir()
         self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
         temp = int(time() * 100)
         temppath = os.path.join(tempDir, 'export_cadastre_%s.pdf' % temp)

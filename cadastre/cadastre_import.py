@@ -31,6 +31,7 @@ import tempfile
 
 from datetime import datetime
 from distutils import dir_util
+from pathlib import Path
 
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
@@ -79,7 +80,9 @@ class cadastreImport(QObject):
 
         # create temporary directories
         s = QSettings()
-        tempDir = s.value("cadastre/tempDir", '%s' % tempfile.gettempdir(), type=str)
+        tempDir = s.value("cadastre/tempDir", type=str)
+        if not tempDir or not Path(tempDir).exists():
+            tempDir = tempfile.gettempdir()
         self.pScriptDir = tempfile.mkdtemp('', 'cad_p_script_', tempDir)
         self.edigeoPlainDir = tempfile.mkdtemp('', 'cad_edigeo_plain_', tempDir)
         self.replaceDict = {
