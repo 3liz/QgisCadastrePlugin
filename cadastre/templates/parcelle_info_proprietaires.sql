@@ -6,8 +6,8 @@ SELECT
         '<th>Code</th>' ||
         '<th>Nom</th>' ||
         '<th>Adresse</th>' ||
-        '<th>Date de naissance</th>' ||
-        '<th>Lieux de naissance</th>' ||
+        CASE WHEN {not_for_third_part} THEN '<th>Date de naissance</th>' ELSE '' END ||
+        CASE WHEN {not_for_third_part} THEN '<th>Lieux de naissance</th>' ELSE '' END ||
         '<th>Code droit</th>' ||
         '<th>Code démembrement</th>' ||
     '</tr>' ||
@@ -26,8 +26,8 @@ FROM (
             trim(coalesce(p.ddenom, '')) ||
         '</td>' ||
         '<td>' || ltrim(trim(coalesce(p.dlign4, '')), '0') || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, '')) || '</td>' ||
-        '<td>' || Coalesce( trim(cast(p.jdatnss AS text) ), '-') || '</td>' ||
-        '<td>' || coalesce(trim(p.dldnss), '-') || '</td>' ||
+        CASE WHEN {not_for_third_part} THEN '<td>' || Coalesce( trim(cast(p.jdatnss AS text) ), '-') || '</td>' ELSE '' END ||
+        CASE WHEN {not_for_third_part} THEN '<td>' || coalesce(trim(p.dldnss), '-') || '</td>' ELSE '' END ||
         '<td>' || Coalesce(ccodro_lib, '') || '</td>' ||
         '<td>' || Coalesce(ccodem_lib, '') || '</td>' ||
     '</tr>'
@@ -37,7 +37,7 @@ FROM (
     LEFT JOIN ccodem ON ccodem.ccodem = p.ccodem
     WHERE 2>1
     AND comptecommunal = (
-        SELECT comptecommunal FROM parcelle WHERE parcelle = '%s'
+        SELECT comptecommunal FROM parcelle WHERE parcelle = '{parcelle_id}'
     )
     ORDER BY p.dnulp
 ) foo

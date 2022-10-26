@@ -395,7 +395,7 @@ def getProprietaireComptesCommunaux(comptecommunal: str, connectionParams: Dict[
 
 
 def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
-                connector: 'DBConnector') -> str:
+                connector: 'DBConnector', for_third_party: bool = False) -> str:
     """
     Build Html for a item (parcelle, proprietaires, etc.)
     based on SQL query
@@ -433,7 +433,10 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
 
     sqlfile = 'templates/parcelle_info_%s.sql' % item
     with open(os.path.join(plugin_dir, sqlfile), encoding='utf8') as sqltemplate:
-        sql = sqltemplate.read() % feature['geo_parcelle']
+        if item == 'proprietaires':
+            sql = sqltemplate.read().format(parcelle_id=feature['geo_parcelle'], not_for_third_part=(not for_third_party))
+        else:
+            sql = sqltemplate.read() % feature['geo_parcelle']
     if not sql:
         html += 'Impossible de lire le SQL dans le fichier %s' % sqlfile
         return html
