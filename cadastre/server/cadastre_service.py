@@ -193,7 +193,7 @@ class CadastreService(QgsService):
 
         # Export PDF
         qex = CadastreExport(project, res.layer, res.type, compte_communal, res.geo_parcelle)
-
+        qex.print_parcelle_page = True
         paths = qex.export_as_pdf()
 
         if not paths:

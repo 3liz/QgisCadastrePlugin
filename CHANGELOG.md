@@ -2,13 +2,15 @@
 
 ## Unreleased
 
+* Server - Ajout de la carte au relevé parcellaire
+
 ## 1.16.1 - 2022-10-19
 
 * Correction d'un bug si le dossier de stockage temporaire dans les préférences n'existait plus
 
 ## 1.16.0 - 2022-09-05
 
-* Export des relevés - Ajout d'une option "Les relevés sont destinés à des tiers" 
+* Export des relevés - Ajout d'une option "Les relevés sont destinés à des tiers"
   qui permet de ne pas faire figurer la date et le lieu de naissance des propriétaires dans les PDF.
 * Annulation d'une fonctionnalité de la version 1.14.0 concernant l'ajout automatique des noms courts.
   Il y a un problème sur Lizmap Web Client https://github.com/3liz/lizmap-web-client/issues/2985
