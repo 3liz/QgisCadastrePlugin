@@ -9,9 +9,6 @@ stages:
 
 variables:
     FACTORY_PRODUCT_NAME: cadastre
-    FACTORY_PACKAGE_NAME: qgis_cadastre
-    FACTORY_PACKAGE_TYPE: plugin
-    FACTORY_MANIFEST: ".lizcloud/factory.manifest"
 
 version:
   stage: tests
@@ -43,19 +40,6 @@ package-zip:
     paths:
       - ${FACTORY_PRODUCT_NAME}.${VERSION}.zip
       - plugins.xml
-
-build_3:
-  stage: build
-  script:
-    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
-    - make -C .lizcloud -f factory.mk package
-  environment:
-    name: snap
-  artifacts:
-    paths:
-      - ".lizcloud/factory.manifest"
-  tags:
-    - infrav3
 
 push-zip-fetch-repo:
   dependencies:
@@ -107,29 +91,36 @@ push-repository:
     - fabric
 
 
+.infrav3-package:
+  dependencies:
+    - version
+    - package-zip
+  script:
+    - $FACTORY_SCRIPTS/make-package-$CI_STAGING qgis_cadastre ${VERSION} ${FACTORY_PRODUCT_NAME} qgis-plugin
+  tags:
+    - infrav3
+  variables:
+    CI_ARCHIVE: ${FACTORY_PRODUCT_NAME}.${VERSION}.zip
 
 deploy_snap_3:
+  extends: .infrav3-package   
   stage: deploy
-  script:
-    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
-    - $FACTORY_SCRIPTS/deploy-package $FACTORY_PACKAGE_NAME
   environment:
     name: snap
-  tags:
-    - infrav3
+  variables:
+    CI_STAGING: snapshot
 
 release_prod_3:
+  extends: .infrav3-package   
   stage: release
-  script:
-    - sed -i "s/^version=.*$/version=${CI_COMMIT_REF_NAME}/g" cadastre/metadata.txt
-    - $FACTORY_SCRIPTS/release-package $FACTORY_PACKAGE_NAME
   environment:
     name: production
-  when: manual
   only:
     - tags
-  tags:
-    - infrav3
+  variables:
+    CI_STAGING: release
+
+
 
 deploy_snap_2:
   stage: deploy
