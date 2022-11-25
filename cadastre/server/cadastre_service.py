@@ -194,6 +194,7 @@ class CadastreService(QgsService):
         # Export PDF
         qex = CadastreExport(project, res.layer, res.type, compte_communal, res.geo_parcelle)
         qex.print_parcelle_page = True
+        qex.for_third_party = params.get('ADVANCED', 'f').lower() not in ('t', 'true', '1')
         paths = qex.export_as_pdf()
 
         if not paths:
@@ -227,21 +228,24 @@ class CadastreService(QgsService):
     def get_html(self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject) -> None:
         # Load ressources based on passed params
         res = self.get_ressources(params, project)
+        for_third_party = params.get('ADVANCED', 'f').lower() not in ('t', 'true', '1')
 
         def get_item_html(n):
             return cadastre_common.getItemHtml(
                 n,
                 res.feature,
                 res.connectionParams,
-                res.connector
+                res.connector,
+                for_third_party
             )
 
         html = ''
         html += get_item_html('parcelle_majic')
         html += get_item_html('proprietaires')
         html += get_item_html('subdivisions')
-        html += get_item_html('locaux')
-        html += get_item_html('locaux_detail')
+        if not for_third_party:
+            html += get_item_html('locaux')
+            html += get_item_html('locaux_detail')
 
         write_json_response({
             'status': 'success',
