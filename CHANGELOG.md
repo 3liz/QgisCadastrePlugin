@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.17.0 - 2022-11-25
+
+### Added
+
 * Server - Ajout de la carte au relevé parcellaire
 * Server - Support du relevé parcellaire pour un tiers et réduction de la fiche HTML
 
