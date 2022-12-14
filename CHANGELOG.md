@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* bugfix - Correction du compte communal abrégé affiché dans les relevés
+
 ## 1.17.0 - 2022-11-25
 
 * Server - Ajout de la carte au relevé parcellaire

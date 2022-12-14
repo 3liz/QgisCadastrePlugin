@@ -148,7 +148,7 @@ class CadastreExport:
         Set parameters for given comptecommunal
         """
         # List of templates
-        compte_communal_abrev = compte_communal[9:]
+        compte_communal_abrev = compte_communal[-6:]
         self.composerTemplates = {
             'header1': {
                 'names': ['annee', 'ccodep', 'ccodir', 'ccocom', 'libcom'],
