@@ -249,7 +249,7 @@ class CadastreExport:
             'proprietes_baties_line': {
                 'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'bat', 'ent', 'niv', 'ndeporte',
                           'numeroinvar', 'star', 'meval', 'af', 'natloc', 'cat', 'revenucadastral', 'coll', 'natexo',
-                          'anret', 'andeb', 'fractionrcexo', 'pourcentageexo', 'txom', 'coefreduc'],
+                          'anret', 'andeb', 'fractionrcexo', 'pourcentageexo', 'txom', 'coefreduc', 'rcteom'],
                 'type': 'sql',
                 'filter': 'comptecommunal',
                 'and': {
