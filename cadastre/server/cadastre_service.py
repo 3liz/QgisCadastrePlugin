@@ -243,9 +243,8 @@ class CadastreService(QgsService):
         html += get_item_html('parcelle_majic')
         html += get_item_html('proprietaires')
         html += get_item_html('subdivisions')
-        if not for_third_party:
-            html += get_item_html('locaux')
-            html += get_item_html('locaux_detail')
+        html += get_item_html('locaux')
+        html += get_item_html('locaux_detail')
 
         write_json_response({
             'status': 'success',
