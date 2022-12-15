@@ -14,7 +14,7 @@
         PROPRIÉTÉS</td>
       <td style="text-align: center;" colspan="5" rowspan="1" width="20%">IDENTIFIANT DU
         LOCAL</td>
-      <td style="text-align: center;" colspan="14" rowspan="1" width="25%">ÉVALUATION DU
+      <td style="text-align: center;" colspan="15" rowspan="1" width="25%">ÉVALUATION DU
         LOCAL</td>
     </tr>
     <tr>
@@ -42,6 +42,7 @@
       <td style="text-align: center;">% EXO</td>
       <td style="text-align: center;">TX OM</td>
       <td style="text-align: center;">COEF REDUC</td>
+      <td style="text-align: center;">RC TEOM</td>
     </tr>
   </thead>
   <tbody>
