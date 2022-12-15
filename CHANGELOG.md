@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.17.1 - 2022-12-15
+
 * bugfix - Correction du compte communal abrégé affiché dans les relevés
 * Ajout de la colonne RC TEOM au tableau des propriétés baties
 * bugfix - Server - Accès à la fiche HTML complète sans les infos sensibles des propriétaires
