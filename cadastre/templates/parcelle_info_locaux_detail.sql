@@ -24,8 +24,8 @@ WITH infos AS (
             trim(coalesce(pr.ddenom, '')) ||
             '</td>' ||
             '<td>' || ltrim(trim(coalesce(pr.dlign4, '')), '0') || trim(coalesce(pr.dlign5, '')) || ' ' || trim(coalesce(pr.dlign6, '')) || '</td>' ||
-            '<td>' || Coalesce( trim(cast(pr.jdatnss AS text) ), '-') || '</td>' ||
-            '<td>' || coalesce(trim(pr.dldnss), '-') || '</td>' ||
+            CASE WHEN {not_for_third_part} THEN '<td>' || Coalesce( trim(cast(pr.jdatnss AS text) ), '-') || '</td>' ELSE '' END ||
+            CASE WHEN {not_for_third_part} THEN '<td>' || coalesce(trim(pr.dldnss), '-') || '</td>' ELSE '' END ||
             '<td>' || Coalesce(ccodro_lib, '') || '</td>' ||
             '<td>' || Coalesce(ccodem_lib, '') || '</td>' ||
         '</tr>'
@@ -79,7 +79,7 @@ WITH infos AS (
     LEFT JOIN "ccodem" c3 ON pr.ccodem = c3.ccodem
 
     WHERE 2>1
-    AND p.parcelle = '%s'
+    AND p.parcelle = '{parcelle_id}'
 
     GROUP BY
     p.parcelle,
@@ -306,8 +306,8 @@ SELECT
             '<th>Code</th>' ||
             '<th>Nom</th>' ||
             '<th>Adresse</th>' ||
-            '<th>Date de naissance</th>' ||
-            '<th>Lieux de naissance</th>' ||
+            CASE WHEN {not_for_third_part} THEN '<th>Date de naissance</th>' ELSE '' END ||
+            CASE WHEN {not_for_third_part} THEN '<th>Lieux de naissance</th>' ELSE '' END ||
             '<th>Code droit</th>' ||
             '<th>Code démembrement</th>' ||
         '</tr>' ||
