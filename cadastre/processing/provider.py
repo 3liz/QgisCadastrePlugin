@@ -28,7 +28,6 @@ from qgis.PyQt.QtGui import QIcon
 
 from cadastre.processing.algorithms.config import ConfigProjectAlgorithm
 from cadastre.processing.algorithms.edigeo_downloader import EdigeoDownloader
-from cadastre.processing.algorithms.import_pg import ImportPg
 
 
 class CadastreProvider(QgsProcessingProvider):
@@ -36,7 +35,6 @@ class CadastreProvider(QgsProcessingProvider):
     def loadAlgorithms(self):
         self.addAlgorithm(ConfigProjectAlgorithm())
         self.addAlgorithm(EdigeoDownloader())
-        self.addAlgorithm(ImportPg())
 
     def id(self):  # NOQA
         return 'cadastre'
