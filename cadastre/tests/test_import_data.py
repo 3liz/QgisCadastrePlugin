@@ -1,4 +1,5 @@
 import unittest
+
 from collections import namedtuple
 
 from qgis.core import QgsCoordinateReferenceSystem, QgsProviderRegistry

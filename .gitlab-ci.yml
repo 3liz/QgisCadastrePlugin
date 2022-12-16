@@ -9,6 +9,7 @@ stages:
 
 variables:
     FACTORY_PRODUCT_NAME: cadastre
+    FACTORY_PACKAGE_TYPE: plugin
 
 version:
   stage: tests
@@ -103,7 +104,7 @@ push-repository:
     CI_ARCHIVE: ${FACTORY_PRODUCT_NAME}.${VERSION}.zip
 
 deploy_snap_3:
-  extends: .infrav3-package   
+  extends: .infrav3-package
   stage: deploy
   environment:
     name: snap
@@ -111,7 +112,7 @@ deploy_snap_3:
     CI_STAGING: snapshot
 
 release_prod_3:
-  extends: .infrav3-package   
+  extends: .infrav3-package
   stage: release
   environment:
     name: production
@@ -144,4 +145,3 @@ tickets:
     - create_ticket.py
   tags:
     - factory-plain
-
