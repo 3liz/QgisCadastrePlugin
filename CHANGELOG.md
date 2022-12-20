@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* bugfix - La colonne RC TEOM au tableau des propriétés baties est le champs `baeteom` et pas `mvltieomx` de `pevtaxation`
+
 ## 1.17.1 - 2022-12-15
 
 * bugfix - Correction du compte communal abrégé affiché dans les relevés
