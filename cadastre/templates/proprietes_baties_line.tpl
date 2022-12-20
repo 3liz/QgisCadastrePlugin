@@ -22,6 +22,6 @@
       <td align="center">$fractionrcexo</td>
       <td align="center">$pourcentageexo</td>
       <td align="center">$txom</td>
-      <td align="center">$coefreduc</td>
+      <td align="center">$exom</td>
       <td align="right">$rcteom</td>
     </tr>

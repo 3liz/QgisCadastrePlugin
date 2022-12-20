@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Ajout de la colonne EX OM au tableau des propriétés baties
+
 ## 1.18.1 - 2023-09-27
 
 * Corrections SQL
