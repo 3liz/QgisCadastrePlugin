@@ -757,7 +757,7 @@ On your local, make a symlink with ln -s
 <p><a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml"><img alt="❄ Flake8" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg" /></a>
 <a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml"><img alt="🎳 Tests" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml/badge.svg" /></a></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>pip install -r requirements/dev.txt
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements/dev.txt
 flake8
 </code></pre></div></td></tr></table></div>
 <p>La variable d'environnement <code>CI=true</code> permet d'éviter certaines QMessageBox.</p>
@@ -771,14 +771,14 @@ flake8
 <span class="normal">5</span>
 <span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code>make start_tests
-make run_tests
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code>make<span class="w"> </span>start_tests
+make<span class="w"> </span>run_tests
 <span class="c1"># Run a custom pattern</span>
-<span class="nb">cd</span> .docker/ <span class="o">&amp;&amp;</span> ./exec_tests.sh test_*.py
-make stop_tests
+<span class="nb">cd</span><span class="w"> </span>.docker/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./exec_tests.sh<span class="w"> </span>test_*.py
+make<span class="w"> </span>stop_tests
 
 <span class="c1"># All in one, but slower</span>
-make tests
+make<span class="w"> </span>tests
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>In your QGIS Desktop itself</li>
@@ -805,8 +805,8 @@ make tests
 <p><a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml"><img alt="📖 Documentation" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml/badge.svg" /></a></p>
 <p>La documentation utilise <a href="https://www.mkdocs.org/">MkDocs</a> avec <a href="https://squidfunk.github.io/mkdocs-material/">Material</a> :</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>pip install -r requirements/doc.txt
-mkdocs serve
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements/doc.txt
+mkdocs<span class="w"> </span>serve
 </code></pre></div></td></tr></table></div>
 
   <hr>

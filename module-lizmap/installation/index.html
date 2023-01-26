@@ -802,26 +802,26 @@ la mise à jour des extensions côté serveur.</p>
   déjà, en copiant le fichier <code>composer.json.dist</code>, qui s'y trouve.</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">cd</span> lizmap/my-packages/
-cp -n composer.json.dist composer.json
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>lizmap/my-packages/
+cp<span class="w"> </span>-n<span class="w"> </span>composer.json.dist<span class="w"> </span>composer.json
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>en ligne de commande, dans le répertoire <code>lizmap/my-packages/</code>, tapez :</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>composer require <span class="s2">&quot;lizmap/lizmap-cadastre-module&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;lizmap/lizmap-cadastre-module&quot;</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>puis dans le répertoire <code>lizmap/install/</code> :</li>
 </ul>
 <p>Si vous utilisez Lizmap 3.6 ou plus, lancez d'abord les commandes :</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>php configurator.php cadastre
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>php<span class="w"> </span>configurator.php<span class="w"> </span>cadastre
 </code></pre></div></td></tr></table></div>
 <p>Enfin pour lizmap 3.4 à 3.6 et plus, lancez les scripts d'installation :</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">cd</span> ../install
-php installer.php
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../install
+php<span class="w"> </span>installer.php
 ./clean_vartmp.sh
 ./set_rights.sh
 </code></pre></div></td></tr></table></div>
@@ -835,15 +835,15 @@ php installer.php
   <code>cadastre.access=2</code> sous la section :</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">[modules]</span><span class="w"></span>
-<span class="na">cadastre.access</span><span class="o">=</span><span class="s">2</span><span class="w"></span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">[modules]</span>
+<span class="na">cadastre.access</span><span class="o">=</span><span class="s">2</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>puis dans le répertoire <code>lizmap/install/</code>, lancer les commandes suivantes :</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code>php installer.php
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code>php<span class="w"> </span>installer.php
 ./clean_vartmp.sh
 ./set_rights.sh
 </code></pre></div></td></tr></table></div>

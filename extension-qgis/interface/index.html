@@ -1082,14 +1082,14 @@ cadastrales. Exemple de configuration intéressante :</p>
 <span class="normal">5</span>
 <span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">Concat</span><span class="p">(</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;COM &#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;codecommune&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; / &#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;SEC &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">substr</span><span class="p">(</span><span class="ss">&quot;idu&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39; / &#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;PAR &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">substr</span><span class="p">(</span><span class="ss">&quot;idu&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39; / &#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;ADR &#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;adresse&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; / &#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;proprietaire&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39; @@&#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;codecommune&quot;</span><span class="w"></span>
-<span class="p">)</span><span class="w"></span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">Concat</span><span class="p">(</span>
+<span class="w">  </span><span class="s1">&#39;COM &#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;codecommune&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; / &#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;SEC &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">substr</span><span class="p">(</span><span class="ss">&quot;idu&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39; / &#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;PAR &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">substr</span><span class="p">(</span><span class="ss">&quot;idu&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39; / &#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;ADR &#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;adresse&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; / &#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;proprietaire&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39; @@&#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;codecommune&quot;</span>
+<span class="p">)</span>
 </code></pre></div></td></tr></table></div>
   (la partie avec @@ et le codecommune à la fin sont utiles si vous publiez le cadastre sur internet vers
   l'application Lizmap. Cela permet de filtrer les données)</li>
