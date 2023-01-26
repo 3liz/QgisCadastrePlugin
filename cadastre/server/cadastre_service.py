@@ -242,6 +242,7 @@ class CadastreService(QgsService):
         html = ''
         html += get_item_html('parcelle_majic')
         html += get_item_html('proprietaires')
+        html += get_item_html('indivisions')
         html += get_item_html('subdivisions')
         html += get_item_html('locaux')
         html += get_item_html('locaux_detail')

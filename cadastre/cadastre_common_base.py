@@ -449,7 +449,10 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
     # print sql
 
     if ok:
-        html += '<h2>' + info['label'] + '</h2>'
+        if item == "indivisions":
+            html += '<h3>' + info['label'] + '</h3>'
+        else:
+            html += '<h2>' + info['label'] + '</h2>'
         for line in data:
             # print info['label']
             # print line
