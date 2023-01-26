@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.17.2 - 2023-01-26
+
 * bugfix - La colonne RC TEOM au tableau des propriétés baties est le champs `baeteom` et pas `mvltieomx` de `pevtaxation`
 * bugfix - homogénéisation des adresses de propriétaires
 * Tableau des indivisions comme sous partie du tableau des propriétaires
