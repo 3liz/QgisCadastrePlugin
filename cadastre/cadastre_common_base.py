@@ -433,7 +433,7 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
 
     sqlfile = 'templates/parcelle_info_%s.sql' % item
     with open(os.path.join(plugin_dir, sqlfile), encoding='utf8') as sqltemplate:
-        if item == 'proprietaires' or item == 'locaux_detail':
+        if item in ('proprietaires', 'indivisions', 'locaux_detail'):
             sql = sqltemplate.read().format(parcelle_id=feature['geo_parcelle'], not_for_third_part=(not for_third_party))
         else:
             sql = sqltemplate.read() % feature['geo_parcelle']
@@ -449,7 +449,10 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
     # print sql
 
     if ok:
-        html += '<h2>' + info['label'] + '</h2>'
+        if item == "indivisions":
+            html += '<h3>' + info['label'] + '</h3>'
+        else:
+            html += '<h2>' + info['label'] + '</h2>'
         for line in data:
             # print info['label']
             # print line
