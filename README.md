@@ -7,7 +7,7 @@
 
 ## Description
 
-L'extension Cadastre a été conçu pour faciliter l'utilisation des données cadastrales dans QGIS.
+L'extension Cadastre a été conçue pour faciliter l'utilisation des données cadastrales dans QGIS.
 
 Pour une description plus complète, lire la documentation de l'extension https://docs.3liz.org/QgisCadastrePlugin/
 
@@ -47,7 +47,7 @@ Les évolutions 2021 ont été soutenues par :
 
 ## Conception
 
-L'extension Cadastre a été conçu et développé par la Société **3Liz**.
+L'extension Cadastre a été conçue et développée par la Société **3Liz**.
 Site internet : https://www.3liz.com
 
 ## Auteurs
@@ -58,6 +58,7 @@ Twitter 🐦 : https://twitter.com/kimaidou
 
 ## Contributeurs
 
+* Nicolas ROCHARD [@DoctorWho80](https://twitter.com/DoctorWho80) : co-initiateur de la démarche de création d'un plugin QGIS pour exploiter les données cadastrales
 * [Landry BREUIL](https://github.com/landryb) : notamment pour ses tests sur de gros volumes de données
   et les corrections sur certaines requêtes
 * @fred-V13 pour l'aide sur la migration du plugin vers QGIS 3
