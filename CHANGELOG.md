@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.17.3 - 2023-02-07
+
 * bugfix - La colonne RC TEOM au tableau des propriétés baties est le champs `bateom` et pas `baeteom`
 
 ## 1.17.2 - 2023-01-26
