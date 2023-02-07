@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* bugfix - La colonne RC TEOM au tableau des propriétés baties est le champs `bateom` et pas `baeteom`
+
 ## 1.17.2 - 2023-01-26
 
 * bugfix - La colonne RC TEOM au tableau des propriétés baties est le champs `baeteom` et pas `mvltieomx` de `pevtaxation`
