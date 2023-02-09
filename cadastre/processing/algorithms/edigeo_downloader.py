@@ -78,7 +78,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
 
         parameter = QgsProcessingParameterString(
             self.DATE,
-            'Date, disponible sur le site cadastre.data.gouv.fr (exemple "2021-02-01")',
+            'Date, disponible sur le site cadastre.data.gouv.fr (exemple "2023-01-01")',
             defaultValue='latest',
         )
         self.set_tooltip_parameter(parameter, 'Par défaut "latest"')
