@@ -643,7 +643,7 @@
             <item>
              <widget class="QLabel" name="label_17">
               <property name="text">
-               <string>Les scripts d'import pour PostGreSQL proviennent initialement de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans cette extension. Nos remerciement aux contributeurs.</string>
+               <string>Les scripts d'import pour PostgreSQL proviennent initialement de l'outil OpenCadastre (licence GPL). Ils ont été adaptés et améliorés pour leur utilisation dans cette extension. Nos remerciement aux contributeurs.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>

@@ -297,7 +297,7 @@ Nouveautés:
 
 ## 1.3.0
 
-* Import - MAJIC : support du millésime 2015. La structure a été un peu modifiée. Il faut réaliser l'import dans un nouveau schéma PostGreSQL ou une nouvelle base de données Spatialite. Un script de migration de la structure est disponible pour PostGreSQL pour ceux qui préfèrent conserver le schéma actuel (faites une sauvegarde avant !) : /.qgis2/python/plugins/cadastre/scripts/plugin/updates/update_structure_postgis_from_1.2.0_to_1.3.0.sql
+* Import - MAJIC : support du millésime 2015. La structure a été un peu modifiée. Il faut réaliser l'import dans un nouveau schéma PostgreSQL ou une nouvelle base de données Spatialite. Un script de migration de la structure est disponible pour PostgreSQL pour ceux qui préfèrent conserver le schéma actuel (faites une sauvegarde avant !) : /.qgis2/python/plugins/cadastre/scripts/plugin/updates/update_structure_postgis_from_1.2.0_to_1.3.0.sql
 * Import - Ajout d'un système de création des tables manquantes ( pour les montées de version )
 * Edigeo - Ajout des objets TRONROUTE dans la table geo_tronroute
 * Import - Éviter l'import des parcelles EDIGEO avec un idu NULL
@@ -338,7 +338,7 @@ Nouveautés:
 
 ## 1.0.0
 
-* Import - débogage import PostGreSQL sous Windows
+* Import - débogage import PostgreSQL sous Windows
 * Recherche - Meilleure gestion de la désactivation des modules de recherche
 * Import - MAJIC : possibilité de lancer l'import même si fichiers MAJIC manquants
 * Import - Vérifications sur les données MAJIC avant import - bug #37
@@ -352,7 +352,7 @@ Nouveautés:
 
 ## 0.9.9
 
-* Import - correction de certaines erreurs d'import des MULTIPOLYGONES (PostGreSQL et Spatialite)
+* Import - correction de certaines erreurs d'import des MULTIPOLYGONES (PostgreSQL et Spatialite)
 
 ## 0.9.8.1
 
