@@ -828,9 +828,9 @@
 <p>Cette boite de dialogue permet de réaliser un <strong>import de données EDIGEO et MAJIC</strong>.</p>
 <p><img alt="alt" src="../../media/cadastre_import_dialog.png" /></p>
 <h2 id="principe">Principe<a class="headerlink" href="#principe" title="Permanent link">#</a></h2>
-<p>Le plugin permet l'import de données <strong>MAJIC de 2012 à 2022 et des données EDIGEO</strong>. Il est possible 
+<p>L'extension permet l'import de données <strong>MAJIC de 2012 à 2022 et des données EDIGEO</strong>. Il est possible
 d'importer des données de manière incrémentale, <strong>étape par étape</strong>, ou bien d'importer <strong>en une seule fois</strong>.</p>
-<p>Le plugin utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un <strong>ensemble de données cohérent</strong> pour 
+<p>L'extension utilise pour cela la notion de <strong>lot</strong>. Un lot regroupe un <strong>ensemble de données cohérent</strong> pour
 votre utilisation. Par exemple, le lot peut être le code d'une commune ou l'acronyme d'une communauté de
 commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des chiffres ou des lettres.</p>
 <p>Vous pouvez par exemple importer les données dans cet ordre :</p>
@@ -841,38 +841,39 @@ commune. C'est une chaîne de 10 caractères maximum. Vous pouvez utiliser des c
 <li>données EDIGEO de la commune A, lot "com_a" (ré-import et écrasement des données précédentes)</li>
 <li>données EDIGEO de la commune C, lot "com_c"</li>
 </ul>
-<p>Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir 
-ensuite quel lot utiliser si on souhaite écraser des données. Une version prochaine du plugin pourra intégrer
-un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports 
+<p>Il est donc important de conserver une liste des lots définis pendant les imports successifs, pour savoir
+ensuite quel lot utiliser si on souhaite écraser des données. Une version prochaine de l'extension pourra intégrer
+un tableau récapitulatif des imports effectués dans une base de données pour faciliter le suivi des imports
 réalisés.</p>
-<blockquote>
-<p>Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas 
-PostGreSQL différents, car la structure peut changer d'un millésime à l'autre (ajout de colonnes, 
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Il est conseillé d'importer des données de millésime différents dans des bases de données ou des schémas
+PostgreSQL différents, car la structure peut changer d'un millésime à l'autre (ajout de colonnes,
 modification de longueur de champs, etc).</p>
-</blockquote>
+</div>
 <h2 id="bases-de-donnees">Bases de données<a class="headerlink" href="#bases-de-donnees" title="Permanent link">#</a></h2>
-<p>Deux <strong>Systèmes de Gestion de Bases de Données</strong> (SGBD) sont supportés par le plugin Cadastre :</p>
+<p>Deux <strong>Systèmes de Gestion de Bases de Données</strong> (SGBD) sont supportés par l'extension Cadastre :</p>
 <ul>
-<li><strong>PostGreSQL</strong> et son extension spatiale <strong>PostGIS</strong></li>
+<li><strong>PostgreSQL</strong> et son extension spatiale <strong>PostGIS</strong></li>
 <li><strong>SQLite</strong> et son extension spatiale <strong>Spatialite</strong></li>
 </ul>
-<p>Nous conseillons d'utiliser PostGreSQL pour des données volumineuses et pour gérer des accès multiples à la 
+<p>Nous conseillons d'utiliser PostgreSQL pour des données volumineuses et pour gérer des multiples accès à la
 base de données.</p>
 <p>Pour les bases de données <strong>PostGIS</strong>, il faut :</p>
 <ul>
 <li>avoir créé <strong>une base de données</strong> sur laquelle on a les droits en écriture et activer l'extension PostGIS.</li>
-<li>avoir créé au préalable <strong>une connexion QGIS</strong> via le menu <strong>Couches &gt; Ajouter une couche PostGIS</strong> vers 
+<li>avoir créé au préalable <strong>une connexion QGIS</strong> via le menu <strong>Couches &gt; Ajouter une couche PostGIS</strong> vers
   cette base de données</li>
 </ul>
-<p>Pour les bases de données <strong>Spatialite</strong>, l'interface d'import permet de créer une base de données vide et la 
+<p>Pour les bases de données <strong>Spatialite</strong>, l'interface d'import permet de créer une base de données vide et la
 connexion QGIS liée si nécessaire.</p>
 <h3 id="remarque-sur-les-contraintes">Remarque sur les contraintes<a class="headerlink" href="#remarque-sur-les-contraintes" title="Permanent link">#</a></h3>
-<p>Il n'existe actuellement aucune contrainte de clés étrangères sur les tables du schéma cadastre. Nous 
-proposerons à l'avenir un script qui permettra de les créer, lorsque les données le permettent (ce qui n'est 
+<p>Il n'existe actuellement aucune contrainte de clés étrangères sur les tables du schéma cadastre. Nous
+proposerons à l'avenir un script qui permettra de les créer, lorsque les données le permettent (ce qui n'est
 pas toujours le cas, comme des voies non référencées dans <code>voie</code> mais référencées dans <code>parcelle</code>).</p>
 <h2 id="les-etapes-dimportation">Les étapes d'importation<a class="headerlink" href="#les-etapes-dimportation" title="Permanent link">#</a></h2>
-<p>Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu 
-<strong>Configurer le plugin</strong>. Ensuite, on ouvre la boite de dialogue</p>
+<p>Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu
+<strong>Configurer l'extension</strong>. Ensuite, on ouvre la boite de dialogue</p>
 <ul>
 <li>via la <strong>barre d'outil Cadastre</strong>, icône base de données</li>
 <li>via le menu <strong>Cadastre &gt; Importer des données</strong></li>
@@ -891,8 +892,8 @@ pas toujours le cas, comme des voies non référencées dans <code>voie</code> m
 <p>Choisir le répertoire contenant les <strong>fichiers EDIGEO</strong> :</p>
 </li>
 <li>
-<p>On peut sélectionner le <strong>répertoire parent</strong> qui contient l'ensemble des sous-répertoires vers les 
-   communes : le plugin ira chercher les fichiers de manière récursive.</p>
+<p>On peut sélectionner le <strong>répertoire parent</strong> qui contient l'ensemble des sous-répertoires vers les
+   communes : l'extension ira chercher les fichiers de manière récursive.</p>
 </li>
 <li>
 <p>Seuls les fichiers <strong>zip</strong> et <strong>tar.bz2</strong> sont pour l'instant gérés</p>
@@ -902,21 +903,25 @@ pas toujours le cas, comme des voies non référencées dans <code>voie</code> m
 </li>
 <li>
 <p>Choisir le <strong>numéro du Département</strong>, par exemple :</p>
+<ul>
+<li><code>80</code> pour la Somme</li>
+<li><code>97</code> pour la Guadeloupe</li>
+</ul>
 </li>
-<li>80 pour la Somme</li>
-<li>97 pour la Guadeloupe</li>
-<li>Choisir le <strong>numéro de la Direction</strong>, par exemple :</li>
-<li>0</li>
 <li>
-<p>1 pour la Guadeloupe</p>
+<p>Choisir le <strong>numéro de la Direction</strong>, par exemple :</p>
+<ul>
+<li><code>0</code></li>
+<li><code>1</code> pour la Guadeloupe</li>
+</ul>
 </li>
 <li>
 <p>Choisir le répertoire contenant <strong>les fichiers MAJIC</strong></p>
 <ul>
-<li>Comme pour EDIGEO, le plugin ira chercher les fichiers dans les répertoires et les sous-répertoires et 
+<li>Comme pour EDIGEO, l'extension ira chercher les fichiers dans les répertoires et les sous-répertoires et
   importera l'ensemble des données.</li>
-<li>Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement 
-  de les télécharger et de configurer le plugin pour donner le bon nom au fichier FANTOIR : 
+<li>Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement
+  de les télécharger et de configurer l'extension pour donner le bon nom au fichier FANTOIR :
   <a href="https://www.collectivites-locales.gouv.fr/competences/la-mise-disposition-gratuite-du-fichier-des-voies-et-des-lieux-dits-fantoir">https://www.collectivites-locales.gouv.fr/competences/la-mise-disposition-gratuite-du-fichier-des-voies-et-des-lieux-dits-fantoir</a></li>
 </ul>
 </li>
@@ -933,11 +938,11 @@ pas toujours le cas, comme des voies non référencées dans <code>voie</code> m
 <p>Choisir le <strong>Lot</strong> : utilisez par exemple le code INSEE de la commune.</p>
 </li>
 <li>
-<p>Activer ou désactiver la case à cocher <strong>Corriger les géométries invalides</strong> selon la qualité de votre jeu 
+<p>Activer ou désactiver la case à cocher <strong>Corriger les géométries invalides</strong> selon la qualité de votre jeu
   de données EDIGEO.</p>
 </li>
 <li>
-<p>Utiliser la barre de défilement de la fenêtre pour aller tout en bas et afficher tout le bloc texte de log 
+<p>Utiliser la barre de défilement de la fenêtre pour aller tout en bas et afficher tout le bloc texte de log
   situé sous la barre de progression.</p>
 </li>
 <li>
@@ -945,21 +950,22 @@ pas toujours le cas, comme des voies non référencées dans <code>voie</code> m
 </li>
 </ul>
 <p>Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fenêtre.</p>
-<blockquote>
-<p>Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, le plugin
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, l'extension
 n'intègre pas de bouton pour annuler un import en cours.</p>
-</blockquote>
+</div>
 <h2 id="outre-mer">Outre-mer<a class="headerlink" href="#outre-mer" title="Permanent link">#</a></h2>
 <p>Pour l'import des communes en France d'outre-mer, il faut découper le code du département pour avoir la direction.
 Par exemple, concernant le département de la Guadeloupe, code INSEE <code>971</code>, dans l'extension Cadastre, le code du
 département est <code>97</code> et la direction est <code>1</code>.</p>
 <p>La projection des données <strong>EDIGEO</strong> peut se lire dans le fichier <code>*.GEO</code>.</p>
 <h3 id="projections-ignf">Projections IGNF<a class="headerlink" href="#projections-ignf" title="Permanent link">#</a></h3>
-<p>Si votre donnée EDIGEO est en projection IGNF, par exemple pour la Guadeloupe, <code>IGNF:GUAD48UTM20</code> (Guadeloupe 
+<p>Si votre donnée EDIGEO est en projection IGNF, par exemple pour la Guadeloupe, <code>IGNF:GUAD48UTM20</code> (Guadeloupe
 Ste Anne), et que vous souhaitez importer les données dans PostgreSQL, il faut au préalable ajouter dans votre
-table <code>public.spatial_ref_sys</code> la définition de la projection <strong>IGNF</strong>. Si vous utilisez à la place l'équivalent 
+table <code>public.spatial_ref_sys</code> la définition de la projection <strong>IGNF</strong>. Si vous utilisez à la place l'équivalent
 <strong>EPSG</strong> (par exemple ici <code>EPSG:2970</code>), vous risquez un décalage des données lors de la reprojection.</p>
-<p>Vous pouvez ajouter dans votre base de données la définition via une requête, par exemple avec la requête 
+<p>Vous pouvez ajouter dans votre base de données la définition via une requête, par exemple avec la requête
 suivante pour <code>IGNF:GUAD48UTM20</code>:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -977,8 +983,8 @@ suivante pour <code>IGNF:GUAD48UTM20</code>:</p>
 </code></pre></div></td></tr></table></div>
 <p>Attention, il est important d'utiliser un code qui est ≤ 998999, car PostGIS place des contraintes sur le
 SRID. Nous avons utilisé ici <code>998999</code>, qui est le maximum possible.</p>
-<p>La liste des caractéristiques des projections peut être trouvée à ce lien : 
-<a href="http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql">http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql</a> (voir discussion Géorézo : <a href="https://georezo.net/forum/viewtopic.php?pid=268134">https://georezo.net/forum/viewtopic.php?pid=268134</a>).</p>
+<p>La liste des caractéristiques des projections peut être trouvée à ce lien :
+<a href="http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql">http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql</a> (voir discussion Georezo : <a href="https://georezo.net/forum/viewtopic.php?pid=268134">https://georezo.net/forum/viewtopic.php?pid=268134</a>).</p>
 <p>Attention, il faut extraire de ce fichier la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, et remplacer le
 SRID par <code>998999</code>.</p>
 <p>Ensuite, dans la projection source, vous pouvez utiliser <code>IGNF:GUAD48UTM20</code> au lieu du code EPSG correspondant.</p>
@@ -988,7 +994,7 @@ SRID par <code>998999</code>.</p>
   <small>
     
       Dernière mise à jour:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 1, 2022</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 9, 2023</span>
       
     
   </small>
