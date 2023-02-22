@@ -158,6 +158,7 @@ SRID. Nous avons utilisé ici `998999`, qui est le maximum possible.
     ```python
     QgsCoordinateReferenceSystem('IGNF:GUAD48UTM20').toWkt()
     ```
+    puis ++enter++
 
     Il existait auparavant une fichier SQL sur le site de l'IGN que l'on peut trouver sur la discussion
     [Georezo suivante](https://georezo.net/forum/viewtopic.php?pid=268134).
