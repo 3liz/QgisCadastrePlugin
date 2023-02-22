@@ -131,11 +131,12 @@ La projection des données **EDIGEO** peut se lire dans le fichier `*.GEO`.
 
 Si votre donnée EDIGEO est en projection IGNF, par exemple pour la Guadeloupe, `IGNF:GUAD48UTM20` (Guadeloupe
 Ste Anne), et que vous souhaitez importer les données dans PostgreSQL, il faut au préalable ajouter dans votre
-table `public.spatial_ref_sys` la définition de la projection **IGNF**. Si vous utilisez à la place l'équivalent
-**EPSG** (par exemple ici `EPSG:2970`), vous risquez un décalage des données lors de la reprojection.
+table `public.spatial_ref_sys` la définition de la projection **IGNF**, au format **WKT**.
+Si vous utilisez à la place l'équivalent **EPSG** (par exemple ici `EPSG:2970`), vous risquez un décalage des
+données lors de la reprojection.
 
 Vous pouvez ajouter dans votre base de données la définition via une requête, par exemple avec la requête
-suivante pour `IGNF:GUAD48UTM20`:
+suivante pour `IGNF:GUAD48UTM20` avec la chaîne **WKT** décrivant la projection :
 
 ```sql
 INSERT INTO spatial_ref_sys values (
@@ -150,8 +151,16 @@ INSERT INTO spatial_ref_sys values (
 Attention, il est important d'utiliser un code qui est ≤ 998999, car PostGIS place des contraintes sur le
 SRID. Nous avons utilisé ici `998999`, qui est le maximum possible.
 
-La liste des caractéristiques des projections peut être trouvée à ce lien :
-http://librairies.ign.fr/geoportail/resources/IGNF-spatial_ref_sys.sql (voir discussion Georezo : https://georezo.net/forum/viewtopic.php?pid=268134).
+!!! tip
+    Pour trouver la chaîne **WKT** décrivant la projection, à défaut de la trouver sur internet pour le moment,
+    nous pouvons utiliser l'API PyQGIS. Dans le menu **Extensions** → **Console Python**, écrire :
+    
+    ```python
+    QgsCoordinateReferenceSystem('IGNF:GUAD48UTM20').toWkt()
+    ```
+
+    Il existait auparavant une fichier SQL sur le site de l'IGN que l'on peut trouver sur la discussion
+    [Georezo suivante](https://georezo.net/forum/viewtopic.php?pid=268134).
 
 Attention, il faut extraire de ce fichier la commande `INSERT` qui correspond à votre code `IGNF`, et remplacer le
 SRID par `998999`.
