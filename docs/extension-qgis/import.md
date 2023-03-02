@@ -167,3 +167,41 @@ Attention, il faut extraire de ce fichier la commande `INSERT` qui correspond à
 SRID par `998999`.
 
 Ensuite, dans la projection source, vous pouvez utiliser `IGNF:GUAD48UTM20` au lieu du code EPSG correspondant.
+
+En appliquant l'astuce PyQGIS ci-dessus :
+
+??? note "Martinique"
+    * Projection du fichier `.geo` : `IGNF:RGAF09UTM20`
+    ```sql
+       INSERT INTO spatial_ref_sys values (
+       998998,
+       'IGNF',
+       998998,
+       'PROJCS["RGAF09 UTM Nord Fuseau 20",GEOGCS["RGAF09 geographiques (dms)",DATUM["Reseau_Geodesique_des_Antilles_Francaises_2009",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","1073"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGAF09G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-63],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGAF09UTM20"]]',
+       '+init=IGNF:RGAF09UTM20'
+       );
+    ```
+
+??? note "Mayotte"
+    * Projection du fichier `.geo` : `IGNF:RGM04UTM38S`
+    ```sql
+       INSERT INTO spatial_ref_sys values (
+       998997,
+       'IGNF',
+       998997,
+       'PROJCS["RGM04 UTM Sud fuseau 38",GEOGCS["RGM04 geographiques (dms)",DATUM["Reseau_Geodesique_de_Mayotte_2004",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","1036"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGM04G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",45],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",10000000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGM04UTM38S"]]',
+       '+init=IGNF:RGM04UTM38S'
+       );
+    ```
+
+??? note "Réunion"
+    * Projection du fichier `.geo` : `IGNF:RGR92UTM40S`
+    ```sql
+       INSERT INTO spatial_ref_sys values (
+       998996,
+       'IGNF',
+       998996,
+       'PROJCS["RGM04 UTM Sud fuseau 38",GEOGCS["RGM04 geographiques (dms)",DATUM["Reseau_Geodesique_de_Mayotte_2004",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","1036"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGM04G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",45],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",10000000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGM04UTM38S"]]',
+       '+init=IGNF:RGR92UTM40S'
+       );
+    ```
