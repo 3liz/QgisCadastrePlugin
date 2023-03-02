@@ -21,7 +21,7 @@
         <link rel="next" href="../charger/">
       
       <link rel="icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.13">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.0">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ffa9267a.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.402914a4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -83,7 +83,7 @@
 
   
 
-<header class="md-header md-header--lifted" data-md-component="header">
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="En-tête">
     <a href="../.." title="Cadastre" class="md-header__button md-logo" aria-label="Cadastre" data-md-component="logo">
       
@@ -996,13 +996,74 @@ puis <span class="keys"><kbd class="key-enter">Enter</kbd></span></p>
 <p>Attention, il faut extraire de ce fichier la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, et remplacer le
 SRID par <code>998999</code>.</p>
 <p>Ensuite, dans la projection source, vous pouvez utiliser <code>IGNF:GUAD48UTM20</code> au lieu du code EPSG correspondant.</p>
+<p>En appliquant l'astuce PyQGIS ci-dessus :</p>
+<details class="note">
+<summary>Martinique</summary>
+<ul>
+<li>Projection du fichier <code>.geo</code> : <code>IGNF:RGAF09UTM20</code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">   </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
+<span class="w">   </span><span class="mi">998998</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="mi">998998</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;PROJCS[&quot;RGAF09 UTM Nord Fuseau 20&quot;,GEOGCS[&quot;RGAF09 geographiques (dms)&quot;,DATUM[&quot;Reseau_Geodesique_des_Antilles_Francaises_2009&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;1073&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;IGNF&quot;,&quot;RGAF09G&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,-63],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGAF09UTM20&quot;]]&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGAF09UTM20&#39;</span>
+<span class="w">   </span><span class="p">);</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
+<details class="note">
+<summary>Mayotte</summary>
+<ul>
+<li>Projection du fichier <code>.geo</code> : <code>IGNF:RGM04UTM38S</code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">   </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
+<span class="w">   </span><span class="mi">998997</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="mi">998997</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;PROJCS[&quot;RGM04 UTM Sud fuseau 38&quot;,GEOGCS[&quot;RGM04 geographiques (dms)&quot;,DATUM[&quot;Reseau_Geodesique_de_Mayotte_2004&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;1036&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04G&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,45],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,10000000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04UTM38S&quot;]]&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGM04UTM38S&#39;</span>
+<span class="w">   </span><span class="p">);</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
+<details class="note">
+<summary>Réunion</summary>
+<ul>
+<li>Projection du fichier <code>.geo</code> : <code>IGNF:RGR92UTM40S</code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">   </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
+<span class="w">   </span><span class="mi">998996</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="mi">998996</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;PROJCS[&quot;RGM04 UTM Sud fuseau 38&quot;,GEOGCS[&quot;RGM04 geographiques (dms)&quot;,DATUM[&quot;Reseau_Geodesique_de_Mayotte_2004&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;1036&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04G&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,45],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,10000000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04UTM38S&quot;]]&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGR92UTM40S&#39;</span>
+<span class="w">   </span><span class="p">);</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Dernière mise à jour:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 22, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 2, 2023</span>
       
     
   </small>
@@ -1115,7 +1176,7 @@ SRID par <code>998999</code>.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ce72ebac.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
