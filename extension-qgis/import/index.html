@@ -991,12 +991,45 @@ nous pouvons utiliser l'API PyQGIS. Dans le menu <strong>Extensions</strong> →
 </code></pre></div></td></tr></table></div>
 puis <span class="keys"><kbd class="key-enter">Enter</kbd></span></p>
 <p>Il existait auparavant une fichier SQL sur le site de l'IGN que l'on peut trouver sur la discussion
-<a href="https://georezo.net/forum/viewtopic.php?pid=268134">Georezo suivante</a>.</p>
+<a href="https://georezo.net/forum/viewtopic.php?pid=268134">Georezo suivante</a>. Attention, il faut extraire de ce fichier
+la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, et remplacer le SRID par <code>998999</code>.</p>
 </div>
-<p>Attention, il faut extraire de ce fichier la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, et remplacer le
-SRID par <code>998999</code>.</p>
 <p>Ensuite, dans la projection source, vous pouvez utiliser <code>IGNF:GUAD48UTM20</code> au lieu du code EPSG correspondant.</p>
-<p>En appliquant l'astuce PyQGIS ci-dessus :</p>
+<p>En appliquant l'astuce PyQGIS ci-dessus, notons que le code interne est propre à votre base :</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">CODE</span><span class="w"> </span><span class="n">INTERNE</span><span class="w"> </span><span class="err">À</span><span class="w"> </span><span class="n">VOUS</span><span class="w"> </span><span class="n">COMME</span><span class="w"> </span><span class="mi">998999</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">CODE</span><span class="w"> </span><span class="n">INTERNE</span><span class="w"> </span><span class="err">À</span><span class="w"> </span><span class="n">VOUS</span><span class="w"> </span><span class="n">COMME</span><span class="w"> </span><span class="mi">998999</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;RESULTAT DE LA LIGNE PyQGIS&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">&#39;+init=NOM DE LA PROJECTION COMME IGNF:GUAD48UTM20&#39;</span>
+<span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<details class="note">
+<summary>Guyane</summary>
+<ul>
+<li>Projection du fichier <code>.geo</code> : <code>IGNF:RGFG95UTM22</code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">   </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
+<span class="w">   </span><span class="mi">998995</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="mi">998995</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;PROJCS[&quot;RGFG95 UTM Nord f.22&quot;,GEOGCS[&quot;RGFG95 geographiques (dms)&quot;,DATUM[&quot;Reseau_Geodesique_Francais_Guyane_1995&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6624&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;IGNF&quot;,&quot;RGFG95G&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,-51],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGFG95UTM22&quot;]]&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGFG95UTM22&#39;</span>
+<span class="w">   </span><span class="p">);</span>
+</code></pre></div></td></tr></table></div></li>
+</ul>
+</details>
 <details class="note">
 <summary>Martinique</summary>
 <ul>
@@ -1020,7 +1053,7 @@ SRID par <code>998999</code>.</p>
 <details class="note">
 <summary>Mayotte</summary>
 <ul>
-<li>Projection du fichier <code>.geo</code> : <code>IGNF:RGM04UTM38S</code>
+<li>Projection du fichier <code>.geo</code> : <code>IGNF:RGM04</code>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
@@ -1031,8 +1064,8 @@ SRID par <code>998999</code>.</p>
 <span class="w">   </span><span class="mi">998997</span><span class="p">,</span>
 <span class="w">   </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
 <span class="w">   </span><span class="mi">998997</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;PROJCS[&quot;RGM04 UTM Sud fuseau 38&quot;,GEOGCS[&quot;RGM04 geographiques (dms)&quot;,DATUM[&quot;Reseau_Geodesique_de_Mayotte_2004&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;1036&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04G&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,45],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,10000000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04UTM38S&quot;]]&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGM04UTM38S&#39;</span>
+<span class="w">   </span><span class="s1">&#39;GEOCCS[&quot;RGM04 cartesiennes geocentriques&quot;,DATUM[&quot;Reseau_Geodesique_de_Mayotte_2004&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;1036&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Geocentric X&quot;,OTHER],AXIS[&quot;Geocentric Y&quot;,OTHER],AXIS[&quot;Geocentric Z&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04&quot;]]&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGM04&#39;</span>
 <span class="w">   </span><span class="p">);</span>
 </code></pre></div></td></tr></table></div></li>
 </ul>
