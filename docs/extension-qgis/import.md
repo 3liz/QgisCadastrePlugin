@@ -161,14 +161,34 @@ SRID. Nous avons utilisé ici `998999`, qui est le maximum possible.
     puis ++enter++
 
     Il existait auparavant une fichier SQL sur le site de l'IGN que l'on peut trouver sur la discussion
-    [Georezo suivante](https://georezo.net/forum/viewtopic.php?pid=268134).
-
-Attention, il faut extraire de ce fichier la commande `INSERT` qui correspond à votre code `IGNF`, et remplacer le
-SRID par `998999`.
+    [Georezo suivante](https://georezo.net/forum/viewtopic.php?pid=268134). Attention, il faut extraire de ce fichier
+    la commande `INSERT` qui correspond à votre code `IGNF`, et remplacer le SRID par `998999`.
 
 Ensuite, dans la projection source, vous pouvez utiliser `IGNF:GUAD48UTM20` au lieu du code EPSG correspondant.
 
-En appliquant l'astuce PyQGIS ci-dessus :
+En appliquant l'astuce PyQGIS ci-dessus, notons que le code interne est propre à votre base :
+
+```sql
+INSERT INTO spatial_ref_sys values (
+    CODE INTERNE À VOUS COMME 998999,
+    'IGNF',
+    CODE INTERNE À VOUS COMME 998999,
+    'RESULTAT DE LA LIGNE PyQGIS',
+    '+init=NOM DE LA PROJECTION COMME IGNF:GUAD48UTM20'
+);
+```
+
+??? note "Guyane"
+    * Projection du fichier `.geo` : `IGNF:RGFG95UTM22`
+    ```sql
+       INSERT INTO spatial_ref_sys values (
+       998995,
+       'IGNF',
+       998995,
+       'PROJCS["RGFG95 UTM Nord f.22",GEOGCS["RGFG95 geographiques (dms)",DATUM["Reseau_Geodesique_Francais_Guyane_1995",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6624"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGFG95G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-51],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGFG95UTM22"]]',
+       '+init=IGNF:RGFG95UTM22'
+       );
+    ```
 
 ??? note "Martinique"
     * Projection du fichier `.geo` : `IGNF:RGAF09UTM20`
@@ -183,14 +203,14 @@ En appliquant l'astuce PyQGIS ci-dessus :
     ```
 
 ??? note "Mayotte"
-    * Projection du fichier `.geo` : `IGNF:RGM04UTM38S`
+    * Projection du fichier `.geo` : `IGNF:RGM04`
     ```sql
        INSERT INTO spatial_ref_sys values (
        998997,
        'IGNF',
        998997,
-       'PROJCS["RGM04 UTM Sud fuseau 38",GEOGCS["RGM04 geographiques (dms)",DATUM["Reseau_Geodesique_de_Mayotte_2004",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","1036"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGM04G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",45],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",10000000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGM04UTM38S"]]',
-       '+init=IGNF:RGM04UTM38S'
+       'GEOCCS["RGM04 cartesiennes geocentriques",DATUM["Reseau_Geodesique_de_Mayotte_2004",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","1036"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Geocentric X",OTHER],AXIS["Geocentric Y",OTHER],AXIS["Geocentric Z",NORTH],AUTHORITY["IGNF","RGM04"]]',
+       '+init=IGNF:RGM04'
        );
     ```
 
