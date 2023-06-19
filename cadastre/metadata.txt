@@ -26,7 +26,7 @@ dateTime=
 
 
 # tags are comma separated with spaces allowed
-tags=cadastre, france, majic, edigeo, import
+tags=cadastre, france, french, majic, edigeo, import
 
 homepage=https://docs.3liz.org/QgisCadastrePlugin/
 tracker=https://github.com/3liz/QgisCadastrePlugin/issues
