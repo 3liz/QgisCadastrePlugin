@@ -138,7 +138,7 @@ comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
     connector
 )
 
-pmulti = 1
+pmulti = 0
 if export_type == 'proprietaire' and pmulti == 1:
     comptecommunal = CadastreCommon.getProprietaireComptesCommunaux(
         comptecommunal,
