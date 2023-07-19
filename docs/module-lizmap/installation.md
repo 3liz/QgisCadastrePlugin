@@ -29,7 +29,6 @@ cd lizmap/my-packages/
 cp -n composer.json.dist composer.json
 ```
 
-
 * en ligne de commande, dans le répertoire `lizmap/my-packages/`, tapez :
 
 ```bash

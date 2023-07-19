@@ -71,7 +71,7 @@ La requête suivante retourne par exemple pour chaque code de parcelle la date d
 schéma est cadastre). Vous pouvez ensuite utiliser une jointure QGIS pour faire le lien avec la couche 
 `Parcelles` :
 
-```
+```sql
 SELECT p.parcelle, p.jdatat AS date_acte
 FROM cadastre.parcelle p
 ```
@@ -79,7 +79,7 @@ FROM cadastre.parcelle p
 La requête suivante renvoie toutes les parcelles appartenant à des collectivités locales, avec la géométrie 
 et les noms des propriétaires
 
-```
+```sql
 SELECT gp.geo_parcelle,
 string_agg(
    trim(

@@ -63,7 +63,7 @@ par exemple seulement le code de la parcelle et la commune
 
 ## Dans Lizmap Web Client
 
-Maintenant vous devez configurer les droits d'accès à l'outil via l'interface d'administration.
+Maintenant, vous devez configurer les droits d'accès à l'outil via l'interface d'administration.
 Le module a créé :
 
 * un groupe d'utilisateurs `Cadastre Lizmap` (identifiant `cadastre_lizmap`)
