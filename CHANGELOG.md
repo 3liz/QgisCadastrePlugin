@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.18.0 - 2023-08-02
+
+* Support du MAJIC 2023 (contribution de @landryb et @MaelREBOUX)
+
 ## 1.17.3 - 2023-02-07
 
 * bugfix - La colonne RC TEOM au tableau des propriétés baties est le champs `bateom` et pas `baeteom`
