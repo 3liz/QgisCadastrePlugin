@@ -123,9 +123,9 @@ class CadastreExport:
 
         # label for header2
         if self.etype == 'proprietaire':
-            self.typeLabel = u'DE PROPRIÉTÉ'
+            self.typeLabel = 'DE PROPRIÉTÉ'
         else:
-            self.typeLabel = u'PARCELLAIRE'
+            self.typeLabel = 'PARCELLAIRE'
 
         self.layer = layer
         self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(self.layer)
@@ -157,8 +157,8 @@ class CadastreExport:
                 'type': 'sql',
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': " AND comptecommunal = '{}'".format(compte_communal),
-                    'parcelle': " AND comptecommunal = '{}'".format(compte_communal),
+                    'proprietaire': f" AND comptecommunal = '{compte_communal}'",
+                    'parcelle': f" AND comptecommunal = '{compte_communal}'",
                 },
                 'sticky': True
             },
@@ -200,8 +200,8 @@ class CadastreExport:
                 'keepContent': True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': " AND l10.comptecommunal = '{}'".format(compte_communal),
-                    'parcelle': " AND p.parcelle = '{}'".format(self.geo_parcelle)
+                    'proprietaire': f" AND l10.comptecommunal = '{compte_communal}'",
+                    'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
                 }
             },
             'proprietes_non_baties': {
@@ -218,8 +218,8 @@ class CadastreExport:
                 'keepContent': True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': " AND p.comptecommunal = '{}'".format(compte_communal),
-                    'parcelle': " AND p.parcelle = '{}'".format(self.geo_parcelle)
+                    'proprietaire': f" AND p.comptecommunal = '{compte_communal}'",
+                    'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
                 },
                 'bgcolor': Qt.transparent
             },
@@ -242,8 +242,8 @@ class CadastreExport:
                 'keepContent': True,
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': " AND comptecommunal = '{}'".format(compte_communal),
-                    'parcelle': " AND comptecommunal = '{}'".format(compte_communal)
+                    'proprietaire': f" AND comptecommunal = '{compte_communal}'",
+                    'parcelle': f" AND comptecommunal = '{compte_communal}'"
                 }
             },
             'proprietes_baties_line': {
@@ -253,8 +253,8 @@ class CadastreExport:
                 'type': 'sql',
                 'filter': 'comptecommunal',
                 'and': {
-                    'proprietaire': " AND l10.comptecommunal = '{}'".format(compte_communal),
-                    'parcelle': " AND p.parcelle = '{}'".format(self.geo_parcelle)
+                    'proprietaire': f" AND l10.comptecommunal = '{compte_communal}'",
+                    'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
                 }
             },
             'proprietes_non_baties_line': {
@@ -263,8 +263,8 @@ class CadastreExport:
                           'revenucadastral', 'coll', 'natexo', 'anret', 'fractionrcexo', 'pourcentageexo', 'tc', 'lff'],
                 'type': 'sql',
                 'and': {
-                    'proprietaire': " AND p.comptecommunal = '{}'".format(compte_communal),
-                    'parcelle': " AND p.parcelle = '{}'".format(self.geo_parcelle)
+                    'proprietaire': f" AND p.comptecommunal = '{compte_communal}'",
+                    'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
                 }
             }
 
@@ -314,7 +314,7 @@ class CadastreExport:
             # Load SQL query and get data
             # Get sql file
             sqlFile = tplPath + '.sql'
-            fin = open(sqlFile, 'rt', encoding='utf8')
+            fin = open(sqlFile, encoding='utf8')
             sql = fin.read()
             fin.close()
 
@@ -362,7 +362,7 @@ class CadastreExport:
                 for line in data:
                     replaceDict = {}
                     for i in range(len(item['names'])):
-                        replaceDict['$%s' % item['names'][i]] = u'%s' % line[i]
+                        replaceDict['$%s' % item['names'][i]] = '%s' % line[i]
                     content += self.getHtmlFromTemplate(tplPath, replaceDict)
 
                 # fill empty data to have full size table
@@ -371,7 +371,7 @@ class CadastreExport:
                     for _ in range(self.maxLineNumber - len(data)):
                         replaceDict = {}
                         for i in range(len(item['names'])):
-                            replaceDict['$%s' % item['names'][i]] = u'&nbsp;'
+                            replaceDict['$%s' % item['names'][i]] = '&nbsp;'
                         content += self.getHtmlFromTemplate(tplPath, replaceDict)
 
         elif item['type'] == 'properties':
@@ -407,13 +407,13 @@ class CadastreExport:
         regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
 
         try:
-            with open(tplPath, 'rt', encoding='utf8') as fin:
+            with open(tplPath, encoding='utf8') as fin:
                 data = fin.read()
             data = regex.sub(replfunc, data)
             return data
 
-        except IOError as e:
-            msg = u"Erreur lors de l'export: %s" % e
+        except OSError as e:
+            msg = "Erreur lors de l'export: %s" % e
             self.go = False
             # fix_print_with_import
             print("%s" % msg)
@@ -559,10 +559,10 @@ class CadastreExport:
             vl.commitChanges()
             vl.updateExtents()
             props = vl.renderer().symbol().symbolLayer(0).properties()
-            props['outline_width'] = u'1'
-            props['outline_color'] = u'0,85,255,255'
-            props['outline_style'] = u'solid'
-            props['style'] = u'no'
+            props['outline_width'] = '1'
+            props['outline_color'] = '0,85,255,255'
+            props['outline_style'] = 'solid'
+            props['style'] = 'no'
             vl.renderer().setSymbol(QgsFillSymbol.createSimple(props))
             self.mProject.addMapLayer(vl)
             self.redlineLayer = vl
@@ -610,7 +610,7 @@ class CadastreExport:
 
             # Create the pdf output path
             from time import time
-            temp = "releve_%s_%s_%s.pdf" % (
+            temp = "releve_{}_{}_{}.pdf".format(
                 self.etype,
                 comptecommunal.replace('+', 'plus').replace('*', 'fois'),  # .replace('¤', 'plus'),
                 int(time() * 100)
@@ -622,7 +622,7 @@ class CadastreExport:
             # print temp
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
-            QgsMessageLog.logMessage('Export PDF vers {}'.format(temppath), 'cadastre', Qgis.Info)
+            QgsMessageLog.logMessage(f'Export PDF vers {temppath}', 'cadastre', Qgis.Info)
             # print("export temppath %s" % temppath)
 
             # Export as pdf

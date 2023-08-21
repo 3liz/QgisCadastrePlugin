@@ -1,7 +1,7 @@
 import ogr
 
 
-class OgrDs(object):
+class OgrDs:
 
     def __init__(self, format, ds):
         self.open(format, ds)

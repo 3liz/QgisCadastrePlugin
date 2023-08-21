@@ -33,7 +33,7 @@ def timing(f):
         time1 = time.time()
         ret = f(*args)
         time2 = time.time()
-        print('{:s} function took {:.3f} ms'.format(f.__name__, (time2 - time1) * 1000.0))
+        print(f'{f.__name__:s} function took {(time2 - time1) * 1000.0:.3f} ms')
 
         return ret
 
@@ -80,7 +80,7 @@ def next_git_tag():
         return 'next'
 
     versions = tag.split('.')
-    text = '{}.{}.{}-pre'.format(versions[0], versions[1], int(versions[2]) + 1)
+    text = f'{versions[0]}.{versions[1]}.{int(versions[2]) + 1}-pre'
     return text
 
 
@@ -93,4 +93,4 @@ def set_window_title() -> str:
     # return 'branch {}, commit {}, next {}'.format(
     #     version, current_git_hash(), next_git_tag())
 
-    return 'next {}'.format(next_git_tag())
+    return f'next {next_git_tag()}'

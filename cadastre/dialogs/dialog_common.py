@@ -51,7 +51,7 @@ class CadastreCommon:
         t.ensureCursorVisible()
         prefix = '<span style="font-weight:normal;">'
         suffix = '</span>'
-        t.append('%s %s %s' % (prefix, msg, suffix))
+        t.append(f'{prefix} {msg} {suffix}')
         c = t.textCursor()
         c.movePosition(QTextCursor.End, QTextCursor.MoveAnchor)
         t.setTextCursor(c)
@@ -178,7 +178,7 @@ class CadastreCommon:
                 return
             except:
                 self.dialog.go = False
-                msg = u"Impossible de récupérer les schémas de la base. Vérifier les informations de connexion."
+                msg = "Impossible de récupérer les schémas de la base. Vérifier les informations de connexion."
                 self.updateLog(msg)
                 QApplication.restoreOverrideCursor()
                 return
@@ -235,7 +235,7 @@ class CadastreCommon:
                 # Check for data in it
                 sql = 'SELECT * FROM "%s" LIMIT 1' % searchTable
                 if self.dialog.dbType == 'postgis':
-                    sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.dialog.schema, searchTable)
+                    sql = f'SELECT * FROM "{self.dialog.schema}"."{searchTable}" LIMIT 1'
                 data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if ok and rowCount >= 1:
                     hasData = True
@@ -243,7 +243,7 @@ class CadastreCommon:
                 # Check for Majic data in it
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableParcelle
                 if self.dialog.dbType == 'postgis':
-                    sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.dialog.schema, majicTableParcelle)
+                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majicTableParcelle}" LIMIT 1'
                 data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if ok and rowCount >= 1:
                     hasMajicData = True
@@ -252,7 +252,7 @@ class CadastreCommon:
                 # Check for Majic data in it
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableProp
                 if self.dialog.dbType == 'postgis':
-                    sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.dialog.schema, majicTableProp)
+                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majicTableProp}" LIMIT 1'
                 data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if ok and rowCount >= 1:
                     hasMajicData = True
@@ -261,7 +261,7 @@ class CadastreCommon:
                 # Check for Majic data in it
                 sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableVoie
                 if self.dialog.dbType == 'postgis':
-                    sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.dialog.schema, majicTableVoie)
+                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majicTableVoie}" LIMIT 1'
                 data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
                 if ok and rowCount >= 1:
                     hasMajicData = True
@@ -286,7 +286,7 @@ class CadastreCommon:
             return False
 
         if self.dialog.dbType == 'postgis':
-            sql = "SELECT * FROM information_schema.tables WHERE table_schema = '%s' AND table_name = '%s'" % (
+            sql = "SELECT * FROM information_schema.tables WHERE table_schema = '{}' AND table_name = '{}'".format(
             schemaName, tableName)
 
         if self.dialog.dbType == 'spatialite':
@@ -339,12 +339,12 @@ class CadastreCommon:
         # Let the user choose new file path
         ipath, __ = QFileDialog.getSaveFileName(
             None,
-            u"Choisir l'emplacement du nouveau fichier",
+            "Choisir l'emplacement du nouveau fichier",
             str(os.path.expanduser("~").encode('utf-8')).strip(' \t'),
             "Sqlite database (*.sqlite)"
         )
         if not ipath:
-            self.updateLog(u"Aucune base de données créée (annulation)")
+            self.updateLog("Aucune base de données créée (annulation)")
             return None
 
         # Delete file if exists (question already asked above)
@@ -362,7 +362,7 @@ class CadastreCommon:
             con.close()
             del con
         except:
-            self.updateLog(u"Échec lors de la création du fichier Spatialite !")
+            self.updateLog("Échec lors de la création du fichier Spatialite !")
             return None
 
         # Create QGIS connexion

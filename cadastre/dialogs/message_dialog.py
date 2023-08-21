@@ -25,10 +25,10 @@ class CadastreMessageDialog(QDialog, MESSAGE_FORM_CLASS):
     """ Displays a message to the user. """
 
     def __init__(self, iface, message, parent=None):
-        super(CadastreMessageDialog, self).__init__(parent)
+        super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
-        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
+        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
 
         self.teMessage.setText(message)
 

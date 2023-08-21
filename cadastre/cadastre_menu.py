@@ -24,7 +24,6 @@ from pathlib import Path
 from time import time
 
 from qgis.core import (
-    Qgis,
     QgsApplication,
     QgsLayoutExporter,
     QgsPrintLayout,
@@ -303,7 +302,7 @@ class CadastreMenu:
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
         template_content = None
-        with open(f, 'rt', encoding='utf8') as ff:
+        with open(f, encoding='utf8') as ff:
             template_content = ff.read()
         if not template_content:
             return
@@ -500,7 +499,7 @@ class CadastreMenu:
         if version in versionMessages:
             message += '<ul>'
             for item in versionMessages[version]:
-                message += '<li><b>%s</b> - %s</li>' % (item[0], item[1])
+                message += f'<li><b>{item[0]}</b> - {item[1]}</li>'
             message += '</ul>'
 
         message += '<h3>Changelog</h3>'
@@ -547,7 +546,7 @@ class CadastreMenu:
         try:
             from cadastre.tests.runner import test_package
             if package is None:
-                package = '{}.__init__'.format(Path(__file__).parent.name)
+                package = f'{Path(__file__).parent.name}.__init__'
             test_package(package, pattern)
         except (AttributeError, ModuleNotFoundError):
             message = 'Could not load tests. Are you using a production package?'

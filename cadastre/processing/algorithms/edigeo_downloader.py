@@ -105,7 +105,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         directory = Path(self.parameterAsString(parameters, self.DOSSIER, context))
 
         if not directory.exists():
-            feedback.pushDebugInfo("Création du répertoire {}".format(directory))
+            feedback.pushDebugInfo(f"Création du répertoire {directory}")
             os.makedirs(directory, exist_ok=True)
 
         filtre = [c.strip() for c in filtre.split(',')]
@@ -125,7 +125,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
 
             commune = Commune(commune_insee, date=date, base_url=url)
             if not self.download_commune(directory, commune, filtre, multi_feedback, context):
-                multi_feedback.reportError("Erreur sur la commune {}".format(commune.insee))
+                multi_feedback.reportError(f"Erreur sur la commune {commune.insee}")
                 break
 
             if multi_feedback.isCanceled():
@@ -140,9 +140,9 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
 
         multi_feedback.pushInfo("\n")
         multi_feedback.pushInfo("\n")
-        multi_feedback.pushInfo("Téléchargement terminé pour {} communes".format(len(communes)))
-        multi_feedback.pushInfo("{} feuilles".format(self.results[self.NB_FEUILLES]))
-        multi_feedback.pushInfo("dans {}".format(str(directory)))
+        multi_feedback.pushInfo(f"Téléchargement terminé pour {len(communes)} communes")
+        multi_feedback.pushInfo(f"{self.results[self.NB_FEUILLES]} feuilles")
+        multi_feedback.pushInfo(f"dans {str(directory)}")
         multi_feedback.pushInfo("\n")
         multi_feedback.pushInfo("\n")
         return self.results
@@ -151,10 +151,10 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         """ Télécharger une commune. """
         commune_directory = directory.joinpath(commune.insee)
         if commune_directory.exists():
-            feedback.reportError("Omission de {}, le répertoire existe déjà.".format(commune.insee))
+            feedback.reportError(f"Omission de {commune.insee}, le répertoire existe déjà.")
             return False
 
-        feedback.pushInfo("Téléchargement de l'index concernant {}".format(commune.insee))
+        feedback.pushInfo(f"Téléchargement de l'index concernant {commune.insee}")
         feedback.pushDebugInfo(commune.url)
 
         params = {
@@ -170,12 +170,12 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         )
         parser = Parser(data['OUTPUT'], commune, feuille_filter=filtre)
         parser.parse()
-        feedback.pushInfo("  {} feuilles".format(parser.count))
+        feedback.pushInfo(f"  {parser.count} feuilles")
         for feuille in parser.feuilles:
             feedback.pushInfo(feuille.name)
 
         if not commune_directory.exists():
-            feedback.pushDebugInfo("Création du répertoire {}".format(commune))
+            feedback.pushDebugInfo(f"Création du répertoire {commune}")
             os.makedirs(commune_directory, exist_ok=True)
 
         for feuille in parser.feuilles:
@@ -189,7 +189,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
 
     @staticmethod
     def download_feuille(commune, feuille, directory, feedback, context) -> bool:
-        feedback.pushInfo("Téléchargement de {} {}".format(commune.insee, feuille.name))
+        feedback.pushInfo(f"Téléchargement de {commune.insee} {feuille.name}")
         params = {
             'URL': commune.url_feuille(feuille),
             'OUTPUT': str(directory.joinpath(feuille.link).absolute()),
@@ -218,4 +218,4 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         )
 
     def helpUrl(self):
-        return "{}/extension-qgis/donnees/#edigeo".format(URL_DOCUMENTATION)
+        return f"{URL_DOCUMENTATION}/extension-qgis/donnees/#edigeo"

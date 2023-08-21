@@ -145,4 +145,4 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
         )
 
     def helpUrl(self) -> str:
-        return "{}/processing/#configuration-du-projet".format(URL_DOCUMENTATION)
+        return f"{URL_DOCUMENTATION}/processing/#configuration-du-projet"

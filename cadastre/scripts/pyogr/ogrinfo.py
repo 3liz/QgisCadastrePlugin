@@ -406,7 +406,7 @@ def ReportOnLayer( poLayer, pszWHERE, pszGeomField, poSpatialFilter, options ):
         if nGeomFieldCount > 1:
             for iGeom in range(nGeomFieldCount):
                 poGFldDefn = poLayer.GetLayerDefn().GetGeomFieldDefn(iGeom)
-                print( "Geometry (%s): %s" % (poGFldDefn.GetNameRef(), ogr.GeometryTypeToName( poGFldDefn.GetType() ) ))
+                print( f"Geometry ({poGFldDefn.GetNameRef()}): {ogr.GeometryTypeToName( poGFldDefn.GetType() )}")
         else:
             print( "Geometry: %s" % ogr.GeometryTypeToName( poDefn.GetGeomType() ) )
 
@@ -417,11 +417,11 @@ def ReportOnLayer( poLayer, pszWHERE, pszGeomField, poSpatialFilter, options ):
                 poGFldDefn = poLayer.GetLayerDefn().GetGeomFieldDefn(iGeom)
                 oExt = poLayer.GetExtent(True, geom_field = iGeom, can_return_null = True)
                 if oExt is not None:
-                    print("Extent (%s): (%f, %f) - (%f, %f)" % (poGFldDefn.GetNameRef(), oExt[0], oExt[2], oExt[1], oExt[3]))
+                    print(f"Extent ({poGFldDefn.GetNameRef()}): ({oExt[0]:f}, {oExt[2]:f}) - ({oExt[1]:f}, {oExt[3]:f})")
         else:
             oExt = poLayer.GetExtent(True, can_return_null = True)
             if oExt is not None:
-                print("Extent: (%f, %f) - (%f, %f)" % (oExt[0], oExt[2], oExt[1], oExt[3]))
+                print(f"Extent: ({oExt[0]:f}, {oExt[2]:f}) - ({oExt[1]:f}, {oExt[3]:f})")
 
         if nGeomFieldCount > 1:
             for iGeom in range(nGeomFieldCount):
@@ -430,7 +430,7 @@ def ReportOnLayer( poLayer, pszWHERE, pszGeomField, poSpatialFilter, options ):
                     pszWKT = "(unknown)"
                 else:
                     pszWKT = poGFldDefn.GetSpatialRef().ExportToPrettyWkt()
-                print( "SRS WKT (%s):\n%s" % (poGFldDefn.GetNameRef(), pszWKT) )
+                print( f"SRS WKT ({poGFldDefn.GetNameRef()}):\n{pszWKT}" )
         else:
             if poLayer.GetSpatialRef() is None:
                 pszWKT = "(unknown)"
@@ -492,7 +492,7 @@ def DumpReadableFeature( poFeature, options = None ):
 
             poFDefn = poDefn.GetFieldDefn(iField)
 
-            line =  "  %s (%s) = " % ( \
+            line =  "  {} ({}) = ".format( \
                     poFDefn.GetNameRef(), \
                     ogr.GetFieldTypeName(poFDefn.GetType()) )
 
@@ -533,7 +533,7 @@ def DumpReadableGeometry( poGeometry, pszPrefix, options ):
 
     if 'DISPLAY_GEOMETRY' in options and EQUAL(options['DISPLAY_GEOMETRY'], 'SUMMARY'):
 
-        line = ("%s%s : " % (pszPrefix, poGeometry.GetGeometryName() ))
+        line = (f"{pszPrefix}{poGeometry.GetGeometryName()} : ")
         eType = poGeometry.GetGeometryType()
         if eType == ogr.wkbLineString or eType == ogr.wkbLineString25D:
             line = line + ("%d points" % poGeometry.GetPointCount())
@@ -568,11 +568,7 @@ def DumpReadableGeometry( poGeometry, pszPrefix, options ):
                 print(line)
                 for ig in range(poGeometry.GetGeometryCount()):
                     subgeom = poGeometry.GetGeometryRef(ig)
-                    from sys import version_info
-                    if version_info >= (3,0,0):
-                        exec('print("", end=" ")')
-                    else:
-                        exec('print "", ')
+                    exec('print("", end=" ")')
                     DumpReadableGeometry( subgeom, pszPrefix, options)
         else:
             print(line)
@@ -580,7 +576,7 @@ def DumpReadableGeometry( poGeometry, pszPrefix, options ):
     elif 'DISPLAY_GEOMETRY' not in options or EQUAL(options['DISPLAY_GEOMETRY'], 'yes') \
             or EQUAL(options['DISPLAY_GEOMETRY'], 'WKT'):
 
-        print("%s%s" % (pszPrefix, poGeometry.ExportToWkt() ))
+        print(f"{pszPrefix}{poGeometry.ExportToWkt()}")
 
     return
 

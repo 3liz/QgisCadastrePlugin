@@ -174,7 +174,7 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
     except BaseError as e:
         ok = False
         QgsMessageLog.logMessage(
-            "Error while fetching data from database : {}".format(str(e.msg)),
+            f"Error while fetching data from database : {str(e.msg)}",
             "cadastre",
             Qgis.Critical
         )
@@ -232,7 +232,7 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
             connector = SpatiaLiteDBConnector(uri)
         except ConnectionError as e:
             QgsMessageLog.logMessage(
-                "Erreur lors de la récupération du fichier SQLite : {}".format(str(e)),
+                f"Erreur lors de la récupération du fichier SQLite : {str(e)}",
                 'cadastre',
                 Qgis.Critical)
 

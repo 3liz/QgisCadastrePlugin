@@ -18,7 +18,7 @@ class CustomQCompleter(QCompleter):
     """
 
     def __init__(self, *args):  # parent=None):
-        super(CustomQCompleter, self).__init__(*args)
+        super().__init__(*args)
         self.local_completion_prefix = ""
         self.source_model = None
         self.filterProxyModel = QSortFilterProxyModel(self)
@@ -28,7 +28,7 @@ class CustomQCompleter(QCompleter):
         self.source_model = model
         self.filterProxyModel = QSortFilterProxyModel(self)
         self.filterProxyModel.setSourceModel(self.source_model)
-        super(CustomQCompleter, self).setModel(self.filterProxyModel)
+        super().setModel(self.filterProxyModel)
         self.usingOriginalModel = True
 
     def updateModel(self):

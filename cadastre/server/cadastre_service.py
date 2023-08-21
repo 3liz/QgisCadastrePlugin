@@ -37,7 +37,7 @@ class CadastreError(Exception):
         super().__init__(msg)
         self.msg = msg
         self.code = code
-        Logger.critical("Cadastre request error {}: {}".format(code, msg))
+        Logger.critical(f"Cadastre request error {code}: {msg}")
 
     def format_response(self, response: QgsServerResponse) -> None:
         """ Format error response
@@ -189,7 +189,7 @@ class CadastreService(QgsService):
                 all_cities
             )
 
-        Logger.debug("comptecommunal = {}".format(compte_communal))
+        Logger.debug(f"comptecommunal = {compte_communal}")
 
         # Export PDF
         qex = CadastreExport(project, res.layer, res.type, compte_communal, res.geo_parcelle)
@@ -200,13 +200,13 @@ class CadastreService(QgsService):
         if not paths:
             raise CadastreError(424, 'An error occurred while generating the PDF')
 
-        Logger.debug("export_as_pdf(), paths: {}".format(paths))
+        Logger.debug(f"export_as_pdf(), paths: {paths}")
 
         tokens = []
         for path in map(Path, paths):
             uid = uuid4()
 
-            Logger.debug("Item path: {}".format(path))
+            Logger.debug(f"Item path: {path}")
 
             new_path = self.cache_dir / ('%s.pdf' % uid.hex)
             path.rename(new_path)
@@ -289,7 +289,7 @@ class CadastreService(QgsService):
         it = layer.getFeatures(req)
         feat = QgsFeature()
         if not it.nextFeature(feat):
-            raise CadastreError(404, "Feature not found for parcelle '%s' in layer '%s'" % (p_parcelle, p_layer))
+            raise CadastreError(404, f"Feature not found for parcelle '{p_parcelle}' in layer '{p_layer}'")
 
         # Get layer connection parameters
         connection_params = cadastre_common.getConnectionParameterFromDbLayer(layer)
@@ -312,9 +312,9 @@ class CadastreService(QgsService):
         if not ptoken:
             raise CadastreError(400, "Missing parameter: token")
 
-        path = self.cache_dir / '{}.pdf'.format(ptoken)
+        path = self.cache_dir / f'{ptoken}.pdf'
 
-        Logger.debug("GetPDF = path is {}".format(path.as_posix()))
+        Logger.debug(f"GetPDF = path is {path.as_posix()}")
 
         if not path.exists():
             raise CadastreError(404, "PDF not found")

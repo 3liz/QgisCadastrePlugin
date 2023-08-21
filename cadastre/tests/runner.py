@@ -13,11 +13,11 @@ from qgis.PyQt import Qt
 
 def pytest_report_header(config):
     """Used by PyTest and Unittest."""
-    message = "QGIS : {}\n".format(Qgis.QGIS_VERSION_INT)
+    message = f"QGIS : {Qgis.QGIS_VERSION_INT}\n"
     message += "Python GDAL : {}\n".format(gdal.VersionInfo("VERSION_NUM"))
-    message += "Python : {}\n".format(sys.version)
+    message += f"Python : {sys.version}\n"
     # message += 'Python path : {}'.format(sys.path)
-    message += "QT : {}".format(Qt.QT_VERSION_STR)
+    message += f"QT : {Qt.QT_VERSION_STR}"
     return message
 
 
@@ -29,21 +29,21 @@ def _run_tests(test_suite, package_name, pattern):
     count = test_suite.countTestCases()
     print("######## Environment   ########")
     print(pytest_report_header(None))
-    print("{} tests has been discovered in {} with pattern {}".format(count, package_name, pattern))
+    print(f"{count} tests has been discovered in {package_name} with pattern {pattern}")
     print("######## Running tests ########")
     results = unittest.TextTestRunner(verbosity=2).run(test_suite)
     print("######## Summary       ########")
-    print("Errors               : {}".format(len(results.errors)))
-    print("Failures             : {}".format(len(results.failures)))
-    print("Expected failures    : {}".format(len(results.expectedFailures)))
-    print("Unexpected successes : {}".format(len(results.unexpectedSuccesses)))
-    print("Skip                 : {}".format(len(results.skipped)))
+    print(f"Errors               : {len(results.errors)}")
+    print(f"Failures             : {len(results.failures)}")
+    print(f"Expected failures    : {len(results.expectedFailures)}")
+    print(f"Unexpected successes : {len(results.unexpectedSuccesses)}")
+    print(f"Skip                 : {len(results.skipped)}")
     successes = (
         results.testsRun - (
             len(results.errors) + len(results.failures) + len(results.expectedFailures)
             + len(results.unexpectedSuccesses) + len(results.skipped)))
-    print("Successes            : {}".format(successes))
-    print("TOTAL                : {}".format(results.testsRun))
+    print(f"Successes            : {successes}")
+    print(f"TOTAL                : {results.testsRun}")
 
 
 def test_package(package=None, pattern="test_*.py"):
@@ -58,7 +58,7 @@ def test_package(package=None, pattern="test_*.py"):
     """
     pattern_environment = os.environ.get('TEST_PATTERN')
     if pattern_environment and pattern_environment != 'default_pattern':
-        print("Pattern from environment : {}".format(pattern_environment))
+        print(f"Pattern from environment : {pattern_environment}")
         pattern = pattern_environment
 
     if package is None:

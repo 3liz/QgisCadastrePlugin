@@ -47,7 +47,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
     def __init__(self, iface, parent=None):
         # QDockWidget.__init__(self)
-        super(CadastreSearchDialog, self).__init__(parent)
+        super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
         self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
@@ -378,7 +378,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 is_postgis = (self.connectionParams['dbType'] == 'postgis')
 
                 # Get data from table proprietaire
-                sql = 'SELECT * FROM "{}" LIMIT 1'.format(majicTableProp)
+                sql = f'SELECT * FROM "{majicTableProp}" LIMIT 1'
                 if is_postgis:
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.connectionParams['schema'], majicTableProp)
                 data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
@@ -386,7 +386,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                     self.hasMajicDataProp = True
 
                 # Get data from table voie
-                sql = 'SELECT * FROM "{}" LIMIT 1'.format(majicTableVoie)
+                sql = f'SELECT * FROM "{majicTableVoie}" LIMIT 1'
                 if is_postgis:
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.connectionParams['schema'], majicTableVoie)
                 data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
@@ -394,7 +394,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                     self.hasMajicDataVoie = True
 
                 # Get data from table parcelle
-                sql = 'SELECT * FROM "{}" LIMIT 1'.format(majicTableParcelle)
+                sql = f'SELECT * FROM "{majicTableParcelle}" LIMIT 1'
                 if is_postgis:
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(self.connectionParams['schema'], majicTableParcelle)
                 data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
@@ -409,10 +409,10 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         if not self.hasMajicDataParcelle or not self.hasMajicDataVoie:
             self.qc.updateLog(
-                u"<b>Pas de données MAJIC non bâties et/ou fantoir</b> -> désactivation de la recherche d'adresse")
+                "<b>Pas de données MAJIC non bâties et/ou fantoir</b> -> désactivation de la recherche d'adresse")
         if not self.hasMajicDataProp:
             self.qc.updateLog(
-                u"<b>Pas de données MAJIC propriétaires</b> -> désactivation de la recherche de propriétaires")
+                "<b>Pas de données MAJIC propriétaires</b> -> désactivation de la recherche de propriétaires")
 
     def setupSearchCombobox(self, combo, filterExpression=None, queryMode='qgis'):
         """
@@ -469,7 +469,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             if filterExpression and queryMode == 'qgis':
                 qe = QgsExpression(filterExpression)
             if queryMode == 'sql':
-                emptyLabel = u'%s item(s)' % len(features)
+                emptyLabel = '%s item(s)' % len(features)
             else:
                 emptyLabel = ''
             cb.addItem('%s' % emptyLabel, '')
@@ -568,7 +568,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             if len(sp) > 0 and self.qc.normalizeString(sp[0]) in stopwords:
                 searchValue = ' '.join(sp[1:])
                 if len(self.qc.normalizeString(searchValue)) < minlen:
-                    self.qc.updateLog(u"%s caractères minimum requis pour la recherche !" % minlen)
+                    self.qc.updateLog("%s caractères minimum requis pour la recherche !" % minlen)
                     QApplication.restoreOverrideCursor()
                     return None
 
@@ -677,7 +677,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
 
         # Write message in log
-        msg = u"%s résultats correpondent à '%s'" % (rowCount, searchValue)
+        msg = f"{rowCount} résultats correpondent à '{searchValue}'"
         if key == 'adresse' and hasCommuneFilter:
             msg += ' pour la commune %s' % searchCom
         # self.qc.updateLog(msg)
@@ -691,7 +691,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         maxStringSize = 0
         for line in data:
             if key == 'adresse':
-                label = '%s | %s %s' % (
+                label = '{} | {} {}'.format(
                     line[1].strip(),
                     line[2].strip(),
                     line[3].strip()
@@ -700,7 +700,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
             if key == 'proprietaire':
                 # ~ label = '%s - %s | %s' % (line[3], line[2], line[0].strip())
-                label = '%s | %s' % (line[1], line[0].strip())
+                label = f'{line[1]} | {line[0].strip()}'
                 val = {
                     'cc': ["'%s'" % a for a in line[1].split(',')],
                     'dnuper': line[2]
@@ -790,7 +790,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         features = []
         if rowCount > 0:
             fids = [str(a[0]) for a in data]
-            exp = ' "%s" IN ( %s ) ' % (
+            exp = ' "{}" IN ( {} ) '.format(
                 attributes[0],
                 ','.join(fids)
             )
@@ -880,7 +880,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         if features:
             self.qc.updateLog(
-                u"%s parcelle(s) trouvée(s) pour '%s'" % (
+                "{} parcelle(s) trouvée(s) pour '{}'".format(
                     len(features),
                     label
                 )
@@ -907,7 +907,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 ckey = child['key']
                 fkey = child['fkey']
                 if feature:
-                    filterExpression = "%s = '%s' AND lot = '%s'" % (fkey, feature[fkey], feature['lot'])
+                    filterExpression = "{} = '{}' AND lot = '{}'".format(fkey, feature[fkey], feature['lot'])
                     self.setupSearchCombobox(ckey, filterExpression, 'sql')
                 else:
                     if child['getIfNoFeature']:
@@ -938,7 +938,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.searchComboBoxes[key]['widget'].setCurrentIndex(0)
         self.searchComboBoxes[key]['widget'].lineEdit().selectAll()
         self.searchComboBoxes[key]['widget'].lineEdit().setFocus()
-        self.searchComboBoxes[key]['widget'].lineEdit().setText(u'')
+        self.searchComboBoxes[key]['widget'].lineEdit().setText('')
 
     def onSearchItemFocus(self, key):
         """
@@ -1092,7 +1092,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                     parcelle_dialog.show()
 
                 else:
-                    self.qc.updateLog(u'Aucune parcelle sélectionnée !')
+                    self.qc.updateLog('Aucune parcelle sélectionnée !')
 
     def printInfosProprietaires(self):
         """
@@ -1102,7 +1102,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         document = QTextDocument()
         document.setHtml(
-            "<h1>Parcelle : %s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (
+            "<h1>Parcelle : {}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
                 self.textEdit.toolTip(), self.textEdit.toHtml()
             )
         )
@@ -1127,7 +1127,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
     def copyInfosProprietaires(self):
         QApplication.clipboard().setText(
-            "<h1>Parcelle : %s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (
+            "<h1>Parcelle : {}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
                 self.textEdit.toolTip(), self.textEdit.toHtml()
             )
         )
@@ -1150,7 +1150,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         fileName = dlgFile.selectedFiles()[0]
         with open(fileName, 'w', encoding="utf8", errors="surrogateescape") as inFile:
             inFile.write(
-                "<h1>Parcelle : %s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (
+                "<h1>Parcelle : {}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
                     self.textEdit.toolTip(), self.textEdit.toHtml()
                 )
             )

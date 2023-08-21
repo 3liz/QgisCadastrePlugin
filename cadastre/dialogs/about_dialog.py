@@ -26,11 +26,11 @@ class CadastreAboutDialog(QDialog, ABOUT_FORM_CLASS):
     """ About - Let the user display the about dialog. """
 
     def __init__(self, iface, parent=None):
-        super(CadastreAboutDialog, self).__init__(parent)
+        super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
 
-        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
+        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
