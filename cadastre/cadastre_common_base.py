@@ -213,16 +213,12 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
                 connectionParams['password']
             )
 
-        if Qgis.QGIS_VERSION_INT >= 31200:
-            # we need a fake DBPlugin object
-            # with connectionName and providerName methods
-            obj = QObject()
-            obj.connectionName = lambda: 'fake'
-            obj.providerName = lambda: 'postgres'
-
-            connector = PostGisDBConnector(uri, obj)
-        else:
-            connector = PostGisDBConnector(uri)
+        # we need a fake DBPlugin object
+        # with connectionName and providerName methods
+        obj = QObject()
+        obj.connectionName = lambda: 'fake'
+        obj.providerName = lambda: 'postgres'
+        connector = PostGisDBConnector(uri, obj)
 
     if connectionParams['dbType'] == 'spatialite':
         uri.setConnection('', '', connectionParams['dbname'], '', '')
