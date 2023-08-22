@@ -28,10 +28,10 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
     """ Let the user configure options. """
 
     def __init__(self, iface, parent=None):
-        super(CadastreOptionDialog, self).__init__(parent)
+        super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
-        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
+        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
 
         # Images
         self.plugin_dir = str(Path(__file__).resolve().parent.parent)
@@ -89,15 +89,15 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         if self.pathSelectors[key]['type'] == 'dir':
             ipath = QFileDialog.getExistingDirectory(
                 None,
-                u"Choisir le répertoire contenant les fichiers",
+                "Choisir le répertoire contenant les fichiers",
                 str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
             )
         else:
             ipath, __ = QFileDialog.getOpenFileName(
                 None,
-                u"Choisir le modèle de composeur utilisé pour l'export",
+                "Choisir le modèle de composeur utilisé pour l'export",
                 str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t'),
-                u"Composeur (*.qpt)"
+                "Composeur (*.qpt)"
             )
 
         if os.path.exists(str(ipath)):
@@ -160,19 +160,19 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
             self.plugin_dir,
             'interface/'
         )
-        interfaceInfo = u'''
-        Pour appliquer l'interface <b>%s</b>
+        interfaceInfo = '''
+        Pour appliquer l'interface <b>{}</b>
         <ul>
             <li>Menu Préférences > Personnalisation</li>
             <li>Bouton <b>Charger depuis le fichier</b> (icône dossier ouvert)</li>
-            <li>Sélectionner le fichier <b>%s.ini</b> situé dans le dossier : <b>%s</b></li>
+            <li>Sélectionner le fichier <b>{}.ini</b> situé dans le dossier : <b>{}</b></li>
             <li>Appliquer et fermer la fenêtre</li>
             <li>Redémarer QGIS</li>
         </ul>
-        ''' % (key, key.lower(), iniPath)
+        '''.format(key, key.lower(), iniPath)
         QMessageBox.information(
             self,
-            u"Cadastre - Personnalisation",
+            "Cadastre - Personnalisation",
             interfaceInfo
         )
 

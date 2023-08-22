@@ -31,9 +31,9 @@ IMPORT_FORM_CLASS, _ = uic.loadUiType(
 class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
     def __init__(self, iface, parent=None):
         self.iface = iface
-        super(CadastreImportDialog, self).__init__(parent)
+        super().__init__(parent)
         self.setupUi(self)
-        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
+        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
 
         # Images
         plugin_dir = str(Path(__file__).resolve().parent.parent)
@@ -182,7 +182,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         """
         ipath = QFileDialog.getExistingDirectory(
             None,
-            u"Choisir le répertoire contenant les fichiers",
+            "Choisir le répertoire contenant les fichiers",
             str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
         )
         if os.path.exists(str(ipath)):
@@ -267,27 +267,27 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
 
         msg = ''
         if not self.db:
-            msg += u'Veuillez sélectionner une base de données\n'
+            msg += 'Veuillez sélectionner une base de données\n'
 
         if not self.doMajicImport and not self.doEdigeoImport:
-            msg += u'Veuillez sélectionner le chemin vers les fichiers à importer !\n'
+            msg += 'Veuillez sélectionner le chemin vers les fichiers à importer !\n'
 
         if self.edigeoSourceDir and not self.doEdigeoImport:
-            msg += u"Le chemin spécifié pour les fichiers EDIGEO n'existe pas\n"
+            msg += "Le chemin spécifié pour les fichiers EDIGEO n'existe pas\n"
 
         if self.majicSourceDir and not self.doMajicImport:
-            msg += u"Le chemin spécifié pour les fichiers MAJIC n'existe pas\n"
+            msg += "Le chemin spécifié pour les fichiers MAJIC n'existe pas\n"
 
         if self.doEdigeoImport and not self.edigeoSourceProj:
-            msg += u'La projection source doit être renseignée !\n'
+            msg += 'La projection source doit être renseignée !\n'
         if self.doEdigeoImport and not self.edigeoTargetProj:
-            msg += u'La projection cible doit être renseignée !\n'
+            msg += 'La projection cible doit être renseignée !\n'
         if len(self.edigeoDepartement) != 2:
-            msg += u'Le département ne doit pas être vide !\n'
+            msg += 'Le département ne doit pas être vide !\n'
         if not self.edigeoDirection:
-            msg += u'La direction doit être un entier (0 par défaut) !\n'
+            msg += 'La direction doit être un entier (0 par défaut) !\n'
         if not self.edigeoLot:
-            msg += u'Merci de renseigner un lot pour cet import (code commune, date d\'import, etc.)\n'
+            msg += 'Merci de renseigner un lot pour cet import (code commune, date d\'import, etc.)\n'
 
         self.qc.updateLog(msg.replace('\n', '<br/>'))
         return msg
@@ -299,7 +299,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
 
         msg = self.checkImportInputData()
         if msg:
-            QMessageBox.critical(self, u"Cadastre", msg)
+            QMessageBox.critical(self, "Cadastre", msg)
             return
 
         # Store settings

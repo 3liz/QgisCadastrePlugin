@@ -22,7 +22,7 @@ class CadastreServer:
 
     def __init__(self, server_iface: QgsServerInterface) -> None:
 
-        Logger.info('Init server version "{}"'.format(version()))
+        Logger.info(f'Init server version "{version()}"')
 
         cache_dir_str = os.getenv('QGIS_CADASTRE_CACHE_DIR')
         if not cache_dir_str:
@@ -32,7 +32,7 @@ class CadastreServer:
         self.cache_dir = Path(cache_dir_str)
         self.cache_dir.mkdir(mode=0o750, parents=True, exist_ok=True)
 
-        Logger.info('Cache directory set to {}'.format(cache_dir_str))
+        Logger.info(f'Cache directory set to {cache_dir_str}')
 
         reg = server_iface.serviceRegistry()
         reg.registerService(CadastreService(cache_dir=self.cache_dir))

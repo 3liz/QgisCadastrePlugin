@@ -40,7 +40,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
     """ Show parcelle information. """
 
     def __init__(self, iface, layer, feature, cadastre_search_dialog, parent=None):
-        super(CadastreParcelleDialog, self).__init__(parent)
+        super().__init__(parent)
 
         plugin_dir = str(Path(__file__).resolve().parent.parent)
 
@@ -49,7 +49,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.layer = layer
         self.mc = iface.mapCanvas()
         self.setupUi(self)
-        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
+        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
         self.cadastre_search_dialog = cadastre_search_dialog
         self.setWindowIcon(QIcon(
             os.path.join(
@@ -97,7 +97,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         connector = CadastreCommon.getConnectorFromUri(connectionParams)
         self.connector = connector
 
-        self.buttonBox.button(QDialogButtonBox.Ok).setText(u"Fermer")
+        self.buttonBox.button(QDialogButtonBox.Ok).setText("Fermer")
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -180,7 +180,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         document = QTextDocument()
         title = self.windowTitle().replace("Cadastre+, ID", "").title()
         document.setHtml(
-            "<h1>%s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (
+            "<h1>{}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
                 title, obj.toHtml()
             )
         )
@@ -219,7 +219,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
         title = self.windowTitle().replace("Cadastre+, ID", "").title()
         QApplication.clipboard().setText(
-            "<h1>%s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (
+            "<h1>{}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
                 title, obj.toHtml()
             )
         )
@@ -243,11 +243,11 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             title = self.windowTitle().replace("Cadastre+, ID", "").title()
             with open(fileName, 'w', encoding="ansi", errors="surrogateescape") as inFile:
                 inFile.write(
-                    "<h1>%s</h1><table width=95%%><tr><td>%s</td></tr></table>" % (
+                    "<h1>{}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
                         title, obj.toHtml()
                     )
                 )
-            self.txtLog.setText(u'fichier sauvegarde sous : %s !' % fileName)
+            self.txtLog.setText('fichier sauvegarde sous : %s !' % fileName)
 
     def contextMnubutActions(self, obj):
         actions = {
@@ -325,7 +325,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Get CSS from CSS file
         """
         plugin_dir = str(Path(__file__).resolve().parent.parent)
-        with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), 'r', encoding='utf8') as f:
+        with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), encoding='utf8') as f:
             css = f.read()
         self.css = css
 
@@ -414,7 +414,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             return
 
         if not self.hasMajicDataProp:
-            self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
+            self.proprietairesInfo.setText('Pas de données de propriétaires dans la base')
             return
 
         # Check if PDF must be exported for a third party or not
@@ -501,7 +501,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Needs refactoring
         """
         if not self.hasMajicDataProp:
-            self.proprietairesInfo.setText(u'Pas de données de propriétaires dans la base')
+            self.proprietairesInfo.setText('Pas de données de propriétaires dans la base')
             return
 
         qs = self.cadastre_search_dialog

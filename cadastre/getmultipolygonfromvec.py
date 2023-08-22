@@ -52,7 +52,7 @@ class GetMultiPolygonFromVec:
         """ Find features with more than 1 faces """
         if not self.path: return False
 
-        f = open(self.path, 'r', encoding='ISO-8859-1')
+        f = open(self.path, encoding='ISO-8859-1')
         if not f: return False
 
         osRTY = ''
@@ -100,7 +100,7 @@ class GetMultiPolygonFromVec:
         """ Find the layers for the features """
         if not self.path: return False
 
-        f = open(self.path, 'r')
+        f = open(self.path)
         if not f: return False
 
         osRTY = ''
@@ -131,7 +131,7 @@ class GetMultiPolygonFromVec:
         """ Find the arcs for the faces """
         if not self.path: return False
 
-        f = open(self.path, 'r')
+        f = open(self.path)
         if not f: return False
 
         osRTY = ''
@@ -183,7 +183,7 @@ class GetMultiPolygonFromVec:
         """ Find the coords for the arcs """
         if not self.path: return False
 
-        f = open(self.path, 'r')
+        f = open(self.path)
         if not f: return False
 
         osRTY = ''
@@ -210,7 +210,7 @@ class GetMultiPolygonFromVec:
         """ Find the noeuds for the arcs """
         if not self.path: return False
 
-        f = open(self.path, 'r')
+        f = open(self.path)
         if not f: return False
 
         osRTY = ''

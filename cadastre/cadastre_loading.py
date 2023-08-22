@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  Cadastre - loading main methods
@@ -346,7 +345,7 @@ class cadastreLoading(QObject):
     def updateTimer(self):
         b = datetime.now()
         diff = b - self.startTime
-        self.qc.updateLog(u'%s s' % diff.seconds)
+        self.qc.updateLog('%s s' % diff.seconds)
 
     def getGroupIndex(self, groupName):
         """
@@ -404,7 +403,7 @@ class cadastreLoading(QObject):
         if cadastreSvgPath not in a:
             a.append(cadastreSvgPath)
             s.setValue("svg/searchPathsForSVG", a)
-            self.qc.updateLog(u"* Le chemin contenant les SVG du plugin Cadastre a été ajouté dans les options de QGIS")
+            self.qc.updateLog("* Le chemin contenant les SVG du plugin Cadastre a été ajouté dans les options de QGIS")
 
         # Get selected options
         providerName = self.dialog.dbpluginclass.providerName()
@@ -414,7 +413,7 @@ class cadastreLoading(QObject):
 
         # Run the loading
         self.updateTimer()
-        self.qc.updateLog(u'Chargement des tables :')
+        self.qc.updateLog('Chargement des tables :')
 
         # Get database list of tables
         if self.dialog.dbType == 'postgis':
@@ -429,7 +428,7 @@ class cadastreLoading(QObject):
         communeFilter = None
         cExp = QgsExpression(communeExpression)
         if communeExpression != '' and not cExp.hasParserError():
-            self.qc.updateLog(u'Filtrage à partir des communes : %s' % communeExpression)
+            self.qc.updateLog('Filtrage à partir des communes : %s' % communeExpression)
             cReq = QgsFeatureRequest(cExp)
             cTableList = [a for a in dbTables if a.name == 'geo_commune']
             cTable = cTableList[0]
@@ -450,7 +449,7 @@ class cadastreLoading(QObject):
             if len(cids):
                 communeFilter = cids
         else:
-            self.qc.updateLog(u'Filtrage à partir des communes, expression invalide : %s' % cExp.parserErrorString())
+            self.qc.updateLog('Filtrage à partir des communes, expression invalide : %s' % cExp.parserErrorString())
 
         # Loop through qgisCadastreLayerList and load each corresponding table
         for item in self.qgisCadastreLayerList:
@@ -462,14 +461,14 @@ class cadastreLoading(QObject):
                 continue
 
             # update progress bar
-            self.qc.updateLog(u'* %s' % item['label'])
+            self.qc.updateLog('* %s' % item['label'])
             self.dialog.step += 1
             self.qc.updateProgressBar()
 
             # Tables - Get db_manager table instance
             tableList = [a for a in dbTables if a.name == item['table']]
             if len(tableList) == 0 and 'isView' not in item:
-                self.qc.updateLog(u'  - Aucune table trouvée pour %s' % item['label'])
+                self.qc.updateLog('  - Aucune table trouvée pour %s' % item['label'])
                 continue
 
             if tableList:
@@ -542,7 +541,7 @@ class cadastreLoading(QObject):
             # apply style
             qmlPath = os.path.join(
                 self.qc.plugin_dir,
-                "styles/%s/%s.qml" % (self.themeDir, item['name'])
+                "styles/{}/{}.qml".format(self.themeDir, item['name'])
             )
             if os.path.exists(qmlPath):
                 vlayer.loadNamedStyle(qmlPath)
@@ -558,7 +557,7 @@ class cadastreLoading(QObject):
         canvas.freeze(True)
 
         # Add all layers to QGIS registry (but not yet to the layer tree)
-        self.qc.updateLog(u'Ajout des couches dans le registre de QGIS')
+        self.qc.updateLog('Ajout des couches dans le registre de QGIS')
         QgsProject.instance().addMapLayers(qgisCadastreLayers, False)
         self.updateTimer()
 
@@ -645,7 +644,7 @@ class cadastreLoading(QObject):
         self.updateTimer()
 
         # Zoom to full extent
-        self.qc.updateLog(u'Zoom sur les couches')
+        self.qc.updateLog('Zoom sur les couches')
         canvas.zoomToFullExtent()
         canvas.freeze(False)
         canvas.refresh()
@@ -656,7 +655,7 @@ class cadastreLoading(QObject):
         self.qc.updateProgressBar()
 
         # Emit signal
-        self.qc.updateLog(u'Mise à jour des outils cadastre')
+        self.qc.updateLog('Mise à jour des outils cadastre')
         self.cadastreLoadingFinished.emit()
         self.updateTimer()
 
@@ -664,8 +663,8 @@ class cadastreLoading(QObject):
         QApplication.restoreOverrideCursor()
         QMessageBox.information(
             self.dialog,
-            u"Cadastre",
-            u"Les données ont bien été chargées dans QGIS"
+            "Cadastre",
+            "Les données ont bien été chargées dans QGIS"
         )
         self.dialog.pbProcess.setValue(0)
 
@@ -704,4 +703,4 @@ class cadastreLoading(QObject):
             QgsProject.instance().addMapLayers([layer], True)
         else:
             self.qc.updateLog(
-                u"La couche n'est pas valide et n'a pu être chargée. Pour PostGIS, avez-vous pensé à indiquer le schéma comme préfixe des tables ?")
+                "La couche n'est pas valide et n'a pu être chargée. Pour PostGIS, avez-vous pensé à indiquer le schéma comme préfixe des tables ?")

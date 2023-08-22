@@ -24,7 +24,6 @@ from pathlib import Path
 from time import time
 
 from qgis.core import (
-    Qgis,
     QgsApplication,
     QgsLayoutExporter,
     QgsPrintLayout,
@@ -85,10 +84,9 @@ class CadastreMenu:
         main_icon = QIcon(os.path.join(plugin_dir, "icon.png"))
 
         # Open the online help
-        if Qgis.QGIS_VERSION_INT >= 31000:
-            self.help_action_about_menu = QAction(main_icon, 'Cadastre', self.iface.mainWindow())
-            self.iface.pluginHelpMenu().addAction(self.help_action_about_menu)
-            self.help_action_about_menu.triggered.connect(self.open_help)
+        self.help_action_about_menu = QAction(main_icon, 'Cadastre', self.iface.mainWindow())
+        self.iface.pluginHelpMenu().addAction(self.help_action_about_menu)
+        self.help_action_about_menu.triggered.connect(self.open_help)
 
         actions = {
             "import_action": (
@@ -304,7 +302,7 @@ class CadastreMenu:
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
         template_content = None
-        with open(f, 'rt', encoding='utf8') as ff:
+        with open(f, encoding='utf8') as ff:
             template_content = ff.read()
         if not template_content:
             return
@@ -501,7 +499,7 @@ class CadastreMenu:
         if version in versionMessages:
             message += '<ul>'
             for item in versionMessages[version]:
-                message += '<li><b>%s</b> - %s</li>' % (item[0], item[1])
+                message += f'<li><b>{item[0]}</b> - {item[1]}</li>'
             message += '</ul>'
 
         message += '<h3>Changelog</h3>'
@@ -520,7 +518,7 @@ class CadastreMenu:
         dialog.exec_()
 
     def unload(self):
-        if Qgis.QGIS_VERSION_INT >= 31000 and self.help_action_about_menu:
+        if self.help_action_about_menu:
             self.iface.pluginHelpMenu().removeAction(self.help_action_about_menu)
             del self.help_action_about_menu
 
@@ -548,7 +546,7 @@ class CadastreMenu:
         try:
             from cadastre.tests.runner import test_package
             if package is None:
-                package = '{}.__init__'.format(Path(__file__).parent.name)
+                package = f'{Path(__file__).parent.name}.__init__'
             test_package(package, pattern)
         except (AttributeError, ModuleNotFoundError):
             message = 'Could not load tests. Are you using a production package?'

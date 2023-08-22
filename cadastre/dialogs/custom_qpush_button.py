@@ -10,7 +10,7 @@ from qgis.PyQt.QtWidgets import QPushButton
 
 class CustomPushButton(QPushButton):
     def __init__(self, *args):
-        super(CustomPushButton, self).__init__(*args)
+        super().__init__(*args)
 
     def initPushButton(
             self, sizeWidth, sizeHeight, coordX, coordY, name, text,

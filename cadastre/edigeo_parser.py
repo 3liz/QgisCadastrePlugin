@@ -60,7 +60,7 @@ class Commune:
         return size
 
     def __str__(self):
-        return '{} ({})'.format(self.insee, self.departement)
+        return f'{self.insee} ({self.departement})'
 
 
 class Parser:

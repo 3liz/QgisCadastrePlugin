@@ -41,10 +41,10 @@ PRINT_FORM_CLASS, _ = uic.loadUiType(
 
 class cadastrePrintProgress(QDialog, PRINT_FORM_CLASS):
     def __init__(self, parent=None):
-        super(cadastrePrintProgress, self).__init__(parent)
+        super().__init__(parent)
         # Set up the user interface
         self.setupUi(self)
-        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
+        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
 
 
 from contextlib import contextmanager

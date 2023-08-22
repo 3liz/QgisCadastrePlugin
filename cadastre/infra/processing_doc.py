@@ -165,7 +165,7 @@ def generate_processing_doc():  # NOQA C901
             help_string=alg.shortHelpString() if alg.shortHelpString() else '',
             parameters=param_markdown if param_markdown else 'No parameter',
             outputs=output_markdown if output_markdown else 'No output',
-            img='./{}'.format(basename(output_screen)),
+            img=f'./{basename(output_screen)}',
             algo_id=alg.id(),
         )
 

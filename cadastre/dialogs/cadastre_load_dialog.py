@@ -26,10 +26,10 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
     """ Load data from database. """
 
     def __init__(self, iface, cadastre_search_dialog, parent=None):
-        super(CadastreLoadDialog, self).__init__(parent)
+        super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
-        self.setWindowTitle('{} {}'.format(self.windowTitle(), set_window_title()))
+        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
         self.mc = self.iface.mapCanvas()
 
         self.cadastre_search_dialog = cadastre_search_dialog

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #/******************************************************************************
 # * $Id$
 # *
@@ -48,7 +47,7 @@ except:
 
 ###############################################################################
 
-class ScaledProgressObject(object):
+class ScaledProgressObject:
     def __init__(self, min, max, cbk, cbk_data = None):
         self.min = min
         self.max = max
@@ -104,7 +103,7 @@ def TermProgress( dfComplete, pszMessage, pProgressArg ):
 
     return True
 
-class TargetLayerInfo(object):
+class TargetLayerInfo:
     def __init__(self):
         self.poDstLayer = None
         self.poCT = None
@@ -112,7 +111,7 @@ class TargetLayerInfo(object):
         self.panMap = None
         self.iSrcZField = None
 
-class AssociatedLayers(object):
+class AssociatedLayers:
     def __init__(self):
         self.poSrcLayer = None
         self.psInfo = None
@@ -737,7 +736,7 @@ def ogr2ogr(
 #/* -------------------------------------------------------------------- */
         poODS = poDriver.CreateDataSource( pszDestDataSource, options = papszDSCO )
         if poODS is None:
-            print( "%s driver failed to create %s" % (pszFormat, pszDestDataSource ))
+            print( f"{pszFormat} driver failed to create {pszDestDataSource}")
             return False
 
 #/* -------------------------------------------------------------------- */
@@ -920,7 +919,7 @@ def ogr2ogr(
             if CSLFindString(papszLayers, poLayer.GetName()) >= 0:
                 if pszWHERE is not None:
                     if poLayer.SetAttributeFilter( pszWHERE ) != 0:
-                        print("FAILURE: SetAttributeFilter(%s) on layer '%s' failed.\n" % (pszWHERE, poLayer.GetName()) )
+                        print(f"FAILURE: SetAttributeFilter({pszWHERE}) on layer '{poLayer.GetName()}' failed.\n" )
                         if not bSkipFailures:
                             return False
 
