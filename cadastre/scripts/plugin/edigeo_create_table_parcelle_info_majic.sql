@@ -39,7 +39,7 @@ CREATE INDEX jj ON [PREFIXE]voie (voie );
 
 INSERT INTO [PREFIXE]parcelle_info
 SELECT gp.ogc_fid AS ogc_fid, gp.geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
-c.libcom AS nomcommune, c.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS bigint) AS surface_geo, p.dcntpa AS contenance,
+c.libcom AS nomcommune, p.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS bigint) AS surface_geo, p.dcntpa AS contenance,
 CASE
     WHEN coalesce(p.gparbat, '0') = '1' THEN 'Oui'
     ELSE 'Non'
@@ -91,7 +91,7 @@ LEFT OUTER JOIN [PREFIXE]ccodro ON ccodro.ccodro = pr.ccodro
 LEFT OUTER JOIN [PREFIXE]commune c ON p.ccocom = c.ccocom AND c.ccodep = p.ccodep
 LEFT OUTER JOIN [PREFIXE]voie v ON v.voie = p.voie
 GROUP BY gp.geo_parcelle, gp.ogc_fid, gp.idu, gp.tex, gp.geo_section, gp.lot,
-c.libcom, c.ccocom, gp.geom, p.dcntpa, v.libvoi, p.dnvoiri, v.natvoi,
+c.libcom, p.ccocom, gp.geom, p.dcntpa, v.libvoi, p.dnvoiri, v.natvoi,
 p.comptecommunal, p.cconvo, p.voie, p.dvoilib, p.gurbpa, p.gparbat,
 ccosec, dnupla
 ;

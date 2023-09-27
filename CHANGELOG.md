@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Utilisation du code commune de la parcelle dans parcelle_info MAJIC
+
 ## 1.18.1 - 2023-09-27
 
 * Corrections SQL
