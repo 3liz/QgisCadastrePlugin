@@ -100,7 +100,7 @@ FROM [PREFIXE]subdsect_id
 DROP INDEX IF EXISTS [PREFIXE]parcelle_id_object_rid;
 CREATE INDEX parcelle_id_object_rid ON [PREFIXE]parcelle_id (object_rid);
 DROP INDEX IF EXISTS [PREFIXE]parcelle_id_temp_idx;
-CREATE INDEX parcelle_id_temp_idx ON [PREFIXE]parcelle_id ('[DEPDIR]'||SUBSTR(idu,1,8));
+CREATE INDEX parcelle_id_temp_idx ON [PREFIXE]parcelle_id (('[DEPDIR]'||SUBSTR(idu,1,8)));
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_annee_idx;
 CREATE INDEX geo_subdsect_annee_idx ON [PREFIXE]geo_subdsect (annee);
 DROP INDEX IF EXISTS [PREFIXE]geo_subdsect_lot_idx;
@@ -363,4 +363,3 @@ ANALYZE [PREFIXE]geo_tsurf_commune;
 ANALYSE [PREFIXE]geo_unite_fonciere;
 COMMIT;
 -- FORMATAGE DONNEES : FIN
-
