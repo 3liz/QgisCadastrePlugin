@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.18.1 - 2023-09-27
+
+* Corrections SQL
+
 ## 1.18.0 - 2023-08-02
 
 * Support du MAJIC 2023 (contribution de @landryb et @MaelREBOUX)
