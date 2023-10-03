@@ -37,14 +37,14 @@ composer require "lizmap/lizmap-cadastre-module"
 
 * puis dans le répertoire `lizmap/install/` :
 
-Si vous utilisez Lizmap 3.6 ou plus, lancez d'abord les commandes :
+Si vous utilisez **Lizmap 3.6** ou plus, lancez d'abord les commandes :
 
 
 ```bash
 php configurator.php cadastre
 ```
 
-Enfin pour lizmap 3.4 à 3.6 et plus, lancez les scripts d'installation :
+Enfin pour **Lizmap 3.4 à 3.6 et plus**, lancez les scripts d'installation :
 
 ```bash
 cd ../install

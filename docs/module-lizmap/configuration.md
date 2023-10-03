@@ -29,14 +29,15 @@ Vous devez maintenant créer ou modifier la configuration **lizmap** via l'exten
 
 * Il faut obligatoirement ajouter la couche `Parcelles` dans l'onglet **table attributaire**.
 
-    - Pour les performances, pensez à cocher la case "Limiter les données à l'emprise courante" en bas de la fenêtre
+    - Pour les performances, pensez à cocher la case **Limiter les données à l'emprise courante** en bas de la fenêtre
       pour l'onglet table attributaire
 
 ![Table attributaire](media/table_attributaire.png)
 
-    - Pour les performances, vous pouvez aussi cocher "Masquer la couche dans la liste" pour la configuration de la
-      couche Parcelles. La fonction de sélection sera active mais la couche Parcelles n'apparaîtra pas dans la liste des
-      tables attributaires disponibles.
+!!! tip Performance
+    Pour les performances, vous pouvez aussi cocher **Masquer la couche dans la liste** pour la configuration de la
+    couche `Parcelles`. La fonction de sélection sera active, mais la couche `Parcelles` n'apparaîtra pas dans la liste des
+    tables attributaires disponibles.
 
 ![Configuration Table attributaire de la couche Parcelles](media/table_attributaire_parcelles.png)
 
@@ -44,14 +45,16 @@ Vous devez maintenant créer ou modifier la configuration **lizmap** via l'exten
 dans l'onglet `Couches` de Lizmap.
 
 * Vous devez activer la **popup** pour la couche des `Parcelles`, via l'onglet `Couches` du plugin Lizmap.
-**ATTENTION** Selon le public visé, vous devrez adapter les champs visibles dans la popup de Lizmap,
-notamment les champs `proprietaire` et `proprietaire_infos` qui contiennent des données sensibles issues
-des fichiers MAJIC.
 
-    - Si vous utilisez la popup **Auto** de Lizmap, désactiver le WMS pour les champs souhaités dans l'onglet
+!!! warning
+    Selon le public visé, vous devrez adapter les champs visibles dans la popup de Lizmap,
+    notamment les champs `proprietaire` et `proprietaire_infos` qui contiennent des données sensibles issues
+    des fichiers MAJIC.
+
+    - Si vous utilisez la popup **Automatique** de Lizmap, désactiver le WMS pour les champs souhaités dans l'onglet
     `Champs` des propriétés de la couche (tout à droite du tableau)
 
-    - Si vous utilisez la popup **QGIS**, adaptez la configuration en supprimant le contenu HTML non souhaité,
+    - Si vous utilisez la popup **Infobulle QGIS**, adaptez la configuration en supprimant le contenu HTML non souhaité,
     visible dans l'onglet `Affichage` (ou `Infobulle`) des propriétés de la couche, groupe `Infobulle HTML`
 
 * À noter que depuis la version **1.6.0** du module Cadastre, lorsque l'utilisateur a
@@ -75,5 +78,7 @@ attention de n'accorder le droit `Accéder aux données de propriétaires` qu'au
 
 Vous pouvez modifier plus finement les droits via le bouton `Changer les droits des groupes` situés
 dans le menu `Groupes d'utilisateurs pour les droits` de l'interface d'administration de Lizmap Web Client.
-*Attention, cette page modifie fortement les droits par défaut des groupes d'utilisateurs.
-Nous conseillons de ne pas toucher aux droits liés à Lizmap ici, sauf si vous maîtrisez ce que vous faites.*
+
+!!! warning
+    Cette page modifie fortement les droits par défaut des groupes d'utilisateurs.
+    Nous conseillons de ne pas toucher aux droits liés à Lizmap ici, sauf si vous maîtrisez ce que vous faites.
