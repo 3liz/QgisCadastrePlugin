@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.d451bc0e.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.79e020e9.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a5377069.min.css">
@@ -978,18 +978,18 @@ avec l'extension <strong>Cadastre</strong> :</p>
 <li>
 <p>Il faut obligatoirement ajouter la couche <code>Parcelles</code> dans l'onglet <strong>table attributaire</strong>.</p>
 <ul>
-<li>Pour les performances, pensez à cocher la case "Limiter les données à l'emprise courante" en bas de la fenêtre
+<li>Pour les performances, pensez à cocher la case <strong>Limiter les données à l'emprise courante</strong> en bas de la fenêtre
   pour l'onglet table attributaire</li>
 </ul>
 </li>
 </ul>
 <p><img alt="Table attributaire" src="../media/table_attributaire.png" /></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code>- Pour les performances, vous pouvez aussi cocher &quot;Masquer la couche dans la liste&quot; pour la configuration de la
-  couche Parcelles. La fonction de sélection sera active mais la couche Parcelles n&#39;apparaîtra pas dans la liste des
-  tables attributaires disponibles.
-</code></pre></div></td></tr></table></div>
+<div class="admonition tip performance">
+<p class="admonition-title">Tip</p>
+<p>Pour les performances, vous pouvez aussi cocher <strong>Masquer la couche dans la liste</strong> pour la configuration de la
+couche <code>Parcelles</code>. La fonction de sélection sera active, mais la couche <code>Parcelles</code> n'apparaîtra pas dans la liste des
+tables attributaires disponibles.</p>
+</div>
 <p><img alt="Configuration Table attributaire de la couche Parcelles" src="../media/table_attributaire_parcelles.png" /></p>
 <ul>
 <li>
@@ -997,29 +997,32 @@ avec l'extension <strong>Cadastre</strong> :</p>
 dans l'onglet <code>Couches</code> de Lizmap.</p>
 </li>
 <li>
-<p>Vous devez activer la <strong>popup</strong> pour la couche des <code>Parcelles</code>, via l'onglet <code>Couches</code> du plugin Lizmap.
-<strong>ATTENTION</strong> Selon le public visé, vous devrez adapter les champs visibles dans la popup de Lizmap,
+<p>Vous devez activer la <strong>popup</strong> pour la couche des <code>Parcelles</code>, via l'onglet <code>Couches</code> du plugin Lizmap.</p>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Selon le public visé, vous devrez adapter les champs visibles dans la popup de Lizmap,
 notamment les champs <code>proprietaire</code> et <code>proprietaire_infos</code> qui contiennent des données sensibles issues
 des fichiers MAJIC.</p>
 <ul>
 <li>
-<p>Si vous utilisez la popup <strong>Auto</strong> de Lizmap, désactiver le WMS pour les champs souhaités dans l'onglet
+<p>Si vous utilisez la popup <strong>Automatique</strong> de Lizmap, désactiver le WMS pour les champs souhaités dans l'onglet
 <code>Champs</code> des propriétés de la couche (tout à droite du tableau)</p>
 </li>
 <li>
-<p>Si vous utilisez la popup <strong>QGIS</strong>, adaptez la configuration en supprimant le contenu HTML non souhaité,
+<p>Si vous utilisez la popup <strong>Infobulle QGIS</strong>, adaptez la configuration en supprimant le contenu HTML non souhaité,
 visible dans l'onglet <code>Affichage</code> (ou <code>Infobulle</code>) des propriétés de la couche, groupe <code>Infobulle HTML</code></p>
 </li>
 </ul>
-</li>
-<li>
-<p>À noter que depuis la version <strong>1.6.0</strong> du module Cadastre, lorsque l'utilisateur a
+</div>
+<ul>
+<li>À noter que depuis la version <strong>1.6.0</strong> du module Cadastre, lorsque l'utilisateur a
 <strong>le droit de voir les données de propriétaires</strong>, le contenu détaillé des informations de la parcelle est
 <strong>affiché sous le contenu de la popup</strong>. Les onglets correspondent à ceux visibles dans QGIS lorsqu'on
 affiche le détail d'une parcelle : <strong>Parcelle, Propriétaires, Subdivisions fiscales, Locaux,
 Locaux : informations détaillées</strong>. Vous pouvez donc afficher moins d'information dans la popup,
-par exemple seulement le code de la parcelle et la commune</p>
-</li>
+par exemple seulement le code de la parcelle et la commune</li>
 </ul>
 <h2 id="dans-lizmap-web-client">Dans Lizmap Web Client<a class="headerlink" href="#dans-lizmap-web-client" title="Permanent link">#</a></h2>
 <p>Maintenant, vous devez configurer les droits d'accès à l'outil via l'interface d'administration.
@@ -1032,16 +1035,19 @@ Le module a créé :</p>
 au panneau de recherche par localisation <strong>ET</strong> par nom de propriétaires. <strong>Vous devez bien faire
 attention de n'accorder le droit <code>Accéder aux données de propriétaires</code> qu'aux personnes habilitées !</strong>.</p>
 <p>Vous pouvez modifier plus finement les droits via le bouton <code>Changer les droits des groupes</code> situés
-dans le menu <code>Groupes d'utilisateurs pour les droits</code> de l'interface d'administration de Lizmap Web Client.
-<em>Attention, cette page modifie fortement les droits par défaut des groupes d'utilisateurs.
-Nous conseillons de ne pas toucher aux droits liés à Lizmap ici, sauf si vous maîtrisez ce que vous faites.</em></p>
+dans le menu <code>Groupes d'utilisateurs pour les droits</code> de l'interface d'administration de Lizmap Web Client.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Cette page modifie fortement les droits par défaut des groupes d'utilisateurs.
+Nous conseillons de ne pas toucher aux droits liés à Lizmap ici, sauf si vous maîtrisez ce que vous faites.</p>
+</div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Dernière mise à jour:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 19, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 3, 2023</span>
       
     
   </small>
@@ -1059,10 +1065,10 @@ Nous conseillons de ne pas toucher aux droits liés à Lizmap ici, sauf si vous 
         </div>
         
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
-            
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-            Retour en haut de la page
-          </button>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Retour en haut de la page
+</button>
         
       </main>
       
@@ -1152,10 +1158,11 @@ Nous conseillons de ne pas toucher aux droits liés à Lizmap ici, sauf si vous 
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+    
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.726fbb30.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6eac0284.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
