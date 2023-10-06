@@ -1056,6 +1056,7 @@ CREATE INDEX sufexoneration_suf_idx ON sufexoneration (suf);
 CREATE INDEX idx_proprietaire_ccocom  ON proprietaire (ccocom);
 CREATE INDEX idx_commune_ccocom  ON commune (ccocom);
 CREATE INDEX idx_proprietaire_ccodro  ON proprietaire (ccodro);
+CREATE INDEX idx_proprietaire_proprietaire ON proprietaire (proprietaire);
 CREATE INDEX idx_proprietaire_comptecommunal ON proprietaire (comptecommunal);
 CREATE INDEX idx_local00_parcelle  ON local00 (parcelle);
 CREATE INDEX idx_local00_voie  ON local00 (voie);
