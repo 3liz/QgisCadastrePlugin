@@ -26,8 +26,8 @@ et imprimer les relevés :
 
 ## Prérequis
 
-* De préférence, QGIS LTR 3.10, ou à défaut QGIS 3.4
-* PostgreSQL : ≥ 9.6 + PostGIS ≥ 1.5 et < 3.x
+* De préférence, QGIS LTR 3.28, minimum QGIS 3.18
+* PostgreSQL : ≥ 13 + PostGIS ≥ 3.X
 * Spatialite : 4.3.0
 
 ## Financeurs
