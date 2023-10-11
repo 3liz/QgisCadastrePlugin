@@ -10,7 +10,7 @@ CASE
   ELSE pt.tse_bipevla
 END AS revenucadastral,
 px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb, Cast(px.rcexba2 * px.pexb / 100 AS numeric(10,2)) AS fractionrcexo,
-px.pexb AS pourcentageexo, l10.gtauom AS txom, '' AS coefreduc, pt.bateom as rcteom
+px.pexb AS pourcentageexo, l10.gtauom AS txom, l10.gimtom AS exom, pt.baeteom as rcteom
 FROM
 $schema"parcelle" p
 INNER JOIN $schema"local00" l ON l.parcelle = p.parcelle

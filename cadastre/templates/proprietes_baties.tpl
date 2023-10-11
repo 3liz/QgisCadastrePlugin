@@ -41,7 +41,7 @@
       <td style="text-align: center;">FRACTION RC EXO</td>
       <td style="text-align: center;">% EXO</td>
       <td style="text-align: center;">TX OM</td>
-      <td style="text-align: center;">COEF REDUC</td>
+      <td style="text-align: center;">EX OM</td>
       <td style="text-align: center;">RC TEOM</td>
     </tr>
   </thead>
