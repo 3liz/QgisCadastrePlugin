@@ -535,6 +535,7 @@ CREATE TABLE pevdependances (
 );
 
 CREATE TABLE proprietaire (
+    id serial NOT NULL,
     proprietaire text,
     annee text,
     ccodep text,

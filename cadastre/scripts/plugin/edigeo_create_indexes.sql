@@ -51,6 +51,8 @@ DROP INDEX IF EXISTS idx_commune_majic_ccocom;
 CREATE INDEX idx_commune_majic_ccocom ON commune_majic (ccocom);
 DROP INDEX IF EXISTS idx_proprietaire_ccodro;
 CREATE INDEX idx_proprietaire_ccodro ON proprietaire (ccodro);
+DROP INDEX IF EXISTS idx_proprietaire_proprietaire;
+CREATE INDEX idx_proprietaire_proprietaire ON proprietaire (proprietaire);
 DROP INDEX IF EXISTS idx_proprietaire_comptecommunal;
 CREATE INDEX idx_proprietaire_comptecommunal ON proprietaire (comptecommunal);
 DROP INDEX IF EXISTS idx_local00_parcelle;
@@ -69,4 +71,3 @@ DROP INDEX IF EXISTS idx_parcelle_voie;
 CREATE INDEX idx_parcelle_voie ON parcelle (voie);
 DROP INDEX IF EXISTS idx_parcelle_comptecommunal;
 CREATE INDEX idx_parcelle_comptecommunal ON parcelle (comptecommunal);
-

@@ -29,6 +29,7 @@ DROP INDEX IF EXISTS sufexoneration_suf_idx;
 DROP INDEX IF EXISTS idx_proprietaire_ccocom;
 DROP INDEX IF EXISTS idx_commune_ccocom;
 DROP INDEX IF EXISTS idx_proprietaire_ccodro;
+DROP INDEX IF EXISTS idx_proprietaire_proprietaire;
 DROP INDEX IF EXISTS idx_proprietaire_comptecommunal;
 DROP INDEX IF EXISTS idx_local00_parcelle;
 DROP INDEX IF EXISTS idx_local00_voie;
