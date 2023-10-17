@@ -3,6 +3,9 @@
 ## Unreleased
 
 * Utilisation du code commune de la parcelle dans parcelle_info MAJIC
+* Correction des DROP d'indexes 
+* Correction de la clé primaire de la table proprietaire
+* Ajout d'un index sur le champ voie de la table parcelle_info
 
 ## 1.18.1 - 2023-09-27
 
