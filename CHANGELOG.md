@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Import - Amélioration des performances pour l'EDIGEO
+  L'import des données EDIGEO via ogr2ogr n'utilisait plus l'option `PG_USE_COPY`
+
 ## 1.18.1 - 2023-09-27
 
 * Corrections SQL
