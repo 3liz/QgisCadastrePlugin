@@ -6,6 +6,8 @@
 * Correction des DROP d'indexes 
 * Correction de la clé primaire de la table proprietaire
 * Ajout d'un index sur le champ voie de la table parcelle_info
+* Import - Amélioration des performances pour l'EDIGEO
+  L'import des données EDIGEO via ogr2ogr n'utilisait plus l'option `PG_USE_COPY`
 
 ## 1.18.1 - 2023-09-27
 

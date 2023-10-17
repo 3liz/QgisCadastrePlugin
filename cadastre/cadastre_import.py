@@ -1402,7 +1402,8 @@ class cadastreImport(QObject):
                     '-lco', 'PG_USE_COPY=YES',
                     '-nlt', 'GEOMETRY',
                     '-gt', '50000',
-                    '--config', 'OGR_EDIGEO_CREATE_LABEL_LAYERS', 'NO'
+                    '--config', 'OGR_EDIGEO_CREATE_LABEL_LAYERS', 'NO',
+                    '--config', 'PG_USE_COPY', 'YES',
                 ]
                 # -c client_encoding=latin1
 
