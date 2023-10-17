@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.18.2 - 2023-10-17
+
 * Utilisation du code commune de la parcelle dans parcelle_info MAJIC
 * Correction des DROP d'indexes 
 * Correction de la clé primaire de la table proprietaire
