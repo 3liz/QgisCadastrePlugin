@@ -2,7 +2,7 @@ from abc import abstractmethod
 from os.path import join
 from pathlib import Path
 
-from qgis.core import Qgis, QgsProcessingAlgorithm
+from qgis.core import QgsProcessingAlgorithm
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 
