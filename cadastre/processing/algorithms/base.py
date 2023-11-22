@@ -26,10 +26,3 @@ class BaseProcessingAlgorithm(QgsProcessingAlgorithm):
     def icon(self):
         plugin_dir = str(Path(__file__).resolve().parent.parent.parent)
         return QIcon(join(plugin_dir, 'icon.png'))
-
-    @staticmethod
-    def set_tooltip_parameter(parameter, tooltip):
-        if Qgis.QGIS_VERSION_INT >= 31600:
-            parameter.setHelp(tooltip)
-        else:
-            parameter.tooltip_3liz = tooltip

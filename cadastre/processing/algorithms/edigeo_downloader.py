@@ -53,7 +53,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             'Liste des codes INSEE à télécharger',
             # defaultValue='25047,05046'
         )
-        self.set_tooltip_parameter(parameter, 'séparés par ","')
+        parameter.setHelp('Séparés par ","')
         self.addParameter(parameter)
 
         parameter = QgsProcessingParameterString(
@@ -62,9 +62,8 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             # defaultValue='050170000C03,AB',
             optional=True,
         )
-        self.set_tooltip_parameter(
-            parameter,
-            'séparés par ",", peut-être "050170000C03,AB" qui téléchargent toutes les feuilles AB et '
+        parameter.setHelp(
+            'Séparés par ",", peut-être "050170000C03,AB" qui téléchargent toutes les feuilles AB et '
             '050170000C03'
         )
         self.addParameter(parameter)
@@ -73,15 +72,15 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             self.DOSSIER,
             'Dossier de destination'
         )
-        self.set_tooltip_parameter(parameter, 'Dossier de destination pour les fichiers Edigeo')
+        parameter.setHelp('Dossier de destination pour les fichiers Edigeo')
         self.addParameter(parameter, createOutput=True)
 
         parameter = QgsProcessingParameterString(
             self.DATE,
-            'Date, disponible sur le site cadastre.data.gouv.fr (exemple "2023-01-01")',
+            'Date, disponible sur le site cadastre.data.gouv.fr (exemple "2023-10-01")',
             defaultValue='latest',
         )
-        self.set_tooltip_parameter(parameter, 'Par défaut "latest"')
+        parameter.setHelp('Par défaut "latest"')
         self.addParameter(parameter)
 
         parameter = QgsProcessingParameterString(
@@ -89,7 +88,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             'URL modèle, avec {date}, {departement}, {commune}',
             defaultValue=self.url(),
         )
-        self.set_tooltip_parameter(parameter, 'À ne changer que si l\'URL change')
+        parameter.setHelp('À ne changer que si l\'URL change')
         parameter.setFlags(parameter.flags() | QgsProcessingParameterDefinition.FlagAdvanced)
         self.addParameter(parameter)
 

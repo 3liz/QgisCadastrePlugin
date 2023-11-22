@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Augmentation de la version minimum de QGIS à 3.22 au lieu de 3.18 qui était une non LTR
+
 ## 1.18.2 - 2023-10-17
 
 * Utilisation du code commune de la parcelle dans parcelle_info MAJIC
