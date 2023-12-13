@@ -14,16 +14,28 @@ dans un dossier nommé `cadastre`.
 avec l'extension **Cadastre** :
 
     - Utilisez l'outil de **chargement des couches**, il configurera notamment les **variables** dans le projet
-  ainsi que les couches requises.
+  ainsi que les couches requises. Sinon, il faut utiliser l'algorithme de QGIS dans le menu **Traitements** pour
+  **configurer le projet**.
 
-    ![Project Properties](media/load_data.png)
+    ![Propriétés du projet](media/load_data.png)
 
     - Dans les **propriétés du projet**, onglet `QGIS Serveur`, il faut publier en WFS les couches
   `Communes`, `Parcelles` et `Sections`.
 
-    ![Plubication WFS](media/wfs_properties.png)
+    ![Publication WFS](media/wfs_properties.png)
 
-### Configurer la publication avec le plugin Lizmap
+??? note "Liste des variables qui doivent être dans les propriétés du projet"
+    Ces variables sont obligatoires dans les propriétés du projet pour avoir le module Cadastre fonctionnel sur le
+    projet en question :
+
+    * `cadastre_commune_layer_id`
+    * `cadastre_commune_unique_field`
+    * `cadastre_section_layer_id`
+    * `cadastre_section_unique_field`
+    * `cadastre_parcelle_layer_id`
+    * `cadastre_parcelle_unique_field`
+
+### Configurer la publication avec l'extension Lizmap
 
 Vous devez maintenant créer ou modifier la configuration **lizmap** via l'extension Lizmap pour QGIS :
 
@@ -44,7 +56,7 @@ Vous devez maintenant créer ou modifier la configuration **lizmap** via l'exten
 * La couche `Parcelles` ne doit pas être dans un groupe qui a l'option `Groupe comme une couche` activée
 dans l'onglet `Couches` de Lizmap.
 
-* Vous devez activer la **popup** pour la couche des `Parcelles`, via l'onglet `Couches` du plugin Lizmap.
+* Vous devez activer la **popup** pour la couche des `Parcelles`, via l'onglet `Couches` de l'extension Lizmap.
 
 !!! warning
     Selon le public visé, vous devrez adapter les champs visibles dans la popup de Lizmap,
