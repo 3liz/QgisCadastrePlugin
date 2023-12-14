@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## 1.19.0 - 2023-12-14
+
+* Correction de l'import des données sans les données MAJIC
 * Augmentation de la version minimum de QGIS à 3.22 au lieu de 3.18 qui était une non LTR
 
 ## 1.18.2 - 2023-10-17
@@ -23,11 +26,11 @@
 
 ## 1.17.3 - 2023-02-07
 
-* bugfix - La colonne RC TEOM au tableau des propriétés baties est le champs `bateom` et pas `baeteom`
+* bugfix - La colonne RC TEOM au tableau des propriétés baties est le champ `bateom` et pas `baeteom`
 
 ## 1.17.2 - 2023-01-26
 
-* bugfix - La colonne RC TEOM au tableau des propriétés baties est le champs `baeteom` et pas `mvltieomx` de `pevtaxation`
+* bugfix - La colonne RC TEOM au tableau des propriétés baties est le champ `baeteom` et pas `mvltieomx` de `pevtaxation`
 * bugfix - homogénéisation des adresses de propriétaires
 * Tableau des indivisions comme sous partie du tableau des propriétaires
 * Indivisions pour un tiers
