@@ -292,7 +292,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.qc.updateLog(msg.replace('\n', '<br/>'))
         return msg
 
-    def processImport(self):
+    def processImport(self) -> bool:
         """
         Lancement du processus d'import
         """
@@ -327,6 +327,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
             qi.importEdigeo()
 
         qi.endImport()
+        return qi.go
 
     def storeSettings(self):
         """

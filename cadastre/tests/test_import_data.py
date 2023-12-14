@@ -17,7 +17,7 @@ class TestCase(namedtuple('TestCase', [
     pass
 
 
-Cornillon = TestCase(
+CornillonMajic = TestCase(
     insee='13029',
     commune='CORNILLON-CONFOUX',
     epsg='EPSG:2154',
@@ -32,20 +32,20 @@ Cornillon = TestCase(
     geo_commune='132029',
 )
 
-# RemireMontjoly = TestCase(
-#     insee='97309',
-#     commune='REMIRE MONTJOLY',
-#     epsg='EPSG:32620',
-#     has_majic=False,
-#     lot='1',
-#     dept='97',
-#     ccocom=None,
-#     ccodir=None,
-#     direction='3',
-#     version='2021',
-#     year='2021',
-#     geo_commune='973309',
-# )
+CornillonSansMajic = TestCase(
+    insee='13029',
+    commune='CORNILLON-CONFOUX',
+    epsg='EPSG:2154',
+    has_majic=False,
+    lot='1',
+    dept='13',
+    ccocom='029',
+    ccodir='2',
+    direction='2',
+    version='2019',
+    year='2019',
+    geo_commune='132029',
+)
 
 TEST_SCHEMA = 'cadastre'
 
@@ -67,7 +67,7 @@ class TestImportData(unittest.TestCase):
 
     def test_import(self):
         """Test to import data into a PostgreSQL database. """
-        for test_case in (Cornillon, ):
+        for test_case in (CornillonMajic, CornillonSansMajic):
             with self.subTest(i=test_case.commune):
                 self._test_import(test_case)
 
@@ -126,7 +126,8 @@ class TestImportData(unittest.TestCase):
         dialog.inDataYear.setValue(int(test_case.year))
 
         # Import
-        dialog.btProcessImport.click()
+        # As we want to the return of the self.go, we call the slot directly
+        self.assertTrue(dialog.processImport())
 
         # Check we have a town in edigeo
         results = connection.executeSql('SELECT "geo_commune", "tex2" FROM cadastre.geo_commune;')
