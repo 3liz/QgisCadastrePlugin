@@ -32,6 +32,7 @@ import tempfile
 from datetime import datetime
 from distutils import dir_util
 from pathlib import Path
+from string import Template
 
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
@@ -86,9 +87,10 @@ class cadastreImport(QObject):
         self.pScriptDir = tempfile.mkdtemp('', 'cad_p_script_', tempDir)
         self.edigeoPlainDir = tempfile.mkdtemp('', 'cad_edigeo_plain_', tempDir)
         self.replaceDict = {
-            '[VERSION]': self.dialog.dataVersion,
-            '[ANNEE]': self.dialog.dataYear,
-            '[LOT]': self.dialog.edigeoLot
+            'VERSION': self.dialog.dataVersion,
+            'ANNEE': self.dialog.dataYear,
+            'LOT': self.dialog.edigeoLot,
+            'SRID': '2154',  # The default
         }
         self.maxInsertRows = s.value("cadastre/maxInsertRows", 50000, type=int)
         self.spatialiteTempStore = s.value("cadastre/spatialiteTempStore", 'MEMORY', type=str)
@@ -133,9 +135,9 @@ class cadastreImport(QObject):
         ]
 
         if self.dialog.dbType == 'postgis':
-            self.replaceDict['[PREFIXE]'] = '"%s".' % self.dialog.schema
+            self.replaceDict['PREFIXE'] = '"%s".' % self.dialog.schema
         else:
-            self.replaceDict['[PREFIXE]'] = ''
+            self.replaceDict['PREFIXE'] = ''
         self.go = True
         self.startTime = datetime.now()
         self.step = 0
@@ -216,7 +218,7 @@ class cadastreImport(QObject):
 
         # Replace dictionnary
         replaceDict = self.replaceDict.copy()
-        replaceDict['2154'] = self.targetSrid
+        replaceDict['SRID'] = self.targetSrid
 
         # Suppression des éventuelles tables edigeo import
         # laissées suite à bug par exemple
@@ -266,7 +268,7 @@ class cadastreImport(QObject):
 
         # Replace dictionnary
         replaceDict = self.replaceDict.copy()
-        replaceDict['2154'] = self.targetSrid
+        replaceDict['SRID'] = self.targetSrid
 
         # Run the table creation scripts
         for table in newTables:
@@ -353,7 +355,7 @@ class cadastreImport(QObject):
         # If MAJIC but no EDIGEO afterward
         # run SQL script to update link between EDI/MAJ
         if not self.dialog.doEdigeoImport:
-            replaceDict['[DEPDIR]'] = f'{self.dialog.edigeoDepartement}{self.dialog.edigeoDirection}'
+            replaceDict['DEPDIR'] = f'{self.dialog.edigeoDepartement}{self.dialog.edigeoDirection}'
             scriptList.append(
                 {
                     'title': 'Suppression des indexes',
@@ -378,7 +380,7 @@ class cadastreImport(QObject):
             )
 
             # Ajout de la table parcelle_info
-            replaceDict['2154'] = self.targetSrid
+            replaceDict['SRID'] = self.targetSrid
             scriptList.append(
                 {
                     'title': 'Ajout de la table parcelle_info',
@@ -675,7 +677,7 @@ class cadastreImport(QObject):
 
         # Suppression et recréation des tables edigeo pour import
         if self.dialog.hasData:
-            replaceDict['2154'] = self.targetSrid
+            replaceDict['SRID'] = self.targetSrid
             # Drop edigeo data
             self.dropEdigeoRawData()
             scriptList.append(
@@ -716,7 +718,7 @@ class cadastreImport(QObject):
 
         # Format edigeo data
         replaceDict = self.replaceDict.copy()
-        replaceDict['[DEPDIR]'] = f'{self.dialog.edigeoDepartement}{self.dialog.edigeoDirection}'
+        replaceDict['DEPDIR'] = f'{self.dialog.edigeoDepartement}{self.dialog.edigeoDirection}'
 
         scriptList = []
 
@@ -764,7 +766,7 @@ class cadastreImport(QObject):
 
         # Ajout de la table parcelle_info
         if (self.dialog.doMajicImport or self.dialog.hasMajicDataProp):
-            replaceDict['2154'] = self.targetSrid
+            replaceDict['SRID'] = self.targetSrid
             scriptList.append(
                 {
                     'title': 'Ajout de la table parcelle_info',
@@ -772,7 +774,7 @@ class cadastreImport(QObject):
                 }
             )
         else:
-            replaceDict['2154'] = self.targetSrid
+            replaceDict['SRID'] = self.targetSrid
             scriptList.append(
                 {
                     'title': 'Ajout de la table parcelle_info',
@@ -1072,21 +1074,6 @@ class cadastreImport(QObject):
             finally:
                 QApplication.restoreOverrideCursor()
 
-    def replaceParametersInString(self, string, replaceDict):
-        """
-        Replace all occurences in string
-        """
-
-        def replfunc(match):
-            if match.group(0) in replaceDict:
-                return replaceDict[match.group(0)]
-            else:
-                return None
-
-        regex = re.compile('|'.join(re.escape(x) for x in replaceDict), re.IGNORECASE)
-        string = regex.sub(replfunc, string)
-        return string
-
     def replaceParametersInScript(self, scriptPath, replaceDict):
         """
         Replace all parameters in sql scripts
@@ -1099,12 +1086,14 @@ class cadastreImport(QObject):
 
             try:
                 data = ''
-                with open(scriptPath, encoding='utf-8-sig') as fin:
-                    data = fin.read()  # .decode("utf-8-sig")
-
-                data = self.replaceParametersInString(data, replaceDict)
-                # data = data.encode('utf-8')
-                with open(scriptPath, 'w', encoding='utf8') as fout:
+                scriptPath = Path(scriptPath)
+                with scriptPath.open() as fin:
+                    data = fin.read()
+                # Will raise a KeyError exception for
+                # unmatched placeholder (we *want* this, because otherwise
+                # we would have an invalid sql script)
+                data = Template(data).substitute(replaceDict)
+                with scriptPath.open('w') as fout:
                     fout.write(data)
 
             except OSError as e:
