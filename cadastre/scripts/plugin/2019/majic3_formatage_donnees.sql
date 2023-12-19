@@ -2,7 +2,7 @@
 BEGIN;
 
 -- Traitement: parcelle
-INSERT INTO [PREFIXE]parcelle
+INSERT INTO ${PREFIXE}parcelle
 (
  parcelle, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, dcntpa, dsrpar, dnupro, jdatat, dreflf, gpdl, cprsecr, ccosecr, dnuplar, dnupdl, gurbpa,
  dparpi, ccoarp, gparnf, gparbat, parrev, gpardp, fviti, dnvoiri, dindic, ccovoi, ccoriv, ccocif, ccpper, gpafpd, ajoutcoherence,
@@ -13,7 +13,7 @@ INSERT INTO [PREFIXE]parcelle
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,15),' ','0') AS parcelle,
-  '[ANNEE]' AS annee,
+  '${ANNEE}' AS annee,
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -67,11 +67,11 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,179,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,179,3),'999') END AS ccoifp,
   REPLACE('FR'||SUBSTRING(tmp,1,15),' ','0') AS inspireid,
 
-  '[LOT]' as lot
-FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='10';
+  '${LOT}' as lot
+FROM ${PREFIXE}nbat WHERE SUBSTRING(tmp,20,2) ='10';
 
 -- Traitement: suf
-INSERT INTO [PREFIXE]suf
+INSERT INTO ${PREFIXE}suf
 (
  suf, annee,ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ccosub, dcntsf, dnupro, gnexps, drcsub, drcsuba, ccostn, cgrnum, dsgrpf, dclssf, cnatsp,
  drgpos, ccoprel, ccosecl, dnuplal, dnupdl, dnulot, rclsi, gnidom, topja, datja, postel,
@@ -80,7 +80,7 @@ INSERT INTO [PREFIXE]suf
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ','0') AS suf,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -118,18 +118,18 @@ SELECT
   REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
   REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,31,6),' ', '0') AS comptecommunal,
   CASE WHEN  trim(SUBSTRING(tmp,81,3))='' THEN NULL ELSE REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,72,9)||SUBSTRING(tmp,81,3),' ', '0') END AS pdl,
-  '[LOT]' as lot
-FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='21';
+  '${LOT}' as lot
+FROM ${PREFIXE}nbat WHERE SUBSTRING(tmp,20,2) ='21';
 
 -- Traitement: sufexoneration
-INSERT INTO [PREFIXE]sufexoneration
+INSERT INTO ${PREFIXE}sufexoneration
 (
  sufexoneration, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ccosub, rnuexn, ccolloc, pexn, gnexts, jandeb, jfinex, fcexn, fcexna, rcexna,
  rcexnba, mpexnba, suf, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END||SUBSTRING(tmp,18,2),' ','0') AS sufexoneration,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -149,18 +149,18 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,79,10))='' THEN NULL ELSE to_number(SUBSTRING(tmp,79,10),'9999999999')/100 END AS rcexnba,
   SUBSTRING(tmp,90,10) AS mpexnba,
   REPLACE(SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ', '0') AS suf,
-  '[LOT]' as lot
-FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='30';
+  '${LOT}' as lot
+FROM ${PREFIXE}nbat WHERE SUBSTRING(tmp,20,2) ='30';
 
 -- Traitement: suftaxation
-INSERT INTO [PREFIXE]suftaxation
+INSERT INTO ${PREFIXE}suftaxation
 (
  suftaxation, annee,ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, ccosub, c1majposa, c1bisufad, c2majposa, c2bisufad, c3majposa, c3bisufad, c4majposa, c4bisufad, cntmajtc,
  suf, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ','0') AS suftaxation,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -178,18 +178,18 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,100,10))='' THEN NULL ELSE to_number(SUBSTRING(tmp,100,10),'9999999999')/100 END  AS c4bisufad,
   CASE WHEN trim(SUBSTRING(tmp,110,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,110,9),'999999999') END cntmajtc,
   REPLACE(SUBSTRING(tmp,1,15)||CASE WHEN SUBSTRING(tmp,16,2) IS NULL THEN '' ELSE trim(SUBSTRING(tmp,16,2)) END,' ', '0') AS suf,
-  '[LOT]' as lot
-FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='36';
+  '${LOT}' as lot
+FROM ${PREFIXE}nbat WHERE SUBSTRING(tmp,20,2) ='36';
 
 -- Traitement: local00
-INSERT INTO [PREFIXE]local00
+INSERT INTO ${PREFIXE}local00
 (
  local00, annee, ccodep, ccodir, ccocom, invar, ccopre, ccosec, dnupla, dnubat, descr, dniv, dpor, ccoriv, ccovoi, dnvoiri, dindic, ccocif, dvoilib, cleinvar,
  ccpper, locinc, parcelle, voie, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10),' ','0') AS local00,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -215,11 +215,11 @@ SELECT
   SUBSTRING(tmp,107,1) AS locinc,
   REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,36,9),' ', '0') AS parcelle,
   REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,62,5),' ', '0')||SUBSTRING(tmp,57,4) AS voie,
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='00';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='00';
 
 -- Traitement: local10
-INSERT INTO [PREFIXE]local10
+INSERT INTO ${PREFIXE}local10
 (
  local10, annee,ccodep, ccodir, ccocom, invar, gpdl, dsrpar, dnupro, jdatat, dnufnl, ccoeva, ccitlv, dteloc, gtauom, dcomrd, ccoplc, cconlc, dvltrt,
  ccoape, cc48lc, dloy48a, top48a, dnatlc, dnupas, gnexcf, dtaucf, cchpr, jannat, dnbniv, hlmsem, postel, dnatcg, jdatcgl, dnutbx, dvltla,
@@ -229,7 +229,7 @@ INSERT INTO [PREFIXE]local10
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10),' ','0') AS local10,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -288,14 +288,14 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,175,3))='' THEN NULL ELSE to_number(SUBSTRING(tmp,175,3),'999') END AS ccoifp,
 
   REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,38,6),' ', '0') AS comptecommunal,
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='10';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='10';
 
 CREATE INDEX idxan_local00 ON local00 (annee);
 CREATE INDEX idxan_local10 ON local10 (annee);
-CREATE INDEX idx_local10_invar ON [PREFIXE]local10 (invar);
-CREATE INDEX idx_local00_invar ON [PREFIXE]local00 (invar);
-UPDATE [PREFIXE]local10 SET
+CREATE INDEX idx_local10_invar ON ${PREFIXE}local10 (invar);
+CREATE INDEX idx_local00_invar ON ${PREFIXE}local00 (invar);
+UPDATE ${PREFIXE}local10 SET
   ccopre = local00.ccopre,
   ccosec = local00.ccosec,
   dnupla = local00.dnupla,
@@ -305,11 +305,11 @@ UPDATE [PREFIXE]local10 SET
   local00 = local10.ccodep||local10.ccodir||local10.invar,
   parcelle = REPLACE(local10.ccodep||local10.ccodir||local10.ccocom||local00.ccopre||local00.ccosec||local00.dnupla,' ', '0'),
   voie= REPLACE(local10.ccodep||local10.ccodir||local10.ccocom||local00.ccovoi||local00.ccoriv,' ', '0')
-FROM [PREFIXE]local00
-WHERE local00.ccodep = local10.ccodep AND local00.ccodir = local10.ccodir AND local00.invar = local10.invar AND local00.annee='[ANNEE]' AND local10.annee='[ANNEE]';
+FROM ${PREFIXE}local00
+WHERE local00.ccodep = local10.ccodep AND local00.ccodir = local10.ccodir AND local00.invar = local10.invar AND local00.annee='${ANNEE}' AND local10.annee='${ANNEE}';
 
 -- Traitement: pev
-INSERT INTO [PREFIXE]pev
+INSERT INTO ${PREFIXE}pev
 (
  pev, annee, ccodep, ccodir, ccocom, invar,
  dnupev,
@@ -322,7 +322,7 @@ INSERT INTO [PREFIXE]pev
  )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ','0') AS pev,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -362,11 +362,11 @@ SELECT
 
 
   SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10) AS local10,
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='21';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='21';
 
 -- Traitement: pevexoneration
-INSERT INTO [PREFIXE]pevexoneration
+INSERT INTO ${PREFIXE}pevexoneration
 (
  pevexoneration, annee,ccodep, ccodir, ccocom, invar, Janbil, dnupev, dnuexb, ccolloc, pexb, gnextl, jandeb, janimp, vecdif, vecdifa, fcexb, fcexba, rcexba,
  dvldif2, dvldif2a, fcexb2, fcexba2, rcexba2,
@@ -375,7 +375,7 @@ INSERT INTO [PREFIXE]pevexoneration
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3)||CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END, ' ','0') AS pevexoneration,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -412,11 +412,11 @@ SELECT
 
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
 
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='30';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='30';
 
 -- Traitement: pevexoneration_imposable
-INSERT INTO [PREFIXE]pevexoneration_imposable
+INSERT INTO ${PREFIXE}pevexoneration_imposable
 (
  pevexoneration_imposable, annee,ccodep, ccodir, ccocom, invar, Janbil, dnupev, dnuexb, ccolloc, pexb, gnextl, jandeb, janimp, vecdif, vecdifa, fcexb, fcexba, rcexba,
  dvldif2, dvldif2a, fcexb2, fcexba2, rcexba2,
@@ -425,7 +425,7 @@ INSERT INTO [PREFIXE]pevexoneration_imposable
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3)||CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END, ' ','0') AS pevexoneration_imposable,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -462,11 +462,11 @@ SELECT
 
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
 
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='30';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='30';
 
 -- Traitement: pevexoneration_imposee
-INSERT INTO [PREFIXE]pevexoneration_imposee
+INSERT INTO ${PREFIXE}pevexoneration_imposee
 (
  pevexoneration_imposee, annee,ccodep, ccodir, ccocom, invar, Janbil, dnupev, dnuexb, ccolloc, pexb, gnextl, jandeb, janimp, vecdif, vecdifa, fcexb, fcexba, rcexba,
  dvldif2, dvldif2a, fcexb2, fcexba2, rcexba2,
@@ -475,7 +475,7 @@ INSERT INTO [PREFIXE]pevexoneration_imposee
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3)||CASE WHEN SUBSTRING(tmp,24,4) IS NOT NULL THEN trim(SUBSTRING(tmp,24,4)) ELSE SUBSTRING(tmp,24,4) END, ' ','0') AS pevexoneration_imposee,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -512,11 +512,11 @@ SELECT
 
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
 
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='31';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='31';
 
 -- Traitement: pevtaxation
-INSERT INTO [PREFIXE]pevtaxation
+INSERT INTO ${PREFIXE}pevtaxation
 (
  pevtaxation, annee,ccodep, ccodir, ccocom, invar, janbil, dnupev, co_vlbai, co_vlbaia, co_bipevla, de_vlbai, de_vlbaia, de_bipevla,
  tse_vlbai, tse_vlbaia, tse_bipevla, gp_vlbai, gp_vlbaia, gp_bipevla, bateom, baomec,
@@ -525,7 +525,7 @@ INSERT INTO [PREFIXE]pevtaxation
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3), ' ', '0') AS pevtaxation,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -555,11 +555,11 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,175,6))='' THEN NULL ELSE to_number(SUBSTRING(tmp,175,6),'999999') END  AS mvltieomx,
 
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='36';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='36';
 
 -- Traitement: pevprincipale
-INSERT INTO [PREFIXE]pevprincipale
+INSERT INTO ${PREFIXE}pevprincipale
 (
  pevprincipale, annee,ccodep, ccodir, ccocom, invar, dnupev, dnudes, dep1_cconad, dep1_dsueic, dep1_dcimei, dep2_cconad, dep2_dsueic, dep2_dcimei, dep3_cconad,
  dep3_dsueic, dep3_dcimei, dep4_cconad, dep4_dsueic, dep4_dcimei, geaulc, gelelc, gesclc, ggazlc, gasclc, gchclc, gvorlc, gteglc, dnbbai, dnbdou,
@@ -568,7 +568,7 @@ INSERT INTO [PREFIXE]pevprincipale
  )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||CASE WHEN SUBSTRING(tmp,33,3) IS NOT NULL THEN trim(SUBSTRING(tmp,33,3)) ELSE SUBSTRING(tmp,33,3) END,' ','0') AS pevprincipale,
-  '[ANNEE]' as annee,
+  '${ANNEE}' as annee,
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -621,11 +621,11 @@ SELECT
   SUBSTRING(tmp,126,2) AS dnbniv,
 
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='40';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='40';
 
 -- Traitement: pevprofessionnelle
-INSERT INTO [PREFIXE]pevprofessionnelle
+INSERT INTO ${PREFIXE}pevprofessionnelle
 (
  pevprofessionnelle, annee,
  ccodep, ccodir, ccocom, invar,
@@ -636,7 +636,7 @@ INSERT INTO [PREFIXE]pevprofessionnelle
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3), ' ', '0') AS pevprofessionnelle,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -652,11 +652,11 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,81,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,81,9),'999999999') END AS dsupk2,
 
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
-  '[LOT]' AS lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='50';
+  '${LOT}' AS lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='50';
 
 -- Traitement:
-INSERT INTO [PREFIXE]pevlissage
+INSERT INTO ${PREFIXE}pevlissage
 (
  pevlissage, annee,
  ccodep, ccodir, ccocom, invar,
@@ -668,7 +668,7 @@ INSERT INTO [PREFIXE]pevlissage
 )
 SELECT DISTINCT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pevlissage,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -689,12 +689,12 @@ SELECT DISTINCT
   CASE WHEN trim(SUBSTRING(tmp,144,11))='' THEN NULL ELSE to_number(SUBSTRING(tmp,144,11),'99999999999') END AS tbfpas,
 
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
-  '[LOT]' AS lot
+  '${LOT}' AS lot
 
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='52';
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='52';
 
 -- Traitement: pevdependances
-INSERT INTO [PREFIXE]pevdependances
+INSERT INTO ${PREFIXE}pevdependances
 (
  pevdependances, annee, ccodep, ccodir, ccocom, invar, dnupev, dnudes, dsudep, cconad, asitet, dmatgm, dmatto, detent, geaulc, gelelc, gchclc, dnbbai, dnbdou,
  dnblav, dnbwc, deqtlc, dcimlc, dcetde, dcspde, dcspdea,
@@ -702,7 +702,7 @@ INSERT INTO [PREFIXE]pevdependances
 )
 select
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3)||SUBSTRING(tmp,33,3), ' ', '0') AS pevdependances,
-  '[ANNEE]' AS annee,
+  '${ANNEE}' AS annee,
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -734,28 +734,28 @@ select
   SUBSTRING(tmp,77,6) AS dcspdea,
 
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10)||SUBSTRING(tmp,28,3),' ', '0') AS pev,
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE SUBSTRING(tmp,31,2) ='60';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='60';
 
 
 -- Traitement: commune_majic
-INSERT INTO [PREFIXE]commune_majic
+INSERT INTO ${PREFIXE}commune_majic
 (
     commune, annee, ccodep, ccodir, ccocom, libcom, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,6),' ', '0') AS commune,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
   trim(SUBSTRING(tmp,17)) AS libcom,
-  '[LOT]' as lot
-FROM [PREFIXE]bati WHERE trim(SUBSTRING(tmp,7,10))='' AND trim(SUBSTRING(tmp,4,3)) != '';
+  '${LOT}' as lot
+FROM ${PREFIXE}bati WHERE trim(SUBSTRING(tmp,7,10))='' AND trim(SUBSTRING(tmp,4,3)) != '';
 
 
 -- Traitement: proprietaire
-INSERT INTO [PREFIXE]proprietaire
+INSERT INTO ${PREFIXE}proprietaire
 (
  proprietaire, annee, ccodep, ccodir, ccocom, dnupro, dnulp, ccocif, dnuper, ccodro, ccodem, gdesip, gtoper, ccoqua, dnatpr, ccogrm, dsglpm, dforme,
  ddenom, gtyp3, gtyp4, gtyp5, gtyp6, dlign3, dlign4, dlign5, dlign6, ccopay, ccodep1a2, ccodira, ccocom_adr, ccovoi, ccoriv, dnvoiri, dindic,
@@ -768,7 +768,7 @@ INSERT INTO [PREFIXE]proprietaire
 )
 SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
   REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,7,6)||SUBSTRING(tmp,13,2)||SUBSTRING(tmp,19,6), ' ', '0') AS proprietaire,
-  '[ANNEE]' AS annee,
+  '${ANNEE}' AS annee,
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -823,37 +823,37 @@ SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
 
 
   REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,7,6),' ', '0') AS comptecommunal,
-  '[LOT]' as lot
-FROM [PREFIXE]prop
+  '${LOT}' as lot
+FROM ${PREFIXE}prop
 WHERE trim(SUBSTRING(tmp,7,6)) != ''
 ORDER BY ccodep,ccocom,dnupro,dnulp,dnuper;
 
 -- création: comptecommunal à partir de proprietaire
 CREATE INDEX idxan_proprietaire ON proprietaire (annee);
-INSERT INTO [PREFIXE]comptecommunal
+INSERT INTO ${PREFIXE}comptecommunal
   (comptecommunal, annee, ccodep, ccodir, ccocom, dnupro, ajoutcoherence, lot)
 SELECT
   REPLACE(ccodep||ccodir||ccocom||dnupro,' ', '0') AS comptecommunal,
-  '[ANNEE]',
+  '${ANNEE}',
   ccodep,
   ccodir,
   ccocom,
   dnupro,
   'N',
-  '[LOT]' as lot
-FROM [PREFIXE]proprietaire
-WHERE annee='[ANNEE]' AND lot='[LOT]'
+  '${LOT}' as lot
+FROM ${PREFIXE}proprietaire
+WHERE annee='${ANNEE}' AND lot='${LOT}'
 GROUP BY ccodep, ccodir, ccocom, dnupro;
 
 -- Traitement: pdl
-INSERT INTO [PREFIXE]pdl
+INSERT INTO ${PREFIXE}pdl
 (
  pdl, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, dnupdl, dnivim, ctpdl, dmrpdl, gprmut, dnupro, ccocif,
  parcelle, comptecommunal, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,18),' ', '0') AS pdl,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -869,18 +869,18 @@ SELECT
   SUBSTRING(tmp,94,4) AS ccocif,
   REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
   REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,83,6),' ', '0') AS comptecommunal,
-  '[LOT]' as lot
-FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='10';
+  '${LOT}' as lot
+FROM ${PREFIXE}pdll WHERE SUBSTRING(tmp,26,2) ='10';
 
 -- Traitement: parcellecomposante
-INSERT INTO [PREFIXE]parcellecomposante
+INSERT INTO ${PREFIXE}parcellecomposante
 (
  parcellecomposante, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, dnupdl, ccoprea, ccoseca, dnuplaa, ccocif,
  pdl, parcelle,parcellea, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,18)||SUBSTRING(tmp,28,9),' ', '0') AS parcellecomposante,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -895,18 +895,18 @@ SELECT
   REPLACE(SUBSTRING(tmp,1,18),' ', '0') AS pdl,
   REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
   CASE WHEN trim(SUBSTRING(tmp,33,4)) ='' THEN null ELSE REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,28,9),' ', '0') END parcellea,
-  '[LOT]' as lot
-FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='20';
+  '${LOT}' as lot
+FROM ${PREFIXE}pdll WHERE SUBSTRING(tmp,26,2) ='20';
 
 -- Traitement: lots
-INSERT INTO [PREFIXE]lots
+INSERT INTO ${PREFIXE}lots
 (
  lots, annee, ccodep, ccodir, ccocom, ccopre, ccosec, dnupla, dnupdl, dnulot, cconlo, dcntlo, dnumql, ddenql, dfilot, datact, dnuprol, dreflf, ccocif,
  pdl, comptecommunal, parcelle, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,25),' ', '0') AS lots,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -927,18 +927,18 @@ SELECT
   REPLACE(SUBSTRING(tmp,1,18),' ', '0') AS pdl,
   REPLACE(SUBSTRING(tmp,1,2)||SUBSTRING(tmp,3,4)||SUBSTRING(tmp,83,6),' ', '0') AS comptecommunal,
   REPLACE(SUBSTRING(tmp,1,15),' ', '0') AS parcelle,
-  '[LOT]' as lot
-FROM [PREFIXE]pdll WHERE SUBSTRING(tmp,26,2) ='30';
+  '${LOT}' as lot
+FROM ${PREFIXE}pdll WHERE SUBSTRING(tmp,26,2) ='30';
 
 -- Traitement: lotslocaux
-INSERT INTO [PREFIXE]lotslocaux
+INSERT INTO ${PREFIXE}lotslocaux
 (
  lotslocaux, annee, ccodepl, ccodirl, ccocoml, ccoprel, ccosecl, dnuplal, dnupdl, dnulot, ccodebpb, ccodird, ccocomb, ccopreb, invloc, dnumql, ddenql,
  lots, local00, local10, lot
 )
 SELECT DISTINCT
   REPLACE(SUBSTRING(tmp,1,25)||SUBSTRING(tmp,37,10),' ', '0') AS lotslocaux,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodepl,
   SUBSTRING(tmp,3,1) AS ccodirl,
   SUBSTRING(tmp,4,3) AS ccocoml,
@@ -957,11 +957,11 @@ SELECT DISTINCT
   REPLACE(SUBSTRING(tmp,1,25),' ', '0') AS lots,
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,37,10),' ', '0') AS local00,
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,37,10),' ', '0') AS local10,
-  '[LOT]' as lot
-FROM [PREFIXE]lloc;
+  '${LOT}' as lot
+FROM ${PREFIXE}lloc;
 
 -- Traitement: commune
-INSERT INTO [PREFIXE]commune
+INSERT INTO ${PREFIXE}commune
 (
  commune, geo_commune, annee, ccodep, ccodir, ccocom, clerivili, libcom, typcom, ruract, carvoi, indpop, poprel, poppart, popfict, annul, dteannul, dtecreart, codvoi,
  typvoi, indldnbat, motclas, lot
@@ -969,7 +969,7 @@ INSERT INTO [PREFIXE]commune
 SELECT
   REPLACE(SUBSTRING(tmp,1,6),' ', '0') AS commune,
   REPLACE(SUBSTRING(tmp,1,6),' ', '0') AS geo_commune,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -989,11 +989,11 @@ SELECT
   SUBSTRING(tmp,109,1) AS typvoi,
   SUBSTRING(tmp,110,1) AS indldnbat,
   SUBSTRING(tmp,113,8) AS motclas,
-  '[LOT]' as lot
-FROM [PREFIXE]fanr WHERE SUBSTRING(tmp,4,3)  != ' ' AND trim(SUBSTRING(tmp,7,4))='';
+  '${LOT}' as lot
+FROM ${PREFIXE}fanr WHERE SUBSTRING(tmp,4,3)  != ' ' AND trim(SUBSTRING(tmp,7,4))='';
 
 -- Traitement: voie
-INSERT INTO [PREFIXE]voie
+INSERT INTO ${PREFIXE}voie
 (
  voie, annee, ccodep, ccodir, ccocom, natvoiriv, ccoriv, clerivili, natvoi, libvoi, typcom, ruract, carvoi, indpop, poprel, poppart, popfict, annul, dteannul,
  dtecreart, codvoi, typvoi, indldnbat, motclas,
@@ -1001,7 +1001,7 @@ INSERT INTO [PREFIXE]voie
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,104,5)||SUBSTRING(tmp,7,4),' ', '0') AS voie,
-  '[ANNEE]',
+  '${ANNEE}',
   SUBSTRING(tmp,1,2) AS ccodep,
   SUBSTRING(tmp,3,1) AS ccodir,
   SUBSTRING(tmp,4,3) AS ccocom,
@@ -1025,8 +1025,8 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,110,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,110,1)) END AS indldnbat,
   SUBSTRING(tmp,113,8) AS motclas,
   REPLACE(SUBSTRING(tmp,1,6),' ', '0') AS commune,
-  '[LOT]' as lot
-FROM [PREFIXE]fanr WHERE trim(SUBSTRING(tmp,4,3))  != '' AND trim(SUBSTRING(tmp,7,4))  != '';
+  '${LOT}' as lot
+FROM ${PREFIXE}fanr WHERE trim(SUBSTRING(tmp,4,3))  != '' AND trim(SUBSTRING(tmp,7,4))  != '';
 
 -- purge des doublons : voie
 CREATE INDEX idxan_voie ON voie (annee);
@@ -1068,26 +1068,26 @@ CREATE INDEX idx_parcelle_voie ON parcelle (voie);
 CREATE INDEX idx_parcelle_comptecommunal ON parcelle (comptecommunal);
 
 -- ANALYSES;
-ANALYZE [PREFIXE]parcelle;
-ANALYZE [PREFIXE]suf;
-ANALYZE [PREFIXE]sufexoneration;
-ANALYZE [PREFIXE]suftaxation;
-ANALYZE [PREFIXE]local00;
-ANALYZE [PREFIXE]local10;
-ANALYZE [PREFIXE]pev;
-ANALYZE [PREFIXE]pevexoneration_imposable;
-ANALYZE [PREFIXE]pevexoneration_imposee;
-ANALYZE [PREFIXE]pevtaxation;
-ANALYZE [PREFIXE]pevprincipale;
-ANALYZE [PREFIXE]pevprofessionnelle;
-ANALYZE [PREFIXE]pevdependances;
-ANALYZE [PREFIXE]proprietaire;
-ANALYZE [PREFIXE]comptecommunal;
-ANALYZE [PREFIXE]pdl;
-ANALYZE [PREFIXE]parcellecomposante;
-ANALYZE [PREFIXE]lots;
-ANALYZE [PREFIXE]lotslocaux;
-ANALYZE [PREFIXE]commune;
-ANALYZE [PREFIXE]voie;
+ANALYZE ${PREFIXE}parcelle;
+ANALYZE ${PREFIXE}suf;
+ANALYZE ${PREFIXE}sufexoneration;
+ANALYZE ${PREFIXE}suftaxation;
+ANALYZE ${PREFIXE}local00;
+ANALYZE ${PREFIXE}local10;
+ANALYZE ${PREFIXE}pev;
+ANALYZE ${PREFIXE}pevexoneration_imposable;
+ANALYZE ${PREFIXE}pevexoneration_imposee;
+ANALYZE ${PREFIXE}pevtaxation;
+ANALYZE ${PREFIXE}pevprincipale;
+ANALYZE ${PREFIXE}pevprofessionnelle;
+ANALYZE ${PREFIXE}pevdependances;
+ANALYZE ${PREFIXE}proprietaire;
+ANALYZE ${PREFIXE}comptecommunal;
+ANALYZE ${PREFIXE}pdl;
+ANALYZE ${PREFIXE}parcellecomposante;
+ANALYZE ${PREFIXE}lots;
+ANALYZE ${PREFIXE}lotslocaux;
+ANALYZE ${PREFIXE}commune;
+ANALYZE ${PREFIXE}voie;
 COMMIT;
 -- FORMATAGE DONNEES : FIN;

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS geo_tronroute (
   update_dat date,
   lot character varying
 );
-SELECT AddGeometryColumn ( current_schema::text, 'geo_tronroute', 'geom', 2154 , 'MULTIPOLYGON', 2 );
+SELECT AddGeometryColumn ( current_schema::text, 'geo_tronroute', 'geom', ${SRID} , 'MULTIPOLYGON', 2 );
 
 COMMENT ON TABLE geo_tronroute IS 'Élément surfacique (fermé) utilisé pour tous les tronçons de routes. Un libellé y est associé.';
 COMMENT ON COLUMN geo_tronroute.geo_tronroute IS 'Identifiant';

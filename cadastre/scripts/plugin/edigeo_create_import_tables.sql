@@ -7,7 +7,7 @@ CREATE TABLE batiment_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('batiment_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('batiment_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE borne_id (
     ogc_fid serial,
@@ -15,7 +15,7 @@ CREATE TABLE borne_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('borne_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('borne_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE boulon_id (
     ogc_fid serial,
@@ -24,7 +24,7 @@ CREATE TABLE boulon_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('boulon_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('boulon_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE commune_id (
     ogc_fid serial,
@@ -34,7 +34,7 @@ CREATE TABLE commune_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('commune_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('commune_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE croix_id (
     ogc_fid serial,
@@ -42,7 +42,7 @@ CREATE TABLE croix_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('croix_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('croix_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE id_s_obj_z_1_2_2 (
     ogc_fid serial,
@@ -66,7 +66,7 @@ CREATE TABLE id_s_obj_z_1_2_2 (
     ogr_angle double precision,
     ogr_font_size double precision
 );
-SELECT AddGeometryColumn('id_s_obj_z_1_2_2', 'geom', 2154, 'POINT', 2);
+SELECT AddGeometryColumn('id_s_obj_z_1_2_2', 'geom', ${SRID}, 'POINT', 2);
 
 CREATE TABLE lieudit_id (
     ogc_fid serial,
@@ -84,7 +84,7 @@ CREATE TABLE lieudit_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('lieudit_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('lieudit_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE numvoie_id (
     ogc_fid serial,
@@ -93,7 +93,7 @@ CREATE TABLE numvoie_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('numvoie_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('numvoie_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE parcelle_id (
     ogc_fid serial,
@@ -108,7 +108,7 @@ CREATE TABLE parcelle_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('parcelle_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('parcelle_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE ptcanv_id (
     ogc_fid serial,
@@ -122,7 +122,7 @@ CREATE TABLE ptcanv_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('ptcanv_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('ptcanv_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE section_id (
     ogc_fid serial,
@@ -132,7 +132,7 @@ CREATE TABLE section_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('section_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('section_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE subdfisc_id (
     ogc_fid serial,
@@ -141,7 +141,7 @@ CREATE TABLE subdfisc_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('subdfisc_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('subdfisc_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE subdsect_id (
     ogc_fid serial,
@@ -158,7 +158,7 @@ CREATE TABLE subdsect_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('subdsect_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('subdsect_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE symblim_id (
     ogc_fid serial,
@@ -169,7 +169,7 @@ CREATE TABLE symblim_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('symblim_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('symblim_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE tline_id (
     ogc_fid serial,
@@ -179,7 +179,7 @@ CREATE TABLE tline_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('tline_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('tline_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE tpoint_id (
     ogc_fid serial,
@@ -190,7 +190,7 @@ CREATE TABLE tpoint_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('tpoint_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('tpoint_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE tronfluv_id (
     ogc_fid serial,
@@ -208,7 +208,7 @@ CREATE TABLE tronfluv_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('tronfluv_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('tronfluv_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE tronroute_id (
     ogc_fid serial,
@@ -227,7 +227,7 @@ CREATE TABLE tronroute_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('tronroute_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('tronroute_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE tsurf_id (
     ogc_fid serial,
@@ -237,7 +237,7 @@ CREATE TABLE tsurf_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('tsurf_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('tsurf_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE voiep_id (
     ogc_fid serial,
@@ -246,7 +246,7 @@ CREATE TABLE voiep_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('voiep_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('voiep_id', 'geom', ${SRID}, 'GEOMETRY', 2);
 
 CREATE TABLE zoncommuni_id (
     ogc_fid serial,
@@ -264,4 +264,4 @@ CREATE TABLE zoncommuni_id (
     creat_date integer,
     update_date integer
 );
-SELECT AddGeometryColumn('zoncommuni_id', 'geom', 2154, 'GEOMETRY', 2);
+SELECT AddGeometryColumn('zoncommuni_id', 'geom', ${SRID}, 'GEOMETRY', 2);
