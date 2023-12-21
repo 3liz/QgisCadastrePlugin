@@ -1009,7 +1009,12 @@ class cadastreImport(QObject):
                 for z in tarFileListA:
                     with tarfile.open(z) as t:
                         try:
-                            t.extractall(os.path.join(self.edigeoPlainDir, 'tar_%s' % i))
+                            # See https://docs.python.org/3.8/library/tarfile.html#tarfile.TarFile.extractall
+                            # See https://peps.python.org/pep-0706/
+                            t.extractall(
+                                os.path.join(self.edigeoPlainDir, 'tar_%s' % i),
+                                filter='data',
+                            )
                         except tarfile.ReadError:
                             # Issue GitHub #339
                             self.go = False
