@@ -67,9 +67,6 @@ class CadastreMenu:
 
         self.mapCanvas = iface.mapCanvas()
 
-    def cadastre_add_submenu(self, submenu):
-        self.iface.addPluginToMenu("&Cadastre", submenu.menuAction())
-
     # noinspection PyPep8Naming
     def initProcessing(self):
         self.provider = CadastreProvider()
