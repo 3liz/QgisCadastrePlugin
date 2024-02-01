@@ -59,7 +59,7 @@ jobs:
         tweet_body: "Nouvelle version de l'extension Cadastre ${{ env.RELEASE_VERSION }} 🇫🇷 pour #QGIS https://github.com/3liz/QgisCadastrePlugin/releases"
 
     - name: Repository Dispatch
-      uses: peter-evans/repository-dispatch@v2
+      uses: peter-evans/repository-dispatch@v3
       with:
         token: ${{ secrets.BOT_HUB_TOKEN }}
         repository: 3liz/3liz.github.io
