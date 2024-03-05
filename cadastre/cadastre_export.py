@@ -422,7 +422,8 @@ class CadastreExport:
             print("%s" % msg)
             return msg
 
-    def randomWord(self, length):
+    @staticmethod
+    def random_word(length: int) -> str:
         """
         Return a random string of given length
         """
@@ -437,8 +438,7 @@ class CadastreExport:
         # We need to set a name to the layout, otherwise, error when exporting
         # more than one time:
         # RuntimeError: wrapped C/C++ object of type QgsPrintLayout has been deleted
-        cName = self.randomWord(20)
-        c.setName(cName)
+        c.setName(self.random_word(20))
         c.initializeDefaults()
         c.setUnits(QgsUnitTypes.LayoutMillimeters)
 
@@ -505,15 +505,15 @@ class CadastreExport:
 
         # create HTML layout item
         # htmlItem = QgsLayoutItemHtml.create(self.currentComposition)
-        htmlItem = QgsLayoutItemHtml(self.currentComposition)
+        html_item = QgsLayoutItemHtml(self.currentComposition)
 
         # add frame to layout
-        self.currentComposition.addMultiFrame(htmlItem)
+        self.currentComposition.addMultiFrame(html_item)
 
         # create frame to show content from htmlItem
-        htmlItemFrame = QgsLayoutFrame(
+        html_item_frame = QgsLayoutFrame(
             self.currentComposition,
-            htmlItem
+            html_item
         )
         # htmlItemFrame.attemptSetSceneRect(
         #     QRectF(
@@ -525,20 +525,20 @@ class CadastreExport:
         # )
 
         # No border
-        htmlItemFrame.setFrameEnabled(False)
+        html_item_frame.setFrameEnabled(False)
 
         # set HTML contents
-        htmlItem.setContentMode(QgsLayoutItemHtml.ManualHtml)
+        html_item.setContentMode(QgsLayoutItemHtml.ManualHtml)
         content = self.getContentForGivenItem(
             key,
             item,
             page
         )
-        htmlItem.setHtml(content)
-        htmlItem.loadHtml()
+        html_item.setHtml(content)
+        html_item.loadHtml()
 
         # Reposition the frame
-        htmlItemFrame.attemptMove(
+        html_item_frame.attemptMove(
             QgsLayoutPoint(
                 item['position'][0],
                 item['position'][1] + (dpage) * (self.pageHeight + 10),
@@ -547,7 +547,7 @@ class CadastreExport:
         )
 
         # Set the correct size
-        htmlItemFrame.attemptResize(
+        html_item_frame.attemptResize(
             QgsLayoutSize(
                 item['position'][2],
                 item['position'][3],
@@ -556,7 +556,7 @@ class CadastreExport:
         )
 
         # Add frame to the HTML item
-        htmlItem.addFrame(htmlItemFrame)
+        html_item.addFrame(html_item_frame)
 
     def addParcelleMap(self):
         """
