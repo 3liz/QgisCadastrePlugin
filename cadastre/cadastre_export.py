@@ -16,7 +16,9 @@ the Free Software Foundation; either version 2 of the License, or
 
 """
 import os
+import random
 import re
+import string
 import tempfile
 
 from contextlib import contextmanager
@@ -29,8 +31,9 @@ from qgis.core import (
     QgsFeatureRequest,
     QgsFillSymbol,
     QgsLayoutExporter,
+    QgsLayoutFrame,
     QgsLayoutGridSettings,
-    QgsLayoutItemLabel,
+    QgsLayoutItemHtml,
     QgsLayoutItemMap,
     QgsLayoutItemPage,
     QgsLayoutMeasurement,
@@ -419,11 +422,23 @@ class CadastreExport:
             print("%s" % msg)
             return msg
 
+    def randomWord(self, length):
+        """
+        Return a random string of given length
+        """
+        letters = string.ascii_lowercase
+        return ''.join(random.choice(letters) for i in range(length))
+
     def createComposition(self):
         """
         Create a print Layout
         """
         c = QgsPrintLayout(self.mProject)
+        # We need to set a name to the layout, otherwise, error when exporting
+        # more than one time:
+        # RuntimeError: wrapped C/C++ object of type QgsPrintLayout has been deleted
+        cName = self.randomWord(20)
+        c.setName(cName)
         c.initializeDefaults()
         c.setUnits(QgsUnitTypes.LayoutMillimeters)
 
@@ -483,21 +498,56 @@ class CadastreExport:
         """
         Add a label to the print layout for an item and page
         """
-        cl = QgsLayoutItemLabel(self.currentComposition)
-
         # 1st page is a map for parcelle
         dpage = page - 1
         if self.etype == 'parcelle' and self.print_parcelle_page:
             dpage = page
 
-        cl.attemptMove(
+        # create HTML layout item
+        # htmlItem = QgsLayoutItemHtml.create(self.currentComposition)
+        htmlItem = QgsLayoutItemHtml(self.currentComposition)
+
+        # add frame to layout
+        self.currentComposition.addMultiFrame(htmlItem)
+
+        # create frame to show content from htmlItem
+        htmlItemFrame = QgsLayoutFrame(
+            self.currentComposition,
+            htmlItem
+        )
+        # htmlItemFrame.attemptSetSceneRect(
+        #     QRectF(
+        #         item['position'][0],
+        #         item['position'][1] + (dpage) * (self.pageHeight + 10),
+        #         item['position'][2],
+        #         item['position'][3]
+        #     )
+        # )
+
+        # No border
+        htmlItemFrame.setFrameEnabled(False)
+
+        # set HTML contents
+        htmlItem.setContentMode(QgsLayoutItemHtml.ManualHtml)
+        content = self.getContentForGivenItem(
+            key,
+            item,
+            page
+        )
+        htmlItem.setHtml(content)
+        htmlItem.loadHtml()
+
+        # Reposition the frame
+        htmlItemFrame.attemptMove(
             QgsLayoutPoint(
                 item['position'][0],
                 item['position'][1] + (dpage) * (self.pageHeight + 10),
                 QgsUnitTypes.LayoutMillimeters
             )
         )
-        cl.setFixedSize(
+
+        # Set the correct size
+        htmlItemFrame.attemptResize(
             QgsLayoutSize(
                 item['position'][2],
                 item['position'][3],
@@ -505,26 +555,8 @@ class CadastreExport:
             )
         )
 
-        cl.setVAlign(item['align'][0])
-        cl.setHAlign(item['align'][1])
-        content = self.getContentForGivenItem(
-            key,
-            item,
-            page
-        )
-
-        cl.setMargin(0)
-        cl.setMode(1)
-        cl.setText(content)
-        cl.setFrameEnabled(False)
-        if 'bgcolor' in item:
-            cl.setBackgroundColor(item['bgcolor'])
-        if 'htmlState' in item:
-            cl.setMode(item['htmlState'])
-        if 'font' in item:
-            cl.setFont(item['font'])
-
-        self.currentComposition.addLayoutItem(cl)
+        # Add frame to the HTML item
+        htmlItem.addFrame(htmlItemFrame)
 
     def addParcelleMap(self):
         """
@@ -624,6 +656,10 @@ class CadastreExport:
             temppath = os.path.normpath(temppath)
             QgsMessageLog.logMessage(f'Export PDF vers {temppath}', 'cadastre', Qgis.Info)
             # print("export temppath %s" % temppath)
+
+            # add layout to layout manager: for tests only
+            # lmgr = self.mProject.layoutManager()
+            # lmgr.addLayout(self.currentComposition)
 
             # Export as pdf
             exportersettings = QgsLayoutExporter.PdfExportSettings()
