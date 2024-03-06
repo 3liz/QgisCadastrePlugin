@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.19.1 - 2024-03-06
+
+* Correction de l'export PDF avec une utilisation QGIS > 3.30
+
 ## 1.19.0 - 2023-12-14
 
 * Correction de l'import des données sans les données MAJIC
@@ -10,7 +14,7 @@
 ## 1.18.2 - 2023-10-17
 
 * Utilisation du code commune de la parcelle dans parcelle_info MAJIC
-* Correction des DROP d'indexes 
+* Correction des DROP d'indexes
 * Correction de la clé primaire de la table proprietaire
 * Ajout d'un index sur le champ voie de la table parcelle_info
 * Import - Amélioration des performances pour l'EDIGEO
