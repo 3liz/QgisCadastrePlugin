@@ -127,6 +127,8 @@ département est `97` et la direction est `1`.
 
 La projection des données **EDIGEO** peut se lire dans le fichier `*.GEO`.
 
+Pensez à regarder si la projection est toujours la même dans les fichiers **EDIGEO**.
+
 ### Projections IGNF
 
 Si votre donnée EDIGEO est en projection IGNF, par exemple pour la Guadeloupe, `IGNF:GUAD48UTM20` (Guadeloupe
@@ -187,18 +189,6 @@ INSERT INTO spatial_ref_sys values (
        998995,
        'PROJCS["RGFG95 UTM Nord f.22",GEOGCS["RGFG95 geographiques (dms)",DATUM["Reseau_Geodesique_Francais_Guyane_1995",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6624"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGFG95G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-51],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGFG95UTM22"]]',
        '+init=IGNF:RGFG95UTM22'
-       );
-    ```
-
-??? note "Martinique"
-    * Projection du fichier `.geo` : `IGNF:RGAF09UTM20`
-    ```sql
-       INSERT INTO spatial_ref_sys values (
-       998998,
-       'IGNF',
-       998998,
-       'PROJCS["RGAF09 UTM Nord Fuseau 20",GEOGCS["RGAF09 geographiques (dms)",DATUM["Reseau_Geodesique_des_Antilles_Francaises_2009",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","1073"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGAF09G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-63],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGAF09UTM20"]]',
-       '+init=IGNF:RGAF09UTM20'
        );
     ```
 
