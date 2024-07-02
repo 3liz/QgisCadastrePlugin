@@ -22,6 +22,7 @@ import tempfile
 
 from pathlib import Path
 from time import time
+from typing import Optional
 
 from qgis.core import (
     QgsApplication,
@@ -65,11 +66,23 @@ class CadastreMenu:
             # If QGIS is headless, there isn't iface set, on qgis_process for instance
             return
 
+        self.import_action: Optional[QAction] = None
+        self.search_action: Optional[QAction] = None
+        self.load_action: Optional[QAction] = None
+        self.export_action: Optional[QAction] = None
+        self.option_action: Optional[QAction] = None
+        self.about_action: Optional[QAction] = None
+        self.help_action: Optional[QAction] = None
+        self.version_action: Optional[QAction] = None
+        self.menu: Optional[QMenu] = None
+        self.mConfig = None
+
         self.mapCanvas = iface.mapCanvas()
 
     # noinspection PyPep8Naming
     def initProcessing(self):
         self.provider = CadastreProvider()
+        # noinspection PyArgumentList
         QgsApplication.processingRegistry().addProvider(self.provider)
 
     # noinspection PyPep8Naming
@@ -224,22 +237,16 @@ class CadastreMenu:
             self.open_about_dialog()
 
         # Display some messages depending on version number
-        mConfig = configparser.ConfigParser()
+        self.mConfig = configparser.ConfigParser()
         metadataFile = plugin_dir + "/metadata.txt"
-        mConfig.read(metadataFile, encoding='utf-8')
-        self.mConfig = mConfig
-        if not on_ci:
-            myVersion = mConfig.get('general', 'version').replace('.', '_')
-            myVersionMsg = s.value("cadastre/version_%s" % myVersion, 1, type=int)
-            if myVersionMsg == 1:
-                s.setValue("cadastre/version_%s" % myVersion, 0)
-                self.open_message_dialog()
+        self.mConfig.read(metadataFile, encoding='utf-8')
 
         # Project load or create : refresh search and identify tool
         self.iface.projectRead.connect(self.onProjectRead)
-        self.iface.newProjectCreated.connect(self.onNewProjectCreated)
+        self.iface.newProjectCreated.connect(self.on_new_project_created)
 
         # Delete layers from table when deleted from registry
+        # noinspection PyArgumentList
         lr = QgsProject.instance()
         lr.layersRemoved.connect(self.checkIdentifyParcelleTool)
 
@@ -306,6 +313,7 @@ class CadastreMenu:
         d = QDomDocument()
         d.setContent(template_content)
 
+        # noinspection PyArgumentList
         c = QgsPrintLayout(QgsProject.instance())
         c.loadFromTemplate(d, QgsReadWriteContext())
 
@@ -442,7 +450,7 @@ class CadastreMenu:
             self.cadastre_search_dialog.setupSearchCombobox('commune_proprietaire', None, 'sql')
             self.checkIdentifyParcelleTool()
 
-    def onNewProjectCreated(self):
+    def on_new_project_created(self):
         """
         Refresh search dialog when new data has been loaded
         """
@@ -454,52 +462,15 @@ class CadastreMenu:
     @staticmethod
     def open_help():
         """Opens the html help file content with default browser"""
+        # noinspection PyArgumentList
         QDesktopServices.openUrl(QUrl(URL_DOCUMENTATION))
 
     def open_message_dialog(self):
         """
         Display a message to the user
         """
-        versionMessages = {
-            '1.1.0': [
-                [
-                    'Compatibilité avec QGIS 2.6',
-                    'La compatibilité n\'est pas assurée à 100 % avec la dernière version 2.6 de QGIS, notamment pour la création d\'une base Spatialite vide. Vous pouvez utiliser les outils de QGIS pour le faire.'
-                ],
-                [
-                    'Lien entre les parcelles EDIGEO et MAJIC',
-                    'Pour cette nouvelle version du plugin, la structure de la base de données a été légèrement modifiée. Pour pouvoir utiliser les fonctions du plugin Cadastre, vous devez donc impérativement <b>réimporter les données dans une base vide</b>'
-                ],
-                [
-                    'Validation des géométries',
-                    'Certaines données EDIGEO contiennent des géométries invalides (polygones croisés dit "papillons", polygones non fermés, etc.). Cette version utilise une fonction de PostGIS qui tente de corriger ces invalidités. Il faut impérativement <b>utiliser une version récente de PostGIS</b> : 2.0.4 minimum pour la version 2, ou les version ultérieures (2.1 par exemple)'
-                ]
-            ],
-            '1.4.0': [
-                [
-                    'Modification de la structure',
-                    'Pour cette nouvelle version 1.4.0 du plugin, la structure de la base de données a été légèrement modifiée par rapport à la 1.4.0. Pour pouvoir utiliser les fonctions du plugin Cadastre, vous devez donc impérativement <b>réimporter les données dans une base vide</b>. Les changements concernent les identifiants des tables parcelle, geo_parcelle, commune, local00, local10, pev, pevexoneration, pevtaxation, pevprincipale, pevprofessionnelle, pevdependances, ainsi que la création d\'une table parcelle_info pour consolider EDIGEO et MAJIC.'
-                ]
-            ],
-            '1.8.1': [
-                [
-                    'Spatialite: Correction de l\'affichage des locaux dans la fiche parcellaire',
-                    'Il faut réimporter les données, ou bien lancer la requête suivante via le gestionnaire de base de données de QGIS: UPDATE local10 SET "parcelle" = substr("parcelle",5), "local00" = substr("local00",5), "voie" = substr("voie",5) WHERE substr("parcelle",0,5) = "annee";'
-                ]
-            ]
-        }
-        mConfig = self.mConfig
-        version = mConfig.get('general', 'version')
-        changelog = mConfig.get('general', 'changelog')
-
-        message = '<h2>Version %s - notes concernant cette version</h2>' % version
-        if version in versionMessages:
-            message += '<ul>'
-            for item in versionMessages[version]:
-                message += f'<li><b>{item[0]}</b> - {item[1]}</li>'
-            message += '</ul>'
-
-        message += '<h3>Changelog</h3>'
+        changelog = self.mConfig.get('general', 'changelog')
+        message = '<h3>Changelog</h3>'
         message += '<p>'
         i = 0
         for item in changelog.split('*'):
@@ -534,6 +505,7 @@ class CadastreMenu:
             self.iface.removeDockWidget(self.cadastre_search_dialog)
 
         # Remove processing provider
+        # noinspection PyArgumentList
         QgsApplication.processingRegistry().removeProvider(self.provider)
 
     @staticmethod
