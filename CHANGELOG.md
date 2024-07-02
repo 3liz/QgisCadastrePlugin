@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 1.19.2 - 2024-07-02
+
+* Correction du style par défaut pour être compatible avec Lizmap Web Client 3.7
+* Re-factorisation du code Python sur certaines classes
+
 ## 1.19.1 - 2024-03-06
 
 * Correction de l'export PDF avec une utilisation QGIS > 3.30
