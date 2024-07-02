@@ -572,42 +572,42 @@ class CadastreLoading(QObject):
         g1 = root.findGroup("Cadastre")
         if g1:
             name = "Fond"
-            gf = root.findGroup(name)
-            if not gf:
-                gf = g1.addGroup(name)
+            groupe_fond = root.findGroup(name)
+            if not groupe_fond:
+                groupe_fond = g1.addGroup(name)
                 if self.set_short_names:
-                    gf.setCustomProperty("wmsShortName", self.short_name(name))
+                    groupe_fond.setCustomProperty("wmsShortName", self.short_name(name))
 
             name = "Étiquettes cadastre"
-            ge = root.findGroup(name)
-            if not ge:
-                ge = gf.addGroup(name)
+            groupe_etiquettes = root.findGroup(name)
+            if not groupe_etiquettes:
+                groupe_etiquettes = groupe_fond.addGroup(name)
                 if self.set_short_names:
-                    ge.setCustomProperty("wmsShortName", self.short_name(name))
+                    groupe_etiquettes.setCustomProperty("wmsShortName", self.short_name(name))
 
             name = "Données cadastre"
-            gd = root.findGroup(name)
-            if not gd:
-                gd = gf.addGroup(name)
+            groupe_donnees = root.findGroup(name)
+            if not groupe_donnees:
+                groupe_donnees = groupe_fond.addGroup(name)
                 if self.set_short_names:
-                    gd.setCustomProperty("wmsShortName", self.short_name(name))
+                    groupe_donnees.setCustomProperty("wmsShortName", self.short_name(name))
         else:
             g1 = root.insertGroup(0, "Cadastre")
 
             name = "Fond"
-            gf = g1.addGroup(name)
+            groupe_fond = g1.addGroup(name)
             if self.set_short_names:
-                gf.setCustomProperty("wmsShortName", self.short_name(name))
+                groupe_fond.setCustomProperty("wmsShortName", self.short_name(name))
 
             name = 'Étiquettes cadastre'
-            ge = gf.addGroup(name)
+            groupe_etiquettes = groupe_fond.addGroup(name)
             if self.set_short_names:
-                ge.setCustomProperty("wmsShortName", self.short_name(name))
+                groupe_etiquettes.setCustomProperty("wmsShortName", self.short_name(name))
 
             name = "Données cadastre"
-            gd = gf.addGroup(name)
+            groupe_donnees = groupe_fond.addGroup(name)
             if self.set_short_names:
-                gd.setCustomProperty("wmsShortName", self.short_name(name))
+                groupe_donnees.setCustomProperty("wmsShortName", self.short_name(name))
 
         variables = QgsProject.instance().customVariables()
         for layer in qgis_cadastre_layers:
@@ -622,9 +622,11 @@ class CadastreLoading(QObject):
 
                 # Move layer to proper group
                 if q_layer['group'] == 'E':
-                    ge.insertChildNode(0, node_layer)
+                    # For Lizmap plugin, for the checks about duplicated layer next to each other
+                    node_layer.layer().setCustomProperty("lizmap-plugin-skip-duplicated-layer", "yes")
+                    groupe_etiquettes.insertChildNode(0, node_layer)
                 elif q_layer['group'] == 'D':
-                    gd.insertChildNode(0, node_layer)
+                    groupe_donnees.insertChildNode(0, node_layer)
                 else:
                     g1.insertChildNode(0, node_layer)
 
