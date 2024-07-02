@@ -15,7 +15,6 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
-import configparser
 import os
 import os.path
 import tempfile
@@ -25,8 +24,10 @@ from time import time
 from typing import Optional
 
 from qgis.core import (
+    Qgis,
     QgsApplication,
     QgsLayoutExporter,
+    QgsMessageLog,
     QgsPrintLayout,
     QgsProject,
     QgsReadWriteContext,
@@ -53,7 +54,9 @@ from cadastre.dialogs.message_dialog import CadastreMessageDialog
 from cadastre.dialogs.options_dialog import CadastreOptionDialog
 from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
 from cadastre.dialogs.search_dialog import CadastreSearchDialog
+from cadastre.plausible import Plausible
 from cadastre.processing.provider import CadastreProvider
+from cadastre.tools import metadata_config
 
 
 class CadastreMenu:
@@ -237,9 +240,7 @@ class CadastreMenu:
             self.open_about_dialog()
 
         # Display some messages depending on version number
-        self.mConfig = configparser.ConfigParser()
-        metadataFile = plugin_dir + "/metadata.txt"
-        self.mConfig.read(metadataFile, encoding='utf-8')
+        self.mConfig = metadata_config()
 
         # Project load or create : refresh search and identify tool
         self.iface.projectRead.connect(self.onProjectRead)
@@ -253,6 +254,13 @@ class CadastreMenu:
         self.updateSearchButton()
 
         self.cadastre_search_dialog.visibilityChanged.connect(self.updateSearchButton)
+
+        # noinspection PyBroadException
+        try:
+            plausible = Plausible(server=False)
+            plausible.request_stat_event()
+        except Exception as e:
+            QgsMessageLog.logMessage("Error while calling the stats API : \"{}\"".format(e), 'cadastre', Qgis.Warning)
 
     def open_import_dialog(self):
         """

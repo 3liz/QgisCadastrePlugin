@@ -10,8 +10,9 @@ from pathlib import Path
 from qgis.server import QgsServerInterface
 
 from cadastre.logger import Logger
+from cadastre.plausible import Plausible
 from cadastre.server.cadastre_service import CadastreService
-from cadastre.server.tools import version
+from cadastre.tools import version
 
 
 class CadastreServer:
@@ -23,6 +24,14 @@ class CadastreServer:
     def __init__(self, server_iface: QgsServerInterface) -> None:
 
         Logger.info(f'Init server version "{version()}"')
+
+        # noinspection PyBroadException
+        try:
+            plausible = Plausible(server=True)
+            plausible.request_stat_event()
+        except Exception as e:
+            Logger.log_exception(e)
+            Logger.critical('Error while calling the API stats')
 
         cache_dir_str = os.getenv('QGIS_CADASTRE_CACHE_DIR')
         if not cache_dir_str:

@@ -2,10 +2,12 @@ __copyright__ = "Copyright 2021, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
+import configparser
 import subprocess
 import time
 
 from pathlib import Path
+from typing import Union
 
 from qgis.utils import pluginMetadata
 
@@ -94,3 +96,42 @@ def set_window_title() -> str:
     #     version, current_git_hash(), next_git_tag())
 
     return f'next {next_git_tag()}'
+
+
+def to_bool(val: Union[str, int, float, bool, None], default_value: bool = True) -> bool:
+    """ Convert lizmap config value to boolean """
+    if isinstance(val, bool):
+        return val
+
+    if val is None or val == '':
+        return default_value
+
+    if isinstance(val, str):
+        # For string, compare lower value to True string
+        return val.lower() in ('yes', 'true', 't', '1')
+
+    elif not val:
+        # For value like False, 0, 0.0, None, empty list or dict returns False
+        return False
+
+    return default_value
+
+
+def metadata_config() -> configparser:
+    """Get the INI config parser for the metadata file.
+
+    :return: The config parser object.
+    :rtype: ConfigParser
+    """
+    path = plugin_path("metadata.txt")
+    config = configparser.ConfigParser()
+    config.read(path, encoding='utf8')
+    return config
+
+
+def version(remove_v_prefix=True) -> str:
+    """Return the version defined in metadata.txt."""
+    v = metadata_config()["general"]["version"]
+    if v.startswith("v") and remove_v_prefix:
+        v = v[1:]
+    return v
