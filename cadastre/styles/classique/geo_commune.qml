@@ -34,8 +34,8 @@
   </edittypes>
   <renderer-v2 symbollevels="0" type="RuleRenderer">
     <rules key="{b04c09b0-5e81-467c-b07c-07072996e477}">
-      <rule scalemaxdenom="100000" key="{52ab7951-a12f-4d87-9409-5f01b1d8e24f}" symbol="0" scalemindenom="1"/>
-      <rule scalemaxdenom="1000000000" key="{79436f17-87a4-431f-98ae-e61836ea4f30}" symbol="1" scalemindenom="100000"/>
+      <rule scalemaxdenom="100000" label="&lt; 10 000" key="{52ab7951-a12f-4d87-9409-5f01b1d8e24f}" symbol="0" scalemindenom="1"/>
+      <rule scalemaxdenom="1000000000" label="≥ 100 000" key="{79436f17-87a4-431f-98ae-e61836ea4f30}" symbol="1" scalemindenom="100000"/>
     </rules>
     <symbols>
       <symbol alpha="1" type="fill" name="0">
