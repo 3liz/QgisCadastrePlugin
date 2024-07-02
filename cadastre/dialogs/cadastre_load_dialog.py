@@ -9,7 +9,7 @@ from pathlib import Path
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
 
-from cadastre.cadastre_loading import cadastreLoading
+from cadastre.cadastre_loading import CadastreLoading
 from cadastre.tools import set_window_title
 
 LOAD_FORM_CLASS, _ = uic.loadUiType(
@@ -37,7 +37,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         # common cadastre methods
         from cadastre.dialogs.dialog_common import CadastreCommon
         self.qc = CadastreCommon(self)
-        self.ql = cadastreLoading(self)
+        self.ql = CadastreLoading(self)
 
         # spatialite support
         self.hasSpatialiteSupport = CadastreCommon.hasSpatialiteSupport()
@@ -104,7 +104,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         """
         if self.connection:
             if self.db:
-                self.ql.processLoading()
+                self.ql.process_loading()
 
     def onLoadSqlLayerClicked(self):
         """
@@ -114,7 +114,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         """
         if self.connection:
             if self.db:
-                self.ql.loadSqlLayer()
+                self.ql.load_sql_layer()
 
     def onLoadingEnd(self):
         """
