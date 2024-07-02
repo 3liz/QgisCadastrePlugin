@@ -345,7 +345,7 @@ class CadastreLoading(QObject):
     def update_timer(self):
         b = datetime.now()
         diff = b - self.startTime
-        self.qc.updateLog('%s s' % diff.seconds)
+        self.qc.updateLog(f'{diff.seconds} s')
 
     def get_group_index(self, group_name):
         """
@@ -389,14 +389,14 @@ class CadastreLoading(QObject):
         self.themeDir = str(self.dialog.liTheme.currentText())
         if not os.path.exists(os.path.join(
                 self.qc.plugin_dir,
-                "styles/%s" % self.themeDir
+                f"styles/{self.themeDir}"
         )):
             self.themeDir = self.defaultThemeDir
 
         # set Cadastre SVG path if not set
         cadastre_svg_path = os.path.join(
             self.qc.plugin_dir,
-            "styles/%s/svg" % self.themeDir
+            f"styles/{self.themeDir}/svg"
         )
         s = QSettings()
         qgis_svg_paths = s.value("svg/searchPathsForSVG", 10, type=str)
@@ -429,7 +429,7 @@ class CadastreLoading(QObject):
         commune_filter = None
         c_exp = QgsExpression(commune_expression)
         if commune_expression != '' and not c_exp.hasParserError():
-            self.qc.updateLog('Filtrage à partir des communes : %s' % commune_expression)
+            self.qc.updateLog(f'Filtrage à partir des communes : {commune_expression}')
             c_req = QgsFeatureRequest(c_exp)
             c_table_list = [a for a in db_tables if a.name == 'geo_commune']
             c_table = c_table_list[0]
@@ -450,7 +450,7 @@ class CadastreLoading(QObject):
             if len(c_ids):
                 commune_filter = c_ids
         else:
-            self.qc.updateLog('Filtrage à partir des communes, expression invalide : %s' % c_exp.parserErrorString())
+            self.qc.updateLog(f'Filtrage à partir des communes, expression invalide : {c_exp.parserErrorString()}')
 
         # Loop through qgisCadastreLayerList and load each corresponding table
         for item in self.qgisCadastreLayerList:
@@ -462,14 +462,14 @@ class CadastreLoading(QObject):
                 continue
 
             # update progress bar
-            self.qc.updateLog('* %s' % item['label'])
+            self.qc.updateLog(f'* {item["label"]}')
             self.dialog.step += 1
             self.qc.updateProgressBar()
 
             # Tables - Get db_manager table instance
             table_list = [a for a in db_tables if a.name == item['table']]
             if len(table_list) == 0 and 'isView' not in item:
-                self.qc.updateLog('  - Aucune table trouvée pour %s' % item['label'])
+                self.qc.updateLog(f'  - Aucune table trouvée pour {item["label"]}')
                 continue
 
             source = ''
@@ -492,7 +492,7 @@ class CadastreLoading(QObject):
                 if self.dialog.dbType == 'spatialite':
                     schema_replace = ''
                 else:
-                    schema_replace = '"%s".' % self.dialog.schema
+                    schema_replace = f'"{self.dialog.schema}".'
                 source = item['table'].replace('schema.', schema_replace)
                 unique_col = item['key']
                 schema = None
@@ -504,7 +504,7 @@ class CadastreLoading(QObject):
                 commune_filter_text = "'" + "', '".join(commune_filter) + "'"
                 ns_schema = ''
                 if self.dialog.dbType == 'postgis':
-                    ns_schema = '"%s".' % schema
+                    ns_schema = f'"{schema}".'
                 if 'subset' in item:
                     subset = item['subset']
                     sql += subset % commune_filter_text
@@ -546,7 +546,7 @@ class CadastreLoading(QObject):
             # apply style
             qml_path = os.path.join(
                 self.qc.plugin_dir,
-                "styles/{}/{}.qml".format(self.themeDir, item['name'])
+                f"styles/{self.themeDir}/{item['name']}.qml"
             )
             if os.path.exists(qml_path):
                 v_layer.loadNamedStyle(qml_path)
@@ -693,7 +693,7 @@ class CadastreLoading(QObject):
 
         layer_name = self.dialog.layerName.text()
         if not layer_name:
-            layer_name = 'requete_cadastre_%s' % datetime.now()
+            layer_name = f'requete_cadastre_{datetime.now()}'
 
         layer = self.dialog.db.toSqlLayer(
             sql_text,
