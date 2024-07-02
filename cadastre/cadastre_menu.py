@@ -260,7 +260,7 @@ class CadastreMenu:
             plausible = Plausible(server=False)
             plausible.request_stat_event()
         except Exception as e:
-            QgsMessageLog.logMessage("Error while calling the stats API : \"{}\"".format(e), 'cadastre', Qgis.Warning)
+            QgsMessageLog.logMessage(f"Error while calling the stats API : \"{e}\"", 'cadastre', Qgis.Warning)
 
     def open_import_dialog(self):
         """
