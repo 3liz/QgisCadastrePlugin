@@ -858,7 +858,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         # Set filter expression for parcell child data
         ckey = self.searchComboBoxes[key]['search']['parcelle_child']
         if key == 'adresse':
-            filterExpression = "voie = '%s'" % value['voie']
+            filterExpression = "SUBSTR(voie,0,7)||SUBSTR(voie,12,4) = '%s%s'" % (value['voie'][0:6], value['voie'][11:])
 
         if key == 'proprietaire':
             filterExpression = "comptecommunal IN (%s)" % ', '.join(value['cc'])
