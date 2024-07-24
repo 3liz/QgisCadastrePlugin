@@ -6,7 +6,7 @@ Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MA
 
 ## Principe
 
-L'extension permet l'import de données **MAJIC de 2012 à 2023 et des données EDIGEO**. Il est possible
+L'extension permet l'import de données **MAJIC de 2012 à 2024 et des données EDIGEO**. Il est possible
 d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
 L'extension utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour
@@ -98,9 +98,9 @@ On configure ensuite les options :
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
-    - Seuls les formats de 2012 à 2023 sont pris en compte
+    - Seuls les formats de 2012 à 2024 sont pris en compte
 
-* Choisir le **millésime des données**, par exemple 2023
+* Choisir le **millésime des données**, par exemple 2024
 
 * Choisir le **Lot** : utilisez par exemple le code INSEE de la commune.
 
