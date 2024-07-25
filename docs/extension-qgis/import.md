@@ -94,7 +94,7 @@ On configure ensuite les options :
       importera l'ensemble des données.
     - Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement
       de les télécharger et de configurer l'extension pour donner le bon nom au fichier FANTOIR :
-      https://www.collectivites-locales.gouv.fr/competences/la-mise-disposition-gratuite-du-fichier-des-voies-et-des-lieux-dits-fantoir
+      https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 

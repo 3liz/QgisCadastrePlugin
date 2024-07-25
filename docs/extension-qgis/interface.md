@@ -135,7 +135,7 @@ Le **PDF est généré et ouvert** avec le lecteur PDF par défaut du système.
 > Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données
 > FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC,
 > vous pouvez le télécharger pour votre département ici (et relancer l'import Majic) :
-> http://www.collectivites-locales.gouv.fr/mise-a-disposition-fichier-fantoir-des-voies-et-lieux-dits
+> https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir
 
 Pour lancer une **recherche de parcelles par adresse**, il suffit :
 
