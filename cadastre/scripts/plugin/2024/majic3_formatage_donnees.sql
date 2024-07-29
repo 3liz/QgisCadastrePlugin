@@ -185,7 +185,7 @@ FROM [PREFIXE]nbat WHERE SUBSTRING(tmp,20,2) ='36';
 INSERT INTO [PREFIXE]local00
 (
  local00, annee, ccodep, ccodir, ccocom, invar, ccopre, ccosec, dnupla, dnubat, descr, dniv, dpor, ccoriv, ccovoi, dnvoiri, dindic, ccocif, dvoilib, cleinvar,
- ccpper, locinc, parcelle, voie, lot
+ assietf, ccpper, codique, parcelle, voie, lot
 )
 SELECT
   REPLACE(SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10),' ','0') AS local00,
@@ -211,8 +211,9 @@ SELECT
   SUBSTRING(tmp,72,4) AS ccocif,
   SUBSTRING(tmp,76,30) AS dvoilib,
   SUBSTRING(tmp,106,1) AS cleinvar,
+  SUBSTRING(tmp,108,10) AS assietf,
   SUBSTRING(tmp,125,3) AS ccpper,
-  SUBSTRING(tmp,107,1) AS locinc,
+  SUBSTRING(tmp,128,7) AS codique,
   REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,36,9),' ', '0') AS parcelle,
   REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,62,5),' ', '0')||SUBSTRING(tmp,57,4) AS voie,
   '[LOT]' as lot
@@ -317,7 +318,7 @@ INSERT INTO [PREFIXE]pev
  ccocac, dnutrf, dcfloc, dsupot, dvlper, dvlpera, gnexpl,
  ccthp, retimp, dnuref, gnidom,
  dvltpe,
- tpevtieom, ccortar, ccorvl, dtaurv, dcmloc, dcsplca, dcsglca, dcralca,
+ tpevtieom, ccortar, ccorvl, dtaurv, dcmloc, dcsplca, dcsglca, dcralca, jancmp
  local10, lot
  )
 SELECT
@@ -359,6 +360,7 @@ SELECT
   SUBSTRING(tmp,156,5) AS dcsplca,
   SUBSTRING(tmp,161,5) AS dcsglca,
   SUBSTRING(tmp,166,5) AS dcralca,
+  SUBSTRING(tmp,171,4) AS jancmp,
 
 
   SUBSTRING(tmp,1,3)||SUBSTRING(tmp,7,10) AS local10,
