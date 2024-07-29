@@ -167,8 +167,10 @@ CREATE TABLE local00 (
     ccocif text,
     dvoilib text,
     cleinvar text,
+    assietf text,
     ccpper text,
     locinc text,
+    codique text,
     lot text
 );
 
@@ -277,6 +279,7 @@ CREATE TABLE pev (
     ccorvl text,
     dtaurv integer,
     dcmloc integer,
+    jancmp text,
     lot text
 );
 
@@ -1387,8 +1390,10 @@ COMMENT ON COLUMN local00.dindic IS 'indice de répétition - ';
 COMMENT ON COLUMN local00.ccocif IS 'code du cdi/cdif (code topad) - ';
 COMMENT ON COLUMN local00.dvoilib IS 'libelle de la voie - ';
 COMMENT ON COLUMN local00.cleinvar IS 'clé alpha no invariant - ';
+COMMENT ON COLUMN local00.assietf IS 'Code SAGES du service gestionnaire de la taxe foncière';
 COMMENT ON COLUMN local00.ccpper IS 'Code de trésorerie gestionnaire - ';
 COMMENT ON COLUMN local00.locinc IS 'code local sans évaluation - INDISPONIBLE';
+COMMENT ON COLUMN local00.codique IS 'Code codique du service de recouvrement de la TF';
 COMMENT ON TABLE local10 IS 'Article identifiant du local';
 COMMENT ON COLUMN local10.ccodep IS 'code département - ';
 COMMENT ON COLUMN local10.ccodir IS 'code direction - ';
@@ -1477,6 +1482,7 @@ COMMENT ON COLUMN pev.ccortar IS 'Code commune origine du tarif';
 COMMENT ON COLUMN pev.ccorvl IS 'Code réduction du local';
 COMMENT ON COLUMN pev.dtaurv IS 'Taux de réduction';
 COMMENT ON COLUMN pev.dcmloc IS 'Coefficient de modulation du local';
+COMMENT ON COLUMN pev.jancmp IS 'Année de début de compensation';
 
 
 COMMENT ON TABLE pevexoneration IS 'Article exonération de pev imposable';
