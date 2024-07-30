@@ -318,7 +318,7 @@ INSERT INTO [PREFIXE]pev
  ccocac, dnutrf, dcfloc, dsupot, dvlper, dvlpera, gnexpl,
  ccthp, retimp, dnuref, gnidom,
  dvltpe,
- tpevtieom, ccortar, ccorvl, dtaurv, dcmloc, dcsplca, dcsglca, dcralca, jancmp
+ tpevtieom, ccortar, ccorvl, dtaurv, dcmloc, dcsplca, dcsglca, dcralca, jancmp,
  local10, lot
  )
 SELECT
