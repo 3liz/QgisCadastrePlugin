@@ -9,7 +9,7 @@ WITH infos AS (
 
     -- adresse
     ltrim(l.dnvoiri, '0') || l.dindic AS l_numero_voirie,
-    CASE WHEN v.libvoi IS NOT NULL THEN v.natvoi || v.libvoi ELSE p.cconvo || p.dvoilib END AS l_adresse,
+    CASE WHEN v.libvoi IS NOT NULL THEN v.natvoi || ' ' || v.libvoi ELSE p.cconvo || ' ' || p.dvoilib END AS l_adresse,
 
     -- proprio et acte
     string_agg((l10.ccodep || l10.ccocom || '-' ||l10.dnupro), '|') AS l10_compte_proprietaire,
@@ -66,7 +66,8 @@ WITH infos AS (
     INNER JOIN local00 l ON l.parcelle = p.parcelle
     INNER JOIN local10 l10 ON l10.local00 = l.local00
     INNER JOIN pev ON pev.local10 = l10.local10
-    LEFT JOIN voie v ON v.voie = l.voie
+    LEFT JOIN voie v
+        ON SUBSTR(l.voie, 1, 6) || SUBSTR(l.voie, 12, 4) = SUBSTR(v.voie, 1, 6) || SUBSTR(v.voie, 12, 4)
     LEFT JOIN pevtaxation pt ON pt.pev = pev.pev
     LEFT JOIN pevexoneration px ON px.pev = pev.pev
     LEFT JOIN "dteloc" ON l10.dteloc = dteloc.dteloc

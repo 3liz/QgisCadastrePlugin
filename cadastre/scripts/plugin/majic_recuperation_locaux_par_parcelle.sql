@@ -61,7 +61,7 @@ WITH infos AS (
     INNER JOIN local00 l ON l.parcelle = p.parcelle
     INNER JOIN local10 l10 ON l10.local00 = l.local00
     INNER JOIN pev ON pev.local10 = l10.local10
-    LEFT JOIN voie v ON v.voie = l.voie
+    LEFT JOIN voie v ON SUBSTR(l.voie, 1, 6) || SUBSTR(l.voie, 12, 4) = SUBSTR(v.voie, 1, 6) || SUBSTR(v.voie, 12, 4)
     LEFT JOIN pevtaxation pt ON pt.pev = pev.pev
     LEFT JOIN pevexoneration px ON px.pev = pev.pev
     LEFT JOIN "dteloc" ON l10.dteloc = dteloc.dteloc

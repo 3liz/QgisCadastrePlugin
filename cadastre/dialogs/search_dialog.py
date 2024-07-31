@@ -744,7 +744,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
     def getFeaturesFromSqlQuery(self, layer, filterExpression=None, attributes='*', orderBy=None):
         """
         Get data from a db table,
-        optionnally filtered by given expression
+        optionally filtered by given expression
         and get corresponding QgsFeature objects
         """
         QApplication.setOverrideCursor(Qt.WaitCursor)
@@ -855,10 +855,10 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             QApplication.restoreOverrideCursor()
             return None
 
-        # Set filter expression for parcell child data
+        # Set filter expression for parcelle child data
         ckey = self.searchComboBoxes[key]['search']['parcelle_child']
         if key == 'adresse':
-            filterExpression = "SUBSTR(voie,0,7)||SUBSTR(voie,12,4) = '%s%s'" % (value['voie'][0:6], value['voie'][11:])
+            filterExpression = "SUBSTR(voie, 1, 6) || SUBSTR(voie, 12, 4) = '%s%s'" % (value['voie'][0:6], value['voie'][11:])
 
         if key == 'proprietaire':
             filterExpression = "comptecommunal IN (%s)" % ', '.join(value['cc'])

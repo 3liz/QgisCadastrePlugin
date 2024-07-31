@@ -21,7 +21,7 @@ SELECT
     coalesce(
     CASE
             WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(coalesce(v.natvoi, '')) || ' ' || v.libvoi)
-            ELSE ltrim(p.cconvo, '0') || p.dvoilib
+            ELSE trim(ltrim(p.cconvo, '0') || ' ' || p.dvoilib)
     END, '') ||
     '</td></tr>' ||
     '<tr><th>Urbaine</th> <td>' ||
@@ -39,7 +39,7 @@ LEFT OUTER JOIN geo_batiment b
 LEFT OUTER JOIN commune c
     ON p.ccocom = c.ccocom AND c.ccodep = p.ccodep
 LEFT OUTER JOIN voie v
-    ON v.voie = p.voie
+    ON SUBSTR(p.voie, 1, 6) || SUBSTR(p.voie, 12, 4) = SUBSTR(v.voie, 1, 6) || SUBSTR(v.voie, 12, 4)
 WHERE 2>1
 AND parcelle = '%s'
 GROUP BY p.ccosec, p.dnupla, c.libcom, p.jdatat, p.dcntpa,
