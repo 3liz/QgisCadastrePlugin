@@ -57,6 +57,19 @@ Il n'existe actuellement aucune contrainte de clés étrangères sur les tables 
 proposerons à l'avenir un script qui permettra de les créer, lorsque les données le permettent (ce qui n'est
 pas toujours le cas, comme des voies non référencées dans `voie` mais référencées dans `parcelle`).
 
+## Données
+
+### Edigeo
+
+Vous pouvez utiliser le téléchargeur Edigeo dans la boîte à outil **Traitements** de QGIS, dans l'extension
+**Cadastre**.
+
+### FANTOIR
+
+Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons de les télécharger sur le
+[site du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir)
+et de configurer l'extension pour donner le bon nom au fichier FANTOIR.
+
 ## Les étapes d'importation
 
 Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu
@@ -92,9 +105,6 @@ On configure ensuite les options :
 
     - Comme pour EDIGEO, l'extension ira chercher les fichiers dans les répertoires et les sous-répertoires et
       importera l'ensemble des données.
-    - Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement
-      de les télécharger et de configurer l'extension pour donner le bon nom au fichier FANTOIR :
-      https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
