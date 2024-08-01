@@ -599,6 +599,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#donnees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Données
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Données">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#edigeo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edigeo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fantoir" class="md-nav__link">
+    <span class="md-ellipsis">
+      FANTOIR
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#les-etapes-dimportation" class="md-nav__link">
     <span class="md-ellipsis">
       Les étapes d'importation
@@ -979,6 +1012,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#donnees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Données
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Données">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#edigeo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edigeo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fantoir" class="md-nav__link">
+    <span class="md-ellipsis">
+      FANTOIR
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#les-etapes-dimportation" class="md-nav__link">
     <span class="md-ellipsis">
       Les étapes d'importation
@@ -1076,6 +1142,14 @@ connexion QGIS liée si nécessaire.</p>
 <p>Il n'existe actuellement aucune contrainte de clés étrangères sur les tables du schéma cadastre. Nous
 proposerons à l'avenir un script qui permettra de les créer, lorsque les données le permettent (ce qui n'est
 pas toujours le cas, comme des voies non référencées dans <code>voie</code> mais référencées dans <code>parcelle</code>).</p>
+<h2 id="donnees">Données<a class="headerlink" href="#donnees" title="Permanent link">#</a></h2>
+<h3 id="edigeo">Edigeo<a class="headerlink" href="#edigeo" title="Permanent link">#</a></h3>
+<p>Vous pouvez utiliser le téléchargeur Edigeo dans la boîte à outil <strong>Traitements</strong> de QGIS, dans l'extension
+<strong>Cadastre</strong>.</p>
+<h3 id="fantoir">FANTOIR<a class="headerlink" href="#fantoir" title="Permanent link">#</a></h3>
+<p>Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons de les télécharger sur le
+<a href="https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir">site du CRAIG</a>
+et de configurer l'extension pour donner le bon nom au fichier FANTOIR.</p>
 <h2 id="les-etapes-dimportation">Les étapes d'importation<a class="headerlink" href="#les-etapes-dimportation" title="Permanent link">#</a></h2>
 <p>Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu
 <strong>Configurer l'extension</strong>. Ensuite, on ouvre la boite de dialogue</p>
@@ -1125,9 +1199,6 @@ pas toujours le cas, comme des voies non référencées dans <code>voie</code> m
 <ul>
 <li>Comme pour EDIGEO, l'extension ira chercher les fichiers dans les répertoires et les sous-répertoires et
   importera l'ensemble des données.</li>
-<li>Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons vivement
-  de les télécharger et de configurer l'extension pour donner le bon nom au fichier FANTOIR :
-  <a href="https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir">https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir</a></li>
 </ul>
 </li>
 <li>
@@ -1297,7 +1368,7 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 24, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 1, 2024</span>
   </span>
 
     
