@@ -205,75 +205,76 @@ class CadastreCommon:
 
         QApplication.restoreOverrideCursor()
 
-    def checkDatabaseForExistingStructure(self):
+    def check_database_for_existing_structure(self):
         """
         Search among a database / schema
         if there are already Cadastre structure tables
         in it
         """
-        hasStructure = False
-        hasData = False
-        hasMajicData = False
-        hasMajicDataProp = False
-        hasMajicDataParcelle = False
-        hasMajicDataVoie = False
+        has_structure = False
+        has_data = False
+        has_majic_data = False
+        has_majic_data_prop = False
+        has_majic_data_parcelle = False
+        has_majic_data_voie = False
 
-        searchTable = 'geo_commune'
-        majicTableParcelle = 'parcelle'
-        majicTableProp = 'proprietaire'
-        majicTableVoie = 'voie'
+        search_table = 'geo_commune'
+        majic_table_parcelle = 'parcelle'
+        majic_table_prop = 'proprietaire'
+        majic_table_voie = 'voie'
         if self.dialog.db:
             if self.dialog.dbType == 'postgis':
-                schemaSearch = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
-                schemaInst = schemaSearch[0]
-                getSearchTable = [a for a in self.dialog.db.tables(schemaInst) if a.name == searchTable]
-            if self.dialog.dbType == 'spatialite':
-                getSearchTable = [a for a in self.dialog.db.tables() if a.name == searchTable]
-            if getSearchTable:
-                hasStructure = True
+                schema_search = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
+                schema_inst = schema_search[0]
+                get_search_table = [a for a in self.dialog.db.tables(schema_inst) if a.name == search_table]
+            else:
+                get_search_table = [a for a in self.dialog.db.tables() if a.name == search_table]
+
+            if get_search_table:
+                has_structure = True
 
                 # Check for data in it
-                sql = 'SELECT * FROM "%s" LIMIT 1' % searchTable
+                sql = f'SELECT * FROM "{search_table}" LIMIT 1'
                 if self.dialog.dbType == 'postgis':
-                    sql = f'SELECT * FROM "{self.dialog.schema}"."{searchTable}" LIMIT 1'
-                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-                if ok and rowCount >= 1:
-                    hasData = True
+                    sql = f'SELECT * FROM "{self.dialog.schema}"."{search_table}" LIMIT 1'
+                data, row_count, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if ok and row_count >= 1:
+                    has_data = True
 
                 # Check for Majic data in it
-                sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableParcelle
+                sql = f'SELECT * FROM "{majic_table_parcelle}" LIMIT 1'
                 if self.dialog.dbType == 'postgis':
-                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majicTableParcelle}" LIMIT 1'
-                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-                if ok and rowCount >= 1:
-                    hasMajicData = True
-                    hasMajicDataParcelle = True
+                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majic_table_parcelle}" LIMIT 1'
+                data, row_count, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if ok and row_count >= 1:
+                    has_majic_data = True
+                    has_majic_data_parcelle = True
 
                 # Check for Majic data in it
-                sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableProp
+                sql = f'SELECT * FROM "{majic_table_prop}" LIMIT 1'
                 if self.dialog.dbType == 'postgis':
-                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majicTableProp}" LIMIT 1'
-                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-                if ok and rowCount >= 1:
-                    hasMajicData = True
-                    hasMajicDataProp = True
+                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majic_table_prop}" LIMIT 1'
+                data, row_count, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if ok and row_count >= 1:
+                    has_majic_data = True
+                    has_majic_data_prop = True
 
                 # Check for Majic data in it
-                sql = 'SELECT * FROM "%s" LIMIT 1' % majicTableVoie
+                sql = f'SELECT * FROM "{majic_table_voie}" LIMIT 1'
                 if self.dialog.dbType == 'postgis':
-                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majicTableVoie}" LIMIT 1'
-                data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
-                if ok and rowCount >= 1:
-                    hasMajicData = True
-                    hasMajicDataVoie = True
+                    sql = f'SELECT * FROM "{self.dialog.schema}"."{majic_table_voie}" LIMIT 1'
+                data, row_count, ok = CadastreCommon.fetchDataFromSqlQuery(self.dialog.db.connector, sql)
+                if ok and row_count >= 1:
+                    has_majic_data = True
+                    has_majic_data_voie = True
 
         # Set global properties
-        self.dialog.hasStructure = hasStructure
-        self.dialog.hasData = hasData
-        self.dialog.hasMajicData = hasMajicData
-        self.dialog.hasMajicDataParcelle = hasMajicDataParcelle
-        self.dialog.hasMajicDataProp = hasMajicDataProp
-        self.dialog.hasMajicData = hasMajicDataVoie
+        self.dialog.hasStructure = has_structure
+        self.dialog.hasData = has_data
+        self.dialog.hasMajicData = has_majic_data
+        self.dialog.hasMajicDataParcelle = has_majic_data_parcelle
+        self.dialog.hasMajicDataProp = has_majic_data_prop
+        self.dialog.hasMajicData = has_majic_data_voie
 
     def checkDatabaseForExistingTable(self, tableName, schemaName=''):
         """

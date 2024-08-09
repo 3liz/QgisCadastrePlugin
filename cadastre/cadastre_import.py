@@ -143,7 +143,7 @@ class cadastreImport(QObject):
 
         self.multiPolygonUpdated = 0
 
-        self.qc.checkDatabaseForExistingStructure()
+        self.qc.check_database_for_existing_structure()
         self.hasConstraints = False
         if self.dialog.hasStructure:
             self.hasConstraints = True
@@ -753,7 +753,7 @@ class cadastreImport(QObject):
 
         # ajout des unités foncières
         # seulement si on a des données MAJIC de propriétaire
-        self.qc.checkDatabaseForExistingStructure()
+        self.qc.check_database_for_existing_structure()
         if (self.dialog.doMajicImport or self.dialog.hasMajicDataProp) \
                 and self.dialog.dbType == 'postgis':
             scriptList.append(

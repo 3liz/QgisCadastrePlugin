@@ -166,6 +166,8 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
     row_count = 0
     c = None
     ok = True
+    if False:
+        QgsMessageLog.logMessage(sql, "cadastre", Qgis.Info)
     try:
         c = connector._execute(None, str(sql))
         data = connector._fetchall(c)
