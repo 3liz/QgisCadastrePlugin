@@ -145,3 +145,14 @@ tickets:
     - create_ticket.py
   tags:
     - factory-plain
+
+release:
+  stage: release
+  only:
+    - tags
+  image:
+    name: $REGISTRY_URI/infra/ci-tools:latest
+  script:
+    - gitlab_release
+  tags:
+    - factory-plain
