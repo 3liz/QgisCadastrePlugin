@@ -1,7 +1,7 @@
 SELECT
 l.ccosec AS section, ltrim(l.dnupla, '0') AS ndeplan,
 ltrim(l.dnvoiri, '0') || l.dindic AS ndevoirie,
-CASE WHEN v.libvoi IS NOT NULL THEN v.natvoi || ' ' || v.libvoi ELSE p.cconvo || p.dvoilib END AS adresse,
+CASE WHEN v.libvoi IS NOT NULL THEN v.natvoi || ' ' || v.libvoi ELSE p.cconvo || ' ' || p.dvoilib END AS adresse,
 l.ccoriv AS coderivoli,
 l.dnubat AS bat, l.descr AS ent, l.dniv AS niv, l.dpor AS ndeporte, substring(l.invar, 4, length(l.invar)) || ' ' || l.cleinvar AS numeroinvar,
 pev.ccostb AS star, l10.ccoeva AS meval, pev.ccoaff AS af, l10.cconlc AS natloc, pev.dcapec AS cat,
@@ -16,7 +16,8 @@ $schema"parcelle" p
 INNER JOIN $schema"local00" l ON l.parcelle = p.parcelle
 INNER JOIN $schema"local10" l10 ON l10.local00 = l.local00
 INNER JOIN $schema"pev" pev ON pev.local10 = l10.local10
-LEFT OUTER JOIN $schema"voie" v ON v.voie = l.voie
+LEFT OUTER JOIN $schema"voie" v
+  ON SUBSTR(l.voie, 1, 6) || SUBSTR(l.voie, 12, 4) = SUBSTR(v.voie, 1, 6) || SUBSTR(v.voie, 12, 4)
 LEFT JOIN $schema"pevexoneration" px ON px.pev = pev.pev
 LEFT JOIN $schema"pevtaxation" pt ON pt.pev = pev.pev
 WHERE 2>1
