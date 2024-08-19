@@ -44,11 +44,11 @@ jobs:
           package ${{ env.VERSION }}
 
       - name: Unzip
-        run: unzip dynamic_layers.${{ env.VERSION }}.zip -d tmp
+        run: unzip cadastre.${{ env.VERSION }}.zip -d tmp
 
       - uses: actions/upload-artifact@v4
         with:
-          name: dynamic_layers.${{ env.VERSION }}
+          name: cadastre.${{ env.VERSION }}
           path: tmp
 
   package-release:

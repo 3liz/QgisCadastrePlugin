@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 1.20.0 - 2024-08-19
+
+* Correction de la recherche sur adresse avec des codes voies n'ayant pas l'identifiant MAJIC (`ccovoi`) @landryb
+* Utilisation d'une URL temporaire pour les FANTOIR 2024 drive.opendata.craig.fr, @landryb
+* Support du millésime 2024 dans le formulaire d'import, @MaelREBOUX et @EtienneRouvin 
+* Correction d'une faille de sécurité lors de l'extraction de l'archive TAR, pensez à vérifier votre version de Python
+
 ## 1.19.2 - 2024-07-02
 
 * Correction du style par défaut pour être compatible avec Lizmap Web Client 3.7
