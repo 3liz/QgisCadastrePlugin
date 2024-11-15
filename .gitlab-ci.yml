@@ -34,7 +34,7 @@ package-zip:
       package ${VERSION}
       --plugin-repo-url https://packages.3liz.org/pub/${FACTORY_PRODUCT_NAME}-qgis-plugin/${STATUS}/
   tags:
-    - infrav3-plain
+    - factory-plain
   artifacts:
     untracked: true
     expose_as: 'QGIS package'
@@ -43,6 +43,7 @@ package-zip:
       - plugins.xml
 
 push-zip-fetch-repo:
+  image: ${REGISTRY_URL}/factory-ci-runner:fabric-ci
   dependencies:
     - version
     - package-zip
@@ -75,13 +76,14 @@ edit-repository:
   script:
     - qgis-plugin-repo merge plugins.xml tmp_repository/*.xml
   tags:
-    - factory
+    - factory-dind
   artifacts:
     untracked: true
     paths:
       - tmp_repository/*.xml
 
 push-repository:
+  image: ${REGISTRY_URL}/factory-ci-runner:fabric-ci
   stage: qgis-repository-push
   dependencies:
     - version
@@ -91,8 +93,8 @@ push-repository:
   tags:
     - fabric
 
-
 deploy_snap_2:
+  image: ${REGISTRY_URL}/factory-ci-runner:fabric-ci
   stage: deploy
   dependencies:
     - push-repository
