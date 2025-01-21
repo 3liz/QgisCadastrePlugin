@@ -12,6 +12,14 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QFileDialog, QMessageBox
 
+from cadastre.definitions import (
+    REGEX_BATI,
+    REGEX_FANTOIR,
+    REGEX_LOTLOCAL,
+    REGEX_NBATI,
+    REGEX_PDL,
+    REGEX_PROP,
+)
 from cadastre.tools import set_window_title
 
 OPTION_FORM_CLASS, _ = uic.loadUiType(
@@ -109,30 +117,30 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         from settings and set corresponding inputs
         """
         s = QgsSettings()
-        batiFileName = s.value("cadastre/batiFileName", 'REVBATI.800', type=str)
-        if batiFileName:
-            self.inMajicBati.setText(batiFileName)
-        fantoirFileName = s.value("cadastre/fantoirFileName", 'TOPFANR.800', type=str)
-        if fantoirFileName:
-            self.inMajicFantoir.setText(fantoirFileName)
-        lotlocalFileName = s.value("cadastre/lotlocalFileName", 'REVD166.800', type=str)
-        if lotlocalFileName:
-            self.inMajicLotlocal.setText(lotlocalFileName)
-        nbatiFileName = s.value("cadastre/nbatiFileName", 'REVNBAT.800', type=str)
-        if nbatiFileName:
-            self.inMajicNbati.setText(nbatiFileName)
-        pdlFileName = s.value("cadastre/pdlFileName", 'REVFPDL.800', type=str)
-        if pdlFileName:
-            self.inMajicPdl.setText(pdlFileName)
-        propFileName = s.value("cadastre/propFileName", 'REVPROP.800', type=str)
-        if propFileName:
-            self.inMajicProp.setText(propFileName)
+        regexBati = s.value("cadastre/regexBati", REGEX_BATI, type=str)
+        if regexBati:
+            self.inMajicBati.setText(regexBati)
+        regexFantoir = s.value("cadastre/regexFantoir", REGEX_FANTOIR, type=str)
+        if regexFantoir:
+            self.inMajicFantoir.setText(regexFantoir)
+        regexLotLocal = s.value("cadastre/regexLotLocal", REGEX_LOTLOCAL, type=str)
+        if regexLotLocal:
+            self.inMajicLotlocal.setText(regexLotLocal)
+        regexNbati = s.value("cadastre/regexNbati", REGEX_NBATI, type=str)
+        if regexNbati:
+            self.inMajicNbati.setText(regexNbati)
+        regexPdl = s.value("cadastre/regexPdl", REGEX_PDL, type=str)
+        if regexPdl:
+            self.inMajicPdl.setText(regexPdl)
+        regexProp = s.value("cadastre/regexProp", REGEX_PROP, type=str)
+        if regexProp:
+            self.inMajicProp.setText(regexProp)
         tempDir = s.value("cadastre/tempDir", type=str)
         if tempDir and Path(tempDir).exists():
             self.inTempDir.setText(tempDir)
         else:
             self.inTempDir.setText(tempfile.gettempdir())
-        maxInsertRows = s.value("cadastre/maxInsertRows", 100000, type=int)
+        maxInsertRows = s.value("cadastre/maxInsertRows", 50000, type=int)
         if maxInsertRows:
             self.inMaxInsertRows.setValue(maxInsertRows)
         spatialiteTempStore = s.value("cadastre/spatialiteTempStore", 'MEMORY', type=str)
@@ -183,12 +191,12 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
 
         # Save Majic file names
         s = QgsSettings()
-        s.setValue("cadastre/batiFileName", self.inMajicBati.text().strip(' \t\n\r'))
-        s.setValue("cadastre/fantoirFileName", self.inMajicFantoir.text().strip(' \t\n\r'))
-        s.setValue("cadastre/lotlocalFileName", self.inMajicLotlocal.text().strip(' \t\n\r'))
-        s.setValue("cadastre/nbatiFileName", self.inMajicNbati.text().strip(' \t\n\r'))
-        s.setValue("cadastre/pdlFileName", self.inMajicPdl.text().strip(' \t\n\r'))
-        s.setValue("cadastre/propFileName", self.inMajicProp.text().strip(' \t\n\r'))
+        s.setValue("cadastre/regexBati", self.inMajicBati.text().strip(' \t\n\r'))
+        s.setValue("cadastre/regexFantoir", self.inMajicFantoir.text().strip(' \t\n\r'))
+        s.setValue("cadastre/regexLotLocal", self.inMajicLotlocal.text().strip(' \t\n\r'))
+        s.setValue("cadastre/regexNbati", self.inMajicNbati.text().strip(' \t\n\r'))
+        s.setValue("cadastre/regexPdl", self.inMajicPdl.text().strip(' \t\n\r'))
+        s.setValue("cadastre/regexProp", self.inMajicProp.text().strip(' \t\n\r'))
 
         # Save temp dir
         s.setValue("cadastre/tempDir", self.inTempDir.text().strip(' \t\n\r'))
