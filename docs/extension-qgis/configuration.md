@@ -1,6 +1,6 @@
 # Configuration
 
-Avant d'importer les premières données cadastrales dans la base de données, il faut au préalable configurer
+Avant d'importer les premières données cadastrales dans la base de données, vous pouvez si vous le souhaitez configurer
 l'extension :
 
 * Menu **Cadastre ➡ Configurer le plugin** ou l'icône **outils** de la barre d'outil Cadastre.
@@ -16,15 +16,26 @@ interface simplifiée adaptée à une utilisation de consultation du Cadastre.
 fonctionnalité lorsque ce sera possible. En attendant, il faut donc le faire manuellement, comme expliqué dans
 la fenêtre d'aide.
 
-## Nom des fichiers MAJIC
+## Mots-clés pour trouver les fichiers MAJIC
 
-Cette partie permet de spécifier comment sont appelés les fichiers MAJIC sur votre poste de travail.
+Cette partie permet de spécifier **comment sont recherchés les fichiers MAJIC** sur votre poste de travail
+dans le répertoire que vous choisissez dans l'outil d'import.
 
-En effet, les conventions de nommage peuvent changer d'un département à l'autre. Souvent, les fichiers se
-terminent par une extension relative au département et à la direction, par exemple `.800` pour les fichiers
-du département de la Somme.
+Pour chaque type de fichier (propriétés bâties, non bâties, propriétaires, etc.), un mot-clé,
+ou une liste de mots-clés séparés par `|` permettent de trouver les fichiers s'ils respectent
+les conventions classiques de nommage.
 
-**Il est important de bien configurer ces noms de fichiers avant votre premier import.**
+Par exemple, les fichiers contenant les propriétaires peuvent s'appeller
+`REVPROP.txt` ou `ART.DC21.W19132.PROP.A2019.N000688`. Dans ce cas,
+il seront bien trouvés par le mot-clé `PROP`.
+
+A noter :
+
+* la recherche est **insensible à la casse**;
+* les mots-clés sont en fait des **expressions régulières**. Par exemple `LLOC|D166`, qui permet
+  de trouver les fichiers des locaux, trouve les fichiers contenant `LLOC` ou `D166`.
+
+**Le plugin propose les mots-clés les plus courants. Vous pouvez les modifier si vos fichiers sont nommés différemment.**
 
 Si l'extension ne trouve pas les fichiers MAJIC pendant l'import, alors que vous aviez spécifié le bon
 répertoire d'import, un message vous avertira et vous proposera d'annuler l'import.

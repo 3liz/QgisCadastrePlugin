@@ -274,7 +274,7 @@ class CadastreCommon:
         self.dialog.hasMajicData = has_majic_data
         self.dialog.hasMajicDataParcelle = has_majic_data_parcelle
         self.dialog.hasMajicDataProp = has_majic_data_prop
-        self.dialog.hasMajicData = has_majic_data_voie
+        self.dialog.hasMajicDataVoie = has_majic_data_voie
 
     def checkDatabaseForExistingTable(self, tableName, schemaName=''):
         """

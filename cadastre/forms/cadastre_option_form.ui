@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>543</width>
-    <height>663</height>
+    <height>825</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>523</width>
-        <height>643</height>
+        <height>805</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -69,56 +69,23 @@
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>Nom des fichiers MAJIC</string>
+          <string>Mot-clés pour trouver les fichiers MAJIC</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Cette configuration permet de définir comment le plugin trouve les fichiers dans le répertoire MAJIC, en fonction de chaque type de fichier. Un simple mot ou une expression régulière peuvent être utilisés.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>BATI</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="inMajicBati"/>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>FANTOIR</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>NBATI</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QLineEdit" name="inMajicProp"/>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLineEdit" name="inMajicLotlocal"/>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>LOTLOCAL</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="inMajicFantoir"/>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLineEdit" name="inMajicNbati"/>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="label_5">
+            <item row="5" column="2">
+             <widget class="QLineEdit" name="inMajicProp">
               <property name="text">
                <string>PROP</string>
               </property>
@@ -131,8 +98,89 @@
               </property>
              </widget>
             </item>
-            <item row="4" column="1">
-             <widget class="QLineEdit" name="inMajicPdl"/>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>TOPO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>BATI</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="inMajicBati">
+              <property name="text">
+               <string>BATI</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="QLineEdit" name="inMajicPdl">
+              <property name="text">
+               <string>PDL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>PROP</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLineEdit" name="inMajicNbati">
+              <property name="text">
+               <string>NBAT</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="inMajicLotlocal">
+              <property name="text">
+               <string>LLOC|D166</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLineEdit" name="lineEdit">
+              <property name="text">
+               <string>TOPO</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>NBATI</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>LOTLOCAL</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="2">
+             <widget class="QLineEdit" name="inMajicFantoir">
+              <property name="text">
+               <string>FANTOIR|FANR</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>FANTOIR</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -196,7 +244,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_7">
               <property name="text">
-               <string>Taille maximum des requêtes INSERT</string>
+               <string>Nombre de lignes MAJIC insérées par lot</string>
               </property>
              </widget>
             </item>
@@ -257,18 +305,19 @@
   <tabstop>btInterfaceCadastre</tabstop>
   <tabstop>btInterfaceQgis</tabstop>
   <tabstop>inMajicBati</tabstop>
-  <tabstop>inMajicFantoir</tabstop>
   <tabstop>inMajicLotlocal</tabstop>
   <tabstop>inMajicNbati</tabstop>
   <tabstop>inMajicPdl</tabstop>
   <tabstop>inMajicProp</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>inMajicFantoir</tabstop>
   <tabstop>inComposerTemplateFile</tabstop>
   <tabstop>btComposerTemplateFile</tabstop>
   <tabstop>inTempDir</tabstop>
   <tabstop>btTempDir</tabstop>
   <tabstop>inMaxInsertRows</tabstop>
   <tabstop>inSpatialiteTempStore</tabstop>
-  <tabstop>buttonBox</tabstop>
  </tabstops>
+ <resources/>
  <connections/>
 </ui>

@@ -180,10 +180,13 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         Ask the user to select a folder
         and write down the path to appropriate field
         """
+        root_directory = str(self.pathSelectors[key]['input'].text()).strip(' \t')
+        if not root_directory:
+            root_directory = os.path.expanduser("~")
         ipath = QFileDialog.getExistingDirectory(
             None,
             "Choisir le répertoire contenant les fichiers",
-            str(self.pathSelectors[key]['input'].text().encode('utf-8')).strip(' \t')
+            root_directory
         )
         if os.path.exists(str(ipath)):
             self.pathSelectors[key]['input'].setText(str(ipath))

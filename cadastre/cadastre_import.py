@@ -40,7 +40,16 @@ from qgis.core import Qgis, QgsMessageLog
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
-from cadastre.definitions import URL_DOCUMENTATION, URL_FANTOIR
+from cadastre.definitions import (
+    IMPORT_MEMORY_ERROR_MESSAGE,
+    REGEX_BATI,
+    REGEX_FANTOIR,
+    REGEX_LOTLOCAL,
+    REGEX_NBATI,
+    REGEX_PDL,
+    REGEX_PROP,
+    URL_FANTOIR,
+)
 from cadastre.dialogs.dialog_common import CadastreCommon
 
 # Import ogr2ogr.py from the script folder
@@ -102,36 +111,42 @@ class cadastreImport(QObject):
 
         s = QSettings()
         self.majicSourceFileNames = [
-            {'key': '[FICHIER_BATI]',
-             'value': s.value("cadastre/batiFileName", 'REVBATI.800', type=str),
-             'table': 'bati',
-             'required': True
-             },
-            {'key': '[FICHIER_FANTOIR]',
-             'value': s.value("cadastre/fantoirFileName", 'TOPFANR.800', type=str),
-             'table': 'fanr',
-             'required': True
-             },
-            {'key': '[FICHIER_LOTLOCAL]',
-             'value': s.value("cadastre/lotlocalFileName", 'REVD166.800', type=str),
-             'table': 'lloc',
-             'required': False
-             },
-            {'key': '[FICHIER_NBATI]',
-             'value': s.value("cadastre/nbatiFileName", 'REVNBAT.800', type=str),
-             'table': 'nbat',
-             'required': True
-             },
-            {'key': '[FICHIER_PDL]',
-             'value': s.value("cadastre/pdlFileName", 'REVFPDL.800', type=str),
-             'table': 'pdll',
-             'required': False
-             },
-            {'key': '[FICHIER_PROP]',
-             'value': s.value("cadastre/propFileName", 'REVPROP.800', type=str),
-             'table': 'prop',
-             'required': True
-             }
+            {
+                'key': '[FICHIER_BATI]',
+                'regex': s.value("cadastre/regexBati", REGEX_BATI, type=str),
+                'table': 'bati',
+                'required': True
+            },
+            {
+                'key': '[FICHIER_FANTOIR]',
+                'regex': s.value("cadastre/regexFantoir", REGEX_FANTOIR, type=str),
+                'table': 'fanr',
+                'required': True
+            },
+            {
+                'key': '[FICHIER_LOTLOCAL]',
+                'regex': s.value("cadastre/regexLotLocal", REGEX_LOTLOCAL, type=str),
+                'table': 'lloc',
+                'required': False
+            },
+            {
+                'key': '[FICHIER_NBATI]',
+                'regex': s.value("cadastre/regexNbati", REGEX_NBATI, type=str),
+                'table': 'nbat',
+                'required': True
+            },
+            {
+                'key': '[FICHIER_PDL]',
+                'regex': s.value("cadastre/regexPdl", REGEX_PDL, type=str),
+                'table': 'pdll',
+                'required': False
+            },
+            {
+                'key': '[FICHIER_PROP]',
+                'regex': s.value("cadastre/regexProp", REGEX_PROP, type=str),
+                'table': 'prop',
+                'required': True
+            },
         ]
 
         if self.dialog.dbType == 'postgis':
@@ -329,7 +344,7 @@ class cadastreImport(QObject):
         # Import MAJIC files into database
         # No use of COPY FROM to allow import into distant databases
         importScript = {
-            'title': 'Import des fichiers majic',
+            'title': 'Import des fichiers MAJIC',
             'method': self.import_majic_into_database
         }
         scriptList.append(importScript)
@@ -425,44 +440,24 @@ class cadastreImport(QObject):
 
         return None
 
-    def chunk(self, iterable, n=100000, padvalue=None):
+    def get_available_majic_files(self) -> tuple[dict, dict]:
         """
-        Chunks an iterable (file, etc.)
-        into pieces
+        Get the list of MAJIC files to import
         """
-        from itertools import zip_longest
-        return zip_longest(*[iter(iterable)] * n, fillvalue=padvalue)
-
-    def import_majic_into_database(self) -> bool:
-        """
-        Method which read each majic file
-        and bulk import data into temp tables
-
-        Returns False if no file processed
-        """
-        processed_files_count = 0
-        majic_files_key = []
         majic_files_found = {}
-
-        # Regex to remove all chars not in the range in ASCII table from space to ~
-        # http://www.catonmat.net/blog/my-favorite-regex/
-        r = re.compile(r"[^ -~]")
-
-        # Loop through all majic files
-
-        # 1st path to build the complet liste for each majic source type (nbat, bati, lloc, etc.)
-        # and read 1st line to get departement and direction to compare to inputs
         dep_dirs = {}
         for item in self.majicSourceFileNames:
             table = item['table']
-            value = item['value']
-            # Get majic files for item
+            file_regex = item['regex']
+            # Get MAJIC files for item
             maj_list = []
             for root, dirs, files in os.walk(self.dialog.majicSourceDir):
-                for i in files:
-                    if os.path.split(i)[1] == value:
-                        file_path = os.path.join(root, i)
+                for file_sub_path in files:
+                    # self.qc.updateLog(file_sub_path)
+                    # Check if the file matches the regex given for this file type
+                    if re.search(file_regex, os.path.split(file_sub_path)[1].upper()):
                         # Add file path to the list
+                        file_path = os.path.join(root, file_sub_path)
                         maj_list.append(file_path)
 
                         # Store dep_dir for this file
@@ -481,23 +476,29 @@ class cadastreImport(QObject):
 
             majic_files_found[table] = maj_list
 
-        # Check if some important majic files are missing
+        return dep_dirs, majic_files_found
+
+    def check_missing_majic_files(self, majic_files_found: dict) -> bool:
+        """
+        Check if the mandatory MAJIC files have been found in the directory
+        """
         f_keys = [a for a in majic_files_found if majic_files_found[a]]
         r_keys = [a['table'] for a in self.majicSourceFileNames if a['required']]
-        m_keys = [a for a in r_keys if a not in f_keys]
-        if m_keys:
+        missing_files = [a for a in r_keys if a not in f_keys]
+        if missing_files:
             msg = (
-                "<b>Des fichiers MAJIC importants sont manquants: {} </b><br/>"
-                "Vérifier le chemin des fichiers MAJIC:<br/>"
-                "{} <br/>"
-                "ainsi que les noms des fichiers configurés dans les options du plugin Cadastre:<br/>"
-                "{}<br/><br/>"
-                "Vous pouvez télécharger les fichiers fantoirs à cette adresse :<br/>"
+                "<b>Des fichiers MAJIC importants sont manquants</b> :<br/>"
+                " <b>{}</b> <br/><br/>"
+                "Vérifier le chemin des fichiers MAJIC :<br/>"
+                "<b>{}</b> <br/>"
+                "ainsi que les mots recherchés pour chaque type de fichier configurés dans les options du plugin Cadastre :<br/>"
+                "<b>{}</b><br/><br/>"
+                "<b>NB:</b> Vous pouvez télécharger les fichiers FANTOIR à cette adresse :<br/>"
                 "<a href='{}'>{}</a><br/>"
             ).format(
-                ', '.join(m_keys),
+                ', '.join(missing_files),
                 self.dialog.majicSourceDir,
-                ', '.join([a['value'].upper() for a in self.majicSourceFileNames]),
+                ', <br/>'.join([f"* {a['key'].strip('[]')}: {a['regex'].upper()}" for a in self.majicSourceFileNames]),
                 URL_FANTOIR,
                 URL_FANTOIR,
             )
@@ -512,6 +513,14 @@ class cadastreImport(QObject):
                 self.qc.updateLog(msg)
                 return False
 
+        return True
+
+    def check_majic_departement_direction(self, dep_dirs: dict) -> bool:
+        """
+        Check if departement and direction are the same for every MAJIC file.
+        Check if departement and direction are different from those
+        given by the user in dialog
+        """
         # Check if departement and direction are the same for every file
         if len(list(dep_dirs.keys())) > 1:
             self.go = False
@@ -523,6 +532,7 @@ class cadastreImport(QObject):
                 "</b>\n<br/> {}".format(lst)
             )
             self.qc.updateLog("<b>Veuillez réaliser l'import en %s fois.</b>" % len(list(dep_dirs.keys())))
+
             return False
 
         # Check if departement and direction are different from those given by the user in dialog
@@ -530,10 +540,11 @@ class cadastreImport(QObject):
         f_dir = list(dep_dirs.keys())[0][2:3]
         if self.dialog.edigeoDepartement != f_dep or self.dialog.edigeoDirection != f_dir:
             msg = (
-                "<b>ERREUR : MAJIC - Les numéros de département et de direction trouvés dans les fichiers "
-                "ne correspondent pas à ceux renseignés dans les options du dialogue d'import:<b>\n"
+                "<b>ERREUR : MAJIC</b> - Les numéros de <b>département</b> et de <b>direction</b> trouvés dans les fichiers "
+                "ne correspondent pas à ceux renseignés dans les options du dialogue d'import:\n"
                 "<br/>"
-                "* fichiers : {} et {} <br/>* options : {} et {}"
+                "* fichiers : <b>{}</b> et <b>{}</b> <br/> "
+                "* options : <b>{}</b> et <b>{}</b>"
             ).format(
                 f_dep,
                 f_dir,
@@ -557,7 +568,121 @@ class cadastreImport(QObject):
             else:
                 self.go = False
                 self.qc.updateLog(msg)
+
                 return False
+
+        return True
+
+    def chunk(self, iterable, pieces_number=100000, padvalue=None):
+        """
+        Chunks an iterable (file, etc.)
+        into pieces
+        """
+        try:
+            from itertools import zip_longest
+
+            return zip_longest(*[iter(iterable)] * pieces_number, fillvalue=padvalue)
+        except MemoryError:
+            self.qc.updateLog(IMPORT_MEMORY_ERROR_MESSAGE)
+            self.go = False
+
+            return
+
+    def import_majic_file_into_database(self, table_name: str, file_path: str, dep_dir: str) -> bool:
+        """
+        Import a single MAJIC file into the corresponding database table
+
+        For example, import a file REVPROP.txt into the "prop" table
+        """
+        # Regex to remove all chars not in the range in ASCII table from space to ~
+        # http://www.catonmat.net/blog/my-favorite-regex/
+        regex_remove_non_ascii = re.compile(r"[^ -~]")
+
+        # read file content
+        with open(file_path, encoding='ascii', errors='replace') as fin:
+            # Divide file into chunks
+            for a in self.chunk(fin, self.maxInsertRows):
+                # Build sql INSERT query depending on database
+                if self.dialog.dbType == 'postgis':
+                    try:
+                        sql = "BEGIN;"
+                        sql = CadastreCommon.setSearchPath(sql, self.dialog.schema)
+                        # Build INSERT list
+                        sql += '\n'.join(
+                            [
+                                "INSERT INTO \"{}\" VALUES ({});".format(
+                                    table_name,
+                                    self.connector.quoteString(
+                                        regex_remove_non_ascii.sub(' ', x.strip('\r\n'))
+                                    )
+                                ) for x in a if x and x[0:3] == dep_dir
+                            ]
+                        )
+                        sql += "COMMIT;"
+                    except MemoryError:
+                        # Issue #326
+                        self.qc.updateLog(IMPORT_MEMORY_ERROR_MESSAGE)
+                        self.go = False
+
+                        return False
+
+                    self.executeSqlQuery(sql)
+                else:
+                    try:
+                        c = self.connector._get_cursor()
+                        c.executemany(
+                            f'INSERT INTO "{table_name}" VALUES (?)',
+                            [(regex_remove_non_ascii.sub(' ', x.strip('\r\n')),) for x in a if x and x[0:3] == dep_dir])
+                        self.connector._commit()
+                        c.close()
+                        del c
+                    except MemoryError:
+                        # Issue #326
+                        self.qc.updateLog(IMPORT_MEMORY_ERROR_MESSAGE)
+                        self.go = False
+
+                        return False
+                    except:
+                        self.qc.updateLog(
+                            "<b>"
+                            f"ERREUR : l'import du fichier '{file_path}' a échoué"
+                            "</b>"
+                        )
+                        self.go = False
+
+                        return False
+
+            # Return False if chunk returned an error
+            if not self.go:
+                return False
+
+        return True
+
+    def import_majic_into_database(self) -> bool:
+        """
+        Method which read each majic file
+        and bulk import data into temp tables
+
+        Returns False if no file processed
+        """
+        processed_files_count = 0
+        majic_files_key = []
+
+        # Loop through all majic files
+
+        # 1st path to build the complet list for each majic source type (nbat, bati, lloc, etc.)
+        # and read 1st line to get departement and direction to compare to inputs
+        dep_dirs, majic_files_found = self.get_available_majic_files()
+
+        # Check if some important majic files are missing
+        check_missing = self.check_missing_majic_files(majic_files_found)
+        if not check_missing:
+            return False
+
+        # Check departement & direction
+        check_depdir = self.check_majic_departement_direction(dep_dirs)
+        if not check_depdir:
+            return False
 
         # 2nd path to insert data
         dep_dir = f'{self.dialog.edigeoDepartement}{self.dialog.edigeoDirection}'
@@ -568,49 +693,9 @@ class cadastreImport(QObject):
             for file_path in majic_files_found[table]:
                 self.qc.updateLog(file_path)
 
-                # read file content
-                with open(file_path, encoding='ascii', errors='replace') as fin:
-                    # Divide file into chunks
-                    for a in self.chunk(fin, self.maxInsertRows):
-                        # Build sql INSERT query depending on database
-                        if self.dialog.dbType == 'postgis':
-                            try:
-                                sql = "BEGIN;"
-                                sql = CadastreCommon.setSearchPath(sql, self.dialog.schema)
-                                # Build INSERT list
-                                sql += '\n'.join(
-                                    [
-                                        "INSERT INTO \"{}\" VALUES ({});".format(
-                                            table,
-                                            self.connector.quoteString(r.sub(' ', x.strip('\r\n')))
-                                        ) for x in a if x and x[0:3] == dep_dir
-                                    ]
-                                )
-                                sql += "COMMIT;"
-                            except MemoryError:
-                                # Issue #326
-                                self.qc.updateLog(
-                                    "<b>"
-                                    "ERREUR : Mémoire - Veuillez recommencer l'import en changeant le "
-                                    "paramètre 'Taille maximum des requêtes INSERT' selon la "
-                                    "documentation : {}{}"
-                                    "</b>".format(
-                                        URL_DOCUMENTATION,
-                                        "/extension-qgis/configuration/#performances",
-                                    )
-                                )
-                                self.go = False
-                                return False
-
-                            self.executeSqlQuery(sql)
-                        else:
-                            c = self.connector._get_cursor()
-                            c.executemany(
-                                f'INSERT INTO {table} VALUES (?)',
-                                [(r.sub(' ', x.strip('\r\n')),) for x in a if x and x[0:3] == dep_dir])
-                            self.connector._commit()
-                            c.close()
-                            del c
+                import_file = self.import_majic_file_into_database(table, file_path, dep_dir)
+                if not import_file:
+                    continue
 
         if not processed_files_count:
             self.qc.updateLog(
