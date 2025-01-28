@@ -50,7 +50,7 @@ Ainsi qu'une zone contenant des **boutons d'action** :
   parcelle, zoomer sur la parcelle ou sélectionner l'objet dans la couche
 * Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
 
-> Si vous n'avez pas importé de données FANTOIR, la commune de la parcelle ne sera pas affichée dans la
+> Si vous n'avez pas importé de données TOPO, la commune de la parcelle ne sera pas affichée dans la
 > fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)
 
 >Si vous n'avez pas de données MAJIC, seule les informations sur la parcelle (1er onglet) seront présentées.
@@ -133,9 +133,9 @@ Le **PDF est généré et ouvert** avec le lecteur PDF par défaut du système.
 ### Recherche d'adresse
 
 > Pour l'instant, cet outil ne fonctionne que si des données MAJIC sont dans la base, et si les données
-> FANTOIR ont été importées. Si vous ne possédez pas de données FANTOIR dans votre lot de données MAJIC,
+> TOPO ont été importées. Si vous ne possédez pas de données TOPO dans votre lot de données MAJIC,
 > vous pouvez le télécharger pour votre département ici (et relancer l'import Majic) :
-> https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir
+> https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo
 
 Pour lancer une **recherche de parcelles par adresse**, il suffit :
 

@@ -45,7 +45,7 @@ CASE
     ELSE 'Non'
 END AS parcelle_batie,
 CASE
-        WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(v.natvoi) || ' ' || v.libvoi)
+        WHEN v.libvoi IS NOT NULL THEN trim(ltrim(p.dnvoiri, '0') || ' ' || trim(Coalesce(v.natvoi, '')) || v.libvoi)
         ELSE ltrim(p.cconvo, '0') || p.dvoilib
 END AS adresse,
 CASE

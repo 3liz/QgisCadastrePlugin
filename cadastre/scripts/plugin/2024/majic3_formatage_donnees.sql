@@ -966,34 +966,43 @@ FROM ${PREFIXE}lloc;
 -- Traitement: commune
 INSERT INTO ${PREFIXE}commune
 (
- commune, geo_commune, annee, ccodep, ccodir, ccocom, clerivili, libcom, typcom, ruract, carvoi, indpop, poprel, poppart, popfict, annul, dteannul, dtecreart, codvoi,
+ commune, geo_commune, annee, ccodep, ccodir, ccocom, clerivili, libcom, typcom,
+ ruract, carvoi, indpop, poprel, poppart, popfict, annul, dteannul, dtecreart, codvoi,
  typvoi, indldnbat, motclas, lot
 )
 SELECT
-  REPLACE(SUBSTRING(tmp,1,6),' ', '0') AS commune,
-  REPLACE(SUBSTRING(tmp,1,6),' ', '0') AS geo_commune,
-  '${ANNEE}',
-  SUBSTRING(tmp,1,2) AS ccodep,
-  SUBSTRING(tmp,3,1) AS ccodir,
-  SUBSTRING(tmp,4,3) AS ccocom,
-  SUBSTRING(tmp,11,1) AS clerivili,
-  SUBSTRING(tmp,12,30) AS libcom,
-  CASE WHEN trim(SUBSTRING(tmp,43,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,43,1)) END AS typcom,
-  SUBSTRING(tmp,46,1) AS ruract,
-  SUBSTRING(tmp,49,1) AS carvoi,
-  SUBSTRING(tmp,50,1) AS indpop,
-  CASE WHEN trim(SUBSTRING(tmp,53,7))='' THEN NULL ELSE to_number(trim(SUBSTRING(tmp,53,7)),'0000000') END AS poprel,
-  to_number(SUBSTRING(tmp,60,7),'9999999') AS poppart,
-  to_number(SUBSTRING(tmp,67,7),'0000000') AS popfict,
-  SUBSTRING(tmp,74,1) AS annul,
-  SUBSTRING(tmp,75,7) AS dteannul,
-  SUBSTRING(tmp,82,7) AS dtecreart,
-  SUBSTRING(tmp,104,5) AS codvoi,
-  SUBSTRING(tmp,109,1) AS typvoi,
-  SUBSTRING(tmp,110,1) AS indldnbat,
-  SUBSTRING(tmp,113,8) AS motclas,
+  '${DEPDIR}' || SUBSTRING("code topo", 10, 3) AS commune,
+  '${DEPDIR}' || SUBSTRING("code topo", 10, 3) AS geo_commune,
+  '${ANNEE}' AS annee,
+  SUBSTRING("code topo", 8, 2) AS ccodep,
+  SUBSTRING('${DEPDIR}', 3, 1) AS ccodir,
+  SUBSTRING("code topo", 10, 3) AS ccocom,
+  NULL AS clerivili,
+  trim("libelle") AS libcom,
+  nullif("type commune actuel (r ou n)", '') AS typcom,
+  nullif("rur actuel", '') AS ruract,
+  NULL AS carvoi,
+  NULL AS indpop,
+  NULL AS poprel,
+  NULL AS poppart,
+  NULL AS popfict,
+  nullif("annulation", '') AS annul,
+  CASE
+    WHEN "date annulation" != '00000000'
+      THEN substr("date annulation", 1, 4) || to_char(to_date("date annulation", 'YYYYMMDD'), 'DDD')
+    ELSE '0000000'
+  END AS dteannul,
+  CASE
+    WHEN "date creation de article" != '00000000'
+      THEN substr("date creation de article", 1, 4) || to_char(to_date("date creation de article", 'YYYYMMDD'), 'DDD')
+    ELSE '0000000'
+  END AS dtecreart,
+  NULL AS codvoi,
+  NULL AS typvoi,
+  NULL AS indldnbat,
+  NULL AS motclas,
   '${LOT}' as lot
-FROM ${PREFIXE}fanr WHERE SUBSTRING(tmp,4,3)  != ' ' AND trim(SUBSTRING(tmp,7,4))='';
+FROM ${PREFIXE}topo WHERE substr("code topo", 17, 2) = '13';
 
 -- Traitement: voie
 INSERT INTO ${PREFIXE}voie
@@ -1003,33 +1012,51 @@ INSERT INTO ${PREFIXE}voie
  commune, lot
 )
 SELECT
-  REPLACE(SUBSTRING(tmp,1,6)||SUBSTRING(tmp,104,5)||SUBSTRING(tmp,7,4),' ', '0') AS voie,
+  REPLACE('${DEPDIR}' || SUBSTRING("code topo", 10, 3) || '00000' || SUBSTRING("code topo", 13, 4) , ' ', '0')  AS voie,
   '${ANNEE}',
-  SUBSTRING(tmp,1,2) AS ccodep,
-  SUBSTRING(tmp,3,1) AS ccodir,
-  SUBSTRING(tmp,4,3) AS ccocom,
-  CASE WHEN trim(SUBSTRING(tmp,7,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,7,1)) END AS natvoiriv,
-  SUBSTRING(tmp,7,4) AS ccoriv,
-  SUBSTRING(tmp,11,1) AS clerivili,
-  TRIM(SUBSTRING(tmp,12,4)) AS natvoi,
-  SUBSTRING(tmp,16,26) AS libvoi,
-  CASE WHEN trim(SUBSTRING(tmp,43,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,43,1)) END AS typcom,
-  SUBSTRING(tmp,46,1) AS ruract,
-  CASE WHEN trim(SUBSTRING(tmp,49,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,49,1)) END AS carvoi,
-  SUBSTRING(tmp,50,1) AS indpop,
-  SUBSTRING(tmp,53,7) AS poprel,
-  to_number(SUBSTRING(tmp,60,7),'0000000') AS poppart,
-  to_number(SUBSTRING(tmp,67,7),'0000000') AS popfict,
-  CASE WHEN trim(SUBSTRING(tmp,74,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,74,1)) END AS annul,
-  SUBSTRING(tmp,75,7) AS dteannul,
-  SUBSTRING(tmp,82,7) AS dtecreart,
-  SUBSTRING(tmp,104,5) AS codvoi,
-  CASE WHEN trim(SUBSTRING(tmp,109,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,109,1)) END AS typvoi,
-  CASE WHEN trim(SUBSTRING(tmp,110,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,110,1)) END AS indldnbat,
-  SUBSTRING(tmp,113,8) AS motclas,
-  REPLACE(SUBSTRING(tmp,1,6),' ', '0') AS commune,
+  SUBSTRING("code topo", 8, 2) AS ccodep,
+  SUBSTRING('${DEPDIR}', 3, 1) AS ccodir,
+  SUBSTRING("code topo", 10, 3) AS ccocom,
+  SUBSTRING("code topo", 13, 1) AS natvoiriv,
+  SUBSTRING("code topo", 13, 4) AS ccoriv,
+  NULL AS clerivili,
+  CASE
+      WHEN "type voie" != '3' AND substr(libelle, 1, 4) IN (SELECT substr(natvoi || '    ', 1, 4) FROM ${PREFIXE}natvoi)
+          THEN substr(libelle, 1, 4)
+      ELSE NULL
+  END AS natvoi,
+  CASE
+      WHEN "type voie" != '3' AND substr(libelle, 1, 4) IN (SELECT substr(natvoi || '    ', 1, 4) FROM ${PREFIXE}natvoi)
+          THEN trim(substr(libelle, 5))
+      ELSE trim(libelle)
+  END AS libvoi,
+  nullif("type commune actuel (r ou n)", '') AS typcom,
+  nullif("rur actuel", '') AS ruract,
+  nullif("caractere voie", '') AS carvoi,
+  NULL AS indpop,
+  NULL AS poprel,
+  NULL AS poppart,
+  NULL AS popfict,
+  nullif("annulation", '') AS annul,
+  CASE
+    WHEN "date annulation" != '00000000'
+      THEN substr("date annulation", 1, 4) || to_char(to_date("date annulation", 'YYYYMMDD'), 'DDD')
+    ELSE '0000000'
+  END AS dteannul,
+  CASE
+    WHEN "date creation de article" != '00000000'
+      THEN substr("date creation de article", 1, 4) || to_char(to_date("date creation de article", 'YYYYMMDD'), 'DDD')
+    ELSE '0000000'
+  END AS dtecreart,
+  NULL AS codvoi,
+  "type voie" AS typvoi,
+  1 AS indldnbat,
+  trim("mot classant") AS motclas,
+  '${DEPDIR}' || SUBSTRING("code topo", 10, 3) AS commune,
   '${LOT}' as lot
-FROM ${PREFIXE}fanr WHERE trim(SUBSTRING(tmp,4,3))  != '' AND trim(SUBSTRING(tmp,7,4))  != '';
+FROM ${PREFIXE}topo
+WHERE substr("code topo", 17, 2) = '14'
+;
 
 -- purge des doublons : voie
 CREATE INDEX idxan_voie ON voie (annee);

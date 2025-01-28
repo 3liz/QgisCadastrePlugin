@@ -1,9 +1,25 @@
 ﻿CREATE TABLE bati (tmp text);
-CREATE TABLE fanr (tmp text);
 CREATE TABLE lloc (tmp text);
 CREATE TABLE nbat (tmp text);
 CREATE TABLE pdll (tmp text);
 CREATE TABLE prop (tmp text);
+
+CREATE TABLE topo (
+    ogc_fid serial,
+    "code topo" character varying,
+    libelle character varying,
+    "type commune actuel (r ou n)" character varying,
+    "type commune fip (rounfip)" character varying,
+    "rur actuel" character varying,
+    "rur fip" character varying,
+    "caractere voie" character varying,
+    annulation character varying,
+    "date annulation" character varying,
+    "date creation de article" character varying,
+    "type voie" character varying,
+    "mot classant" character varying,
+    "date derniere transition" character varying
+);
 
 CREATE TABLE parcelle (
     parcelle text,

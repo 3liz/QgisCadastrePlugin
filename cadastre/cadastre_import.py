@@ -43,12 +43,12 @@ from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 from cadastre.definitions import (
     IMPORT_MEMORY_ERROR_MESSAGE,
     REGEX_BATI,
-    REGEX_FANTOIR,
     REGEX_LOTLOCAL,
     REGEX_NBATI,
     REGEX_PDL,
     REGEX_PROP,
-    URL_FANTOIR,
+    REGEX_TOPO,
+    URL_TOPO,
 )
 from cadastre.dialogs.dialog_common import CadastreCommon
 
@@ -118,9 +118,9 @@ class cadastreImport(QObject):
                 'required': True
             },
             {
-                'key': '[FICHIER_FANTOIR]',
-                'regex': s.value("cadastre/regexFantoir", REGEX_FANTOIR, type=str),
-                'table': 'fanr',
+                'key': '[FICHIER_TOPO]',
+                'regex': s.value("cadastre/regexTopo", REGEX_TOPO, type=str),
+                'table': 'topo',
                 'required': True
             },
             {
@@ -165,7 +165,7 @@ class cadastreImport(QObject):
         if self.dialog.hasStructure:
             self.hasConstraints = True
 
-        # Remove MAJIC from tables bati|fanr|lloc|nbat|pdll|prop
+        # Remove MAJIC from tables bati|topo|lloc|nbat|pdll|prop
         self.removeMajicRawData = True
 
         self.beginImport()
@@ -305,7 +305,7 @@ class cadastreImport(QObject):
 
         # dict for parameters replacement
         replaceDict = self.replaceDict.copy()
-        # mandatoryFilesKeys = ['[FICHIER_BATI]', '[FICHIER_FANTOIR]', '[FICHIER_NBATI]', '[FICHIER_PROP]']
+        # mandatoryFilesKeys = ['[FICHIER_BATI]', '[FICHIER_TOPO]', '[FICHIER_NBATI]', '[FICHIER_PROP]']
         # missingMajicFiles = False
 
         scriptList = []
@@ -350,6 +350,7 @@ class cadastreImport(QObject):
         scriptList.append(importScript)
 
         # Format data
+        replaceDict['DEPDIR'] = f'{self.dialog.edigeoDepartement}{self.dialog.edigeoDirection}'
         scriptList.append(
             {
                 'title': 'Mise en forme des données',
@@ -460,9 +461,8 @@ class cadastreImport(QObject):
                         file_path = os.path.join(root, file_sub_path)
                         maj_list.append(file_path)
 
-                        # Store dep_dir for this file
-                        # avoid fantoir, as now it is given for the whole country
-                        if table == 'fanr':
+                        # avoid topo, since direction is not used in TOPO
+                        if table == 'topo':
                             continue
 
                         # Get dep_dir : first line with content
@@ -490,17 +490,21 @@ class cadastreImport(QObject):
                 "<b>Des fichiers MAJIC importants sont manquants</b> :<br/>"
                 " <b>{}</b> <br/><br/>"
                 "Vérifier le chemin des fichiers MAJIC :<br/>"
-                "<b>{}</b> <br/>"
+                "<b>{}</b> <br/><br/>"
                 "ainsi que les mots recherchés pour chaque type de fichier configurés dans les options du plugin Cadastre :<br/>"
-                "<b>{}</b><br/><br/>"
-                "<b>NB:</b> Vous pouvez télécharger les fichiers FANTOIR à cette adresse :<br/>"
+                "<b>{}</b><br/><br/><br/>"
+                "<b>NB:</b> Vous pouvez télécharger les fichiers TOPO à cette adresse :<br/>"
                 "<a href='{}'>{}</a><br/>"
             ).format(
-                ', '.join(missing_files),
+                ', <br/>'.join(missing_files),
                 self.dialog.majicSourceDir,
-                ', <br/>'.join([f"* {a['key'].strip('[]')}: {a['regex'].upper()}" for a in self.majicSourceFileNames]),
-                URL_FANTOIR,
-                URL_FANTOIR,
+                ', <br/>'.join([
+                    f"* {a['key'].strip('[]')}: {a['regex'].upper()}"
+                    for a in self.majicSourceFileNames
+                    if a['table'] in missing_files
+                ]),
+                URL_TOPO,
+                URL_TOPO,
             )
             missing_majic_ignore = QMessageBox.question(
                 self.dialog,
@@ -691,9 +695,12 @@ class cadastreImport(QObject):
             self.totalSteps += len(majic_files_found[table])
             processed_files_count += len(majic_files_found[table])
             for file_path in majic_files_found[table]:
+                self.qc.updateLog(f'<b>{table}</b>')
                 self.qc.updateLog(file_path)
-
-                import_file = self.import_majic_file_into_database(table, file_path, dep_dir)
+                if table == 'topo':
+                    import_file = self.import_file_with_ogr(file_path, 'topo')
+                else:
+                    import_file = self.import_majic_file_into_database(table, file_path, dep_dir)
                 if not import_file:
                     continue
 
@@ -1187,6 +1194,12 @@ class cadastreImport(QObject):
                 self.qc.updateLog(msg)
                 return msg
 
+            except KeyError as e:
+                msg = "<b>Erreur lors du paramétrage des scripts d'import: %s</b>" % e
+                self.go = False
+                self.qc.updateLog(msg)
+                return msg
+
             finally:
                 QApplication.restoreOverrideCursor()
 
@@ -1408,7 +1421,7 @@ class cadastreImport(QObject):
             self.step = 0
             self.totalSteps = len(thfList)
             for thf in thfList:
-                self.importEdigeoThfToDatabase(thf)
+                self.import_file_with_ogr(thf, 'thf')
                 self.updateProgressBar()
                 if not self.go:
                     break
@@ -1442,110 +1455,139 @@ class cadastreImport(QObject):
         self.totalSteps = initialTotalSteps
         QApplication.restoreOverrideCursor()
 
-    def importEdigeoThfToDatabase(self, filename):
+    def import_file_with_ogr(self, file_path: str, file_type: str):
         """
-        Import one edigeo THF files into database
+        Import file into the database.
+
+        It can either be an EDIGEO THF file or a TOPO file.
         source : db_manager/dlg_import_vector.py
         """
-        if self.go:
-            # Get options
+        if not self.go:
+            return None
+
+        # SRID configurations
+        if file_type == 'thf':
             targetSridOption = '-t_srs'
             if self.sourceSridFull == self.targetSridFull:
                 targetSridOption = '-a_srs'
 
-            # Build ogr2ogr command
-            conn_name = self.dialog.connectionName
-            settings = QSettings()
-            settings.beginGroup(f"/{self.db.dbplugin().connectionSettingsKey()}/{conn_name}")
+        # Build ogr2ogr command
+        conn_name = self.dialog.connectionName
+        settings = QSettings()
+        settings.beginGroup(f"/{self.db.dbplugin().connectionSettingsKey()}/{conn_name}")
 
-            # normalising file path
-            filename = os.path.normpath(filename)
-            if self.dialog.dbType == 'postgis':
-                if not settings.contains("database"):  # non-existent entry?
-                    raise Exception(self.tr('There is no defined database connection "%s".') % conn_name)
-                settingsList = ["service", "host", "port", "database", "username", "password"]
-                service, host, port, database, username, password = (settings.value(x) for x in settingsList)
+        # normalising file path
+        file_path = os.path.normpath(file_path)
+        if self.dialog.dbType == 'postgis':
+            if not settings.contains("database"):  # non-existent entry?
+                raise Exception(self.tr('There is no defined database connection "%s".') % conn_name)
+            settingsList = ["service", "host", "port", "database", "username", "password"]
+            service, host, port, database, username, password = (settings.value(x) for x in settingsList)
 
-                if service:
-                    pg_access = 'PG:service={} active_schema={}'.format(
-                        service,
-                        self.dialog.schema
-                    )
-                else:
-                    # qgis can connect to postgis DB without a specified host param connection, but ogr2ogr cannot
-                    if not host:
-                        host = "localhost"
+            if service:
+                pg_access = 'PG:service={} active_schema={}'.format(
+                    service,
+                    self.dialog.schema
+                )
+            else:
+                # qgis can connect to postgis DB without a specified host param connection, but ogr2ogr cannot
+                if not host:
+                    host = "localhost"
 
-                    pg_access = 'PG:host={} port={} dbname={} active_schema={} user={} password={}'.format(
-                        host,
-                        port,
-                        database,
-                        self.dialog.schema,
-                        username,
-                        password
-                    )
-                cmdArgs = [
-                    '',
-                    '-s_srs', self.sourceSridFull,
-                    targetSridOption, self.targetSridFull,
-                    '-append',
-                    '-f', 'PostgreSQL',
-                    pg_access,
-                    filename,
-                    '-lco', 'GEOMETRY_NAME=geom',
-                    '-lco', 'PG_USE_COPY=YES',
-                    '-nlt', 'GEOMETRY',
-                    '-gt', '50000',
-                    '--config', 'OGR_EDIGEO_CREATE_LABEL_LAYERS', 'NO',
-                    '--config', 'PG_USE_COPY', 'YES',
-                ]
-                # -c client_encoding=latin1
-
-            if self.dialog.dbType == 'spatialite':
-                if not settings.contains("sqlitepath"):  # non-existent entry?
-                    self.go = False
-                    raise Exception('there is no defined database connection "%s".' % conn_name)
-
-                database = settings.value("sqlitepath")
-
-                cmdArgs = [
-                    '',
-                    '-s_srs', self.sourceSridFull,
-                    targetSridOption, self.targetSridFull,
-                    '-append',
-                    '-f', 'SQLite',
+                pg_access = 'PG:host={} port={} dbname={} active_schema={} user={} password={}'.format(
+                    host,
+                    port,
                     database,
-                    filename,
+                    self.dialog.schema,
+                    username,
+                    password
+                )
+            cmdArgs = [
+                '',
+            ]
+            if file_type == 'thf':
+                cmdArgs += [
+                    '-s_srs', self.sourceSridFull,
+                    targetSridOption, self.targetSridFull,
+                ]
+            cmdArgs += [
+                '-append',
+                '-f', 'PostgreSQL',
+                pg_access,
+                file_path,
+                '-lco', 'PG_USE_COPY=YES',
+                '-gt', '50000',
+                '--config', 'PG_USE_COPY', 'YES',
+            ]
+            if file_type == 'thf':
+                cmdArgs += [
+                    '-lco', 'GEOMETRY_NAME=geom',
+                    '-nlt', 'GEOMETRY',
+                    '--config', 'OGR_EDIGEO_CREATE_LABEL_LAYERS', 'NO',
+                ]
+            if file_type == 'topo':
+                cmdArgs += [
+                    '-nln', 'topo',
+                ]
+            # -c client_encoding=latin1
+
+        if self.dialog.dbType == 'spatialite':
+            if not settings.contains("sqlitepath"):  # non-existent entry?
+                self.go = False
+                raise Exception('there is no defined database connection "%s".' % conn_name)
+
+            database = settings.value("sqlitepath")
+
+            cmdArgs = [
+                '',
+            ]
+            if file_type == 'thf':
+                cmdArgs += [
+                    '-s_srs', self.sourceSridFull,
+                    targetSridOption, self.targetSridFull,
+                ]
+            cmdArgs += [
+                '-append',
+                '-f', 'SQLite',
+                database,
+                file_path,
+                '-gt', '50000',
+                '--config', 'OGR_SQLITE_SYNCHRONOUS', 'OFF',
+                '--config', 'OGR_SQLITE_CACHE', '512'
+            ]
+            if file_type == 'thf':
+                cmdArgs += [
                     '-lco', 'GEOMETRY_NAME=geom',
                     '-nlt', 'GEOMETRY',
                     '-dsco', 'SPATIALITE=YES',
-                    '-gt', '50000',
                     '--config', 'OGR_EDIGEO_CREATE_LABEL_LAYERS', 'NO',
-                    '--config', 'OGR_SQLITE_SYNCHRONOUS', 'OFF',
-                    '--config', 'OGR_SQLITE_CACHE', '512'
+                ]
+            if file_type == 'topo':
+                cmdArgs += [
+                    '-nln', 'topo',
                 ]
 
-            # self.qc.updateLog( ' '.join(cmdArgs))
-            # Run only if ogr2ogr found
-            if self.go:
-                # Workaround to get ogr2ogr error messages via stdout
-                # as ogr2ogr.py does not return exceptions nor error messages
-                # but only prints the error before returning False
-                stdout = sys.stdout
-                try:
-                    sys.stdout = file = io.StringIO()
-                    self.go = ogr2ogr(cmdArgs)
-                    printedString = file.getvalue()
-                finally:
-                    sys.stdout = stdout
+        # self.qc.updateLog( ' '.join(cmdArgs))
+        # Run only if ogr2ogr found
+        if self.go:
+            # Workaround to get ogr2ogr error messages via stdout
+            # as ogr2ogr.py does not return exceptions nor error messages
+            # but only prints the error before returning False
+            stdout = sys.stdout
+            try:
+                sys.stdout = file = io.StringIO()
+                self.go = ogr2ogr(cmdArgs)
+                printedString = file.getvalue()
+            finally:
+                sys.stdout = stdout
 
-                if not self.go:
-                    self.qc.updateLog(
-                        "<b>Erreur - L'import des données via OGR2OGR a échoué:</b>\n\n{}\n\n{}".format(
-                            printedString,
-                            cmdArgs
-                        )
+            if not self.go:
+                self.qc.updateLog(
+                    "<b>Erreur - L'import des données via OGR2OGR a échoué:</b>\n\n{}\n\n{}".format(
+                        printedString,
+                        cmdArgs
                     )
+                )
 
         return None
 
