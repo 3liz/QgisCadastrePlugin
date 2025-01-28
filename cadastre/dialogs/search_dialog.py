@@ -409,7 +409,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         if not self.hasMajicDataParcelle or not self.hasMajicDataVoie:
             self.qc.updateLog(
-                "<b>Pas de données MAJIC non bâties et/ou fantoir</b> -> désactivation de la recherche d'adresse")
+                "<b>Pas de données MAJIC non bâties et/ou TOPO</b> -> désactivation de la recherche d'adresse")
         if not self.hasMajicDataProp:
             self.qc.updateLog(
                 "<b>Pas de données MAJIC propriétaires</b> -> désactivation de la recherche de propriétaires")
@@ -578,7 +578,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         # Build SQL query
         hasCommuneFilter = None
         if key == 'adresse':
-            sql = ' SELECT DISTINCT v.voie, c.tex2 AS libcom, v.natvoi, v.libvoi'
+            sql = " SELECT DISTINCT v.voie, c.tex2 AS libcom, Coalesce(v.natvoi, '') AS natvoi, coalesce(v.libvoi, '') AS libvoi"
             if self.dbType == 'postgis':
                 sql += ' FROM "{}"."voie" v'.format(connectionParams['schema'])
             else:
@@ -602,9 +602,9 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 hasCommuneFilter = True
 
             # order
-            sql += ' ORDER BY c.tex2, v.natvoi, v.libvoi'
+            sql += ' ORDER BY c.tex2, natvoi, libvoi'
 
-        if key == 'proprietaire':
+        elif key == 'proprietaire':
 
             # determines if search by usage name or birth name
             searchByBirthName = self.cbSearchNameBirth.isChecked()
@@ -625,7 +625,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
             selectedCity = '' if selectedCity is None else selectedCity
 
-            if searchByBirthName is False:
+            if not searchByBirthName:
                 # search by usage name
                 sql = "/* search by usage name*/\r\n"
                 sql += "WITH proprio AS (\r\n"
@@ -649,7 +649,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += "GROUP BY proprio.ccocom, comptecommunal, dnuper, nom_usage, geo_commune\r\n"
                 sql += "ORDER BY nom_usage\r\n"
 
-            elif searchByBirthName is True:
+            else:
                 # search by birth name
                 sql = "/* search by birth name*/\r\n"
                 sql += "WITH proprio AS (\r\n"
@@ -672,8 +672,10 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += " AND commune.commune LIKE %s" % self.connector.quoteString('%' + selectedCity + '%') + "\r\n"
                 sql += "GROUP BY proprio.ccocom, comptecommunal, dnuper, dnomus, dprnus, nom_naissance, geo_commune\r\n"
                 sql += "ORDER BY nom_naissance\r\n"
+
         sql += ' LIMIT 50'
 
+        # self.qc.updateLog(sql)
         data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
 
         # Write message in log

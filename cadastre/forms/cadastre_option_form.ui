@@ -169,16 +169,16 @@
              </widget>
             </item>
             <item row="7" column="2">
-             <widget class="QLineEdit" name="inMajicFantoir">
+             <widget class="QLineEdit" name="inMajicTopo">
               <property name="text">
-               <string>FANTOIR|FANR</string>
+               <string>TOPO</string>
               </property>
              </widget>
             </item>
             <item row="7" column="0">
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>FANTOIR</string>
+               <string>TOPO</string>
               </property>
              </widget>
             </item>
@@ -310,7 +310,7 @@
   <tabstop>inMajicPdl</tabstop>
   <tabstop>inMajicProp</tabstop>
   <tabstop>lineEdit</tabstop>
-  <tabstop>inMajicFantoir</tabstop>
+  <tabstop>inMajicTopo</tabstop>
   <tabstop>inComposerTemplateFile</tabstop>
   <tabstop>btComposerTemplateFile</tabstop>
   <tabstop>inTempDir</tabstop>

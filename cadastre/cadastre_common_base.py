@@ -262,8 +262,9 @@ def postgisToSpatialite(sql: str, targetSrid: str = '2154') -> str:
         {'in': r'alter table [^;]+drop constraint[^;]+;', 'out': ''},
         # ~ {'in': r'^analyse [^;]+;', 'out': ''},
         # replace
-        {'in': r'truncate (bati|fanr|lloc|nbat|pdll|prop)',
-         'out': r'drop table \1;create table \1 (tmp text)'},
+        {'in': r'truncate (bati|lloc|nbat|pdll|prop)',
+         'out': r'drop table if exists \1;create table \1 (tmp text)'},
+        {'in': r'truncate topo', 'out': r'delete from topo'},
         {'in': r'truncate ', 'out': 'delete from '},
         {'in': r'distinct on *\([a-z, ]+\)', 'out': 'distinct'},
         {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
@@ -276,6 +277,10 @@ def postgisToSpatialite(sql: str, targetSrid: str = '2154') -> str:
          'out': r"date(substr(\2, 5, 4) || '-' || substr(\2, 3, 2) || '-' || substr(\2, 1, 2))"},
         {'in': r"(to_date\()([^']+) *, *'DD/MM/YYYY' *\)",
          'out': r"date(substr(\2, 7, 4) || '-' || substr(\2, 4, 2) || '-' || substr(\2, 1, 2))"},
+
+        {'in': r"(to_char\()(.+), 'DDD'\)",
+         'out': r"strftime('%j', \2)"},
+
         {'in': r"(to_date\()([^']+) *, *'YYYYMMDD' *\)",
          'out': r"date(substr(\2, 1, 4) || '-' || substr(\2, 5, 2) || '-' || substr(\2, 7, 2))"},
         {'in': r"(to_char\()([^']+) *, *'dd/mm/YYYY' *\)",

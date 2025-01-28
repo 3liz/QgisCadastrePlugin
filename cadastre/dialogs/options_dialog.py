@@ -14,11 +14,11 @@ from qgis.PyQt.QtWidgets import QDialog, QFileDialog, QMessageBox
 
 from cadastre.definitions import (
     REGEX_BATI,
-    REGEX_FANTOIR,
     REGEX_LOTLOCAL,
     REGEX_NBATI,
     REGEX_PDL,
     REGEX_PROP,
+    REGEX_TOPO,
 )
 from cadastre.tools import set_window_title
 
@@ -120,9 +120,9 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         regexBati = s.value("cadastre/regexBati", REGEX_BATI, type=str)
         if regexBati:
             self.inMajicBati.setText(regexBati)
-        regexFantoir = s.value("cadastre/regexFantoir", REGEX_FANTOIR, type=str)
-        if regexFantoir:
-            self.inMajicFantoir.setText(regexFantoir)
+        regexTopo = s.value("cadastre/regexTopo", REGEX_TOPO, type=str)
+        if regexTopo:
+            self.inMajicTopo.setText(regexTopo)
         regexLotLocal = s.value("cadastre/regexLotLocal", REGEX_LOTLOCAL, type=str)
         if regexLotLocal:
             self.inMajicLotlocal.setText(regexLotLocal)
@@ -192,7 +192,7 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         # Save Majic file names
         s = QgsSettings()
         s.setValue("cadastre/regexBati", self.inMajicBati.text().strip(' \t\n\r'))
-        s.setValue("cadastre/regexFantoir", self.inMajicFantoir.text().strip(' \t\n\r'))
+        s.setValue("cadastre/regexTopo", self.inMajicTopo.text().strip(' \t\n\r'))
         s.setValue("cadastre/regexLotLocal", self.inMajicLotlocal.text().strip(' \t\n\r'))
         s.setValue("cadastre/regexNbati", self.inMajicNbati.text().strip(' \t\n\r'))
         s.setValue("cadastre/regexPdl", self.inMajicPdl.text().strip(' \t\n\r'))

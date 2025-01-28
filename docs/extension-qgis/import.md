@@ -66,9 +66,14 @@ Vous pouvez utiliser le téléchargeur Edigeo dans la boîte à outil **Traiteme
 
 ### FANTOIR
 
-Si vous ne possédez pas les données FANTOIR dans votre jeu de données MAJIC, nous conseillons de les télécharger sur le
-[site du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ffantoir)
-et de configurer l'extension pour donner le bon nom au fichier FANTOIR.
+Le support des fichiers FANTOIR a été abandonné début 2025 au profit du support des fichiers TOPO.
+
+### TOPO
+
+Si vous ne possédez pas les données TOPO dans votre jeu de données MAJIC, nous conseillons de les télécharger sur le
+[site du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo)
+et de configurer l'extension pour vérifier que vous avez configuré le bon mot pour la recherche
+des fichiers TOPO.
 
 ## Les étapes d'importation
 
@@ -166,7 +171,7 @@ SRID. Nous avons utilisé ici `998999`, qui est le maximum possible.
 !!! tip
     Pour trouver la chaîne **WKT** décrivant la projection, à défaut de la trouver sur internet pour le moment,
     nous pouvons utiliser l'API PyQGIS. Dans le menu **Extensions** → **Console Python**, écrire :
-    
+
     ```python
     QgsCoordinateReferenceSystem('IGNF:GUAD48UTM20').toWkt()
     ```
