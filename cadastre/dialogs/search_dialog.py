@@ -578,7 +578,8 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         # Build SQL query
         hasCommuneFilter = None
         if key == 'adresse':
-            sql = " SELECT DISTINCT v.voie, c.tex2 AS libcom, Coalesce(v.natvoi, '') AS natvoi, coalesce(v.libvoi, '') AS libvoi"
+            sql = " SELECT DISTINCT v.voie, c.tex2 AS libcom, "
+            sql += " trim(Coalesce(v.natvoi, '') || coalesce(v.libvoi, '')) AS natlibvoi"
             if self.dbType == 'postgis':
                 sql += ' FROM "{}"."voie" v'.format(connectionParams['schema'])
             else:
@@ -602,7 +603,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 hasCommuneFilter = True
 
             # order
-            sql += ' ORDER BY c.tex2, natvoi, libvoi'
+            sql += ' ORDER BY c.tex2, natlibvoi'
 
         elif key == 'proprietaire':
 
@@ -656,7 +657,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += "  SELECT\r\n"
                 sql += "    ccocom, comptecommunal, dnuper, dnomus, dprnus,\r\n"
                 sql += "    CASE\r\n"
-                sql += "        WHEN gtoper = '1' THEN COALESCE(rtrim(dqualp),'')||' '||COALESCE(rtrim(dnomlp),'')||' '||COALESCE(rtrim(dprnlp),'')\r\n"
+                sql += "        WHEN gtoper = '1' THEN COALESCE(rtrim(dqualp), '')||' '||COALESCE(rtrim(dnomlp),'')||' '||COALESCE(rtrim(dprnlp),'')\r\n"
                 sql += "        WHEN gtoper = '2' THEN trim(ddenom)\r\n"
                 sql += "    END AS nom_naissance\r\n"
                 sql += sqlFrom
@@ -693,10 +694,9 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         maxStringSize = 0
         for line in data:
             if key == 'adresse':
-                label = '{} | {} {}'.format(
+                label = '{} | {}'.format(
                     line[1].strip(),
-                    line[2].strip(),
-                    line[3].strip()
+                    line[2].strip()
                 )
                 val = {'voie': line[0]}
 
