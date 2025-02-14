@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../icon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.2">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -851,6 +851,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#200-2025-02-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.0.0 - 2025-02-14
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1200-2024-08-19" class="md-nav__link">
     <span class="md-ellipsis">
       1.20.0 - 2024-08-19
@@ -1538,6 +1547,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#200-2025-02-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.0.0 - 2025-02-14
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1200-2024-08-19" class="md-nav__link">
     <span class="md-ellipsis">
       1.20.0 - 2024-08-19
@@ -2186,11 +2204,26 @@ On your local, make a symlink with ln -s
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<h2 id="200-2025-02-14">2.0.0 - 2025-02-14<a class="headerlink" href="#200-2025-02-14" title="Permanent link">#</a></h2>
+<ul>
+<li>Import MAJIC - Abandon du support des fichiers FANTOIR au bénéfice des fichiers TOPO</li>
+<li>Le FANTOIR n'est plus supporté, même pour des vieux millésimes</li>
+<li>Le TOPO est le format utilisé pour l'import des voies</li>
+<li>Certains champs dans la table des voies ne sont plus remplis par des chaînes vides
+    mais par des vrais <code>NULL</code>, comme par exemple <code>natvoie</code></li>
+<li>Détail: <a href="https://github.com/3liz/QgisCadastrePlugin/pull/475">https://github.com/3liz/QgisCadastrePlugin/pull/475</a></li>
+<li>Import MAJIC - les noms fichiers MAJIC ne sont plus stricts mais devinés par le plugin</li>
+<li>Dans la configuration, les noms des fichiers sont maintenant des clés de recherche
+    (expressions régulières). NB: Il est déconseillé de les modifier sans maîtriser.</li>
+<li>Lors de l'import, le plugin trouve automatiquement les fichiers par type en utilisant
+    ces clés de recherche.</li>
+<li>Détail: <a href="https://github.com/3liz/QgisCadastrePlugin/pull/474">https://github.com/3liz/QgisCadastrePlugin/pull/474</a></li>
+</ul>
 <h2 id="1200-2024-08-19">1.20.0 - 2024-08-19<a class="headerlink" href="#1200-2024-08-19" title="Permanent link">#</a></h2>
 <ul>
 <li>Correction de la recherche sur adresse avec des codes voies n'ayant pas l'identifiant MAJIC (<code>ccovoi</code>) @landryb</li>
 <li>Utilisation d'une URL temporaire pour les FANTOIR 2024 drive.opendata.craig.fr, @landryb</li>
-<li>Support du millésime 2024 dans le formulaire d'import, @MaelREBOUX et @EtienneRouvin </li>
+<li>Support du millésime 2024 dans le formulaire d'import, @MaelREBOUX et @EtienneRouvin</li>
 <li>Correction d'une faille de sécurité lors de l'extraction de l'archive TAR, pensez à vérifier votre version de Python</li>
 </ul>
 <h2 id="1192-2024-07-02">1.19.2 - 2024-07-02<a class="headerlink" href="#1192-2024-07-02" title="Permanent link">#</a></h2>
@@ -2881,7 +2914,7 @@ On your local, make a symlink with ln -s
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.f13b1293.min.js"></script>
+      <script src="../assets/javascripts/bundle.f1b6f286.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
