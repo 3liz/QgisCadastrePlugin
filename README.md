@@ -45,6 +45,11 @@ Les évolutions 2021 ont été soutenues par :
 - La **[Métropole de Clermont-Ferrand](https://www.clermontmetropole.eu)** :
   maintenance sur l'extension, travail exploratoire sur le remplacement d'ancien code concernant le DBManager et amélioration du code
 
+Les évolutions 2025 ont été soutenues par :
+
+- Le **[CRAIG](https://www.craig.fr/)** (Centre Régional Auvergne-Rhône-Alpes de l'Information Géographique) :
+  Abandon du support des fichiers FANTOIR au bénéfice des fichiers TOPO
+
 ## Conception
 
 L'extension Cadastre a été conçue et développée par la Société **3Liz**.

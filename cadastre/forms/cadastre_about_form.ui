@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>610</width>
-        <height>1195</height>
+        <height>1432</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -119,6 +119,46 @@
           <string>Financeurs</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_24">
+            <property name="text">
+             <string>Les évolutions 2025 de l'extension Cadastre ont été financés par :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_logo_craig">
+              <property name="text">
+               <string>LOGO CRAIG</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_28">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;a href=&quot;https://www.craig.fr&quot;  style=&quot;color:#434343;text-decoration:none;&quot;&gt;CRAIG - Centre Régional Auvergne-Rhône-Alpes de l'Information Géographique&lt;/a&gt;</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
           <item>
            <widget class="QLabel" name="label_8">
             <property name="text">

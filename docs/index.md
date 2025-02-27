@@ -26,7 +26,7 @@ et imprimer les relevés :
 
 ## Prérequis
 
-* De préférence, QGIS LTR 3.28, minimum QGIS 3.18
+* De préférence, QGIS LTR 3.34, minimum QGIS 3.18
 * PostgreSQL : ≥ 13 + PostGIS ≥ 3.X
 * Spatialite : 4.3.0
 
@@ -48,7 +48,7 @@ Les évolutions 2020 ont été soutenues par :
   AUD Clermont Métropole, AGAPE Lorraine Nord, Boulogne Développement
 * Le **[Conseil Départemental de Meurthe et Moselle](http://www.meurthe-et-moselle.fr/)**
 
-Les structures suivantes ont aidé 3Liz pour la maintenance ou l'ajout de fonctionnalités:
+Les structures suivantes ont aidé 3Liz pour la maintenance ou l'ajout de fonctionnalités :
 
 - L'**[ADUGA](https://www.aduga.org/)** : maintenance pour les nouveaux millésimes
 - La **[Ville de Megève](https://mairie.megeve.fr/)** : migration du plugin vers QGIS 3
@@ -66,5 +66,10 @@ Les évolutions 2021 ont été soutenues par :
 - La société **[Éléments](https://www.elements.green/)** pour le téléchargeur Édigéo
 - La **[Métropole de Clermont-Ferrand](https://www.clermontmetropole.eu)** :
   maintenance sur l'extension, travail exploratoire sur le remplacement d'ancien code concernant le DBManager et amélioration du code
+
+Les évolutions 2025 ont été soutenues par :
+
+- Le **[CRAIG](https://www.craig.fr/)** (Centre Régional Auvergne-Rhône-Alpes de l'Information Géographique) :
+  Abandon du support des fichiers FANTOIR au bénéfice des fichiers TOPO
 
 ![Financeurs](media/cadastre_financeurs.png)

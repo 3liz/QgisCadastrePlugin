@@ -39,6 +39,8 @@ class CadastreAboutDialog(QDialog, ABOUT_FORM_CLASS):
 
         # Images
         plugin_dir = str(Path(__file__).resolve().parent.parent)
+        self.label_logo_craig.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_craig.png')))
+        self.label_logo_craig.setText('')
         self.label_logo_rennes_metropole.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_rennes_metropole.png')))
         self.label_logo_mtes.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_mtes.png')))
         self.label_logo_mtes_2.setPixmap(QPixmap(os.path.join(plugin_dir, 'forms', 'images', 'logo_mtes_2.png')))
