@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 2.0.1 - 2025-02-27
+
+* Ajout du financeur pour la version 2.0.0 : le CRAIG @landryb
+
 ## 2.0.0 - 2025-02-14
 
 * Import MAJIC - Abandon du support des fichiers FANTOIR au bénéfice des fichiers TOPO
