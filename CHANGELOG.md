@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Implement `X-Request-Id` for logging in the server side
+
 ## 2.0.1 - 2025-02-27
 
 * Ajout du financeur pour la version 2.0.0 : le CRAIG @landryb
