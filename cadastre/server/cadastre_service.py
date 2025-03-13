@@ -23,28 +23,35 @@ from cadastre.logger import Logger
 PARCELLE_FORMAT_RE = re.compile("^([A-Z0-9]+)*$")
 
 
-def write_json_response(data: Dict[str, str], response: QgsServerResponse, code: int = 200) -> None:
+def write_json_response(
+        data: Dict[str, str], response: QgsServerResponse, request_id: str, code: int = 200) -> None:
     """ Write data as json response
     """
     response.setStatusCode(code)
     response.setHeader("Content-Type", "application/json")
+    response.setHeader("X-Request-Id", request_id)
     response.write(json.dumps(data))
 
 
 class CadastreError(Exception):
 
-    def __init__(self, code: int, msg: str) -> None:
+    def __init__(self, code: int, msg: str, request_id: str) -> None:
         super().__init__(msg)
         self.msg = msg
         self.code = code
-        Logger.critical(f"Cadastre request error {code}: {msg}")
+        self.request_id = request_id
+        Logger.critical(f"Cadastre request ID {request_id}, error {code}: {msg}")
 
     def format_response(self, response: QgsServerResponse) -> None:
         """ Format error response
         """
-        body = {'status': 'fail', 'message': self.msg}
+        body = {
+            'status': 'fail',
+            'message': self.msg,
+            'request_id': self.request_id,
+        }
         response.clear()
-        write_json_response(body, response, self.code)
+        write_json_response(body, response, self.request_id, self.code)
 
 
 # Immutable structure for holding resources values
@@ -79,36 +86,39 @@ class CadastreService(QgsService):
         """ Execute a 'cadastre' request
         """
         params = request.parameters()
+        request_id = request.headers().get('X-Request-Id', 'ND')
 
         # noinspection PyBroadException
         try:
             req_param = params.get('REQUEST', '').lower()
 
             if req_param == 'getcapabilities':
-                self.get_capabilities(response, project)
+                self.get_capabilities(response, project, request_id)
             elif req_param == 'createpdf':
-                self.create_pdf(params, response, project)
+                self.create_pdf(params, response, project, request_id)
             elif req_param == 'getpdf':
-                self.get_pdf(params, response)
+                self.get_pdf(params, response, request_id)
             elif req_param == 'gethtml':
-                self.get_html(params, response, project)
+                self.get_html(params, response, project, request_id)
             else:
                 raise CadastreError(
-                    400, (
-                            "Invalid REQUEST parameter: must be one of GetCapabilities, GetHtml, CreatePdf or GetPdf, "
-                            "found '%s'"
-                         ) % req_param
+                    400,
+                    (
+                        f"Invalid REQUEST parameter: must be one of GetCapabilities, GetHtml, CreatePdf or GetPdf, "
+                        f"found '{req_param}'"
+                    ),
+                    request_id,
                 )
 
         except CadastreError as err:
             err.format_response(response)
         except Exception:
-            Logger.critical("Unhandled exception:\n%s" % traceback.format_exc())
-            err = CadastreError(500, "Internal 'cadastre' service error")
+            Logger.critical(f"Unhandled exception, request-ID: {request_id}\n{traceback.format_exc()}")
+            err = CadastreError(500, "Internal 'cadastre' service error", request_id)
             err.format_response(response)
 
     @staticmethod
-    def get_capabilities(response: QgsServerResponse, project: QgsProject) -> None:
+    def get_capabilities(response: QgsServerResponse, project: QgsProject, request_id: str) -> None:
         """ Get cadastral capabilities based on config stored as project custom variables
         """
         # get project custom variables
@@ -116,14 +126,14 @@ class CadastreService(QgsService):
 
         if 'cadastre_parcelle_layer_id' not in variables or \
                 'cadastre_parcelle_unique_field' not in variables:
-            raise CadastreError(400, "Project has no cadastral capabilities")
+            raise CadastreError(400, "Project has no cadastral capabilities", request_id)
 
         parcelle_layer_id = variables['cadastre_parcelle_layer_id']
         parcelle_layer_unique_field = variables['cadastre_parcelle_unique_field']
 
         player = project.mapLayer(parcelle_layer_id)
         if not player:
-            raise CadastreError(404, "Parcel layer not available")
+            raise CadastreError(404, "Parcel layer not available", request_id)
 
         capabilities = {
             'parcelle': {
@@ -165,13 +175,14 @@ class CadastreService(QgsService):
             'status': 'success',
             'message': 'Capabilities',
             'data': capabilities
-        }, response)
+        }, response, request_id)
 
-    def create_pdf(self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject) -> None:
+    def create_pdf(
+            self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject, request_id: str) -> None:
         """ Create a PDF from cadastral data
         """
         # Load ressources based on passed params
-        res = self.get_ressources(params, project)
+        res = self.get_ressources(params, project, request_id)
 
         # Get compte communal
         compte_communal = cadastre_common.getCompteCommunalFromParcelleId(
@@ -198,7 +209,7 @@ class CadastreService(QgsService):
         paths = qex.export_as_pdf()
 
         if not paths:
-            raise CadastreError(424, 'An error occurred while generating the PDF')
+            raise CadastreError(424, 'An error occurred while generating the PDF', request_id)
 
         Logger.debug(f"export_as_pdf(), paths: {paths}")
 
@@ -208,7 +219,7 @@ class CadastreService(QgsService):
 
             Logger.debug(f"Item path: {path}")
 
-            new_path = self.cache_dir / ('%s.pdf' % uid.hex)
+            new_path = self.cache_dir / f'{uid.hex}.pdf'
             path.rename(new_path)
             tokens.append(uid.hex)
 
@@ -223,11 +234,12 @@ class CadastreService(QgsService):
                 },
                 'tokens': tokens
             }
-        }, response)
+        }, response, request_id)
 
-    def get_html(self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject) -> None:
+    def get_html(
+            self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject, request_id: str) -> None:
         # Load ressources based on passed params
-        res = self.get_ressources(params, project)
+        res = self.get_ressources(params, project, request_id)
         for_third_party = params.get('ADVANCED', 'f').lower() not in ('t', 'true', '1')
 
         def get_item_html(n):
@@ -251,20 +263,20 @@ class CadastreService(QgsService):
             'status': 'success',
             'message': 'HTML generated',
             'data': html
-        }, response)
+        }, response, request_id)
 
     @staticmethod
-    def get_ressources(params: Dict[str, str], project: QgsProject) -> CadastreResources:
+    def get_ressources(params: Dict[str, str], project: QgsProject, request_id: str) -> CadastreResources:
         """ Find layer and feature corresponding to given parameters
         """
 
         def get_param(name: str, allowed_values: Sequence[str] = None) -> str:
             v = params.get(name)
             if not v:
-                raise CadastreError(400, "Missing parameter '%s'" % name)
+                raise CadastreError(400, f"Missing parameter '{name}'", request_id)
 
             if allowed_values and v not in allowed_values:
-                raise CadastreError(400, "Invalid or missing value for '%s'" % name)
+                raise CadastreError(400, f"Invalid or missing value for '{name}'", request_id)
             return v
 
         # Get layer and expression
@@ -274,22 +286,23 @@ class CadastreService(QgsService):
 
         # Get feature
         if not PARCELLE_FORMAT_RE.match(p_parcelle):
-            raise CadastreError(400, "Invalid PARCELLE format: %s" % p_parcelle)
+            raise CadastreError(400, f"Invalid PARCELLE format: {p_parcelle}", request_id)
 
         # Find layer
         lr = project.mapLayersByName(p_layer)
         if len(lr) <= 0:
-            raise CadastreError(404, "Layer '%s' not found" % p_layer)
+            raise CadastreError(404, f"Layer '{p_layer}' not found", request_id)
 
         layer = lr[0]
 
         req = QgsFeatureRequest()
-        req.setFilterExpression(' "geo_parcelle" = \'%s\' ' % p_parcelle)
+        req.setFilterExpression(f' "geo_parcelle" = \'{p_parcelle}\' ')
 
         it = layer.getFeatures(req)
         feat = QgsFeature()
         if not it.nextFeature(feat):
-            raise CadastreError(404, f"Feature not found for parcelle '{p_parcelle}' in layer '{p_layer}'")
+            raise CadastreError(
+                404, f"Feature not found for parcelle '{p_parcelle}' in layer '{p_layer}'", request_id)
 
         # Get layer connection parameters
         connection_params = cadastre_common.getConnectionParameterFromDbLayer(layer)
@@ -305,26 +318,27 @@ class CadastreService(QgsService):
             connectionParams=connection_params,
         )
 
-    def get_pdf(self, params: Dict[str, str], response: QgsServerResponse) -> None:
+    def get_pdf(self, params: Dict[str, str], response: QgsServerResponse, request_id: str) -> None:
         """ Get PDF files previously exported
         """
         ptoken = params.get('TOKEN')
         if not ptoken:
-            raise CadastreError(400, "Missing parameter: token")
+            raise CadastreError(400, "Missing parameter: token", request_id)
 
         path = self.cache_dir / f'{ptoken}.pdf'
 
         Logger.debug(f"GetPDF = path is {path.as_posix()}")
 
         if not path.exists():
-            raise CadastreError(404, "PDF not found")
+            raise CadastreError(404, "PDF not found", request_id)
 
         # Send PDF
         response.setHeader('Content-type', 'application/pdf')
+        response.setHeader("X-Request-Id", request_id)
         response.setStatusCode(200)
         try:
             response.write(path.read_bytes())
             path.unlink()
         except Exception:
-            Logger.critical("Error occurred while reading PDF file")
+            Logger.critical("Error occurred while reading PDF file, request ID {}".format(request_id))
             raise
