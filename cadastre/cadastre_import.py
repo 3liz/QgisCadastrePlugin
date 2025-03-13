@@ -466,7 +466,9 @@ class cadastreImport(QObject):
                         if table == 'topo':
                             continue
 
-                        Logger.info(f"Lecture du fichier Majic: {file_path}")
+                        msg = f"Lecture du fichier Majic: {file_path}"
+                        Logger.info(msg)
+                        self.qc.updateLog(msg)
                         try:
                             # Get dep_dir : first line with content
                             with open(file_path, encoding='utf8') as fin:
