@@ -94,9 +94,9 @@ class Plausible:
             data["name"] = "cadastre-server"
             is_lizcloud = "lizcloud" in os.getenv("QGIS_SERVER_APPLICATION_NAME", "").lower()
             if is_lizcloud:
-                plausible_domain = os.getenv("QGIS_SERVER_PLAUSIBLE_DOMAIN_NAME", PLAUSIBLE_DOMAIN_PROD_SERVER)
-            else:
-                plausible_domain = PLAUSIBLE_DOMAIN_PROD_SERVER
+                return True
+
+            plausible_domain = PLAUSIBLE_DOMAIN_PROD_SERVER
         else:
             data["name"] = "cadastre-desktop"
             plausible_domain = PLAUSIBLE_DOMAIN_PROD_DESKTOP
