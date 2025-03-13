@@ -66,17 +66,18 @@ push-zip-fetch-repo:
       - tmp_repository/*.xml
 
 edit-repository:
+  # Use the Python ci runner
+  image: ${REGISTRY_URL}/factory-ci-runner:factory-ci
   stage: qgis-repository-edit
   dependencies:
     - package-zip
     - push-zip-fetch-repo
   before_script:
-    - PATH=$PATH:~/.local/bin
-    - pip3 install --user qgis-plugin-repo
+    - pip install qgis-plugin-repo
   script:
     - qgis-plugin-repo merge plugins.xml tmp_repository/*.xml
   tags:
-    - factory-dind
+    - factory-plain
   artifacts:
     untracked: true
     paths:
