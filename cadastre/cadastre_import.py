@@ -52,6 +52,8 @@ from cadastre.definitions import (
 )
 from cadastre.dialogs.dialog_common import CadastreCommon
 
+from .logger import Logger
+
 # Import ogr2ogr.py from the script folder
 from .scripts.pyogr.ogr2ogr import main as ogr2ogr
 
@@ -464,14 +466,19 @@ class cadastreImport(QObject):
                         if table == 'topo':
                             continue
 
-                        # Get dep_dir : first line with content
-                        with open(file_path, encoding='utf8') as fin:
-                            for a in fin:
-                                if len(a) < 4:
-                                    continue
-                                dep_dir = a[0:3]
-                                break
-                            dep_dirs[dep_dir] = True
+                        Logger.info(f"Lecture du fichier Majic: {file_path}")
+                        try:
+                            # Get dep_dir : first line with content
+                            with open(file_path, encoding='utf8') as fin:
+                                for a in fin:
+                                    if len(a) < 4:
+                                        continue
+                                    dep_dir = a[0:3]
+                                    break
+                                dep_dirs[dep_dir] = True
+                        except Exception as err:
+                            Logger.critical(f"Erreur de lecture du fichier '{file_path}': {err}")
+                            raise
 
             majic_files_found[table] = maj_list
 
