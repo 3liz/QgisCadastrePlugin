@@ -30,7 +30,6 @@ import sys
 import tempfile
 
 from datetime import datetime
-from distutils import dir_util
 from pathlib import Path
 from string import Template
 
@@ -1010,7 +1009,7 @@ class cadastreImport(QObject):
 
             # copy script directory
             try:
-                dir_util.copy_tree(source, target)
+                shutil.copytree(source, target)
                 os.chmod(target, 0o777)
             except OSError as e:
                 msg = "<b>Erreur lors de la copie des scripts d'import: %s</b>" % e
