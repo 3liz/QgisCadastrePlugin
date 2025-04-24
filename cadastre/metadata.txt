@@ -2,7 +2,7 @@
 
 name=cadastre
 
-qgisMinimumVersion=3.22
+qgisMinimumVersion=3.28
 qgisMaximumVersion=3.99
 
 description=This plugins helps users to use French land registry data, called Cadastre, in QGIS. It is only useful in
@@ -38,6 +38,8 @@ experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
+
+supportsQt6=True
 
 # Activate server configuration
 server=True
