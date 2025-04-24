@@ -224,7 +224,7 @@ class CadastreExport:
                     'proprietaire': f" AND p.comptecommunal = '{compte_communal}'",
                     'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
                 },
-                'bgcolor': Qt.transparent
+                'bgcolor': Qt.GlobalColor.transparent
             },
             'footer': {
                 'names': ['foot'],
@@ -232,7 +232,7 @@ class CadastreExport:
                 'keepContent': True,
                 'type': 'properties',
                 'source': ["Ce document est donné à titre indicatif - Il n'a pas de valeur légale"],
-                'bgcolor': Qt.white,
+                'bgcolor': Qt.GlobalColor.white,
                 'htmlState': 0,
                 'font': QFont('sans-serif', 4, 1, True),
                 'sticky': True
@@ -440,10 +440,10 @@ class CadastreExport:
         # RuntimeError: wrapped C/C++ object of type QgsPrintLayout has been deleted
         c.setName(self.random_word(20))
         c.initializeDefaults()
-        c.setUnits(QgsUnitTypes.LayoutMillimeters)
+        c.setUnits(QgsUnitTypes.LayoutUnit.LayoutMillimeters)
 
         g = QgsLayoutGridSettings(c)
-        g.setOffset(QgsLayoutPoint(3.5, 0, QgsUnitTypes.LayoutMillimeters))
+        g.setOffset(QgsLayoutPoint(3.5, 0, QgsUnitTypes.LayoutUnit.LayoutMillimeters))
         g.setResolution(QgsLayoutMeasurement(2.5))
 
         # Set page number
@@ -452,7 +452,7 @@ class CadastreExport:
         for i in range(1, self.numPages):
             p = QgsLayoutItemPage(c)
             # page.setPageSize('A6')
-            p.setPageSize(QgsLayoutSize(self.pageWidth, self.pageHeight, QgsUnitTypes.LayoutMillimeters))
+            p.setPageSize(QgsLayoutSize(self.pageWidth, self.pageHeight, QgsUnitTypes.LayoutUnit.LayoutMillimeters))
             c.pageCollection().addPage(p)
 
         # Set the global currentComposition
@@ -528,7 +528,7 @@ class CadastreExport:
         html_item_frame.setFrameEnabled(False)
 
         # set HTML contents
-        html_item.setContentMode(QgsLayoutItemHtml.ManualHtml)
+        html_item.setContentMode(QgsLayoutItemHtml.ContentMode.ManualHtml)
         content = self.getContentForGivenItem(
             key,
             item,
@@ -542,7 +542,7 @@ class CadastreExport:
             QgsLayoutPoint(
                 item['position'][0],
                 item['position'][1] + (dpage) * (self.pageHeight + 10),
-                QgsUnitTypes.LayoutMillimeters
+                QgsUnitTypes.LayoutUnit.LayoutMillimeters
             )
         )
 
@@ -551,7 +551,7 @@ class CadastreExport:
             QgsLayoutSize(
                 item['position'][2],
                 item['position'][3],
-                QgsUnitTypes.LayoutMillimeters
+                QgsUnitTypes.LayoutUnit.LayoutMillimeters
             )
         )
 
@@ -654,7 +654,7 @@ class CadastreExport:
             # print temp
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
-            QgsMessageLog.logMessage(f'Export PDF vers {temppath}', 'cadastre', Qgis.Info)
+            QgsMessageLog.logMessage(f'Export PDF vers {temppath}', 'cadastre', Qgis.MessageLevel.Info)
             # print("export temppath %s" % temppath)
 
             # add layout to layout manager: for tests only

@@ -517,9 +517,9 @@ class cadastreImport(QObject):
                 self.dialog,
                 'Cadastre',
                 msg + '\n\n' + "Voulez-vous néanmoins continuer l'import ?",
-                QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
             )
-            if missing_majic_ignore != QMessageBox.Yes:
+            if missing_majic_ignore != QMessageBox.StandardButton.Yes:
                 self.go = False
                 self.qc.updateLog(msg)
                 return False
@@ -569,9 +569,9 @@ class cadastreImport(QObject):
                     "\n\n<br/><br/>"
                     "Voulez-vous continuer l'import avec les numéros trouvés dans les fichiers ?"
                 ),
-                QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
             )
-            if use_file_dep_dir == QMessageBox.Yes:
+            if use_file_dep_dir == QMessageBox.StandardButton.Yes:
                 self.dialog.edigeoDepartement = f_dep
                 self.dialog.inEdigeoDepartement.setText(f_dep)
                 self.dialog.edigeoDirection = f_dir
@@ -1005,7 +1005,7 @@ class cadastreImport(QObject):
 
             self.qc.updateLog('* Copie du répertoire %s' % source)
 
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
             # copy script directory
             try:
@@ -1047,7 +1047,7 @@ class cadastreImport(QObject):
                                 file_path, ', '.join(extension_list)
                             ),
                             'cadastre',
-                            Qgis.Info
+                            Qgis.MessageLevel.Info
                         )
                 else:
                     if os.path.splitext(i)[1][1:].lower() not in extension_list:
@@ -1057,7 +1057,7 @@ class cadastreImport(QObject):
                             "Omission du fichier {} car il s'agit d'une extension non souhaitée "
                             "\"{}\"".format(file_path, ', '.join(extension_list)),
                             'cadastre',
-                            Qgis.Info
+                            Qgis.MessageLevel.Info
                         )
 
         return file_list
@@ -1068,7 +1068,7 @@ class cadastreImport(QObject):
         and unzip all content into a single folder
         """
         if self.go:
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
             self.qc.updateLog('* Décompression des fichiers')
 
             # get all the zip files
@@ -1127,7 +1127,7 @@ class cadastreImport(QObject):
                                 )
                                 self.qc.updateLog(f"<b>{msg}</b>")
                                 # noinspection PyTypeChecker
-                                QgsMessageLog.logMessage(msg, 'cadastre', Qgis.Warning)
+                                QgsMessageLog.logMessage(msg, 'cadastre', Qgis.MessageLevel.Warning)
                                 arguments.pop('filter')
 
                             t.extractall(
@@ -1183,7 +1183,7 @@ class cadastreImport(QObject):
 
         if self.go:
 
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
             try:
                 data = ''
@@ -1221,7 +1221,7 @@ class cadastreImport(QObject):
 
         if self.go:
 
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
             # Read sql script
             sql = ''
@@ -1325,7 +1325,7 @@ class cadastreImport(QObject):
         NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
         """
         if self.go:
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
             c = None
 

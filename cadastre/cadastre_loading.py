@@ -383,7 +383,7 @@ class CadastreLoading(QObject):
         """
         self.startTime = datetime.now()
         # noinspection PyUnresolvedReferences
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # default style to apply for Cadastre layers
         self.themeDir = str(self.dialog.liTheme.currentText())
@@ -633,7 +633,7 @@ class CadastreLoading(QObject):
                 # Enable/Disable layer
                 if not q_layer['active']:
                     # noinspection PyUnresolvedReferences
-                    node_layer.setItemVisibilityChecked(Qt.Unchecked)
+                    node_layer.setItemVisibilityChecked(Qt.CheckState.Unchecked)
             else:
                 # Move layer to Cadastre group
                 g1.insertChildNode(-1, node_layer)
@@ -702,7 +702,7 @@ class CadastreLoading(QObject):
             geometry_column,
             None,
             layer_name,
-            QgsMapLayer.VectorLayer,
+            QgsMapLayer.LayerType.VectorLayer,
             # QgsMapLayer.VectorLayer is an equivalent to QgsMapLayerType.VectorLayer since 3.8
             False
         )

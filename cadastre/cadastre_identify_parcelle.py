@@ -56,7 +56,7 @@ class IdentifyParcelle(QgsMapToolIdentify):
             # Ignore if no layer
             return
 
-        if layer.type() != QgsMapLayer.VectorLayer:
+        if layer.type() != QgsMapLayer.LayerType.VectorLayer:
             # Ignore this layer as it's not a vector
             # QgsMapLayer.VectorLayer is an equivalent to QgsMapLayerType.VectorLayer since 3.8
             return

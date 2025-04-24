@@ -90,14 +90,14 @@ class CadastreExport(cadastreExportBase):
         Get the content of a template file
         and replace all variables with given data
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         try:
             return super().getHtmlFromTemplate(tplPath, replaceDict)
         finally:
             QApplication.restoreOverrideCursor()
 
     def exportItemAsPdf(self, comptecommunal, suffix=None):
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         try:
             temppath = super().exportItemAsPdf(comptecommunal, suffix)
             # Opens PDF in default application

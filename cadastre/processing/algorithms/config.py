@@ -51,7 +51,7 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingParameterVectorLayer(
                 self.COMMUNE_LAYER,
                 self.tr('La couche communes'),
-                [QgsProcessing.TypeVectorPolygon],
+                [QgsProcessing.SourceType.TypeVectorPolygon],
                 defaultValue='Communes'
             )
         )
@@ -62,7 +62,7 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
                 self.tr('Champs identifiant les communes'),
                 parentLayerParameterName=self.COMMUNE_LAYER,
                 defaultValue='geo_commune',
-                type=QgsProcessingParameterField.String
+                type=QgsProcessingParameterField.DataType.String
             )
         )
 
@@ -70,7 +70,7 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingParameterVectorLayer(
                 self.SECTION_LAYER,
                 self.tr('La couche sections'),
-                [QgsProcessing.TypeVectorPolygon],
+                [QgsProcessing.SourceType.TypeVectorPolygon],
                 defaultValue='Sections',
             )
         )
@@ -81,7 +81,7 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
                 self.tr('Champs identifiant les sections'),
                 parentLayerParameterName=self.SECTION_LAYER,
                 defaultValue='geo_section',
-                type=QgsProcessingParameterField.String
+                type=QgsProcessingParameterField.DataType.String
             )
         )
 
@@ -89,7 +89,7 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingParameterVectorLayer(
                 self.PARCELLE_LAYER,
                 self.tr('La couche parcelles'),
-                [QgsProcessing.TypeVectorPolygon],
+                [QgsProcessing.SourceType.TypeVectorPolygon],
                 defaultValue='Parcelles',
             )
         )
@@ -100,7 +100,7 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
                 self.tr('Champs identifiant les parcelles'),
                 parentLayerParameterName=self.PARCELLE_LAYER,
                 defaultValue='geo_parcelle',
-                type=QgsProcessingParameterField.String
+                type=QgsProcessingParameterField.DataType.String
             )
         )
 

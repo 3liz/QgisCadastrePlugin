@@ -78,7 +78,7 @@ def getLayerFromLegendByTableProps(
         if not hasattr(layer, 'providerType'):
             continue
 
-        if hasattr(layer, 'type') and layer.type() != QgsMapLayer.VectorLayer:
+        if hasattr(layer, 'type') and layer.type() != QgsMapLayer.LayerType.VectorLayer:
             # Ignore this layer as it's not a vector
             # QgsMapLayer.VectorLayer is an equivalent to QgsMapLayerType.VectorLayer since 3.8
             continue
@@ -167,7 +167,7 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
     c = None
     ok = True
     if False:
-        QgsMessageLog.logMessage(sql, "cadastre", Qgis.Info)
+        QgsMessageLog.logMessage(sql, "cadastre", Qgis.MessageLevel.Info)
     try:
         c = connector._execute(None, str(sql))
         data = connector._fetchall(c)
@@ -178,9 +178,9 @@ def fetchDataFromSqlQuery(connector: 'DBConnector',
         QgsMessageLog.logMessage(
             f"Error while fetching data from database : {str(e.msg)}",
             "cadastre",
-            Qgis.Critical
+            Qgis.MessageLevel.Critical
         )
-        QgsMessageLog.logMessage(sql, "cadastre", Qgis.Info)
+        QgsMessageLog.logMessage(sql, "cadastre", Qgis.MessageLevel.Info)
 
     finally:
         if c:
@@ -236,7 +236,7 @@ def getConnectorFromUri(connectionParams: Dict[str, str]) -> 'DBConnector':
             QgsMessageLog.logMessage(
                 f"Erreur lors de la récupération du fichier SQLite : {str(e)}",
                 'cadastre',
-                Qgis.Critical)
+                Qgis.MessageLevel.Critical)
 
     return connector
 

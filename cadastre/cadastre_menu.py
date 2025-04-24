@@ -260,14 +260,14 @@ class CadastreMenu:
             plausible = Plausible(server=False)
             plausible.request_stat_event()
         except Exception as e:
-            QgsMessageLog.logMessage(f"Error while calling the stats API : \"{e}\"", 'cadastre', Qgis.Warning)
+            QgsMessageLog.logMessage(f"Error while calling the stats API : \"{e}\"", 'cadastre', Qgis.MessageLevel.Warning)
 
     def open_import_dialog(self):
         """
         Import dialog
         """
         dialog = CadastreImportDialog(self.iface)
-        dialog.exec_()
+        dialog.exec()
 
     def open_load_dialog(self):
         """
@@ -277,7 +277,7 @@ class CadastreMenu:
             self.iface,
             self.cadastre_search_dialog
         )
-        dialog.exec_()
+        dialog.exec()
 
     def toggle_search_dialog(self):
         """
@@ -312,7 +312,7 @@ class CadastreMenu:
             f = os.path.join(str(Path(__file__).resolve().parent), 'composers', 'paysage_a4.qpt')
             s.setValue("cadastre/composerTemplateFile", f)
 
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         template_content = None
         with open(f, encoding='utf8') as ff:
             template_content = ff.read()
@@ -360,14 +360,14 @@ class CadastreMenu:
         Config dialog
         """
         dialog = CadastreOptionDialog(self.iface)
-        dialog.exec_()
+        dialog.exec()
 
     def open_about_dialog(self):
         """
         About dialog
         """
         dialog = CadastreAboutDialog(self.iface)
-        dialog.exec_()
+        dialog.exec()
 
     def setActionsExclusive(self):
 
@@ -491,7 +491,7 @@ class CadastreMenu:
         message += '</p>'
 
         dialog = CadastreMessageDialog(self.iface, message)
-        dialog.exec_()
+        dialog.exec()
 
     def unload(self):
         if self.help_action_about_menu:

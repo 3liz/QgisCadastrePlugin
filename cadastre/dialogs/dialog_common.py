@@ -15,7 +15,7 @@ from db_manager.dlg_db_error import DlgDbError
 from qgis.core import QgsMapLayer, QgsProject, QgsSettings
 from qgis.PyQt.QtCore import QFileInfo, Qt
 from qgis.PyQt.QtGui import QTextCursor
-from qgis.PyQt.QtWidgets import QApplication, QFileDialog, qApp
+from qgis.PyQt.QtWidgets import QApplication, QFileDialog
 
 import cadastre.cadastre_common_base as common_utils
 
@@ -53,9 +53,9 @@ class CadastreCommon:
         suffix = '</span>'
         t.append(f'{prefix} {msg} {suffix}')
         c = t.textCursor()
-        c.movePosition(QTextCursor.End, QTextCursor.MoveAnchor)
+        c.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.MoveAnchor)
         t.setTextCursor(c)
-        qApp.processEvents()
+        QApplication.instance().processEvents()
 
     def updateProgressBar(self):
         """
@@ -64,7 +64,7 @@ class CadastreCommon:
         if self.dialog.go:
             self.dialog.step += 1
             self.dialog.pbProcess.setValue(int(self.dialog.step * 100 / self.dialog.totalSteps))
-            qApp.processEvents()
+            QApplication.instance().processEvents()
 
     def load_default_values(self):
         """ Try to load values in the UI which are stored in QGIS settings.
@@ -94,7 +94,7 @@ class CadastreCommon:
                 return
 
             combo = getattr(self.dialog, widget.ui)
-            index = combo.findText(value, Qt.MatchFixedString)
+            index = combo.findText(value, Qt.MatchFlag.MatchFixedString)
             if not index:
                 return
 
@@ -104,7 +104,7 @@ class CadastreCommon:
         """
         Update the combo box containing the database connection list
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         dbType = str(self.dialog.liDbType.currentText()).lower()
         self.dialog.liDbConnection.clear()
@@ -153,7 +153,7 @@ class CadastreCommon:
         """
         self.dialog.liDbSchema.clear()
 
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         connectionName = str(self.dialog.liDbConnection.currentText())
         self.dialog.connectionName = connectionName
         dbType = str(self.dialog.liDbType.currentText()).lower()

@@ -19,19 +19,19 @@ class Logger:
     @staticmethod
     def debug(message: str):
         # We could add an env variable if we log or not ?
-        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.Info)
+        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.MessageLevel.Info)
 
     @staticmethod
     def info(message: str):
-        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.Info)
+        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.MessageLevel.Info)
 
     @staticmethod
     def warning(message: str):
-        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.Warning)
+        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.MessageLevel.Warning)
 
     @staticmethod
     def critical(message: str):
-        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.Critical)
+        QgsMessageLog.logMessage(str(message), PLUGIN, Qgis.MessageLevel.Critical)
 
     @staticmethod
     def log_exception(e: BaseException):

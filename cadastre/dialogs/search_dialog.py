@@ -50,7 +50,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
-        self.iface.addDockWidget(Qt.RightDockWidgetArea, self)
+        self.iface.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self)
 
         # Images
         plugin_dir = str(Path(__file__).resolve().parent.parent)
@@ -285,9 +285,9 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 # Activate autocompletion
                 completer = CustomQCompleter([], self)
                 # completer.setCompletionMode(QCompleter.PopupCompletion) # does not work with regex custom completer
-                completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
+                completer.setCompletionMode(QCompleter.CompletionMode.UnfilteredPopupCompletion)
                 completer.setMaxVisibleItems(20)
-                completer.setCaseSensitivity(Qt.CaseInsensitive)
+                completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
                 # completer.popup().setStyleSheet("background-color: lightblue")
                 completer.activated.connect(partial(self.onCompleterActivated, key))
                 control = item['widget']
@@ -490,9 +490,9 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
             # Activate autocompletion ( based on combobox content, match only first letters)
             completer = QCompleter(itemList, self)
-            completer.setCompletionMode(QCompleter.PopupCompletion)
+            completer.setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
             completer.setMaxVisibleItems(30)
-            completer.setCaseSensitivity(Qt.CaseInsensitive)
+            completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
             # ~ completer.popup().setStyleSheet("background-color: lightblue")
             cb.setEditable(True)
             cb.setCompleter(completer)
@@ -510,7 +510,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         """
         Refresh autocompletion while the users add more chars in line edit
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get value
         combo = self.searchComboBoxes[key]['widget']
@@ -749,7 +749,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         optionally filtered by given expression
         and get corresponding QgsFeature objects
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get connection parameters
         connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
@@ -812,7 +812,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         Get the feature corresponding to
         the chosen combobox value
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get widget
         searchCombo = self.searchComboBoxes[combo]
@@ -848,7 +848,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         to chosen item in combo box
         (adresse, proprietaire)
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get value
         # combo = self.searchComboBoxes[key]['widget']
@@ -1114,8 +1114,8 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         printer = QPrinter()
         printer.setPageSize(QPrinter.A4)
         printer.setOrientation(QPrinter.Landscape)
-        printer.setPageMargins(5, 10, 5, 10, QPrinter.Millimeter)
-        printer.setOutputFormat(QPrinter.NativeFormat)
+        printer.setPageMargins(5, 10, 5, 10, QPrinter.Unit.Millimeter)
+        printer.setOutputFormat(QPrinter.OutputFormat.NativeFormat)
         dlg = QPrintPreviewDialog(printer)
         dlg.setWindowIcon(QIcon(
             os.path.join(
@@ -1123,9 +1123,9 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             )
         ))
         dlg.setWindowTitle("Aperçu")
-        dlg.setWindowFlags(Qt.WindowMaximizeButtonHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        dlg.setWindowFlags(Qt.WindowType.WindowMaximizeButtonHint | Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.WindowCloseButtonHint)
         dlg.paintRequested.connect(document.print_)
-        dlg.exec_()
+        dlg.exec()
 
     def copyInfosProprietaires(self):
         QApplication.clipboard().setText(
@@ -1142,11 +1142,11 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         dlgFile.setNameFilters(("All (*.htm*)", "HTML (*.html)", "HTM (*.htm)"))
         dlgFile.selectNameFilter("Fichier HTML (*.html)")
         dlgFile.setDefaultSuffix("html")
-        dlgFile.setViewMode(QFileDialog.Detail)
+        dlgFile.setViewMode(QFileDialog.ViewMode.Detail)
         dlgFile.setDirectory(plugin_dir)
-        dlgFile.setAcceptMode(QFileDialog.AcceptSave)
+        dlgFile.setAcceptMode(QFileDialog.AcceptMode.AcceptSave)
 
-        if not dlgFile.exec_():
+        if not dlgFile.exec():
             return
 
         fileName = dlgFile.selectedFiles()[0]
@@ -1228,7 +1228,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             for_third_party
         )
 
-        with OverrideCursor(Qt.WaitCursor):
+        with OverrideCursor(Qt.CursorShape.WaitCursor):
             exports = qex.export_as_pdf()
 
         if not exports:
@@ -1277,7 +1277,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             None, for_third_party
         )
 
-        with OverrideCursor(Qt.WaitCursor):
+        with OverrideCursor(Qt.CursorShape.WaitCursor):
             exports = qex.export_as_pdf()
 
         if not exports:

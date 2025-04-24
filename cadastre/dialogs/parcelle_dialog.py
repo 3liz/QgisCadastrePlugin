@@ -97,7 +97,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         connector = CadastreCommon.getConnectorFromUri(connectionParams)
         self.connector = connector
 
-        self.buttonBox.button(QDialogButtonBox.Ok).setText("Fermer")
+        self.buttonBox.button(QDialogButtonBox.StandardButton.Ok).setText("Fermer")
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -191,14 +191,14 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             printer.setOrientation(QPrinter.Portrait)
         else:
             printer.setOrientation(QPrinter.Landscape)
-        printer.setPageMargins(5, 10, 5, 10, QPrinter.Millimeter)
-        printer.setOutputFormat(QPrinter.NativeFormat)
+        printer.setPageMargins(5, 10, 5, 10, QPrinter.Unit.Millimeter)
+        printer.setOutputFormat(QPrinter.OutputFormat.NativeFormat)
         dlg = QPrintPreviewDialog(printer)
         dlg.setWindowIcon(QIcon("%s/icons/print.png" % os.path.dirname(__file__)))
         dlg.setWindowTitle("Aperçu")
-        dlg.setWindowFlags(Qt.WindowMaximizeButtonHint | Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
+        dlg.setWindowFlags(Qt.WindowType.WindowMaximizeButtonHint | Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.WindowCloseButtonHint)
         dlg.paintRequested.connect(document.print_)
-        dlg.exec_()
+        dlg.exec()
 
     def copyInfosTabQc(self):
         obj = self.setObj()
@@ -234,11 +234,11 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         dlgFile.setNameFilters(("All (*.htm*)", "HTML (*.html)", "HTM (*.htm)"))
         dlgFile.selectNameFilter("Fichier HTML (*.html)")
         dlgFile.setDefaultSuffix("html")
-        dlgFile.setViewMode(QFileDialog.Detail)
+        dlgFile.setViewMode(QFileDialog.ViewMode.Detail)
         dlgFile.setDirectory(os.path.dirname(__file__))
-        dlgFile.setAcceptMode(QFileDialog.AcceptSave)
+        dlgFile.setAcceptMode(QFileDialog.AcceptMode.AcceptSave)
 
-        if dlgFile.exec_():
+        if dlgFile.exec():
             fileName = dlgFile.selectedFiles()[0]
             title = self.windowTitle().replace("Cadastre+, ID", "").title()
             with open(fileName, 'w', encoding="ansi", errors="surrogateescape") as inFile:

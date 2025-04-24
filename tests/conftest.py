@@ -238,9 +238,9 @@ def install_logger_hook( verbose: bool=False ) -> None:
     # Add a hook to qgis  message log
     def writelogmessage(message, tag, level):
         arg = f'{tag}: {message}'
-        if level == Qgis.Warning:
+        if level == Qgis.MessageLevel.Warning:
             LOGGER.warning(arg)
-        elif level == Qgis.Critical:
+        elif level == Qgis.MessageLevel.Critical:
             LOGGER.error(arg)
         elif verbose:
             # Qgis is somehow very noisy

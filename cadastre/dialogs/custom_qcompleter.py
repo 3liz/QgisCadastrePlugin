@@ -36,7 +36,7 @@ class CustomQCompleter(QCompleter):
             self.filterProxyModel.setSourceModel(self.source_model)
 
         pattern = QRegExp(self.local_completion_prefix,
-                          Qt.CaseInsensitive,
+                          Qt.CaseSensitivity.CaseInsensitive,
                           QRegExp.FixedString
                           )
 

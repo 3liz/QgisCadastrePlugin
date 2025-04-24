@@ -112,7 +112,7 @@ class Plausible:
         if extra_debug:
             request.setRawHeader(b"X-Debug-Request", b"true")
             request.setRawHeader(b"X-Forwarded-For", b"127.0.0.1")
-        request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
+        request.setHeader(QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json")
 
         # noinspection PyArgumentList
         r: QNetworkReply = QgsNetworkAccessManager.instance().post(request, QByteArray(str.encode(json.dumps(data))))
@@ -125,7 +125,7 @@ class Plausible:
         logger = Logger()
         message = (
             f"Request HTTP OS process '{os.getpid()}' sent to '{PLAUSIBLE_URL_PROD}' with domain '{plausible_domain} : ")
-        if r.error() == QNetworkReply.NoError:
+        if r.error() == QNetworkReply.NetworkError.NoError:
             logger.info(message + "OK")
         else:
             logger.warning(message + r.error())

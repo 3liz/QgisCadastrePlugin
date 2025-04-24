@@ -215,7 +215,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.qc.load_default_values()
 
     def createSchema(self):
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         try:
             if self.db is None:
                 QMessageBox.warning(
