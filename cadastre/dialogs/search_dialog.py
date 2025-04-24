@@ -304,7 +304,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 control = item['widget']
                 # when the user edits the combobox content
                 slot = partial(self.onNonSearchItemEdit, key)
-                control.editTextChanged[str].connect(slot)
+                control.editTextChanged.connect(slot)
 
                 # when the user chooses in the list
                 slot = partial(self.onNonSearchItemChoose, key)
