@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## 2.1.1
+## 2.1.1 - 2025-04-24
 
 * Poursuite de la version précédente sur le support PyQt6
 
