@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 2.1.1
+
+* Poursuite de la version précédente sur le support PyQt6
+
 ## 2.1.0 - 2025-04-24
 
 * Suppression de l'usage de `distutils` pour Python 3.12
