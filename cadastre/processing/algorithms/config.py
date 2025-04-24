@@ -137,6 +137,10 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
     def displayName(self):
         return self.tr('Configuration du projet')
 
+    @staticmethod
+    def tags():
+        return 'cadastre', 'lizmap'
+
     def shortHelpString(self):
         return (
             'Ce traitement permet de configurer un projet QGIS pour de la publication sur le web avec '

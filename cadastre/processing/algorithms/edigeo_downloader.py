@@ -208,6 +208,10 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
     def displayName(self):
         return 'Téléchargeur Édigéo communal'
 
+    @staticmethod
+    def tags():
+        return 'edigeo', 'édigéo', 'édigeo', 'edigéo'
+
     def shortHelpString(self):
         return (
             'Ce traitement permet de télécharger toutes les feuilles Edigéo sur plusieurs communes.\n'
