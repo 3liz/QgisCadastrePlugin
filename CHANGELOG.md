@@ -2,10 +2,12 @@
 
 ## Unreleased
 
-## 2.0.2 - 2025-04-24
+## 2.1.0 - 2025-04-24
 
 * Suppression de l'usage de `distutils` pour Python 3.12
 * Ajout de `X-Request-Id` pour les logs côté serveur
+* Raise to QGIS 3.28 minimum version
+* Add compatibility for PyQt6
 
 ## 2.0.1 - 2025-02-27
 
