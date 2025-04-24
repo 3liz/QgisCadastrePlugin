@@ -67,9 +67,7 @@ def format_type(class_name):
 
 
 def generate_processing_doc():  # NOQA C901
-    global TEMPLATE
-
-    markdown_all = TEMPLATE
+    markdown_all = str(TEMPLATE)
     algorithms_markdown = {}
 
     for alg in provider.algorithms():
