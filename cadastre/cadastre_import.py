@@ -996,25 +996,25 @@ class cadastreImport(QObject):
     # TOOLS
     #
 
-    def copyFilesToTemp(self, source, target):
+    def copyFilesToTemp(self, source: str, target: str):
         """
         Copy cadastre scripts
         into a temporary folder
         """
         if self.go:
 
-            self.qc.updateLog('* Copie du répertoire %s' % source)
+            self.qc.updateLog(f'* Copie du répertoire {source} vers {target}')
 
             QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
             # copy script directory
             try:
-                shutil.copytree(source, target)
+                # Avoid hang from shutil.copytree() with dirs_exist_ok=True
+                shutil.copytree(source, target, dirs_exist_ok=True)
                 os.chmod(target, 0o777)
             except OSError as e:
                 msg = "<b>Erreur lors de la copie des scripts d'import: %s</b>" % e
-                QMessageBox.information(self.dialog,
-                                        "Cadastre", msg)
+                QMessageBox.information(self.dialog, "Cadastre", msg)
                 self.go = False
                 return msg
 

@@ -26,7 +26,7 @@ services:
   qgis:
     profiles:
       - "qgis"
-    image: qgis/qgis:release-3_22
+    image: qgis/qgis:release-3_28
     container_name: qgis
     networks:
       qgis_plugin_network:
