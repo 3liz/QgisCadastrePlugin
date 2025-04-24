@@ -633,7 +633,7 @@ class CadastreLoading(QObject):
                 # Enable/Disable layer
                 if not q_layer['active']:
                     # noinspection PyUnresolvedReferences
-                    node_layer.setItemVisibilityChecked(Qt.CheckState.Unchecked)
+                    node_layer.setItemVisibilityChecked(False)
             else:
                 # Move layer to Cadastre group
                 g1.insertChildNode(-1, node_layer)

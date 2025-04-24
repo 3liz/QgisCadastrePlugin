@@ -3,10 +3,9 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 from qgis.PyQt.QtCore import (
-    QRegExp,
+    QRegularExpression,
     QSortFilterProxyModel,
     QStringListModel,
-    Qt,
 )
 from qgis.PyQt.QtWidgets import QCompleter
 
@@ -35,12 +34,12 @@ class CustomQCompleter(QCompleter):
         if not self.usingOriginalModel:
             self.filterProxyModel.setSourceModel(self.source_model)
 
-        pattern = QRegExp(self.local_completion_prefix,
-                          Qt.CaseSensitivity.CaseInsensitive,
-                          QRegExp.FixedString
-                          )
+        pattern = QRegularExpression(
+            self.local_completion_prefix,
+            QRegularExpression.PatternOption.CaseInsensitiveOption
+        )
 
-        self.filterProxyModel.setFilterRegExp(pattern)
+        self.filterProxyModel.setFilterRegularExpression(pattern)
 
     def splitPath(self, path):
         self.local_completion_prefix = path

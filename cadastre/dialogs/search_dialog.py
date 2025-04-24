@@ -308,7 +308,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
                 # when the user chooses in the list
                 slot = partial(self.onNonSearchItemChoose, key)
-                control.currentIndexChanged[str].connect(slot)
+                control.currentIndexChanged.connect(slot)
 
                 # when the user reset the entered value
                 control = item['resetWidget']
