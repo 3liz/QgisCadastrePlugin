@@ -6,7 +6,6 @@ from qgis.PyQt.QtCore import (
     QRegularExpression,
     QSortFilterProxyModel,
     QStringListModel,
-    Qt,
 )
 from qgis.PyQt.QtWidgets import QCompleter
 
@@ -36,8 +35,8 @@ class CustomQCompleter(QCompleter):
             self.filterProxyModel.setSourceModel(self.source_model)
 
         pattern = QRegularExpression(self.local_completion_prefix,
-                          QRegularExpression.CaseInsensitiveOption
-                          )
+                                    QRegularExpression.PatternOption.CaseInsensitiveOption
+                                    )
 
         self.filterProxyModel.setFilterRegularExpression(pattern)
 
