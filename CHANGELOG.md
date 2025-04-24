@@ -2,7 +2,10 @@
 
 ## Unreleased
 
-* Implement `X-Request-Id` for logging in the server side
+## 2.0.2 - 2025-04-24
+
+* Suppression de l'usage de `distutils` pour Python 3.12
+* Ajout de `X-Request-Id` pour les logs côté serveur
 
 ## 2.0.1 - 2025-02-27
 
