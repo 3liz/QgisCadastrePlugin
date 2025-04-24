@@ -56,8 +56,8 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
             self.btCreateNewSpatialiteDb.setEnabled(False)
 
         # Signals/Slot Connections
-        self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
-        self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
+        self.liDbType.currentIndexChanged.connect(self.qc.updateConnectionList)
+        self.liDbConnection.currentIndexChanged.connect(self.qc.updateSchemaList)
         self.btDbCreateSchema.clicked.connect(self.createSchema)
         self.btCreateNewSpatialiteDb.clicked.connect(self.qc.createNewSpatialiteDatabase)
         self.btProcessImport.clicked.connect(self.processImport)

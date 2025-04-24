@@ -61,8 +61,8 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         self.getStyleList()
 
         # Signals/Slot Connections
-        self.liDbType.currentIndexChanged[str].connect(self.qc.updateConnectionList)
-        self.liDbConnection.currentIndexChanged[str].connect(self.qc.updateSchemaList)
+        self.liDbType.currentIndexChanged.connect(self.qc.updateConnectionList)
+        self.liDbConnection.currentIndexChanged.connect(self.qc.updateSchemaList)
         self.btProcessLoading.clicked.connect(self.onProcessLoadingClicked)
         self.ql.cadastreLoadingFinished.connect(self.onLoadingEnd)
 
