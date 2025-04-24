@@ -35,8 +35,8 @@ class CustomQCompleter(QCompleter):
             self.filterProxyModel.setSourceModel(self.source_model)
 
         pattern = QRegularExpression(self.local_completion_prefix,
-                                    QRegularExpression.PatternOption.CaseInsensitiveOption
-                                    )
+                                     QRegularExpression.PatternOption.CaseInsensitiveOption
+                                     )
 
         self.filterProxyModel.setFilterRegularExpression(pattern)
 
