@@ -223,7 +223,7 @@ FROM ${PREFIXE}bati WHERE SUBSTRING(tmp,31,2) ='00';
 INSERT INTO ${PREFIXE}local10
 (
  local10, annee,ccodep, ccodir, ccocom, invar, gpdl, dsrpar, dnupro, jdatat, dnufnl, ccoeva, ccitlv, dteloc, gtauom, dcomrd, ccoplc, cconlc, dvltrt,
- ccoape, cc48lc, dloy48a, top48a, dnatlc, dnupas, gnexcf, dtaucf, cchpr, jannat, dnbniv, hlmsem, postel, dnatcg, jdatcgl, dnutbx, dvltla,
+ ccoape, cc48lc, dloy48a, top48a, dnupas, gnexcf, dtaucf, cchpr, jannat, dnbniv, hlmsem, postel, dnatcg, jdatcgl, dnutbx, dvltla,
  janloc, ccsloc, fburx, gimtom, cbtabt, jdtabt, jrtabt, jacloc, cconac,
  toprev, ccoifp,
  comptecommunal, lot
@@ -257,7 +257,6 @@ SELECT
   SUBSTRING(tmp,82,2) AS cc48lc,
   CASE WHEN trim(SUBSTRING(tmp,84,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,84,9),'999999999') END AS dloy48a,
   CASE WHEN trim(SUBSTRING(tmp,93,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,93,1)) END AS top48a,
-  CASE WHEN trim(SUBSTRING(tmp,94,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,94,1)) END AS dnatlc,
 
   SUBSTRING(tmp,95,8) AS dnupas,
   SUBSTRING(tmp,103,2) AS gnexcf,
@@ -316,7 +315,7 @@ INSERT INTO ${PREFIXE}pev
  dnupev,
  ccoaff, ccostb, dcapec, dcetlc,
  ccocac, dnutrf, dcfloc, dsupot, dvlper, dvlpera, gnexpl,
- ccthp, retimp, dnuref, gnidom,
+ retimp, dnuref, gnidom,
  dvltpe,
  tpevtieom, ccortar, ccorvl, dtaurv, dcmloc, dcsplca, dcsglca, dcralca, jancmp,
  local10, lot
@@ -344,7 +343,6 @@ SELECT
   CASE when trim(SUBSTRING(tmp,70,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,70,9),'999999999') END AS dvlpera,
   CASE WHEN trim(SUBSTRING(tmp,79,2))='' THEN NULL ELSE trim(SUBSTRING(tmp,79,2)) END AS gnexpl,
 
-  SUBSTRING(tmp,111,1) AS ccthp,
   SUBSTRING(tmp,112,1) AS retimp,
   SUBSTRING(tmp,113,3) AS dnuref,
   SUBSTRING(tmp,116,1) AS gnidom,
