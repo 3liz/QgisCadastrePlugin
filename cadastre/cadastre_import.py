@@ -461,6 +461,10 @@ class cadastreImport(QObject):
                         file_path = os.path.join(root, file_sub_path)
                         maj_list.append(file_path)
 
+                        # ignore PDF files
+                        if file_path.endswith(".pdf") or file_path.endswith(".PDF"):
+                            continue
+
                         # avoid topo, since direction is not used in TOPO
                         if table == 'topo':
                             continue
