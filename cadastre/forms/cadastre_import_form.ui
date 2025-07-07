@@ -346,10 +346,10 @@
                <number>2012</number>
               </property>
               <property name="maximum">
-               <number>2024</number>
+               <number>2025</number>
               </property>
               <property name="value">
-               <number>2024</number>
+               <number>2025</number>
               </property>
              </widget>
             </item>
@@ -369,10 +369,10 @@
                <number>2012</number>
               </property>
               <property name="maximum">
-               <number>2024</number>
+               <number>2025</number>
               </property>
               <property name="value">
-               <number>2024</number>
+               <number>2025</number>
               </property>
              </widget>
             </item>
