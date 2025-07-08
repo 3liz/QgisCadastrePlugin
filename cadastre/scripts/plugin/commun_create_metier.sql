@@ -6,19 +6,20 @@ CREATE TABLE prop (tmp text);
 
 CREATE TABLE topo (
     ogc_fid serial,
-    "code topo" character varying,
+    code_topo character varying,
+    nature_de_la_voie character varying,
     libelle character varying,
-    "type commune actuel (r ou n)" character varying,
-    "type commune fip (rounfip)" character varying,
-    "rur actuel" character varying,
-    "rur fip" character varying,
-    "caractere voie" character varying,
+    type_commune_actuel_r_ou_n character varying,
+    type_commune_fip_r_ou_nfip character varying,
+    rur_actuel character varying,
+    rur_fip character varying,
+    caractere_voie character varying,
     annulation character varying,
-    "date annulation" character varying,
-    "date creation de article" character varying,
-    "type voie" character varying,
-    "mot classant" character varying,
-    "date derniere transition" character varying
+    date_annulation character varying,
+    date_creation_de_article character varying,
+    type_voie character varying,
+    mot_classant character varying,
+    date_derniere_transition character varying
 );
 
 CREATE TABLE parcelle (

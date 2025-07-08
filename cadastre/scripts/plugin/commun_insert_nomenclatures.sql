@@ -477,12 +477,22 @@ INSERT INTO gnextl VALUES ('RQ', 'Local achevé avant la mise en place d''un pla
 INSERT INTO gnextl VALUES ('RR', 'Commerces en milieu rural');
 INSERT INTO gnextl VALUES ('RT', 'Abattement de 25 % pour les locaux faisant l’objet d’une convention ou d''un contrat de résidence temporaire – art. 1388 quinquies A du CGI');
 INSERT INTO gnextl VALUES ('RW', 'Exonération de 50 à 100% pour les locaux ayant fait l''objet de dépenses destinées à économiser l''énergie. Article 1383-O B et 1383-O B du CGI.');
+INSERT INTO gnextl VALUES ('R1', 'exonération de 25 ans pour travaux de rénovation lourde');
+INSERT INTO gnextl VALUES ('R2', 'exonération de 15 ans pour travaux de rénovation lourde');
 INSERT INTO gnextl VALUES ('UM', 'Exonération de 5 ans pour les usines de méthanisation - art. 1387 A du CGI');
 INSERT INTO gnextl VALUES ('ZD', 'Abattement zone franche DOM');
 INSERT INTO gnextl VALUES ('ZL', 'Transformation local commercial en habitation');
 INSERT INTO gnextl VALUES ('ZQ', 'Abattement de 30 % pour les locaux d’habitation situés dans les immeubles collectifs issus de la transformation de locaux industriels ou commerciaux dans le périmètre des quartiers prioritaires de la politique de la ville');
 INSERT INTO gnextl VALUES ('ZR', 'Exonération de 15 ans pour locaux situés dans une zone de revitalisation rurale art. 1383 E du CGI');
 INSERT INTO gnextl VALUES ('ZT', 'Logement topé ZUS');
+INSERT INTO gnextl VALUES ('Z1', 'Exonération de 5 ans de 100 % pour les locaux professionnels en zone France ruralités revitalisation – 1ʳᵉ année');
+INSERT INTO gnextl VALUES ('Z2', 'Exonération de 5 ans de 100 % pour les locaux professionnels en zone France ruralités revitalisation – 2ᵉ année');
+INSERT INTO gnextl VALUES ('Z3', 'Exonération de 5 ans de 100 % pour les locaux professionnels en zone France ruralités revitalisation – 3ᵉ année');
+INSERT INTO gnextl VALUES ('Z4', 'Exonération de 5 ans de 100 % pour les locaux professionnels en zone France ruralités revitalisation – 4ᵉ année');
+INSERT INTO gnextl VALUES ('Z5', 'Exonération de 5 ans de 100 % pour les locaux professionnels en zone France ruralités revitalisation – 5ᵉ année');
+INSERT INTO gnextl VALUES ('Z6', 'Abattement de 75 % pour les locaux professionnels en zone France ruralités revitalisation – 6ᵉ année');
+INSERT INTO gnextl VALUES ('Z7', 'Abattement de 50 % pour les locaux professionnels en zone France ruralités revitalisation – 7ᵉ année');
+INSERT INTO gnextl VALUES ('Z8', 'Abattement de 25 % pour les locaux professionnels en zone France ruralités revitalisation – 8ᵉ année');
 -- valeurs obsolètes mais existant toujours en base pour des questions de compatibilité
 INSERT INTO gnextl VALUES ('AX', 'Longue durée (10 ans) - addition de construction');
 INSERT INTO gnextl VALUES ('CD', 'Exonération permanente des parts communale et départementale (biens d''une région situés dans une autre région)');
