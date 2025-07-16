@@ -579,7 +579,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         hasCommuneFilter = None
         if key == 'adresse':
             sql = " SELECT DISTINCT v.voie, c.tex2 AS libcom, "
-            sql += " trim(Coalesce(v.natvoi, '') || coalesce(v.libvoi, '')) AS natlibvoi"
+            sql += " trim(Coalesce(v.natvoi, '') || ' ' || coalesce(v.libvoi, '')) AS natlibvoi"
             if self.dbType == 'postgis':
                 sql += ' FROM "{}"."voie" v'.format(connectionParams['schema'])
             else:
