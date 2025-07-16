@@ -27,8 +27,8 @@ CornillonMajic = TestCase(
     ccocom='029',
     ccodir='2',
     direction='2',
-    version='2024',
-    year='2024',
+    version='2025',
+    year='2025',
     geo_commune='132029',
 )
 
@@ -42,8 +42,8 @@ CornillonSansMajic = TestCase(
     ccocom='029',
     ccodir='2',
     direction='2',
-    version='2024',
-    year='2024',
+    version='2025',
+    year='2025',
     geo_commune='132029',
 )
 
