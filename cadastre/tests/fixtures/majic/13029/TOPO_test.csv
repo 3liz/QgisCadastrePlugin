@@ -1,4 +1,4 @@
-code_topo;nature_de_la_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition
+code_topo;nature_de_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition
 991009313       12;;BOUCHES-DU-RHONE;;;;;;;00000000;17900304;;;00000000
 991009313029    13;;CORNILLON-CONFOUX;N;N;3;3;;;00000000;18750101;;;00000000
 991009313029087014;CHE;DE CAMPREOUX;;;;;0;;00000000;20100126;1;CAMPREOU;00000000
