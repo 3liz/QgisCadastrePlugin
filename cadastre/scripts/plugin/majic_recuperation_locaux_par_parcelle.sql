@@ -11,7 +11,7 @@ WITH infos AS (
 
     -- adresse
     ltrim(l.dnvoiri, '0') || l.dindic AS l_numero_voirie,
-    CASE WHEN v.libvoi IS NOT NULL THEN Coalesce(v.natvoi, '') || v.libvoi ELSE p.cconvo || p.dvoilib END AS l_adresse,
+    CASE WHEN v.libvoi IS NOT NULL THEN Coalesce(v.natvoi || ' ', '') || v.libvoi ELSE p.cconvo || p.dvoilib END AS l_adresse,
 
     -- proprio et acte
     string_agg((l10.ccodep || l10.ccocom || '-' ||l10.dnupro), '|') AS l10_compte_proprietaire,
