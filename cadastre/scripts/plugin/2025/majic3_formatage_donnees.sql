@@ -1018,7 +1018,7 @@ SELECT
   SUBSTRING(code_topo, 13, 1) AS natvoiriv,
   SUBSTRING(code_topo, 13, 4) AS ccoriv,
   NULL AS clerivili,
-  nullif(nature_de_la_voie, '') AS natvoi,
+  nullif(nature_de_voie, '') AS natvoi,
   trim(libelle) AS libvoi,
   nullif(type_commune_actuel_r_ou_n, '') AS typcom,
   nullif(rur_actuel, '') AS ruract,
