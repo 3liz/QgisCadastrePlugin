@@ -1058,9 +1058,6 @@ FROM ${PREFIXE}topo
 WHERE substr("code topo", 17, 2) = '14'
 ;
 
--- purge des doublons : voie
-CREATE INDEX idxan_voie ON voie (annee);
-
 -- INDEXES
 CREATE INDEX idxan_suf ON suf (annee);
 CREATE INDEX idxan_sufexoneration ON sufexoneration (annee);
@@ -1077,6 +1074,8 @@ CREATE INDEX idxan_parcellecomposante ON parcellecomposante (annee);
 CREATE INDEX idx_lots_tmp1 ON lots (annee, ccodep, ccodir, ccocom, dnuprol);
 CREATE INDEX idxan_lotslocaux ON lotslocaux (annee);
 CREATE INDEX idxan_commune ON commune (annee);
+CREATE INDEX idxan_voie ON voie (annee);
+CREATE INDEX idx_voie_voie_substr ON voie ((SUBSTR(voie, 1, 6) || SUBSTR(voie, 12, 4)));
 CREATE INDEX proprietaire_dnupro_idx ON proprietaire (dnupro);
 CREATE INDEX proprietaire_ddenom_idx ON proprietaire (ddenom);
 CREATE INDEX parcelle_dnupro_idx ON parcelle (dnupro);
@@ -1084,6 +1083,7 @@ CREATE INDEX suf_parcelle_idx ON suf (parcelle);
 CREATE INDEX sufexoneration_suf_idx ON sufexoneration (suf);
 CREATE INDEX idx_proprietaire_ccocom  ON proprietaire (ccocom);
 CREATE INDEX idx_commune_ccocom  ON commune (ccocom);
+CREATE INDEX idx_commune_ccodep ON commune (ccodep);
 CREATE INDEX idx_proprietaire_ccodro  ON proprietaire (ccodro);
 CREATE INDEX idx_proprietaire_proprietaire ON proprietaire (proprietaire);
 CREATE INDEX idx_proprietaire_comptecommunal ON proprietaire (comptecommunal);
@@ -1096,6 +1096,10 @@ CREATE INDEX idx_pevexoneration_imposee_pev ON pevexoneration_imposee (pev);
 CREATE INDEX idx_pevtaxation_pev ON pevtaxation (pev);
 CREATE INDEX idx_parcelle_voie ON parcelle (voie);
 CREATE INDEX idx_parcelle_comptecommunal ON parcelle (comptecommunal);
+CREATE INDEX idx_parcelle_parcelle ON parcelle (parcelle);
+CREATE INDEX idx_parcelle_ccocom ON parcelle (ccocom);
+CREATE INDEX idx_parcelle_ccodep ON parcelle (ccodep);
+
 
 -- ANALYSES;
 ANALYZE ${PREFIXE}parcelle;
