@@ -1,9 +1,7 @@
 BEGIN;
 
 -- Création la table parcelle_info ( EDIGEO + MAJIC )
-DROP TABLE IF EXISTS ${PREFIXE}parcelle_info;
-
-CREATE TABLE ${PREFIXE}parcelle_info
+CREATE TABLE IF NOT EXISTS ${PREFIXE}parcelle_info
 (
   ogc_fid integer,
   geo_parcelle text,
@@ -86,13 +84,14 @@ ccosec, dnupla
 ;
 
 
+ALTER TABLE ${PREFIXE}parcelle_info DROP CONSTRAINT IF EXISTS parcelle_info_pk;
 ALTER TABLE ${PREFIXE}parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
-CREATE INDEX parcelle_info_geom_idx ON ${PREFIXE}parcelle_info USING gist (geom);
-CREATE INDEX parcelle_info_geo_section_idx ON ${PREFIXE}parcelle_info (geo_section);
-CREATE INDEX parcelle_info_voie_substr_idx ON ${PREFIXE}parcelle_info ((substr(voie, 1, 6) || substr(voie, 12, 4)));
-CREATE INDEX parcelle_info_comptecommunal_idx ON ${PREFIXE}parcelle_info (comptecommunal);
-CREATE INDEX parcelle_info_codecommune_idx ON ${PREFIXE}parcelle_info (codecommune );
-CREATE INDEX parcelle_info_geo_parcelle_idx ON ${PREFIXE}parcelle_info (geo_parcelle );
+CREATE INDEX IF NOT EXISTS parcelle_info_geom_idx ON ${PREFIXE}parcelle_info USING gist (geom);
+CREATE INDEX IF NOT EXISTS parcelle_info_geo_section_idx ON ${PREFIXE}parcelle_info (geo_section);
+CREATE INDEX IF NOT EXISTS parcelle_info_voie_substr_idx ON ${PREFIXE}parcelle_info ((substr(voie, 1, 6) || substr(voie, 12, 4)));
+CREATE INDEX IF NOT EXISTS parcelle_info_comptecommunal_idx ON ${PREFIXE}parcelle_info (comptecommunal);
+CREATE INDEX IF NOT EXISTS parcelle_info_codecommune_idx ON ${PREFIXE}parcelle_info (codecommune );
+CREATE INDEX IF NOT EXISTS parcelle_info_geo_parcelle_idx ON ${PREFIXE}parcelle_info (geo_parcelle );
 
 
 COMMENT ON TABLE ${PREFIXE}parcelle_info IS 'Table de parcelles consolidées, proposant les géométries et les informations MAJIC principales, dont les propriétaires';
