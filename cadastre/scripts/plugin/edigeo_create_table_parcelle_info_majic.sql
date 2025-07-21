@@ -72,6 +72,7 @@ string_agg(
 gp.lot AS lot,
 gp.geom AS geom
 FROM ${PREFIXE}geo_parcelle gp
+WHERE gp.lot = '${LOT}'
 LEFT OUTER JOIN ${PREFIXE}parcelle p ON gp.geo_parcelle = p.parcelle
 LEFT OUTER JOIN ${PREFIXE}proprietaire pr ON p.comptecommunal = pr.comptecommunal
 LEFT OUTER JOIN ${PREFIXE}ccodro ON ccodro.ccodro = pr.ccodro
