@@ -19,6 +19,8 @@ CREATE INDEX IF NOT EXISTS parcelle_info_comptecommunal_idx ON ${PREFIXE}parcell
 INSERT INTO ${PREFIXE}parcelle_info
 SELECT gp.ogc_fid AS ogc_fid, gp.geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
 c.libcom AS nomcommune, p.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS bigint) AS surface_geo, p.dcntpa AS contenance,
+gp.lot AS lot,
+gp.geom AS geom,
 CASE
     WHEN coalesce(p.gparbat, '0') = '1' THEN 'Oui'
     ELSE 'Non'
@@ -59,10 +61,8 @@ string_agg(
         )
     ),
     '|'
-) AS info_proprietaire,
+) AS proprietaire_info
 
-gp.lot AS lot,
-gp.geom AS geom
 FROM ${PREFIXE}geo_parcelle gp
 LEFT OUTER JOIN ${PREFIXE}parcelle p ON gp.geo_parcelle = p.parcelle
 LEFT OUTER JOIN ${PREFIXE}proprietaire pr ON p.comptecommunal = pr.comptecommunal
