@@ -1096,7 +1096,6 @@ CREATE INDEX idx_pevexoneration_imposee_pev ON pevexoneration_imposee (pev);
 CREATE INDEX idx_pevtaxation_pev ON pevtaxation (pev);
 CREATE INDEX idx_parcelle_voie ON parcelle (voie);
 CREATE INDEX idx_parcelle_comptecommunal ON parcelle (comptecommunal);
-CREATE INDEX idx_parcelle_parcelle ON parcelle (parcelle);
 CREATE INDEX idx_parcelle_ccocom ON parcelle (ccocom);
 CREATE INDEX idx_parcelle_ccodep ON parcelle (ccodep);
 
