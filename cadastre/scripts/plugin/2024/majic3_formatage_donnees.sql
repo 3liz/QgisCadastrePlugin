@@ -1099,6 +1099,11 @@ CREATE INDEX idx_parcelle_comptecommunal ON parcelle (comptecommunal);
 CREATE INDEX idx_parcelle_ccocom ON parcelle (ccocom);
 CREATE INDEX idx_parcelle_ccodep ON parcelle (ccodep);
 
+CREATE INDEX parcelle_info_geom_idx ON parcelle_info USING gist (geom);
+CREATE INDEX parcelle_info_geo_section_idx ON parcelle_info (geo_section);
+CREATE INDEX parcelle_info_codecommune_idx ON parcelle_info (codecommune);
+CREATE INDEX parcelle_info_geo_parcelle_idx ON parcelle_info (geo_parcelle);
+
 
 -- ANALYSES;
 ANALYZE ${PREFIXE}parcelle;
