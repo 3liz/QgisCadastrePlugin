@@ -17,6 +17,11 @@ CREATE INDEX IF NOT EXISTS parcelle_info_comptecommunal_idx ON ${PREFIXE}parcell
 -- Insertion pour le lot ${LOT}
 
 INSERT INTO ${PREFIXE}parcelle_info
+(
+    ogc_fid, geo_parcelle, idu, tex, geo_section, nomcommune, codecommune,
+    surface_geo, contenance, lot, geom, parcelle_batie, adresse, urbain, code,
+    comptecommunal, voie, proprietaire, proprietaire_info
+)
 SELECT gp.ogc_fid AS ogc_fid, gp.geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
 c.libcom AS nomcommune, p.ccocom AS codecommune, Cast(ST_Area(gp.geom) AS bigint) AS surface_geo, p.dcntpa AS contenance,
 gp.lot AS lot,
