@@ -24,4 +24,5 @@ DELETE FROM ${PREFIXE}suftaxation WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}sufexoneration WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}suf WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}parcelle WHERE lot='${LOT}';
+DELETE FROM ${PREFIXE}parcelle_info WHERE lot='${LOT}';
 -- PURGE DES DONNEES : FIN;
