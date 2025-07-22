@@ -1,28 +1,20 @@
 BEGIN;
 
--- Création la table parcelle_info ( EDIGEO + MAJIC )
-CREATE TABLE IF NOT EXISTS ${PREFIXE}parcelle_info
-(
-  ogc_fid integer,
-  geo_parcelle text,
-  idu text,
-  tex text,
-  geo_section text,
-  nomcommune text,
-  codecommune text,
-  surface_geo bigint,
-  contenance bigint,
-  parcelle_batie text,
-  adresse text,
-  urbain text,
-  code text,
-  comptecommunal text,
-  voie text,
-  proprietaire text,
-  proprietaire_info text,
-  lot text
-);
-SELECT AddGeometryColumn ( current_schema::text, 'parcelle_info', 'geom', ${SRID} , 'MULTIPOLYGON', 2 );
+-- Ajout des champs specifiques a la version MAJIC de la table parcelle_info
+
+ALTER TABLE ${PREFIXE}parcelle_info ADD COLUMN IF NOT EXISTS parcelle_batie text;
+ALTER TABLE ${PREFIXE}parcelle_info ADD COLUMN IF NOT EXISTS adresse text;
+ALTER TABLE ${PREFIXE}parcelle_info ADD COLUMN IF NOT EXISTS urbain text;
+ALTER TABLE ${PREFIXE}parcelle_info ADD COLUMN IF NOT EXISTS code text;
+ALTER TABLE ${PREFIXE}parcelle_info ADD COLUMN IF NOT EXISTS comptecommunal text;
+ALTER TABLE ${PREFIXE}parcelle_info ADD COLUMN IF NOT EXISTS voie text;
+ALTER TABLE ${PREFIXE}parcelle_info ADD COLUMN IF NOT EXISTS proprietaire text;
+ALTER TABLE ${PREFIXE}parcelle_info ADD COLUMN IF NOT EXISTS proprietaire_info text;
+
+CREATE INDEX IF NOT EXISTS parcelle_info_voie_substr_idx ON ${PREFIXE}parcelle_info ((substr(voie, 1, 6) || substr(voie, 12, 4)));
+CREATE INDEX IF NOT EXISTS parcelle_info_comptecommunal_idx ON ${PREFIXE}parcelle_info (comptecommunal);
+
+-- Insertion pour le lot ${LOT}
 
 INSERT INTO ${PREFIXE}parcelle_info
 SELECT gp.ogc_fid AS ogc_fid, gp.geo_parcelle, gp.idu AS idu, gp.tex AS tex, gp.geo_section AS geo_section,
@@ -85,27 +77,7 @@ ccosec, dnupla
 ;
 
 
-ALTER TABLE ${PREFIXE}parcelle_info DROP CONSTRAINT IF EXISTS parcelle_info_pk;
-ALTER TABLE ${PREFIXE}parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
-CREATE INDEX IF NOT EXISTS parcelle_info_geom_idx ON ${PREFIXE}parcelle_info USING gist (geom);
-CREATE INDEX IF NOT EXISTS parcelle_info_geo_section_idx ON ${PREFIXE}parcelle_info (geo_section);
-CREATE INDEX IF NOT EXISTS parcelle_info_voie_substr_idx ON ${PREFIXE}parcelle_info ((substr(voie, 1, 6) || substr(voie, 12, 4)));
-CREATE INDEX IF NOT EXISTS parcelle_info_comptecommunal_idx ON ${PREFIXE}parcelle_info (comptecommunal);
-CREATE INDEX IF NOT EXISTS parcelle_info_codecommune_idx ON ${PREFIXE}parcelle_info (codecommune );
-CREATE INDEX IF NOT EXISTS parcelle_info_geo_parcelle_idx ON ${PREFIXE}parcelle_info (geo_parcelle );
 
-
-COMMENT ON TABLE ${PREFIXE}parcelle_info IS 'Table de parcelles consolidées, proposant les géométries et les informations MAJIC principales, dont les propriétaires';
-
-COMMENT ON COLUMN parcelle_info.ogc_fid IS 'Identifiant unique (base de données)';
-COMMENT ON COLUMN parcelle_info.geo_parcelle IS 'Identifiant de la parcelle : année + département + direction + idu';
-COMMENT ON COLUMN parcelle_info.idu IS 'Identifiant de la parcelle (unique par département et direction seulement)';
-COMMENT ON COLUMN parcelle_info.tex IS 'Etiquette (maximum 3 caractères, ex: 1 ou 24)';
-COMMENT ON COLUMN parcelle_info.geo_section IS 'Code de la section (lien vers table geo_section.geo_section)';
-COMMENT ON COLUMN parcelle_info.nomcommune IS 'Nom de la commune';
-COMMENT ON COLUMN parcelle_info.codecommune IS 'Code de la commune à 3 chiffres, ex: 021';
-COMMENT ON COLUMN parcelle_info.surface_geo IS 'Surface de la parcelle, calculée spatialement';
-COMMENT ON COLUMN parcelle_info.contenance IS 'Contenance de la parcelle (information MAJIC)';
 COMMENT ON COLUMN parcelle_info.parcelle_batie IS 'Indique si la parcelle est bâtie ou non (issu du champ parcelle.gparbat)';
 COMMENT ON COLUMN parcelle_info.adresse IS 'Adresse de la parcelle';
 COMMENT ON COLUMN parcelle_info.urbain IS 'Déclare si la parcelle est urbaine ou non';
@@ -114,6 +86,5 @@ COMMENT ON COLUMN parcelle_info.comptecommunal IS 'Compte communal du propriéta
 COMMENT ON COLUMN parcelle_info.voie IS 'Code de la voie (lien avec voie)';
 COMMENT ON COLUMN parcelle_info.proprietaire IS 'Information sur les propriétaires: code DNUPER, nom, et type. Les informations sont séparées par | entre propriétaires.';
 COMMENT ON COLUMN parcelle_info.proprietaire_info IS 'Informations détaillées sur les propriétaires bis: code DNUPER, adresse, date et lieu de naissance. Les informations sont séparées par | entre propriétaires.';
-COMMENT ON COLUMN parcelle_info.lot IS 'Lot utilisé pendant l''import';
 
 COMMIT;

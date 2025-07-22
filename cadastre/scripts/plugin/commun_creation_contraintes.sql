@@ -53,6 +53,7 @@ ALTER TABLE ${PREFIXE}geo_tsurf ADD CONSTRAINT geo_tsurf_pk PRIMARY KEY (geo_tsu
 ALTER TABLE ${PREFIXE}geo_tsurf_commune ADD CONSTRAINT geo_tsurf_commune_pk PRIMARY KEY (geo_tsurf_commune );
 ALTER TABLE ${PREFIXE}geo_label ADD CONSTRAINT geo_label_pk PRIMARY KEY (ogc_fid );
 ALTER TABLE ${PREFIXE}geo_unite_fonciere ADD CONSTRAINT geo_unite_fonciere_pk PRIMARY KEY (id);
+ALTER TABLE ${PREFIXE}parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
 
 --~ -- création clé étrangère;
 --~ ALTER TABLE ${PREFIXE}commune ADD CONSTRAINT commune_geo_commune_fk FOREIGN KEY (geo_commune) REFERENCES ${PREFIXE}geo_commune (geo_commune) ON DELETE SET NULL;
