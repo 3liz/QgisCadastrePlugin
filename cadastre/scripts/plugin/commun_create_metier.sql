@@ -1273,6 +1273,21 @@ CREATE TABLE geo_unite_fonciere
 );
 SELECT AddGeometryColumn ( current_schema::text, 'geo_unite_fonciere', 'geom', ${SRID} , 'MULTIPOLYGON', 2 );
 
+-- Création la table parcelle_info ( EDIGEO + MAJIC )
+CREATE TABLE parcelle_info
+(
+  ogc_fid integer,
+  geo_parcelle text,
+  idu text,
+  tex text,
+  geo_section text,
+  nomcommune text,
+  codecommune text,
+  surface_geo bigint,
+  contenance bigint,
+  lot text
+);
+SELECT AddGeometryColumn ( current_schema::text, 'parcelle_info', 'geom', ${SRID} , 'MULTIPOLYGON', 2 );
 
 -- COMMENTS
 
@@ -2141,3 +2156,15 @@ COMMENT ON TABLE geo_unite_fonciere IS 'Regroupe les unités foncières, c est a
 COMMENT ON COLUMN geo_unite_fonciere.id IS 'Identifiant des unités foncières';
 COMMENT ON COLUMN geo_unite_fonciere.comptecommunal IS 'Compte communal des parcelles composant l unité foncière';
 COMMENT ON COLUMN geo_unite_fonciere.annee IS 'Année';
+
+COMMENT ON TABLE parcelle_info IS 'Table de parcelles consolidées, proposant les géométries et les informations MAJIC principales, dont les propriétaires';
+COMMENT ON COLUMN parcelle_info.ogc_fid IS 'Identifiant unique (base de données)';
+COMMENT ON COLUMN parcelle_info.geo_parcelle IS 'Identifiant de la parcelle : année + département + direction + idu';
+COMMENT ON COLUMN parcelle_info.idu IS 'Identifiant de la parcelle (unique par département et direction seulement)';
+COMMENT ON COLUMN parcelle_info.tex IS 'Etiquette (code à 3 chiffres)';
+COMMENT ON COLUMN parcelle_info.geo_section IS 'Code de la section (lien vers table geo_section.geo_section)';
+COMMENT ON COLUMN parcelle_info.nomcommune IS 'Nom de la commune';
+COMMENT ON COLUMN parcelle_info.codecommune IS 'Code de la commune à 3 chiffres';
+COMMENT ON COLUMN parcelle_info.surface_geo IS 'Surface de la parcelle, calculée spatialement';
+COMMENT ON COLUMN parcelle_info.contenance IS 'Surface cadastrale de la parcelle';
+COMMENT ON COLUMN parcelle_info.lot IS 'Lot utilisé pendant l''import';
