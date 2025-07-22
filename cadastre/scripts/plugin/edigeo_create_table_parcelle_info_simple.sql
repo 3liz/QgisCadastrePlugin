@@ -26,6 +26,7 @@ gp.geom AS geom
 FROM ${PREFIXE}geo_parcelle gp
 INNER JOIN ${PREFIXE}geo_commune c
 ON c.geo_commune = SUBSTRING(gp.geo_parcelle,1,6)
+WHERE gp.lot = '${LOT}'
 ;
 
 ALTER TABLE ${PREFIXE}parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY (ogc_fid);
