@@ -41,4 +41,9 @@ DROP INDEX IF EXISTS idx_pevtaxation_pev;
 DROP INDEX IF EXISTS idx_parcelle_voie;
 DROP INDEX IF EXISTS idx_parcelle_comptecommunal;
 
-DROP INDEX IF EXISTS parcelle_info_locaux_pk;
+DROP INDEX IF EXISTS parcelle_info_geom_idx;
+DROP INDEX IF EXISTS parcelle_info_geo_section_idx;
+DROP INDEX IF EXISTS parcelle_info_codecommune_idx;
+DROP INDEX IF EXISTS parcelle_info_geo_parcelle_idx;
+DROP INDEX IF EXISTS parcelle_info_voie_substr_idx;
+DROP INDEX IF EXISTS parcelle_info_compte_communal_idx;
