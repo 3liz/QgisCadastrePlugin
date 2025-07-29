@@ -21,7 +21,7 @@ FROM (
         '<td>' || l.invar || '</td>' ||
         '<td>' || dteloc_lib || '</td>' ||
         '<td>' || cconlc_lib || '</td>' ||
-        '<td>' || dnatlc_lib || '</td>' ||
+        '<td>' || Coalesce(dnatlc_lib, '') || '</td>' ||
         '<td>' || COALESCE(cast(l10.jdatat AS text), '') || '</td>' ||
         '<td>' || Coalesce(cast(l10.jannat AS text), '') || '</td>' ||
         '<td>' ||

@@ -254,7 +254,7 @@ SELECT
         '<p>' ||
         '<b>Type: </b>' ||  l10_type_local ||
         '<br/><b>Nature: </b>' ||  l10_nature_local ||
-        '<br/><b>Occupation: </b>' ||  l10_nature_occupation ||
+        '<br/><b>Occupation: </b>' ||  Coalesce(l10_nature_occupation, '-') ||
         '<br/><b>Construction: </b>' ||  l10_nature_construction_particuliere ||
         '<br/><b>Année de construction: </b>' ||  l10_annee_construction ||
         '<br/><b>Niveaux: </b>' ||  l10_nombre_niveaux ||
