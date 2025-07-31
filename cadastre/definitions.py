@@ -17,3 +17,9 @@ IMPORT_MEMORY_ERROR_MESSAGE = "<b>ERREUR : Mémoire</b></br>"
 "documentation : {}/extension-qgis/configuration/#performances</br>".format(
     URL_DOCUMENTATION
 )
+
+# Millésime
+# Si changement de la valeur ci-dessous,
+# penser à mettre à jour toutes les occurrences de l'année N-1 dans le fichier "import.md"
+MAXIMUM_YEAR = 2025
+MINIMUM_YEAR = 2012
