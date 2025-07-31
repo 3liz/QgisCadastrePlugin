@@ -5,6 +5,7 @@ from collections import namedtuple
 from qgis.core import QgsCoordinateReferenceSystem, QgsProviderRegistry
 from qgis.utils import iface
 
+from cadastre.definitions import MAXIMUM_YEAR
 from cadastre.dialogs.import_dialog import CadastreImportDialog
 from cadastre.tools import plugin_test_data_path
 
@@ -27,8 +28,8 @@ CornillonMajic = TestCase(
     ccocom='029',
     ccodir='2',
     direction='2',
-    version='2025',
-    year='2025',
+    version=str(MAXIMUM_YEAR),
+    year=str(MAXIMUM_YEAR),
     geo_commune='132029',
 )
 
@@ -42,8 +43,8 @@ CornillonSansMajic = TestCase(
     ccocom='029',
     ccodir='2',
     direction='2',
-    version='2025',
-    year='2025',
+    version=str(MAXIMUM_YEAR),
+    year=str(MAXIMUM_YEAR),
     geo_commune='132029',
 )
 

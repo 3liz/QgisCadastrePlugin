@@ -16,6 +16,7 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox
 
 from cadastre.cadastre_import import cadastreImport
+from cadastre.definitions import MAXIMUM_YEAR, MINIMUM_YEAR
 from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.tools import set_window_title
 
@@ -160,6 +161,12 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
             }
         }
         self.getValuesFromSettings()
+        self.inDataVersion.setMaximum(MAXIMUM_YEAR)
+        self.inDataYear.setMaximum(MAXIMUM_YEAR)
+        self.inDataVersion.setValue(MAXIMUM_YEAR)
+        self.inDataYear.setValue(MAXIMUM_YEAR)
+        self.inDataVersion.setMinimum(MINIMUM_YEAR)
+        self.inDataYear.setMinimum(MINIMUM_YEAR)
 
     def onClose(self):
         """

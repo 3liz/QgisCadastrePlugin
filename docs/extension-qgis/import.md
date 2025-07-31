@@ -66,7 +66,7 @@ Vous pouvez utiliser le téléchargeur Edigeo dans la boîte à outil **Traiteme
 
 ### FANTOIR
 
-Le support des fichiers FANTOIR a été abandonné début 2025 au profit du support des fichiers TOPO.
+Le support des fichiers FANTOIR a été abandonné début 2024 au profit du support des fichiers TOPO.
 
 ### TOPO
 
