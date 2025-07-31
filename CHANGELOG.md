@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+## 2.2.0 - 2025-07-31
+
+* Import - support du millésime 2025
+* Import - adaptation pour suivre les changements de format des fichiers TOPO
+* Import - Refonte de la création et du remplissage de la table `parcelle_info`
+  Cela optimise les performances pour les imports multiples dans la même base
+  pour de gros volumes de données (ex: plusieurs départements)
+* Import MAJIC - Meilleure détection des fichiers à ne pas charger pendant l'import
+  (PDF, DOC, DOCX, TXT)
+* Configuration - Suppression du champ TOPO en doublon
+* Outil de téléchargement d'EDIGEO : ajout des tags cadastre & lizmap
+* Code - Ajout d'une variable globale pour la version maximale
+* Code - Suppression de scripts SQL non utilisés
+* CI - Configuration modifiée pour Dependabot : il tourne maintenant tous les 4 mois
+
+Merci à tous les contributeurs @landryb, @MaelREBOUX, @Gustry, @Alain-LG
+
 ## 2.1.1 - 2025-04-24
 
 * Poursuite de la version précédente sur le support PyQt6
