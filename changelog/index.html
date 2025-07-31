@@ -891,6 +891,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#220-2025-07-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.0 - 2025-07-31
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#211-2025-04-24" class="md-nav__link">
     <span class="md-ellipsis">
       2.1.1 - 2025-04-24
@@ -1615,6 +1624,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#220-2025-07-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.0 - 2025-07-31
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#211-2025-04-24" class="md-nav__link">
     <span class="md-ellipsis">
       2.1.1 - 2025-04-24
@@ -2299,6 +2317,22 @@ On your local, make a symlink with ln -s
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<h2 id="220-2025-07-31">2.2.0 - 2025-07-31<a class="headerlink" href="#220-2025-07-31" title="Permanent link">#</a></h2>
+<ul>
+<li>Import - support du millésime 2025</li>
+<li>Import - adaptation pour suivre les changements de format des fichiers TOPO</li>
+<li>Import - Refonte de la création et du remplissage de la table <code>parcelle_info</code>
+  Cela optimise les performances pour les imports multiples dans la même base
+  pour de gros volumes de données (ex: plusieurs départements)</li>
+<li>Import MAJIC - Meilleure détection des fichiers à ne pas charger pendant l'import
+  (PDF, DOC, DOCX, TXT)</li>
+<li>Configuration - Suppression du champ TOPO en doublon</li>
+<li>Outil de téléchargement d'EDIGEO : ajout des tags cadastre &amp; lizmap</li>
+<li>Code - Ajout d'une variable globale pour la version maximale</li>
+<li>Code - Suppression de scripts SQL non utilisés</li>
+<li>CI - Configuration modifiée pour Dependabot : il tourne maintenant tous les 4 mois</li>
+</ul>
+<p>Merci à tous les contributeurs @landryb, @MaelREBOUX, @Gustry, @Alain-LG</p>
 <h2 id="211-2025-04-24">2.1.1 - 2025-04-24<a class="headerlink" href="#211-2025-04-24" title="Permanent link">#</a></h2>
 <ul>
 <li>Poursuite de la version précédente sur le support PyQt6</li>
