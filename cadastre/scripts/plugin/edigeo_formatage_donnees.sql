@@ -184,8 +184,8 @@ AND ST_Intersects(ST_Centroid(s.geom), p.geom)
 ;
 -- Suppression des indexes temporaires
 DROP INDEX ${PREFIXE}geo_batiment_annee_idx;
-DROP INDEX ${PREFIXE}geo_batiment_geom_idx;
-DROP INDEX ${PREFIXE}geo_parcelle_geom_idx;
+DROP INDEX IF EXISTS ${PREFIXE}geo_batiment_geom_idx;
+DROP INDEX IF EXISTS ${PREFIXE}geo_parcelle_geom_idx;
 
 -- geo_zoncommuni
 INSERT INTO ${PREFIXE}geo_zoncommuni( annee, object_rid, tex, creat_date, update_dat, geom, lot)
