@@ -396,10 +396,18 @@ class cadastreImport(QObject):
             )
 
             # Ajout de la table parcelle_info
+            script_list.append(
+                {
+                    'title': 'Ajout des champs a la table parcelle_info',
+                    'script': '%s' % os.path.join(self.pScriptDir, 'edigeo_ajout_champs_parcelle_info_majic.sql'),
+                    'divide': True,
+                }
+            )
+
             replace_dict['SRID'] = self.targetSrid
             script_list.append(
                 {
-                    'title': 'Ajout de la table parcelle_info',
+                    'title': 'Remplissage de la table parcelle_info',
                     'script': '%s' % os.path.join(self.pScriptDir, 'edigeo_create_table_parcelle_info_majic.sql'),
                     'divide': False
                 }
@@ -875,7 +883,15 @@ class cadastreImport(QObject):
             replaceDict['SRID'] = self.targetSrid
             scriptList.append(
                 {
-                    'title': 'Ajout de la table parcelle_info',
+                    'title': 'Ajout des champs a la table parcelle_info',
+                    'script': '%s' % os.path.join(self.pScriptDir, 'edigeo_ajout_champs_parcelle_info_majic.sql'),
+                    'divide': True,
+                }
+            )
+
+            scriptList.append(
+                {
+                    'title': 'Remplissage de la table parcelle_info',
                     'script': '%s' % os.path.join(self.pScriptDir, 'edigeo_create_table_parcelle_info_majic.sql')
                 }
             )
@@ -883,7 +899,7 @@ class cadastreImport(QObject):
             replaceDict['SRID'] = self.targetSrid
             scriptList.append(
                 {
-                    'title': 'Ajout de la table parcelle_info',
+                    'title': 'Remplissage de la table parcelle_info',
                     'script': '%s' % os.path.join(self.pScriptDir, 'edigeo_create_table_parcelle_info_simple.sql')
                 }
             )
@@ -1393,7 +1409,7 @@ class cadastreImport(QObject):
                         self.qc.updateLog("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
                         self.qc.updateLog("<b>Erreur </b> <p>%s</p>" % e.msg)
                 except sqlite.OperationalError as e:
-                    if not re.search(r'CREATE INDEX ', sql, re.IGNORECASE):
+                    if not re.search(r'CREATE INDEX ', sql, re.IGNORECASE) and 'duplicate column name' not in e.args[0]:
                         self.go = False
                         self.qc.updateLog("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
                         self.qc.updateLog("<b>Erreur </b> <p>%s</p>" % format(e))

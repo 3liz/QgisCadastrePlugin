@@ -270,6 +270,7 @@ def postgisToSpatialite(sql: str, targetSrid: str = '2154') -> str:
         {'in': r'serial', 'out': 'INTEGER PRIMARY KEY AUTOINCREMENT'},
         {'in': r'string_agg', 'out': 'group_concat'},
         {'in': r'current_schema::text, ', 'out': ''},
+        {'in': r'add column if not exists', 'out': 'add column'},
         {'in': r'substring', 'out': 'SUBSTR'},
         {'in': r"(to_char\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS TEXT)"},
         {'in': r"(to_number\()([^']+) *, *'[09]+' *\)", 'out': r"CAST(\2 AS float)"},
