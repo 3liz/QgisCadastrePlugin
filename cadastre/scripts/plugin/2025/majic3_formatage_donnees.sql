@@ -793,7 +793,7 @@ SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
   CASE WHEN trim(SUBSTRING(tmp,120,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,120,1)) END AS gtyp6,
   SUBSTRING(tmp,121,30) AS dlign3,
   SUBSTRING(tmp,151,36) AS dlign4,
-  CASE WHEN trim(SUBSTRING(tmp,249,1))='' THEN '                              ' ELSE SUBSTRING(tmp,187,30) END AS dlign5,
+  CASE WHEN trim(SUBSTRING(tmp,249,1))='' THEN PRINTF('%.*c', 30, ' ') ELSE SUBSTRING(tmp,187,30) END AS dlign5,
   SUBSTRING(tmp,217,32) AS dlign6,
   SUBSTRING(tmp,249,3) AS ccopay,
   SUBSTRING(tmp,252,2) AS ccodep1a2,
