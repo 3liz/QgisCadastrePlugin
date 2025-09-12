@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../icon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
     
     
       
@@ -1227,12 +1227,16 @@ pas toujours le cas, comme des voies non référencées dans <code>voie</code> m
 <p>Vous pouvez utiliser le téléchargeur Edigeo dans la boîte à outil <strong>Traitements</strong> de QGIS, dans l'extension
 <strong>Cadastre</strong>.</p>
 <h3 id="fantoir">FANTOIR<a class="headerlink" href="#fantoir" title="Permanent link">#</a></h3>
-<p>Le support des fichiers FANTOIR a été abandonné début 2024 au profit du support des fichiers TOPO.</p>
+<p>Le support des fichiers <strong>FANTOIR</strong> a été <strong>abandonné début 2024</strong> au profit du support des fichiers TOPO.</p>
 <h3 id="topo">TOPO<a class="headerlink" href="#topo" title="Permanent link">#</a></h3>
-<p>Si vous ne possédez pas les données TOPO dans votre jeu de données MAJIC, nous conseillons de les télécharger sur le
-<a href="https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo">site du CRAIG</a>
-et de configurer l'extension pour vérifier que vous avez configuré le bon mot pour la recherche
-des fichiers TOPO.</p>
+<p>Si vous ne possédez pas les données TOPO dans votre jeu de données MAJIC, <strong>nous conseillons de les télécharger</strong> sur le
+<a href="https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo">site du CRAIG</a>.</p>
+<p>Une fois le fichier TOPO récupéré (par exemple <code>TOPO_34.csv.gz</code>) décompressez-le pour placer le CSV décompressé (par exemple <code>TOPO_34.csv</code>) au même niveau que les autres fichiers MAJIC. <strong>Attention</strong>: Le fichier <code>.gz</code> n'est pas reconnu et peut être supprimé une fois décompressé.</p>
+<p><strong>Important</strong> :</p>
+<ul>
+<li>par défaut, le plugin recherche les fichiers dont le nom contient <code>TOPO</code> (voir plus bas <strong>Configurer l'extension</strong>).</li>
+</ul>
+<p><img alt="Fichiers MAJIC" src="../../media/fichiers_majic.png" /></p>
 <h2 id="les-etapes-dimportation">Les étapes d'importation<a class="headerlink" href="#les-etapes-dimportation" title="Permanent link">#</a></h2>
 <p>Pour lancer l'importation, il faut bien avoir au préalable configuré les noms des fichiers MAJIC via le menu
 <strong>Configurer l'extension</strong>. Ensuite, on ouvre la boite de dialogue</p>
@@ -1451,7 +1455,7 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="31 juillet 2025 12:49:42 UTC">31 juillet 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="12 septembre 2025 13:23:16 UTC">12 septembre 2025</span>
   </span>
 
     
@@ -1498,7 +1502,8 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
   
 </div>
       
-        <div class="md-social">
+        
+<div class="md-social">
   
     
     
@@ -1569,10 +1574,10 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
