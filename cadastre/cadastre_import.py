@@ -469,7 +469,10 @@ class cadastreImport(QObject):
                         file_path = os.path.join(root, file_sub_path)
 
                         # ignore PDF/ODT/DOC/DOCX files
-                        if file_path.lower().endswith((".pdf", ".odt", ".doc", ".docx")):
+                        if file_path.lower().endswith((
+                            ".pdf", ".odt", ".doc", ".docx",
+                            ".zip", ".tar", ".bz", ".gz"
+                        )):
                             continue
 
                         maj_list.append(file_path)
