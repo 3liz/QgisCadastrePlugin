@@ -78,7 +78,11 @@ Une fois le fichier TOPO récupéré (par exemple `TOPO_34.csv.gz`) décompresse
 **Important** :
 
 * par défaut, le plugin recherche les fichiers dont le nom contient `TOPO` (voir plus bas **Configurer l'extension**).
-
+* il faut respecter **l'entête des fichiers CSV** comme produits par le CRAIG. Les fichiers récupérés sur le site national n'ont pas la bonne entête. Il faut remplacer notamment les espaces par des `_`.
+  * accepté :
+    `code_topo;nature_de_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition`
+  * non accepté :
+    `code topo;nature de voie;libelle;type commune actuel (R ou N);type commune FIP (R ou NFIP);RUR actuel;RUR FIP;caractere voie;annulation;date annulation;date creation de article;type voie;mot classant;date derniere transition`
 
 ![Fichiers MAJIC](../media/fichiers_majic.png)
 
