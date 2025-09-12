@@ -40,7 +40,6 @@ WITH infos AS (
     ccoplc_lib AS l10_nature_construction_particuliere,
     l10.jannat AS l10_annee_construction,
     l10.dnbniv AS l10_nombre_niveaux,
-    dnatlc_lib AS l10_nature_occupation,
 
     -- pev : informations générales
     pev.pev,
@@ -73,7 +72,6 @@ WITH infos AS (
     LEFT JOIN "dteloc" ON l10.dteloc = dteloc.dteloc
     LEFT JOIN "cconlc" ON l10.cconlc = cconlc.cconlc
     LEFT JOIN "ccoplc" ON l10.ccoplc = ccoplc.ccoplc
-    LEFT JOIN "dnatlc" ON l10.dnatlc = dnatlc.dnatlc
     LEFT JOIN "ccoaff" ON pev.ccoaff = ccoaff.ccoaff
     LEFT JOIN proprietaire AS pr ON pr.comptecommunal = l10.comptecommunal
     LEFT JOIN "ccodro" c2 ON pr.ccodro = c2.ccodro
@@ -89,7 +87,7 @@ WITH infos AS (
     l.dnvoiri, l.dindic,
     v.natvoi, v.libvoi, p.cconvo, p.dvoilib,
     l10.ccodep, l10.ccocom, l10.dnupro, l10.jdatat,
-    dteloc_lib, cconlc_lib, ccoplc_lib, l10.jannat, l10.dnbniv, dnatlc_lib,
+    dteloc_lib, cconlc_lib, ccoplc_lib, l10.jannat, l10.dnbniv,
     pev.pev, ccoaff_lib, pev.ccostb, pev.dcapec, pev.dcetlc, pev.dvlpera, pev.gnexpl, pev.dnuref, pev.dcsplca, pev.dcsglca,
     pt.co_vlbaia, pt.gp_vlbaia, pt.de_vlbaia, pt.re_vlbaia, px.pexb, pt.co_bipevla, pt.gp_bipevla, pt.de_bipevla, pt.re_bipevla
 

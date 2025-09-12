@@ -225,7 +225,6 @@ CREATE TABLE local10 (
     cc48lc text,
     dloy48a integer,
     top48a text,
-    dnatlc text,
     dnupas text,
     gnexcf text,
     dtaucf text,
@@ -1448,7 +1447,7 @@ COMMENT ON COLUMN local10.ccoape IS 'Code NAF pour les locaux professionnels - '
 COMMENT ON COLUMN local10.cc48lc IS 'Catégorie de loi de 48 - ';
 COMMENT ON COLUMN local10.dloy48a IS 'Loyer de 48 en valeur de l’année - ';
 COMMENT ON COLUMN local10.top48a IS 'top taxation indiquant si la pev est impose au loyer ou a la vl - 1 = loyer o = vl';
-COMMENT ON COLUMN local10.dnatlc IS 'Nature d occupation - A P V L T D tableau 2.3.6';
+COMMENT ON COLUMN local10.dnatlc IS 'Nature d occupation - A P V L T D tableau 2.3.6. ATTENTION: donnée plus restituée à compter du millésime 2025';
 COMMENT ON COLUMN local10.dnupas IS 'no passerelle TH/TP - INDISPONIBLE';
 COMMENT ON COLUMN local10.gnexcf IS 'code nature exo ecf - INDISPONIBLE';
 COMMENT ON COLUMN local10.dtaucf IS 'taux exo ecf - INDISPONIBLE';
