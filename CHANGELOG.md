@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 2.2.1 - 2025-09-12
+
+* Import
+  * MAJIC - Annulation de l'import si des fichiers sont manquants, notamment `TOPO`.
+  * MAJIC - Ignore les fichiers d'archive `zip, tar, gz` en plus des fichiers déjà ignorés
+  * TOPO - Éviter l'import de doublons pour `commune` et `voie` via l'ajout
+    d'une contrainte d'unicité sur les champs `commune.commune` et `voie.voie`
+    et l'utilisation de `ON CONFLICT DO NOTHING` pendant l'`INSERT`
+  * Propriétaire - ignorer `dlign5` pour les adresse en France
+  * Correction du remplissage de la table `parcelle_info` lors d'un import spatialite
+* Fiches - Suppression du champ `dnatlc` des fiches d'information
+* Docs - TOPO: précision sur l'extension attendue et sur l'entête des fichiers CSV
+
 ## 2.2.0 - 2025-07-31
 
 * Import - support du millésime 2025
