@@ -66,14 +66,21 @@ Vous pouvez utiliser le téléchargeur Edigeo dans la boîte à outil **Traiteme
 
 ### FANTOIR
 
-Le support des fichiers FANTOIR a été abandonné début 2024 au profit du support des fichiers TOPO.
+Le support des fichiers **FANTOIR** a été **abandonné début 2024** au profit du support des fichiers TOPO.
 
 ### TOPO
 
-Si vous ne possédez pas les données TOPO dans votre jeu de données MAJIC, nous conseillons de les télécharger sur le
-[site du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo)
-et de configurer l'extension pour vérifier que vous avez configuré le bon mot pour la recherche
-des fichiers TOPO.
+Si vous ne possédez pas les données TOPO dans votre jeu de données MAJIC, **nous conseillons de les télécharger** sur le
+[site du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo).
+
+Une fois le fichier TOPO récupéré (par exemple `TOPO_34.csv.gz`) décompressez-le pour placer le CSV décompressé (par exemple `TOPO_34.csv`) au même niveau que les autres fichiers MAJIC. **Attention**: Le fichier `.gz` n'est pas reconnu et peut être supprimé une fois décompressé.
+
+**Important** :
+
+* par défaut, le plugin recherche les fichiers dont le nom contient `TOPO` (voir plus bas **Configurer l'extension**).
+
+
+![Fichiers MAJIC](../media/fichiers_majic.png)
 
 ## Les étapes d'importation
 
