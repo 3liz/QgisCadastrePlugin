@@ -1235,6 +1235,11 @@ pas toujours le cas, comme des voies non référencées dans <code>voie</code> m
 <p><strong>Important</strong> :</p>
 <ul>
 <li>par défaut, le plugin recherche les fichiers dont le nom contient <code>TOPO</code> (voir plus bas <strong>Configurer l'extension</strong>).</li>
+<li>il faut respecter <strong>l'entête des fichiers CSV</strong> comme produits par le CRAIG. Les fichiers récupérés sur le site national n'ont pas la bonne entête. Il faut remplacer notamment les espaces par des <code>_</code>.</li>
+<li>accepté :
+    <code>code_topo;nature_de_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition</code></li>
+<li>non accepté :
+    <code>code topo;nature de voie;libelle;type commune actuel (R ou N);type commune FIP (R ou NFIP);RUR actuel;RUR FIP;caractere voie;annulation;date annulation;date creation de article;type voie;mot classant;date derniere transition</code></li>
 </ul>
 <p><img alt="Fichiers MAJIC" src="../../media/fichiers_majic.png" /></p>
 <h2 id="les-etapes-dimportation">Les étapes d'importation<a class="headerlink" href="#les-etapes-dimportation" title="Permanent link">#</a></h2>
@@ -1455,7 +1460,7 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="12 septembre 2025 13:23:16 UTC">12 septembre 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="12 septembre 2025 15:40:03 UTC">12 septembre 2025</span>
   </span>
 
     
