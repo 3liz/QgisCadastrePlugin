@@ -743,7 +743,7 @@ CREATE TABLE commune_majic(
 );
 
 CREATE TABLE commune (
-    commune text,
+    commune text UNIQUE,
     annee text,
     ccodep text,
     ccodir text,
@@ -769,7 +769,7 @@ CREATE TABLE commune (
 );
 
 CREATE TABLE voie (
-    voie text,
+    voie text UNIQUE,
     annee text,
     ccodep text,
     ccodir text,

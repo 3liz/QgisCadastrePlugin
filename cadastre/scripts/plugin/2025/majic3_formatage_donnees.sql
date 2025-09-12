@@ -1000,7 +1000,9 @@ SELECT
   NULL AS indldnbat,
   NULL AS motclas,
   '${LOT}' as lot
-FROM ${PREFIXE}topo WHERE substr(code_topo, 17, 2) = '13';
+FROM ${PREFIXE}topo WHERE substr(code_topo, 17, 2) = '13'
+ON CONFLICT DO NOTHING
+;
 
 -- Traitement: voie
 INSERT INTO ${PREFIXE}voie
@@ -1046,6 +1048,7 @@ SELECT
   '${LOT}' as lot
 FROM ${PREFIXE}topo
 WHERE substr(code_topo, 17, 2) = '14'
+ON CONFLICT DO NOTHING
 ;
 
 -- INDEXES
