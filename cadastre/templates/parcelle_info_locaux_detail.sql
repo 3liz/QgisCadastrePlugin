@@ -182,7 +182,7 @@ source AS (
     SELECT
     parcelle,
     l_batiment, l_numero_entree, l_niveau_etage, l_numero_local, l_invariant, l_identifiant, l_numero_voirie, l_adresse,
-    l10_compte_proprietaire, l10_proprietaires, l10_date_acte, l10_type_local, l10_nature_local, l10_nature_occupation, l10_nature_construction_particuliere, l10_annee_construction, l10_nombre_niveaux,
+    l10_compte_proprietaire, l10_proprietaires, l10_date_acte, l10_type_local, l10_nature_local, l10_nature_construction_particuliere, l10_annee_construction, l10_nombre_niveaux,
     pev_dnupev, pev_affectation, pev_lettre_serie, pev_categorie, pev_entretien, pev_valeur_locative_ref, pev_valeur_locative_an, pev_nature_exoneration_permanente,
     pev_numero_local_type, pev_coefficient_situation_particuliere, pev_coefficient_situation_generale,
     co_vlbaia, gp_vlbaia, de_vlbaia, re_vlbaia, co_bipevla, gp_bipevla, de_bipevla, re_bipevla,
@@ -203,7 +203,7 @@ source AS (
     GROUP BY
     parcelle,
     l_batiment, l_numero_entree, l_niveau_etage, l_numero_local, l_invariant, l_identifiant, l_numero_voirie, l_adresse,
-    l10_compte_proprietaire, l10_proprietaires, l10_date_acte, l10_type_local, l10_nature_local, l10_nature_occupation, l10_nature_construction_particuliere, l10_annee_construction, l10_nombre_niveaux,
+    l10_compte_proprietaire, l10_proprietaires, l10_date_acte, l10_type_local, l10_nature_local, l10_nature_construction_particuliere, l10_annee_construction, l10_nombre_niveaux,
     pev_dnupev, pev_affectation, pev_lettre_serie, pev_categorie, pev_entretien, pev_valeur_locative_ref, pev_valeur_locative_an, pev_nature_exoneration_permanente,
     pev_numero_local_type, pev_coefficient_situation_particuliere, pev_coefficient_situation_generale,
     co_vlbaia, gp_vlbaia, de_vlbaia, re_vlbaia, co_bipevla, gp_bipevla, de_bipevla, re_bipevla
@@ -252,7 +252,6 @@ SELECT
         '<p>' ||
         '<b>Type: </b>' ||  l10_type_local ||
         '<br/><b>Nature: </b>' ||  l10_nature_local ||
-        '<br/><b>Occupation: </b>' ||  Coalesce(l10_nature_occupation, '-') ||
         '<br/><b>Construction: </b>' ||  l10_nature_construction_particuliere ||
         '<br/><b>Année de construction: </b>' ||  l10_annee_construction ||
         '<br/><b>Niveaux: </b>' ||  l10_nombre_niveaux ||

@@ -225,6 +225,7 @@ CREATE TABLE local10 (
     cc48lc text,
     dloy48a integer,
     top48a text,
+    dnatlc text,
     dnupas text,
     gnexcf text,
     dtaucf text,
