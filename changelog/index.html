@@ -891,6 +891,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#221-2025-09-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1 - 2025-09-12
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#220-2025-07-31" class="md-nav__link">
     <span class="md-ellipsis">
       2.2.0 - 2025-07-31
@@ -1624,6 +1633,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#221-2025-09-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1 - 2025-09-12
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#220-2025-07-31" class="md-nav__link">
     <span class="md-ellipsis">
       2.2.0 - 2025-07-31
@@ -2317,6 +2335,19 @@ On your local, make a symlink with ln -s
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<h2 id="221-2025-09-12">2.2.1 - 2025-09-12<a class="headerlink" href="#221-2025-09-12" title="Permanent link">#</a></h2>
+<ul>
+<li>Import</li>
+<li>MAJIC - Annulation de l'import si des fichiers sont manquants, notamment <code>TOPO</code>.</li>
+<li>MAJIC - Ignore les fichiers d'archive <code>zip, tar, gz</code> en plus des fichiers déjà ignorés</li>
+<li>TOPO - Éviter l'import de doublons pour <code>commune</code> et <code>voie</code> via l'ajout
+    d'une contrainte d'unicité sur les champs <code>commune.commune</code> et <code>voie.voie</code>
+    et l'utilisation de <code>ON CONFLICT DO NOTHING</code> pendant l'<code>INSERT</code></li>
+<li>Propriétaire - ignorer <code>dlign5</code> pour les adresse en France</li>
+<li>Correction du remplissage de la table <code>parcelle_info</code> lors d'un import spatialite</li>
+<li>Fiches - Suppression du champ <code>dnatlc</code> des fiches d'information</li>
+<li>Docs - TOPO: précision sur l'extension attendue et sur l'entête des fichiers CSV</li>
+</ul>
 <h2 id="220-2025-07-31">2.2.0 - 2025-07-31<a class="headerlink" href="#220-2025-07-31" title="Permanent link">#</a></h2>
 <ul>
 <li>Import - support du millésime 2025</li>
