@@ -533,6 +533,8 @@ class cadastreImport(QObject):
                 URL_TOPO,
                 URL_TOPO,
             )
+            self.qc.updateLog(msg)
+            self.go = False
 
             return False
 
