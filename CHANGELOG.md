@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.2.3 - 2025-10-23
+
 * Formatage EDIGeo - Erreur de suppression de l'index temporaire `geo_batiment_annee_idx`
 
 ## 2.2.2 - 2025-10-23
