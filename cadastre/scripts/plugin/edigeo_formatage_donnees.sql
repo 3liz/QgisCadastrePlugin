@@ -183,7 +183,7 @@ AND s.object_rid=r.de AND p.object_rid=r.vers
 AND ST_Intersects(ST_Centroid(s.geom), p.geom)
 ;
 -- Suppression des indexes temporaires
-DROP INDEX ${PREFIXE}geo_batiment_annee_idx;
+DROP INDEX IF EXISTS ${PREFIXE}geo_batiment_annee_idx;
 DROP INDEX IF EXISTS ${PREFIXE}geo_batiment_geom_idx;
 DROP INDEX IF EXISTS ${PREFIXE}geo_parcelle_geom_idx;
 
