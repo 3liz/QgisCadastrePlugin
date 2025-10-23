@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 2.2.2 - 2025-10-23
+
+* Import MAJIC
+  * Corection de l'annulation de l'import si des fichiers sont manquants
+  * Ajout de message de suivie
+  * Correction de la règle de recherche de fichier, en la passant en majuscule comme le nom des fichiers
+
 ## 2.2.1 - 2025-09-12
 
 * Import
