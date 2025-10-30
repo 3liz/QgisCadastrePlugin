@@ -23,7 +23,7 @@ WITH infos AS (
             CASE WHEN trim(pr.dnomus) != trim(pr.dnomlp) THEN Coalesce( trim(pr.dnomus) || '/' || trim(pr.dprnus) || ', née ', '' ) ELSE '' END ||
             trim(coalesce(pr.ddenom, '')) ||
             '</td>' ||
-            '<td>' || ltrim(trim(coalesce(pr.dlign4, '')), '0') || trim(coalesce(pr.dlign5, '')) || ' ' || trim(coalesce(pr.dlign6, '')) || '</td>' ||
+            '<td>' || replace(ltrim(trim(coalesce(pr.dlign4, '')), '0') || ' ' || trim(coalesce(pr.dlign5, '')) || ' ' || trim(coalesce(pr.dlign6, '')), '  ',' ') || '</td>' ||
             CASE WHEN {not_for_third_part} THEN '<td>' || Coalesce( trim(cast(pr.jdatnss AS text) ), '-') || '</td>' ELSE '' END ||
             CASE WHEN {not_for_third_part} THEN '<td>' || coalesce(trim(pr.dldnss), '-') || '</td>' ELSE '' END ||
             '<td>' || Coalesce(ccodro_lib, '') || '</td>' ||
