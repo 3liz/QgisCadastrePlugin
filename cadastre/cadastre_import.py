@@ -35,7 +35,7 @@ from string import Template
 
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
-from qgis.core import Qgis, QgsMessageLog
+from qgis.core import Qgis, QgsMessageLog, QgsApplication, QgsAuthMethodConfig
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
@@ -457,8 +457,7 @@ class cadastreImport(QObject):
         dep_dirs = {}
         for item in self.majicSourceFileNames:
             table = item['table']
-            file_regex = item['regex'].upper()
-            self.qc.updateLog(f"Recherche des fichiers {table} contenant {file_regex} une fois en majuscule.")
+            file_regex = item['regex']
             # Get MAJIC files for item
             maj_list = []
             for root, dirs, files in os.walk(self.dialog.majicSourceDir):
@@ -498,7 +497,6 @@ class cadastreImport(QObject):
                             Logger.critical(f"Erreur de lecture du fichier '{file_path}': {err}")
                             raise
 
-            self.qc.updateLog(f"Nous avons trouvé {len(maj_list)} fichier{('s' if len(maj_list) > 1 else '')} pour {table}.")
             majic_files_found[table] = maj_list
 
         return dep_dirs, majic_files_found
@@ -533,8 +531,6 @@ class cadastreImport(QObject):
                 URL_TOPO,
                 URL_TOPO,
             )
-            self.qc.updateLog(msg)
-            self.go = False
 
             return False
 
@@ -1507,12 +1503,48 @@ class cadastreImport(QObject):
 
         # normalising file path
         file_path = os.path.normpath(file_path)
-        if self.dialog.dbType == 'postgis':
-            if not settings.contains("database"):  # non-existent entry?
-                raise Exception(self.tr('There is no defined database connection "%s".') % conn_name)
-            settingsList = ["service", "host", "port", "database", "username", "password"]
-            service, host, port, database, username, password = (settings.value(x) for x in settingsList)
 
+        # Code NON FONCTIONNEL (ne lit pas username et password de la BD dans le coffre-fort Qgis)
+        # if self.dialog.dbType == 'postgis':
+        #     if not settings.contains("database"):  # non-existent entry?
+        #         raise Exception(self.tr('There is no defined database connection "%s".') % conn_name)
+        #     settingsList = ["service", "host", "port", "database", "username", "password"]
+        #     service, host, port, database, username, password = (settings.value(x) for x in settingsList)
+
+        # Code fonctionnel corrigé par francois.thevand@gmail.com
+        if self.dialog.dbType == 'postgis':
+            if not settings.contains("database"):
+                raise Exception(self.tr('There is no defined database connection "%s".') % conn_name)
+
+            # Lecture classique
+            service, host, port, database, username, password = (
+                settings.value(x) for x in
+                ["service", "host", "port", "database", "username", "password"]
+            )
+            # Lecture de l’ID d’authent config (nouvel API)
+            authcfg = settings.value("authcfg", "")
+
+            # Si authcfg existe, on charge la config avec les credentials
+            if authcfg:
+                auth_mgr = QgsApplication.authManager()
+                cfg_obj = QgsAuthMethodConfig()
+
+                # loadAuthenticationConfig attend deux arguments en PyQGIS :
+                # 1. l’ID authcfg
+                # 2. un QStringList (ici, une simple liste Python vide)
+                success, cfg = auth_mgr.loadAuthenticationConfig(authcfg, cfg_obj,True)
+                if success and cfg.isValid():
+                    auth_info = cfg.configMap()
+                    username = auth_info.get('username', '')
+                    password = auth_info.get('password', '')
+
+                else:
+                    QgsMessageLog.logMessage(
+                        f"⚠️ Auth config '{authcfg}' invalide pour la connexion '{conn_name}'",
+                        level=Qgis.Warning
+                    )
+
+            # Construction de la chaîne PG
             if service:
                 pg_access = 'PG:service={} active_schema={}'.format(
                     service,
