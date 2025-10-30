@@ -41,8 +41,12 @@ string_agg(
     trim(
         pr.dnuper || ' - ' ||
         ltrim(trim(coalesce(pr.dlign4, '')), '0') ||
-        trim(coalesce(pr.dlign5, '')) || ' ' ||
-        trim(coalesce(pr.dlign6, '')) ||
+        CASE
+            WHEN trim(coalesce(pr.dlign5, '')) = ''
+            THEN ''
+            ELSE ' ' || trim(coalesce(pr.dlign5, ''))
+        END
+        || ' ' || trim(coalesce(pr.dlign6, '')) ||
         trim(
             CASE
                 WHEN pr.jdatnss IS NOT NULL
