@@ -1,7 +1,7 @@
 
 SELECT Coalesce(ccodro_lib, '') || ' - ' || p.dnuper || ' - ' || trim(Coalesce(p.dqualp, '')) || ' ' || trim(Coalesce(p.ddenom, '')) AS mainprop,
 CASE WHEN epxnee = 'NEE' THEN 'EP ' || trim(Coalesce(dnomlp, '')) || ' ' || trim(Coalesce(dprnlp, '')) ELSE '' END AS epousede,
-trim(Coalesce(p.dlign3, '')) || ' / ' || ltrim(trim(Coalesce(p.dlign4, '')), '0') || trim(Coalesce(p.dlign5, '')) || ' ' || trim(Coalesce(p.dlign6, '')) AS adrprop,
+trim(Coalesce(p.dlign3, '')) || ' / ' || replace(ltrim(trim(Coalesce(p.dlign4, '')), '0') || ' ' || trim(Coalesce(p.dlign5, '')) || ' ' || trim(Coalesce(p.dlign6, '')), '  ', ' ') AS adrprop,
 CASE
   WHEN jdatnss IS NOT NULL AND NOT $for_third_party
   THEN ' Né(e) le ' || jdatnss || ' à ' || coalesce(p.dldnss, '')
