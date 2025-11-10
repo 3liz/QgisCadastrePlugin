@@ -25,7 +25,7 @@ FROM (
             CASE WHEN trim(p.dnomus) != trim(p.dnomlp) THEN Coalesce( trim(p.dnomus) || '/' || trim(p.dprnus) || ', née ', '' ) ELSE '' END ||
             trim(coalesce(p.ddenom, '')) ||
         '</td>' ||
-        '<td>' || trim(trim(coalesce(p.dlign3, '')) || ' ' || ltrim(trim(coalesce(p.dlign4, '')), '0') || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, ''))) || '</td>' ||
+        '<td>' || replace(trim(trim(coalesce(p.dlign3, '')) || ' ' || ltrim(trim(coalesce(p.dlign4, '')), '0') || ' ' || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, ''))), '  ',' ') || '</td>' ||
         CASE WHEN {not_for_third_part} THEN '<td>' || Coalesce( trim(cast(p.jdatnss AS text) ), '-') || '</td>' ELSE '' END ||
         CASE WHEN {not_for_third_part} THEN '<td>' || coalesce(trim(p.dldnss), '-') || '</td>' ELSE '' END ||
         '<td>' || Coalesce(ccodro_lib, '') || '</td>' ||

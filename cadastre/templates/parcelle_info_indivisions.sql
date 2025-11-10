@@ -19,7 +19,7 @@ FROM (
         '<td>' || l.dnulot || '</td>' ||
         '<td>' || l.comptecommunal || '</td>' ||
         '<td>' || trim(coalesce(p.dqualp, '')) || ' ' || trim(coalesce(p.ddenom, '')) || '</td>' ||
-        '<td>' || trim(trim(coalesce(p.dlign3, '')) || ' ' || ltrim(trim(coalesce(p.dlign4, '')), '0') || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, ''))) || '</td>' ||
+        '<td>' || replace(trim(trim(coalesce(p.dlign3, '')) || ' ' || ltrim(trim(coalesce(p.dlign4, '')), '0') || ' ' || trim(coalesce(p.dlign5, '')) || ' ' || trim(coalesce(p.dlign6, ''))), '  ', ' ') || '</td>' ||
         CASE WHEN {not_for_third_part} THEN '<td>' || Coalesce( trim(cast(p.jdatnss AS text) ), '-') || '</td>' ELSE '' END ||
         '<td>' || coalesce(p.ccodem, '') || '</td>' ||
         '<td>' || coalesce(p.ccodro, '') || '</td>' ||
