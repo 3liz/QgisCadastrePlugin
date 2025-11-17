@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Correction de la requête pour locaux - détails
+
 ## 2.2.4 - 2025-11-17
 
 * Correction de la reconstruction d'adresse

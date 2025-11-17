@@ -88,7 +88,8 @@ WITH infos AS (
     v.natvoi, v.libvoi, p.cconvo, p.dvoilib,
     l10.ccodep, l10.ccocom, l10.dnupro, l10.jdatat,
     dteloc_lib, cconlc_lib, ccoplc_lib, l10.jannat, l10.dnbniv,
-    pev.pev, ccoaff_lib, pev.ccostb, pev.dcapec, pev.dcetlc, pev.dvlpera, pev.gnexpl, pev.dnuref, pev.dcsplca, pev.dcsglca,
+    pev.pev, pev.dnupev, ccoaff_lib, pev.ccostb, pev.dcapec, pev.dcetlc,
+    pev.dvlper, pev.dvlpera, pev.gnexpl, pev.dnuref, pev.dcsplca, pev.dcsglca,
     pt.co_vlbaia, pt.gp_vlbaia, pt.de_vlbaia, pt.re_vlbaia, px.pexb, pt.co_bipevla, pt.gp_bipevla, pt.de_bipevla, pt.re_bipevla
 
     ORDER BY l_identifiant
