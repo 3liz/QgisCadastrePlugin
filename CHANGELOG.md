@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 2.2.4 - 2025-11-17
+
+* Correction de la reconstruction d'adresse
+* Utilisation du système d'authentification de QGIS quand celui-ci est nécessaire pour l'import
+
+Merci à tous les contributeurs @jersig, @ThT12, @fthvd
+
+
 ## 2.2.3 - 2025-10-23
 
 * Formatage EDIGeo - Erreur de suppression de l'index temporaire `geo_batiment_annee_idx`
