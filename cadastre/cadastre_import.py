@@ -35,7 +35,7 @@ from string import Template
 
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
-from qgis.core import Qgis, QgsMessageLog
+from qgis.core import Qgis, QgsApplication, QgsAuthMethodConfig, QgsMessageLog
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
@@ -1510,9 +1510,34 @@ class cadastreImport(QObject):
         if self.dialog.dbType == 'postgis':
             if not settings.contains("database"):  # non-existent entry?
                 raise Exception(self.tr('There is no defined database connection "%s".') % conn_name)
-            settingsList = ["service", "host", "port", "database", "username", "password"]
-            service, host, port, database, username, password = (settings.value(x) for x in settingsList)
+            settingsList = [
+                "service", "host", "port", "database", "username", "password", "authcfg"
+            ]
+            service, host, port, database, username, password, authcfg = (
+                settings.value(x) for x in settingsList
+            )
 
+            # Get username/password from QGIS auth manager
+            if authcfg:
+                auth_mgr = QgsApplication.authManager()
+                cfg_obj = QgsAuthMethodConfig()
+
+                # loadAuthenticationConfig attend deux arguments en PyQGIS :
+                # 1. l’ID authcfg
+                # 2. un QStringList (ici, une simple liste Python vide)
+                success, cfg = auth_mgr.loadAuthenticationConfig(authcfg, cfg_obj, True)
+                if success and cfg.isValid():
+                    auth_info = cfg.configMap()
+                    username = auth_info.get('username', '')
+                    password = auth_info.get('password', '')
+
+                else:
+                    QgsMessageLog.logMessage(
+                        f"⚠️ Auth config '{authcfg}' invalide pour la connexion '{conn_name}'",
+                        level=Qgis.Warning
+                    )
+
+            # Build PG acess string for ogr2ogr command
             if service:
                 pg_access = 'PG:service={} active_schema={}'.format(
                     service,
