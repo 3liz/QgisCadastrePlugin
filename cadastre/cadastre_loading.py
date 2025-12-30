@@ -206,6 +206,15 @@ class CadastreLoading(QObject):
                 'group': 'D',
             },
             {
+                'label': 'Boulons',
+                'name': 'geo_boulon',
+                'table': 'geo_boulon',
+                'geom': 'geom',
+                'sql': '',
+                'active': False,
+                'group': 'D',
+            },
+            {
                 'label': 'Croix',
                 'name': 'geo_croix',
                 'table': 'geo_croix',
