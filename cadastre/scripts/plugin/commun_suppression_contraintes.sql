@@ -11,6 +11,8 @@ ALTER TABLE ${PREFIXE}geo_symblim_parcelle DROP CONSTRAINT IF EXISTS geo_symblim
 ALTER TABLE ${PREFIXE}geo_symblim DROP CONSTRAINT IF EXISTS geo_symblim_pk;
 ALTER TABLE ${PREFIXE}geo_croix_parcelle DROP CONSTRAINT IF EXISTS geo_croix_parcelle_pk;
 ALTER TABLE ${PREFIXE}geo_croix DROP CONSTRAINT IF EXISTS geo_croix_pk;
+ALTER TABLE ${PREFIXE}geo_boulon_parcelle DROP CONSTRAINT IF EXISTS geo_boulon_parcelle_pk;
+ALTER TABLE ${PREFIXE}geo_boulon DROP CONSTRAINT IF EXISTS geo_boulon_pk;
 ALTER TABLE ${PREFIXE}geo_borne_parcelle DROP CONSTRAINT IF EXISTS geo_borne_parcelle_pk;
 ALTER TABLE ${PREFIXE}geo_borne DROP CONSTRAINT IF EXISTS geo_borne_pk;
 ALTER TABLE ${PREFIXE}geo_ptcanv DROP CONSTRAINT IF EXISTS geo_ptcanv_pk;
