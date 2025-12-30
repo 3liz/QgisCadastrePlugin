@@ -12,6 +12,7 @@ CREATE INDEX IF NOT EXISTS geo_tronfluv_geom_idx ON geo_tronfluv USING gist (geo
 CREATE INDEX IF NOT EXISTS geo_tronroute_geom_idx ON geo_tronroute USING gist (geom);
 CREATE INDEX IF NOT EXISTS geo_ptcanv_geom_idx ON geo_ptcanv USING gist (geom);
 CREATE INDEX IF NOT EXISTS geo_borne_geom_idx ON geo_borne USING gist (geom);
+CREATE INDEX IF NOT EXISTS geo_boulon_geom_idx ON geo_boulon USING gist (geom);
 CREATE INDEX IF NOT EXISTS geo_croix_geom_idx ON geo_croix USING gist (geom);
 CREATE INDEX IF NOT EXISTS geo_symblim_geom_idx ON geo_symblim USING gist (geom);
 CREATE INDEX IF NOT EXISTS geo_tpoint_geom_idx ON geo_tpoint USING gist (geom);
