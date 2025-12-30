@@ -1122,6 +1122,29 @@ CREATE TABLE geo_borne_parcelle
   geo_parcelle text NOT NULL
 );
 
+
+CREATE TABLE geo_boulon
+(
+  geo_boulon serial NOT NULL,
+  annee text NOT NULL,
+  object_rid text,
+  ori numeric(12,9),
+  creat_date date,
+  update_dat date,
+  lot text
+);
+SELECT AddGeometryColumn ( current_schema::text, 'geo_boulon', 'geom', ${SRID} , 'POINT', 2 );
+
+
+CREATE TABLE geo_boulon_parcelle
+(
+  geo_boulon_parcelle serial NOT NULL,
+  annee text NOT NULL,
+  geo_boulon integer NOT NULL,
+  geo_parcelle text NOT NULL
+);
+
+
 CREATE TABLE geo_croix
 (
   geo_croix serial NOT NULL,
@@ -2058,6 +2081,19 @@ COMMENT ON COLUMN geo_borne_parcelle.geo_borne_parcelle IS 'Identifiant';
 COMMENT ON COLUMN geo_borne_parcelle.annee IS 'Année';
 COMMENT ON COLUMN geo_borne_parcelle.geo_borne IS 'borne';
 COMMENT ON COLUMN geo_borne_parcelle.geo_parcelle IS 'Parcelle';
+
+COMMENT ON TABLE geo_boulon IS 'Borne située en limite de propriété et représentée par un symbole ponctuel.';
+COMMENT ON COLUMN geo_boulon.geo_boulon IS 'Identifiant';
+COMMENT ON COLUMN geo_boulon.annee IS 'Année';
+COMMENT ON COLUMN geo_boulon.object_rid IS 'Numéro d''objet';
+COMMENT ON COLUMN geo_boulon.ori IS 'Orientation';
+COMMENT ON COLUMN geo_boulon.creat_date IS 'Date de création';
+COMMENT ON COLUMN geo_boulon.update_dat IS 'Date de dernière modification';
+COMMENT ON TABLE geo_boulon_parcelle IS 'Lien borne - parcelle';
+COMMENT ON COLUMN geo_boulon_parcelle.geo_boulon_parcelle IS 'Identifiant';
+COMMENT ON COLUMN geo_boulon_parcelle.annee IS 'Année';
+COMMENT ON COLUMN geo_boulon_parcelle.geo_boulon IS 'borne';
+COMMENT ON COLUMN geo_boulon_parcelle.geo_parcelle IS 'Parcelle';
 
 COMMENT ON TABLE geo_croix IS 'Borne située en limite de propriété et représentée par un symbole ponctuel.';
 COMMENT ON COLUMN geo_croix.geo_croix IS 'Identifiant';
