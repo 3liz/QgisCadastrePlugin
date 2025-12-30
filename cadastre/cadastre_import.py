@@ -107,8 +107,8 @@ class cadastreImport(QObject):
 
         self.geoTableList = ['geo_zoncommuni', 'geo_ptcanv', 'geo_commune', 'geo_parcelle', 'geo_symblim',
                              'geo_tronfluv', 'geo_tronroute', 'geo_label', 'geo_subdsect', 'geo_batiment', 'geo_borne',
-                             'geo_croix', 'geo_tpoint', 'geo_lieudit', 'geo_section', 'geo_subdfisc', 'geo_tsurf',
-                             'geo_tline', 'geo_unite_fonciere']
+                             'geo_boulon', 'geo_croix', 'geo_tpoint', 'geo_lieudit', 'geo_section', 'geo_subdfisc',
+                             'geo_tsurf','geo_tline', 'geo_unite_fonciere']
 
         s = QSettings()
         self.majicSourceFileNames = [
@@ -1321,7 +1321,7 @@ class cadastreImport(QObject):
                     avoid_query = False
                     if self.dialog.dbType == 'spatialite':
                         spatialite_avoid_list = [
-                            'geo_borne_annee_idx',
+                            'geo_borne_annee_idx', 'geo_boulon_annee_idx', 'geo_croix_annee_idx',
                         ]
                         for avoid_item in spatialite_avoid_list:
                             if avoid_item in sql:
