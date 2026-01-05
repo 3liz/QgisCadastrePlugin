@@ -46,7 +46,7 @@ jobs:
       - name: Unzip
         run: unzip cadastre.${{ env.VERSION }}.zip -d tmp
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: cadastre.${{ env.VERSION }}
           path: tmp
