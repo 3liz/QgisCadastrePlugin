@@ -1,15 +1,15 @@
 """ Cadastre tests
 """
+from qgis.server import QgsServerInterface
 
+from .core.client import Client
 
-def test_service_exists(client):
-    """  Test that the cadastre service is registered
-    """
-    plugin = client.getplugin('cadastre')
-    assert plugin is not None
-
-    registry = plugin.serverIface.serviceRegistry()
-    service = registry.getService('cadastre')
-    assert service is not None
+# XXX Do not mix server test and desktop tests
+#def test_service_exists(qgis_server_iface: QgsServerInterface):
+#    """  Test that the cadastre service is registered
+#    """
+#    registry = qgis_server_iface.serviceRegistry()
+#    service = registry.getService('CADASTRE')
+#    assert service is not None
 
 

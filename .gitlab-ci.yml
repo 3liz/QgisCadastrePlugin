@@ -1,119 +1,124 @@
+variables:
+  PRODUCT_NAME: cadastre
+
 stages:
-- tests
+- lint
+- test
+- version
 - build
-- qgis-plugin
-- qgis-repository-edit
-- qgis-repository-push
 - deploy
 - release
 
-variables:
-    FACTORY_PRODUCT_NAME: cadastre
-    FACTORY_PACKAGE_TYPE: plugin
 
-version:
-  stage: tests
-  image:
-    name: $REGISTRY_URI/infra/ci-tools:latest
-  script:
-    - version-helper
+# ------------
+# Lint
+# ------------
+lint:
+  image: ${REGISTRY_URL}/factory-ci-runner:qgis-release
   tags:
     - factory-plain
+  stage: lint
+  script:
+    - make lint
+  allow_failure: true
+
+# ------------
+# Tests
+# ------------
+
+.tests:
+  image: ${REGISTRY_URL}/factory-ci-runner:factory-ci
+  tags:
+    - factory-dind
+  stage: test
+  script:
+    - make docker-test QGIS_VERSION=$QGIS_FLAVOR
+
+# Tests are not functionals on CI yet
+qgis-tests:
+  extends: .tests
+  parallel:
+    matrix:
+      - QGIS_FLAVOR: [
+        "3.34",
+        "3.40",
+        "3.44",
+        "nightly-release",
+      ]
+
+
+# NOTE: Following jobs are triggered only on RELEASE_BRANCH == "true"
+
+# 
+# Packages 
+#
+
+
+
+version:
+  image: $REGISTRY_URI/factory-ci-runner:qgis-plugin-ci
+  tags:
+    - factory-plain
+  rules:
+    - if: $RELEASE_BRANCH == "true"
+  stage: version
+  script:
+    - version-helper > build.env
+    - cat build.env
   artifacts:
     reports:
       dotenv: build.env
 
-package-zip:
+
+build:
+  image: $REGISTRY_URI/factory-ci-runner:qgis-plugin-ci
+  tags:
+    - factory-plain
+  rules:
+    - if: $RELEASE_BRANCH == "true"
   dependencies:
     - version
   stage: build
-  image: $REGISTRY_URI/qgis-plugin-ci:latest
   script:
-    - >
-      qgis-plugin-ci
-      package ${VERSION}
-      --plugin-repo-url https://packages.3liz.org/pub/${FACTORY_PRODUCT_NAME}-qgis-plugin/${STATUS}/
-  tags:
-    - factory-plain
+      - qgis-plugin-ci package ${VERSION}
   artifacts:
     untracked: true
     expose_as: 'QGIS package'
     paths:
-      - ${FACTORY_PRODUCT_NAME}.${VERSION}.zip
-      - plugins.xml
+      - ${PRODUCT_NAME}.${VERSION}.zip
 
-push-zip-fetch-repo:
-  image: ${REGISTRY_URL}/factory-ci-runner:fabric-ci
-  dependencies:
-    - version
-    - package-zip
-  stage: qgis-plugin
-  script:
-    # Upload into the plugin directory
-    - upload_to_packages_server ${FACTORY_PRODUCT_NAME}.${VERSION}.zip pub/${FACTORY_PRODUCT_NAME}-qgis-plugin/${STATUS}/
-    - upload_to_packages_server plugins.xml pub/${FACTORY_PRODUCT_NAME}-qgis-plugin/${STATUS}/
 
-    # Fetch XML files
-    - mkdir tmp_repository
-    - pull_folder_from_packages_server pub/server-plugins-repository/${STATUS}/ tmp_repository
-
-    # This CI job is running as "fabric" user, the next job is "factory"
-    - chmod 777 -R tmp_repository/
+deploy:
+  image: $REGISTRY_URI/factory-ci-runner:fabric-ci
   tags:
     - fabric
-  artifacts:
-    paths:
-      - tmp_repository/*.xml
-
-edit-repository:
-  # Use the Python ci runner
-  image: ${REGISTRY_URL}/factory-ci-runner:factory-ci
-  stage: qgis-repository-edit
-  dependencies:
-    - package-zip
-    - push-zip-fetch-repo
-  before_script:
-    - pip install qgis-plugin-repo
-  script:
-    - qgis-plugin-repo merge plugins.xml tmp_repository/*.xml
-  tags:
-    - factory-plain
-  artifacts:
-    untracked: true
-    paths:
-      - tmp_repository/*.xml
-
-push-repository:
-  image: ${REGISTRY_URL}/factory-ci-runner:fabric-ci
-  stage: qgis-repository-push
+  rules:
+    - if: $RELEASE_BRANCH == "true"
+  stage: deploy 
   dependencies:
     - version
-    - edit-repository
+    - build
   script:
-    - upload_folder_to_packages_server tmp_repository/ pub/server-plugins-repository/${STATUS}/
-  tags:
-    - fabric
-
-deploy_snap_2:
-  image: ${REGISTRY_URL}/factory-ci-runner:fabric-ci
-  stage: deploy
-  dependencies:
-    - push-repository
-  script:
+    - upload_plugins ${PRODUCT_NAME} ${PRODUCT_NAME}.${VERSION}.zip ${STATUS}
     - update-snap-qgis-plugins
-  environment:
-    name: snap
-  tags:
-    - fabric
+  variables:
+    PLUGIN_SERVER_URL: "https://qgis-plugins.3liz.org"
 
-tickets:
-  stage: release
-  when: manual
-  only:
-    - tags
+#
+# Release
+#
+
+# XXX Deprecate ci-tools and adapts scripts to qgis-plugin-ci runner
+
+release:
   image:
     name: $REGISTRY_URI/infra/ci-tools:latest
-  script:
-    - create_ticket.py
   tags:
     - factory-plain
+  stage: release
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^(?:release-)?\d+\.\d+\.\d+(?:-.*)?$/'
+  script:
+    - create_ticket.py
+    - gitlab_release
+

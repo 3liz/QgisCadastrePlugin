@@ -21,11 +21,6 @@ def plugin_path(*args) -> Path:
     return path
 
 
-def plugin_test_data_path(*args) -> Path:
-    """Return the path to the plugin test data folder."""
-    return plugin_path("tests", "fixtures", *args)
-
-
 def timing(f):
     """
     Fonction qui permet de calculer le temps passé par une méthode

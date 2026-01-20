@@ -1,12 +1,14 @@
-name: 🎳 Tests
+name: Tests
 
 on:
   push:
-    paths:
-      - 'cadastre/**'
+    tags: 
+      - '*'
+    branches:
+      - master
   pull_request:
-    paths:
-      - 'cadastre/**'
+    branches:
+      - master
 
 jobs:
   test-qgis:
