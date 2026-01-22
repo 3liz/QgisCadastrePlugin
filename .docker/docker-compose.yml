@@ -14,7 +14,7 @@ services:
       - "qgis"
 
   db:
-    image: 3liz/postgis:${POSTGIS_VERSION}
+    image: ${POSTGIS_IMAGE_TAG}
     hostname: db
     environment:
       POSTGRES_DB: "gis"
@@ -34,7 +34,7 @@ services:
     build:
       context: .
       dockerfile_inline: |
-          FROM 3liz/postgis:${POSTGIS_VERSION}
+          FROM ${POSTGIS_IMAGE_TAG}
           RUN apt-get -y update && apt-get install -y rename
     user: ${UID}:${GID}
     command: ${DB_COMMAND}

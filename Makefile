@@ -2,6 +2,7 @@ SHELL:=bash
 
 PYTHON_MODULE=cadastre
 
+
 -include .localconfig.mk
 
 #
@@ -73,11 +74,19 @@ scan:
 test:
 	$(RUN) pytest -v tests/
 
+
+ifdef REGISTRY_URL
+REGISTRY_PREFIX=$(REGISTRY_URL)/
+else
+REGISTRY_PREFIX=3liz/
+endif 
+
+
 ##
 ## Test using docker image
 ##
 QGIS_VERSION ?= 3.40
-QGIS_IMAGE_REPOSITORY ?= 3liz/qgis-platform
+QGIS_IMAGE_REPOSITORY ?= ${REGISTRY_PREFIX}qgis-platform
 QGIS_IMAGE_TAG ?= $(QGIS_IMAGE_REPOSITORY):$(QGIS_VERSION)
 
 # Overridable in .localconfig.mk

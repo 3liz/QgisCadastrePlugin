@@ -1,6 +1,7 @@
 
 # Overridable
 export POSTGIS_VERSION ?= 15-3
+export POSTGIS_IMAGE_TAG ?= $(REGISTRY_PREFIX)postgis:$(POSTGIS_VERSION)
 
 # We need to start the database when running tests locally
 start-db:

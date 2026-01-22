@@ -14,17 +14,10 @@ jobs:
   test-qgis:
     name: Tests QGIS
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .docker
+    
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
-        with:
-          submodules: 'true'
-
-      - name: Launching docker-compose
-        run: ./start.sh with-qgis
 
       - name: Running tests
-        run: ./exec_tests.sh
+        run: make docker-test
