@@ -14,10 +14,18 @@ jobs:
   test-qgis:
     name: Tests QGIS
     runs-on: ubuntu-latest
-    
+    strategy:
+      fail-fast: false
+      matrix:
+        qgis_version: [
+          "3.34",
+          "3.40",
+          "3.44",
+          "nightly-release",
+        ]
     steps:
       - name: Check out repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Running tests
-        run: make docker-test
+        run: make docker-test QGIS_VERSION=${{ matrix.qgis_version }}
