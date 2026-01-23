@@ -1124,33 +1124,37 @@ class cadastreImport(QObject):
                     "EDIGEO peut résoudre le problème"
                 )
 
+                def check_tarfile_security_hole() -> dict:
+                    # See https://docs.python.org/3.10/library/tarfile.html#tarfile.TarFile.extractall
+                    # See https://peps.python.org/pep-0706/
+                    if (3, 8, 0) <= sys.version_info < (3, 8, 17) \
+                            or (3, 9, 0) <= sys.version_info < (3, 9, 17) \
+                            or (3, 10, 0) <= sys.version_info < (3, 10, 12):
+                        msg = (
+                            "Version de Python obsolète, votre version comporte une faille de sécurité "
+                            "concernant l'extraction d'une archive. Veuillez monter votre version de QGIS afin "
+                            "de passer à une version plus récente dès que possible."
+                        )
+                        self.qc.updateLog(f"<b>{msg}</b>")
+                        # noinspection PyTypeChecker
+                        QgsMessageLog.logMessage(msg, 'cadastre', Qgis.MessageLevel.Warning)
+                        arguments.pop('filter')
+                        return {"filter": "data"}
+
+                    return {}
+ 
                 i = 0
                 # untar all tar.bz2 in source folder
                 self.qc.updateLog('* Recherche des fichiers .bz2')
                 tarFileListA = self.list_files_in_directory(path, ['bz2'])
                 self.qc.updateLog(f"{len(tarFileListA)} fichier(s) .bz2 dans {path}")
+
+                arguments = check_tarfile_security_hole()
+
                 for z in tarFileListA:
                     with tarfile.open(z) as t:
                         try:
-                            # See https://docs.python.org/3.10/library/tarfile.html#tarfile.TarFile.extractall
-                            # See https://peps.python.org/pep-0706/
-                            arguments = {
-                                'filter': 'data'
-                            }
-                            if (3, 8, 0) <= sys.version_info < (3, 8, 17) \
-                                    or (3, 9, 0) <= sys.version_info < (3, 9, 17) \
-                                    or (3, 10, 0) <= sys.version_info < (3, 10, 12):
-                                msg = (
-                                    "Version de Python obsolète, votre version comporte une faille de sécurité "
-                                    "concernant l'extraction d'une archive. Veuillez monter votre version de QGIS afin "
-                                    "de passer à une version plus récente dès que possible."
-                                )
-                                self.qc.updateLog(f"<b>{msg}</b>")
-                                # noinspection PyTypeChecker
-                                QgsMessageLog.logMessage(msg, 'cadastre', Qgis.MessageLevel.Warning)
-                                arguments.pop('filter')
-
-                            t.extractall(
+                           t.extractall(
                                 os.path.join(self.edigeoPlainDir, 'tar_%s' % i),
                                 **arguments,
                             )
@@ -1170,7 +1174,10 @@ class cadastreImport(QObject):
                 for z in tarFileListB:
                     with tarfile.open(z) as t:
                         try:
-                            t.extractall(os.path.join(self.edigeoPlainDir, f'tar_{i}'))
+                            t.extractall(
+                                os.path.join(self.edigeoPlainDir, f'tar_{i}'),
+                                **arguments,
+                            )
                         except tarfile.ReadError:
                             # Issue GitHub #339
                             self.go = False
