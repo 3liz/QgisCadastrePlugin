@@ -63,7 +63,7 @@ build:
       variables:
         PRERELEASE: ""
         STATUS: stable
-    - if $RELEASE_BRANCH == "true"
+    - if: $RELEASE_BRANCH == "true"
       variables:
         PRERELEASE: "--pre"
         STATUS: unstable
@@ -85,6 +85,9 @@ deploy:
   stage: deploy 
   tags:
     - fabric
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
+    - if: $RELEASE_BRANCH == "true"
   dependencies:
     - build
   script:
@@ -107,7 +110,7 @@ release:
     - build
     - deploy
   rules:
-    - if: $STATUS == "stable"
+    - if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
   script:
     - create_ticket.py
     - gitlab_release

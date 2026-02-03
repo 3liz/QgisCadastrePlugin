@@ -35,13 +35,13 @@ lint = [
     "mypy",
     "bandit",
 ]
-packaging = [
-    "qgis-plugin-package-ci; python_full_version >= '3.12'",
-]
 
 [tool.uv.sources]
-qgis-plugin-package-ci = { git = "https://github.com/3liz/qgis-plugin-package-ci.git" }
 pytest-qgis = { git = "https://github.com/3liz/pytest-qgis.git" }
+
+[tool.yapt]
+plugin_source = "cadastre"
+
 
 # Ruff configuration
 # See https://doc.astral.sh/ruff/configuration
@@ -100,11 +100,6 @@ known-third-party = [
 ignore-fully-untyped = true
 suppress-none-returning = true
 suppress-dummy-args = true
-
-[tool.package-ci]
-plugin_source = "cadastre"
-github_organization_slug = "3liz"
-project_slug = "QgisCadastrePlugin"
 
 #
 # Mypy
