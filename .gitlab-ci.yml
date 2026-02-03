@@ -4,7 +4,6 @@ variables:
 stages:
 - lint
 - test
-- version
 - build
 - deploy
 - release
@@ -54,55 +53,43 @@ qgis-tests:
 #
 
 
-
-version:
+build:
   image: $REGISTRY_URI/factory-ci-runner:qgis-plugin-ci
+  stage: build
   tags:
     - factory-plain
   rules:
-    - if: $RELEASE_BRANCH == "true"
-  stage: version
+    - if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
+      variables:
+        PRERELEASE: ""
+        STATUS: stable
+    - if $RELEASE_BRANCH == "true"
+      variables:
+        PRERELEASE: "--pre"
+        STATUS: unstable
   script:
-    - version-helper > build.env
-    - cat build.env
+      - echo "Building plugin ${PRODUCT_NAME} STATUS=${STATUS}"
+      - yapt-pkg package $PRERELEASE
+      - echo "PACKAGE=`ls -1 *.zip`" > build.env
+      - echo "STATUS=$STATUS" >> build.env
+      - cat build.env
   artifacts:
     reports:
       dotenv: build.env
-
-
-build:
-  image: $REGISTRY_URI/factory-ci-runner:qgis-plugin-ci
-  tags:
-    - factory-plain
-  rules:
-    - if: $RELEASE_BRANCH == "true"
-  dependencies:
-    - version
-  stage: build
-  script:
-      - qgis-plugin-ci package ${VERSION}
-  artifacts:
-    untracked: true
-    expose_as: 'QGIS package'
     paths:
-      - ${PRODUCT_NAME}.${VERSION}.zip
+      - "*.zip"
 
 
 deploy:
   image: $REGISTRY_URI/factory-ci-runner:fabric-ci
+  stage: deploy 
   tags:
     - fabric
-  rules:
-    - if: $RELEASE_BRANCH == "true"
-  stage: deploy 
   dependencies:
-    - version
     - build
   script:
-    - upload_plugins ${PRODUCT_NAME} ${PRODUCT_NAME}.${VERSION}.zip ${STATUS}
+    - upload_plugins ${PRODUCT_NAME} ${PACKAGE} ${STATUS}
     - update-snap-qgis-plugins
-  variables:
-    PLUGIN_SERVER_URL: "https://qgis-plugins.3liz.org"
 
 #
 # Release
@@ -116,8 +103,11 @@ release:
   tags:
     - factory-plain
   stage: release
+  dependencies:
+    - build
+    - deploy
   rules:
-    - if: '$CI_COMMIT_TAG =~ /^(?:release-)?\d+\.\d+\.\d+(?:-.*)?$/'
+    - if: $STATUS == "stable"
   script:
     - create_ticket.py
     - gitlab_release
