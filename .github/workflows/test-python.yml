@@ -1,28 +1,31 @@
-name: 🎳 Tests
+name: Tests
 
 on:
   push:
-    paths:
-      - 'cadastre/**'
+    tags: 
+      - '*'
+    branches:
+      - master
   pull_request:
-    paths:
-      - 'cadastre/**'
+    branches:
+      - master
 
 jobs:
   test-qgis:
     name: Tests QGIS
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .docker
+    strategy:
+      fail-fast: false
+      matrix:
+        qgis_version: [
+          "3.34",
+          "3.40",
+          "3.44",
+          "nightly-release",
+        ]
     steps:
       - name: Check out repository
-        uses: actions/checkout@v5
-        with:
-          submodules: 'true'
-
-      - name: Launching docker-compose
-        run: ./start.sh with-qgis
+        uses: actions/checkout@v6
 
       - name: Running tests
-        run: ./exec_tests.sh
+        run: make docker-test QGIS_VERSION=${{ matrix.qgis_version }}

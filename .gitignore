@@ -24,3 +24,6 @@ cadastre.*.zip
 
 # VSCode
 *.code-workspace
+
+.qgis-settings
+.docker-venv-*

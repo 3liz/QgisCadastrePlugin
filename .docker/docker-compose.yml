@@ -1,39 +1,59 @@
-networks:
-  qgis_plugin_network:
-
 services:
-  db:
+  qgis:
+    image: ${QGIS_IMAGE_TAG}
+    user: ${UID}:${GID}
+    command: /src/.docker/run-tests.sh
+    working_dir: /src
+    environment:
+        HOME: /home/qgis
+        QGIS_VERSION: ${QGIS_VERSION}
+    volumes:
+    - {type: bind, source: "..", target: /src}
+    - {type: bind, source: "./qgis_settings.ini", target: /src/tests/qgis_settings.ini}
     profiles:
       - "qgis"
-      - "db"
-    image: 3liz/postgis:13-3
+
+  db:
+    image: ${POSTGIS_IMAGE_TAG}
     hostname: db
-    container_name: postgis
-    networks:
-      qgis_plugin_network:
     environment:
       POSTGRES_DB: "gis"
       POSTGRES_USER: "docker"
       POSTGRES_PASSWORD: "docker"
       POSTGRES_HOST: "db"
-    volumes:
-      - ../${PLUGIN_NAME}:/tests_directory/${PLUGIN_NAME}
     ports:
       - "35432:5432"
     healthcheck:
-      test: "exit 0"
+      test: ["CMD-SHELL", "pg_isready -U docker -d gis -q || exit 1"]
+      interval: 30s
+      timeout: 30s
+      start_interval: 2s
+      start_period: 10s
 
-  qgis:
-    profiles:
-      - "qgis"
-    image: qgis/qgis:release-3_28
-    container_name: qgis
-    networks:
-      qgis_plugin_network:
+  db-runner:
+    build:
+      context: .
+      dockerfile_inline: |
+          FROM ${POSTGIS_IMAGE_TAG}
+          RUN apt-get -y update && apt-get install -y rename
+    user: ${UID}:${GID}
+    command: ${DB_COMMAND}
+    working_dir: /src/.docker
+    entrypoint: /src/.docker/db-runner-entrypoint
+    stop_signal: SIGKILL
     volumes:
-      # - /tmp/.X11-unix:/tmp/.X11-unix
-      - ../${PLUGIN_NAME}:/tests_directory/${PLUGIN_NAME}
-    environment:
-      # - DISPLAY=unix$DISPLAY
-      - DISPLAY=:99
-      - CI=True
+    - {type: bind, source: "..", target: /src}
+    - type: bind
+      source: ./pg_service.conf
+      target: /etc/postgresql-common/pg_service.conf
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f /tmp/.db-runner-ok ] || exit 1"]
+      start_interval: 2s
+      start_period: 10s 
+    profiles:
+    - schemaspy
+    - dbrunner
+ 

@@ -14,10 +14,9 @@ about=This plugins helps users to use French land registry data, called Cadastre
   Régional de Picardie, Conseil Régional de Picardie, Agence de Développement et d'Urbanisme du Grand Amienois.
 
 
-author=3Liz
-email=info@3liz.com
-
 # Done by qgis-plugin-ci
+#author=3Liz
+#email=info@3liz.com
 version=master
 changelog=
 commitNumber=
@@ -34,7 +33,7 @@ repository=https://github.com/3liz/QgisCadastrePlugin
 icon=icon.png
 
 # experimental flag
-experimental=False
+experimental=True
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
