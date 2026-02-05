@@ -17,15 +17,15 @@ about=This plugins helps users to use French land registry data, called Cadastre
 # Done by qgis-plugin-ci
 #author=3Liz
 #email=info@3liz.com
-version=master
-changelog=
-commitNumber=
-commitSha1=
-dateTime=
+#version=master
+#changelog=
+#commitNumber=
+#commitSha1=
+#dateTime=
 
 
 # tags are comma separated with spaces allowed
-tags=cadastre, france, french, majic, edigeo, import
+tags=cadastre,france,french,majic,edigeo,import
 
 homepage=https://docs.3liz.org/QgisCadastrePlugin/
 tracker=https://github.com/3liz/QgisCadastrePlugin/issues
