@@ -6,7 +6,7 @@ iniconfig==2.1.0 ; python_full_version < '3.10'
 iniconfig==2.3.0 ; python_full_version >= '3.10'
 packaging==26.0
 pluggy==1.6.0
-pygments==2.19.2
+pygments==2.20.0
 pytest==8.4.2 ; python_full_version < '3.10'
 pytest==9.0.2 ; python_full_version >= '3.10'
 pytest-qgis @ git+https://github.com/3liz/pytest-qgis.git@190a2859f0c0203b08a0de987cac29b1579ae9b5
