@@ -27,7 +27,7 @@ dev = [
 ]
 tests = [
     "pytest >= 5.3",
-    "pytest-qgis",
+    "pytest-qgis; python_full_version >= '3.10'",
     "semver",
 ]
 lint = [
@@ -54,6 +54,7 @@ exclude = [
     ".local",
     ".test/.local",
     ".cache",
+    "cadastre/scripts/pyogr",
 ]
 
 [tool.ruff.format]
