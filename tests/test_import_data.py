@@ -132,18 +132,22 @@ def test_import(test_case: TestCase, qgis_iface: QgisInterface, fixtures: Path):
     # Year
     dialog.inDataYear.setValue(int(test_case.year))
 
+    print("\n::test_import::9")
     # Import
     # As we want to the return of the self.go, we call the slot directly
     assert dialog.processImport()
 
+    print("\n::test_import::9.1")
     # Check we have a town in edigeo
     results = connection.executeSql('SELECT "geo_commune", "tex2" FROM cadastre.geo_commune;')
 
+    print("\n::test_import::9.2")
     assert len(results) == 1
     row = results[0]
     assert test_case.geo_commune == row[0]
     assert test_case.commune == row[1]
 
+    print("\n::test_import::10")
     # Check we have a town in majic
     if test_case.has_majic:
         results = connection.executeSql('SELECT * FROM cadastre.commune_majic;')
@@ -156,3 +160,5 @@ def test_import(test_case: TestCase, qgis_iface: QgisInterface, fixtures: Path):
         assert test_case.ccocom == row[4]  # ccocom
         assert test_case.commune == row[5]  # libcom
         assert test_case.lot == row[6]  # lot
+
+    print("\n::test_import::11")

@@ -20,7 +20,7 @@ jobs:
     uses: ./.github/workflows/release-package.yml
     with:
       dry_run: true
-      publish: false
+      publish: false 
     secrets:
       osgeo_username: ${{ secrets.OSGEO_USERNAME }}
       osgeo_password: ${{ secrets.OSGEO_PASSWORD }}

@@ -13,14 +13,17 @@ stages:
 # Lint
 # ------------
 lint:
-  image: ${REGISTRY_URL}/factory-ci-runner:qgis-release
+  image: ${REGISTRY_URL}/factory-ci-runner:qgis-${QGIS_FLAVOR}
   tags:
     - factory-plain
   stage: lint
   script:
     - make lint
   allow_failure: true
-
+  parallel:
+    matrix:
+      - QGIS_FLAVOR: ["ltr", "release"]
+ 
 # ------------
 # Tests
 # ------------
@@ -42,7 +45,7 @@ qgis-tests:
         "3.34",
         "3.40",
         "3.44",
-        "nightly-release",
+        "4.0",
       ]
 
 
@@ -52,6 +55,9 @@ qgis-tests:
 # Packages 
 #
 
+.release_rules:
+  if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
+
 
 build:
   image: $REGISTRY_URI/factory-ci-runner:qgis-plugin-ci
@@ -59,19 +65,15 @@ build:
   tags:
     - factory-plain
   rules:
-    - if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
+    - if: !reference [.release_rules, if]
       variables:
         PRERELEASE: ""
-        STATUS: stable
     - if: $RELEASE_BRANCH == "true"
       variables:
         PRERELEASE: "--pre"
-        STATUS: unstable
   script:
-      - echo "Building plugin ${PRODUCT_NAME} STATUS=${STATUS}"
       - yapt-pkg package $PRERELEASE
       - echo "PACKAGE=`ls -1 *.zip`" > build.env
-      - echo "STATUS=$STATUS" >> build.env
       - cat build.env
   artifacts:
     reports:
@@ -79,19 +81,18 @@ build:
     paths:
       - "*.zip"
 
-
 deploy:
   image: $REGISTRY_URI/factory-ci-runner:fabric-ci
   stage: deploy 
   tags:
     - fabric
   rules:
-    - if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
+    - !reference [.release_rules]
     - if: $RELEASE_BRANCH == "true"
   dependencies:
     - build
   script:
-    - upload_plugins ${PRODUCT_NAME} ${PACKAGE} ${STATUS}
+    - upload_plugins ${PRODUCT_NAME} ${PACKAGE}
     - update-snap-qgis-plugins
 
 #
@@ -106,11 +107,8 @@ release:
   tags:
     - factory-plain
   stage: release
-  dependencies:
-    - build
-    - deploy
   rules:
-    - if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
+    - !reference [.release_rules]
   script:
     - create_ticket.py
     - gitlab_release

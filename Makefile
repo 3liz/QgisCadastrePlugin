@@ -16,7 +16,7 @@ ifdef VIRTUAL_ENV
 # Always prefer active environment
 ACTIVE_VENV=--active
 endif
-RUN=uv run $(ACTIVE_VENV)
+UV=uv run $(ACTIVE_VENV)
 endif
 
 
@@ -50,27 +50,30 @@ requirements/%.txt: uv.lock
 LINT_TARGETS=$(PYTHON_MODULE) $(EXTRA_LINT_TARGETS)
 
 lint::
-	@ $(RUN) ruff check --preview --output-format=concise $(LINT_TARGETS)
+	@ $(UV) ruff check --output-format=concise $(LINT_TARGETS)
+
+lint-preview::
+	@ $(UV) ruff check --preview --output-format=concise $(LINT_TARGETS)
 
 lint-fix:
-	@ $(RUN) ruff check --preview --fix $(LINT_TARGETS)
+	@ $(UV) ruff check --fix $(LINT_TARGETS)
 
 format:
-	@ $(RUN) ruff format $(LINT_TARGETS)
+	@ $(UV) ruff format $(LINT_TARGETS)
 
 typecheck:
-	@ $(RUN) mypy $(LINT_TARGETS)
-	@ $(RUN) mypy --python-version 3.10 tests
+	@ $(UV) mypy $(LINT_TARGETS)
+	@ $(UV) mypy --python-version 3.10 tests
 
 scan:
-	@ $(RUN) bandit -r $(PYTHON_MODULE) $(SCAN_OPTS)
+	@ $(UV) bandit -r $(PYTHON_MODULE) $(SCAN_OPTS)
 
 #
 # Tests
 #
 
 test:
-	$(RUN) pytest -v tests/
+	$(UV) pytest -v tests/
 
 
 ifdef REGISTRY_URL
@@ -83,7 +86,7 @@ endif
 ##
 ## Test using docker image
 ##
-QGIS_VERSION ?= 3.40
+QGIS_VERSION ?= 3.44
 QGIS_IMAGE_REPOSITORY ?= ${REGISTRY_PREFIX}qgis-platform
 QGIS_IMAGE_TAG ?= $(QGIS_IMAGE_REPOSITORY):$(QGIS_VERSION)
 
