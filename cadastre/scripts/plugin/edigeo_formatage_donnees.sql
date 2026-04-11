@@ -17,6 +17,7 @@ DELETE FROM ${PREFIXE}geo_tronfluv WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}geo_tronroute WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}geo_symblim WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}geo_croix WHERE lot='${LOT}';
+DELETE FROM ${PREFIXE}geo_boulon WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}geo_borne WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}geo_ptcanv WHERE lot='${LOT}';
 DELETE FROM ${PREFIXE}geo_subdfisc WHERE lot='${LOT}';
@@ -226,6 +227,20 @@ FROM ${PREFIXE}geo_borne s, ${PREFIXE}geo_parcelle p, ${PREFIXE}edigeo_rel r
 WHERE s.annee='${ANNEE}' AND s.annee=p.annee AND s.lot='${LOT}' AND p.lot=s.lot AND r.nom='Rel_BORNE_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
 DROP INDEX ${PREFIXE}geo_borne_annee_idx;
 
+-- geo_boulon
+INSERT INTO ${PREFIXE}geo_boulon( annee, object_rid, ori, creat_date, update_dat, geom, lot)
+SELECT '${ANNEE}', object_rid, ori, to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), geom, '${LOT}'
+FROM ${PREFIXE}boulon_id;
+UPDATE ${PREFIXE}geo_boulon set ori=360-ori WHERE annee='${ANNEE}' AND lot='${LOT}';
+
+-- geo_boulon_parcelle
+CREATE INDEX IF NOT EXISTS geo_boulon_annee_idx ON ${PREFIXE}geo_boulon (annee, object_rid);
+INSERT INTO ${PREFIXE}geo_boulon_parcelle (annee, geo_boulon, geo_parcelle)
+SELECT s.annee, s.geo_boulon, p.geo_parcelle
+FROM ${PREFIXE}geo_boulon s, ${PREFIXE}geo_parcelle p, ${PREFIXE}edigeo_rel r
+WHERE s.annee='${ANNEE}' AND s.annee=p.annee AND s.lot='${LOT}' AND p.lot=s.lot AND r.nom='Rel_BORNE_PARCELLE' AND s.object_rid=r.de AND p.object_rid=r.vers;
+DROP INDEX ${PREFIXE}geo_boulon_annee_idx;
+
 -- geo_croix
 INSERT INTO ${PREFIXE}geo_croix( annee, object_rid, creat_date, update_dat, geom, lot)
 SELECT '${ANNEE}', object_rid,  to_date(to_char(creat_date,'00000000'), 'YYYYMMDD'), to_date(to_char(update_date,'00000000'), 'YYYYMMDD'), geom, '${LOT}'
@@ -328,6 +343,8 @@ ANALYZE ${PREFIXE}geo_sym;
 ANALYZE ${PREFIXE}geo_ptcanv;
 ANALYZE ${PREFIXE}geo_borne;
 ANALYZE ${PREFIXE}geo_borne_parcelle;
+ANALYZE ${PREFIXE}geo_boulon;
+ANALYZE ${PREFIXE}geo_boulon_parcelle;
 ANALYZE ${PREFIXE}geo_croix;
 ANALYZE ${PREFIXE}geo_croix_parcelle;
 ANALYZE ${PREFIXE}geo_symblim;

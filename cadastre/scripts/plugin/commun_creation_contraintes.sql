@@ -41,6 +41,8 @@ ALTER TABLE ${PREFIXE}geo_tronroute ADD CONSTRAINT geo_tronroute_pk PRIMARY KEY 
 ALTER TABLE ${PREFIXE}geo_ptcanv ADD CONSTRAINT geo_ptcanv_pk PRIMARY KEY (geo_ptcanv );
 ALTER TABLE ${PREFIXE}geo_borne ADD CONSTRAINT geo_borne_pk PRIMARY KEY (geo_borne);
 ALTER TABLE ${PREFIXE}geo_borne_parcelle ADD CONSTRAINT geo_borne_parcelle_pk PRIMARY KEY (geo_borne_parcelle );
+ALTER TABLE ${PREFIXE}geo_boulon ADD CONSTRAINT geo_boulon_pk PRIMARY KEY (geo_boulon);
+ALTER TABLE ${PREFIXE}geo_boulon_parcelle ADD CONSTRAINT geo_boulon_parcelle_pk PRIMARY KEY (geo_boulon_parcelle );
 ALTER TABLE ${PREFIXE}geo_croix ADD CONSTRAINT geo_croix_pk PRIMARY KEY (geo_croix );
 ALTER TABLE ${PREFIXE}geo_croix_parcelle ADD CONSTRAINT geo_croix_parcelle_pk PRIMARY KEY (geo_croix_parcelle );
 ALTER TABLE ${PREFIXE}geo_symblim ADD CONSTRAINT geo_symblim_pk PRIMARY KEY (geo_symblim );
@@ -157,6 +159,8 @@ ALTER TABLE ${PREFIXE}parcelle_info ADD CONSTRAINT parcelle_info_pk PRIMARY KEY 
 --~ ALTER TABLE ${PREFIXE}geo_ptcanv ADD CONSTRAINT geo_ptcanv_sym_fk FOREIGN KEY (geo_sym) REFERENCES ${PREFIXE}geo_sym (geo_sym) ON DELETE CASCADE;
 --~ ALTER TABLE ${PREFIXE}geo_borne_parcelle ADD CONSTRAINT geo_borne_parcelle_n_fk FOREIGN KEY (geo_borne) REFERENCES ${PREFIXE}geo_borne (geo_borne) ON DELETE CASCADE;
 --~ ALTER TABLE ${PREFIXE}geo_borne_parcelle ADD CONSTRAINT geo_borne_parcelle_p_fk FOREIGN KEY (geo_parcelle) REFERENCES ${PREFIXE}geo_parcelle (geo_parcelle) ON DELETE CASCADE;
+--~ ALTER TABLE ${PREFIXE}geo_boulon_parcelle ADD CONSTRAINT geo_boulon_parcelle_n_fk FOREIGN KEY (geo_boulon) REFERENCES ${PREFIXE}geo_boulon (geo_boulon) ON DELETE CASCADE;
+--~ ALTER TABLE ${PREFIXE}geo_boulon_parcelle ADD CONSTRAINT geo_boulon_parcelle_p_fk FOREIGN KEY (geo_parcelle) REFERENCES ${PREFIXE}geo_parcelle (geo_parcelle) ON DELETE CASCADE;
 --~ ALTER TABLE ${PREFIXE}geo_croix_parcelle ADD CONSTRAINT geo_croix_parcelle_n_fk FOREIGN KEY (geo_croix) REFERENCES ${PREFIXE}geo_croix (geo_croix) ON DELETE CASCADE;
 --~ ALTER TABLE ${PREFIXE}geo_croix_parcelle ADD CONSTRAINT geo_croix_parcelle_p_fk FOREIGN KEY (geo_parcelle) REFERENCES ${PREFIXE}geo_parcelle (geo_parcelle) ON DELETE CASCADE;
 --~ ALTER TABLE ${PREFIXE}geo_symblim ADD CONSTRAINT geo_symblim_sym_n_fk FOREIGN KEY (geo_sym) REFERENCES ${PREFIXE}geo_sym (geo_sym) ON DELETE CASCADE;
