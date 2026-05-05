@@ -36,7 +36,7 @@ jobs:
       # Note: this action fail if this is not a tag ref
       - name: Create release on Github
         if: ${{ inputs.dry_run == false }}
-        uses: ncipollo/release-action@v1.20.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           bodyFile: release.md
           artifacts: "*.zip"
