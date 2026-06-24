@@ -7,6 +7,12 @@ CREATE TABLE prop (tmp text);
 CREATE TABLE topo (
     ogc_fid serial,
     code_topo character varying,
+    code_pays character varying,
+    code_region character varying,
+    code_dep character varying,
+    code_commune character varying,
+    code_voie character varying,
+    code_type_topo character varying,
     nature_de_voie character varying,
     libelle character varying,
     type_commune_actuel_r_ou_n character varying,
