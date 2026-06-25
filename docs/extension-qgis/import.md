@@ -71,7 +71,7 @@ Le support des fichiers **FANTOIR** a été **abandonné début 2024** au profit
 ### TOPO
 
 Si vous ne possédez pas les données TOPO dans votre jeu de données MAJIC, **nous conseillons de les télécharger** sur le
-[site du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo).
+[drive opendata du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo).
 
 Une fois le fichier TOPO récupéré (par exemple `TOPO_34.csv.gz`) décompressez-le pour placer le CSV décompressé (par exemple `TOPO_34.csv`) au même niveau que les autres fichiers MAJIC. **Attention**: Le fichier `.gz` n'est pas reconnu et peut être supprimé une fois décompressé.
 
