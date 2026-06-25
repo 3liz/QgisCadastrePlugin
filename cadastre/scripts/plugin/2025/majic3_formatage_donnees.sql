@@ -1,6 +1,20 @@
 -- FORMATAGE DONNEES : DEBUT
 BEGIN;
 
+-- Traitement: topo
+UPDATE ${PREFIXE}topo
+  SET code_topo=code_pays || code_region || code_dep || CASE WHEN trim(code_commune)='' THEN '   ' ELSE code_commune END || CASE WHEN trim(code_voie)='' THEN '    ' ELSE code_voie END || code_type_topo
+  WHERE code_topo IS NULL;
+
+UPDATE ${PREFIXE}topo
+  SET code_pays=SUBSTRING(code_topo,0,6),
+      code_region=SUBSTRING(code_topo,6,2),
+      code_dep=SUBSTRING(code_topo,8,2),
+      code_commune=SUBSTRING(code_topo,10,3),
+      code_voie=SUBSTRING(code_topo,13,4),
+      code_type_topo=SUBSTRING(code_topo,17,2)
+  WHERE code_pays IS NULL;
+
 -- Traitement: parcelle
 INSERT INTO ${PREFIXE}parcelle
 (
