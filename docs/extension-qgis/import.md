@@ -6,7 +6,7 @@ Cette boite de dialogue permet de réaliser un **import de données EDIGEO et MA
 
 ## Principe
 
-L'extension permet l'import de données **MAJIC de 2012 à 2025 et des données EDIGEO**. Il est possible
+L'extension permet l'import de données **MAJIC de 2012 à 2026 et des données EDIGEO**. Il est possible
 d'importer des données de manière incrémentale, **étape par étape**, ou bien d'importer **en une seule fois**.
 
 L'extension utilise pour cela la notion de **lot**. Un lot regroupe un **ensemble de données cohérent** pour
@@ -71,7 +71,7 @@ Le support des fichiers **FANTOIR** a été **abandonné début 2024** au profit
 ### TOPO
 
 Si vous ne possédez pas les données TOPO dans votre jeu de données MAJIC, **nous conseillons de les télécharger** sur le
-[site du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo).
+[drive opendata du CRAIG](https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo).
 
 Une fois le fichier TOPO récupéré (par exemple `TOPO_34.csv.gz`) décompressez-le pour placer le CSV décompressé (par exemple `TOPO_34.csv`) au même niveau que les autres fichiers MAJIC. **Attention**: Le fichier `.gz` n'est pas reconnu et peut être supprimé une fois décompressé.
 
@@ -80,9 +80,11 @@ Une fois le fichier TOPO récupéré (par exemple `TOPO_34.csv.gz`) décompresse
 * par défaut, le plugin recherche les fichiers dont le nom contient `TOPO` (voir plus bas **Configurer l'extension**).
 * il faut respecter **l'entête des fichiers CSV** comme produits par le CRAIG. Les fichiers récupérés sur le site national n'ont pas la bonne entête. Il faut remplacer notamment les espaces par des `_`.
   * accepté :
-    `code_topo;nature_de_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition`
+    * `code_pays;code_region;code_dep;code_commune;code_voie;code_type_topo;nature_de_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition`
+    * `code_topo;nature_de_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition` (format TOPO avant 2026, encore supporté pour 2026..)
   * non accepté :
-    `code topo;nature de voie;libelle;type commune actuel (R ou N);type commune FIP (R ou NFIP);RUR actuel;RUR FIP;caractere voie;annulation;date annulation;date creation de article;type voie;mot classant;date derniere transition`
+    * `code topo;nature de voie;libelle;type commune actuel (R ou N);type commune FIP (R ou NFIP);RUR actuel;RUR FIP;caractere voie;annulation;date annulation;date creation de article;type voie;mot classant;date derniere transition`
+    * `code pays;code region;code dep;code commune;code voie;code type topo;nature de voie;libelle;type commune actuel (R ou N);type commune FIP (R ou NFIP);RUR actuel;RUR FIP;caractere voie;annulation;date annulation;date creation de article;type voie;mot classant;date derniere transition`
 
 ![Fichiers MAJIC](../media/fichiers_majic.png)
 
@@ -124,9 +126,9 @@ On configure ensuite les options :
 
 * Choisir la **version du format** en utilisant les flèches haut et bas
 
-    - Seuls les formats de 2012 à 2025 sont pris en compte
+    - Seuls les formats de 2012 à 2026 sont pris en compte
 
-* Choisir le **millésime des données**, par exemple 2025
+* Choisir le **millésime des données**, par exemple 2026
 
 * Choisir le **Lot** : utilisez par exemple le code INSEE de la commune.
 

@@ -21,5 +21,5 @@ IMPORT_MEMORY_ERROR_MESSAGE = "<b>ERREUR : Mémoire</b></br>"
 # Millésime
 # Si changement de la valeur ci-dessous,
 # penser à mettre à jour toutes les occurrences de l'année N-1 dans le fichier "import.md"
-MAXIMUM_YEAR = 2025
+MAXIMUM_YEAR = 2026
 MINIMUM_YEAR = 2012
