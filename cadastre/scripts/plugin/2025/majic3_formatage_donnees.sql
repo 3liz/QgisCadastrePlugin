@@ -806,7 +806,19 @@ SELECT DISTINCT ON (ccodep,ccocom,dnupro,dnulp,dnuper)
   CASE WHEN trim(SUBSTRING(tmp,119,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,119,1)) END AS gtyp5,
   CASE WHEN trim(SUBSTRING(tmp,120,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,120,1)) END AS gtyp6,
   SUBSTRING(tmp,121,30) AS dlign3,
-  SUBSTRING(tmp,151,36) AS dlign4,
+  CASE WHEN SUBSTRING(tmp,151,5) ~ '[0-9]{4}[A-Z]' THEN
+      CASE WHEN SUBSTRING(tmp,151,10) ~ '[0-9]{4}[A-Z]{6}' AND SUBSTRING(tmp,156,4) IN (SELECT natvoi FROM ${PREFIXE}natvoi) THEN
+          SUBSTRING(tmp,151,4) || ' ' || SUBSTRING(tmp,155,1) || ' ' || SUBSTRING(tmp,156,4) || ' ' || SUBSTRING(tmp,160,27)
+      ELSE
+          SUBSTRING(tmp,151,4) || ' ' || SUBSTRING(tmp,155,1) || ' ' || SUBSTRING(tmp,156,31)
+      END
+  ELSE
+      CASE WHEN SUBSTRING(tmp,151,10) ~ '[0-9]{4}.[A-Z]{5}' AND SUBSTRING(tmp,156,4) IN (SELECT natvoi FROM ${PREFIXE}natvoi) THEN
+          SUBSTRING(tmp,151,9) || ' ' || SUBSTRING(tmp,160,27)
+      ELSE
+          SUBSTRING(tmp,151,36)
+      END
+  END AS dlign4,
   CASE WHEN trim(SUBSTRING(tmp,249,1))='' THEN '                              ' ELSE SUBSTRING(tmp,187,30) END AS dlign5,
   SUBSTRING(tmp,217,32) AS dlign6,
   SUBSTRING(tmp,249,3) AS ccopay,

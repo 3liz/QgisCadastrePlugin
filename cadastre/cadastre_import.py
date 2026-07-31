@@ -1306,7 +1306,7 @@ class cadastreImport(QObject):
                         self.qc.updateLog('  - %s' % comment.strip(' \n\r\t'))
 
                     # Do nothing if sql is only comment
-                    if not r.search(sqla) or not len(sqla.split('~')) == 1:
+                    if not r.search(sqla) or sqla.startswith('--~'):
                         continue
 
                     # Get SQL query
