@@ -129,6 +129,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
         # Get CSS
         self.css = None
+        self.fiche_parcelle_css = ''
         self.getCss()
 
         # Set dialog content
@@ -179,10 +180,12 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
         document = QTextDocument()
         title = self.windowTitle().replace("Cadastre+, ID", "").title()
+        html = obj.toHtml()
         document.setHtml(
-            "<h1>{}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
-                title, obj.toHtml()
-            )
+            f"""
+            <h1>{title}</h1>
+            <div width=95%>{html}</div>
+            """
         )
 
         printer = QPrinter()
@@ -327,7 +330,10 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         plugin_dir = str(Path(__file__).resolve().parent.parent)
         with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), encoding='utf8') as f:
             css = f.read()
-        self.css = css
+            self.css = css
+        with open(os.path.join(plugin_dir, 'scripts', 'css', 'fiche_parcelle.css'), encoding='utf8') as f:
+            parcelle_css = f.read()
+            self.fiche_parcelle_css = parcelle_css
 
     def checkMajicContent(self):
         """
@@ -355,7 +361,14 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
         html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.parcelleInfo.setStyleSheet(self.css)
-        self.parcelleInfo.setHtml('%s' % html)
+        self.parcelleInfo.setHtml(
+            f"""
+            <style>
+            {self.fiche_parcelle_css}
+            </style>
+            {html}
+            """
+        )
 
     # @timing
     def setProprietairesContent(self):
@@ -370,7 +383,14 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
             html += CadastreCommon.getItemHtml('indivisions', self.feature, self.connectionParams, self.connector)
         self.proprietairesInfo.setStyleSheet(self.css)
-        self.proprietairesInfo.setText('%s' % html)
+        self.proprietairesInfo.setHtml(
+            f"""
+            <style>
+            {self.fiche_parcelle_css}
+            </style>
+            {html}
+            """
+        )
 
     # @timing
     def setSubdivisionsContent(self):
@@ -384,7 +404,14 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             item = 'subdivisions'
             html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.subdivisionsInfo.setStyleSheet(self.css)
-        self.subdivisionsInfo.setText('%s' % html)
+        self.subdivisionsInfo.setHtml(
+            f"""
+            <style>
+            {self.fiche_parcelle_css}
+            </style>
+            {html}
+            """
+        )
 
     # @timing
     def setLocauxContent(self):
@@ -400,7 +427,14 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             item = 'locaux_detail'
             html += CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.locauxInfo.setStyleSheet(self.css)
-        self.locauxInfo.setText('%s' % html)
+        self.locauxInfo.setHtml(
+            f"""
+            <style>
+            {self.fiche_parcelle_css}
+            </style>
+            {html}
+            """
+        )
 
     def export_as_pdf(self, key):
         """

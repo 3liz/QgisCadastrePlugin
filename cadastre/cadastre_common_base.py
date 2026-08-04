@@ -463,6 +463,8 @@ def getItemHtml(item: str, feature, connectionParams: Dict[str, str],
             if line and len(line) > 0 and line[0]:
                 if item == "indivisions":
                     html += '<br>'
-                html += '%s' % line[0].replace('100p', '100%')
+                html += f"""
+                    {line[0].replace('100p', '100%')}
+                """
 
     return html

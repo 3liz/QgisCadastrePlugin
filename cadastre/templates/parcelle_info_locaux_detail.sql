@@ -100,11 +100,11 @@ pevs AS (
     SELECT pp.pev,
         'Habitation' AS type_pev, 'Habitation' AS sous_type_pev,
         (
-            '<b>Nombre de pièces: </b>' || pp.dnbpdc || '<br/><b>Pièces principales: </b>' || pp.dnbppr ||
-            '<br/><b>Surface des pièces: </b>' || pp.dsupdc || ' m2' || '<br/><b>Salles à manger: </b>' || pp.dnbsam || '<br/><b>Chambres: </b>' || pp.dnbcha ||
-            '<br/><b>Cuisines - 9m2: </b>' || pp.dnbcu8 || '<br/><b>Cuisines > 9m2: </b>' || pp.dnbcu9 ||
-            '<br/><b>Salles d''eau: </b>' || pp.dnbsea || '<br/><b>Pièces annexes: </b>' || pp.dnbann ||
-            '<br/><b>Matériaux des gros murs: </b>' ||
+            '<strong>Nombre de pièces: </strong>' || pp.dnbpdc || '<br/><strong>Pièces principales: </strong>' || pp.dnbppr ||
+            '<br/><strong>Surface des pièces: </strong>' || pp.dsupdc || ' m2' || '<br/><strong>Salles à manger: </strong>' || pp.dnbsam || '<br/><strong>Chambres: </strong>' || pp.dnbcha ||
+            '<br/><strong>Cuisines - 9m2: </strong>' || pp.dnbcu8 || '<br/><strong>Cuisines > 9m2: </strong>' || pp.dnbcu9 ||
+            '<br/><strong>Salles d''eau: </strong>' || pp.dnbsea || '<br/><strong>Pièces annexes: </strong>' || pp.dnbann ||
+            '<br/><strong>Matériaux des gros murs: </strong>' ||
                 CASE
                     WHEN pp.dmatgm IN ('00', '00') THEN 'indéterminé'
                     WHEN pp.dmatgm IN ('10', '01') THEN 'pierre'
@@ -116,7 +116,7 @@ pevs AS (
                     WHEN pp.dmatgm IN ('90', '09') THEN 'autres'
                     ELSE 'inconnu'
                 END ||
-            '<br/><b>Matériaux des toitures: </b>' ||
+            '<br/><strong>Matériaux des toitures: </strong>' ||
                 CASE
                     WHEN pp.dmatto IN ('00', '00') THEN 'indéterminé'
                     WHEN pp.dmatto IN ('10', '01') THEN 'tuiles'
@@ -128,10 +128,10 @@ pevs AS (
 
         ) AS descriptif,
         (
-            '<b>Eau: </b>' || pp.geaulc || '<br/><b>Électricité: </b>' || pp.gelelc ||
-            '<br/><b>Gaz: </b>' || pp.ggazlc || '<br/><b>Chauffage central: </b>' || pp.gchclc ||
-            '<br/><b>Baignoire(s): </b>' || pp.dnbbai || '<br/><b>Douche(s): </b>' || pp.dnbdou ||
-            '<br/><b>Lavabo(s): </b>' || pp.dnblav || '<br/><b>WC: </b>' || pp.dnbwc
+            '<strong>Eau: </strong>' || pp.geaulc || '<br/><strong>Électricité: </strong>' || pp.gelelc ||
+            '<br/><strong>Gaz: </strong>' || pp.ggazlc || '<br/><strong>Chauffage central: </strong>' || pp.gchclc ||
+            '<br/><strong>Baignoire(s): </strong>' || pp.dnbbai || '<br/><strong>Douche(s): </strong>' || pp.dnbdou ||
+            '<br/><strong>Lavabo(s): </strong>' || pp.dnblav || '<br/><strong>WC: </strong>' || pp.dnbwc
         ) AS confort
     FROM pevprincipale pp
     JOIN infos ON infos.pev = pp.pev
@@ -139,9 +139,9 @@ pevs AS (
     SELECT pd.pev,
         'Dépendance' AS type_pev, cconad_lib AS sous_type_pev,
         (
-            '<b>Situation particulière: </b>' || pd.dcspdea || '<br/><b>Surface réelle: </b>' || pd.dsudep || ' m2</b>' ||
-            '<br/><b>Pondération: </b>' || pd.dcimlc || '<br/><b>État d''entretien: </b>' || pd.detent ||
-            '<br/><b>Matériaux des gros murs: </b>' ||
+            '<strong>Situation particulière: </strong>' || pd.dcspdea || '<br/><strong>Surface réelle: </strong>' || pd.dsudep || ' m2</strong>' ||
+            '<br/><strong>Pondération: </strong>' || pd.dcimlc || '<br/><strong>État d''entretien: </strong>' || pd.detent ||
+            '<br/><strong>Matériaux des gros murs: </strong>' ||
                 CASE
                     WHEN pd.dmatgm IN ('00', '00') THEN 'indéterminé'
                     WHEN pd.dmatgm IN ('10', '01') THEN 'pierre'
@@ -153,7 +153,7 @@ pevs AS (
                     WHEN pd.dmatgm IN ('90', '09') THEN 'autres'
                     ELSE 'inconnu'
                 END ||
-            '<br/><b>Matériaux des toitures: </b>' ||
+            '<br/><strong>Matériaux des toitures: </strong>' ||
                 CASE
                     WHEN pd.dmatto IN ('00', '00') THEN 'indéterminé'
                     WHEN pd.dmatto IN ('10', '01') THEN 'tuiles'
@@ -164,9 +164,9 @@ pevs AS (
                 END
         ) AS descriptif,
         (
-            '<b>Eau: </b>' || pd.geaulc || '<br/><b>Électricité: </b>' || pd.gelelc ||
-            '<br/><b>Chauffage central: </b>' || pd.gchclc || '<br/><b>Baignoire(s): </b>' || pd.dnbbai ||
-            '<br/><b>Douche(s): </b>' || pd.dnbdou || '<br/><b>Lavabo(s): </b>' || pd.dnblav || '<br/><b>WC: </b>' || pd.dnbwc
+            '<strong>Eau: </strong>' || pd.geaulc || '<br/><strong>Électricité: </strong>' || pd.gelelc ||
+            '<br/><strong>Chauffage central: </strong>' || pd.gchclc || '<br/><strong>Baignoire(s): </strong>' || pd.dnbbai ||
+            '<br/><strong>Douche(s): </strong>' || pd.dnbdou || '<br/><strong>Lavabo(s): </strong>' || pd.dnblav || '<br/><strong>WC: </strong>' || pd.dnbwc
         ) AS confort
     FROM pevdependances pd
     JOIN infos ON infos.pev = pd.pev
@@ -174,7 +174,7 @@ pevs AS (
     UNION ALL
     SELECT po.pev,
         'Professionnel' AS type, 'Local professionnel' AS sous_type_pev,
-        Coalesce('<b>Surface réelle: </b>' || po.vsurzt || ' m2', '') AS descriptif,
+        Coalesce('<strong>Surface réelle: </strong>' || po.vsurzt || ' m2', '') AS descriptif,
         '' AS confort
     FROM pevprofessionnelle po
     JOIN infos ON infos.pev = po.pev
@@ -245,42 +245,42 @@ SELECT
 
         '<h4>Propriété</h4>' ||
         '<p>' ||
-        '<b>Compte propriétaire: </b>' ||  l10_compte_proprietaire ||
-        '<br/><b>Date de l''acte: </b>' ||  Coalesce(cast(l10_date_acte AS text), '-') ||
+        '<strong>Compte propriétaire: </strong>' ||  l10_compte_proprietaire ||
+        '<br/><strong>Date de l''acte: </strong>' ||  Coalesce(cast(l10_date_acte AS text), '-') ||
         '</p>' ||
 
         '<h4>Caractéristiques</h4>' ||
         '<p>' ||
-        '<b>Type: </b>' ||  l10_type_local ||
-        '<br/><b>Nature: </b>' ||  l10_nature_local ||
-        '<br/><b>Construction: </b>' ||  l10_nature_construction_particuliere ||
-        '<br/><b>Année de construction: </b>' ||  l10_annee_construction ||
-        '<br/><b>Niveaux: </b>' ||  l10_nombre_niveaux ||
+        '<strong>Type: </strong>' ||  l10_type_local ||
+        '<br/><strong>Nature: </strong>' ||  l10_nature_local ||
+        '<br/><strong>Construction: </strong>' ||  l10_nature_construction_particuliere ||
+        '<br/><strong>Année de construction: </strong>' ||  l10_annee_construction ||
+        '<br/><strong>Niveaux: </strong>' ||  l10_nombre_niveaux ||
         '</p>' ||
 
         '<h3>Description foncière</h3>' ||
 
         '<h4>Évaluation</h4>' ||
         '<p>' ||
-        '<b>Numéro de PEV: </b>' ||  pev_dnupev ||
-        '<br/><b>Affectation: </b>' ||  pev_affectation ||
-        '<br/><b>Lettre de série: </b>' ||  pev_lettre_serie ||
-        '<br/><b>Catégorie: </b>' ||  pev_categorie ||
-        '<br/><b>Entretien: </b>' ||  Coalesce(pev_entretien, -1) ||
-        '<br/><b>Valeur locative (en valeur de référence): </b>' ||  Coalesce(pev_valeur_locative_ref, -1) ||
-        '<br/><b>Valeur locative (en valeur de l''année): </b>' ||  Coalesce(pev_valeur_locative_an, -1) ||
-        '<br/><b>Exonération permanente: </b>' ||  Coalesce(pev_nature_exoneration_permanente, '') ||
-        '<br/><b>Numéro du local type: </b>' ||  Coalesce(pev_numero_local_type, '') ||
-        '<br/><b>Situation générale: </b>' ||  Coalesce(pev_coefficient_situation_generale, '') ||
-        '<br/><b>Situation particulière: </b>' ||  Coalesce(pev_coefficient_situation_particuliere, '') ||
+        '<strong>Numéro de PEV: </strong>' ||  pev_dnupev ||
+        '<br/><strong>Affectation: </strong>' ||  pev_affectation ||
+        '<br/><strong>Lettre de série: </strong>' ||  pev_lettre_serie ||
+        '<br/><strong>Catégorie: </strong>' ||  pev_categorie ||
+        '<br/><strong>Entretien: </strong>' ||  Coalesce(pev_entretien, -1) ||
+        '<br/><strong>Valeur locative (en valeur de référence): </strong>' ||  Coalesce(pev_valeur_locative_ref, -1) ||
+        '<br/><strong>Valeur locative (en valeur de l''année): </strong>' ||  Coalesce(pev_valeur_locative_an, -1) ||
+        '<br/><strong>Exonération permanente: </strong>' ||  Coalesce(pev_nature_exoneration_permanente, '') ||
+        '<br/><strong>Numéro du local type: </strong>' ||  Coalesce(pev_numero_local_type, '') ||
+        '<br/><strong>Situation générale: </strong>' ||  Coalesce(pev_coefficient_situation_generale, '') ||
+        '<br/><strong>Situation particulière: </strong>' ||  Coalesce(pev_coefficient_situation_particuliere, '') ||
         '</p>' ||
 
         '<h4>Taxation</h4>' ||
         '<p>' ||
-        '<b>Commune: </b>' ||  Coalesce(co_bipevla, 0) ||
-        '<br/><b>Intercommunalité: </b>' ||  Coalesce(gp_bipevla, 0) ||
-        '<br/><b>Département: </b>' ||  Coalesce(de_bipevla, 0) ||
-        '<br/><b>Région: </b>' ||  Coalesce(re_bipevla, 0) ||
+        '<strong>Commune: </strong>' ||  Coalesce(co_bipevla, 0) ||
+        '<br/><strong>Intercommunalité: </strong>' ||  Coalesce(gp_bipevla, 0) ||
+        '<br/><strong>Département: </strong>' ||  Coalesce(de_bipevla, 0) ||
+        '<br/><strong>Région: </strong>' ||  Coalesce(re_bipevla, 0) ||
         '</p>' ||
 
         '<h3>Parties d''évaluation</h3>' ||

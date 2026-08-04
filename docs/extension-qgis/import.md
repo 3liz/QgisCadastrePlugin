@@ -61,7 +61,7 @@ pas toujours le cas, comme des voies non référencées dans `voie` mais référ
 
 ### Edigeo
 
-Vous pouvez utiliser le téléchargeur Edigeo dans la boîte à outil **Traitements** de QGIS, dans l'extension
+Vous pouvez utiliser le **téléchargeur Edigeo** dans la boîte à outil **Traitements** de QGIS, dans l'extension
 **Cadastre**.
 
 ### FANTOIR
@@ -78,7 +78,7 @@ Une fois le fichier TOPO récupéré (par exemple `TOPO_34.csv.gz`) décompresse
 **Important** :
 
 * par défaut, le plugin recherche les fichiers dont le nom contient `TOPO` (voir plus bas **Configurer l'extension**).
-* il faut respecter **l'entête des fichiers CSV** comme produits par le CRAIG. Les fichiers récupérés sur le site national n'ont pas la bonne entête. Il faut remplacer notamment les espaces par des `_`.
+* il faut respecter **l'entête des fichiers CSV** comme produits par le CRAIG. **Les fichiers récupérés sur le site national n'ont pas la bonne entête**. Il faut remplacer notamment les espaces par des `_`.
   * accepté :
     * `code_pays;code_region;code_dep;code_commune;code_voie;code_type_topo;nature_de_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition`
     * `code_topo;nature_de_voie;libelle;type_commune_actuel_r_ou_n;type_commune_fip_r_ou_nfip;rur_actuel;rur_fip;caractere_voie;annulation;date_annulation;date_creation_de_article;type_voie;mot_classant;date_derniere_transition` (format TOPO avant 2026, encore supporté pour 2026..)

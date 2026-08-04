@@ -1,4 +1,8 @@
 QTextEdit {
-    font: 11pt Helvetica;
     text-align: left;
+    font-size: 11pt;
+    font-family: Lucida Grande, Segoe UI, Arial, sans-serif;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
 }
