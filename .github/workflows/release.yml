@@ -22,7 +22,6 @@ jobs:
       dry_run: true
       publish: false
     secrets:
-      transifex_token: ${{ secrets.TRANSIFEX_TOKEN }}
       osgeo_username: ${{ secrets.OSGEO_USERNAME }}
       osgeo_password: ${{ secrets.OSGEO_PASSWORD }}
 
@@ -33,7 +32,6 @@ jobs:
       dry_run: false
       publish: ${{ inputs.publish }}
     secrets:
-      transifex_token: ${{ secrets.TRANSIFEX_TOKEN }}
       osgeo_username: ${{ secrets.OSGEO_USERNAME }}
       osgeo_password: ${{ secrets.OSGEO_PASSWORD }}
       release_token: ${{ secrets.BOT_HUB_TOKEN }}

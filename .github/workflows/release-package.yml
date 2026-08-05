@@ -10,8 +10,6 @@ on:
         required: true
         type: boolean
     secrets:
-      transifex_token:
-        required: true
       osgeo_username:
         required: true
       osgeo_password:
@@ -35,18 +33,6 @@ jobs:
           python-version: "3.12"
           architecture: x64
           cache: "pip"
-          cache-dependency-path: "requirements/transifex.txt"
-
-      - name: Install Qt tranlation tools
-        run: |
-            sudo apt-get -qq update
-            sudo apt-get -qq install qttools5-dev-tools pyqt5-dev-tools
-            pip install --quiet -r requirements/transifex.txt
-
-      - name: Pull transifex translations
-        run: >
-          qt-transifex -vv pull --compile
-          --transifex-token "${{ secrets.transifex_token }}"
 
       - name: Fetch current changelog
         run: |
