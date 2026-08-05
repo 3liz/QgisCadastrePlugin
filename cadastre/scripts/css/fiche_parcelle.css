@@ -1,0 +1,43 @@
+
+h1, h2, h3 {
+    color: #43718c;
+}
+h1, h2 {
+    line-height: 1.5;
+}
+h4 {
+    color: #505050;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.7em;
+}
+tr th, table tr td {
+    text-align: left;
+    padding: 5px;
+}
+table tr th {
+    font-weight: bold;
+    color: #43718c;
+}
+
+table.table-striped {
+  border: 1px solid #BBB;
+}
+table.table-striped tr td {
+    border: 1px solid #BBB;
+}
+table.table-striped tr th {
+    border: 1px solid #BBB;
+}
+table tr:nth-child(even){
+    background: #f0f0f0;
+}
+table tr:nth-child(odd) {
+    background: #FFF;
+}
+
+img {
+    max-width: 100%;
+}
