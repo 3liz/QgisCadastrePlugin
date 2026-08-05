@@ -29,7 +29,7 @@ jobs:
   release:
     if: ${{ github.repository_owner == '3liz' && contains(github.ref, 'refs/tags/') && inputs.dry_run == false }}
     uses: ./.github/workflows/release-package.yml
-        with:
+    with:
       dry_run: false
       publish: ${{ inputs.publish }}
     secrets:
@@ -37,4 +37,3 @@ jobs:
       osgeo_username: ${{ secrets.OSGEO_USERNAME }}
       osgeo_password: ${{ secrets.OSGEO_PASSWORD }}
       release_token: ${{ secrets.BOT_HUB_TOKEN }}
-

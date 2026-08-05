@@ -1,4 +1,4 @@
-name: Release-Package 🎳
+name: Release-Package
 
 on:
   workflow_call:
@@ -10,7 +10,7 @@ on:
         required: true
         type: boolean
     secrets:
-      transifex_token: 
+      transifex_token:
         required: true
       osgeo_username:
         required: true
@@ -35,7 +35,7 @@ jobs:
           python-version: "3.12"
           architecture: x64
           cache: "pip"
-          cache-dependency-path: "requirements/transifex.txt"      
+          cache-dependency-path: "requirements/transifex.txt"
 
       - name: Install Qt tranlation tools
         run: |
@@ -70,4 +70,3 @@ jobs:
           bodyFile: release.md
           artifacts: "*.zip,plugins.xml"
           token: ${{ secrets.release_token }}
-
