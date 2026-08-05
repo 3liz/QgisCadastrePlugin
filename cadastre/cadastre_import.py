@@ -27,7 +27,9 @@ import re
 import shutil
 import sqlite3 as sqlite
 import sys
+import tarfile
 import tempfile
+import zipfile
 
 from datetime import datetime
 from pathlib import Path
@@ -1031,7 +1033,7 @@ class cadastreImport(QObject):
             try:
                 # Avoid hang from shutil.copytree() with dirs_exist_ok=True
                 shutil.copytree(source, target, dirs_exist_ok=True)
-                os.chmod(target, 0o666)
+                os.chmod(target, 0o760)
             except OSError as e:
                 msg = "<b>Erreur lors de la copie des scripts d'import: %s</b>" % e
                 QMessageBox.information(self.dialog, "Cadastre", msg)
@@ -1082,6 +1084,52 @@ class cadastreImport(QObject):
 
         return file_list
 
+    def safe_zip_extract(self, zip_path, target_dir):
+        abs_target = os.path.abspath(target_dir)
+
+        with zipfile.ZipFile(zip_path, 'r') as zf:
+            for member in zf.namelist():
+                # Construire le chemin complet de destination
+                member_path = os.path.abspath(os.path.join(abs_target, member))
+
+                # Vérifier que le fichier reste bien dans le dossier cible
+                if not member_path.startswith(abs_target + os.sep) and member_path != abs_target:
+                    raise SecurityError(f"Chemin suspect détecté : {member}")
+
+                # Créer les sous-dossiers si besoin et extraire
+                if member.endswith('/'):
+                    os.makedirs(member_path, exist_ok=True)
+                else:
+                    os.makedirs(os.path.dirname(member_path), exist_ok=True)
+                    with zf.open(member) as source, open(member_path, 'wb') as target:
+                        target.write(source.read())
+
+    def safe_extract_tar(
+        self,
+        tf: tarfile.TarFile,
+        target_dir: str,
+        arguments: dict | None = None
+    ) -> None:
+        """Extrait de manière sécurisée une archive TAR ouverte dans un répertoire cible en validant chaque chemin."""
+        abs_target: str = os.path.abspath(target_dir)
+        extract_kwargs = arguments.copy() if arguments else {}
+
+        if "filter" in extract_kwargs and not hasattr(tarfile, "data_filter"):
+            extract_kwargs.pop("filter")
+
+        for member in tf.getmembers():
+            member_path: str = os.path.abspath(os.path.join(abs_target, member.name))
+
+            if not member_path.startswith(abs_target + os.sep) and member_path != abs_target:
+                continue
+
+            if member.issym() or member.islnk():
+                link_path: str = os.path.abspath(os.path.join(abs_target, member.linkname))
+                if not link_path.startswith(abs_target + os.sep) and link_path != abs_target:
+                    continue
+
+            tf.extract(member, path=abs_target, **extract_kwargs)
+
     def unzipFolderContent(self, path):
         """
         Scan content of specified path
@@ -1095,23 +1143,18 @@ class cadastreImport(QObject):
             zipFileList = self.list_files_in_directory(path, ['zip'])
 
             # unzip all files
-            import tarfile
-            import zipfile
             try:
                 # unzip all zip in source folder
                 for z in zipFileList:
                     # Extract file from edigeoDir into edigeoPlainDir
-                    with zipfile.ZipFile(z) as azip:
-                        azip.extractall(self.edigeoPlainDir)
+                    self.safe_zip_extract(z, self.edigeoPlainDir)
 
                 # unzip all new zip in edigeoPlainDir
                 inner_zips_pattern = os.path.join(self.edigeoPlainDir, "*.zip")
                 i = 0
                 for filename in glob.glob(inner_zips_pattern):
                     inner_folder = filename[:-4] + '_%s' % i
-
-                    with zipfile.ZipFile(filename) as myzip:
-                        myzip.extractall(inner_folder)
+                    self.safe_extract_zip(filename, inner_folder)
                     try:
                         os.remove(filename)
                     except OSError:
@@ -1150,9 +1193,10 @@ class cadastreImport(QObject):
                                 QgsMessageLog.logMessage(msg, 'cadastre', Qgis.MessageLevel.Warning)
                                 arguments.pop('filter')
 
-                            t.extractall(
+                            self.safe_extract_tar(
+                                t,
                                 os.path.join(self.edigeoPlainDir, 'tar_%s' % i),
-                                **arguments,
+                                arguments,
                             )
                         except tarfile.ReadError:
                             # Issue GitHub #339
@@ -1170,7 +1214,11 @@ class cadastreImport(QObject):
                 for z in tarFileListB:
                     with tarfile.open(z) as t:
                         try:
-                            t.extractall(os.path.join(self.edigeoPlainDir, f'tar_{i}'))
+                            self.safe_extract_tar(
+                                t,
+                                os.path.join(self.edigeoPlainDir, f'tar_{i}'),
+                                arguments,
+                            )
                         except tarfile.ReadError:
                             # Issue GitHub #339
                             self.go = False
