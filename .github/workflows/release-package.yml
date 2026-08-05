@@ -1,0 +1,73 @@
+name: Release-Package 🎳
+
+on:
+  workflow_call:
+    inputs:
+      dry_run:
+        required: true
+        type: boolean
+      publish:
+        required: true
+        type: boolean
+    secrets:
+      transifex_token: 
+        required: true
+      osgeo_username:
+        required: true
+      osgeo_password:
+        required: true
+      release_token:
+        required: false
+
+jobs:
+  release-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Fetch yapt
+        run: |
+          curl ${{ vars.YAPT_REPOSITORY_URL }} | tar -xzf -
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          architecture: x64
+          cache: "pip"
+          cache-dependency-path: "requirements/transifex.txt"      
+
+      - name: Install Qt tranlation tools
+        run: |
+            sudo apt-get -qq update
+            sudo apt-get -qq install qttools5-dev-tools pyqt5-dev-tools
+            pip install --quiet -r requirements/transifex.txt
+
+      - name: Pull transifex translations
+        run: >
+          qt-transifex -vv pull --compile
+          --transifex-token "${{ secrets.transifex_token }}"
+
+      - name: Fetch current changelog
+        run: |
+          ./yapt-pkg changelog >> release.md
+          cat release.md
+
+      - name: Package and publish
+        env:
+            DRY_RUN_OPT: ${{ inputs.dry_run == true && '--dry-run' || '' }}
+            PUBLISH_OPT: ${{ inputs.publish == true && '--publish' || '' }}
+        run: >
+          ./yapt-pkg -v package ${{ env.PUBLISH_OPT }} ${{ env.DRY_RUN_OPT }}
+          --osgeo-username "${{ secrets.osgeo_username }}"
+          --osgeo-password "${{ secrets.osgeo_password }}"
+          --xml ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/
+
+      - name: Create release on GitHub
+        if: ${{ inputs.dry_run == false }}
+        uses: ncipollo/release-action@v1.20.0
+        with:
+          bodyFile: release.md
+          artifacts: "*.zip,plugins.xml"
+          token: ${{ secrets.release_token }}
+

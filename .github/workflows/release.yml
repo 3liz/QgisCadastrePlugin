@@ -3,43 +3,38 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      dry-run:
+      dry_run:
         description: Execute dry run
+        required: true
+        type: boolean
+        default: false
+      publish:
+        description: Publish to qgis.org
         required: true
         type: boolean
         default: false
 
 jobs:
   release-dry-run:
-    if: github.repository_owner == '3liz'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
+    if: github.repository_owner == '3liz' && inputs.dry_run == true
+    uses: ./.github/workflows/release-package.yml
+    with:
+      dry_run: true
+      publish: false
+    secrets:
+      transifex_token: ${{ secrets.TRANSIFEX_TOKEN }}
+      osgeo_username: ${{ secrets.OSGEO_USERNAME }}
+      osgeo_password: ${{ secrets.OSGEO_PASSWORD }}
 
-      - name: Fetch yapt
-        run: |
-          curl ${{ vars.YAPT_REPOSITORY_URL }} | tar -xzf -        
-      
-      - name: Fetch current changelog
-        run: |
-          ./yapt-pkg  changelog >> release.md
-          cat release.md
-
-      - name: Package and deploy the zip
-        env:
-            DRY_RUN_OPT: ${{ inputs.dry_run == true && '--dry-run' || '' }}
-        run: >
-          ./yapt-pkg -v package --publish ${{ env.DRY_RUN_OPT }}
-          --osgeo-username "${{ secrets.OSGEO_USERNAME }}"
-          --osgeo-password "${{ secrets.OSGEO_PASSWORD }}"
-
-      # Note: this action fail if this is not a tag ref
-      - name: Create release on Github
-        if: ${{ inputs.dry_run == false }}
-        uses: ncipollo/release-action@v1.20.0
+  release:
+    if: ${{ github.repository_owner == '3liz' && contains(github.ref, 'refs/tags/') && inputs.dry_run == false }}
+    uses: ./.github/workflows/release-package.yml
         with:
-          bodyFile: release.md
-          artifacts: "*.zip"
-          token: ${{ secrets.BOT_HUB_TOKEN }}
-
+      dry_run: false
+      publish: ${{ inputs.publish }}
+    secrets:
+      transifex_token: ${{ secrets.TRANSIFEX_TOKEN }}
+      osgeo_username: ${{ secrets.OSGEO_USERNAME }}
+      osgeo_password: ${{ secrets.OSGEO_PASSWORD }}
+      release_token: ${{ secrets.BOT_HUB_TOKEN }}
 
