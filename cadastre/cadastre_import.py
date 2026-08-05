@@ -1031,7 +1031,7 @@ class cadastreImport(QObject):
             try:
                 # Avoid hang from shutil.copytree() with dirs_exist_ok=True
                 shutil.copytree(source, target, dirs_exist_ok=True)
-                os.chmod(target, 0o777)
+                os.chmod(target, 0o666)
             except OSError as e:
                 msg = "<b>Erreur lors de la copie des scripts d'import: %s</b>" % e
                 QMessageBox.information(self.dialog, "Cadastre", msg)
