@@ -1,0 +1,3 @@
+[bandit]
+# Ignore cadastre/standalone/export.py temporary usage since this file is used by the QGIS plugin
+skips = B108

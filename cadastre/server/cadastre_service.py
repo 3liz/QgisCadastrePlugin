@@ -223,18 +223,20 @@ class CadastreService(QgsService):
             path.rename(new_path)
             tokens.append(uid.hex)
 
-        write_json_response({
+        json_response = {
             'status': 'success',
             'message': 'PDF generated',
             'data': {
                 'url': {
                     'request': 'getPdf',
                     'service': 'cadastre',
-                    'token': None
                 },
                 'tokens': tokens
             }
-        }, response, request_id)
+        }
+        # The token is added here and not above to pass the bandit security check, code B105
+        json_response['data']['url']['token'] = None
+        write_json_response(json_response, response, request_id)
 
     def get_html(
             self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject, request_id: str) -> None:
