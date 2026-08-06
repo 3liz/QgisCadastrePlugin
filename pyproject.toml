@@ -3,7 +3,7 @@ name = "Cadastre-plugin"
 authors = [
     { name = "3liz", email = "info@3liz.com" }
 ]
-version = "2.3.0"
+version = "2.3.1"
 requires-python = ">=3.9"
 license = "GPL-2.0-only"
 license-files = ["LICENSE"]

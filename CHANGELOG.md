@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## 2.3.1 - 2026-08-06
+
+* Import
+  * EDIGEO: Utilisation de `GdalUtils.runGdal` à la place
+    de la librairie obsolète Python `ogr2ogr` qui était livrée avec le plugin.
+* Sécurité
+  * Ajout d'un fichier de configuration `.bandit` pour désactiver certaines règles de contrôle
+    (ignore `B108` & `B608`)
+  * Correction d'un faux positif sur la partie serveur du plugin (code `B105`)
+  * Remplacement du module `random` par le module `uuid` pour nommer la mise en page exportée
+  * Suppression de l'utilisation du module `subprocess` pour différentes fonctions,
+    notamment pour l'import des données via `ogr2ogr` (code `B602`)
+  * Autres corrections mineures
+
 ## 2.3.0 - 2026-08-06
 
 * Import
@@ -21,6 +35,11 @@
 * Intégration continue
   * Modernisation des processus automatique Github
   * Tests lancés sur plusieurs versions de QGIS (préparation du support de la version 4)
+
+Un grand merci aux contributeurs
+* Landry BREUIL @landryb
+* David MARTEAU @dmarteau
+* Maël REBOUX @MaelREBOUX
 
 ## 2.2.5 - 2025-11-17
 
