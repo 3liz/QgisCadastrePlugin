@@ -16,14 +16,13 @@ the Free Software Foundation; either version 2 of the License, or
 
 """
 import os
-import random
 import re
-import string
 import tempfile
 
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Callable, Generator, List
+from uuid import uuid4
 
 from qgis.core import (
     Qgis,
@@ -422,14 +421,6 @@ class CadastreExport:
             print("%s" % msg)
             return msg
 
-    @staticmethod
-    def random_word(length: int) -> str:
-        """
-        Return a random string of given length
-        """
-        letters = string.ascii_lowercase
-        return ''.join(random.choice(letters) for i in range(length))
-
     def createComposition(self):
         """
         Create a print Layout
@@ -438,7 +429,8 @@ class CadastreExport:
         # We need to set a name to the layout, otherwise, error when exporting
         # more than one time:
         # RuntimeError: wrapped C/C++ object of type QgsPrintLayout has been deleted
-        c.setName(self.random_word(20))
+        uid = uuid4()
+        c.setName(f"cadastre_export_{uid.hex}")
         c.initializeDefaults()
         c.setUnits(QgsUnitTypes.LayoutUnit.LayoutMillimeters)
 
