@@ -1004,6 +1004,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#231-2026-08-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 - 2026-08-06
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#230-2026-08-06" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1905,6 +1916,20 @@
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<h2 id="231-2026-08-06">2.3.1 - 2026-08-06<a class="headerlink" href="#231-2026-08-06" title="Permanent link">#</a></h2>
+<ul>
+<li>Import</li>
+<li>EDIGEO: Utilisation de <code>GdalUtils.runGdal</code> à la place
+    de la librairie obsolète Python <code>ogr2ogr</code> qui était livrée avec le plugin.</li>
+<li>Sécurité</li>
+<li>Ajout d'un fichier de configuration <code>.bandit</code> pour désactiver certaines règles de contrôle
+    (ignore <code>B108</code> &amp; <code>B608</code>)</li>
+<li>Correction d'un faux positif sur la partie serveur du plugin (code <code>B105</code>)</li>
+<li>Remplacement du module <code>random</code> par le module <code>uuid</code> pour nommer la mise en page exportée</li>
+<li>Suppression de l'utilisation du module <code>subprocess</code> pour différentes fonctions,
+    notamment pour l'import des données via <code>ogr2ogr</code> (code <code>B602</code>)</li>
+<li>Autres corrections mineures</li>
+</ul>
 <h2 id="230-2026-08-06">2.3.0 - 2026-08-06<a class="headerlink" href="#230-2026-08-06" title="Permanent link">#</a></h2>
 <ul>
 <li>Import</li>
@@ -1925,6 +1950,10 @@
 <li>Modernisation des processus automatique Github</li>
 <li>Tests lancés sur plusieurs versions de QGIS (préparation du support de la version 4)</li>
 </ul>
+<p>Un grand merci aux contributeurs
+* Landry BREUIL @landryb
+* David MARTEAU @dmarteau
+* Maël REBOUX @MaelREBOUX</p>
 <h2 id="225-2025-11-17">2.2.5 - 2025-11-17<a class="headerlink" href="#225-2025-11-17" title="Permanent link">#</a></h2>
 <ul>
 <li>Correction de la requête pour locaux - détails</li>
@@ -2579,7 +2608,7 @@
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="6 août 2026 08:28:29 UTC">6 août 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="6 août 2026 13:59:58 UTC">6 août 2026</span>
   </span>
 
     

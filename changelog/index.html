@@ -998,6 +998,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#231-2026-08-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 - 2026-08-06
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#230-2026-08-06" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1952,6 +1963,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#231-2026-08-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 - 2026-08-06
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#230-2026-08-06" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2860,6 +2882,20 @@ On your local, make a symlink with ln -s
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<h2 id="231-2026-08-06">2.3.1 - 2026-08-06<a class="headerlink" href="#231-2026-08-06" title="Permanent link">#</a></h2>
+<ul>
+<li>Import</li>
+<li>EDIGEO: Utilisation de <code>GdalUtils.runGdal</code> à la place
+    de la librairie obsolète Python <code>ogr2ogr</code> qui était livrée avec le plugin.</li>
+<li>Sécurité</li>
+<li>Ajout d'un fichier de configuration <code>.bandit</code> pour désactiver certaines règles de contrôle
+    (ignore <code>B108</code> &amp; <code>B608</code>)</li>
+<li>Correction d'un faux positif sur la partie serveur du plugin (code <code>B105</code>)</li>
+<li>Remplacement du module <code>random</code> par le module <code>uuid</code> pour nommer la mise en page exportée</li>
+<li>Suppression de l'utilisation du module <code>subprocess</code> pour différentes fonctions,
+    notamment pour l'import des données via <code>ogr2ogr</code> (code <code>B602</code>)</li>
+<li>Autres corrections mineures</li>
+</ul>
 <h2 id="230-2026-08-06">2.3.0 - 2026-08-06<a class="headerlink" href="#230-2026-08-06" title="Permanent link">#</a></h2>
 <ul>
 <li>Import</li>
@@ -2880,6 +2916,10 @@ On your local, make a symlink with ln -s
 <li>Modernisation des processus automatique Github</li>
 <li>Tests lancés sur plusieurs versions de QGIS (préparation du support de la version 4)</li>
 </ul>
+<p>Un grand merci aux contributeurs
+* Landry BREUIL @landryb
+* David MARTEAU @dmarteau
+* Maël REBOUX @MaelREBOUX</p>
 <h2 id="225-2025-11-17">2.2.5 - 2025-11-17<a class="headerlink" href="#225-2025-11-17" title="Permanent link">#</a></h2>
 <ul>
 <li>Correction de la requête pour locaux - détails</li>
