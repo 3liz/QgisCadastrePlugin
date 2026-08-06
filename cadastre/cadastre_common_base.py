@@ -17,7 +17,6 @@ the Free Software Foundation; either version 2 of the License, or
 """
 import os
 import re
-import sys
 
 from pathlib import Path
 from typing import Any, Dict, List, Union
@@ -34,7 +33,8 @@ from qgis.core import (
     QgsMessageLog,
     QgsProject,
 )
-from qgis.PyQt.QtCore import QObject
+from qgis.PyQt.QtCore import QObject, QUrl
+from qgis.PyQt.QtGui import QDesktopServices
 
 
 def hasSpatialiteSupport() -> bool:
@@ -56,12 +56,8 @@ def openFile(filename: str) -> None:
     """
     Opens a file with default system app
     """
-    import subprocess
-    if sys.platform == "win32":
-        os.startfile(filename)
-    else:
-        opener = "open" if sys.platform == "darwin" else "xdg-open"
-        subprocess.call([opener, filename])
+    p = Path(filename).expanduser().resolve()
+    QDesktopServices.openUrl(QUrl.fromLocalFile(str(p)))
 
 
 def getLayerFromLegendByTableProps(

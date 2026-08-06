@@ -151,7 +151,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
                 20
             )
         except:
-            pass
+            print("Error while resizing the dialog items")
 
     def setObj(self):
         """
@@ -291,7 +291,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         try:
             self.copyPageQc.setEnabled(self.tabWidget.currentIndex() == 1)
         except:
-            pass
+            print("Error while updating the context menu")
 
     def builderContextMenu(self, obj, actions):
         contextMnu = QMenu()

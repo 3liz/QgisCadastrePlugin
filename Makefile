@@ -79,7 +79,7 @@ ifdef REGISTRY_URL
 REGISTRY_PREFIX=$(REGISTRY_URL)/
 else
 REGISTRY_PREFIX=3liz/
-endif 
+endif
 
 
 ##
@@ -105,4 +105,3 @@ docker-test:
 	docker compose --profile=qgis down -v;
 
 include database.mk
-
