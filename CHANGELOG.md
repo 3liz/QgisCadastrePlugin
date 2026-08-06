@@ -2,6 +2,26 @@
 
 ## Unreleased
 
+## 2.3.0 - 2026-08-06
+
+* Import
+  * Support du format MAJIC 2026.
+  * Support du format TOPO 2026 (pour lequel le champ `code_topo`
+    a été séparé en 6 champs. Adaptation des scripts pour que le format 2025 soit encore utilisable.
+  * Amélioration de l'import Spatialite (gestion des indexes)
+  * Ajout d'un espace si nécessaire pour `dlign4`
+  * SQL: réécriture d'un `CASE WHEN` pour le rendre plus lisible
+* Fiche parcellaire
+  * Amélioration du rendu (ajout d'une feuille de style CSS pour la mise en forme)
+* Sécurité : respect des nouvelles règles de plugin de QGIS (https://plugins.qgis.org/docs/security-scanning)
+  * Extraction des Zip et Tar de manière plus sécurisée
+  * Droits moins permissifs lors de la copie des fichiers SQL dans le répertoire temporaire
+* Documentation
+  * Correction du lien vers l'OpenData du CRAIG pour le téléchargement des fichiers TOPO
+* Intégration continue
+  * Modernisation des processus automatique Github
+  * Tests lancés sur plusieurs versions de QGIS (préparation du support de la version 4)
+
 ## 2.2.5 - 2025-11-17
 
 * Correction de la requête pour locaux - détails

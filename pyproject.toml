@@ -3,7 +3,7 @@ name = "Cadastre-plugin"
 authors = [
     { name = "3liz", email = "info@3liz.com" }
 ]
-version = "2.2.6"
+version = "2.3.0"
 requires-python = ">=3.9"
 license = "GPL-2.0-only"
 license-files = ["LICENSE"]
@@ -71,7 +71,7 @@ ignore = [
     "COM812", # Conflict with format
     "SIM108", # Use ternary operator
     "RUF067", # module should only contain docstrings and re-exports
-    # XXX Fix 
+    # XXX Fix
     "E501", # Line too long
 ]
 
