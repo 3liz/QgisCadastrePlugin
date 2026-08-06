@@ -1641,7 +1641,7 @@ class cadastreImport(QObject):
                     '-nln', 'topo',
                 ]
             # -c client_encoding=latin1
-            self.qc.updateLog(' '.join(cmdArgs))
+            # self.qc.updateLog(' '.join(cmdArgs))
 
         if self.dialog.dbType == 'spatialite':
             if not settings.contains("sqlitepath"):  # non-existent entry?
