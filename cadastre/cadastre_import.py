@@ -37,7 +37,14 @@ from string import Template
 
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
-from qgis.core import Qgis, QgsApplication, QgsAuthMethodConfig, QgsMessageLog
+from qgis.core import (
+    Qgis,
+    QgsApplication,
+    QgsAuthMethodConfig,
+    QgsMessageLog,
+    QgsProcessingException,
+    QgsProcessingFeedback,
+)
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
@@ -55,8 +62,7 @@ from cadastre.dialogs.dialog_common import CadastreCommon
 
 from .logger import Logger
 
-# Import ogr2ogr.py from the script folder
-from .scripts.pyogr.ogr2ogr import main as ogr2ogr
+from processing.algs.gdal.GdalUtils import GdalUtils
 
 
 class cadastreImport(QObject):
@@ -1540,7 +1546,6 @@ class cadastreImport(QObject):
         Import file into the database.
 
         It can either be an EDIGEO THF file or a TOPO file.
-        source : db_manager/dlg_import_vector.py
         """
         if not self.go:
             return None
@@ -1590,7 +1595,7 @@ class cadastreImport(QObject):
 
             # Build PG acess string for ogr2ogr command
             if service:
-                pg_access = 'PG:service={} active_schema={}'.format(
+                pg_access = '"PG:service={} active_schema={}"'.format(
                     service,
                     self.dialog.schema
                 )
@@ -1599,7 +1604,7 @@ class cadastreImport(QObject):
                 if not host:
                     host = "localhost"
 
-                pg_access = 'PG:host={} port={} dbname={} active_schema={} user={} password={}'.format(
+                pg_access = '"PG:host={} port={} dbname={} active_schema={} user={} password={}"'.format(
                     host,
                     port,
                     database,
@@ -1608,6 +1613,7 @@ class cadastreImport(QObject):
                     password
                 )
             cmdArgs = [
+                'ogr2ogr',
                 '',
             ]
             if file_type == 'thf':
@@ -1635,6 +1641,7 @@ class cadastreImport(QObject):
                     '-nln', 'topo',
                 ]
             # -c client_encoding=latin1
+            self.qc.updateLog(' '.join(cmdArgs))
 
         if self.dialog.dbType == 'spatialite':
             if not settings.contains("sqlitepath"):  # non-existent entry?
@@ -1644,6 +1651,7 @@ class cadastreImport(QObject):
             database = settings.value("sqlitepath")
 
             cmdArgs = [
+                'ogr2ogr',
                 '',
             ]
             if file_type == 'thf':
@@ -1673,26 +1681,32 @@ class cadastreImport(QObject):
                 ]
 
         # self.qc.updateLog( ' '.join(cmdArgs))
-        # Run only if ogr2ogr found
-        if self.go:
-            # Workaround to get ogr2ogr error messages via stdout
-            # as ogr2ogr.py does not return exceptions nor error messages
-            # but only prints the error before returning False
-            stdout = sys.stdout
-            try:
-                sys.stdout = file = io.StringIO()
-                self.go = ogr2ogr(cmdArgs)
-                printedString = file.getvalue()
-            finally:
-                sys.stdout = stdout
+        if not self.go:
+            return None
 
-            if not self.go:
-                self.qc.updateLog(
-                    "<b>Erreur - L'import des données via OGR2OGR a échoué:</b>\n\n{}\n\n{}".format(
-                        printedString,
-                        cmdArgs
-                    )
+        # Use GdalUtils to run ogr2ogr command
+        try:
+            loglines = GdalUtils.runGdal(cmdArgs, None)
+        except QgsProcessingException as e:
+            self.go = False
+            error_message = f"Erreur lors de l'exécution d'ogr2ogr : {e}"
+            self.qc.updateLog(loglines.join('\n'))
+            self.qc.updateLog(error_message)
+
+        for line in loglines:
+            if "ERROR" in line or "error" in line:
+                self.go = False
+                error_message = f"Erreur lors de l'exécution d'ogr2ogr : {line}"
+                self.qc.updateLog(error_message)
+                break
+
+        if not self.go:
+            self.qc.updateLog(
+                "<b>Erreur - L'import des données via OGR2OGR a échoué:</b>\n\n{}\n\n{}".format(
+                    error_message,
+                    cmdArgs
                 )
+            )
 
         return None
 
