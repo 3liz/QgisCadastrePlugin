@@ -1,3 +1,4 @@
 [bandit]
-# Ignore cadastre/standalone/export.py temporary usage since this file is used by the QGIS plugin
-skips = B108
+# Ignore B108 The use of /tmp/ folder is used only in a standalone script not used in QGIS
+# Ignore B608 (SQL injection) . We will change drastically the way the plugin queries database for plugin compatible with QGIS >= 4.2
+skips = B108,B608
