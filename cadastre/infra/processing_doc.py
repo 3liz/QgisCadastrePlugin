@@ -85,7 +85,7 @@ def generate_processing_doc():  # NOQA C901
             else:
                 info = ''
 
-            if Qgis.QGIS_VERSION_INT >= 31500 and not info:
+            if not info:
                 info = param.help()
 
             dict_type = {
@@ -116,19 +116,12 @@ def generate_processing_doc():  # NOQA C901
                     option += 'Max: ' + str(param.maximum()) + ' <br>'
             elif isinstance(param, QgsProcessingParameterVectorLayer):
                 option += 'Type: '
-                if Qgis.QGIS_VERSION_INT < 30600:
-                    name_types = [dict_type[item] for item in param.dataTypes()]
-                    option += ', '.join(name_types) + ' <br>'
-                else:
-                    name_types = [QgsProcessing.sourceTypeToString(item) for item in param.dataTypes()]
-                    option += ', '.join(name_types) + ' <br>'
+                name_types = [QgsProcessing.sourceTypeToString(item) for item in param.dataTypes()]
+                option += ', '.join(name_types) + ' <br>'
 
             elif isinstance(param, QgsProcessingParameterFeatureSink):
                 option += 'Type: '
-                if Qgis.QGIS_VERSION_INT < 30600:
-                    option += dict_type[param.dataType()] + ' <br>'
-                else:
-                    option += QgsProcessing.sourceTypeToString(param.dataType()) + ' <br>'
+                option += QgsProcessing.sourceTypeToString(param.dataType()) + ' <br>'
 
             elif isinstance(param, QgsProcessingParameterEnum):
                 list_value = param.options()

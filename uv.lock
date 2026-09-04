@@ -121,7 +121,7 @@ dev = [
     { name = "coverage", extras = ["toml"] },
     { name = "mypy" },
     { name = "pytest", specifier = ">=5.3" },
-    { name = "pytest-qgis", git = "https://github.com/3liz/pytest-qgis.git" },
+    { name = "pytest-qgis", marker = "python_full_version >= '3.10'", git = "https://github.com/3liz/pytest-qgis.git" },
     { name = "ruff" },
     { name = "semver" },
 ]
@@ -132,7 +132,7 @@ lint = [
 ]
 tests = [
     { name = "pytest", specifier = ">=5.3" },
-    { name = "pytest-qgis", git = "https://github.com/3liz/pytest-qgis.git" },
+    { name = "pytest-qgis", marker = "python_full_version >= '3.10'", git = "https://github.com/3liz/pytest-qgis.git" },
     { name = "semver" },
 ]
 

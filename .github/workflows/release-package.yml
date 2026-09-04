@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: Release-Package
+=======
+name: Release-Package 🎳
+>>>>>>> a4b631c (QGIS 4 support)
 
 on:
   workflow_call:
@@ -26,13 +30,6 @@ jobs:
       - name: Fetch yapt
         run: |
           curl ${{ vars.YAPT_REPOSITORY_URL }} | tar -xzf -
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-          architecture: x64
-          cache: "pip"
 
       - name: Fetch current changelog
         run: |

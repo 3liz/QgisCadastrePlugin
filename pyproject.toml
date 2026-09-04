@@ -27,7 +27,7 @@ dev = [
 ]
 tests = [
     "pytest >= 5.3",
-    "pytest-qgis",
+    "pytest-qgis;
     "semver",
 ]
 lint = [
@@ -35,9 +35,6 @@ lint = [
     "mypy",
     "bandit",
 ]
-
-[tool.uv.sources]
-pytest-qgis = { git = "https://github.com/3liz/pytest-qgis.git" }
 
 [tool.yapt]
 plugin_source = "cadastre"
@@ -54,6 +51,7 @@ exclude = [
     ".local",
     ".test/.local",
     ".cache",
+    "cadastre/scripts/pyogr",
 ]
 
 [tool.ruff.format]
