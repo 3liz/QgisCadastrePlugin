@@ -4,7 +4,7 @@ authors = [
     { name = "3liz", email = "info@3liz.com" }
 ]
 version = "2.3.1"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = "GPL-2.0-only"
 license-files = ["LICENSE"]
 readme = "README.md"
@@ -48,7 +48,7 @@ plugin_source = "cadastre"
 
 [tool.ruff]
 line-length = 110
-target-version = "py39"
+target-version = "py310"
 exclude = [
     ".venv",
     ".local",
@@ -105,7 +105,7 @@ suppress-dummy-args = true
 # Mypy
 #
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 
 exclude = [
     "lizmap_server/context/py_qgis_server.py",
