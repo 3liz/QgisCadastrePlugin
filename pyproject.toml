@@ -125,6 +125,7 @@ module = [
     "qgis.*",
     "osgeo.*",
     "xmldiff.*",
+    "db_manager.*",
 ]
 ignore_missing_imports = true
 
