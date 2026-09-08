@@ -16,7 +16,7 @@ pathspec==1.1.1
 pluggy==1.6.0
 pygments==2.21.0
 pytest==9.1.1
-pytest-qgis @ git+https://github.com/3liz/pytest-qgis.git@364633963a2d7b75aabde9044b8b79c3cd40c7ab
+pytest-qgis==4.1.1
 pyyaml==6.0.3
 rich==15.0.0
 ruff==0.16.6

@@ -26,7 +26,7 @@ dev = [
     {include-group = "security"},
 ]
 tests = [
-    "pytest >= 5.3",
+    "pytest",
     "pytest-qgis",
     "semver",
 ]
@@ -42,9 +42,6 @@ extras = [
     "ipython",
     "pydantic",
 ]
-
-[tool.uv.sources]
-pytest-qgis = { git = "https://github.com/3liz/pytest-qgis.git" }
 
 [tool.yapt]
 plugin_source = "cadastre"

@@ -147,8 +147,8 @@ dev = [
     { name = "bandit" },
     { name = "coverage", extras = ["toml"] },
     { name = "mypy" },
-    { name = "pytest", specifier = ">=5.3" },
-    { name = "pytest-qgis", git = "https://github.com/3liz/pytest-qgis.git" },
+    { name = "pytest" },
+    { name = "pytest-qgis" },
     { name = "ruff" },
     { name = "semver" },
     { name = "vulture" },
@@ -164,8 +164,8 @@ lint = [
 ]
 security = [{ name = "bandit" }]
 tests = [
-    { name = "pytest", specifier = ">=5.3" },
-    { name = "pytest-qgis", git = "https://github.com/3liz/pytest-qgis.git" },
+    { name = "pytest" },
+    { name = "pytest-qgis" },
     { name = "semver" },
 ]
 
@@ -930,10 +930,14 @@ wheels = [
 
 [[package]]
 name = "pytest-qgis"
-version = "4.0.1.post1"
-source = { git = "https://github.com/3liz/pytest-qgis.git#364633963a2d7b75aabde9044b8b79c3cd40c7ab" }
+version = "4.1.1"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5e/b9/79eb97d5c30eb14b3a9c108e06436a7d982071fd473512e6ea28bc66fc64/pytest_qgis-4.1.1.tar.gz", hash = "sha256:c7f86f6cb7640a2f595e97fdbbd314450ad88461d1eb1a16c2bb599ad66f57a7", size = 29746, upload-time = "2026-08-04T12:32:40.164Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/77/b9e111799b2117346d3001eee9ef492a5305797a0ec59c0bd1e1206480f1/pytest_qgis-4.1.1-py3-none-any.whl", hash = "sha256:78ba6152280203748003e16e1e54e8939ae580d7a0767bb21078e41d166eb6c9", size = 31603, upload-time = "2026-08-04T12:32:39.045Z" },
 ]
 
 [[package]]
