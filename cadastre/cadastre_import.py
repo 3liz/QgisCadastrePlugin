@@ -1186,9 +1186,7 @@ class cadastreImport(QObject):
                             arguments = {
                                 'filter': 'data'
                             }
-                            if (3, 8, 0) <= sys.version_info < (3, 8, 17) \
-                                    or (3, 9, 0) <= sys.version_info < (3, 9, 17) \
-                                    or (3, 10, 0) <= sys.version_info < (3, 10, 12):
+                            if sys.version_info < (3, 10, 12):
                                 msg = (
                                     "Version de Python obsolète, votre version comporte une faille de sécurité "
                                     "concernant l'extraction d'une archive. Veuillez monter votre version de QGIS afin "

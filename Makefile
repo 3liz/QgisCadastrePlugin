@@ -97,6 +97,7 @@ export UID=$(shell id -u)
 export GID=$(shell id -g)
 
 docker-test:
+	set -e; \
 	export DB_COMMAND=true; \
 	cd .docker; \
 	docker compose --profile=qgis up \
@@ -104,5 +105,12 @@ docker-test:
 	--abort-on-container-exit \
 	--exit-code-from qgis; \
 	docker compose --profile=qgis down -v;
+
+docker-clean:
+	set -e; \
+	export DB_COMMAND=true; \
+	cd .docker; \
+	docker compose --profile=qgis down -v;
+
 
 include database.mk
