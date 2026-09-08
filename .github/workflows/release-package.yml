@@ -28,7 +28,7 @@ jobs:
           curl ${{ vars.YAPT_REPOSITORY_URL }} | tar -xzf -
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           architecture: x64
@@ -51,7 +51,7 @@ jobs:
 
       - name: Create release on GitHub
         if: ${{ inputs.dry_run == false }}
-        uses: ncipollo/release-action@v1.20.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           bodyFile: release.md
           artifacts: "*.zip,plugins.xml"
