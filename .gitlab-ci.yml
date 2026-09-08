@@ -13,12 +13,13 @@ stages:
 # Lint
 # ------------
 lint:
-  image: ${REGISTRY_URL}/factory-ci-runner:qgis-release
+  image: ${REGISTRY_URL}/factory-ci-runner:qgis-ltr
   tags:
     - factory-plain
   stage: lint
   script:
-    - make lint
+    - make lint scan
+  # Temporary allow failure until lint errors are fixed
   allow_failure: true
 
 # ------------
@@ -33,7 +34,6 @@ lint:
   script:
     - make docker-test QGIS_VERSION=$QGIS_FLAVOR
 
-# Tests are not functionals on CI yet
 qgis-tests:
   extends: .tests
   parallel:
@@ -42,7 +42,7 @@ qgis-tests:
         "3.34",
         "3.40",
         "3.44",
-        "nightly-release",
+        "release",
       ]
 
 

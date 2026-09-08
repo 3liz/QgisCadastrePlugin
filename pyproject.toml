@@ -14,7 +14,6 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3",
     "Topic :: Scientific/Engineering :: GIS",
 ]
@@ -24,6 +23,7 @@ dev = [
     "coverage[toml]",
     {include-group = "tests"},
     {include-group = "lint"},
+    {include-group = "security"},
 ]
 tests = [
     "pytest >= 5.3",
@@ -33,7 +33,14 @@ tests = [
 lint = [
     "ruff",
     "mypy",
+    "vulture",
+]
+security = [
     "bandit",
+]
+extras = [
+    "ipython",
+    "pydantic",
 ]
 
 [tool.uv.sources]

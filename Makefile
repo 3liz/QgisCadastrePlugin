@@ -24,6 +24,7 @@ REQUIREMENT_GROUPS= \
 	dev \
 	tests \
 	lint \
+	security \
 	$(NULL)
 
 .PHONY: update-requirements
@@ -61,6 +62,8 @@ format:
 typecheck:
 	@ $(RUN) mypy $(LINT_TARGETS)
 	@ $(RUN) mypy --python-version 3.10 tests
+
+SCAN_OPTS:=--severity-level all
 
 scan:
 	@ $(RUN) bandit -r $(PYTHON_MODULE) $(SCAN_OPTS)

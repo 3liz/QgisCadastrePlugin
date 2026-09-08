@@ -1,4 +1,7 @@
 [bandit]
 # Ignore B108 The use of /tmp/ folder is used only in a standalone script not used in QGIS
 # Ignore B608 (SQL injection) . We will change drastically the way the plugin queries database for plugin compatible with QGIS >= 4.2
-skips = B108,B608
+# Ignore B406 (XML, attack) . Low severity, depends on lib expat version.  will be replaced a soon
+# https://github.com/datagouv/cadastre-bundler-api/issues/8 is landed. 
+# See https://docs.python.org/3/library/xml.html#xml-vulnerabilities
+skips = B108,B608,B406
