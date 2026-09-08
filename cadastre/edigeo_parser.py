@@ -1,7 +1,12 @@
 import re
 
+from datetime import datetime
 from pathlib import Path
-from typing import NamedTuple, Union
+from typing import (
+    Iterator,
+    NamedTuple, 
+    Union,
+)
 
 __copyright__ = "Copyright 2021, 3Liz"
 __license__ = "GPL version 3"
@@ -9,12 +14,10 @@ __email__ = "info@3liz.org"
 
 
 class Feuille(NamedTuple):
-    link: str = None
-    name: str = None
-    day: str = None
-    month: str = None
-    year: str = None
-    size: str = None
+    link: str
+    name: str
+    size: int       # XXX: Not used in plugin
+    date: datetime  # XXX: Not used in plugin
 
     def __str__(self):
         return self.name
@@ -22,13 +25,16 @@ class Feuille(NamedTuple):
 
 class Commune:
 
-    def __init__(self, insee: str, date: str = "latest", feuilles=None, base_url=None):
+    def __init__(
+        self,
+        insee: str, 
+        date: str = "latest", 
+        feuilles: list[Feuille] | None = None, 
+        base_url: str | None = None,
+    ):
         self.insee = insee
         self.date = date
-        self.feuilles = feuilles
-        if self.feuilles is None:
-            self.feuilles = []
-
+        self.feuilles = feuilles if feuilles is not None else []
         self.base_url = base_url
 
     @property
@@ -56,7 +62,7 @@ class Commune:
     def total_size(self) -> int:
         size = 0
         for feuille in self.feuilles:
-            size += int(feuille.size)
+            size += feuille.size
         return size
 
     def __str__(self):
@@ -64,11 +70,6 @@ class Commune:
 
 
 class Parser:
-
-    @classmethod
-    def regex(cls):
-        # TODO : Provide a simple regex looking for "(.*).tar.bz2"
-        return r'<a href="(.*)">edigeo-([a-zA-Z0-9\-]+)\.tar\.bz2<\/a>\s+(\d{2})-(\w+)-(\d{4})\s.*\s\s(\d*)K'
 
     def __init__(
             self, file_path: Union[Path, str], commune: Commune, feuille_filter: Union[str, list, None] = None):
@@ -95,23 +96,41 @@ class Parser:
         return self.commune.feuilles
 
     def parse(self):
-        with self.file_path.open(mode="r", encoding='utf8') as f:
-            content = f.readlines()
 
-        for line in content:
-            results = re.findall(
-                pattern=self.regex(), string=line, flags=re.DOTALL
-            )
+        content = self.file_path.read_text()
 
-            if not len(results):
-                continue
+        for (link, name, size, date) in _html_parse(content):
 
             if self.feuille_filter:
                 for one_filter in self.feuille_filter:
-                    if one_filter in results[0][1]:
-                        self.commune.feuilles.append(Feuille(*results[0]))
+                    if one_filter in name:  # ???!!! 
+                        self.commune.feuilles.append(Feuille(link, name, size, date))
                         break
             else:
-                self.commune.feuilles.append(Feuille(*results[0]))
+                self.commune.feuilles.append(Feuille(link, name, size, date))
 
         self._count = len(self.feuilles)
+
+
+
+CODE_RE = re.compile("edigeo(?:-cc)?-([a-zA-Z0-9\-]+)\.tar\.bz2")
+
+def _html_parse(index: str) -> Iterator[tuple[str, str, int, datetime]]:
+    from .xmltodict import parse
+
+    tag_start = "<tbody>"
+    tag_end = "</tbody>"
+
+    # Strip anything outside of <tbody></tbody>
+    start, end = index.find(tag_start), index.rfind(tag_end) + len(tag_end)
+    for td in parse(index[start:end])["tbody"]["tr"][1:]:
+        td = td["td"]
+        #link = td[0]["a"]["@href"] 
+        name = td[0]["a"]["#text"]
+        link = name
+        size = int(td[1])
+        date = datetime.fromisoformat(td[2])
+        if m := CODE_RE.match(name):
+            name = m.groups()[0]
+            yield link, name, size, date
+

@@ -45,7 +45,7 @@ def test_parse_index_page(url: str, fixtures: Path):
 
     assert parser.count == 15
     assert len(commune.feuilles) == 15
-    assert commune.total_size == 1763
+    assert commune.total_size == 1895819
 
     feuille = commune.feuilles[0]
 

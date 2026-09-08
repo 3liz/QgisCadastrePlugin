@@ -24,6 +24,7 @@ REQUIREMENT_GROUPS= \
 	dev \
 	tests \
 	lint \
+	security \
 	$(NULL)
 
 .PHONY: update-requirements
@@ -62,6 +63,8 @@ typecheck:
 	@ $(RUN) mypy $(LINT_TARGETS)
 	@ $(RUN) mypy --python-version 3.10 tests
 
+SCAN_OPTS:=--severity-level all
+
 scan:
 	@ $(RUN) bandit -r $(PYTHON_MODULE) $(SCAN_OPTS)
 
@@ -83,7 +86,7 @@ endif
 ##
 ## Test using docker image
 ##
-QGIS_VERSION ?= 3.40
+QGIS_VERSION ?= 3.44
 QGIS_IMAGE_REPOSITORY ?= ${REGISTRY_PREFIX}qgis-platform
 QGIS_IMAGE_TAG ?= $(QGIS_IMAGE_REPOSITORY):$(QGIS_VERSION)
 
