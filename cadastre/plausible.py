@@ -1,6 +1,6 @@
-__copyright__ = 'Copyright 2024, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
+__copyright__ = "Copyright 2024, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
 
 import json
 import os
@@ -30,14 +30,13 @@ PLAUSIBLE_URL_PROD = "https://bourbon.3liz.com/api/event"
 
 
 class Plausible:
-
     def __init__(self, server: bool):
-        """ Constructor. """
+        """Constructor."""
         self.server = server
         self.previous_date = None
 
     def request_stat_event(self) -> bool:
-        """ Request to send an event to the API. """
+        """Request to send an event to the API."""
         if to_bool(os.getenv(ENV_SKIP_STATS), default_value=False):
             # Disabled by environment variable
             return False
@@ -46,7 +45,7 @@ class Plausible:
             # If running on CI, do not send stats
             return False
 
-        if version() in ('master', 'dev'):
+        if version() in ("master", "dev"):
             return False
 
         current = QDateTime().currentDateTimeUtc()
@@ -62,17 +61,17 @@ class Plausible:
         return False
 
     def _send_stat_event(self) -> bool:
-        """ Send stats event to the API. """
+        """Send stats event to the API."""
         # Qgis.QGIS_VERSION → 3.34.6-Prizren
         # noinspection PyUnresolvedReferences
-        qgis_version_full = Qgis.QGIS_VERSION.split('-')[0]
+        qgis_version_full = Qgis.QGIS_VERSION.split("-")[0]
         # qgis_version_full → 3.34.6
-        qgis_version_branch = '.'.join(qgis_version_full.split('.')[0:2])
+        qgis_version_branch = ".".join(qgis_version_full.split(".")[0:2])
         # qgis_version_branch → 3.34
 
         python_version_full = platform.python_version()
         # python_version_full → 3.10.12
-        python_version_branch = '.'.join(python_version_full.split('.')[0:2])
+        python_version_branch = ".".join(python_version_full.split(".")[0:2])
         # python_version_branch → 3.10
 
         data = {
@@ -115,7 +114,9 @@ class Plausible:
         request.setHeader(QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json")
 
         # noinspection PyArgumentList
-        r: QNetworkReply = QgsNetworkAccessManager.instance().post(request, QByteArray(str.encode(json.dumps(data))))
+        r: QNetworkReply = QgsNetworkAccessManager.instance().post(
+            request, QByteArray(str.encode(json.dumps(data)))
+        )
         if not self.server:
             return True
 
@@ -123,8 +124,7 @@ class Plausible:
             return True
 
         logger = Logger()
-        message = (
-            f"Request HTTP OS process '{os.getpid()}' sent to '{PLAUSIBLE_URL_PROD}' with domain '{plausible_domain} : ")
+        message = f"Request HTTP OS process '{os.getpid()}' sent to '{PLAUSIBLE_URL_PROD}' with domain '{plausible_domain} : "
         if r.error() == QNetworkReply.NetworkError.NoError:
             logger.info(message + "OK")
         else:

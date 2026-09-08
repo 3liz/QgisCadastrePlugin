@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import (
     Iterator,
-    NamedTuple, 
+    NamedTuple,
     Union,
 )
 
@@ -16,7 +16,7 @@ __email__ = "info@3liz.org"
 class Feuille(NamedTuple):
     link: str
     name: str
-    size: int       # XXX: Not used in plugin
+    size: int  # XXX: Not used in plugin
     date: datetime  # XXX: Not used in plugin
 
     def __str__(self):
@@ -24,12 +24,11 @@ class Feuille(NamedTuple):
 
 
 class Commune:
-
     def __init__(
         self,
-        insee: str, 
-        date: str = "latest", 
-        feuilles: list[Feuille] | None = None, 
+        insee: str,
+        date: str = "latest",
+        feuilles: list[Feuille] | None = None,
         base_url: str | None = None,
     ):
         self.insee = insee
@@ -39,15 +38,14 @@ class Commune:
 
     @property
     def departement(self) -> str:
-        if self.insee.startswith('97'):
+        if self.insee.startswith("97"):
             return self.insee[0:3]
-        else:
-            return self.insee[0:2]
+        return self.insee[0:2]
 
     @property
     def url(self):
         if self.base_url is None:
-            return ''
+            return ""
 
         return self.base_url.format(
             date=self.date,
@@ -66,18 +64,18 @@ class Commune:
         return size
 
     def __str__(self):
-        return f'{self.insee} ({self.departement})'
+        return f"{self.insee} ({self.departement})"
 
 
 class Parser:
-
     def __init__(
-            self, file_path: Union[Path, str], commune: Commune, feuille_filter: Union[str, list, None] = None):
+        self, file_path: Union[Path, str], commune: Commune, feuille_filter: Union[str, list, None] = None
+    ):
         self._count = None
 
         self.feuille_filter = None
         if isinstance(feuille_filter, str):
-            self.feuille_filter = feuille_filter.split(',')
+            self.feuille_filter = feuille_filter.split(",")
         elif isinstance(feuille_filter, list):
             self.feuille_filter = feuille_filter
 
@@ -99,11 +97,10 @@ class Parser:
 
         content = self.file_path.read_text()
 
-        for (link, name, size, date) in _html_parse(content):
-
+        for link, name, size, date in _html_parse(content):
             if self.feuille_filter:
                 for one_filter in self.feuille_filter:
-                    if one_filter in name:  # ???!!! 
+                    if one_filter in name:  # ???!!!
                         self.commune.feuilles.append(Feuille(link, name, size, date))
                         break
             else:
@@ -112,8 +109,8 @@ class Parser:
         self._count = len(self.feuilles)
 
 
+CODE_RE = re.compile(r"edigeo(?:-cc)?-([a-zA-Z0-9\-]+)\.tar\.bz2")
 
-CODE_RE = re.compile("edigeo(?:-cc)?-([a-zA-Z0-9\-]+)\.tar\.bz2")
 
 def _html_parse(index: str) -> Iterator[tuple[str, str, int, datetime]]:
     from .xmltodict import parse
@@ -125,7 +122,7 @@ def _html_parse(index: str) -> Iterator[tuple[str, str, int, datetime]]:
     start, end = index.find(tag_start), index.rfind(tag_end) + len(tag_end)
     for td in parse(index[start:end])["tbody"]["tr"][1:]:
         td = td["td"]
-        #link = td[0]["a"]["@href"] 
+        # link = td[0]["a"]["@href"]
         name = td[0]["a"]["#text"]
         link = name
         size = int(td[1])
@@ -133,4 +130,3 @@ def _html_parse(index: str) -> Iterator[tuple[str, str, int, datetime]]:
         if m := CODE_RE.match(name):
             name = m.groups()[0]
             yield link, name, size, date
-

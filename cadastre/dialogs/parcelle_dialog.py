@@ -26,18 +26,16 @@ from cadastre.dialogs.cadastre_export_dialog import CadastreExport
 from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.tools import set_window_title
 
+from ..logger import Logger
+
+
 PARCELLE_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(
-        str(Path(__file__).resolve().parent.parent),
-        'forms',
-        'cadastre_parcelle_form.ui'
-    )
+    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_parcelle_form.ui")
 )
 
 
 class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
-
-    """ Show parcelle information. """
+    """Show parcelle information."""
 
     def __init__(self, iface, layer, feature, cadastre_search_dialog, parent=None):
         super().__init__(parent)
@@ -49,41 +47,45 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.layer = layer
         self.mc = iface.mapCanvas()
         self.setupUi(self)
-        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
+        self.setWindowTitle(f"{self.windowTitle()} {set_window_title()}")
         self.cadastre_search_dialog = cadastre_search_dialog
-        self.setWindowIcon(QIcon(
-            os.path.join(
-                plugin_dir, 'icons', 'toolbar', "get-parcelle-info.png"
-            )
-        ))
-        self.setWindowTitle("Cadastre+, ID parcelle : %s" % self.feature['geo_parcelle'])
+        self.setWindowIcon(QIcon(os.path.join(plugin_dir, "icons", "toolbar", "get-parcelle-info.png")))
+        self.setWindowTitle("Cadastre+, ID parcelle : %s" % self.feature["geo_parcelle"])
         self.setMinimumWidth(450)
 
         self.txtLog = QTextEdit(self)
         self.txtLog.setEnabled(False)
 
         from cadastre.dialogs.custom_qpush_button import CustomPushButton
+
         self.butActions = CustomPushButton(self)
         self.butActions.initPushButton(
-            40, 24, 10, 0, "butActions", "", "Actions ...", True,
-            QIcon(
-                os.path.join(
-                    plugin_dir, 'icons', "actions.png"
-                )
-            ), 40, 24, True
+            40,
+            24,
+            10,
+            0,
+            "butActions",
+            "",
+            "Actions ...",
+            True,
+            QIcon(os.path.join(plugin_dir, "icons", "actions.png")),
+            40,
+            24,
+            True,
         )
         self.contextMnubutActions(self.butActions)
 
         # Images
-        self.btCentrer.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'centrer.png')))
-        self.btZoomer.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'zoom.png')))
-        self.btSelectionner.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'select.png')))
-        self.btParcellesProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'select.png')))
-        self.btExportParcelle.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
-        self.btExportProprietaire.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'releve.png')))
+        self.btCentrer.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "centrer.png")))
+        self.btZoomer.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "zoom.png")))
+        self.btSelectionner.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "select.png")))
+        self.btParcellesProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "select.png")))
+        self.btExportParcelle.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png")))
+        self.btExportProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png")))
 
         # common cadastre methods
         from cadastre.dialogs.dialog_common import CadastreCommon
+
         self.qc = CadastreCommon(self)
 
         # Get connection parameters
@@ -92,8 +94,8 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             return
 
         self.connectionParams = connectionParams
-        self.dbType = connectionParams['dbType']
-        self.schema = connectionParams['schema']
+        self.dbType = connectionParams["dbType"]
+        self.schema = connectionParams["schema"]
         connector = CadastreCommon.getConnectorFromUri(connectionParams)
         self.connector = connector
 
@@ -105,10 +107,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.buttonBox.accepted.connect(self.onAccept)
 
         # Export buttons
-        exportButtons = {
-            'parcelle': self.btExportParcelle,
-            'proprietaire': self.btExportProprietaire
-        }
+        exportButtons = {"parcelle": self.btExportParcelle, "proprietaire": self.btExportProprietaire}
         for key, item in list(exportButtons.items()):
             control = item
             slot = partial(self.export_as_pdf, key)
@@ -129,7 +128,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
         # Get CSS
         self.css = None
-        self.fiche_parcelle_css = ''
+        self.fiche_parcelle_css = ""
         self.getCss()
 
         # Set dialog content
@@ -141,17 +140,11 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
     def resizeEvent(self, event):
         try:
-            self.butActions.setGeometry(
-                max(300, self.width() - 60),
-                15, 48, 48
-            )
-            self.txtLog.setGeometry(
-                5, self.height() - 32,
-                max(200, self.width() - 100),
-                20
-            )
-        except:
-            print("Error while resizing the dialog items")
+            self.butActions.setGeometry(max(300, self.width() - 60), 15, 48, 48)
+            self.txtLog.setGeometry(5, self.height() - 32, max(200, self.width() - 100), 20)
+        except Exception as err:
+            Logger.error("Error while resizing the dialog items")
+            Logger.log_exception(err)
 
     def setObj(self):
         """
@@ -163,11 +156,11 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
         if index == 0:
             return self.parcelleInfo
-        elif index == 1:
+        if index == 1:
             return self.proprietairesInfo
-        elif index == 2:
+        if index == 2:
             return self.subdivisionsInfo
-        elif index == 3:
+        if index == 3:
             return self.locauxInfo
 
         return None
@@ -199,7 +192,11 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         dlg = QPrintPreviewDialog(printer)
         dlg.setWindowIcon(QIcon("%s/icons/print.png" % os.path.dirname(__file__)))
         dlg.setWindowTitle("Aperçu")
-        dlg.setWindowFlags(Qt.WindowType.WindowMaximizeButtonHint | Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.WindowCloseButtonHint)
+        dlg.setWindowFlags(
+            Qt.WindowType.WindowMaximizeButtonHint
+            | Qt.WindowType.WindowStaysOnTopHint
+            | Qt.WindowType.WindowCloseButtonHint
+        )
         dlg.paintRequested.connect(document.print_)
         dlg.exec()
 
@@ -222,11 +219,9 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
         title = self.windowTitle().replace("Cadastre+, ID", "").title()
         QApplication.clipboard().setText(
-            "<h1>{}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
-                title, obj.toHtml()
-            )
+            "<h1>{}</h1><table width=95%><tr><td>{}</td></tr></table>".format(title, obj.toHtml())
         )
-        self.txtLog.setText('Texte copié dans le presse papier !')
+        self.txtLog.setText("Texte copié dans le presse papier !")
 
     def saveInfosTab(self):
         obj = self.setObj()
@@ -244,37 +239,29 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         if dlgFile.exec():
             fileName = dlgFile.selectedFiles()[0]
             title = self.windowTitle().replace("Cadastre+, ID", "").title()
-            with open(fileName, 'w', encoding="ansi", errors="surrogateescape") as inFile:
+            with open(fileName, "w", encoding="ansi", errors="surrogateescape") as inFile:
                 inFile.write(
-                    "<h1>{}</h1><table width=95%><tr><td>{}</td></tr></table>".format(
-                        title, obj.toHtml()
-                    )
+                    "<h1>{}</h1><table width=95%><tr><td>{}</td></tr></table>".format(title, obj.toHtml())
                 )
-            self.txtLog.setText('fichier sauvegarde sous : %s !' % fileName)
+            self.txtLog.setText("fichier sauvegarde sous : %s !" % fileName)
 
     def contextMnubutActions(self, obj):
         actions = {
-            "printPage": (
-                "print.png",
-                "Imprimer la page courante ...",
-                "Ctrl+P",
-                self.printInfosTab,
-                True
-            ),
+            "printPage": ("print.png", "Imprimer la page courante ...", "Ctrl+P", self.printInfosTab, True),
             # "~0": (),
             "copyPage": (
                 "copy.png",
                 "Copier la page courante dans le presse papier",
                 "Ctrl+C",
                 self.copyInfosTab,
-                True
+                True,
             ),
             "copyPageQc": (
                 "copy.png",
                 "Copier les infos propriétaires dans la fenêtre 'Outils de recherche'",
                 "",
                 self.copyInfosTabQc,
-                True
+                True,
             ),
             # "~1": (),
             "savePage": (
@@ -282,16 +269,17 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
                 "Enregistrer la page courante sous ...",
                 "Ctrl+S",
                 self.saveInfosTab,
-                True
-            )
+                True,
+            ),
         }
         self.builderContextMenu(obj, actions)
 
     def updateMenuContext(self):
         try:
             self.copyPageQc.setEnabled(self.tabWidget.currentIndex() == 1)
-        except:
-            print("Error while updating the context menu")
+        except Exception as err:
+            Logger.log_exception(err)
+            Logger.error("Error while updating the context menu")
 
     def builderContextMenu(self, obj, actions):
         contextMnu = QMenu()
@@ -304,13 +292,11 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             elif key.startswith("list-"):
                 subMenu = QMenu(actions[key][1], self)
                 subMenu.setIcon(QIcon(icon))
-                i = 0
-                for elt in actions[key][3]:
+                for i, elt in enumerate(actions[key][3]):
                     urlServer = QAction(QIcon(icon), elt, self)
                     urlServer.setObjectName("urlServer%s" % (i))
                     subMenu.addAction(urlServer)
                     urlServer.triggered.connect(self.shortCut)
-                    i += 1
                 contextMnu.addMenu(subMenu)
             else:
                 action = QAction(QIcon(icon), actions[key][1], self)
@@ -328,10 +314,10 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Get CSS from CSS file
         """
         plugin_dir = str(Path(__file__).resolve().parent.parent)
-        with open(os.path.join(plugin_dir, 'scripts', 'css', 'cadastre.css'), encoding='utf8') as f:
+        with open(os.path.join(plugin_dir, "scripts", "css", "cadastre.css"), encoding="utf8") as f:
             css = f.read()
             self.css = css
-        with open(os.path.join(plugin_dir, 'scripts', 'css', 'fiche_parcelle.css'), encoding='utf8') as f:
+        with open(os.path.join(plugin_dir, "scripts", "css", "fiche_parcelle.css"), encoding="utf8") as f:
             parcelle_css = f.read()
             self.fiche_parcelle_css = parcelle_css
 
@@ -342,9 +328,9 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         """
         self.hasMajicDataProp = False
         sql = 'SELECT * FROM "proprietaire" LIMIT 1'
-        if self.connectionParams['dbType'] == 'postgis':
-            sql = 'SELECT * FROM "{}"."proprietaire" LIMIT 1'.format(self.connectionParams['schema'])
-        data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.connector, sql)
+        if self.connectionParams["dbType"] == "postgis":
+            sql = 'SELECT * FROM "{}"."proprietaire" LIMIT 1'.format(self.connectionParams["schema"])
+        _data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.connector, sql)
         if ok and rowCount >= 1:
             self.hasMajicDataProp = True
 
@@ -354,10 +340,10 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Get parcelle data
         and set the dialog content
         """
-        if self.feature.fieldNameIndex('proprietaire') > 0:
-            item = 'parcelle_majic'
+        if self.feature.fieldNameIndex("proprietaire") > 0:
+            item = "parcelle_majic"
         else:
-            item = 'parcelle_simple'
+            item = "parcelle_simple"
 
         html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.parcelleInfo.setStyleSheet(self.css)
@@ -376,12 +362,14 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Get proprietaires data
         and set the dialog content
         """
-        if self.feature.fieldNameIndex('proprietaire') == -1:
-            html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
+        if self.feature.fieldNameIndex("proprietaire") == -1:
+            html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
-            item = 'proprietaires'
+            item = "proprietaires"
             html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
-            html += CadastreCommon.getItemHtml('indivisions', self.feature, self.connectionParams, self.connector)
+            html += CadastreCommon.getItemHtml(
+                "indivisions", self.feature, self.connectionParams, self.connector
+            )
         self.proprietairesInfo.setStyleSheet(self.css)
         self.proprietairesInfo.setHtml(
             f"""
@@ -398,10 +386,10 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Get subdivision data
         and set the dialog content
         """
-        if self.feature.fieldNameIndex('proprietaire') == -1:
-            html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
+        if self.feature.fieldNameIndex("proprietaire") == -1:
+            html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
-            item = 'subdivisions'
+            item = "subdivisions"
             html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.subdivisionsInfo.setStyleSheet(self.css)
         self.subdivisionsInfo.setHtml(
@@ -419,12 +407,12 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Get locaux data
         and set the dialog content
         """
-        if self.feature.fieldNameIndex('proprietaire') == -1:
-            html = 'Les données MAJIC n\'ont pas été trouvées dans la base de données'
+        if self.feature.fieldNameIndex("proprietaire") == -1:
+            html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
-            item = 'locaux'
+            item = "locaux"
             html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
-            item = 'locaux_detail'
+            item = "locaux_detail"
             html += CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.locauxInfo.setStyleSheet(self.css)
         self.locauxInfo.setHtml(
@@ -448,7 +436,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             return
 
         if not self.hasMajicDataProp:
-            self.proprietairesInfo.setText('Pas de données de propriétaires dans la base')
+            self.proprietairesInfo.setText("Pas de données de propriétaires dans la base")
             return
 
         # Check if PDF must be exported for a third party or not
@@ -456,26 +444,19 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
 
         if self.feature:
             comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
-                self.feature['geo_parcelle'],
-                self.connectionParams,
-                self.connector
+                self.feature["geo_parcelle"], self.connectionParams, self.connector
             )
             if comptecommunal:
-                if key == 'proprietaire':
+                if key == "proprietaire":
                     comptecommunal = CadastreCommon.getProprietaireComptesCommunaux(
                         comptecommunal,
                         self.connectionParams,
                         self.connector,
-                        self.cbExportAllCities.isChecked()
+                        self.cbExportAllCities.isChecked(),
                     )
                 if self.layer:
                     qe = CadastreExport(
-                        self.layer,
-                        key,
-                        comptecommunal,
-                        self.feature['geo_parcelle'],
-                        None,
-                        for_third_party
+                        self.layer, key, comptecommunal, self.feature["geo_parcelle"], None, for_third_party
                     )
                     qe.export_as_pdf()
 
@@ -535,14 +516,15 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Needs refactoring
         """
         if not self.hasMajicDataProp:
-            self.proprietairesInfo.setText('Pas de données de propriétaires dans la base')
+            self.proprietairesInfo.setText("Pas de données de propriétaires dans la base")
             return
 
         qs = self.cadastre_search_dialog
-        key = 'proprietaire'
+        key = "proprietaire"
 
-        comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(self.feature['geo_parcelle'],
-                                                                        self.connectionParams, self.connector)
+        comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
+            self.feature["geo_parcelle"], self.connectionParams, self.connector
+        )
         if not comptecommunal:
             # fix_print_with_import
             self.txtLog.setText("Aucune parcelle trouvée pour ce propriétaire")
@@ -550,20 +532,16 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         filterExpression = "comptecommunal IN ('%s')" % value
 
         # Get data for child parcelle combo and fill it
-        ckey = qs.searchComboBoxes[key]['search']['parcelle_child']
-        [layer, features] = qs.setupSearchCombobox(
-            ckey,
-            filterExpression,
-            'sql'
-        )
+        ckey = qs.searchComboBoxes[key]["search"]["parcelle_child"]
+        [layer, features] = qs.setupSearchCombobox(ckey, filterExpression, "sql")
 
         # Set properties
-        qs.searchComboBoxes[key]['layer'] = layer
-        qs.searchComboBoxes[key]['features'] = features
-        qs.searchComboBoxes[key]['chosenFeature'] = features
+        qs.searchComboBoxes[key]["layer"] = layer
+        qs.searchComboBoxes[key]["features"] = features
+        qs.searchComboBoxes[key]["chosenFeature"] = features
 
         # Select all parcelles from proprietaire
-        qs.setSelectionToChosenSearchCombobox('proprietaire')
+        qs.setSelectionToChosenSearchCombobox("proprietaire")
 
     def onAccept(self):
         """

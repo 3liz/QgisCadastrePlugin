@@ -1,6 +1,6 @@
-__copyright__ = 'Copyright 2022, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
+__copyright__ = "Copyright 2022, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
 
 import functools
 import time
@@ -10,12 +10,11 @@ from contextlib import contextmanager
 
 from qgis.core import Qgis, QgsMessageLog
 
-PLUGIN = 'Cadastre'
+PLUGIN = "Cadastre"
 
 
 # noinspection PyTypeChecker
 class Logger:
-
     @staticmethod
     def debug(message: str):
         # We could add an env variable if we log or not ?
@@ -35,28 +34,25 @@ class Logger:
 
     @staticmethod
     def log_exception(e: BaseException):
-        """ Log a Python exception. """
-        Logger.critical(
-            "Critical exception:\n{e}\n{traceback}".format(
-                e=e,
-                traceback=traceback.format_exc()
-            )
-        )
+        """Log a Python exception."""
+        Logger.critical("Critical exception:\n{e}\n{traceback}".format(e=e, traceback=traceback.format_exc()))
 
 
 def exception_handler(func):
-    """ Decorator to catch all exceptions. """
+    """Decorator to catch all exceptions."""
+
     def inner_function(*args, **kwargs):
         try:
             func(*args, **kwargs)
         except Exception as e:
             Logger.log_exception(e)
+
     return inner_function
 
 
 @contextmanager
 def trap():
-    """ Define a trap context for catching all exceptions """
+    """Define a trap context for catching all exceptions"""
     try:
         yield
     except Exception as e:
@@ -64,18 +60,18 @@ def trap():
 
 
 def log_function(func):
-    """ Decorator to log function. """
+    """Decorator to log function."""
+
     @functools.wraps(func)
     def log_function_core(*args, **kwargs):
         Logger.info(func.__name__)
-        value = func(*args, **kwargs)
-        return value
+        return func(*args, **kwargs)
 
     return log_function_core
 
 
 def profiling(func):
-    """ Decorator to make some profiling. """
+    """Decorator to make some profiling."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -89,12 +85,12 @@ def profiling(func):
 
 
 def log_output_value(func):
-    """ Decorator to log the output of the function. """
+    """Decorator to log the output of the function."""
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-        Logger.info(f"{func.__name__} output is {result} for parameter {str(args)}")
+        Logger.info(f"{func.__name__} output is {result} for parameter {args!s}")
         return result
 
     return wrapper

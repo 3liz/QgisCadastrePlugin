@@ -5,6 +5,8 @@ from pathlib import Path
 import processing
 
 from qgis.core import (
+    QgsProcessingContext,
+    QgsProcessingFeedback,
     QgsProcessingMultiStepFeedback,
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
@@ -14,7 +16,7 @@ from qgis.core import (
 )
 
 from cadastre.definitions import URL_DOCUMENTATION
-from cadastre.edigeo_parser import Commune, Parser
+from cadastre.edigeo_parser import Commune, Feuille, Parser
 from cadastre.processing.algorithms.base import BaseProcessingAlgorithm
 
 __copyright__ = "Copyright 2021, 3Liz"
@@ -23,18 +25,17 @@ __email__ = "info@3liz.org"
 
 
 class EdigeoDownloader(BaseProcessingAlgorithm):
-
     # INPUTS
-    LISTE_CODE_INSEE = 'LISTE_CODE_INSEE'
-    FILTRE = 'FILTRE'
-    DATE = 'DATE'
-    URL_TEMPLATE = 'URL_TEMPLATE'
-    DOSSIER = 'DOSSIER'
+    LISTE_CODE_INSEE = "LISTE_CODE_INSEE"
+    FILTRE = "FILTRE"
+    DATE = "DATE"
+    URL_TEMPLATE = "URL_TEMPLATE"
+    DOSSIER = "DOSSIER"
 
     # OUTPUTS
-    NB_COMMUNES = 'NB_COMMUNES'
-    NB_FEUILLES = 'NB_FEUILLES'
-    DEPARTEMENTS = 'DEPARTEMENTS'
+    NB_COMMUNES = "NB_COMMUNES"
+    NB_FEUILLES = "NB_FEUILLES"
+    DEPARTEMENTS = "DEPARTEMENTS"
 
     @classmethod
     def url(cls):
@@ -50,7 +51,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
     def initAlgorithm(self, config):
         parameter = QgsProcessingParameterString(
             self.LISTE_CODE_INSEE,
-            'Liste des codes INSEE à télécharger',
+            "Liste des codes INSEE à télécharger",
             # defaultValue='25047,05046'
         )
         parameter.setHelp('Séparés par ","')
@@ -58,42 +59,39 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
 
         parameter = QgsProcessingParameterString(
             self.FILTRE,
-            'Filtre sur les feuilles',
+            "Filtre sur les feuilles",
             # defaultValue='050170000C03,AB',
             optional=True,
         )
         parameter.setHelp(
             'Séparés par ",", peut-être "050170000C03,AB" qui téléchargent toutes les feuilles AB et '
-            '050170000C03'
+            "050170000C03"
         )
         self.addParameter(parameter)
 
-        parameter = QgsProcessingParameterFolderDestination(
-            self.DOSSIER,
-            'Dossier de destination'
-        )
-        parameter.setHelp('Dossier de destination pour les fichiers Edigeo')
+        parameter = QgsProcessingParameterFolderDestination(self.DOSSIER, "Dossier de destination")
+        parameter.setHelp("Dossier de destination pour les fichiers Edigeo")
         self.addParameter(parameter, createOutput=True)
 
         parameter = QgsProcessingParameterString(
             self.DATE,
             'Date, disponible sur le site cadastre.data.gouv.fr (exemple "2023-10-01")',
-            defaultValue='latest',
+            defaultValue="latest",
         )
         parameter.setHelp('Par défaut "latest"')
         self.addParameter(parameter)
 
         parameter = QgsProcessingParameterString(
             self.URL_TEMPLATE,
-            'URL modèle, avec {date}, {departement}, {commune}',
+            "URL modèle, avec {date}, {departement}, {commune}",
             defaultValue=self.url(),
         )
-        parameter.setHelp('À ne changer que si l\'URL change')
+        parameter.setHelp("À ne changer que si l'URL change")
         parameter.setFlags(parameter.flags() | QgsProcessingParameterDefinition.Flag.FlagAdvanced)
         self.addParameter(parameter)
 
-        self.addOutput(QgsProcessingOutputNumber(self.NB_COMMUNES, 'Nombre de communes'))
-        self.addOutput(QgsProcessingOutputNumber(self.NB_FEUILLES, 'Nombre de feuilles'))
+        self.addOutput(QgsProcessingOutputNumber(self.NB_COMMUNES, "Nombre de communes"))
+        self.addOutput(QgsProcessingOutputNumber(self.NB_FEUILLES, "Nombre de feuilles"))
         self.addOutput(QgsProcessingOutputString(self.DEPARTEMENTS, 'Départements, séparés par ","'))
 
     def processAlgorithm(self, parameters, context, feedback):
@@ -107,9 +105,9 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             feedback.pushDebugInfo(f"Création du répertoire {directory}")
             os.makedirs(directory, exist_ok=True)
 
-        filtre = [c.strip() for c in filtre.split(',')]
+        filtre = [c.strip() for c in filtre.split(",")]
 
-        communes = [c.strip() for c in communes.split(',')]
+        communes = [c.strip() for c in communes.split(",")]
         departements = []
         self.results = {
             self.DOSSIER: str(directory),
@@ -121,7 +119,6 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         multi_feedback = QgsProcessingMultiStepFeedback(len(communes), feedback)
 
         for i, commune_insee in enumerate(communes):
-
             commune = Commune(commune_insee, date=date, base_url=url)
             if not self.download_commune(directory, commune, filtre, multi_feedback, context):
                 multi_feedback.reportError(f"Erreur sur la commune {commune.insee}")
@@ -135,19 +132,26 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             if commune.departement not in departements:
                 departements.append(commune.departement)
 
-        self.results[self.DEPARTEMENTS] = ','.join(departements)
+        self.results[self.DEPARTEMENTS] = ",".join(departements)
 
         multi_feedback.pushInfo("\n")
         multi_feedback.pushInfo("\n")
         multi_feedback.pushInfo(f"Téléchargement terminé pour {len(communes)} communes")
         multi_feedback.pushInfo(f"{self.results[self.NB_FEUILLES]} feuilles")
-        multi_feedback.pushInfo(f"dans {str(directory)}")
+        multi_feedback.pushInfo(f"dans {directory!s}")
         multi_feedback.pushInfo("\n")
         multi_feedback.pushInfo("\n")
         return self.results
 
-    def download_commune(self, directory: Path, commune: Commune, filtre: list, feedback, context) -> bool:
-        """ Télécharger une commune. """
+    def download_commune(
+        self,
+        directory: Path,
+        commune: Commune,
+        filtre: list,
+        feedback: QgsProcessingFeedback,
+        context: QgsProcessingContext,
+    ) -> bool:
+        """Télécharger une commune."""
         commune_directory = directory.joinpath(commune.insee)
         if commune_directory.exists():
             feedback.reportError(f"Omission de {commune.insee}, le répertoire existe déjà.")
@@ -157,8 +161,8 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         feedback.pushDebugInfo(commune.url)
 
         params = {
-            'URL': commune.url,
-            'OUTPUT': 'TEMPORARY_OUTPUT',
+            "URL": commune.url,
+            "OUTPUT": "TEMPORARY_OUTPUT",
         }
         data = processing.run(
             "native:filedownloader",
@@ -167,7 +171,7 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             feedback=feedback,
             is_child_algorithm=True,
         )
-        parser = Parser(data['OUTPUT'], commune, feuille_filter=filtre)
+        parser = Parser(data["OUTPUT"], commune, feuille_filter=filtre)
         parser.parse()
         feedback.pushInfo(f"  {parser.count} feuilles")
         for feuille in parser.feuilles:
@@ -178,7 +182,6 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
             os.makedirs(commune_directory, exist_ok=True)
 
         for feuille in parser.feuilles:
-
             self.download_feuille(commune, feuille, commune_directory, feedback, context)
             if feedback.isCanceled():
                 break
@@ -187,11 +190,17 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         return True
 
     @staticmethod
-    def download_feuille(commune, feuille, directory, feedback, context) -> bool:
+    def download_feuille(
+        commune: Commune,
+        feuille: Feuille,
+        directory: Path,
+        feedback: QgsProcessingFeedback,
+        context: QgsProcessingContext,
+    ) -> bool:
         feedback.pushInfo(f"Téléchargement de {commune.insee} {feuille.name}")
         params = {
-            'URL': commune.url_feuille(feuille),
-            'OUTPUT': str(directory.joinpath(feuille.link).absolute()),
+            "URL": commune.url_feuille(feuille),
+            "OUTPUT": str(directory.joinpath(feuille.link).absolute()),
         }
         processing.run(
             "native:filedownloader",
@@ -203,21 +212,21 @@ class EdigeoDownloader(BaseProcessingAlgorithm):
         return True
 
     def name(self):
-        return 'telechargeur_edigeo_communal'
+        return "telechargeur_edigeo_communal"
 
     def displayName(self):
-        return 'Téléchargeur Édigéo communal'
+        return "Téléchargeur Édigéo communal"
 
     @staticmethod
     def tags():
-        return 'edigeo', 'édigéo', 'édigeo', 'edigéo'
+        return "edigeo", "édigéo", "édigeo", "edigéo"
 
     def shortHelpString(self):
         return (
-            'Ce traitement permet de télécharger toutes les feuilles Edigéo sur plusieurs communes.\n'
+            "Ce traitement permet de télécharger toutes les feuilles Edigéo sur plusieurs communes.\n"
             'La date peut-être "latest" ou alors une date disponible sur '
-            'https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise\n'
-            'L\'URL ne doit pas être changé, sauf si l\'API de cadastre.gouv.fr change.'
+            "https://cadastre.data.gouv.fr/datasets/plan-cadastral-informatise\n"
+            "L'URL ne doit pas être changé, sauf si l'API de cadastre.gouv.fr change."
         )
 
     def helpUrl(self):

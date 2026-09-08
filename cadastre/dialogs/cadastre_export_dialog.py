@@ -15,9 +15,12 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
+
 import os.path
 
+from contextlib import contextmanager
 from pathlib import Path
+from typing import Callable, Generator
 
 from qgis.core import QgsMapLayer, QgsMapSettings, QgsProject
 from qgis.PyQt import uic
@@ -31,11 +34,7 @@ from cadastre.cadastre_export import CadastreExport as cadastreExportBase
 from cadastre.tools import set_window_title
 
 PRINT_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(
-        str(Path(__file__).resolve().parent.parent),
-        'forms',
-        'cadastre_print_form.ui'
-    )
+    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_print_form.ui")
 )
 
 
@@ -44,15 +43,11 @@ class cadastrePrintProgress(QDialog, PRINT_FORM_CLASS):
         super().__init__(parent)
         # Set up the user interface
         self.setupUi(self)
-        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
-
-
-from contextlib import contextmanager
-from typing import Callable, Generator
+        self.setWindowTitle(f"{self.windowTitle()} {set_window_title()}")
 
 
 @contextmanager
-def printProgress(self, nb: int) -> Generator[Callable[[int], None], None, None]:
+def printProgress(_this, nb: int) -> Generator[Callable[[int], None], None, None]:
     # Show progress dialog
     printProgress = cadastrePrintProgress()
     # Set progress bar
@@ -60,19 +55,28 @@ def printProgress(self, nb: int) -> Generator[Callable[[int], None], None, None]
     # Show dialog
     printProgress.show()
 
-    progress = lambda step: printProgress.pbPrint.setValue(int(step * 100 / nb))
+    def progress(step):
+        printProgress.pbPrint.setValue(int(step * 100 / nb))
+
     yield progress
 
 
 class CadastreExport(cadastreExportBase):
-
-    def __init__(self, layer: QgsMapLayer, etype: str, comptecommunal: str,
-                 geo_parcelle: str = None, target_dir: str = None, for_third_party: bool = False) -> None:
+    def __init__(
+        self,
+        layer: QgsMapLayer,
+        etype: str,
+        comptecommunal: str,
+        geo_parcelle: str | None = None,
+        target_dir: str | None = None,
+        for_third_party: bool = False,
+    ) -> None:
 
         self.mProgress = printProgress
 
-        super().__init__(QgsProject.instance(),
-                         layer, etype, comptecommunal, geo_parcelle, target_dir, for_third_party)
+        super().__init__(
+            QgsProject.instance(), layer, etype, comptecommunal, geo_parcelle, target_dir, for_third_party
+        )
 
         self.print_parcelle_page = True
 
@@ -115,6 +119,6 @@ class CadastreExport(cadastreExportBase):
         if self.isMulti:
             # info = u"Les relevés ont été enregistrés dans le répertoire :\n%s\n\nOuvrir le dossier ?" % self.targetDir
             openFolder = QDesktopServices()
-            openFolder.openUrl(QUrl('file:///%s' % self.targetDir))
+            openFolder.openUrl(QUrl("file:///%s" % self.targetDir))
 
         return paths

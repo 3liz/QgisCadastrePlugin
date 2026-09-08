@@ -25,6 +25,7 @@
 def classFactory(iface):
     # load Cadastre class from file Cadastre
     from cadastre.cadastre_menu import CadastreMenu
+
     return CadastreMenu(iface)
 
 
@@ -35,4 +36,5 @@ def serverClassFactory(serverIface):  # pylint: disable=invalid-name
     """
     #
     from cadastre.server.cadastre_server import CadastreServer
+
     return CadastreServer(serverIface)

@@ -10,6 +10,7 @@ from typing import Union
 
 from qgis.utils import pluginMetadata
 
+from .logger import Logger
 
 def plugin_path(*args) -> Path:
     """Return the path to the plugin root folder."""
@@ -25,11 +26,12 @@ def timing(f):
     Fonction qui permet de calculer le temps passé par une méthode
     Pour l'activer, ajouter simplement le décorateur @timing sur la méthode.
     """
+
     def wrap(*args):
         time1 = time.time()
         ret = f(*args)
         time2 = time.time()
-        print(f'{f.__name__:s} function took {(time2 - time1) * 1000.0:.3f} ms')
+        Logger.info(f"{f.__name__:s} function took {(time2 - time1) * 1000.0:.3f} ms")
 
         return ret
 
@@ -37,23 +39,23 @@ def timing(f):
 
 
 def set_window_title() -> str:
-    """ Set the window title if on a dev version. """
-    return pluginMetadata('cadastre', 'version')
+    """Set the window title if on a dev version."""
+    return pluginMetadata("cadastre", "version")
 
 
 def to_bool(val: Union[str, int, float, bool, None], default_value: bool = True) -> bool:
-    """ Convert lizmap config value to boolean """
+    """Convert lizmap config value to boolean"""
     if isinstance(val, bool):
         return val
 
-    if val is None or val == '':
+    if val is None or val == "":
         return default_value
 
     if isinstance(val, str):
         # For string, compare lower value to True string
-        return val.lower() in ('yes', 'true', 't', '1')
+        return val.lower() in ("yes", "true", "t", "1")
 
-    elif not val:
+    if not val:
         # For value like False, 0, 0.0, None, empty list or dict returns False
         return False
 
@@ -68,11 +70,11 @@ def metadata_config() -> configparser:
     """
     path = plugin_path("metadata.txt")
     config = configparser.ConfigParser()
-    config.read(path, encoding='utf8')
+    config.read(path, encoding="utf8")
     return config
 
 
-def version(remove_v_prefix=True) -> str:
+def version(remove_v_prefix: bool = True) -> str:
     """Return the version defined in metadata.txt."""
     v = metadata_config()["general"]["version"]
     if v.startswith("v") and remove_v_prefix:

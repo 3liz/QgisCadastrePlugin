@@ -37,74 +37,74 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
     Algorithm to set project variables for cadastre use
     """
 
-    COMMUNE_LAYER = 'COMMUNE_LAYER'
-    COMMUNE_UNIQUE_FIELD = 'COMMUNE_UNIQUE_FIELD'
-    SECTION_LAYER = 'SECTION_LAYER'
-    SECTION_UNIQUE_FIELD = 'SECTION_UNIQUE_FIELD'
-    PARCELLE_LAYER = 'PARCELLE_LAYER'
-    PARCELLE_UNIQUE_FIELD = 'PARCELLE_UNIQUE_FIELD'
+    COMMUNE_LAYER = "COMMUNE_LAYER"
+    COMMUNE_UNIQUE_FIELD = "COMMUNE_UNIQUE_FIELD"
+    SECTION_LAYER = "SECTION_LAYER"
+    SECTION_UNIQUE_FIELD = "SECTION_UNIQUE_FIELD"
+    PARCELLE_LAYER = "PARCELLE_LAYER"
+    PARCELLE_UNIQUE_FIELD = "PARCELLE_UNIQUE_FIELD"
 
-    SUCCESS = 'SUCCESS'
+    SUCCESS = "SUCCESS"
 
     def initAlgorithm(self, config):
         self.addParameter(
             QgsProcessingParameterVectorLayer(
                 self.COMMUNE_LAYER,
-                self.tr('La couche communes'),
+                self.tr("La couche communes"),
                 [QgsProcessing.SourceType.TypeVectorPolygon],
-                defaultValue='Communes'
+                defaultValue="Communes",
             )
         )
 
         self.addParameter(
             QgsProcessingParameterField(
                 self.COMMUNE_UNIQUE_FIELD,
-                self.tr('Champs identifiant les communes'),
+                self.tr("Champs identifiant les communes"),
                 parentLayerParameterName=self.COMMUNE_LAYER,
-                defaultValue='geo_commune',
-                type=QgsProcessingParameterField.DataType.String
+                defaultValue="geo_commune",
+                type=QgsProcessingParameterField.DataType.String,
             )
         )
 
         self.addParameter(
             QgsProcessingParameterVectorLayer(
                 self.SECTION_LAYER,
-                self.tr('La couche sections'),
+                self.tr("La couche sections"),
                 [QgsProcessing.SourceType.TypeVectorPolygon],
-                defaultValue='Sections',
+                defaultValue="Sections",
             )
         )
 
         self.addParameter(
             QgsProcessingParameterField(
                 self.SECTION_UNIQUE_FIELD,
-                self.tr('Champs identifiant les sections'),
+                self.tr("Champs identifiant les sections"),
                 parentLayerParameterName=self.SECTION_LAYER,
-                defaultValue='geo_section',
-                type=QgsProcessingParameterField.DataType.String
+                defaultValue="geo_section",
+                type=QgsProcessingParameterField.DataType.String,
             )
         )
 
         self.addParameter(
             QgsProcessingParameterVectorLayer(
                 self.PARCELLE_LAYER,
-                self.tr('La couche parcelles'),
+                self.tr("La couche parcelles"),
                 [QgsProcessing.SourceType.TypeVectorPolygon],
-                defaultValue='Parcelles',
+                defaultValue="Parcelles",
             )
         )
 
         self.addParameter(
             QgsProcessingParameterField(
                 self.PARCELLE_UNIQUE_FIELD,
-                self.tr('Champs identifiant les parcelles'),
+                self.tr("Champs identifiant les parcelles"),
                 parentLayerParameterName=self.PARCELLE_LAYER,
-                defaultValue='geo_parcelle',
-                type=QgsProcessingParameterField.DataType.String
+                defaultValue="geo_parcelle",
+                type=QgsProcessingParameterField.DataType.String,
             )
         )
 
-        self.addOutput(QgsProcessingOutputNumber(self.SUCCESS, self.tr('Succès')))
+        self.addOutput(QgsProcessingOutputNumber(self.SUCCESS, self.tr("Succès")))
 
     def processAlgorithm(self, parameters, context, feedback):
         commune_layer = self.parameterAsVectorLayer(parameters, self.COMMUNE_LAYER, context)
@@ -118,32 +118,32 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
 
         variables = context.project().customVariables()
 
-        variables['cadastre_commune_layer_id'] = commune_layer.id()
-        variables['cadastre_commune_unique_field'] = commune_unique_field
+        variables["cadastre_commune_layer_id"] = commune_layer.id()
+        variables["cadastre_commune_unique_field"] = commune_unique_field
 
-        variables['cadastre_section_layer_id'] = section_layer.id()
-        variables['cadastre_section_unique_field'] = section_unique_field
+        variables["cadastre_section_layer_id"] = section_layer.id()
+        variables["cadastre_section_unique_field"] = section_unique_field
 
-        variables['cadastre_parcelle_layer_id'] = parcelle_layer.id()
-        variables['cadastre_parcelle_unique_field'] = parcelle_unique_field
+        variables["cadastre_parcelle_layer_id"] = parcelle_layer.id()
+        variables["cadastre_parcelle_unique_field"] = parcelle_unique_field
 
         context.project().setCustomVariables(variables)
         # Returns empty dict if no outputs
         return {self.SUCCESS: 1}
 
     def name(self):
-        return 'config_project'
+        return "config_project"
 
     def displayName(self):
-        return self.tr('Configuration du projet')
+        return self.tr("Configuration du projet")
 
     @staticmethod
     def tags():
-        return 'cadastre', 'lizmap'
+        return "cadastre", "lizmap"
 
     def shortHelpString(self):
         return (
-            'Ce traitement permet de configurer un projet QGIS pour de la publication sur le web avec '
+            "Ce traitement permet de configurer un projet QGIS pour de la publication sur le web avec "
             '<a href="https://github.com/3liz/lizmap-web-client/">Lizmap Web Client</a> et son '
             '<a href="https://github.com/3liz/lizmap-cadastre-module">module Cadastre</a>.\n'
         )

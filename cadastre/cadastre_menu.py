@@ -15,6 +15,7 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
+
 import os
 import os.path
 import tempfile
@@ -54,6 +55,7 @@ from cadastre.dialogs.message_dialog import CadastreMessageDialog
 from cadastre.dialogs.options_dialog import CadastreOptionDialog
 from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
 from cadastre.dialogs.search_dialog import CadastreSearchDialog
+from cadastre.logger import Logger
 from cadastre.plausible import Plausible
 from cadastre.processing.provider import CadastreProvider
 from cadastre.tools import metadata_config
@@ -97,71 +99,23 @@ class CadastreMenu:
         main_icon = QIcon(os.path.join(plugin_dir, "icon.png"))
 
         # Open the online help
-        self.help_action_about_menu = QAction(main_icon, 'Cadastre', self.iface.mainWindow())
+        self.help_action_about_menu = QAction(main_icon, "Cadastre", self.iface.mainWindow())
         self.iface.pluginHelpMenu().addAction(self.help_action_about_menu)
         self.help_action_about_menu.triggered.connect(self.open_help)
 
         actions = {
-            "import_action": (
-                "database.png",
-                "Importer des données",
-                "",
-                self.open_import_dialog,
-                True
-            ),
-            "search_action": (
-                "search.png",
-                "Outils de recherche",
-                "",
-                self.toggle_search_dialog,
-                True
-            ),
-            "load_action": (
-                "output.png",
-                "Charger des données",
-                "",
-                self.open_load_dialog,
-                True
-            ),
-            "export_action": (
-                "mActionSaveAsPDF.png",
-                "Exporter la vue",
-                "",
-                self.export_view,
-                True
-            ),
-            "option_action": (
-                "config.png",
-                "Configurer le plugin",
-                "",
-                self.open_option_dialog,
-                True
-            ),
-            "about_action": (
-                "about.png",
-                "À propos",
-                "",
-                self.open_about_dialog,
-                True
-            ),
-            "help_action": (
-                "about.png",
-                "Aide",
-                "",
-                self.open_help,
-                True
-            ),
-            "version_action": (
-                "about.png",
-                "Notes de version",
-                "",
-                self.open_message_dialog,
-                True
-            )
+            "import_action": ("database.png", "Importer des données", "", self.open_import_dialog, True),
+            "search_action": ("search.png", "Outils de recherche", "", self.toggle_search_dialog, True),
+            "load_action": ("output.png", "Charger des données", "", self.open_load_dialog, True),
+            "export_action": ("mActionSaveAsPDF.png", "Exporter la vue", "", self.export_view, True),
+            "option_action": ("config.png", "Configurer le plugin", "", self.open_option_dialog, True),
+            "about_action": ("about.png", "À propos", "", self.open_about_dialog, True),
+            "help_action": ("about.png", "Aide", "", self.open_help, True),
+            "version_action": ("about.png", "Notes de version", "", self.open_message_dialog, True),
         }
 
         for key in actions:
-            icon_path = os.path.join(plugin_dir, 'icons', actions[key][0])
+            icon_path = os.path.join(plugin_dir, "icons", actions[key][0])
             icon = QIcon(icon_path)
             action = QAction(QIcon(icon), actions[key][1], self.iface.mainWindow())
             if actions[key][2] != "":
@@ -200,19 +154,14 @@ class CadastreMenu:
         menu.addMenu(self.menu)
 
         # Add cadastre toolbar
-        self.toolbar = self.iface.addToolBar('&Cadastre')
+        self.toolbar = self.iface.addToolBar("&Cadastre")
         self.toolbar.setObjectName("cadastreToolbar")
 
         # Create action for "Parcelle information"
         self.identifyParcelleAction = QAction(
-            QIcon(os.path.join(
-                plugin_dir,
-                "icons",
-                "toolbar",
-                "get-parcelle-info.png"
-            )),
+            QIcon(os.path.join(plugin_dir, "icons", "toolbar", "get-parcelle-info.png")),
             "Infos parcelle",
-            self.iface.mainWindow()
+            self.iface.mainWindow(),
         )
         self.identifyParcelleAction.setCheckable(True)
         self.identifyParcelleAction.triggered.connect(self.setIndentifyParcelleTool)
@@ -230,7 +179,7 @@ class CadastreMenu:
         self.setActionsExclusive()
 
         # Disable some dialogs on CI : about and changelog
-        on_ci = os.getenv("CI", "").lower() == 'true'
+        on_ci = os.getenv("CI", "").lower() == "true"
 
         # Display About window on first use
         s = QSettings()
@@ -260,7 +209,9 @@ class CadastreMenu:
             plausible = Plausible(server=False)
             plausible.request_stat_event()
         except Exception as e:
-            QgsMessageLog.logMessage(f"Error while calling the stats API : \"{e}\"", 'cadastre', Qgis.MessageLevel.Warning)
+            QgsMessageLog.logMessage(
+                f'Error while calling the stats API : "{e}"', "cadastre", Qgis.MessageLevel.Warning
+            )
 
     def open_import_dialog(self):
         """
@@ -273,10 +224,7 @@ class CadastreMenu:
         """
         Load dialog
         """
-        dialog = CadastreLoadDialog(
-            self.iface,
-            self.cadastre_search_dialog
-        )
+        dialog = CadastreLoadDialog(self.iface, self.cadastre_search_dialog)
         dialog.exec()
 
     def toggle_search_dialog(self):
@@ -298,7 +246,7 @@ class CadastreMenu:
             icon_file = "nosearch.png"
         else:
             icon_file = "search.png"
-        icon_path = os.path.join(plugin_dir, 'icons', icon_file)
+        icon_path = os.path.join(plugin_dir, "icons", icon_file)
         self.search_action.setIcon(QIcon(icon_path))
 
     def export_view(self):
@@ -307,14 +255,14 @@ class CadastreMenu:
         """
         # Load template from file
         s = QSettings()
-        f = s.value("cadastre/composerTemplateFile", '', type=str)
+        f = s.value("cadastre/composerTemplateFile", "", type=str)
         if not os.path.exists(f):
-            f = os.path.join(str(Path(__file__).resolve().parent), 'composers', 'paysage_a4.qpt')
+            f = os.path.join(str(Path(__file__).resolve().parent), "composers", "paysage_a4.qpt")
             s.setValue("cadastre/composerTemplateFile", f)
 
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         template_content = None
-        with open(f, encoding='utf8') as ff:
+        with open(f, encoding="utf8") as ff:
             template_content = ff.read()
         if not template_content:
             return
@@ -339,9 +287,9 @@ class CadastreMenu:
         tempDir = s.value("cadastre/tempDir", type=str)
         if not tempDir or not Path(tempDir).exists():
             tempDir = tempfile.gettempdir()
-        self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
+        self.targetDir = tempfile.mkdtemp("", "cad_export_", tempDir)
         temp = int(time() * 100)
-        temppath = os.path.join(tempDir, 'export_cadastre_%s.pdf' % temp)
+        temppath = os.path.join(tempDir, "export_cadastre_%s.pdf" % temp)
 
         exporter = QgsLayoutExporter(c)
         exportersettings = QgsLayoutExporter.PdfExportSettings()
@@ -400,8 +348,10 @@ class CadastreMenu:
         parcelleLayer = None
         try:
             from cadastre.dialogs.dialog_common import CadastreCommon
-            parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps('parcelle_info')
-        except:
+
+            parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps("parcelle_info")
+        except Exception as err:
+            Logger.log_exception(err)
             parcelleLayer = None
 
         if not parcelleLayer:
@@ -416,12 +366,12 @@ class CadastreMenu:
         """
 
         # Find parcelle layer
-        parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps('parcelle_info')
+        parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps("parcelle_info")
         if not parcelleLayer:
             QMessageBox.warning(
                 self.cadastre_search_dialog,
                 "Cadastre",
-                "La couche de parcelles n'a pas été trouvée dans le projet"
+                "La couche de parcelles n'a pas été trouvée dans le projet",
             )
             self.identifyParcelleAction.setChecked(False)
             self.iface.actionPan().trigger()
@@ -438,12 +388,7 @@ class CadastreMenu:
         Return information of the identified
         parcelle
         """
-        parcelleDialog = CadastreParcelleDialog(
-            self.iface,
-            layer,
-            feature,
-            self.cadastre_search_dialog
-        )
+        parcelleDialog = CadastreParcelleDialog(self.iface, layer, feature, self.cadastre_search_dialog)
         parcelleDialog.show()
 
     def onProjectRead(self):
@@ -453,9 +398,9 @@ class CadastreMenu:
         if self.cadastre_search_dialog:
             self.cadastre_search_dialog.checkMajicContent()
             self.cadastre_search_dialog.clearComboboxes()
-            self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
-            self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')
-            self.cadastre_search_dialog.setupSearchCombobox('commune_proprietaire', None, 'sql')
+            self.cadastre_search_dialog.setupSearchCombobox("commune", None, "sql")
+            self.cadastre_search_dialog.setupSearchCombobox("section", None, "sql")
+            self.cadastre_search_dialog.setupSearchCombobox("commune_proprietaire", None, "sql")
             self.checkIdentifyParcelleTool()
 
     def on_new_project_created(self):
@@ -477,18 +422,16 @@ class CadastreMenu:
         """
         Display a message to the user
         """
-        changelog = self.mConfig.get('general', 'changelog')
-        message = '<h3>Changelog</h3>'
-        message += '<p>'
-        i = 0
-        for item in changelog.split('*'):
+        changelog = self.mConfig.get("general", "changelog")
+        message = "<h3>Changelog</h3>"
+        message += "<p>"
+        for i, item in enumerate(changelog.split("*")):
             if i == 0:
-                message += '<b>%s</b><ul>' % item
+                message += "<b>%s</b><ul>" % item
             else:
-                message += '<li>%s</li>' % item
-            i += 1
-        message += '</ul>'
-        message += '</p>'
+                message += "<li>%s</li>" % item
+        message += "</ul>"
+        message += "</p>"
 
         dialog = CadastreMessageDialog(self.iface, message)
         dialog.exec()
@@ -517,14 +460,16 @@ class CadastreMenu:
         QgsApplication.processingRegistry().removeProvider(self.provider)
 
     @staticmethod
-    def run_tests(pattern='test_*.py', package=None):
+    def run_tests(pattern="test_*.py", package=None):
         """Run the test inside QGIS."""
         from pathlib import Path
+
         try:
             from cadastre.tests.runner import test_package
+
             if package is None:
-                package = f'{Path(__file__).parent.name}.__init__'
+                package = f"{Path(__file__).parent.name}.__init__"
             test_package(package, pattern)
         except (AttributeError, ModuleNotFoundError):
-            message = 'Could not load tests. Are you using a production package?'
+            message = "Could not load tests. Are you using a production package?"
             print(message)  # NOQA

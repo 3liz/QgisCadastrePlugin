@@ -1,6 +1,4 @@
-URL_TOPO = (
-    "https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo"
-)
+URL_TOPO = "https://drive.opendata.craig.fr/s/opendata?path=%2Fadresse%2Ftopo"
 
 URL_DOCUMENTATION = "https://docs.3liz.org/QgisCadastrePlugin/"
 
@@ -14,9 +12,7 @@ REGEX_TOPO = "TOPO"
 IMPORT_MEMORY_ERROR_MESSAGE = "<b>ERREUR : Mémoire</b></br>"
 "Veuillez recommencer l'import en baissant la valeur du "
 "paramètre <b>'Taille maximum des requêtes INSERT'</b> selon la "
-"documentation : {}/extension-qgis/configuration/#performances</br>".format(
-    URL_DOCUMENTATION
-)
+"documentation : {}/extension-qgis/configuration/#performances</br>".format(URL_DOCUMENTATION)
 
 # Millésime
 # Si changement de la valeur ci-dessous,

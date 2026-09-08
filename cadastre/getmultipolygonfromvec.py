@@ -3,8 +3,17 @@ import os
 
 class GetMultiPolygonFromVec:
     __slots__ = (
-    'listPar', 'listPfe', 'listFea', 'mapLyFea', 'mapFeaPfe', 'mapPfePar', 'mapParCor', 'mapParPno', 'mapPnoPar',
-    'path')
+        "listFea",
+        "listPar",
+        "listPfe",
+        "mapFeaPfe",
+        "mapLyFea",
+        "mapParCor",
+        "mapParPno",
+        "mapPfePar",
+        "mapPnoPar",
+        "path",
+    )
 
     def __init__(self):
         self.listPar = []
@@ -29,11 +38,16 @@ class GetMultiPolygonFromVec:
         self.mapParPno = {}
         self.mapPnoPar = {}
         self.path = os.path.abspath(path)
-        if not self.__features__(): return {}
-        if not self.__layers__(): return {}
-        if not self.__arcs__(): return {}
-        if not self.__coords__(): return {}
-        if not self.__nodes__(): return {}
+        if not self.__features__():
+            return {}
+        if not self.__layers__():
+            return {}
+        if not self.__arcs__():
+            return {}
+        if not self.__coords__():
+            return {}
+        if not self.__nodes__():
+            return {}
         mapPfePoly = self.__polygons__()
 
         mapLyFeaMulti = {}
@@ -43,238 +57,258 @@ class GetMultiPolygonFromVec:
                 multipolygon = []
                 for pfe in self.mapFeaPfe[fea]:
                     multipolygon += mapPfePoly[pfe]
-                mapLyFeaMulti[ly][fea] = 'MULTIPOLYGON(' + ', '.join(['(' + ', '.join(
-                    ['(' + '),('.join([','.join([str(x) + ' ' + str(y) for x, y in ring])]) + ')' for ring in
-                     poly]) + ')' for poly in multipolygon]) + ')'
+                mapLyFeaMulti[ly][fea] = (
+                    "MULTIPOLYGON("
+                    + ", ".join(
+                        [
+                            "("
+                            + ", ".join(
+                                [
+                                    "("
+                                    + "),(".join([",".join([str(x) + " " + str(y) for x, y in ring])])
+                                    + ")"
+                                    for ring in poly
+                                ]
+                            )
+                            + ")"
+                            for poly in multipolygon
+                        ]
+                    )
+                    + ")"
+                )
         return mapLyFeaMulti
 
     def __features__(self):
-        """ Find features with more than 1 faces """
-        if not self.path: return False
+        """Find features with more than 1 faces"""
+        if not self.path:
+            return False
 
-        f = open(self.path, encoding='ISO-8859-1')
-        if not f: return False
+        with open(self.path, encoding="ISO-8859-1") as f:
+            osRTY = ""
+            _osRID = "" # FIXME: not used
+            _osSCP = "" # FIXME: not used
+            lnkNb = 0
+            lnkStartType = ""
+            lnkStartName = ""
+            lnkFaces = []
+            for line in f:
+                line = line.replace("\n", "").replace("\r", "")
+                if len(line) < 8:
+                    continue
+                if line[:5] == "RTYSA":
+                    osRTY = line[8:]
+                    _osRID = ""
+                    _osSCP = ""
+                    lnkNb = 0
+                    lnkStartType = ""
+                    lnkStartName = ""
+                    lnkFaces = []
+                elif osRTY == "LNK" and line[:5] == "RIDSA":
+                    _osRID = line[8:]
+                elif osRTY == "LNK" and line[:5] == "SCPCP":
+                    _osSCP = line[8:]
+                elif osRTY == "LNK" and line[:5] == "FTCSN":
+                    lnkNb = int(line[8:])
+                elif osRTY == "LNK" and lnkNb > 2 and line[:5] == "FTPCP":
+                    lnkArray = line[8:].split(";")
+                    if not lnkStartType:
+                        lnkStartType = lnkArray[2]
+                        lnkStartName = lnkArray[3]
+                    elif lnkStartType and lnkStartType == "FEA" and lnkArray[2] == "PFE":
+                        lnkFaces.append(lnkArray[3])
+                elif osRTY == "LNK" and lnkNb > 2 and len(lnkFaces) == lnkNb - 1:
+                    lnkNb = 0
+                    self.mapFeaPfe[lnkStartName] = lnkFaces
+                    self.listPfe += lnkFaces
+                    self.listFea.append(lnkStartName)
 
-        osRTY = ''
-        osRID = ''
-        osSCP = ''
-        lnkNb = 0
-        lnkStartType = ''
-        lnkStartName = ''
-        lnkFaces = []
-        for line in f:
-            line = line.replace('\n', '').replace('\r', '')
-            if len(line) < 8:
-                continue
-            if line[:5] == 'RTYSA':
-                osRTY = line[8:]
-                osRID = ''
-                osSCP = ''
-                lnkNb = 0
-                lnkStartType = ''
-                lnkStartName = ''
-                lnkFaces = []
-            elif osRTY == 'LNK' and line[:5] == 'RIDSA':
-                osRID = line[8:]
-            elif osRTY == 'LNK' and line[:5] == 'SCPCP':
-                osSCP = line[8:]
-            elif osRTY == 'LNK' and line[:5] == 'FTCSN':
-                lnkNb = int(line[8:])
-            elif osRTY == 'LNK' and lnkNb > 2 and line[:5] == 'FTPCP':
-                lnkArray = line[8:].split(';')
-                if not lnkStartType:
-                    lnkStartType = lnkArray[2]
-                    lnkStartName = lnkArray[3]
-                elif lnkStartType and lnkStartType == 'FEA' and lnkArray[2] == 'PFE':
-                    lnkFaces.append(lnkArray[3])
-            elif osRTY == 'LNK' and lnkNb > 2 and len(lnkFaces) == lnkNb - 1:
-                lnkNb = 0
-                self.mapFeaPfe[lnkStartName] = lnkFaces
-                self.listPfe += lnkFaces
-                self.listFea.append(lnkStartName)
-        f.close()
-        if not self.listFea: return False
-        return True
+        return bool(self.listFea)
 
     def __layers__(self):
-        """ Find the layers for the features """
-        if not self.path: return False
+        """Find the layers for the features"""
+        if not self.path:
+            return False
 
-        f = open(self.path)
-        if not f: return False
+        with open(self.path) as f:
+            osRTY = ""
+            osRID = ""
+            for line in f:
+                line = line.replace("\n", "").replace("\r", "")
+                if len(line) < 8:
+                    continue
+                if line[:5] == "RTYSA":
+                    osRTY = line[8:]
+                    osRID = ""
+                elif osRTY == "FEA" and line[:5] == "RIDSA":
+                    osRID = line[8:]
+                elif osRTY == "FEA" and line[:5] == "SCPCP":
+                    osSCP = line[8:]
+                elif osRTY == "FEA" and osRID in self.listFea and osSCP:
+                    scpArray = osSCP.split(";")
+                    ly = scpArray[3]
+                    if ly in self.mapLyFea:
+                        self.mapLyFea[ly].append(osRID)
+                    else:
+                        self.mapLyFea[ly] = [osRID]
+                    osRID = ""
 
-        osRTY = ''
-        osRID = ''
-        for line in f:
-            line = line.replace('\n', '').replace('\r', '')
-            if len(line) < 8:
-                continue
-            if line[:5] == 'RTYSA':
-                osRTY = line[8:]
-                osRID = ''
-            elif osRTY == 'FEA' and line[:5] == 'RIDSA':
-                osRID = line[8:]
-            elif osRTY == 'FEA' and line[:5] == 'SCPCP':
-                osSCP = line[8:]
-            elif osRTY == 'FEA' and osRID in self.listFea and osSCP:
-                scpArray = osSCP.split(';')
-                ly = scpArray[3]
-                if ly in self.mapLyFea:
-                    self.mapLyFea[ly].append(osRID)
-                else:
-                    self.mapLyFea[ly] = [osRID]
-                osRID = ''
-        f.close()
         return True
 
     def __arcs__(self):
-        """ Find the arcs for the faces """
-        if not self.path: return False
+        """Find the arcs for the faces"""
+        if not self.path:
+            return False
 
-        f = open(self.path)
-        if not f: return False
+        with open(self.path) as f:
+            osRTY = ""
+            _osRID = ""
+            _osSCP = ""
+            lnkStartType = ""
+            lnkStartName = ""
+            lnkEndType = ""
+            lnkEndName = ""
+            for line in f:
+                line = line.replace("\n", "").replace("\r", "")
+                if len(line) < 8:
+                    continue
+                if lnkStartType == "PAR" and lnkEndType == "PFE" and lnkEndName in self.listPfe:
+                    if lnkEndName in self.mapPfePar:
+                        self.mapPfePar[lnkEndName].append(lnkStartName)
+                    else:
+                        self.mapPfePar[lnkEndName] = [lnkStartName]
+                    if lnkStartName not in self.listPar:
+                        self.listPar.append(lnkStartName)
+                    lnkStartType = ""
+                    lnkStartName = ""
+                    lnkEndType = ""
+                    lnkEndName = ""
+                if line[:5] == "RTYSA":
+                    osRTY = line[8:]
+                    _osRID = ""
+                    _osSCP = ""
+                    lnkStartType = ""
+                    lnkStartName = ""
+                    lnkEndType = ""
+                    lnkEndName = ""
+                elif osRTY == "LNK" and line[:5] == "RIDSA":
+                    _osRID = line[8:]
+                elif osRTY == "LNK" and line[:5] == "SCPCP":
+                    _osSCP = line[8:]
+                elif osRTY == "LNK" and line[:5] == "FTPCP":
+                    lnkArray = line[8:].split(";")
+                    if not lnkStartType:
+                        lnkStartType = lnkArray[2]
+                        lnkStartName = lnkArray[3]
+                    else:
+                        lnkEndType = lnkArray[2]
+                        lnkEndName = lnkArray[3]
 
-        osRTY = ''
-        osRID = ''
-        osSCP = ''
-        lnkStartType = ''
-        lnkStartName = ''
-        lnkEndType = ''
-        lnkEndName = ''
-        for line in f:
-            line = line.replace('\n', '').replace('\r', '')
-            if len(line) < 8:
-                continue
-            if lnkStartType == 'PAR' and lnkEndType == 'PFE' and lnkEndName in self.listPfe:
-                if lnkEndName in self.mapPfePar:
-                    self.mapPfePar[lnkEndName].append(lnkStartName)
-                else:
-                    self.mapPfePar[lnkEndName] = [lnkStartName]
-                if lnkStartName not in self.listPar:
-                    self.listPar.append(lnkStartName)
-                lnkStartType = ''
-                lnkStartName = ''
-                lnkEndType = ''
-                lnkEndName = ''
-            if line[:5] == 'RTYSA':
-                osRTY = line[8:]
-                osRID = ''
-                osSCP = ''
-                lnkStartType = ''
-                lnkStartName = ''
-                lnkEndType = ''
-                lnkEndName = ''
-            elif osRTY == 'LNK' and line[:5] == 'RIDSA':
-                osRID = line[8:]
-            elif osRTY == 'LNK' and line[:5] == 'SCPCP':
-                osSCP = line[8:]
-            elif osRTY == 'LNK' and line[:5] == 'FTPCP':
-                lnkArray = line[8:].split(';')
-                if not lnkStartType:
-                    lnkStartType = lnkArray[2]
-                    lnkStartName = lnkArray[3]
-                else:
-                    lnkEndType = lnkArray[2]
-                    lnkEndName = lnkArray[3]
-        f.close()
         return True
 
     def __coords__(self):
-        """ Find the coords for the arcs """
-        if not self.path: return False
+        """Find the coords for the arcs"""
+        if not self.path:
+            return False
 
-        f = open(self.path)
-        if not f: return False
+        with open(self.path) as f:
+            osRTY = ""
+            osRID = ""
+            for line in f:
+                line = line.replace("\n", "").replace("\r", "")
+                if len(line) < 8:
+                    continue
+                if line[:5] == "RTYSA":
+                    osRTY = line[8:]
+                    osRID = ""
+                elif osRTY == "PAR" and line[:5] == "RIDSA":
+                    osRID = line[8:]
+                elif osRTY == "PAR" and osRID in self.listPar and line[:5] == "CORCC":
+                    pts = line[8:].split(";")
+                    if osRID in self.mapParCor:
+                        self.mapParCor[osRID].append([float(pts[0]), float(pts[1])])
+                    else:
+                        self.mapParCor[osRID] = [[float(pts[0]), float(pts[1])]]
 
-        osRTY = ''
-        osRID = ''
-        for line in f:
-            line = line.replace('\n', '').replace('\r', '')
-            if len(line) < 8:
-                continue
-            if line[:5] == 'RTYSA':
-                osRTY = line[8:]
-                osRID = ''
-            elif osRTY == 'PAR' and line[:5] == 'RIDSA':
-                osRID = line[8:]
-            elif osRTY == 'PAR' and osRID in self.listPar and line[:5] == 'CORCC':
-                pts = line[8:].split(';')
-                if osRID in self.mapParCor:
-                    self.mapParCor[osRID].append([float(pts[0]), float(pts[1])])
-                else:
-                    self.mapParCor[osRID] = [[float(pts[0]), float(pts[1])]]
-        f.close()
         return True
 
     def __nodes__(self):
-        """ Find the noeuds for the arcs """
-        if not self.path: return False
+        """Find the noeuds for the arcs"""
+        if not self.path:
+            return False
 
-        f = open(self.path)
-        if not f: return False
+        with open(self.path) as f:
+            osRTY = ""
+            _osRID = ""
+            _osSCP = ""
+            lnkStartType = ""
+            lnkStartName = ""
+            lnkEndType = ""
+            lnkEndName = ""
+            for line in f:
+                line = line.replace("\n", "").replace("\r", "")
+                if len(line) < 8:
+                    continue
+                if (
+                    osRTY == "LNK"
+                    and lnkStartType == "PAR"
+                    and lnkStartName in self.listPar
+                    and lnkEndType == "PNO"
+                ):
+                    if lnkEndName in self.mapPnoPar:
+                        self.mapPnoPar[lnkEndName].append(lnkStartName)
+                    else:
+                        self.mapPnoPar[lnkEndName] = [lnkStartName]
+                    if lnkStartName in self.mapParPno:
+                        self.mapParPno[lnkStartName].append(lnkEndName)
+                    else:
+                        self.mapParPno[lnkStartName] = [lnkEndName]
+                    lnkStartType = ""
+                    lnkStartName = ""
+                    lnkEndType = ""
+                    lnkEndName = ""
+                if (
+                    osRTY == "LNK"
+                    and lnkStartType == "PNO"
+                    and lnkEndType == "PAR"
+                    and lnkEndName in self.listPar
+                ):
+                    if lnkEndName in self.mapParPno:
+                        self.mapParPno[lnkEndName].append(lnkStartName)
+                    else:
+                        self.mapParPno[lnkEndName] = [lnkStartName]
+                    if lnkStartName in self.mapPnoPar:
+                        self.mapPnoPar[lnkStartName].append(lnkEndName)
+                    else:
+                        self.mapPnoPar[lnkStartName] = [lnkEndName]
+                    lnkStartType = ""
+                    lnkStartName = ""
+                    lnkEndType = ""
+                    lnkEndName = ""
+                if line[:5] == "RTYSA":
+                    osRTY = line[8:]
+                    _osRID = ""
+                    _osSCP = ""
+                    lnkStartType = ""
+                    lnkStartName = ""
+                    lnkEndType = ""
+                    lnkEndName = ""
+                elif osRTY == "LNK" and line[:5] == "RIDSA":
+                    _osRID = line[8:]
+                elif osRTY == "LNK" and line[:5] == "SCPCP":
+                    _osSCP = line[8:]
+                elif osRTY == "LNK" and line[:5] == "FTPCP":
+                    lnkArray = line[8:].split(";")
+                    if not lnkStartType:
+                        lnkStartType = lnkArray[2]
+                        lnkStartName = lnkArray[3]
+                    else:
+                        lnkEndType = lnkArray[2]
+                        lnkEndName = lnkArray[3]
 
-        osRTY = ''
-        osRID = ''
-        osSCP = ''
-        lnkStartType = ''
-        lnkStartName = ''
-        lnkEndType = ''
-        lnkEndName = ''
-        for line in f:
-            line = line.replace('\n', '').replace('\r', '')
-            if len(line) < 8:
-                continue
-            if osRTY == 'LNK' and lnkStartType == 'PAR' and lnkStartName in self.listPar and lnkEndType == 'PNO':
-                if lnkEndName in self.mapPnoPar:
-                    self.mapPnoPar[lnkEndName].append(lnkStartName)
-                else:
-                    self.mapPnoPar[lnkEndName] = [lnkStartName]
-                if lnkStartName in self.mapParPno:
-                    self.mapParPno[lnkStartName].append(lnkEndName)
-                else:
-                    self.mapParPno[lnkStartName] = [lnkEndName]
-                lnkStartType = ''
-                lnkStartName = ''
-                lnkEndType = ''
-                lnkEndName = ''
-            if osRTY == 'LNK' and lnkStartType == 'PNO' and lnkEndType == 'PAR' and lnkEndName in self.listPar:
-                if lnkEndName in self.mapParPno:
-                    self.mapParPno[lnkEndName].append(lnkStartName)
-                else:
-                    self.mapParPno[lnkEndName] = [lnkStartName]
-                if lnkStartName in self.mapPnoPar:
-                    self.mapPnoPar[lnkStartName].append(lnkEndName)
-                else:
-                    self.mapPnoPar[lnkStartName] = [lnkEndName]
-                lnkStartType = ''
-                lnkStartName = ''
-                lnkEndType = ''
-                lnkEndName = ''
-            if line[:5] == 'RTYSA':
-                osRTY = line[8:]
-                osRID = ''
-                osSCP = ''
-                lnkStartType = ''
-                lnkStartName = ''
-                lnkEndType = ''
-                lnkEndName = ''
-            elif osRTY == 'LNK' and line[:5] == 'RIDSA':
-                osRID = line[8:]
-            elif osRTY == 'LNK' and line[:5] == 'SCPCP':
-                osSCP = line[8:]
-            elif osRTY == 'LNK' and line[:5] == 'FTPCP':
-                lnkArray = line[8:].split(';')
-                if not lnkStartType:
-                    lnkStartType = lnkArray[2]
-                    lnkStartName = lnkArray[3]
-                else:
-                    lnkEndType = lnkArray[2]
-                    lnkEndName = lnkArray[3]
-        f.close()
         return True
 
     def __polygons__(self):
-        """ Face to polygon """
+        """Face to polygon"""
         mapPfePoly = {}
         for face in self.listPfe:
             arcs = self.mapPfePar[face][:]
@@ -311,13 +345,21 @@ class GetMultiPolygonFromVec:
                     inserted = False
                     for p in bboxPolygons:
                         extBbox = p[0]
-                        if bbox[0] >= extBbox[0] and bbox[1] >= extBbox[1] and bbox[2] <= extBbox[2] and bbox[3] <= \
-                                extBbox[3]:
+                        if (
+                            bbox[0] >= extBbox[0]
+                            and bbox[1] >= extBbox[1]
+                            and bbox[2] <= extBbox[2]
+                            and bbox[3] <= extBbox[3]
+                        ):
                             p.append(bbox)
                             inserted = True
                             break
-                        elif extBbox[0] >= bbox[0] and extBbox[1] >= bbox[1] and extBbox[2] <= bbox[2] and extBbox[3] <= \
-                                bbox[3]:
+                        if (
+                            extBbox[0] >= bbox[0]
+                            and extBbox[1] >= bbox[1]
+                            and extBbox[2] <= bbox[2]
+                            and extBbox[3] <= bbox[3]
+                        ):
                             p.insert(0, bbox)
                             inserted = True
                             break
@@ -380,6 +422,7 @@ class GetMultiPolygonFromVec:
                     pnoArcs = self.mapPnoPar[pno][:]
             rings.append(ring)
         return rings
+
 
 # import glob
 # getMultiPolygon = GetMultiPolygonFromVec()

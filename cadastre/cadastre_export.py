@@ -15,6 +15,7 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
 """
+
 import os
 import re
 import tempfile
@@ -51,24 +52,32 @@ from qgis.PyQt.QtGui import QFont
 
 import cadastre.cadastre_common_base as cadastre_common
 
+from .logger import Logger
+
 
 @contextmanager
-def _printProgress(self, nb: int) -> Generator[Callable[[int], None], None, None]:
-    """ Define a dummy defaultprint progress
-    """
+def _printProgress(_this, nb: int) -> Generator[Callable[[int], None], None, None]:
+    """Define a dummy defaultprint progress"""
     yield (lambda step: None)
 
 
 class CadastreExport:
-
-    def __init__(self, project: QgsProject, layer: QgsMapLayer, etype: str, comptecommunal: str,
-                 geo_parcelle: str = None, target_dir: str = None, for_third_party: bool = False) -> None:
+    def __init__(
+        self,
+        project: QgsProject,
+        layer: QgsMapLayer,
+        etype: str,
+        comptecommunal: str,
+        geo_parcelle: str | None = None,
+        target_dir: str | None = None,
+        for_third_party: bool = False,
+    ) -> None:
 
         self.plugin_dir = str(Path(__file__).resolve().parent)
 
         self.print_parcelle_page = False
 
-        if not hasattr(self, 'mProgress'):
+        if not hasattr(self, "mProgress"):
             self.mProgress = _printProgress
 
         # Store project from context
@@ -119,20 +128,20 @@ class CadastreExport:
         if not tempDir or not Path(tempDir).exists():
             tempDir = tempfile.gettempdir()
         if not target_dir or not os.path.exists(target_dir):
-            self.targetDir = tempfile.mkdtemp('', 'cad_export_', tempDir)
+            self.targetDir = tempfile.mkdtemp("", "cad_export_", tempDir)
         else:
             self.targetDir = target_dir
 
         # label for header2
-        if self.etype == 'proprietaire':
-            self.typeLabel = 'DE PROPRIÉTÉ'
+        if self.etype == "proprietaire":
+            self.typeLabel = "DE PROPRIÉTÉ"
         else:
-            self.typeLabel = 'PARCELLAIRE'
+            self.typeLabel = "PARCELLAIRE"
 
         self.layer = layer
         self.connectionParams = cadastre_common.getConnectionParameterFromDbLayer(self.layer)
         self.connector = cadastre_common.getConnectorFromUri(self.connectionParams)
-        self.dbType = self.connectionParams['dbType']
+        self.dbType = self.connectionParams["dbType"]
 
         # Variable created in set_composer_templates
         self.main_tables = {}
@@ -152,141 +161,204 @@ class CadastreExport:
         # List of templates
         compte_communal_abrev = compte_communal[-6:]
         self.composerTemplates = {
-            'header1': {
-                'names': ['annee', 'ccodep', 'ccodir', 'ccocom', 'libcom'],
-                'position': [3.5, 2.5, 145, 7.5], 'align': [128, 4],
-                'keepContent': True,
-                'type': 'sql',
-                'filter': 'comptecommunal',
-                'and': {
-                    'proprietaire': f" AND comptecommunal = '{compte_communal}'",
-                    'parcelle': f" AND comptecommunal = '{compte_communal}'",
+            "header1": {
+                "names": ["annee", "ccodep", "ccodir", "ccocom", "libcom"],
+                "position": [3.5, 2.5, 145, 7.5],
+                "align": [128, 4],
+                "keepContent": True,
+                "type": "sql",
+                "filter": "comptecommunal",
+                "and": {
+                    "proprietaire": f" AND comptecommunal = '{compte_communal}'",
+                    "parcelle": f" AND comptecommunal = '{compte_communal}'",
                 },
-                'sticky': True
+                "sticky": True,
             },
-            'header2': {
-                'names': ['type'],
-                'position': [153.5, 2.5, 60, 7.5], 'align': [128, 4],
-                'keepContent': True,
-                'type': 'properties',
-                'source': [self.typeLabel],
-                'sticky': True
+            "header2": {
+                "names": ["type"],
+                "position": [153.5, 2.5, 60, 7.5],
+                "align": [128, 4],
+                "keepContent": True,
+                "type": "properties",
+                "source": [self.typeLabel],
+                "sticky": True,
             },
-            'header3': {
-                'names': ['comptecommunal'],
-                'position': [218.5, 2.5, 75, 7.5], 'align': [128, 2],
-                'keepContent': True,
-                'type': 'properties',
-                'source': [compte_communal_abrev],
-                'sticky': True
+            "header3": {
+                "names": ["comptecommunal"],
+                "position": [218.5, 2.5, 75, 7.5],
+                "align": [128, 2],
+                "keepContent": True,
+                "type": "properties",
+                "source": [compte_communal_abrev],
+                "sticky": True,
             },
-            'proprietaires': {
-                'names': ['lines'],
-                'position': [3.5, 10, 290, 40], 'align': [32, 1],
-                'keepContent': False,
-                'type': 'parent',
-                'source': 'proprietaires_line'
+            "proprietaires": {
+                "names": ["lines"],
+                "position": [3.5, 10, 290, 40],
+                "align": [32, 1],
+                "keepContent": False,
+                "type": "parent",
+                "source": "proprietaires_line",
             },
-            'proprietes_baties': {
-                'names': ['lines'],
-                'position': [3.5, 50, 290, 65], 'align': [32, 1],
-                'keepContent': False,
-                'type': 'parent',
-                'source': 'proprietes_baties_line'
+            "proprietes_baties": {
+                "names": ["lines"],
+                "position": [3.5, 50, 290, 65],
+                "align": [32, 1],
+                "keepContent": False,
+                "type": "parent",
+                "source": "proprietes_baties_line",
             },
-            'proprietes_baties_sum': {
-                'names': ['revenucadastral', 'co_vlbaia', 'co_bipevla', 'gp_vlbaia', 'gp_bipevla', 'de_vlbaia',
-                          'de_bipevla', 're_vlbaia', 're_bipevla'],
-                'position': [3.5, 115, 290, 15], 'align': [32, 1],
-                'type': 'sql',
-                'keepContent': True,
-                'filter': 'comptecommunal',
-                'and': {
-                    'proprietaire': f" AND l10.comptecommunal = '{compte_communal}'",
-                    'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
-                }
-            },
-            'proprietes_non_baties': {
-                'names': ['lines'],
-                'position': [3.5, 130, 290, 65], 'align': [32, 1],
-                'keepContent': False,
-                'type': 'parent',
-                'source': 'proprietes_non_baties_line'
-            },
-            'proprietes_non_baties_sum': {
-                'names': ['sum_ha_contenance', 'sum_a_contenance', 'sum_ca_contenance', 'sum_drcsuba'],
-                'position': [3.5, 195, 290, 13], 'align': [32, 1],
-                'type': 'sql',
-                'keepContent': True,
-                'filter': 'comptecommunal',
-                'and': {
-                    'proprietaire': f" AND p.comptecommunal = '{compte_communal}'",
-                    'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
+            "proprietes_baties_sum": {
+                "names": [
+                    "revenucadastral",
+                    "co_vlbaia",
+                    "co_bipevla",
+                    "gp_vlbaia",
+                    "gp_bipevla",
+                    "de_vlbaia",
+                    "de_bipevla",
+                    "re_vlbaia",
+                    "re_bipevla",
+                ],
+                "position": [3.5, 115, 290, 15],
+                "align": [32, 1],
+                "type": "sql",
+                "keepContent": True,
+                "filter": "comptecommunal",
+                "and": {
+                    "proprietaire": f" AND l10.comptecommunal = '{compte_communal}'",
+                    "parcelle": f" AND p.parcelle = '{self.geo_parcelle}'",
                 },
-                'bgcolor': Qt.GlobalColor.transparent
             },
-            'footer': {
-                'names': ['foot'],
-                'position': [3.5, 208, 288, 4], 'align': [128, 4],
-                'keepContent': True,
-                'type': 'properties',
-                'source': ["Ce document est donné à titre indicatif - Il n'a pas de valeur légale"],
-                'bgcolor': Qt.GlobalColor.white,
-                'htmlState': 0,
-                'font': QFont('sans-serif', 4, 1, True),
-                'sticky': True
-            }
+            "proprietes_non_baties": {
+                "names": ["lines"],
+                "position": [3.5, 130, 290, 65],
+                "align": [32, 1],
+                "keepContent": False,
+                "type": "parent",
+                "source": "proprietes_non_baties_line",
+            },
+            "proprietes_non_baties_sum": {
+                "names": ["sum_ha_contenance", "sum_a_contenance", "sum_ca_contenance", "sum_drcsuba"],
+                "position": [3.5, 195, 290, 13],
+                "align": [32, 1],
+                "type": "sql",
+                "keepContent": True,
+                "filter": "comptecommunal",
+                "and": {
+                    "proprietaire": f" AND p.comptecommunal = '{compte_communal}'",
+                    "parcelle": f" AND p.parcelle = '{self.geo_parcelle}'",
+                },
+                "bgcolor": Qt.GlobalColor.transparent,
+            },
+            "footer": {
+                "names": ["foot"],
+                "position": [3.5, 208, 288, 4],
+                "align": [128, 4],
+                "keepContent": True,
+                "type": "properties",
+                "source": ["Ce document est donné à titre indicatif - Il n'a pas de valeur légale"],
+                "bgcolor": Qt.GlobalColor.white,
+                "htmlState": 0,
+                "font": QFont("sans-serif", 4, 1, True),
+                "sticky": True,
+            },
         }
         self.main_tables = {
-            'proprietaires_line': {
-                'names': ['mainprop', 'epousede', 'adrprop', 'nele'],
-                'type': 'sql',
-                'keepContent': True,
-                'filter': 'comptecommunal',
-                'and': {
-                    'proprietaire': f" AND comptecommunal = '{compte_communal}'",
-                    'parcelle': f" AND comptecommunal = '{compte_communal}'"
-                }
+            "proprietaires_line": {
+                "names": ["mainprop", "epousede", "adrprop", "nele"],
+                "type": "sql",
+                "keepContent": True,
+                "filter": "comptecommunal",
+                "and": {
+                    "proprietaire": f" AND comptecommunal = '{compte_communal}'",
+                    "parcelle": f" AND comptecommunal = '{compte_communal}'",
+                },
             },
-            'proprietes_baties_line': {
-                'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'bat', 'ent', 'niv', 'ndeporte',
-                          'numeroinvar', 'star', 'meval', 'af', 'natloc', 'cat', 'revenucadastral', 'coll', 'natexo',
-                          'anret', 'andeb', 'fractionrcexo', 'pourcentageexo', 'txom', 'coefreduc', 'rcteom'],
-                'type': 'sql',
-                'filter': 'comptecommunal',
-                'and': {
-                    'proprietaire': f" AND l10.comptecommunal = '{compte_communal}'",
-                    'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
-                }
+            "proprietes_baties_line": {
+                "names": [
+                    "section",
+                    "ndeplan",
+                    "ndevoirie",
+                    "adresse",
+                    "coderivoli",
+                    "bat",
+                    "ent",
+                    "niv",
+                    "ndeporte",
+                    "numeroinvar",
+                    "star",
+                    "meval",
+                    "af",
+                    "natloc",
+                    "cat",
+                    "revenucadastral",
+                    "coll",
+                    "natexo",
+                    "anret",
+                    "andeb",
+                    "fractionrcexo",
+                    "pourcentageexo",
+                    "txom",
+                    "coefreduc",
+                    "rcteom",
+                ],
+                "type": "sql",
+                "filter": "comptecommunal",
+                "and": {
+                    "proprietaire": f" AND l10.comptecommunal = '{compte_communal}'",
+                    "parcelle": f" AND p.parcelle = '{self.geo_parcelle}'",
+                },
             },
-            'proprietes_non_baties_line': {
-                'names': ['section', 'ndeplan', 'ndevoirie', 'adresse', 'coderivoli', 'nparcprim', 'fpdp', 'star',
-                          'suf', 'grssgr', 'cl', 'natcult', 'ha_contenance', 'a_contenance', 'ca_contenance',
-                          'revenucadastral', 'coll', 'natexo', 'anret', 'fractionrcexo', 'pourcentageexo', 'tc', 'lff'],
-                'type': 'sql',
-                'and': {
-                    'proprietaire': f" AND p.comptecommunal = '{compte_communal}'",
-                    'parcelle': f" AND p.parcelle = '{self.geo_parcelle}'"
-                }
-            }
-
+            "proprietes_non_baties_line": {
+                "names": [
+                    "section",
+                    "ndeplan",
+                    "ndevoirie",
+                    "adresse",
+                    "coderivoli",
+                    "nparcprim",
+                    "fpdp",
+                    "star",
+                    "suf",
+                    "grssgr",
+                    "cl",
+                    "natcult",
+                    "ha_contenance",
+                    "a_contenance",
+                    "ca_contenance",
+                    "revenucadastral",
+                    "coll",
+                    "natexo",
+                    "anret",
+                    "fractionrcexo",
+                    "pourcentageexo",
+                    "tc",
+                    "lff",
+                ],
+                "type": "sql",
+                "and": {
+                    "proprietaire": f" AND p.comptecommunal = '{compte_communal}'",
+                    "parcelle": f" AND p.parcelle = '{self.geo_parcelle}'",
+                },
+            },
         }
 
         # items for which to count number of lines
         self.lineCount = {
-            'proprietes_baties_line': {'count': 0, 'data': None},
-            'proprietes_non_baties_line': {'count': 0, 'data': None}
+            "proprietes_baties_line": {"count": 0, "data": None},
+            "proprietes_non_baties_line": {"count": 0, "data": None},
         }
 
         # items for which not the run a query for each page
         # but only once and keep content for next pages
         self.contentKeeped = {}
         for key, item in list(self.composerTemplates.items()):
-            if 'keepContent' in item and item['keepContent']:
-                self.contentKeeped[key] = ''
+            if item.get("keepContent"):
+                self.contentKeeped[key] = ""
         for key, item in list(self.main_tables.items()):
-            if 'keepContent' in item and item['keepContent']:
-                self.contentKeeped[key] = ''
+            if item.get("keepContent"):
+                self.contentKeeped[key] = ""
 
     def getContentForGivenItem(self, key, item, page=None):
         """
@@ -295,109 +367,102 @@ class CadastreExport:
         and assign data from item
         """
         # First check previous stored content
-        if 'keepContent' in item and item['keepContent'] \
-                and self.contentKeeped[key]:
+        if "keepContent" in item and item["keepContent"] and self.contentKeeped[key]:
             return self.contentKeeped[key]
 
-        content = ''
-        replaceDict = ''
+        content = ""
+        replaceDict = ""
 
         # Build template file path
-        tplPath = os.path.join(
-            self.plugin_dir,
-            "templates",
-            "%s.tpl" % key
-        )
+        tplPath = os.path.join(self.plugin_dir, "templates", "%s.tpl" % key)
 
         # Build replace dict depending on source type
-        if item['type'] == 'sql':
+        if item["type"] == "sql":
             data = None
 
             # Load SQL query and get data
             # Get sql file
-            sqlFile = tplPath + '.sql'
-            fin = open(sqlFile, encoding='utf8')
-            sql = fin.read()
-            fin.close()
+            sql = Path(tplPath + ".sql").read_text()
 
             # Add schema to search_path if postgis
-            if self.dbType == 'postgis':
-                sql = sql.replace('$schema', '"{}".'.format(self.connectionParams['schema']))
+            if self.dbType == "postgis":
+                sql = sql.replace("$schema", '"{}".'.format(self.connectionParams["schema"]))
             else:
-                sql = sql.replace('$schema', '')
+                sql = sql.replace("$schema", "")
 
             # Add the for_third_party values
             # only useful for proprietaire
             # to empty sensitive data (date and location of birth)
-            sql = sql.replace('$for_third_party', str(self.for_third_party))
+            sql = sql.replace("$for_third_party", str(self.for_third_party))
 
             # Add where clause depending on etype
-            sql = sql.replace('$and', item['and'][self.etype])
+            sql = sql.replace("$and", item["and"][self.etype])
 
             # Limit results if asked
-            if page and key in self.main_tables.keys() and key in self.lineCount.keys():
+            if page and key in self.main_tables and key in self.lineCount:
                 offset = int((page - 1) * self.maxLineNumber)
                 # ~ sql+= " LIMIT %s" % self.maxLineNumber
                 # ~ sql+= " OFFSET %s" % offset
                 # Get data from previous fetched full data
-                data = self.lineCount[key]['data'][offset:self.maxLineNumber + offset]
+                data = self.lineCount[key]["data"][offset : self.maxLineNumber + offset]
 
             # Convert PostgreSQL syntax to SQLite
-            if self.dbType == 'spatialite':
+            if self.dbType == "spatialite":
                 sql = cadastre_common.postgisToSpatialite(sql)
 
             # Run SQL only if data has not already been defined
             if data is None:
-                # print(sql)
-                data, rowCount, ok = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+                data, rowCount, _ok = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+
 
             # Page no defined = means the query is here to
             # get line count and whole data for proprietes_baties & proprietes_non_baties
-            if not page:
-                if key in list(self.lineCount.keys()):
+            if not page and  key in self.lineCount:
                     # line count
-                    self.lineCount[key]['count'] = rowCount
+                    self.lineCount[key]["count"] = rowCount
                     # keep data
-                    self.lineCount[key]['data'] = data
+                    self.lineCount[key]["data"] = data
             if page:
                 # Get content for each line of data
                 for line in data:
                     replaceDict = {}
-                    for i in range(len(item['names'])):
-                        replaceDict['$%s' % item['names'][i]] = '%s' % line[i]
+                    for i in range(len(item["names"])):
+                        replaceDict["$%s" % item["names"][i]] = "%s" % line[i]
                     content += self.getHtmlFromTemplate(tplPath, replaceDict)
 
                 # fill empty data to have full size table
-                if key in self.main_tables.keys() and key not in self.contentKeeped.keys() \
-                        and len(data) < self.maxLineNumber:
+                if (
+                    key in self.main_tables.keys
+                    and key not in self.contentKeeped
+                    and len(data) < self.maxLineNumber
+                ):
                     for _ in range(self.maxLineNumber - len(data)):
                         replaceDict = {}
-                        for i in range(len(item['names'])):
-                            replaceDict['$%s' % item['names'][i]] = '&nbsp;'
+                        for i in range(len(item["names"])):
+                            replaceDict["$%s" % item["names"][i]] = "&nbsp;"
                         content += self.getHtmlFromTemplate(tplPath, replaceDict)
 
-        elif item['type'] == 'properties':
+        elif item["type"] == "properties":
             # build replace dict from properties
             replaceDict = {}
-            for i in range(len(item['names'])):
-                replaceDict['$' + item['names'][i]] = item['source'][i]
+            for i in range(len(item["names"])):
+                replaceDict["$" + item["names"][i]] = item["source"][i]
             content = self.getHtmlFromTemplate(tplPath, replaceDict)
 
-        elif item['type'] == 'parent':
+        elif item["type"] == "parent":
             replaceDict = {}
-            for i in range(len(item['names'])):
-                replaceDict['$' + item['names'][i]] = self.main_tables[item['source']]['content']
+            for i in range(len(item["names"])):
+                replaceDict["$" + item["names"][i]] = self.main_tables[item["source"]]["content"]
             content = self.getHtmlFromTemplate(tplPath, replaceDict)
 
         # Keep somme content globally
-        if 'keepContent' in item and item['keepContent']:
+        if item.get("keepContent"):
             self.contentKeeped[key] = content
 
         # replace some unwanted content
-        content = content.replace('None', '')
-        return content
+        return content.replace("None", "")
 
-    def getHtmlFromTemplate(self, tplPath, replaceDict):
+    def getHtmlFromTemplate(self, tplPath: str, replaceDict: dict[str, str]) -> str:
         """
         Get the content of a template file
         and replace all variables with given data
@@ -406,19 +471,18 @@ class CadastreExport:
         def replfunc(match):
             return replaceDict[match.group(0)]
 
-        regex = re.compile('|'.join(re.escape(x) for x in replaceDict))
+        regex = re.compile("|".join(re.escape(x) for x in replaceDict))
 
         try:
-            with open(tplPath, encoding='utf8') as fin:
+            with open(tplPath, encoding="utf8") as fin:
                 data = fin.read()
-            data = regex.sub(replfunc, data)
-            return data
+            return regex.sub(replfunc, data)
 
         except OSError as e:
             msg = "Erreur lors de l'export: %s" % e
             self.go = False
             # fix_print_with_import
-            print("%s" % msg)
+            Logger.error(f"{msg}")
             return msg
 
     def createComposition(self):
@@ -444,7 +508,9 @@ class CadastreExport:
         for i in range(1, self.numPages):
             p = QgsLayoutItemPage(c)
             # page.setPageSize('A6')
-            p.setPageSize(QgsLayoutSize(self.pageWidth, self.pageHeight, QgsUnitTypes.LayoutUnit.LayoutMillimeters))
+            p.setPageSize(
+                QgsLayoutSize(self.pageWidth, self.pageHeight, QgsUnitTypes.LayoutUnit.LayoutMillimeters)
+            )
             c.pageCollection().addPage(p)
 
         # Set the global currentComposition
@@ -460,13 +526,13 @@ class CadastreExport:
             self.getContentForGivenItem(key, self.main_tables[key])
         self.numPages = max(
             [
-                1 + int(self.lineCount['proprietes_baties_line']['count'] / self.maxLineNumber),
-                1 + int(self.lineCount['proprietes_non_baties_line']['count'] / self.maxLineNumber)
+                1 + int(self.lineCount["proprietes_baties_line"]["count"] / self.maxLineNumber),
+                1 + int(self.lineCount["proprietes_non_baties_line"]["count"] / self.maxLineNumber),
             ]
         )
 
         # Add a page for map if etype == parcelle
-        if self.etype == 'parcelle' and self.print_parcelle_page:
+        if self.etype == "parcelle" and self.print_parcelle_page:
             self.numPages += 1
 
     def addPageContent(self, page):
@@ -476,11 +542,7 @@ class CadastreExport:
 
         # First get content for parent items
         for key, item in list(self.main_tables.items()):
-            self.main_tables[key]['content'] = self.getContentForGivenItem(
-                key,
-                item,
-                page
-            )
+            self.main_tables[key]["content"] = self.getContentForGivenItem(key, item, page)
 
         # Then get content for displayed items
         for key, item in list(self.composerTemplates.items()):
@@ -492,7 +554,7 @@ class CadastreExport:
         """
         # 1st page is a map for parcelle
         dpage = page - 1
-        if self.etype == 'parcelle' and self.print_parcelle_page:
+        if self.etype == "parcelle" and self.print_parcelle_page:
             dpage = page
 
         # create HTML layout item
@@ -503,10 +565,7 @@ class CadastreExport:
         self.currentComposition.addMultiFrame(html_item)
 
         # create frame to show content from htmlItem
-        html_item_frame = QgsLayoutFrame(
-            self.currentComposition,
-            html_item
-        )
+        html_item_frame = QgsLayoutFrame(self.currentComposition, html_item)
         # htmlItemFrame.attemptSetSceneRect(
         #     QRectF(
         #         item['position'][0],
@@ -521,30 +580,22 @@ class CadastreExport:
 
         # set HTML contents
         html_item.setContentMode(QgsLayoutItemHtml.ContentMode.ManualHtml)
-        content = self.getContentForGivenItem(
-            key,
-            item,
-            page
-        )
+        content = self.getContentForGivenItem(key, item, page)
         html_item.setHtml(content)
         html_item.loadHtml()
 
         # Reposition the frame
         html_item_frame.attemptMove(
             QgsLayoutPoint(
-                item['position'][0],
-                item['position'][1] + (dpage) * (self.pageHeight + 10),
-                QgsUnitTypes.LayoutUnit.LayoutMillimeters
+                item["position"][0],
+                item["position"][1] + (dpage) * (self.pageHeight + 10),
+                QgsUnitTypes.LayoutUnit.LayoutMillimeters,
             )
         )
 
         # Set the correct size
         html_item_frame.attemptResize(
-            QgsLayoutSize(
-                item['position'][2],
-                item['position'][3],
-                QgsUnitTypes.LayoutUnit.LayoutMillimeters
-            )
+            QgsLayoutSize(item["position"][2], item["position"][3], QgsUnitTypes.LayoutUnit.LayoutMillimeters)
         )
 
         # Add frame to the HTML item
@@ -557,11 +608,11 @@ class CadastreExport:
         """
         # First add headers
         for key, item in list(self.composerTemplates.items()):
-            if 'sticky' in item:
+            if "sticky" in item:
                 self.buildComposerLabel(key, item, 0)
 
         # Get feature extent
-        exp = QgsExpression('"geo_parcelle" = \'%s\'' % self.geo_parcelle)
+        exp = QgsExpression("\"geo_parcelle\" = '%s'" % self.geo_parcelle)
         request = QgsFeatureRequest(exp)
         extent = None
         features = self.layer.getFeatures(request)
@@ -579,14 +630,14 @@ class CadastreExport:
             vl = QgsVectorLayer("Polygon?crs=" + crs, "temporary", "memory")
             pr = vl.dataProvider()
             vl.startEditing()
-            pr.addFeatures([f for f in self.layer.getFeatures(request)])
+            pr.addFeatures(list(self.layer.getFeatures(request)))
             vl.commitChanges()
             vl.updateExtents()
             props = vl.renderer().symbol().symbolLayer(0).properties()
-            props['outline_width'] = '1'
-            props['outline_color'] = '0,85,255,255'
-            props['outline_style'] = 'solid'
-            props['style'] = 'no'
+            props["outline_width"] = "1"
+            props["outline_color"] = "0,85,255,255"
+            props["outline_style"] = "solid"
+            props["style"] = "no"
             vl.renderer().setSymbol(QgsFillSymbol.createSimple(props))
             self.mProject.addMapLayer(vl)
             self.redlineLayer = vl
@@ -607,14 +658,13 @@ class CadastreExport:
         cm.setBackgroundEnabled(True)
         self.currentComposition.addItem(cm)
 
-    def exportItemAsPdf(self, comptecommunal, suffix=None) -> str:
+    def exportItemAsPdf(self, comptecommunal: str, suffix: str | None = None) -> str:
         """
         Export one PDF file using the template composer
         filled with appropriate data
         for one "compte communal"
         """
         temppath = None
-        # print("export pour le cc %s" % comptecommunal)
         # Set configuration
         self.set_composer_templates(comptecommunal)
 
@@ -623,31 +673,31 @@ class CadastreExport:
 
         if self.currentComposition:
             # Populate composition for all pages
-            # print("numpage %s" % self.numPages)
             for i in range(self.numPages):
                 j = i + 1
                 self.addPageContent(j)
 
             # Add map in first page if export parcelle
-            if self.etype == 'parcelle' and self.print_parcelle_page:
+            if self.etype == "parcelle" and self.print_parcelle_page:
                 self.addParcelleMap()
 
             # Create the pdf output path
             from time import time
+
             temp = "releve_{}_{}_{}.pdf".format(
                 self.etype,
-                comptecommunal.replace('+', 'plus').replace('*', 'fois'),  # .replace('¤', 'plus'),
-                int(time() * 100)
+                comptecommunal.replace("+", "plus").replace("*", "fois"),  # .replace('¤', 'plus'),
+                int(time() * 100),
             )
             # Create regexp to remove all non ascii chars
             import re
+
             r = re.compile(r"[^ -~]")
-            temp = r.sub('', temp)
+            temp = r.sub("", temp)
             # print temp
             temppath = os.path.join(self.targetDir, temp)
             temppath = os.path.normpath(temppath)
-            QgsMessageLog.logMessage(f'Export PDF vers {temppath}', 'cadastre', Qgis.MessageLevel.Info)
-            # print("export temppath %s" % temppath)
+            QgsMessageLog.logMessage(f"Export PDF vers {temppath}", "cadastre", Qgis.MessageLevel.Info)
 
             # add layout to layout manager: for tests only
             # lmgr = self.mProject.layoutManager()
@@ -676,17 +726,15 @@ class CadastreExport:
         if self.isMulti:
             nb = len(self.comptecommunal)
             with self.mProgress(self, nb=nb) as printProgress:
-                printStep = 0
                 # Export PDF for each compte
-                for comptecommunal in self.comptecommunal:
+                for printStep, comptecommunal in enumerate(self.comptecommunal):
                     # export as PDF
                     comptecommunal = comptecommunal.strip("' ")
                     apath = self.exportItemAsPdf(comptecommunal)
                     if apath:
                         paths.append(apath)
 
-                    printStep += 1
-                    printProgress(printStep)
+                    printProgress(printStep + 1)
         else:
             apath = self.exportItemAsPdf(self.comptecommunal)
             if apath:

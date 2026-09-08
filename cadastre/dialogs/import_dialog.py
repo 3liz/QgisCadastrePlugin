@@ -21,11 +21,7 @@ from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.tools import set_window_title
 
 IMPORT_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(
-        str(Path(__file__).resolve().parent.parent),
-        'forms',
-        'cadastre_import_form.ui'
-    )
+    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_import_form.ui")
 )
 
 
@@ -34,12 +30,12 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.iface = iface
         super().__init__(parent)
         self.setupUi(self)
-        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
+        self.setWindowTitle(f"{self.windowTitle()} {set_window_title()}")
 
         # Images
         plugin_dir = str(Path(__file__).resolve().parent.parent)
-        self.btEdigeoSourceDir.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'open.png')))
-        self.btMajicSourceDir.setIcon(QIcon(os.path.join(plugin_dir, 'forms', 'icons', 'open.png')))
+        self.btEdigeoSourceDir.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "open.png")))
+        self.btMajicSourceDir.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "open.png")))
 
         self.connectionDbList = []
         # common cadastre methods
@@ -68,17 +64,11 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         # path buttons selectors
         # paths needed to be chosen by user
         self.pathSelectors = {
-            "edigeoSourceDir": {
-                "button": self.btEdigeoSourceDir,
-                "input": self.inEdigeoSourceDir
-            },
-            "majicSourceDir": {
-                "button": self.btMajicSourceDir,
-                "input": self.inMajicSourceDir
-            }
+            "edigeoSourceDir": {"button": self.btEdigeoSourceDir, "input": self.inEdigeoSourceDir},
+            "majicSourceDir": {"button": self.btMajicSourceDir, "input": self.inMajicSourceDir},
         }
         for key, item in list(self.pathSelectors.items()):
-            control = item['button']
+            control = item["button"]
             slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
 
@@ -111,54 +101,40 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
 
         # set input values from settings
         self.sList = {
-            'dataVersion': {
-                'widget': self.inDataVersion,
-                'wType': 'spinbox',
-                'property': self.dataVersion
+            "dataVersion": {"widget": self.inDataVersion, "wType": "spinbox", "property": self.dataVersion},
+            "dataYear": {"widget": self.inDataYear, "wType": "spinbox", "property": self.dataYear},
+            "schema": {"widget": None},
+            "majicSourceDir": {
+                "widget": self.inMajicSourceDir,
+                "wType": "text",
+                "property": self.majicSourceDir,
             },
-            'dataYear': {
-                'widget': self.inDataYear,
-                'wType': 'spinbox',
-                'property': self.dataYear
+            "edigeoSourceDir": {
+                "widget": self.inEdigeoSourceDir,
+                "wType": "text",
+                "property": self.edigeoSourceDir,
             },
-            'schema': {
-                'widget': None
+            "edigeoDepartement": {
+                "widget": self.inEdigeoDepartement,
+                "wType": "text",
+                "property": self.edigeoDepartement,
             },
-            'majicSourceDir': {
-                'widget': self.inMajicSourceDir,
-                'wType': 'text',
-                'property': self.majicSourceDir
+            "edigeoDirection": {
+                "widget": self.inEdigeoDirection,
+                "wType": "spinbox",
+                "property": self.edigeoDirection,
             },
-            'edigeoSourceDir': {
-                'widget': self.inEdigeoSourceDir,
-                'wType': 'text',
-                'property': self.edigeoSourceDir
+            "edigeoLot": {"widget": self.inEdigeoLot, "wType": "text", "property": self.edigeoLot},
+            "edigeoSourceProj": {
+                "widget": self.inEdigeoSourceProj,
+                "wType": "crs",
+                "property": self.edigeoSourceProj,
             },
-            'edigeoDepartement': {
-                'widget': self.inEdigeoDepartement,
-                'wType': 'text',
-                'property': self.edigeoDepartement
+            "edigeoTargetProj": {
+                "widget": self.inEdigeoTargetProj,
+                "wType": "crs",
+                "property": self.edigeoTargetProj,
             },
-            'edigeoDirection': {
-                'widget': self.inEdigeoDirection,
-                'wType': 'spinbox',
-                'property': self.edigeoDirection
-            },
-            'edigeoLot': {
-                'widget': self.inEdigeoLot,
-                'wType': 'text',
-                'property': self.edigeoLot
-            },
-            'edigeoSourceProj': {
-                'widget': self.inEdigeoSourceProj,
-                'wType': 'crs',
-                'property': self.edigeoSourceProj
-            },
-            'edigeoTargetProj': {
-                'widget': self.inEdigeoTargetProj,
-                'wType': 'crs',
-                'property': self.edigeoTargetProj
-            }
         }
         self.getValuesFromSettings()
         self.inDataVersion.setMaximum(MAXIMUM_YEAR)
@@ -187,16 +163,14 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         Ask the user to select a folder
         and write down the path to appropriate field
         """
-        root_directory = str(self.pathSelectors[key]['input'].text()).strip(' \t')
+        root_directory = str(self.pathSelectors[key]["input"].text()).strip(" \t")
         if not root_directory:
             root_directory = os.path.expanduser("~")
         ipath = QFileDialog.getExistingDirectory(
-            None,
-            "Choisir le répertoire contenant les fichiers",
-            root_directory
+            None, "Choisir le répertoire contenant les fichiers", root_directory
         )
         if os.path.exists(str(ipath)):
-            self.pathSelectors[key]['input'].setText(str(ipath))
+            self.pathSelectors[key]["input"].setText(str(ipath))
 
     def getValuesFromSettings(self):
         """
@@ -205,17 +179,17 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         """
         s = QgsSettings()
         for k, v in list(self.sList.items()):
-            value = s.value("cadastre/%s" % k, '', type=str)
-            if value and value != 'None' and v['widget']:
-                if v['wType'] == 'text':
-                    v['widget'].setText(value)
-                if v['wType'] == 'spinbox':
-                    v['widget'].setValue(int(value))
-                if v['wType'] == 'combobox':
-                    listDic = {v['list'][i]: i for i in range(0, len(v['list']))}
-                    v['widget'].setCurrentIndex(listDic[value])
-                if v['wType'] == 'crs':
-                    v['widget'].setCrs(QgsCoordinateReferenceSystem(value))
+            value = s.value("cadastre/%s" % k, "", type=str)
+            if value and value != "None" and v["widget"]:
+                if v["wType"] == "text":
+                    v["widget"].setText(value)
+                if v["wType"] == "spinbox":
+                    v["widget"].setValue(int(value))
+                if v["wType"] == "combobox":
+                    listDic = {v["list"][i]: i for i in range(0, len(v["list"]))}
+                    v["widget"].setCurrentIndex(listDic[value])
+                if v["wType"] == "crs":
+                    v["widget"].setCrs(QgsCoordinateReferenceSystem(value))
 
         # self.sLists does not provide database type, connection name
         # load_default_values will do
@@ -228,7 +202,9 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
                 QMessageBox.warning(
                     self,
                     QApplication.translate("DBManagerPlugin", "Sorry"),
-                    QApplication.translate("DBManagerPlugin", "No database selected or you are not connected to it.")
+                    QApplication.translate(
+                        "DBManagerPlugin", "No database selected or you are not connected to it."
+                    ),
                 )
                 return
             schema = self.inDbCreateSchema.text()
@@ -240,7 +216,6 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
                 self.db.createSchema(schema)
 
             except BaseError as e:
-
                 DlgDbError.showError(e, self)
                 self.qc.updateLog(e.msg)
                 return
@@ -260,11 +235,11 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.dataVersion = str(self.inDataVersion.text())
         self.dataYear = str(self.inDataYear.text())
         self.schema = str(self.liDbSchema.currentText())
-        self.majicSourceDir = str(self.inMajicSourceDir.text()).strip(' \t')
-        self.edigeoSourceDir = str(self.inEdigeoSourceDir.text()).strip(' \t')
-        self.edigeoDepartement = str(self.inEdigeoDepartement.text()).strip(' \t')
-        self.edigeoDirection = str(self.inEdigeoDirection.text()).strip(' \t')
-        self.edigeoLot = str(self.inEdigeoLot.text()).strip(' \t')
+        self.majicSourceDir = str(self.inMajicSourceDir.text()).strip(" \t")
+        self.edigeoSourceDir = str(self.inEdigeoSourceDir.text()).strip(" \t")
+        self.edigeoDepartement = str(self.inEdigeoDepartement.text()).strip(" \t")
+        self.edigeoDirection = str(self.inEdigeoDirection.text()).strip(" \t")
+        self.edigeoLot = str(self.inEdigeoLot.text()).strip(" \t")
         self.edigeoSourceProj = self.inEdigeoSourceProj.crs().authid()
         self.edigeoTargetProj = self.inEdigeoTargetProj.crs().authid()
 
@@ -275,12 +250,12 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         if self.cbMakeValid.isChecked():
             self.edigeoMakeValid = True
 
-        msg = ''
+        msg = ""
         if not self.db:
-            msg += 'Veuillez sélectionner une base de données\n'
+            msg += "Veuillez sélectionner une base de données\n"
 
         if not self.doMajicImport and not self.doEdigeoImport:
-            msg += 'Veuillez sélectionner le chemin vers les fichiers à importer !\n'
+            msg += "Veuillez sélectionner le chemin vers les fichiers à importer !\n"
 
         if self.edigeoSourceDir and not self.doEdigeoImport:
             msg += "Le chemin spécifié pour les fichiers EDIGEO n'existe pas\n"
@@ -289,17 +264,17 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
             msg += "Le chemin spécifié pour les fichiers MAJIC n'existe pas\n"
 
         if self.doEdigeoImport and not self.edigeoSourceProj:
-            msg += 'La projection source doit être renseignée !\n'
+            msg += "La projection source doit être renseignée !\n"
         if self.doEdigeoImport and not self.edigeoTargetProj:
-            msg += 'La projection cible doit être renseignée !\n'
+            msg += "La projection cible doit être renseignée !\n"
         if len(self.edigeoDepartement) != 2:
-            msg += 'Le département ne doit pas être vide !\n'
+            msg += "Le département ne doit pas être vide !\n"
         if not self.edigeoDirection:
-            msg += 'La direction doit être un entier (0 par défaut) !\n'
+            msg += "La direction doit être un entier (0 par défaut) !\n"
         if not self.edigeoLot:
-            msg += 'Merci de renseigner un lot pour cet import (code commune, date d\'import, etc.)\n'
+            msg += "Merci de renseigner un lot pour cet import (code commune, date d'import, etc.)\n"
 
-        self.qc.updateLog(msg.replace('\n', '<br/>'))
+        self.qc.updateLog(msg.replace("\n", "<br/>"))
         return msg
 
     def processImport(self) -> bool:
@@ -310,7 +285,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         msg = self.checkImportInputData()
         if msg:
             QMessageBox.critical(self, "Cadastre", msg)
-            return
+            return None
 
         # Store settings
         self.storeSettings()
@@ -351,7 +326,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         if database_type == "postgis":
             schema = self.liDbSchema.currentText()
         else:
-            schema = ''
+            schema = ""
         s.setValue("cadastre/schema", schema)
         s.setValue("cadastre/dataVersion", str(self.dataVersion))
         s.setValue("cadastre/dataYear", int(self.dataYear))

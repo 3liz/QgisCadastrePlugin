@@ -3,16 +3,16 @@
 #
 # Copyright (C) 2012 Martin Blech and individual contributors.
 #
-# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
-# documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
-# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+# documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
 # and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 #
 # The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
-# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
-# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 #
@@ -25,6 +25,7 @@ from xml.sax.xmlreader import AttributesImpl
 from io import StringIO
 from inspect import isgenerator
 import codecs
+
 
 class ParsingInterrupted(Exception):
     pass
@@ -74,15 +75,14 @@ class _DictSAXHandler:
         i = full_name.rfind(self.namespace_separator)
         if i == -1:
             return full_name
-        namespace, name = full_name[:i], full_name[i+1:]
+        namespace, name = full_name[:i], full_name[i + 1 :]
         try:
             short_namespace = self.namespaces[namespace]
         except KeyError:
             short_namespace = namespace
         if not short_namespace:
             return name
-        else:
-            return self.namespace_separator.join((short_namespace, name))
+        return self.namespace_separator.join((short_namespace, name))
 
     def _attrs_to_dict(self, attrs):
         if isinstance(attrs, dict):
@@ -90,7 +90,7 @@ class _DictSAXHandler:
         return self.dict_constructor(zip(attrs[0::2], attrs[1::2]))
 
     def startNamespaceDecl(self, prefix, uri):
-        self.namespace_declarations[prefix or ''] = uri
+        self.namespace_declarations[prefix or ""] = uri
 
     def startElement(self, full_name, attrs):
         name = self._build_name(full_name)
@@ -98,7 +98,7 @@ class _DictSAXHandler:
         if self.namespace_declarations:
             if not attrs:
                 attrs = self.dict_constructor()
-            attrs['xmlns'] = self.namespace_declarations
+            attrs["xmlns"] = self.namespace_declarations
             self.namespace_declarations = self.dict_constructor()
         self.path.append((name, attrs or None))
         if len(self.path) >= self.item_depth:
@@ -106,7 +106,7 @@ class _DictSAXHandler:
             if self.xml_attribs:
                 attr_entries = []
                 for key, value in attrs.items():
-                    key = self.attr_prefix+self._build_name(key)
+                    key = self.attr_prefix + self._build_name(key)
                     if self.postprocessor:
                         entry = self.postprocessor(self.path, key, value)
                     else:
@@ -125,8 +125,7 @@ class _DictSAXHandler:
         # without attaching it back to its parent. This avoids accumulating all
         # streamed items in memory when using item_depth > 0.
         if len(self.path) == self.item_depth:
-            data = (None if not self.data
-                    else self.cdata_separator.join(self.data))
+            data = None if not self.data else self.cdata_separator.join(self.data)
             item = self.item
             if self.strip_whitespace and data:
                 data = data.strip() or None
@@ -151,8 +150,7 @@ class _DictSAXHandler:
             self.path.pop()
             return
         if self.stack:
-            data = (None if not self.data
-                    else self.cdata_separator.join(self.data))
+            data = None if not self.data else self.cdata_separator.join(self.data)
             item = self.item
             self.item, self.data = self.stack.pop()
             if self.strip_whitespace and data:
@@ -223,8 +221,16 @@ class _DictSAXHandler:
             return self.force_cdata(self.path[:-1], key, value)
 
 
-def parse(xml_input, encoding=None, expat=expat, process_namespaces=False,
-          namespace_separator=':', disable_entities=True, process_comments=False, **kwargs):
+def parse(
+    xml_input,
+    encoding=None,
+    expat=expat,
+    process_namespaces=False,
+    namespace_separator=":",
+    disable_entities=True,
+    process_comments=False,
+    **kwargs,
+):
     """Parse the given XML input and convert it into a dictionary.
 
     `xml_input` can either be a `string`, a file-like object, or a generator of strings.
@@ -361,17 +367,13 @@ def parse(xml_input, encoding=None, expat=expat, process_namespaces=False,
         whitespace removed. Disable `strip_whitespace` to keep comment
         indentation or padding intact.
     """
-    handler = _DictSAXHandler(namespace_separator=namespace_separator,
-                              **kwargs)
+    handler = _DictSAXHandler(namespace_separator=namespace_separator, **kwargs)
     if isinstance(xml_input, str):
-        encoding = encoding or 'utf-8'
+        encoding = encoding or "utf-8"
         xml_input = xml_input.encode(encoding)
     if not process_namespaces:
         namespace_separator = None
-    parser = expat.ParserCreate(
-        encoding,
-        namespace_separator
-    )
+    parser = expat.ParserCreate(encoding, namespace_separator)
     parser.ordered_attributes = True
     parser.StartNamespaceDeclHandler = handler.startNamespaceDecl
     parser.StartElementHandler = handler.startElement
@@ -381,22 +383,23 @@ def parse(xml_input, encoding=None, expat=expat, process_namespaces=False,
         parser.CommentHandler = handler.comments
     parser.buffer_text = True
     if disable_entities:
+
         def _forbid_entities(*_args, **_kwargs):
             raise ValueError("entities are disabled")
 
         parser.EntityDeclHandler = _forbid_entities
-    if hasattr(xml_input, 'read'):
+    if hasattr(xml_input, "read"):
         parser.ParseFile(xml_input)
     elif isgenerator(xml_input):
         for chunk in xml_input:
             parser.Parse(chunk, False)
-        parser.Parse(b'', True)
+        parser.Parse(b"", True)
     else:
         parser.Parse(xml_input, True)
     return handler.item
 
 
-def _convert_value_to_string(value, encoding='utf-8', bytes_errors='replace'):
+def _convert_value_to_string(value, encoding="utf-8", bytes_errors="replace"):
     """Convert a value to its string representation for XML output.
 
     Handles boolean values consistently by converting them to lowercase.
@@ -448,7 +451,7 @@ def _validate_comment(value):
     return value
 
 
-def _process_namespace(name, namespaces, ns_sep=':', attr_prefix='@'):
+def _process_namespace(name, namespaces, ns_sep=":", attr_prefix="@"):
     if not isinstance(name, str):
         return name
     if not namespaces:
@@ -459,27 +462,33 @@ def _process_namespace(name, namespaces, ns_sep=':', attr_prefix='@'):
         pass
     else:
         ns_res = namespaces.get(ns.strip(attr_prefix))
-        name = '{}{}{}{}'.format(
-            attr_prefix if ns.startswith(attr_prefix) else '',
-            ns_res, ns_sep, name) if ns_res else name
+        name = (
+            "{}{}{}{}".format(attr_prefix if ns.startswith(attr_prefix) else "", ns_res, ns_sep, name)
+            if ns_res
+            else name
+        )
     return name
 
 
-def _emit(key, value, content_handler,
-          attr_prefix='@',
-          cdata_key='#text',
-          depth=0,
-          preprocessor=None,
-          pretty=False,
-          newl='\n',
-          indent='\t',
-          namespace_separator=':',
-          namespaces=None,
-          full_document=True,
-          expand_iter=None,
-          encoding='utf-8',
-          bytes_errors='replace',
-          comment_key='#comment'):
+def _emit(
+    key,
+    value,
+    content_handler,
+    attr_prefix="@",
+    cdata_key="#text",
+    depth=0,
+    preprocessor=None,
+    pretty=False,
+    newl="\n",
+    indent="\t",
+    namespace_separator=":",
+    namespaces=None,
+    full_document=True,
+    expand_iter=None,
+    encoding="utf-8",
+    bytes_errors="replace",
+    comment_key="#comment",
+):
     if isinstance(key, str) and key == comment_key:
         comments_list = value if isinstance(value, list) else [value]
         if isinstance(indent, int):
@@ -507,15 +516,15 @@ def _emit(key, value, content_handler,
         key, value = result
     # Minimal validation to avoid breaking out of tag context
     _validate_name(key, "element")
-    if not hasattr(value, '__iter__') or isinstance(value, (str, bytes, bytearray, memoryview, dict)):
+    if not hasattr(value, "__iter__") or isinstance(value, (str, bytes, bytearray, memoryview, dict)):
         value = [value]
     for index, v in enumerate(value):
         if full_document and depth == 0 and index > 0:
-            raise ValueError('document with multiple roots')
+            raise ValueError("document with multiple roots")
         if v is None:
             v = {}
         elif not isinstance(v, (dict, str)):
-            if expand_iter and hasattr(v, '__iter__') and not isinstance(v, (bytes, bytearray, memoryview)):
+            if expand_iter and hasattr(v, "__iter__") and not isinstance(v, (bytes, bytearray, memoryview)):
                 v = {expand_iter: v}
             else:
                 v = _convert_value_to_string(v, encoding=encoding, bytes_errors=bytes_errors)
@@ -532,18 +541,19 @@ def _emit(key, value, content_handler,
                     cdata = _convert_value_to_string(iv, encoding=encoding, bytes_errors=bytes_errors)
                 continue
             if isinstance(ik, str) and ik.startswith(attr_prefix):
-                ik = _process_namespace(ik, namespaces, namespace_separator,
-                                        attr_prefix)
-                if ik == attr_prefix + 'xmlns' and isinstance(iv, dict):
+                ik = _process_namespace(ik, namespaces, namespace_separator, attr_prefix)
+                if ik == attr_prefix + "xmlns" and isinstance(iv, dict):
                     for k, v in iv.items():
                         _validate_name(k, "attribute")
-                        attr = 'xmlns{}'.format(f':{k}' if k else '')
-                        attrs[attr] = '' if v is None else _convert_value_to_string(
-                            v, encoding=encoding, bytes_errors=bytes_errors
+                        attr = "xmlns{}".format(f":{k}" if k else "")
+                        attrs[attr] = (
+                            ""
+                            if v is None
+                            else _convert_value_to_string(v, encoding=encoding, bytes_errors=bytes_errors)
                         )
                     continue
                 if iv is None:
-                    iv = ''
+                    iv = ""
                 elif not isinstance(iv, str):
                     iv = _convert_value_to_string(iv, encoding=encoding, bytes_errors=bytes_errors)
                 attr_name = ik[len(attr_prefix) :]
@@ -551,22 +561,34 @@ def _emit(key, value, content_handler,
                 attrs[attr_name] = iv
                 continue
             if isinstance(iv, list) and not iv:
-                continue # Skip empty lists to avoid creating empty child elements
+                continue  # Skip empty lists to avoid creating empty child elements
             children.append((ik, iv))
         if isinstance(indent, int):
-            indent = ' ' * indent
+            indent = " " * indent
         if pretty:
             content_handler.ignorableWhitespace(depth * indent)
         content_handler.startElement(key, AttributesImpl(attrs))
         if pretty and children:
             content_handler.ignorableWhitespace(newl)
         for child_key, child_value in children:
-            _emit(child_key, child_value, content_handler,
-                  attr_prefix, cdata_key, depth+1, preprocessor,
-                  pretty, newl, indent, namespaces=namespaces,
-                  namespace_separator=namespace_separator,
-                  expand_iter=expand_iter, encoding=encoding,
-                  bytes_errors=bytes_errors, comment_key=comment_key)
+            _emit(
+                child_key,
+                child_value,
+                content_handler,
+                attr_prefix,
+                cdata_key,
+                depth + 1,
+                preprocessor,
+                pretty,
+                newl,
+                indent,
+                namespaces=namespaces,
+                namespace_separator=namespace_separator,
+                expand_iter=expand_iter,
+                encoding=encoding,
+                bytes_errors=bytes_errors,
+                comment_key=comment_key,
+            )
         if cdata is not None:
             content_handler.characters(cdata)
         if pretty and children:
@@ -582,9 +604,15 @@ class _XMLGenerator(XMLGenerator):
         self._write(f"<!--{escape(text)}-->")
 
 
-def unparse(input_dict, output=None, encoding='utf-8', full_document=True,
-            short_empty_elements=False, comment_key='#comment',
-            **kwargs):
+def unparse(
+    input_dict,
+    output=None,
+    encoding="utf-8",
+    full_document=True,
+    short_empty_elements=False,
+    comment_key="#comment",
+    **kwargs,
+):
     """Emit an XML document for the given `input_dict` (reverse of `parse`).
 
     The resulting XML document is returned as a string, but if `output` (a
@@ -605,7 +633,7 @@ def unparse(input_dict, output=None, encoding='utf-8', full_document=True,
     defaults to `'replace'`.
 
     """
-    bytes_errors = kwargs.pop('bytes_errors', 'replace')
+    bytes_errors = kwargs.pop("bytes_errors", "replace")
     try:
         codecs.lookup_error(bytes_errors)
     except LookupError as exc:
@@ -648,4 +676,3 @@ def unparse(input_dict, output=None, encoding='utf-8', full_document=True,
         except AttributeError:  # pragma no cover
             pass
         return value
-

@@ -12,17 +12,16 @@ __email__ = "info@3liz.org"
 
 
 class BaseProcessingAlgorithm(QgsProcessingAlgorithm):
-
     @abstractmethod
     def shortHelpString(self):
         pass
 
     def tr(self, string):
-        return QCoreApplication.translate('Processing', string)
+        return QCoreApplication.translate("Processing", string)
 
     def createInstance(self):
         return self.__class__()
 
     def icon(self):
         plugin_dir = str(Path(__file__).resolve().parent.parent.parent)
-        return QIcon(join(plugin_dir, 'icon.png'))
+        return QIcon(join(plugin_dir, "icon.png"))

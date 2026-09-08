@@ -1,6 +1,6 @@
-__copyright__ = 'Copyright 2022, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
+__copyright__ = "Copyright 2022, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
 
 import os
 import tempfile
@@ -16,9 +16,9 @@ from cadastre.tools import version
 
 
 class CadastreServer:
-    """ Plugin for QGIS server
+    """Plugin for QGIS server
 
-        This plugin loads Cadastre server service
+    This plugin loads Cadastre server service
     """
 
     def __init__(self, server_iface: QgsServerInterface) -> None:
@@ -31,25 +31,25 @@ class CadastreServer:
             plausible.request_stat_event()
         except Exception as e:
             Logger.log_exception(e)
-            Logger.critical('Error while calling the API stats')
+            Logger.critical("Error while calling the API stats")
 
-        cache_dir_str = os.getenv('QGIS_CADASTRE_CACHE_DIR')
+        cache_dir_str = os.getenv("QGIS_CADASTRE_CACHE_DIR")
         if not cache_dir_str:
             # Create cache in /tmp/org.qgis.cadastre
-            cache_dir_str = os.path.join(tempfile.gettempdir(), 'org.qgis.cadastre')
+            cache_dir_str = os.path.join(tempfile.gettempdir(), "org.qgis.cadastre")
 
         self.cache_dir = Path(cache_dir_str)
         self.cache_dir.mkdir(mode=0o750, parents=True, exist_ok=True)
 
-        Logger.info(f'Cache directory set to {cache_dir_str}')
+        Logger.info(f"Cache directory set to {cache_dir_str}")
 
         reg = server_iface.serviceRegistry()
         reg.registerService(CadastreService(cache_dir=self.cache_dir))
 
     def createService(self, debug: bool = False) -> CadastreService:
-        """ Create  a new service instance
+        """Create  a new service instance
 
-            Used for testing
+        Used for testing
         """
         _ = debug
         return CadastreService(self.cache_dir)

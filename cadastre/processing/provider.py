@@ -20,6 +20,7 @@
  *                                                                         *
  ***************************************************************************/
 """
+
 from os.path import join
 from pathlib import Path
 
@@ -31,20 +32,19 @@ from cadastre.processing.algorithms.edigeo_downloader import EdigeoDownloader
 
 
 class CadastreProvider(QgsProcessingProvider):
-
     def loadAlgorithms(self):
         self.addAlgorithm(ConfigProjectAlgorithm())
         self.addAlgorithm(EdigeoDownloader())
 
-    def id(self):  # NOQA
-        return 'cadastre'
+    def id(self):
+        return "cadastre"
 
     def name(self):
-        return 'Cadastre'
+        return "Cadastre"
 
     def longName(self):
-        return 'Outils d\'exploitation des données cadastrale français'
+        return "Outils d'exploitation des données cadastrale français"
 
     def icon(self):
         plugin_dir = str(Path(__file__).resolve().parent.parent)
-        return QIcon(join(plugin_dir, 'icon.png'))
+        return QIcon(join(plugin_dir, "icon.png"))

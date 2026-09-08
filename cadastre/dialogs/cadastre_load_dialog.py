@@ -13,29 +13,25 @@ from cadastre.cadastre_loading import CadastreLoading
 from cadastre.tools import set_window_title
 
 LOAD_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(
-        str(Path(__file__).resolve().parent.parent),
-        'forms',
-        'cadastre_load_form.ui'
-    )
+    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_load_form.ui")
 )
 
 
 class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
-
-    """ Load data from database. """
+    """Load data from database."""
 
     def __init__(self, iface, cadastre_search_dialog, parent=None):
         super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
-        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
+        self.setWindowTitle(f"{self.windowTitle()} {set_window_title()}")
         self.mc = self.iface.mapCanvas()
 
         self.cadastre_search_dialog = cadastre_search_dialog
 
         # common cadastre methods
         from cadastre.dialogs.dialog_common import CadastreCommon
+
         self.qc = CadastreCommon(self)
         self.ql = CadastreLoading(self)
 
@@ -94,7 +90,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         cb = self.liTheme
         cb.clear()
         for d in dirs:
-            cb.addItem('%s' % d, d)
+            cb.addItem("%s" % d, d)
 
     def onProcessLoadingClicked(self):
         """
@@ -102,9 +98,8 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         from database tables
         when user clicked on button
         """
-        if self.connection:
-            if self.db:
-                self.ql.process_loading()
+        if self.connection and self.db:
+            self.ql.process_loading()
 
     def onLoadSqlLayerClicked(self):
         """
@@ -112,9 +107,8 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         from given SQL
         when user clicked on button
         """
-        if self.connection:
-            if self.db:
-                self.ql.load_sql_layer()
+        if self.connection and self.db:
+            self.ql.load_sql_layer()
 
     def onLoadingEnd(self):
         """
@@ -124,6 +118,6 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         """
         self.cadastre_search_dialog.checkMajicContent()
         self.cadastre_search_dialog.clearComboboxes()
-        self.cadastre_search_dialog.setupSearchCombobox('commune', None, 'sql')
-        self.cadastre_search_dialog.setupSearchCombobox('commune_proprietaire', None, 'sql')
+        self.cadastre_search_dialog.setupSearchCombobox("commune", None, "sql")
+        self.cadastre_search_dialog.setupSearchCombobox("commune_proprietaire", None, "sql")
         # self.cadastre_search_dialog.setupSearchCombobox('section', None, 'sql')

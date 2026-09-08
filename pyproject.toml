@@ -64,6 +64,9 @@ exclude = [
 indent-style = "space"
 
 [tool.ruff.lint]
+# Freeze Ruff defaults
+# see https://pydevtools.com/blog/ruff-0-16-0-default-rules/
+select = ["E4", "E7", "E9", "F"]
 extend-select = [
     "E", "F", "ANN", "W", "T", "COM", "RUF",
     "C4", "SIM", "TC", "RET",
@@ -92,6 +95,12 @@ ignore = [
 ]
 "cadastre/standalone/export.py" = [
     "T201",
+    # Imports must come after the sys.path setup done at the top of the script
+    "E402",
+]
+"cadastre/xmltodict.py" = [
+    "RET503",
+    "SIM105",
 ]
 
 [tool.ruff.lint.isort]

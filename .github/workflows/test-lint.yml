@@ -31,4 +31,4 @@ jobs:
 
       - name: Run linter
         run: |
-          ruff check --preview --output-format=concise cadastre
+          ruff check --output-format=concise cadastre

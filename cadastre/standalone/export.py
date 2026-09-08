@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+"""
+Script used by Lizmap Web Client to make a asynchrone call from PHP.
+"""
+
 __copyright__ = "Copyright 2021, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
@@ -7,16 +11,12 @@ __email__ = "info@3liz.org"
 import os
 import sys
 
-"""
-Script used by Lizmap Web Client to make a asynchrone call from PHP.
-"""
-
 qgisPrefixPath = "/usr"
 os.environ["DISPLAY"] = ":99"
 os.environ["HOME"] = "/srv/qgis"
 sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/"))
 sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/plugins/"))
-sys.path.append('/srv/qgis/plugins')
+sys.path.append("/srv/qgis/plugins")
 
 import argparse
 
@@ -28,53 +28,33 @@ from cadastre.dialogs.dialog_common import CadastreCommon
 
 # Variables
 parser = argparse.ArgumentParser()
+parser.add_argument("-P", metavar='"Project file"', help="Usage: Override QGS project file")
+parser.add_argument("-L", metavar='"Parcelle layer name"', help="Usage: Override Parcelle layer name")
+parser.add_argument("-I", metavar='"Parcelle ID"', help="Usage: Override Parcelle ID")
+parser.add_argument("-T", metavar='"Export type"', help="Usage: Override Export type")
 parser.add_argument(
-    '-P',
-    metavar='\"Project file\"',
-    help='Usage: Override QGS project file'
+    "-S",
+    metavar='"For third-party"',
+    help="Usage: Specify the export is for third-party and must be simplified: use true or false",
 )
-parser.add_argument(
-    '-L',
-    metavar='\"Parcelle layer name\"',
-    help='Usage: Override Parcelle layer name'
-)
-parser.add_argument(
-    '-I',
-    metavar='\"Parcelle ID\"',
-    help='Usage: Override Parcelle ID'
-)
-parser.add_argument(
-    '-T',
-    metavar='\"Export type\"',
-    help='Usage: Override Export type'
-)
-parser.add_argument(
-    '-S',
-    metavar='\"For third-party\"',
-    help='Usage: Specify the export is for third-party and must be simplified: use true or false'
-)
-parser.add_argument(
-    '-O',
-    metavar='\"Output log file\"',
-    help='Usage: Override Output log file'
-)
+parser.add_argument("-O", metavar='"Output log file"', help="Usage: Override Output log file")
 
 ####      Hardcode variables here      ####
 #### Or use flags to override defaults ####
 # -P = Project file
-project_path = 'c:your\\project\\location.qgs'
+project_path = "c:your\\project\\location.qgs"
 # -L = Parcelle Layer Name ("Parcelles")
-parcelle_layer = 'Parcelles'
+parcelle_layer = "Parcelles"
 # -I = Parcelle ID ("-1")
-parcelle_id = '2018300189000EY0670'
+parcelle_id = "2018300189000EY0670"
 # -T = Export type ("proprietaire")
-export_type = 'parcelle'
+export_type = "parcelle"
 # -S = For third party ("True")
 for_third_party = False
 # -D = Target directory for PDF ("/tmp/")
-target_dir = '/tmp/'
+target_dir = "/tmp/"
 # -O = Output log file ("/tmp/export_cadastre.log")
-output_log = '/tmp/export_cadastre.log'
+output_log = "/tmp/export_cadastre.log"
 
 #### Setting variables using flags ####
 if "-P" in sys.argv:
@@ -87,7 +67,7 @@ if "-T" in sys.argv:
     export_type = sys.argv[sys.argv.index("-T") + 1]
 if "-S" in sys.argv:
     _for_third_party = sys.argv[sys.argv.index("-S") + 1]
-    if _for_third_party.lower() == 'true':
+    if _for_third_party.lower() == "true":
         for_third_party = True
 if "-D" in sys.argv:
     target_dir = sys.argv[sys.argv.index("-D") + 1]
@@ -103,10 +83,7 @@ QgsApplication.initQgis()
 p = QgsProject()
 p.read(project_path)
 canvas = QgsMapCanvas()
-bridge = QgsLayerTreeMapCanvasBridge(
-    p.layerTreeRoot(),
-    canvas
-)
+bridge = QgsLayerTreeMapCanvasBridge(p.layerTreeRoot(), canvas)
 bridge.setCanvasLayers()
 
 # Get the layers in the project
@@ -114,13 +91,13 @@ layerList = p.mapLayersByName(parcelle_layer)
 if not layerList:
     layers = p.mapLayers()
     for lname, layer in layers.items():
-        print(lname + ' ' + layer.name() + ' ' + parcelle_layer)
+        print(lname + " " + layer.name() + " " + parcelle_layer)
     layerList = [layer for lname, layer in layers.items() if layer.name() == parcelle_layer]
 layer = layerList[0]
 
 # Get Feature
 req = QgsFeatureRequest()
-req.setFilterExpression(' "geo_parcelle" = \'%s\' ' % parcelle_id)
+req.setFilterExpression(" \"geo_parcelle\" = '%s' " % parcelle_id)
 it = layer.getFeatures(req)
 feat = None
 for f in it:
@@ -133,35 +110,23 @@ connector = CadastreCommon.getConnectorFromUri(connectionParams)
 
 # Get compte communal
 comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
-    feat['geo_parcelle'],
-    connectionParams,
-    connector
+    feat["geo_parcelle"], connectionParams, connector
 )
 
 pmulti = 0
-if export_type == 'proprietaire' and pmulti == 1:
+if export_type == "proprietaire" and pmulti == 1:
     comptecommunal = CadastreCommon.getProprietaireComptesCommunaux(
-        comptecommunal,
-        connectionParams,
-        connector
+        comptecommunal, connectionParams, connector
     )
 
 # Export PDF
 print(target_dir)
-qex = CadastreExport(
-    p,
-    layer,
-    export_type,
-    comptecommunal,
-    feat['geo_parcelle'],
-    target_dir,
-    for_third_party
-)
+qex = CadastreExport(p, layer, export_type, comptecommunal, feat["geo_parcelle"], target_dir, for_third_party)
 paths = qex.export_as_pdf()
 print(paths)
 
 # Add path into file
-with open(output_log, 'w', encoding='utf8') as f:
+with open(output_log, "w", encoding="utf8") as f:
     for path in paths:
         f.write(path)
 

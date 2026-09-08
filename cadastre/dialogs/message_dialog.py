@@ -12,23 +12,18 @@ from qgis.PyQt.QtWidgets import QDialog
 from cadastre.tools import set_window_title
 
 MESSAGE_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(
-        str(Path(__file__).resolve().parent.parent),
-        'forms',
-        'cadastre_message_form.ui'
-    )
+    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_message_form.ui")
 )
 
 
 class CadastreMessageDialog(QDialog, MESSAGE_FORM_CLASS):
-
-    """ Displays a message to the user. """
+    """Displays a message to the user."""
 
     def __init__(self, iface, message, parent=None):
         super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
-        self.setWindowTitle(f'{self.windowTitle()} {set_window_title()}')
+        self.setWindowTitle(f"{self.windowTitle()} {set_window_title()}")
 
         self.teMessage.setText(message)
 

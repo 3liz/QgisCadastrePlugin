@@ -51,10 +51,10 @@ requirements/%.txt: uv.lock
 LINT_TARGETS=$(PYTHON_MODULE) $(EXTRA_LINT_TARGETS)
 
 lint::
-	@ $(RUN) ruff check --preview --output-format=concise $(LINT_TARGETS)
+	@ $(RUN) ruff check --output-format=concise $(LINT_TARGETS)
 
 lint-fix:
-	@ $(RUN) ruff check --preview --fix $(LINT_TARGETS)
+	@ $(RUN) ruff check --fix $(LINT_TARGETS)
 
 format:
 	@ $(RUN) ruff format $(LINT_TARGETS)

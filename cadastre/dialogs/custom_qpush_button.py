@@ -13,8 +13,20 @@ class CustomPushButton(QPushButton):
         super().__init__(*args)
 
     def initPushButton(
-            self, sizeWidth, sizeHeight, coordX, coordY, name, text,
-            toolTip, isGeom, icon, iconWidth, iconHeight, isStyleSheeted):
+        self,
+        sizeWidth,
+        sizeHeight,
+        coordX,
+        coordY,
+        name,
+        text,
+        toolTip,
+        isGeom,
+        icon,
+        iconWidth,
+        iconHeight,
+        isStyleSheeted,
+    ):
         self.setMinimumSize(sizeWidth, sizeHeight)
         self.setMaximumSize(sizeWidth, sizeHeight)
         self.iconWidth = iconWidth
