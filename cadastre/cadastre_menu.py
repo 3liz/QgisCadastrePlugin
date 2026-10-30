@@ -243,6 +243,10 @@ class CadastreMenu:
         """
         Update search button icon
         """
+        if not self.search_action or not self.cadastre_search_dialog:
+            # The plugin is being unloaded
+            return
+
         if self.cadastre_search_dialog.isVisible():
             icon_file = "nosearch.png"
         else:
@@ -430,11 +434,15 @@ class CadastreMenu:
     def unload_gui(self):
         """Remove everything added by initGui, so that the plugin can be reloaded"""
         # Signals, otherwise this instance would still be called after a reload
-        for signal, slot in (
+        signals = [
             (self.iface.projectRead, self.onProjectRead),
             (self.iface.newProjectCreated, self.on_new_project_created),
             (QgsProject.instance().layersRemoved, self.checkIdentifyParcelleTool),
-        ):
+        ]
+        if self.cadastre_search_dialog:
+            # Removing the dock widget hides it, after the actions have been deleted
+            signals.append((self.cadastre_search_dialog.visibilityChanged, self.updateSearchButton))
+        for signal, slot in signals:
             # TypeError if not connected, when initGui has not been fully run
             with contextlib.suppress(TypeError):
                 signal.disconnect(slot)

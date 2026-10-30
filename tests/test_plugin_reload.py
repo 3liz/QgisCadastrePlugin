@@ -53,7 +53,13 @@ def test_reload(qgis_iface: QgisInterface, plugin: Any):
         assert project.receivers(project.layersRemoved) == receivers[0] + 1
         assert qgis_iface.receivers(qgis_iface.newProjectCreated) == receivers[1] + 1
 
+        dock = menu.cadastre_search_dialog
+        dock_receivers = dock.receivers(dock.visibilityChanged)
         menu.unload()
+
+        # QGIS hides the dock widget when it is removed: the deleted search action must not be updated
+        assert dock.receivers(dock.visibilityChanged) == dock_receivers - 1
+        menu.updateSearchButton()
         delete_later_objects()
 
         # Everything has been removed
