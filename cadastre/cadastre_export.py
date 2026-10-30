@@ -432,7 +432,7 @@ class CadastreExport:
 
                 # fill empty data to have full size table
                 if (
-                    key in self.main_tables.keys
+                    key in self.main_tables
                     and key not in self.contentKeeped
                     and len(data) < self.maxLineNumber
                 ):

@@ -147,6 +147,35 @@ Le déroulement de l'import est écrit dans le bloc texte situé en bas de la fe
     Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, l'extension
     n'intègre pas de bouton pour annuler un import en cours.
 
+## Tester l'extension avec des données d'exemple
+
+Pour découvrir l'extension sans avoir de données cadastrales, vous pouvez utiliser les données de test
+du dépôt, pour la commune de Cornillon-Confoux :
+
+* les données EDIGEO : [tests/fixtures/edigeo/13029](https://github.com/3liz/QgisCadastrePlugin/tree/master/tests/fixtures/edigeo/13029)
+* les données MAJIC : [tests/fixtures/majic/13029](https://github.com/3liz/QgisCadastrePlugin/tree/master/tests/fixtures/majic/13029)
+
+!!! warning "Données MAJIC fictives"
+    **Les données MAJIC de test sont entièrement fictives.** **Les propriétaires, noms, prénoms, dates et
+    lieux de naissance, adresses, locaux, évaluations et montants ont été inventés** : ils ne décrivent
+    aucune personne et aucun bien réel. **Ces données ne doivent pas être utilisées comme des données
+    cadastrales.**
+
+    Seules les parcelles correspondent à celles des données EDIGEO de test, afin que les deux jeux de
+    données soient liés après l'import.
+
+Téléchargez les deux répertoires, puis lancez l'import avec les paramètres suivants :
+
+* **Projection source** et **projection cible** : `EPSG:2154`
+* **Département** : `13`
+* **Direction** : `2`
+* **Version du format** et **millésime** : `2026`
+* **Lot** : par exemple `13029`
+
+Vous pouvez ensuite charger les couches, ouvrir la fiche d'une parcelle avec ses propriétaires et ses
+locaux, faire une recherche par propriétaire ou éditer un relevé de propriété, **à partir de ces données
+fictives**.
+
 ## Outre-mer
 
 Pour l'import des communes en France d'outre-mer, il faut découper le code du département pour avoir la direction.

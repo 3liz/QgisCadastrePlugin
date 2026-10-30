@@ -124,14 +124,15 @@ def test_search_and_parcelle_dialogs(database: CadastreDatabase, project: QgsPro
 
     search_dialog = CadastreSearchDialog(qgis_iface)
     search_dialog.checkMajicContent()
-    # MAJIC fixtures only contain the TOPO file with data
     assert search_dialog.hasMajicDataVoie
-    assert not search_dialog.hasMajicDataProp
+    assert search_dialog.hasMajicDataProp
+    assert search_dialog.hasMajicDataParcelle
 
     layer = project.mapLayersByName("Parcelles")[0]
     feature = next(layer.getFeatures())
     dialog = CadastreParcelleDialog(qgis_iface, layer, feature, search_dialog)
 
-    assert not dialog.hasMajicDataProp
+    assert dialog.hasMajicDataProp
     assert feature["geo_parcelle"] in dialog.windowTitle()
     assert dialog.parcelleInfo.toPlainText().strip()
+    assert "Propriétaire" in dialog.proprietairesInfo.toPlainText()
