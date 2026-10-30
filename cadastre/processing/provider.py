@@ -27,12 +27,15 @@ from qgis.PyQt.QtGui import QIcon
 from cadastre.tools import plugin_path
 from cadastre.processing.algorithms.config import ConfigProjectAlgorithm
 from cadastre.processing.algorithms.edigeo_downloader import EdigeoDownloader
+from cadastre.processing.algorithms.import_data import ImportPostgisAlgorithm, ImportSpatialiteAlgorithm
 
 
 class CadastreProvider(QgsProcessingProvider):
     def loadAlgorithms(self):
         self.addAlgorithm(ConfigProjectAlgorithm())
         self.addAlgorithm(EdigeoDownloader())
+        self.addAlgorithm(ImportPostgisAlgorithm())
+        self.addAlgorithm(ImportSpatialiteAlgorithm())
 
     def id(self):
         return "cadastre"

@@ -8,6 +8,9 @@
   * Correction de la gestion des erreurs lors de l'exécution d'`ogr2ogr`
   * Les erreurs SQL sont affichées dans le journal de l'import au lieu d'une fenêtre
   * Correction de l'affichage des erreurs lors d'un manque de mémoire ou d'une archive EDIGEO corrompue
+* Processing
+  * Nouveaux traitements « Import des données dans PostGIS » et « Import des données dans Spatialite »,
+    équivalents au dialogue d'import, pour automatiser les imports (modèles, scripts)
 * Chargement
   * Correction du message « expression invalide » affiché à tort sans filtre de communes
 * Interface
