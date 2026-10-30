@@ -18,6 +18,7 @@ from qgis.PyQt.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox
 from cadastre.cadastre_import import cadastreImport
 from cadastre.definitions import MAXIMUM_YEAR, MINIMUM_YEAR
 from cadastre.dialogs.dialog_common import CadastreCommon
+from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback
 from cadastre.tools import set_window_title
 
 IMPORT_FORM_CLASS, _ = uic.loadUiType(
@@ -291,7 +292,7 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.storeSettings()
 
         # cadastreImport instance
-        qi = cadastreImport(self)
+        qi = cadastreImport(self, CadastreDialogFeedback(self.txtLog, self.pbProcess, self.stepLabel))
 
         # Check if structure already exists in the database/schema
         self.qc.check_database_for_existing_structure()

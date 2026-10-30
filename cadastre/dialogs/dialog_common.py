@@ -14,18 +14,18 @@ from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
 from qgis.core import QgsMapLayer, QgsProject, QgsSettings
 from qgis.PyQt.QtCore import QFileInfo, Qt
-from qgis.PyQt.QtGui import QTextCursor
 from qgis.PyQt.QtWidgets import QApplication, QFileDialog
 
 import cadastre.cadastre_common_base as common_utils
 
 from ..logger import Logger
+from .dialog_feedback import append_log
+
 
 class CadastreCommon:
     """Import data from EDIGEO and MAJIC files."""
 
     def __init__(self, dialog):
-
         self.dialog = dialog
 
         # plugin directory path
@@ -42,29 +42,7 @@ class CadastreCommon:
         """
         Update the log
         """
-        if os.getenv("CI", "").lower() == "true":
-            # Running headless, hack to see logs
-            Logger.info(msg)
-            return
-
-        t = self.dialog.txtLog
-        t.ensureCursorVisible()
-        prefix = '<span style="font-weight:normal;">'
-        suffix = "</span>"
-        t.append(f"{prefix} {msg} {suffix}")
-        c = t.textCursor()
-        c.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.MoveAnchor)
-        t.setTextCursor(c)
-        QApplication.instance().processEvents()
-
-    def updateProgressBar(self):
-        """
-        Update the progress bar
-        """
-        if self.dialog.go:
-            self.dialog.step += 1
-            self.dialog.pbProcess.setValue(int(self.dialog.step * 100 / self.dialog.totalSteps))
-            QApplication.instance().processEvents()
+        append_log(self.dialog.txtLog, msg)
 
     def load_default_values(self):
         """Try to load values in the UI which are stored in QGIS settings.
@@ -303,6 +281,7 @@ class CadastreCommon:
         return tableExists
 
     # Bind as class properties for compatibility
+    @staticmethod
     def getLayerFromLegendByTableProps(*args, **kwargs) -> QgsMapLayer:
         return common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), *args, **kwargs)
 

@@ -143,7 +143,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             self.butActions.setGeometry(max(300, self.width() - 60), 15, 48, 48)
             self.txtLog.setGeometry(5, self.height() - 32, max(200, self.width() - 100), 20)
         except Exception as err:
-            Logger.error("Error while resizing the dialog items")
+            Logger.critical("Error while resizing the dialog items")
             Logger.log_exception(err)
 
     def setObj(self):
@@ -279,7 +279,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             self.copyPageQc.setEnabled(self.tabWidget.currentIndex() == 1)
         except Exception as err:
             Logger.log_exception(err)
-            Logger.error("Error while updating the context menu")
+            Logger.critical("Error while updating the context menu")
 
     def builderContextMenu(self, obj, actions):
         contextMnu = QMenu()

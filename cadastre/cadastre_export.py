@@ -482,7 +482,7 @@ class CadastreExport:
             msg = "Erreur lors de l'export: %s" % e
             self.go = False
             # fix_print_with_import
-            Logger.error(f"{msg}")
+            Logger.critical(f"{msg}")
             return msg
 
     def createComposition(self):

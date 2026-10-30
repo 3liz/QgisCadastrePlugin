@@ -33,6 +33,7 @@ import zipfile
 
 from datetime import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 from string import Template
 
 from db_manager.db_plugins.plugin import BaseError
@@ -43,6 +44,7 @@ from qgis.core import (
     QgsAuthMethodConfig,
     QgsMessageLog,
     QgsProcessingException,
+    QgsProcessingFeedback,
 )
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
@@ -63,14 +65,18 @@ from .logger import Logger
 
 from processing.algs.gdal.GdalUtils import GdalUtils
 
+if TYPE_CHECKING:
+    from cadastre.dialogs.import_dialog import CadastreImportDialog
+
 
 class SecurityError(Exception):
     pass
 
 
 class cadastreImport(QObject):
-    def __init__(self, dialog):
+    def __init__(self, dialog: "CadastreImportDialog", feedback: QgsProcessingFeedback):
         self.dialog = dialog
+        self.feedback = feedback
 
         # common cadastre methods
         self.qc = self.dialog.qc
@@ -207,8 +213,8 @@ class cadastreImport(QObject):
         """
         self.totalSteps = step_number
         self.step = 0
-        self.dialog.stepLabel.setText("<b>%s</b>" % title)
-        self.qc.updateLog("<h3>%s</h3>" % title)
+        self.feedback.setProgressText(title)
+        self.feedback.pushInfo("<h3>%s</h3>" % title)
 
     def updateProgressBar(self):
         """
@@ -216,7 +222,7 @@ class cadastreImport(QObject):
         """
         if self.go:
             self.step += 1
-            self.dialog.pbProcess.setValue(int(self.step * 100 / self.totalSteps))
+            self.feedback.setProgress(self.step * 100 / self.totalSteps)
 
     def updateTimer(self):
         """
@@ -225,7 +231,7 @@ class cadastreImport(QObject):
         if self.go:
             b = datetime.now()
             diff = b - self.startTime
-            self.qc.updateLog("%s s" % diff.seconds)
+            self.feedback.pushInfo("%s s" % diff.seconds)
 
     def beginImport(self):
         """
@@ -292,7 +298,7 @@ class cadastreImport(QObject):
             if self.go:
                 s = item["script"]
                 self.dialog.subStepLabel.setText(item["title"])
-                self.qc.updateLog("%s" % item["title"])
+                self.feedback.pushInfo("%s" % item["title"])
                 self.updateProgressBar()
                 self.replaceParametersInScript(s, replace_dict)
                 self.executeSqlScript(s, "constraints" in item)
@@ -328,7 +334,6 @@ class cadastreImport(QObject):
             self.executeSqlScript(s, False)
 
     def importMajic(self):
-
         # Log
         job_title = "MAJIC"
         self.beginJobLog(13, job_title)
@@ -458,7 +463,7 @@ class cadastreImport(QObject):
         for item in script_list:
             if self.go:
                 self.dialog.subStepLabel.setText(item["title"])
-                self.qc.updateLog("%s" % item["title"])
+                self.feedback.pushInfo("%s" % item["title"])
                 if "script" in item:
                     s = item["script"]
                     self.replaceParametersInScript(s, replace_dict)
@@ -488,12 +493,14 @@ class cadastreImport(QObject):
         for item in self.majicSourceFileNames:
             table = item["table"]
             file_regex = item["regex"].upper()
-            self.qc.updateLog(f"Recherche des fichiers {table} contenant {file_regex} une fois en majuscule.")
+            self.feedback.pushInfo(
+                f"Recherche des fichiers {table} contenant {file_regex} une fois en majuscule."
+            )
             # Get MAJIC files for item
             maj_list = []
             for root, dirs, files in os.walk(self.dialog.majicSourceDir):
                 for file_sub_path in files:
-                    # self.qc.updateLog(file_sub_path)
+                    # self.feedback.pushInfo(file_sub_path)
                     # Check if the file matches the regex given for this file type
                     if re.search(file_regex, os.path.split(file_sub_path)[1].upper()):
                         # Add file path to the list
@@ -513,7 +520,7 @@ class cadastreImport(QObject):
 
                         msg = f"Lecture du fichier Majic: {file_path}"
                         Logger.info(msg)
-                        self.qc.updateLog(msg)
+                        self.feedback.pushInfo(msg)
                         try:
                             # Get dep_dir : first line with content
                             with open(file_path, encoding="utf8") as fin:
@@ -527,7 +534,7 @@ class cadastreImport(QObject):
                             Logger.critical(f"Erreur de lecture du fichier '{file_path}': {err}")
                             raise
 
-            self.qc.updateLog(
+            self.feedback.pushInfo(
                 f"Nous avons trouvé {len(maj_list)} fichier{('s' if len(maj_list) > 1 else '')} pour {table}."
             )
             majic_files_found[table] = maj_list
@@ -566,7 +573,7 @@ class cadastreImport(QObject):
                 URL_TOPO,
                 URL_TOPO,
             )
-            self.qc.updateLog(msg)
+            self.feedback.pushInfo(msg)
             self.go = False
 
             return False
@@ -583,12 +590,14 @@ class cadastreImport(QObject):
         if len(list(dep_dirs.keys())) > 1:
             self.go = False
             lst = ",<br/> ".join(f"département : {a[0:2]} et direction : {a[2:3]}" for a in dep_dirs)
-            self.qc.updateLog(
+            self.feedback.pushInfo(
                 "<b>"
                 "ERREUR : MAJIC - Les données concernent des départements et codes direction différents :"
                 "</b>\n<br/> {}".format(lst)
             )
-            self.qc.updateLog("<b>Veuillez réaliser l'import en %s fois.</b>" % len(list(dep_dirs.keys())))
+            self.feedback.pushInfo(
+                "<b>Veuillez réaliser l'import en %s fois.</b>" % len(list(dep_dirs.keys()))
+            )
 
             return False
 
@@ -622,7 +631,7 @@ class cadastreImport(QObject):
                 self.dialog.inEdigeoDirection.setValue(int(f_dir))
             else:
                 self.go = False
-                self.qc.updateLog(msg)
+                self.feedback.pushInfo(msg)
 
                 return False
 
@@ -638,7 +647,7 @@ class cadastreImport(QObject):
 
             return zip_longest(*[iter(iterable)] * pieces_number, fillvalue=padvalue)
         except MemoryError:
-            self.qc.updateLog(IMPORT_MEMORY_ERROR_MESSAGE)
+            self.feedback.pushInfo(IMPORT_MEMORY_ERROR_MESSAGE)
             self.go = False
 
             return None
@@ -678,7 +687,7 @@ class cadastreImport(QObject):
                         sql += "COMMIT;"
                     except MemoryError:
                         # Issue #326
-                        self.qc.updateLog(IMPORT_MEMORY_ERROR_MESSAGE)
+                        self.feedback.pushInfo(IMPORT_MEMORY_ERROR_MESSAGE)
                         self.go = False
 
                         return False
@@ -700,14 +709,14 @@ class cadastreImport(QObject):
                         del c
                     except MemoryError as err:
                         # Issue #326
-                        Logger.error(f"{err}")
-                        self.qc.updateLog(IMPORT_MEMORY_ERROR_MESSAGE)
+                        Logger.critical(f"{err}")
+                        self.feedback.pushInfo(IMPORT_MEMORY_ERROR_MESSAGE)
                         self.go = False
 
                         return False
                     except Exception as err:
                         Logger.log_exception(err)
-                        self.qc.updateLog(f"<b>ERREUR : l'import du fichier '{file_path}' a échoué</b>")
+                        self.feedback.pushInfo(f"<b>ERREUR : l'import du fichier '{file_path}' a échoué</b>")
                         self.go = False
 
                         return False
@@ -751,8 +760,8 @@ class cadastreImport(QObject):
             self.totalSteps += len(majic_files_found[table])
             processed_files_count += len(majic_files_found[table])
             for file_path in majic_files_found[table]:
-                self.qc.updateLog(f"<b>{table}</b>")
-                self.qc.updateLog(file_path)
+                self.feedback.pushInfo(f"<b>{table}</b>")
+                self.feedback.pushInfo(file_path)
                 if table == "topo":
                     import_file = self.import_file_with_ogr(file_path, "topo")
                 else:
@@ -761,7 +770,7 @@ class cadastreImport(QObject):
                     continue
 
         if not processed_files_count:
-            self.qc.updateLog(
+            self.feedback.pushInfo(
                 "<b>"
                 "ERREUR : MAJIC - aucun fichier trouvé. Vérifier les noms de fichiers dans les paramètres "
                 "du plugin et que le répertoire"
@@ -784,7 +793,7 @@ class cadastreImport(QObject):
         # Log : Print connection parameters to database
         jobTitle = "EDIGEO"
         self.beginJobLog(21, jobTitle)
-        self.qc.updateLog(
+        self.feedback.pushInfo(
             "Type de base : {}, Connexion: {}, Schéma: {}".format(
                 self.dialog.dbType, self.dialog.connectionName, self.dialog.schema
             )
@@ -848,7 +857,7 @@ class cadastreImport(QObject):
         for item in scriptList:
             if self.go:
                 self.dialog.subStepLabel.setText(item["title"])
-                self.qc.updateLog("%s" % item["title"])
+                self.feedback.pushInfo("%s" % item["title"])
                 s = item["script"]
                 self.replaceParametersInScript(s, replaceDict)
                 self.updateProgressBar()
@@ -948,7 +957,7 @@ class cadastreImport(QObject):
         for item in scriptList:
             if self.go:
                 self.dialog.subStepLabel.setText(item["title"])
-                self.qc.updateLog("%s" % item["title"])
+                self.feedback.pushInfo("%s" % item["title"])
                 s = item["script"]
                 self.replaceParametersInScript(s, replaceDict)
                 self.updateProgressBar()
@@ -1011,7 +1020,7 @@ class cadastreImport(QObject):
                     # rmt = 1
         except OSError as e:
             delmsg = "<b>Erreur lors de la suppression des répertoires temporaires: %s</b>" % e
-            self.qc.updateLog(delmsg)
+            self.feedback.pushInfo(delmsg)
             self.go = False
 
         # Delete labels outside commune bbox
@@ -1068,7 +1077,7 @@ class cadastreImport(QObject):
         into a temporary folder
         """
         if self.go:
-            self.qc.updateLog(f"* Copie du répertoire {source} vers {target}")
+            self.feedback.pushInfo(f"* Copie du répertoire {source} vers {target}")
 
             QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
@@ -1175,7 +1184,7 @@ class cadastreImport(QObject):
         """
         if self.go:
             QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
-            self.qc.updateLog("* Décompression des fichiers")
+            self.feedback.pushInfo("* Décompression des fichiers")
 
             # get all the zip files
             zipFileList = self.list_files_in_directory(path, ["zip"])
@@ -1195,7 +1204,7 @@ class cadastreImport(QObject):
                     try:
                         os.remove(filename)
                     except OSError:
-                        self.qc.updateLog("<b>Erreur lors de la suppression de %s</b>" % str(filename))
+                        self.feedback.pushInfo("<b>Erreur lors de la suppression de %s</b>" % str(filename))
                         pass  # in Windows, sometime file is not unlocked
 
                 error_message = (
@@ -1205,9 +1214,9 @@ class cadastreImport(QObject):
 
                 i = 0
                 # untar all tar.bz2 in source folder
-                self.qc.updateLog("* Recherche des fichiers .bz2")
+                self.feedback.pushInfo("* Recherche des fichiers .bz2")
                 tarFileListA = self.list_files_in_directory(path, ["bz2"])
-                self.qc.updateLog(f"{len(tarFileListA)} fichier(s) .bz2 dans {path}")
+                self.feedback.pushInfo(f"{len(tarFileListA)} fichier(s) .bz2 dans {path}")
                 for z in tarFileListA:
                     with tarfile.open(z) as t:
                         try:
@@ -1220,7 +1229,7 @@ class cadastreImport(QObject):
                                     "concernant l'extraction d'une archive. Veuillez monter votre version de QGIS afin "
                                     "de passer à une version plus récente dès que possible."
                                 )
-                                self.qc.updateLog(f"<b>{msg}</b>")
+                                self.feedback.pushInfo(f"<b>{msg}</b>")
                                 # noinspection PyTypeChecker
                                 QgsMessageLog.logMessage(msg, "cadastre", Qgis.MessageLevel.Warning)
                                 arguments.pop("filter")
@@ -1235,14 +1244,14 @@ class cadastreImport(QObject):
                             self.go = False
                             t.close()
                             error = error_message.format(z)
-                            self.qc.updateLog(error)
+                            self.feedback.pushInfo(error)
                             return error
                         i += 1
                         t.close()
 
                 # untar all new tar.bz2 found in self.edigeoPlainDir
                 tarFileListB = self.list_files_in_directory(self.edigeoPlainDir, ["bz2"])
-                self.qc.updateLog(f"{len(tarFileListA)} fichier(s) .bz2 dans {self.edigeoPlainDir}")
+                self.feedback.pushInfo(f"{len(tarFileListA)} fichier(s) .bz2 dans {self.edigeoPlainDir}")
                 for z in tarFileListB:
                     with tarfile.open(z) as t:
                         try:
@@ -1251,13 +1260,13 @@ class cadastreImport(QObject):
                                 os.path.join(self.edigeoPlainDir, f"tar_{i}"),
                                 arguments,
                             )
-                        except tarfile.ReadErrori as err:
+                        except tarfile.ReadError as err:
                             # Issue GitHub #339
                             Logger.log_exception(err)
                             self.go = False
                             t.close()
                             error = error_message.format(z)
-                            self.qc.updateLog(error)
+                            self.feedback.pushInfo(error)
                             return error
                         i += 1
                         t.close()
@@ -1265,14 +1274,14 @@ class cadastreImport(QObject):
                         os.remove(z)
                     except OSError as err:
                         Logger.log_exception(err)
-                        self.qc.updateLog(f"<b>Erreur lors de la suppression de {z}</b>")
+                        self.feedback.pushInfo(f"<b>Erreur lors de la suppression de {z}</b>")
                         pass  # in Windows, sometime file is not unlocked
 
             except OSError as err:
                 Logger.log_exception(err)
                 msg = "<b>Erreur lors de l'extraction des fichiers EDIGEO</b>"
                 self.go = False
-                self.qc.updateLog(msg)
+                self.feedback.pushInfo(msg)
                 return msg
 
             finally:
@@ -1304,13 +1313,13 @@ class cadastreImport(QObject):
             except OSError as e:
                 msg = "<b>Erreur lors du paramétrage des scripts d'import: %s</b>" % e
                 self.go = False
-                self.qc.updateLog(msg)
+                self.feedback.pushInfo(msg)
                 return msg
 
             except KeyError as e:
                 msg = "<b>Erreur lors du paramétrage des scripts d'import: %s</b>" % e
                 self.go = False
-                self.qc.updateLog(msg)
+                self.feedback.pushInfo(msg)
                 return msg
 
             finally:
@@ -1357,7 +1366,7 @@ class cadastreImport(QObject):
 
             # Execute query
             if not divide:
-                # self.qc.updateLog('|%s|' % sql)
+                # self.feedback.pushInfo('|%s|' % sql)
                 self.executeSqlQuery(sql, ignoreError)
             else:
                 # Split all SQL into single queries
@@ -1386,7 +1395,7 @@ class cadastreImport(QObject):
                         self.updateTimer()
 
                         # Write item. Ex: geo_borne_parcelle
-                        self.qc.updateLog("  - %s" % comment.strip(" \n\r\t"))
+                        self.feedback.pushInfo("  - %s" % comment.strip(" \n\r\t"))
 
                     # Do nothing if sql is only comment
                     if not r.search(sqla) or sqla.startswith("--~"):
@@ -1394,7 +1403,7 @@ class cadastreImport(QObject):
 
                     # Get SQL query
                     sql = "%s" % sqla
-                    # self.qc.updateLog('@@%s$$' % sql)
+                    # self.feedback.pushInfo('@@%s$$' % sql)
                     # self.updateProgressBar()
 
                     # Spatialite performance adaptations
@@ -1416,7 +1425,7 @@ class cadastreImport(QObject):
                             if avoid_item in sql:
                                 avoid_query = True
                     if avoid_query:
-                        # self.qc.updateLog('AVOID FOR SPATIALITE')
+                        # self.feedback.pushInfo('AVOID FOR SPATIALITE')
                         continue
 
                     # Execute query
@@ -1445,7 +1454,7 @@ class cadastreImport(QObject):
                     if not ignoreError and not re.search(r"CREATE INDEX ", sql, re.IGNORECASE):
                         DlgDbError.showError(e, self.dialog)
                         self.go = False
-                        self.qc.updateLog(e.msg)
+                        self.feedback.pushInfo(e.msg)
                 except UnicodeDecodeError:
                     try:
                         c = self.connector._execute_and_commit(sql)
@@ -1453,7 +1462,7 @@ class cadastreImport(QObject):
                         if not ignoreError and not re.search(r"CREATE INDEX ", sql, re.IGNORECASE):
                             DlgDbError.showError(e, self.dialog)
                             self.go = False
-                            self.qc.updateLog(e.msg)
+                            self.feedback.pushInfo(e.msg)
                 finally:
                     QApplication.restoreOverrideCursor()
                     if c:
@@ -1462,10 +1471,10 @@ class cadastreImport(QObject):
                             del c
                         except Exception as err:
                             Logger.log_exception(err)
-                            self.qc.updateLog("issue closing connection")
+                            self.feedback.pushInfo("issue closing connection")
 
             if self.dialog.dbType == "spatialite":
-                # ~ self.qc.updateLog(sql)
+                # ~ self.feedback.pushInfo(sql)
 
                 try:
                     # Get cursor
@@ -1493,16 +1502,16 @@ class cadastreImport(QObject):
                 except BaseError as e:
                     if not re.search(r"CREATE INDEX ", sql, re.IGNORECASE):
                         self.go = False
-                        self.qc.updateLog("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
-                        self.qc.updateLog("<b>Erreur </b> <p>%s</p>" % e.msg)
+                        self.feedback.pushInfo("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
+                        self.feedback.pushInfo("<b>Erreur </b> <p>%s</p>" % e.msg)
                 except sqlite.OperationalError as e:
                     if (
                         not re.search(r"CREATE INDEX ", sql, re.IGNORECASE)
                         and "duplicate column name" not in e.args[0]
                     ):
                         self.go = False
-                        self.qc.updateLog("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
-                        self.qc.updateLog("<b>Erreur </b> <p>%s</p>" % format(e))
+                        self.feedback.pushInfo("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
+                        self.feedback.pushInfo("<b>Erreur </b> <p>%s</p>" % format(e))
                 finally:
                     QApplication.restoreOverrideCursor()
                     if c:
@@ -1511,7 +1520,7 @@ class cadastreImport(QObject):
                             del c
                         except Exception as err:
                             Logger.log_exception(err)
-                            self.qc.updateLog("issue closing connection")
+                            self.feedback.pushInfo("issue closing connection")
 
     def importAllEdigeoToDatabase(self):
         """
@@ -1520,14 +1529,14 @@ class cadastreImport(QObject):
         """
 
         if self.go:
-            self.qc.updateLog("* Import des fichiers EDIGEO dans la base")
+            self.feedback.pushInfo("* Import des fichiers EDIGEO dans la base")
 
             initialStep = self.step
             initialTotalSteps = self.totalSteps
 
             # THF
             self.dialog.subStepLabel.setText("Import des fichiers via ogr2ogr (*.thf)")
-            self.qc.updateLog("  - Import des fichiers via ogr2ogr")
+            self.feedback.pushInfo("  - Import des fichiers via ogr2ogr")
             # Get plain files in source directory
             thfList1 = self.list_files_in_directory(self.dialog.edigeoSourceDir, ["thf"])
             # Get files which have been uncompressed by plugin in temp folder
@@ -1544,7 +1553,7 @@ class cadastreImport(QObject):
         if self.go:
             # VEC - import relations between objects
             self.dialog.subStepLabel.setText("Import des relations (*.vec)")
-            self.qc.updateLog("  - Import des relations (*.vec)")
+            self.feedback.pushInfo("  - Import des relations (*.vec)")
             # Get plain files in source directory
             vecList1 = self.list_files_in_directory(self.dialog.edigeoSourceDir, ["vec"])
             # Get files which have been uncompressed by plugin in temp folder
@@ -1561,7 +1570,7 @@ class cadastreImport(QObject):
                 if not self.go:
                     break
             if self.go:
-                self.qc.updateLog(
+                self.feedback.pushInfo(
                     "  - %s multipolygones mis à jours dans la base de données" % self.multiPolygonUpdated
                 )
 
@@ -1674,7 +1683,7 @@ class cadastreImport(QObject):
                     "topo",
                 ]
             # -c client_encoding=latin1
-            # self.qc.updateLog(' '.join(cmdArgs))
+            # self.feedback.pushInfo(' '.join(cmdArgs))
 
         if self.dialog.dbType == "spatialite":
             if not settings.contains("sqlitepath"):  # non-existent entry?
@@ -1727,7 +1736,7 @@ class cadastreImport(QObject):
                     "topo",
                 ]
 
-        # self.qc.updateLog( ' '.join(cmdArgs))
+        # self.feedback.pushInfo( ' '.join(cmdArgs))
         if not self.go:
             return
 
@@ -1739,17 +1748,17 @@ class cadastreImport(QObject):
         except QgsProcessingException as e:
             self.go = False
             error_message = f"Erreur lors de l'exécution d'ogr2ogr : {e}"
-            self.qc.updateLog(error_message)
+            self.feedback.pushInfo(error_message)
 
         for line in loglines:
             if "ERROR" in line or "error" in line:
                 self.go = False
                 error_message = f"Erreur lors de l'exécution d'ogr2ogr : {line}"
-                self.qc.updateLog(error_message)
+                self.feedback.pushInfo(error_message)
                 break
 
         if not self.go:
-            self.qc.updateLog(
+            self.feedback.pushInfo(
                 "<b>Erreur - L'import des données via OGR2OGR a échoué:</b>\n\n{}\n\n{}".format(
                     error_message, cmdArgs
                 )
@@ -1794,7 +1803,7 @@ class cadastreImport(QObject):
                         self.connector._commit()
                     except Exception as err:
                         Logger.log_exception(err)
-                        self.qc.updateLog("<b>Erreurs pendant la requête :</b> %s" % sql)
+                        self.feedback.pushInfo("<b>Erreurs pendant la requête :</b> %s" % sql)
                     finally:
                         c.close()
                         del c

@@ -10,6 +10,7 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
 
 from cadastre.cadastre_loading import CadastreLoading
+from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback
 from cadastre.tools import set_window_title
 
 LOAD_FORM_CLASS, _ = uic.loadUiType(
@@ -33,7 +34,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         from cadastre.dialogs.dialog_common import CadastreCommon
 
         self.qc = CadastreCommon(self)
-        self.ql = CadastreLoading(self)
+        self.ql = CadastreLoading(self, CadastreDialogFeedback(self.txtLog, self.pbProcess))
 
         # spatialite support
         self.hasSpatialiteSupport = CadastreCommon.hasSpatialiteSupport()
@@ -42,8 +43,6 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
 
         # Set initial values
         self.go = True
-        self.step = 0
-        self.totalSteps = 0
         self.dbType = None
         self.dbpluginclass = None
         self.connectionName = None

@@ -25,25 +25,33 @@ import os
 import unicodedata
 
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from qgis.core import (
     QgsExpression,
     QgsFeatureRequest,
     QgsLayerTreeLayer,
     QgsMapLayer,
+    QgsProcessingFeedback,
     QgsProject,
     QgsVectorLayer,
 )
 from qgis.PyQt.QtCore import QObject, QSettings, Qt, pyqtSignal
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
+if TYPE_CHECKING:
+    from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
+
 
 class CadastreLoading(QObject):
     cadastreLoadingFinished = pyqtSignal()
 
-    def __init__(self, dialog):
+    def __init__(self, dialog: "CadastreLoadDialog", feedback: QgsProcessingFeedback):
         QObject.__init__(self)
         self.dialog = dialog
+        self.feedback = feedback
+        self.step = 0
+        self.totalSteps = 0
 
         self.startTime = datetime.now()
 
@@ -337,10 +345,14 @@ class CadastreLoading(QObject):
             "Parcelles": {"var_key": "parcelle", "unique_field": "geo_parcelle"},
         }
 
+    def update_progress_bar(self):
+        self.step += 1
+        self.feedback.setProgress(self.step * 100 / self.totalSteps)
+
     def update_timer(self):
         b = datetime.now()
         diff = b - self.startTime
-        self.qc.updateLog(f"{diff.seconds} s")
+        self.feedback.pushInfo(f"{diff.seconds} s")
 
     def get_group_index(self, group_name):
         """
@@ -392,7 +404,7 @@ class CadastreLoading(QObject):
         if cadastre_svg_path not in a:
             a.append(cadastre_svg_path)
             s.setValue("svg/searchPathsForSVG", a)
-            self.qc.updateLog(
+            self.feedback.pushInfo(
                 "* Le chemin contenant les SVG du plugin Cadastre a été ajouté dans les options de QGIS"
             )
 
@@ -400,11 +412,13 @@ class CadastreLoading(QObject):
         provider_name = self.dialog.dbpluginclass.providerName()
         qgis_cadastre_layers = []
         self.dialog.schema = str(self.dialog.liDbSchema.currentText())
-        self.dialog.totalSteps = len(self.qgisCadastreLayerList)
+        self.step = 0
+        # One step per layer, plus the final one
+        self.totalSteps = len(self.qgisCadastreLayerList) + 1
 
         # Run the loading
         self.update_timer()
-        self.qc.updateLog("Chargement des tables :")
+        self.feedback.pushInfo("Chargement des tables :")
 
         # Get database list of tables
         if self.dialog.dbType == "postgis":
@@ -419,7 +433,7 @@ class CadastreLoading(QObject):
         commune_filter = None
         c_exp = QgsExpression(commune_expression)
         if commune_expression != "" and not c_exp.hasParserError():
-            self.qc.updateLog(f"Filtrage à partir des communes : {commune_expression}")
+            self.feedback.pushInfo(f"Filtrage à partir des communes : {commune_expression}")
             c_req = QgsFeatureRequest(c_exp)
             c_table_list = [a for a in db_tables if a.name == "geo_commune"]
             c_table = c_table_list[0]
@@ -434,7 +448,7 @@ class CadastreLoading(QObject):
             if len(c_ids):
                 commune_filter = c_ids
         else:
-            self.qc.updateLog(
+            self.feedback.pushInfo(
                 f"Filtrage à partir des communes, expression invalide : {c_exp.parserErrorString()}"
             )
 
@@ -447,14 +461,13 @@ class CadastreLoading(QObject):
                 continue
 
             # update progress bar
-            self.qc.updateLog(f"* {item['label']}")
-            self.dialog.step += 1
-            self.qc.updateProgressBar()
+            self.feedback.pushInfo(f"* {item['label']}")
+            self.update_progress_bar()
 
             # Tables - Get db_manager table instance
             table_list = [a for a in db_tables if a.name == item["table"]]
             if len(table_list) == 0 and "isView" not in item:
-                self.qc.updateLog(f"  - Aucune table trouvée pour {item['label']}")
+                self.feedback.pushInfo(f"  - Aucune table trouvée pour {item['label']}")
                 continue
 
             source = ""
@@ -549,12 +562,12 @@ class CadastreLoading(QObject):
         canvas.freeze(True)
 
         # Add all layers to QGIS registry (but not yet to the layer tree)
-        self.qc.updateLog("Ajout des couches dans le registre de QGIS")
+        self.feedback.pushInfo("Ajout des couches dans le registre de QGIS")
         QgsProject.instance().addMapLayers(qgis_cadastre_layers, False)
         self.update_timer()
 
         # Create a group "Cadastre" and move all layers into it
-        self.qc.updateLog("Ajout des couches dans le groupe Cadastre")
+        self.feedback.pushInfo("Ajout des couches dans le groupe Cadastre")
         root = QgsProject.instance().layerTreeRoot()
         g1 = root.findGroup("Cadastre")
         if g1:
@@ -639,25 +652,24 @@ class CadastreLoading(QObject):
         self.update_timer()
 
         # Zoom to full extent
-        self.qc.updateLog("Zoom sur les couches")
+        self.feedback.pushInfo("Zoom sur les couches")
         canvas.zoomToFullExtent()
         canvas.freeze(False)
         canvas.refresh()
         self.update_timer()
 
         # progress bar
-        self.dialog.step += 1
-        self.qc.updateProgressBar()
+        self.update_progress_bar()
 
         # Emit signal
-        self.qc.updateLog("Mise à jour des outils cadastre")
+        self.feedback.pushInfo("Mise à jour des outils cadastre")
         self.cadastreLoadingFinished.emit()
         self.update_timer()
 
         # Final message
         QApplication.restoreOverrideCursor()
         QMessageBox.information(self.dialog, "Cadastre", "Les données ont bien été chargées dans QGIS")
-        self.dialog.pbProcess.setValue(0)
+        self.feedback.setProgress(0)
 
         QApplication.restoreOverrideCursor()
 
@@ -694,7 +706,7 @@ class CadastreLoading(QObject):
             QgsProject.instance().addMapLayers([layer], True)
             return
 
-        self.qc.updateLog(
+        self.feedback.pushInfo(
             "La couche n'est pas valide et n'a pu être chargée. Pour PostGIS, avez-vous pensé à indiquer le schéma "
             "comme préfixe des tables ?"
         )
