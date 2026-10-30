@@ -104,6 +104,8 @@ feat = None
 for f in it:
     feat = f
     break
+if feat is None:
+    sys.exit(f"Parcelle {parcelle_id} introuvable dans la couche")
 
 # Get connection params
 connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
@@ -113,14 +115,17 @@ connector = common_utils.getConnectorFromUri(connectionParams)
 comptecommunal = common_utils.getCompteCommunalFromParcelleId(
     feat["geo_parcelle"], connectionParams, connector
 )
+if not comptecommunal:
+    sys.exit(f"Pas de données MAJIC pour la parcelle {parcelle_id}")
 
+comptes_communaux: str | list[str] = comptecommunal
 pmulti = 0
 if export_type == "proprietaire" and pmulti == 1:
-    comptecommunal = common_utils.getProprietaireComptesCommunaux(comptecommunal, connectionParams, connector)
+    comptes_communaux = common_utils.getProprietaireComptesCommunaux(comptecommunal, connectionParams, connector)
 
 # Export PDF
 print(target_dir)
-qex = CadastreExport(p, layer, export_type, comptecommunal, feat["geo_parcelle"], target_dir, for_third_party)
+qex = CadastreExport(p, layer, export_type, comptes_communaux, feat["geo_parcelle"], target_dir, for_third_party)
 paths = qex.export_as_pdf()
 print(paths)
 

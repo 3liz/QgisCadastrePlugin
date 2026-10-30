@@ -1,7 +1,7 @@
 import shutil
 
 from pathlib import Path
-from typing import NamedTuple
+from typing import Iterator, NamedTuple
 
 import pytest
 
@@ -75,7 +75,7 @@ def remove_schema():
 
 
 @pytest.fixture(params=[CornillonMajic, CornillonSansMajic], ids=["Majic", "SansMajic"])
-def test_case(request: pytest.FixtureRequest) -> TestCase:
+def test_case(request: pytest.FixtureRequest) -> Iterator[TestCase]:
     remove_schema()
     yield request.param
 

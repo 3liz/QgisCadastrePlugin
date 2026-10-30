@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Iterator
 
 import pytest
 
@@ -20,7 +21,7 @@ CONNECTION = "cadastre test.sqlite"
 
 
 @pytest.fixture(scope="module")
-def connection_name(tmp_path_factory: pytest.TempPathFactory) -> str:
+def connection_name(tmp_path_factory: pytest.TempPathFactory) -> Iterator[str]:
     """ An empty Spatialite database, with a QGIS connection. """
     path = tmp_path_factory.mktemp("spatialite") / CONNECTION
     con = spatialite_connect(str(path), isolation_level=None)

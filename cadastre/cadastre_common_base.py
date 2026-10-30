@@ -426,7 +426,7 @@ def getProprietaireComptesCommunaux(
         sql = sql.replace("MyStringAgg", "group_concat")
 
     data, _, ok = fetchDataFromSqlQuery(connector, sql)
-    ccs = []
+    ccs: list[str] = []
     if ok:
         for line in data:
             ccs = ccs + line[1].split(",")

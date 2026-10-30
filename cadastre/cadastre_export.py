@@ -22,7 +22,7 @@ import tempfile
 
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Callable, Generator, List
+from typing import Any, Callable, Generator, List
 from uuid import uuid4
 
 from qgis.core import (
@@ -68,7 +68,7 @@ class CadastreExport:
         project: QgsProject,
         layer: QgsMapLayer,
         etype: str,
-        comptecommunal: str,
+        comptecommunal: str | list[str],
         geo_parcelle: str | None = None,
         target_dir: str | None = None,
         for_third_party: bool = False,
@@ -105,6 +105,8 @@ class CadastreExport:
 
         self.ccFilter = None
 
+        # Several comptes communaux: one PDF for each
+        self.isMulti: bool = False
         if isinstance(comptecommunal, list):
             self.isMulti = True
             comptecommunal = list(set(comptecommunal))
@@ -144,7 +146,7 @@ class CadastreExport:
         self.dbType = self.connectionParams["dbType"]
 
         # Variable created in set_composer_templates
-        self.main_tables = {}
+        self.main_tables: dict[str, Any] = {}
 
     def getMapInstance(self) -> QgsMapSettings:
         """
@@ -658,7 +660,7 @@ class CadastreExport:
         cm.setBackgroundEnabled(True)
         self.currentComposition.addItem(cm)
 
-    def exportItemAsPdf(self, comptecommunal: str, suffix: str | None = None) -> str:
+    def exportItemAsPdf(self, comptecommunal: str, suffix: str | None = None) -> str | None:
         """
         Export one PDF file using the template composer
         filled with appropriate data
@@ -736,7 +738,9 @@ class CadastreExport:
 
                     printProgress(printStep + 1)
         else:
-            apath = self.exportItemAsPdf(self.comptecommunal)
+            # A list with one compte communal has been converted to a string in __init__
+            compte = self.comptecommunal
+            apath = self.exportItemAsPdf(compte[0] if isinstance(compte, list) else compte)
             if apath:
                 paths.append(apath)
         return paths

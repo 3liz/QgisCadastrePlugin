@@ -158,6 +158,7 @@ class Personne:
     dnuper: str
     gtoper: str  # 1 physique, 2 morale
     ccodro: str
+    adresse: Adresse
     ccodem: str = ""
     nom: str = ""
     prenom: str = ""
@@ -171,7 +172,6 @@ class Personne:
     dformjur: str = ""
     dsiren: str = ""
     destinataire: bool = False
-    adresse: Adresse | None = None
 
 
 @dataclass
@@ -180,7 +180,7 @@ class Compte:
     personnes: list[Personne] = field(default_factory=list)
 
 
-used_dnuper = set()
+used_dnuper: set[str] = set()
 
 
 def dnuper(prefix: str) -> str:
@@ -332,6 +332,20 @@ class Parcelle:
     def dnupla(self) -> str:
         return self.geo_parcelle[11:15]
 
+    @property
+    def proprietaire(self) -> Compte:
+        """The owner, once set by build()"""
+        if self.compte is None:
+            raise ValueError(f"No owner for the parcel {self.geo_parcelle}")
+        return self.compte
+
+    @property
+    def voie(self) -> tuple:
+        """The address (dnvoiri, ccoriv, nature, libelle), once set by build()"""
+        if self.adresse is None:
+            raise ValueError(f"No address for the parcel {self.geo_parcelle}")
+        return self.adresse
+
 
 def read_parcelles() -> list[Parcelle]:
     with open(HERE / "parcelles_edigeo_13029.csv") as f:
@@ -345,13 +359,13 @@ def nbat_parcelle(p: Parcelle) -> list[str]:
     lines = []
     r = Record(200).text(1, 2, DEP).text(3, 1, DIR).text(4, 3, COM)
     r.text(10, 2, p.ccosec).text(12, 4, p.dnupla).text(20, 2, "10")
-    r.num(22, 9, p.contenance).text(32, 6, p.compte.dnupro)
+    r.num(22, 9, p.contenance).text(32, 6, p.proprietaire.dnupro)
     r.text(38, 8, f"{rng.randint(1, 28):02d}{rng.randint(1, 12):02d}{rng.randint(1975, 2025)}")
     r.text(51, 1, "1" if p.pdl else "0")
     if p.pdl:
         r.text(55, 2, p.ccosec).text(57, 4, p.dnupla).text(61, 3, "001")
     r.text(64, 1, "U" if p.nb_batiments else "").text(70, 1, "1").text(71, 1, "1" if p.nb_batiments else "")
-    dnvoiri, ccoriv, natvoi, libvoi = p.adresse
+    dnvoiri, ccoriv, natvoi, libvoi = p.voie
     r.text(86, 4, dnvoiri.rjust(4, "0") if dnvoiri else "").text(91, 5, ccovoi(ccoriv)).text(96, 4, ccoriv)
     r.text(100, 4, CCOCIF).text(122, 3, CCPPER).text(136, 4, natvoi).text(140, 26, libvoi)
     lines.append(str(r))
@@ -362,7 +376,7 @@ def nbat_parcelle(p: Parcelle) -> list[str]:
         drcsub = contenance * tarif // 10000
         r = Record(200).text(1, 2, DEP).text(3, 1, DIR).text(4, 3, COM)
         r.text(10, 2, p.ccosec).text(12, 4, p.dnupla).text(16, 2, ccosub).text(20, 2, "21")
-        r.num(22, 9, contenance).text(31, 6, p.compte.dnupro)
+        r.num(22, 9, contenance).text(31, 6, p.proprietaire.dnupro)
         r.num(39, 10, drcsub).num(49, 10, drcsub * 497 // 100)
         r.text(59, 1, "A").text(60, 2, cgrnum).text(64, 2, classe)
         r.text(71, 1, "0").num(148, 3, int(COM))
@@ -405,7 +419,7 @@ class Local:
     lot: str = ""
 
 
-invariants = set()
+invariants: set[str] = set()
 
 
 def invariant() -> str:
@@ -418,7 +432,7 @@ def invariant() -> str:
 
 def bati_records(local: Local) -> list[str]:
     p = local.parcelle
-    dnvoiri, ccoriv, natvoi, libvoi = p.adresse
+    dnvoiri, ccoriv, natvoi, libvoi = p.voie
     # About 5 % of recent houses, still exonerated
     jannat = rng.randint(2024, 2025) if local.type == "MA" and rng.random() < 0.05 else rng.randint(1890, 2022)
     lines = []
@@ -504,7 +518,7 @@ def pdll_records(p: Parcelle, lots: list[tuple[str, Local, int, int]]) -> list[s
 
     lines = []
     r = identifiant().text(26, 2, "10").text(28, 1, "1").text(29, 3, "CL")
-    r.text(62, 20, "LE CLOS DES OLIVIERS").text(83, 6, p.compte.dnupro).text(94, 4, CCOCIF)
+    r.text(62, 20, "LE CLOS DES OLIVIERS").text(83, 6, p.proprietaire.dnupro).text(94, 4, CCOCIF)
     lines.append(str(r))
     for dnulot, local, numerateur, denominateur in lots:
         r = identifiant(dnulot).text(26, 2, "30").text(28, 1, "2")
@@ -629,7 +643,7 @@ def build():
 
 def write():
     parcelles, comptes, locaux, copro_parcelle, lots = build()
-    used = {p.compte.dnupro for p in parcelles} | {local.compte.dnupro for local in locaux}
+    used = {p.proprietaire.dnupro for p in parcelles} | {local.compte.dnupro for local in locaux}
 
     def save(name: str, lines: list[str]):
         (OUTPUT / name).write_text("\n".join(lines) + "\n", encoding="ascii")

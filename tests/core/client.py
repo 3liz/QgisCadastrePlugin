@@ -12,7 +12,6 @@ from typing import (
 )
 from urllib.parse import urlencode
 
-from PIL import Image
 
 from qgis.core import QgsProject
 from qgis.server import QgsBufferServerResponse

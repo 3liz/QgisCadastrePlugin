@@ -783,7 +783,7 @@ class cadastreImport(QObject):
         Returns False if no file processed
         """
         processed_files_count = 0
-        majic_files_key = []
+        majic_files_key: list[str] = []
 
         # Loop through all majic files
 

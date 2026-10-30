@@ -85,7 +85,7 @@ def to_bool(val: Union[str, int, float, bool, None], default_value: bool = True)
     return default_value
 
 
-def metadata_config() -> configparser:
+def metadata_config() -> configparser.ConfigParser:
     """Get the INI config parser for the metadata file.
 
     :return: The config parser object.

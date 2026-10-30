@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Iterator
 
 import pytest
 
@@ -31,7 +32,7 @@ def database(fixtures: Path) -> CadastreDatabase:
 
 
 @pytest.fixture()
-def project() -> QgsProject:
+def project() -> Iterator[QgsProject]:
     project = QgsProject.instance()
     project.clear()
     yield project

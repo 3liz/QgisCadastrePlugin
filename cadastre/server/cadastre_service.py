@@ -8,7 +8,7 @@ import traceback
 
 from collections import namedtuple
 from pathlib import Path
-from typing import Dict, Sequence
+from typing import Any, Dict, Sequence
 from uuid import uuid4
 
 from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject
@@ -24,7 +24,7 @@ PARCELLE_FORMAT_RE = re.compile("^([A-Z0-9]+)*$")
 
 
 def write_json_response(
-    data: Dict[str, str], response: QgsServerResponse, request_id: str, code: int = 200
+    data: Dict[str, Any], response: QgsServerResponse, request_id: str, code: int = 200
 ) -> None:
     """Write data as json response"""
     response.setStatusCode(code)
@@ -105,8 +105,8 @@ class CadastreService(QgsService):
             err.format_response(response)
         except Exception:
             Logger.critical(f"Unhandled exception, request-ID: {request_id}\n{traceback.format_exc()}")
-            err = CadastreError(500, "Internal 'cadastre' service error", request_id)
-            err.format_response(response)
+            error = CadastreError(500, "Internal 'cadastre' service error", request_id)
+            error.format_response(response)
 
     @staticmethod
     def get_capabilities(response: QgsServerResponse, project: QgsProject, request_id: str) -> None:
@@ -124,7 +124,7 @@ class CadastreService(QgsService):
         if not player:
             raise CadastreError(404, "Parcel layer not available", request_id)
 
-        capabilities = {
+        capabilities: Dict[str, Any] = {
             "parcelle": {
                 "id": player.id(),
                 "name": player.name(),
@@ -175,17 +175,22 @@ class CadastreService(QgsService):
         compte_communal = cadastre_common.getCompteCommunalFromParcelleId(
             res.geo_parcelle, res.connectionParams, res.connector
         )
+        if not compte_communal:
+            raise CadastreError(404, "No MAJIC data found for this parcel", request_id)
+
+        # For an owner, all his comptes communaux
+        comptes_communaux: str | list[str] = compte_communal
         p_multi = 1
         all_cities = params.get("ALLCITIES", "f").lower() in ("t", "true", "1")
         if res.type == "proprietaire" and p_multi == 1:
-            compte_communal = cadastre_common.getProprietaireComptesCommunaux(
+            comptes_communaux = cadastre_common.getProprietaireComptesCommunaux(
                 compte_communal, res.connectionParams, res.connector, all_cities
             )
 
-        Logger.debug(f"comptecommunal = {compte_communal}")
+        Logger.debug(f"comptecommunal = {comptes_communaux}")
 
         # Export PDF
-        qex = CadastreExport(project, res.layer, res.type, compte_communal, res.geo_parcelle)
+        qex = CadastreExport(project, res.layer, res.type, comptes_communaux, res.geo_parcelle)
         qex.print_parcelle_page = True
         qex.for_third_party = params.get("ADVANCED", "f").lower() not in ("t", "true", "1")
         paths = qex.export_as_pdf()
@@ -205,7 +210,7 @@ class CadastreService(QgsService):
             path.rename(new_path)
             tokens.append(uid.hex)
 
-        json_response = {
+        json_response: Dict[str, Any] = {
             "status": "success",
             "message": "PDF generated",
             "data": {

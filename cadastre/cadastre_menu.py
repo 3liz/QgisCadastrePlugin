@@ -479,18 +479,3 @@ class CadastreMenu:
             self.iface.removeDockWidget(self.cadastre_search_dialog)
             self.cadastre_search_dialog.deleteLater()
             self.cadastre_search_dialog = None
-
-    @staticmethod
-    def run_tests(pattern="test_*.py", package=None):
-        """Run the test inside QGIS."""
-        from pathlib import Path
-
-        try:
-            from cadastre.tests.runner import test_package
-
-            if package is None:
-                package = f"{Path(__file__).parent.name}.__init__"
-            test_package(package, pattern)
-        except (AttributeError, ModuleNotFoundError):
-            message = "Could not load tests. Are you using a production package?"
-            print(message)  # NOQA

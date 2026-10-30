@@ -120,23 +120,11 @@ suppress-dummy-args = true
 [tool.mypy]
 python_version = "3.10"
 
-exclude = [
-    "lizmap_server/context/py_qgis_server.py",
-    "lizmap_server/context/qjazz.py",
-]
-
-[[tool.mypy.overrides]]
-module = "lizmap_server.context.qjazz"
-follow_imports = "skip"
-
-[[tool.mypy.overrides]]
-module = "lizmap_server.context.py_qgis_server"
-follow_imports = "skip"
-
 [[tool.mypy.overrides]]
 module = [
     "qgis.*",
     "osgeo.*",
+    "processing.*",
     "xmldiff.*",
 ]
 ignore_missing_imports = true

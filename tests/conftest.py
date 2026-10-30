@@ -140,6 +140,6 @@ def client(data: Path, plugin: Any, qgis_server: QgsServer) -> Client:
             else:
                 qgsproject = None
             qgis_server.handleRequest(request, response, project=qgsproject)
-            return Response(responser)
+            return Response(response)
 
     return _Client()
