@@ -16,8 +16,8 @@ the Free Software Foundation; either version 2 of the License, or
 
 """
 
+import math
 import os
-import re
 import tempfile
 
 from contextlib import contextmanager
@@ -31,9 +31,7 @@ from qgis.core import (
     QgsFeatureRequest,
     QgsFillSymbol,
     QgsLayoutExporter,
-    QgsLayoutFrame,
     QgsLayoutGridSettings,
-    QgsLayoutItemHtml,
     QgsLayoutItemMap,
     QgsLayoutItemPage,
     QgsLayoutMeasurement,
@@ -47,12 +45,11 @@ from qgis.core import (
     QgsUnitTypes,
     QgsVectorLayer,
 )
-from qgis.PyQt.QtCore import QRectF, QSettings, Qt
-from qgis.PyQt.QtGui import QFont
+from qgis.PyQt.QtCore import QRectF, QSettings
 
 import cadastre.cadastre_common_base as cadastre_common
+import cadastre.releve_layout as releve_layout
 
-from .logger import Logger
 from .tools import plugin_path
 
 
@@ -60,6 +57,10 @@ from .tools import plugin_path
 def _printProgress(_this, nb: int) -> Generator[Callable[[int], None], None, None]:
     """Define a dummy defaultprint progress"""
     yield (lambda step: None)
+
+
+# Height of a line of the main tables, in mm: 15 lines are displayed in the zone of each table
+ROW_HEIGHT = 3.3
 
 
 class CadastreExport:
@@ -73,8 +74,6 @@ class CadastreExport:
         target_dir: str | None = None,
         for_third_party: bool = False,
     ) -> None:
-
-
         self.print_parcelle_page = False
 
         if not hasattr(self, "mProgress"):
@@ -84,7 +83,7 @@ class CadastreExport:
         self.mProject = project
 
         # Store an instance of QgsComposition
-        self.currentComposition = None
+        self.currentComposition: QgsPrintLayout | None = None
 
         # Get instance needed for QgsComposition
         self.mInstance = self.getMapInstance()
@@ -166,7 +165,6 @@ class CadastreExport:
             "header1": {
                 "names": ["annee", "ccodep", "ccodir", "ccocom", "libcom"],
                 "position": [3.5, 2.5, 145, 7.5],
-                "align": [128, 4],
                 "keepContent": True,
                 "type": "sql",
                 "filter": "comptecommunal",
@@ -179,7 +177,6 @@ class CadastreExport:
             "header2": {
                 "names": ["type"],
                 "position": [153.5, 2.5, 60, 7.5],
-                "align": [128, 4],
                 "keepContent": True,
                 "type": "properties",
                 "source": [self.typeLabel],
@@ -188,7 +185,6 @@ class CadastreExport:
             "header3": {
                 "names": ["comptecommunal"],
                 "position": [218.5, 2.5, 75, 7.5],
-                "align": [128, 2],
                 "keepContent": True,
                 "type": "properties",
                 "source": [compte_communal_abrev],
@@ -197,7 +193,6 @@ class CadastreExport:
             "proprietaires": {
                 "names": ["lines"],
                 "position": [3.5, 10, 290, 40],
-                "align": [32, 1],
                 "keepContent": False,
                 "type": "parent",
                 "source": "proprietaires_line",
@@ -205,7 +200,6 @@ class CadastreExport:
             "proprietes_baties": {
                 "names": ["lines"],
                 "position": [3.5, 50, 290, 65],
-                "align": [32, 1],
                 "keepContent": False,
                 "type": "parent",
                 "source": "proprietes_baties_line",
@@ -223,7 +217,6 @@ class CadastreExport:
                     "re_bipevla",
                 ],
                 "position": [3.5, 115, 290, 15],
-                "align": [32, 1],
                 "type": "sql",
                 "keepContent": True,
                 "filter": "comptecommunal",
@@ -235,7 +228,6 @@ class CadastreExport:
             "proprietes_non_baties": {
                 "names": ["lines"],
                 "position": [3.5, 130, 290, 65],
-                "align": [32, 1],
                 "keepContent": False,
                 "type": "parent",
                 "source": "proprietes_non_baties_line",
@@ -243,7 +235,6 @@ class CadastreExport:
             "proprietes_non_baties_sum": {
                 "names": ["sum_ha_contenance", "sum_a_contenance", "sum_ca_contenance", "sum_drcsuba"],
                 "position": [3.5, 195, 290, 13],
-                "align": [32, 1],
                 "type": "sql",
                 "keepContent": True,
                 "filter": "comptecommunal",
@@ -251,18 +242,13 @@ class CadastreExport:
                     "proprietaire": f" AND p.comptecommunal = '{compte_communal}'",
                     "parcelle": f" AND p.parcelle = '{self.geo_parcelle}'",
                 },
-                "bgcolor": Qt.GlobalColor.transparent,
             },
             "footer": {
                 "names": ["foot"],
                 "position": [3.5, 208, 288, 4],
-                "align": [128, 4],
                 "keepContent": True,
                 "type": "properties",
                 "source": ["Ce document est donné à titre indicatif - Il n'a pas de valeur légale"],
-                "bgcolor": Qt.GlobalColor.white,
-                "htmlState": 0,
-                "font": QFont("sans-serif", 4, 1, True),
                 "sticky": True,
             },
         }
@@ -352,39 +338,26 @@ class CadastreExport:
             "proprietes_non_baties_line": {"count": 0, "data": None},
         }
 
-        # items for which not the run a query for each page
-        # but only once and keep content for next pages
-        self.contentKeeped = {}
-        for key, item in list(self.composerTemplates.items()):
-            if item.get("keepContent"):
-                self.contentKeeped[key] = ""
-        for key, item in list(self.main_tables.items()):
-            if item.get("keepContent"):
-                self.contentKeeped[key] = ""
+        # Data of the items for which the query is run only once, and kept for next pages
+        self.dataKept: dict[str, list[dict[str, str]]] = {}
 
-    def getContentForGivenItem(self, key, item, page=None):
+    def getDataForGivenItem(
+        self, key: str, item: dict[str, Any], page: int | None = None
+    ) -> list[dict[str, str]]:
         """
-        Take content from template file
-        corresponding to the key
-        and assign data from item
+        Get the rows of data of an item, from its SQL query, as dictionaries of strings.
+        Without page, all the rows are fetched and counted for the main tables.
+        With a page, only the rows of this page are returned for the main tables.
         """
-        # First check previous stored content
-        if "keepContent" in item and item["keepContent"] and self.contentKeeped[key]:
-            return self.contentKeeped[key]
+        if item.get("keepContent") and key in self.dataKept:
+            return self.dataKept[key]
 
-        content = ""
-        replaceDict = ""
-
-        # Build template file path
-        tplPath = str(plugin_path("templates", "%s.tpl" % key))
-
-        # Build replace dict depending on source type
-        if item["type"] == "sql":
-            data = None
-
-            # Load SQL query and get data
-            # Get sql file
-            sql = Path(tplPath + ".sql").read_text()
+        if page and key in self.lineCount:
+            # Rows of the page, from the data fetched to count the lines
+            offset = (page - 1) * self.maxLineNumber
+            data = self.lineCount[key]["data"][offset : offset + self.maxLineNumber]
+        else:
+            sql = plugin_path("templates", f"{key}.tpl.sql").read_text()
 
             # Add schema to search_path if postgis
             if self.dbType == "postgis":
@@ -400,92 +373,22 @@ class CadastreExport:
             # Add where clause depending on etype
             sql = sql.replace("$and", item["and"][self.etype])
 
-            # Limit results if asked
-            if page and key in self.main_tables and key in self.lineCount:
-                offset = int((page - 1) * self.maxLineNumber)
-                # ~ sql+= " LIMIT %s" % self.maxLineNumber
-                # ~ sql+= " OFFSET %s" % offset
-                # Get data from previous fetched full data
-                data = self.lineCount[key]["data"][offset : self.maxLineNumber + offset]
-
             # Convert PostgreSQL syntax to SQLite
             if self.dbType == "spatialite":
                 sql = cadastre_common.postgisToSpatialite(sql)
 
-            # Run SQL only if data has not already been defined
-            if data is None:
-                data, rowCount, _ok = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+            data, row_count, _ok = cadastre_common.fetchDataFromSqlQuery(self.connector, sql)
+            if key in self.lineCount:
+                self.lineCount[key]["count"] = row_count
+                self.lineCount[key]["data"] = data
 
-
-            # Page no defined = means the query is here to
-            # get line count and whole data for proprietes_baties & proprietes_non_baties
-            if not page and  key in self.lineCount:
-                    # line count
-                    self.lineCount[key]["count"] = rowCount
-                    # keep data
-                    self.lineCount[key]["data"] = data
-            if page:
-                # Get content for each line of data
-                for line in data:
-                    replaceDict = {}
-                    for i in range(len(item["names"])):
-                        replaceDict["$%s" % item["names"][i]] = "%s" % line[i]
-                    content += self.getHtmlFromTemplate(tplPath, replaceDict)
-
-                # fill empty data to have full size table
-                if (
-                    key in self.main_tables
-                    and key not in self.contentKeeped
-                    and len(data) < self.maxLineNumber
-                ):
-                    for _ in range(self.maxLineNumber - len(data)):
-                        replaceDict = {}
-                        for i in range(len(item["names"])):
-                            replaceDict["$%s" % item["names"][i]] = "&nbsp;"
-                        content += self.getHtmlFromTemplate(tplPath, replaceDict)
-
-        elif item["type"] == "properties":
-            # build replace dict from properties
-            replaceDict = {}
-            for i in range(len(item["names"])):
-                replaceDict["$" + item["names"][i]] = item["source"][i]
-            content = self.getHtmlFromTemplate(tplPath, replaceDict)
-
-        elif item["type"] == "parent":
-            replaceDict = {}
-            for i in range(len(item["names"])):
-                replaceDict["$" + item["names"][i]] = self.main_tables[item["source"]]["content"]
-            content = self.getHtmlFromTemplate(tplPath, replaceDict)
-
-        # Keep somme content globally
+        rows = [
+            {name: "" if value is None else str(value) for name, value in zip(item["names"], line)}
+            for line in data
+        ]
         if item.get("keepContent"):
-            self.contentKeeped[key] = content
-
-        # replace some unwanted content
-        return content.replace("None", "")
-
-    def getHtmlFromTemplate(self, tplPath: str, replaceDict: dict[str, str]) -> str:
-        """
-        Get the content of a template file
-        and replace all variables with given data
-        """
-
-        def replfunc(match):
-            return replaceDict[match.group(0)]
-
-        regex = re.compile("|".join(re.escape(x) for x in replaceDict))
-
-        try:
-            with open(tplPath, encoding="utf8") as fin:
-                data = fin.read()
-            return regex.sub(replfunc, data)
-
-        except OSError as e:
-            msg = "Erreur lors de l'export: %s" % e
-            self.go = False
-            # fix_print_with_import
-            Logger.critical(f"{msg}")
-            return msg
+            self.dataKept[key] = rows
+        return rows
 
     def createComposition(self):
         """
@@ -524,14 +427,10 @@ class CadastreExport:
         needed to fit all the data
         """
         # retrieve total data and get total count
-        for key in list(self.lineCount.keys()):
-            self.getContentForGivenItem(key, self.main_tables[key])
-        self.numPages = max(
-            [
-                1 + int(self.lineCount["proprietes_baties_line"]["count"] / self.maxLineNumber),
-                1 + int(self.lineCount["proprietes_non_baties_line"]["count"] / self.maxLineNumber),
-            ]
-        )
+        for key in self.lineCount:
+            self.getDataForGivenItem(key, self.main_tables[key])
+        lines = max(self.lineCount[key]["count"] for key in self.lineCount)
+        self.numPages = max(1, math.ceil(lines / self.maxLineNumber))
 
         # Add a page for map if etype == parcelle
         if self.etype == "parcelle" and self.print_parcelle_page:
@@ -541,67 +440,119 @@ class CadastreExport:
         """
         Add all needed item for a single page
         """
-
-        # First get content for parent items
-        for key, item in list(self.main_tables.items()):
-            self.main_tables[key]["content"] = self.getContentForGivenItem(key, item, page)
-
-        # Then get content for displayed items
         for key, item in list(self.composerTemplates.items()):
             self.buildComposerLabel(key, item, page)
 
     def buildComposerLabel(self, key, item, page):
         """
-        Add a label to the print layout for an item and page
+        Add the layout items of a template for a page: labels and tables
         """
         # 1st page is a map for parcelle
         dpage = page - 1
         if self.etype == "parcelle" and self.print_parcelle_page:
             dpage = page
 
-        # create HTML layout item
-        # htmlItem = QgsLayoutItemHtml.create(self.currentComposition)
-        html_item = QgsLayoutItemHtml(self.currentComposition)
+        layout = self.currentComposition
+        x, y, width, height = item["position"]
+        y += dpage * (self.pageHeight + 10)
 
-        # add frame to layout
-        self.currentComposition.addMultiFrame(html_item)
+        if key == "header1":
+            rows = self.getDataForGivenItem(key, item)
+            row = rows[0] if rows else {}
+            values = [
+                "ANNÉE MAJ",
+                row.get("annee", ""),
+                "DEP/DIR",
+                "{}/{}".format(row.get("ccodep", ""), row.get("ccodir", "")),
+                "COM",
+                "{} {}".format(row.get("ccocom", ""), row.get("libcom", "")).strip(),
+            ]
+            releve_layout.add_table(layout, (x, y, width, height), [values], [22, 13, 18, 13, 12, 67], size=7)
 
-        # create frame to show content from htmlItem
-        html_item_frame = QgsLayoutFrame(self.currentComposition, html_item)
-        # htmlItemFrame.attemptSetSceneRect(
-        #     QRectF(
-        #         item['position'][0],
-        #         item['position'][1] + (dpage) * (self.pageHeight + 10),
-        #         item['position'][2],
-        #         item['position'][3]
-        #     )
-        # )
+        elif key == "header2":
+            releve_layout.add_label(layout, f"RELEVÉ {item['source'][0]}", (x, y, width, height), size=10)
 
-        # No border
-        html_item_frame.setFrameEnabled(False)
+        elif key == "header3":
+            values = ["COMPTE", item["source"][0]]
+            releve_layout.add_table(layout, (x, y, width, height), [values], [width / 2, width / 2], size=7)
 
-        # set HTML contents
-        html_item.setContentMode(QgsLayoutItemHtml.ContentMode.ManualHtml)
-        content = self.getContentForGivenItem(key, item, page)
-        html_item.setHtml(content)
-        html_item.loadHtml()
-
-        # Reposition the frame
-        html_item_frame.attemptMove(
-            QgsLayoutPoint(
-                item["position"][0],
-                item["position"][1] + (dpage) * (self.pageHeight + 10),
-                QgsUnitTypes.LayoutUnit.LayoutMillimeters,
+        elif key == "proprietaires":
+            releve_layout.add_label(layout, "PROPRIÉTAIRES", (x, y, width, 4))
+            source = item["source"]
+            rows = [
+                [" ".join("{mainprop} {epousede} {adrprop}".format(**row).split()), row["nele"].strip()]
+                for row in self.getDataForGivenItem(source, self.main_tables[source], page)
+            ]
+            releve_layout.add_table(
+                layout,
+                (x, y + 4, width, height - 4),
+                rows,
+                [width * 0.7, width * 0.3],
+                aligns=[releve_layout.LEFT, releve_layout.RIGHT],
+                row_height=3.5,
+                grid=False,
             )
-        )
 
-        # Set the correct size
-        html_item_frame.attemptResize(
-            QgsLayoutSize(item["position"][2], item["position"][3], QgsUnitTypes.LayoutUnit.LayoutMillimeters)
-        )
+        elif key in ("proprietes_baties", "proprietes_non_baties"):
+            source = item["source"]
+            if key == "proprietes_baties":
+                title, groups, columns = (
+                    "PROPRIÉTÉS BATIES",
+                    releve_layout.BATI_GROUPS,
+                    releve_layout.BATI_COLUMNS,
+                )
+            else:
+                title, groups, columns = (
+                    "PROPRIÉTÉS NON BATIES",
+                    releve_layout.NON_BATI_GROUPS,
+                    releve_layout.NON_BATI_COLUMNS,
+                )
+            releve_layout.add_columns_table(
+                layout,
+                x,
+                y,
+                title,
+                groups,
+                columns,
+                self.getDataForGivenItem(source, self.main_tables[source], page),
+                self.maxLineNumber,
+                ROW_HEIGHT,
+            )
 
-        # Add frame to the HTML item
-        html_item.addFrame(html_item_frame)
+        elif key == "proprietes_baties_sum":
+            rows = self.getDataForGivenItem(key, item)
+            row = rows[0] if rows else {}
+            # Without merged cells, the labels of the 2 lines are on the first one
+            first = ["REV IMPOSABLE", row.get("revenucadastral", ""), "COM"]
+            second = ["", "", ""]
+            for collectivite, prefix in (("COM", "co"), ("GRP COM", "gp"), ("DEP", "de"), ("REG", "re")):
+                if collectivite != "COM":
+                    first.append(collectivite)
+                    second.append("")
+                first += ["R EXO", row.get(f"{prefix}_vlbaia", "")]
+                second += ["R IMP", row.get(f"{prefix}_bipevla", "")]
+            values = [first, second]
+            widths = [30, 24, 16, 14, 24, 18, 14, 24, 16, 14, 24, 16, 14, 26]
+            widths = [w * width / sum(widths) for w in widths]
+            releve_layout.add_table(layout, (x, y + 2, width, height - 2), values, widths, row_height=4)
+
+        elif key == "proprietes_non_baties_sum":
+            rows = self.getDataForGivenItem(key, item)
+            row = rows[0] if rows else {}
+            contenance = "{} {} {}".format(
+                row.get("sum_ha_contenance", ""),
+                row.get("sum_a_contenance", ""),
+                row.get("sum_ca_contenance", ""),
+            ).strip()
+            values = [["CONTENANCE HA A CA", contenance, "REV IMPOSABLE", row.get("sum_drcsuba", "")]]
+            releve_layout.add_table(
+                layout, (x, y + 2, width, height - 2), values, [60, 85, 60, 85], row_height=4
+            )
+
+        elif key == "footer":
+            releve_layout.add_label(
+                layout, item["source"][0], (x, y, width, height), size=5, bold=False, italic=True
+            )
 
     def addParcelleMap(self):
         """

@@ -5,12 +5,20 @@ from typing import Iterator
 
 import pytest
 
-from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject, QgsProviderRegistry, QgsVectorLayer
+from qgis.core import (
+    QgsFeature,
+    QgsFeatureRequest,
+    QgsLayoutItemManualTable,
+    QgsProject,
+    QgsProviderRegistry,
+    QgsVectorLayer,
+)
 
 import cadastre.cadastre_common_base as common_utils
+import cadastre.releve_layout as releve_layout
 
 from cadastre.cadastre_database import CadastreDatabase
-from cadastre.cadastre_export import CadastreExport
+from cadastre.cadastre_export import ROW_HEIGHT, CadastreExport
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.feedback import CadastreFeedback
@@ -164,3 +172,35 @@ def test_releve_pdf(parcelles: QgsVectorLayer, tmp_path: Path, etype: str):
 
     assert len(paths) == 1
     assert Path(paths[0]).stat().st_size > 10000
+
+    # Only native layout items, no HTML item which needs QtWebKit
+    layout = export.currentComposition
+    assert layout is not None
+    multi_frames = layout.multiFrames()
+    assert multi_frames
+    assert all(isinstance(item, QgsLayoutItemManualTable) for item in multi_frames)
+
+
+def test_releve_zones(parcelles: QgsVectorLayer):
+    """ The main tables, with the lines of a page, fit in their zone, otherwise lines would not be drawn """
+    export = CadastreExport(QgsProject.instance(), parcelles, "proprietaire", "132029+00005", COPROPRIETE)
+    export.set_composer_templates("132029+00005")
+
+    # Title, groups of columns, titles of the columns, lines, and the grid strokes
+    needed = 4 + 3.5 + releve_layout.HEADER_HEIGHT + export.maxLineNumber * ROW_HEIGHT + 3 * releve_layout.GRID_STROKE
+    for key in ("proprietes_baties", "proprietes_non_baties"):
+        assert needed <= export.composerTemplates[key]["position"][3], key
+
+
+@pytest.mark.parametrize("lines, pages", [(0, 1), (1, 1), (15, 1), (16, 2), (30, 2), (31, 3)])
+def test_releve_pages(parcelles: QgsVectorLayer, lines: int, pages: int, monkeypatch: pytest.MonkeyPatch):
+    """ Number of pages, depending on the number of lines of the longest table """
+    export = CadastreExport(QgsProject.instance(), parcelles, "proprietaire", "132029+00005", COPROPRIETE)
+    export.set_composer_templates("132029+00005")
+    monkeypatch.setattr(export, "getDataForGivenItem", lambda key, item, page=None: [])
+    export.lineCount["proprietes_baties_line"]["count"] = lines
+    export.lineCount["proprietes_non_baties_line"]["count"] = 2
+
+    export.getPageNumberNeeded()
+
+    assert export.numPages == pages

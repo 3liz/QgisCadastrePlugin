@@ -88,14 +88,6 @@ class CadastreExport(cadastreExportBase):
         return super().getMapInstance()
 
     @wait_cursor
-    def getHtmlFromTemplate(self, tplPath, replaceDict):
-        """
-        Get the content of a template file
-        and replace all variables with given data
-        """
-        return super().getHtmlFromTemplate(tplPath, replaceDict)
-
-    @wait_cursor
     def exportItemAsPdf(self, comptecommunal: str, suffix: str | None = None) -> str | None:
         temppath = super().exportItemAsPdf(comptecommunal, suffix)
         # Opens PDF in default application

@@ -23,6 +23,12 @@
     le menu et la barre d'outils ne sont plus dupliqués, et les signaux de QGIS sont déconnectés
   * Le bouton « Infos parcelle » ne modifie plus le groupe des outils de navigation de QGIS
   * Export d'un relevé : pas d'erreur si aucun fichier PDF n'a été produit
+* Relevés de propriété et parcellaires
+  * Utilisation des tableaux natifs de QGIS au lieu de blocs HTML : les relevés ne dépendent plus de QtWebKit,
+    absent de certaines installations (pages vides, seule la carte s'affichait) et de QGIS 4
+  * Les textes trop longs pour leur colonne sont tronqués
+  * Correction d'une page vide en trop pour 15, 30, 45... lignes
+  * Correction du texte « None » affiché dans les totaux à partir de la 2e page
 * Serveur
   * `CreatePdf` : erreur 404 explicite pour une parcelle sans données MAJIC
 * Base de données
