@@ -3,14 +3,18 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import configparser
+import functools
+import inspect
 import time
 
 from pathlib import Path
 from typing import Union
 
-from qgis.utils import pluginMetadata
+from qgis.PyQt.QtCore import Qt
+from qgis.utils import OverrideCursor, pluginMetadata
 
 from .logger import Logger
+
 
 def plugin_path(*args) -> Path:
     """Return the path to the plugin root folder."""
@@ -19,6 +23,25 @@ def plugin_path(*args) -> Path:
         path = path.joinpath(item)
 
     return path
+
+
+def wait_cursor(func):
+    """Display the wait cursor while the decorated method is running, even if it raises an exception.
+
+    Like PyQt does for a slot, extra positional arguments sent by a signal are ignored.
+    """
+    parameters = inspect.signature(func).parameters.values()
+    if any(p.kind == p.VAR_POSITIONAL for p in parameters):
+        max_args = None
+    else:
+        max_args = len([p for p in parameters if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)])
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        with OverrideCursor(Qt.CursorShape.WaitCursor):
+            return func(*args[:max_args], **kwargs)
+
+    return wrapper
 
 
 def timing(f):

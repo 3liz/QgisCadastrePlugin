@@ -8,8 +8,10 @@ from functools import partial
 
 from qgis.core import QgsCoordinateReferenceSystem, QgsSettings
 from qgis.PyQt import uic
+from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QFileDialog, QMessageBox
+from qgis.utils import OverrideCursor
 
 from cadastre.cadastre_import import ImportOptions, cadastreImport
 from cadastre.definitions import MAXIMUM_YEAR, MINIMUM_YEAR
@@ -236,7 +238,8 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         )
         feedback = CadastreDialogFeedback(self.txtLog, self.pbProcess, self.stepLabel, self.subStepLabel)
         qi = cadastreImport(options, feedback, self.confirm)
-        success = qi.run()
+        with OverrideCursor(Qt.CursorShape.WaitCursor):
+            success = qi.run()
 
         # The user may have accepted the departement and direction found in MAJIC files
         if (options.departement, options.direction) != (self.edigeoDepartement, self.edigeoDirection):
@@ -259,13 +262,15 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         """
         Ask a yes/no question to the user during the import
         """
-        answer = QMessageBox.question(
-            self,
-            "Cadastre",
-            question,
-            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-            QMessageBox.StandardButton.No,
-        )
+        # The import is running with the wait cursor
+        with OverrideCursor(Qt.CursorShape.ArrowCursor):
+            answer = QMessageBox.question(
+                self,
+                "Cadastre",
+                question,
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.No,
+            )
         return answer == QMessageBox.StandardButton.Yes
 
     def storeSettings(self):

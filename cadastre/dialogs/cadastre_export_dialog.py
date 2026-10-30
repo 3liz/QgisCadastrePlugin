@@ -22,14 +22,14 @@ from typing import Callable, Generator
 
 from qgis.core import QgsMapLayer, QgsMapSettings, QgsProject
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import Qt, QUrl
+from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtGui import QDesktopServices
-from qgis.PyQt.QtWidgets import QApplication, QDialog
+from qgis.PyQt.QtWidgets import QDialog
 
 import cadastre.cadastre_common_base as cadastre_common
 
 from cadastre.cadastre_export import CadastreExport as cadastreExportBase
-from cadastre.tools import plugin_path, set_window_title
+from cadastre.tools import plugin_path, set_window_title, wait_cursor
 
 PRINT_FORM_CLASS, _ = uic.loadUiType(
     str(plugin_path("forms", "cadastre_print_form.ui"))
@@ -87,26 +87,20 @@ class CadastreExport(cadastreExportBase):
         # return self.iface.mapCanvas().mapSettings()
         return super().getMapInstance()
 
+    @wait_cursor
     def getHtmlFromTemplate(self, tplPath, replaceDict):
         """
         Get the content of a template file
         and replace all variables with given data
         """
-        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
-        try:
-            return super().getHtmlFromTemplate(tplPath, replaceDict)
-        finally:
-            QApplication.restoreOverrideCursor()
+        return super().getHtmlFromTemplate(tplPath, replaceDict)
 
+    @wait_cursor
     def exportItemAsPdf(self, comptecommunal, suffix=None):
-        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
-        try:
-            temppath = super().exportItemAsPdf(comptecommunal, suffix)
-            # Opens PDF in default application
-            if not self.isMulti:
-                cadastre_common.openFile(temppath)
-        finally:
-            QApplication.restoreOverrideCursor()
+        temppath = super().exportItemAsPdf(comptecommunal, suffix)
+        # Opens PDF in default application
+        if not self.isMulti:
+            cadastre_common.openFile(temppath)
 
         return temppath
 

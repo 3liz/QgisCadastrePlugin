@@ -46,8 +46,7 @@ from qgis.core import (
     QgsProcessingException,
     QgsProcessingFeedback,
 )
-from qgis.PyQt.QtCore import QObject, QSettings, Qt
-from qgis.PyQt.QtWidgets import QApplication
+from qgis.PyQt.QtCore import QObject, QSettings
 
 import cadastre.cadastre_common_base as common_utils
 
@@ -1126,8 +1125,6 @@ class cadastreImport(QObject):
         if self.go:
             self.feedback.pushInfo(f"* Copie du répertoire {source} vers {target}")
 
-            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
-
             # copy script directory
             try:
                 # Avoid hang from shutil.copytree() with dirs_exist_ok=True
@@ -1138,9 +1135,6 @@ class cadastreImport(QObject):
                 self.feedback.reportError(msg)
                 self.go = False
                 return msg
-
-            finally:
-                QApplication.restoreOverrideCursor()
 
         return None
 
@@ -1230,7 +1224,6 @@ class cadastreImport(QObject):
         and unzip all content into a single folder
         """
         if self.go:
-            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
             self.feedback.pushInfo("* Décompression des fichiers")
 
             # get all the zip files
@@ -1331,9 +1324,6 @@ class cadastreImport(QObject):
                 self.feedback.pushInfo(msg)
                 return msg
 
-            finally:
-                QApplication.restoreOverrideCursor()
-
         return None
 
     def replaceParametersInScript(self, scriptPath, replaceDict):
@@ -1343,8 +1333,6 @@ class cadastreImport(QObject):
         """
 
         if self.go:
-            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
-
             try:
                 data = ""
                 scriptPath = Path(scriptPath)
@@ -1369,9 +1357,6 @@ class cadastreImport(QObject):
                 self.feedback.pushInfo(msg)
                 return msg
 
-            finally:
-                QApplication.restoreOverrideCursor()
-
         return None
 
     def executeSqlScript(self, scriptPath, divide=False, ignoreError=False):
@@ -1380,8 +1365,6 @@ class cadastreImport(QObject):
         """
 
         if self.go:
-            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
-
             # Read sql script
             sql = ""
             try:
@@ -1479,7 +1462,6 @@ class cadastreImport(QObject):
                     self.executeSqlQuery(sql, ignoreError)
 
                     self.updateProgressBar()
-            QApplication.restoreOverrideCursor()
 
         return
 
@@ -1490,8 +1472,6 @@ class cadastreImport(QObject):
         NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
         """
         if self.go:
-            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
-
             c = None
 
             if self.database.db_type == "postgis":
@@ -1509,7 +1489,6 @@ class cadastreImport(QObject):
                             self.go = False
                             self.feedback.reportError(e.msg)
                 finally:
-                    QApplication.restoreOverrideCursor()
                     if c:
                         try:
                             c.close()
@@ -1558,7 +1537,6 @@ class cadastreImport(QObject):
                         self.feedback.pushInfo("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
                         self.feedback.pushInfo("<b>Erreur </b> <p>%s</p>" % format(e))
                 finally:
-                    QApplication.restoreOverrideCursor()
                     if c:
                         try:
                             c.close()
@@ -1622,7 +1600,6 @@ class cadastreImport(QObject):
         # Reinit progress var
         self.step = initialStep
         self.totalSteps = initialTotalSteps
-        QApplication.restoreOverrideCursor()
 
     def import_file_with_ogr(self, file_path: str, file_type: str):
         """

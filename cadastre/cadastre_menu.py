@@ -33,12 +33,11 @@ from qgis.core import (
     QgsProject,
     QgsReadWriteContext,
 )
-from qgis.PyQt.QtCore import QSettings, Qt, QUrl
+from qgis.PyQt.QtCore import QSettings, QUrl
 from qgis.PyQt.QtGui import QDesktopServices, QIcon, QKeySequence
 from qgis.PyQt.QtWidgets import (
     QAction,
     QActionGroup,
-    QApplication,
     QMenu,
     QMessageBox,
     QWidgetAction,
@@ -59,7 +58,7 @@ from cadastre.dialogs.search_dialog import CadastreSearchDialog
 from cadastre.logger import Logger
 from cadastre.plausible import Plausible
 from cadastre.processing.provider import CadastreProvider
-from cadastre.tools import metadata_config, plugin_path
+from cadastre.tools import metadata_config, plugin_path, wait_cursor
 
 
 class CadastreMenu:
@@ -248,6 +247,7 @@ class CadastreMenu:
         icon_path = str(plugin_path("icons", icon_file))
         self.search_action.setIcon(QIcon(icon_path))
 
+    @wait_cursor
     def export_view(self):
         """
         Export current view to PDF
@@ -259,7 +259,6 @@ class CadastreMenu:
             f = str(plugin_path("composers", "paysage_a4.qpt"))
             s.setValue("cadastre/composerTemplateFile", f)
 
-        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         template_content = None
         with open(f, encoding="utf8") as ff:
             template_content = ff.read()
@@ -297,7 +296,6 @@ class CadastreMenu:
         exportersettings.rasterizeWholeImage = False  # rasterizeWholeImage = false
         exporter.exportToPdf(temppath, exportersettings)
 
-        QApplication.restoreOverrideCursor()
 
         if os.path.exists(temppath):
             common_utils.openFile(temppath)

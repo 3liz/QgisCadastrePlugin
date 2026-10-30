@@ -28,7 +28,7 @@ from qgis.utils import OverrideCursor
 
 import cadastre.cadastre_common_base as common_utils
 
-from cadastre.tools import plugin_path
+from cadastre.tools import plugin_path, wait_cursor
 from cadastre.cadastre_export import CadastreExport
 from cadastre.dialogs.custom_qcompleter import CustomQCompleter
 from cadastre.dialogs.dialog_feedback import append_log
@@ -466,11 +466,11 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         return [layer, features]
 
+    @wait_cursor
     def refreshAutocomplete(self, key):
         """
         Refresh autocompletion while the users add more chars in line edit
         """
-        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get value
         combo = self.searchComboBoxes[key]["widget"]
@@ -480,18 +480,15 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         minlen = self.searchComboBoxes[key]["search"]["minlen"]
         if len(common_utils.normalizeString(searchValue)) < minlen:
             # append_log(self.txtLog, u"%s caractères minimum requis pour la recherche !" % minlen)
-            QApplication.restoreOverrideCursor()
             return
 
         # Get database connection parameters from a qgis layer
         dbtable = self.searchComboBoxes[key]["table"]
         layer = common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), dbtable.replace("v_", ""))
         if not layer:
-            QApplication.restoreOverrideCursor()
             return
         connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
         if not connectionParams:
-            QApplication.restoreOverrideCursor()
             return
 
         # Use db_manager tool to run the query
@@ -647,7 +644,6 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 searchValue = " ".join(sp[1:])
                 if len(common_utils.normalizeString(searchValue)) < minlen:
                     append_log(self.txtLog, "%s caractères minimum requis pour la recherche !" % minlen)
-                    QApplication.restoreOverrideCursor()
                     return
 
         sqlSearchValue = common_utils.normalizeString(searchValue)
@@ -826,21 +822,17 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # We do not fill the combobox (cause it overrides autocompletion)
 
-        # Restore cursor
-        QApplication.restoreOverrideCursor()
-
+    @wait_cursor
     def getFeaturesFromSqlQuery(self, layer, filterExpression=None, attributes="*", orderBy=None):
         """
         Get data from a db table,
         optionally filtered by given expression
         and get corresponding QgsFeature objects
         """
-        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get connection parameters
         connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
         if not connectionParams:
-            QApplication.restoreOverrideCursor()
             return None
 
         # set properties
@@ -889,15 +881,14 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         connector.__del__()
 
-        QApplication.restoreOverrideCursor()
         return features
 
+    @wait_cursor
     def getFeatureFromComboboxValue(self, combo):
         """
         Get the feature corresponding to
         the chosen combobox value
         """
-        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get widget
         searchCombo = self.searchComboBoxes[combo]
@@ -908,8 +899,6 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         feature = cb.itemData(cb.currentIndex())
         if feature:
             self.searchComboBoxes[combo]["chosenFeature"] = feature
-
-        QApplication.restoreOverrideCursor()
 
     def onCompleterActivated(self, key):
         """
@@ -927,19 +916,18 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             chosenValue = self.searchComboBoxes[key]["foundValues"][label]
             self.onSearchItemChoose(key, label, chosenValue)
 
+    @wait_cursor
     def onSearchItemChoose(self, key, label, value):
         """
         Select parcelles corresponding
         to chosen item in combo box
         (adresse, proprietaire)
         """
-        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get value
         # combo = self.searchComboBoxes[key]['widget']
         # value = combo.itemData(combo.currentIndex())
         if not value:
-            QApplication.restoreOverrideCursor()
             return
 
         # Set filter expression for parcelle child data
@@ -967,8 +955,6 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         if features:
             append_log(self.txtLog, "{} parcelle(s) trouvée(s) pour '{}'".format(len(features), label))
             self.setZoomToChosenSearchCombobox(key)
-
-        QApplication.restoreOverrideCursor()
 
     def onNonSearchItemChoose(self, key):
         """
