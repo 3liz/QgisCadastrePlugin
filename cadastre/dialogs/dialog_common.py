@@ -3,11 +3,8 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
-import re
-import unicodedata
 
 from collections import namedtuple
-from pathlib import Path
 
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.plugin import BaseError
@@ -27,12 +24,6 @@ class CadastreCommon:
 
     def __init__(self, dialog):
         self.dialog = dialog
-
-        # plugin directory path
-        self.plugin_dir = str(Path(__file__).resolve().parent.parent)
-
-        # default auth id for layers
-        self.defaultAuthId = "2154"
 
     # Bind as class properties for compatibility
     hasSpatialiteSupport = common_utils.hasSpatialiteSupport
@@ -289,23 +280,6 @@ class CadastreCommon:
     setSearchPath = common_utils.setSearchPath
     fetchDataFromSqlQuery = common_utils.fetchDataFromSqlQuery
     getConnectorFromUri = common_utils.getConnectorFromUri
-
-    def normalizeString(self, s):
-        """
-        Removes all accents from
-        the given string and
-        replace e dans l'o
-        """
-        p = re.compile("(œ)")
-        s = p.sub("oe", s)
-
-        s = unicodedata.normalize("NFD", s)
-        s = s.encode("ascii", "ignore")
-        s = s.upper()
-        s = s.decode().strip(" \t\n")
-        r = re.compile(r"[^ -~]")
-        s = r.sub(" ", s)
-        return s.replace("'", " ")
 
     # Bind as class properties for compatibility
     postgisToSpatialite = common_utils.postgisToSpatialite

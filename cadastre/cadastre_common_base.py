@@ -18,6 +18,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 import os
 import re
+import unicodedata
 
 from pathlib import Path
 from typing import Any
@@ -234,6 +235,23 @@ def getConnectorFromUri(connectionParams: dict[str, str]) -> "DBConnector":
             )
 
     return connector
+
+
+def normalizeString(s: str) -> str:
+    """
+    Removes all accents from
+    the given string and
+    replace e dans l'o
+    """
+    p = re.compile("(œ)")
+    s = p.sub("oe", s)
+
+    s = unicodedata.normalize("NFD", s)
+    b = s.encode("ascii", "ignore")
+    s = b.decode().upper().strip(" \t\n")
+    r = re.compile(r"[^ -~]")
+    s = r.sub(" ", s)
+    return s.replace("'", " ")
 
 
 def postgisToSpatialite(sql: str, targetSrid: str = "2154") -> str:

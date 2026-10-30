@@ -29,7 +29,9 @@ from qgis.utils import OverrideCursor
 
 from cadastre.cadastre_export import CadastreExport
 from cadastre.dialogs.custom_qcompleter import CustomQCompleter
+from cadastre.cadastre_common_base import normalizeString
 from cadastre.dialogs.dialog_common import CadastreCommon
+from cadastre.dialogs.dialog_feedback import append_log
 from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
 
 SEARCH_FORM_CLASS, _ = uic.loadUiType(
@@ -76,11 +78,6 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.btResetCommuneProprietaire.setIcon(
             QIcon(os.path.join(plugin_dir, "forms", "icons", "delete.png"))
         )
-
-        # common cadastre methods
-        from cadastre.dialogs.dialog_common import CadastreCommon
-
-        self.qc = CadastreCommon(self)
 
         # database properties
         self.connectionParams = None
@@ -396,12 +393,14 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.btExportParcelle.setEnabled(self.hasMajicDataProp)
 
         if not self.hasMajicDataParcelle or not self.hasMajicDataVoie:
-            self.qc.updateLog(
-                "<b>Pas de données MAJIC non bâties et/ou TOPO</b> -> désactivation de la recherche d'adresse"
+            append_log(
+                self.txtLog,
+                "<b>Pas de données MAJIC non bâties et/ou TOPO</b> -> désactivation de la recherche d'adresse",
             )
         if not self.hasMajicDataProp:
-            self.qc.updateLog(
-                "<b>Pas de données MAJIC propriétaires</b> -> désactivation de la recherche de propriétaires"
+            append_log(
+                self.txtLog,
+                "<b>Pas de données MAJIC propriétaires</b> -> désactivation de la recherche de propriétaires",
             )
 
     def setupSearchCombobox(self, combo, filterExpression=None, queryMode="qgis"):
@@ -456,7 +455,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             cb.addItem("%s" % emptyLabel, "")
 
             for feat in features:
-                if not qe or (qe.evaluate(feat) and  feat and feat[labelAttribute]):
+                if not qe or (qe.evaluate(feat) and feat and feat[labelAttribute]):
                     itemList.append(feat[labelAttribute])
                     cb.addItem(feat[labelAttribute], feat)
 
@@ -474,7 +473,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             cb.setCompleter(completer)
 
         else:
-            # ~ self.qc.updateLog(u'Veuillez charger des données cadastrales dans QGIS pour pouvoir effectuer une recherche')
+            # ~ append_log(self.txtLog, u'Veuillez charger des données cadastrales dans QGIS pour pouvoir effectuer une recherche')
             self.searchComboBoxes[combo]["layer"] = None
             self.searchComboBoxes[combo]["request"] = None
             self.searchComboBoxes[combo]["features"] = None
@@ -494,8 +493,8 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # Abort if searchValue length too small
         minlen = self.searchComboBoxes[key]["search"]["minlen"]
-        if len(self.qc.normalizeString(searchValue)) < minlen:
-            # self.qc.updateLog(u"%s caractères minimum requis pour la recherche !" % minlen)
+        if len(normalizeString(searchValue)) < minlen:
+            # append_log(self.txtLog, u"%s caractères minimum requis pour la recherche !" % minlen)
             QApplication.restoreOverrideCursor()
             return
 
@@ -659,14 +658,14 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 "ZONE",
             ]
             sp = searchValue.split(" ")
-            if len(sp) > 0 and self.qc.normalizeString(sp[0]) in stopwords:
+            if len(sp) > 0 and normalizeString(sp[0]) in stopwords:
                 searchValue = " ".join(sp[1:])
-                if len(self.qc.normalizeString(searchValue)) < minlen:
-                    self.qc.updateLog("%s caractères minimum requis pour la recherche !" % minlen)
+                if len(normalizeString(searchValue)) < minlen:
+                    append_log(self.txtLog, "%s caractères minimum requis pour la recherche !" % minlen)
                     QApplication.restoreOverrideCursor()
                     return
 
-        sqlSearchValue = self.qc.normalizeString(searchValue)
+        sqlSearchValue = normalizeString(searchValue)
         searchValues = sqlSearchValue.split(" ")
 
         # Build SQL query
@@ -780,14 +779,14 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         sql += " LIMIT 50"
 
-        # self.qc.updateLog(sql)
+        # append_log(self.txtLog, sql)
         data, rowCount, _ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
 
         # Write message in log
         msg = f"{rowCount} résultats correpondent à '{searchValue}'"
         if key == "adresse" and hasCommuneFilter:
             msg += " pour la commune %s" % searchCom
-        # self.qc.updateLog(msg)
+        # append_log(self.txtLog, msg)
 
         # Fill in the combobox
         cb = self.searchComboBoxes[key]["widget"]
@@ -887,7 +886,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             sql += " ORDER BY %s" % ", ".join(orderBy)
 
         # Get data
-        # self.qc.updateLog(sql)
+        # append_log(self.txtLog, sql)
         data, rowCount, _ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
 
         # Get features
@@ -981,7 +980,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             self.searchComboBoxes[key]["id"] = value["cc"]
 
         if features:
-            self.qc.updateLog("{} parcelle(s) trouvée(s) pour '{}'".format(len(features), label))
+            append_log(self.txtLog, "{} parcelle(s) trouvée(s) pour '{}'".format(len(features), label))
             self.setZoomToChosenSearchCombobox(key)
 
         QApplication.restoreOverrideCursor()
@@ -1183,7 +1182,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                     parcelle_dialog.show()
 
                 else:
-                    self.qc.updateLog("Aucune parcelle sélectionnée !")
+                    append_log(self.txtLog, "Aucune parcelle sélectionnée !")
 
     def printInfosProprietaires(self):
         """
@@ -1222,7 +1221,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 self.textEdit.toolTip(), self.textEdit.toHtml()
             )
         )
-        self.qc.updateLog("Texte copié dans le presse papier !")
+        append_log(self.txtLog, "Texte copié dans le presse papier !")
 
     def saveInfosProprietaires(self):
         plugin_dir = str(Path(__file__).resolve().parent.parent)
@@ -1245,7 +1244,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                     self.textEdit.toolTip(), self.textEdit.toHtml()
                 )
             )
-            self.qc.updateLog("fichier sauvegarde sous : %s !" % fileName)
+            append_log(self.txtLog, "fichier sauvegarde sous : %s !" % fileName)
 
     def setCenterToChosenItem(self, key):
         """
@@ -1299,7 +1298,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         # Search proprietaire by dnuper
         cc = self.searchComboBoxes["proprietaire"]["id"]
         if not cc:
-            self.qc.updateLog("Aucune donnée trouvée pour ce propriétaire !")
+            append_log(self.txtLog, "Aucune donnée trouvée pour ce propriétaire !")
             return
 
         layer = self.searchComboBoxes["proprietaire"]["layer"]
@@ -1314,7 +1313,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             exports = qex.export_as_pdf()
 
         if not exports:
-            self.qc.updateLog("Problème lors de l'export PDF")
+            append_log(self.txtLog, "Problème lors de l'export PDF")
             self.iface.messageBar().pushCritical("Export PDF", "Erreur lors de l'export PDF")
             return
 
@@ -1338,7 +1337,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         feature = self.searchComboBoxes[key]["chosenFeature"]
         layer = self.searchComboBoxes[key]["layer"]
         if not feature:
-            self.qc.updateLog("Aucune parcelle sélectionnée !")
+            append_log(self.txtLog, "Aucune parcelle sélectionnée !")
             return
 
         # Get id of the owner
@@ -1363,7 +1362,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             exports = qex.export_as_pdf()
 
         if not exports:
-            self.qc.updateLog("Problème lors de l'export PDF")
+            append_log(self.txtLog, "Problème lors de l'export PDF")
             self.iface.messageBar().pushCritical("Export PDF", "Erreur lors de l'export PDF")
             return
 

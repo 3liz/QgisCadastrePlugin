@@ -11,7 +11,7 @@ from qgis.PyQt.QtWidgets import QDialog
 
 from cadastre.cadastre_loading import CadastreLoading
 from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback
-from cadastre.tools import set_window_title
+from cadastre.tools import plugin_path, set_window_title
 
 LOAD_FORM_CLASS, _ = uic.loadUiType(
     os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_load_form.ui")
@@ -82,7 +82,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         inside the plugin dir
         and add combobox item
         """
-        spath = os.path.join(self.qc.plugin_dir, "styles/")
+        spath = str(plugin_path("styles"))
         dirs = os.listdir(spath)
         dirs = [a for a in dirs if os.path.isdir(os.path.join(spath, a))]
         dirs.sort()

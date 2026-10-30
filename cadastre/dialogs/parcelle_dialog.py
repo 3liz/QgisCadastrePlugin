@@ -24,6 +24,7 @@ from qgis.PyQt.QtWidgets import (
 
 from cadastre.dialogs.cadastre_export_dialog import CadastreExport
 from cadastre.dialogs.dialog_common import CadastreCommon
+from cadastre.dialogs.dialog_feedback import append_log
 from cadastre.tools import set_window_title
 
 from ..logger import Logger
@@ -82,11 +83,6 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.btParcellesProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "select.png")))
         self.btExportParcelle.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png")))
         self.btExportProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png")))
-
-        # common cadastre methods
-        from cadastre.dialogs.dialog_common import CadastreCommon
-
-        self.qc = CadastreCommon(self)
 
         # Get connection parameters
         connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
@@ -210,7 +206,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             return
 
         if self.cadastre_search_dialog:
-            self.cadastre_search_dialog.qc.updateLog(obj.toPlainText())
+            append_log(self.cadastre_search_dialog.txtLog, obj.toPlainText())
 
     def copyInfosTab(self):
         obj = self.setObj()

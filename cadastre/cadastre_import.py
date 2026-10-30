@@ -60,6 +60,7 @@ from cadastre.definitions import (
     URL_TOPO,
 )
 from cadastre.dialogs.dialog_common import CadastreCommon
+from cadastre.tools import plugin_path
 
 from .logger import Logger
 
@@ -83,7 +84,7 @@ class cadastreImport(QObject):
 
         self.db = self.dialog.db
         self.connector = self.db.connector
-        self.pScriptSourceDir = os.path.join(self.qc.plugin_dir, "scripts/plugin")
+        self.pScriptSourceDir = str(plugin_path("scripts", "plugin"))
 
         # projections
         if self.dialog.doEdigeoImport:

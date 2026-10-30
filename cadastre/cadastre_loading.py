@@ -39,6 +39,8 @@ from qgis.core import (
 from qgis.PyQt.QtCore import QObject, QSettings, Qt, pyqtSignal
 from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
+from cadastre.tools import plugin_path
+
 if TYPE_CHECKING:
     from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
 
@@ -393,11 +395,11 @@ class CadastreLoading(QObject):
 
         # default style to apply for Cadastre layers
         self.themeDir = str(self.dialog.liTheme.currentText())
-        if not os.path.exists(os.path.join(self.qc.plugin_dir, f"styles/{self.themeDir}")):
+        if not os.path.exists(plugin_path("styles", self.themeDir)):
             self.themeDir = self.defaultThemeDir
 
         # set Cadastre SVG path if not set
-        cadastre_svg_path = os.path.join(self.qc.plugin_dir, f"styles/{self.themeDir}/svg")
+        cadastre_svg_path = str(plugin_path("styles", self.themeDir, "svg"))
         s = QSettings()
         qgis_svg_paths = s.value("svg/searchPathsForSVG", 10, type=str)
         a = list(qgis_svg_paths)
@@ -546,7 +548,7 @@ class CadastreLoading(QObject):
                 v_layer.setShortName(self.short_name(layer_name))
 
             # apply style
-            qml_path = os.path.join(self.qc.plugin_dir, f"styles/{self.themeDir}/{item['name']}.qml")
+            qml_path = str(plugin_path("styles", self.themeDir, f"{item['name']}.qml"))
             if os.path.exists(qml_path):
                 v_layer.loadNamedStyle(qml_path)
 
