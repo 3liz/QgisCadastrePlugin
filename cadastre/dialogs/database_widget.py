@@ -4,10 +4,9 @@ __email__ = "info@3liz.org"
 
 import os
 
-from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
-from qgis.core import QgsSettings
+from qgis.core import QgsProviderRegistry, QgsSettings
 from qgis.PyQt.QtCore import QFileInfo, Qt, pyqtSignal
 from qgis.PyQt.QtWidgets import (
     QApplication,
@@ -30,6 +29,8 @@ from cadastre.logger import Logger
 
 POSTGIS = "postgis"
 SPATIALITE = "spatialite"
+# QGIS provider names
+PROVIDERS = {POSTGIS: "postgres", SPATIALITE: "spatialite"}
 
 
 class DatabaseWidget(QWidget):
@@ -121,8 +122,10 @@ class DatabaseWidget(QWidget):
             # Clearing the list will reset the current connection
             self.liDbConnection.clear()
             if self.db_type:
-                for connection in createDbPlugin(self.db_type).connections():
-                    self.liDbConnection.addItem(connection.connectionName())
+                # Use the QGIS cache: reloading the connections, like db_manager connections() does,
+                # deletes the connection objects used by the opened db_manager connectors (crash)
+                metadata = QgsProviderRegistry.instance().providerMetadata(PROVIDERS[self.db_type])
+                self.liDbConnection.addItems(sorted(metadata.dbConnections().keys()))
         self._update_widgets()
 
     def connect_database(self):
@@ -220,9 +223,8 @@ class DatabaseWidget(QWidget):
 
         # Create QGIS connexion
         name = os.path.basename(ipath)
-        QgsSettings().setValue(
-            f"/SpatiaLite/connections/{name}/sqlitepath", QFileInfo(ipath).canonicalFilePath()
-        )
+        metadata = QgsProviderRegistry.instance().providerMetadata(PROVIDERS[SPATIALITE])
+        metadata.saveConnection(metadata.createConnection(QFileInfo(ipath).canonicalFilePath(), {}), name)
 
         # Update connections combo box and set new db selected
         self.update_connection_list()

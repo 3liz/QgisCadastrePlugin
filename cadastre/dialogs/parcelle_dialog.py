@@ -21,8 +21,9 @@ from qgis.PyQt.QtWidgets import (
     QTextEdit,
 )
 
+import cadastre.cadastre_common_base as common_utils
+
 from cadastre.dialogs.cadastre_export_dialog import CadastreExport
-from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.dialogs.dialog_feedback import append_log
 from cadastre.tools import plugin_path, set_window_title
 
@@ -80,14 +81,14 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.btExportProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
 
         # Get connection parameters
-        connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
+        connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
         if not connectionParams:
             return
 
         self.connectionParams = connectionParams
         self.dbType = connectionParams["dbType"]
         self.schema = connectionParams["schema"]
-        connector = CadastreCommon.getConnectorFromUri(connectionParams)
+        connector = common_utils.getConnectorFromUri(connectionParams)
         self.connector = connector
 
         self.buttonBox.button(QDialogButtonBox.StandardButton.Ok).setText("Fermer")
@@ -319,7 +320,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         sql = 'SELECT * FROM "proprietaire" LIMIT 1'
         if self.connectionParams["dbType"] == "postgis":
             sql = 'SELECT * FROM "{}"."proprietaire" LIMIT 1'.format(self.connectionParams["schema"])
-        _data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(self.connector, sql)
+        _data, rowCount, ok = common_utils.fetchDataFromSqlQuery(self.connector, sql)
         if ok and rowCount >= 1:
             self.hasMajicDataProp = True
 
@@ -334,7 +335,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         else:
             item = "parcelle_simple"
 
-        html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+        html = common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.parcelleInfo.setStyleSheet(self.css)
         self.parcelleInfo.setHtml(
             f"""
@@ -355,8 +356,8 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
             item = "proprietaires"
-            html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
-            html += CadastreCommon.getItemHtml(
+            html = common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            html += common_utils.getItemHtml(
                 "indivisions", self.feature, self.connectionParams, self.connector
             )
         self.proprietairesInfo.setStyleSheet(self.css)
@@ -379,7 +380,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
             item = "subdivisions"
-            html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            html = common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.subdivisionsInfo.setStyleSheet(self.css)
         self.subdivisionsInfo.setHtml(
             f"""
@@ -400,9 +401,9 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
             item = "locaux"
-            html = CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            html = common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
             item = "locaux_detail"
-            html += CadastreCommon.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            html += common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
         self.locauxInfo.setStyleSheet(self.css)
         self.locauxInfo.setHtml(
             f"""
@@ -432,12 +433,12 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         for_third_party = self.combo_for_third_party.isChecked()
 
         if self.feature:
-            comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
+            comptecommunal = common_utils.getCompteCommunalFromParcelleId(
                 self.feature["geo_parcelle"], self.connectionParams, self.connector
             )
             if comptecommunal:
                 if key == "proprietaire":
-                    comptecommunal = CadastreCommon.getProprietaireComptesCommunaux(
+                    comptecommunal = common_utils.getProprietaireComptesCommunaux(
                         comptecommunal,
                         self.connectionParams,
                         self.connector,
@@ -511,7 +512,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         qs = self.cadastre_search_dialog
         key = "proprietaire"
 
-        comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
+        comptecommunal = common_utils.getCompteCommunalFromParcelleId(
             self.feature["geo_parcelle"], self.connectionParams, self.connector
         )
         if not comptecommunal:

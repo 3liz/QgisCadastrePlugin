@@ -26,11 +26,11 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.utils import OverrideCursor
 
+import cadastre.cadastre_common_base as common_utils
+
 from cadastre.tools import plugin_path
 from cadastre.cadastre_export import CadastreExport
 from cadastre.dialogs.custom_qcompleter import CustomQCompleter
-from cadastre.cadastre_common_base import normalizeString
-from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.dialogs.dialog_feedback import append_log
 from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
 
@@ -82,10 +82,10 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.sectionRequest = None
         self.sectionCommuneFeature = None
 
-        aLayer = CadastreCommon.getLayerFromLegendByTableProps("geo_commune")
+        aLayer = common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), "geo_commune")
         if aLayer:
-            self.connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(aLayer)
-            self.connector = CadastreCommon.getConnectorFromUri(self.connectionParams)
+            self.connectionParams = common_utils.getConnectionParameterFromDbLayer(aLayer)
+            self.connector = common_utils.getConnectorFromUri(self.connectionParams)
 
         # signals/slots
         self.searchComboBoxes = {
@@ -324,16 +324,14 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.hasMajicDataVoie = False
         self.hasMajicDataParcelle = False
 
-        from cadastre.dialogs.dialog_common import CadastreCommon
-
-        aLayer = CadastreCommon.getLayerFromLegendByTableProps("geo_commune")
+        aLayer = common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), "geo_commune")
         if aLayer:
-            self.connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(aLayer)
+            self.connectionParams = common_utils.getConnectionParameterFromDbLayer(aLayer)
 
         # Get connection parameters
         if self.connectionParams:
             # Get Connection params
-            connector = CadastreCommon.getConnectorFromUri(self.connectionParams)
+            connector = common_utils.getConnectorFromUri(self.connectionParams)
             if connector:
                 # Tables to check
                 majicTableParcelle = "parcelle"
@@ -349,7 +347,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(
                         self.connectionParams["schema"], majicTableProp
                     )
-                _data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+                _data, rowCount, ok = common_utils.fetchDataFromSqlQuery(connector, sql)
                 if ok and rowCount >= 1:
                     self.hasMajicDataProp = True
 
@@ -359,7 +357,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(
                         self.connectionParams["schema"], majicTableVoie
                     )
-                _data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+                _data, rowCount, ok = common_utils.fetchDataFromSqlQuery(connector, sql)
                 if ok and rowCount >= 1:
                     self.hasMajicDataVoie = True
 
@@ -369,7 +367,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                     sql = 'SELECT * FROM "{}"."{}" LIMIT 1'.format(
                         self.connectionParams["schema"], majicTableParcelle
                     )
-                _data, rowCount, ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+                _data, rowCount, ok = common_utils.fetchDataFromSqlQuery(connector, sql)
                 if ok and rowCount >= 1:
                     self.hasMajicDataParcelle = True
 
@@ -407,8 +405,8 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         # Get corresponding QGIS layer
         itemList = []
         table = searchCombo["table"]
-        layer = CadastreCommon.getLayerFromLegendByTableProps(
-            table, searchCombo["geomCol"], searchCombo["sql"]
+        layer = common_utils.getLayerFromLegendByTableProps(
+            QgsProject.instance(), table, searchCombo["geomCol"], searchCombo["sql"]
         )
 
         self.searchComboBoxes[combo]["layer"] = layer
@@ -480,24 +478,24 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # Abort if searchValue length too small
         minlen = self.searchComboBoxes[key]["search"]["minlen"]
-        if len(normalizeString(searchValue)) < minlen:
+        if len(common_utils.normalizeString(searchValue)) < minlen:
             # append_log(self.txtLog, u"%s caractères minimum requis pour la recherche !" % minlen)
             QApplication.restoreOverrideCursor()
             return
 
         # Get database connection parameters from a qgis layer
         dbtable = self.searchComboBoxes[key]["table"]
-        layer = CadastreCommon.getLayerFromLegendByTableProps(dbtable.replace("v_", ""))
+        layer = common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), dbtable.replace("v_", ""))
         if not layer:
             QApplication.restoreOverrideCursor()
             return
-        connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
+        connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
         if not connectionParams:
             QApplication.restoreOverrideCursor()
             return
 
         # Use db_manager tool to run the query
-        connector = CadastreCommon.getConnectorFromUri(connectionParams)
+        connector = common_utils.getConnectorFromUri(connectionParams)
         self.connector = connector
 
         # Format searchValue
@@ -645,14 +643,14 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 "ZONE",
             ]
             sp = searchValue.split(" ")
-            if len(sp) > 0 and normalizeString(sp[0]) in stopwords:
+            if len(sp) > 0 and common_utils.normalizeString(sp[0]) in stopwords:
                 searchValue = " ".join(sp[1:])
-                if len(normalizeString(searchValue)) < minlen:
+                if len(common_utils.normalizeString(searchValue)) < minlen:
                     append_log(self.txtLog, "%s caractères minimum requis pour la recherche !" % minlen)
                     QApplication.restoreOverrideCursor()
                     return
 
-        sqlSearchValue = normalizeString(searchValue)
+        sqlSearchValue = common_utils.normalizeString(searchValue)
         searchValues = sqlSearchValue.split(" ")
 
         # Build SQL query
@@ -767,7 +765,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         sql += " LIMIT 50"
 
         # append_log(self.txtLog, sql)
-        data, rowCount, _ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+        data, rowCount, _ok = common_utils.fetchDataFromSqlQuery(connector, sql)
 
         # Write message in log
         msg = f"{rowCount} résultats correpondent à '{searchValue}'"
@@ -840,7 +838,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # Get connection parameters
-        connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
+        connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
         if not connectionParams:
             QApplication.restoreOverrideCursor()
             return None
@@ -850,7 +848,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.schema = connectionParams["schema"]
 
         # Use db_manager tool to run the query
-        connector = CadastreCommon.getConnectorFromUri(connectionParams)
+        connector = common_utils.getConnectorFromUri(connectionParams)
 
         # SQL
         sql = " SELECT %s" % ", ".join(attributes)
@@ -874,7 +872,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
 
         # Get data
         # append_log(self.txtLog, sql)
-        data, rowCount, _ok = CadastreCommon.fetchDataFromSqlQuery(connector, sql)
+        data, rowCount, _ok = common_utils.fetchDataFromSqlQuery(connector, sql)
 
         # Get features
         features = []
@@ -1123,12 +1121,12 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         Update connection settings if broken
         """
         dbtable = self.searchComboBoxes["commune"]["table"]
-        layer = CadastreCommon.getLayerFromLegendByTableProps(dbtable.replace("v_", ""))
+        layer = common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), dbtable.replace("v_", ""))
         if not layer:
             return
 
         # Get connection parameters
-        connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
+        connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
 
         if not connectionParams:
             return
@@ -1136,7 +1134,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.connectionParams = connectionParams
         self.dbType = connectionParams["dbType"]
         self.schema = connectionParams["schema"]
-        connector = CadastreCommon.getConnectorFromUri(connectionParams)
+        connector = common_utils.getConnectorFromUri(connectionParams)
         self.connector = connector
 
     def setIdentifierToChosenItem(self, key):
@@ -1324,7 +1322,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             return
 
         # Get id of the owner
-        compte_communal = CadastreCommon.getCompteCommunalFromParcelleId(
+        compte_communal = common_utils.getCompteCommunalFromParcelleId(
             feature["geo_parcelle"], self.connectionParams, self.connector
         )
 

@@ -23,8 +23,9 @@ import argparse
 from qgis.core import QgsApplication, QgsFeatureRequest, QgsProject
 from qgis.gui import QgsLayerTreeMapCanvasBridge, QgsMapCanvas
 
+import cadastre.cadastre_common_base as common_utils
+
 from cadastre.cadastre_export import CadastreExport
-from cadastre.dialogs.dialog_common import CadastreCommon
 
 # Variables
 parser = argparse.ArgumentParser()
@@ -105,19 +106,17 @@ for f in it:
     break
 
 # Get connection params
-connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
-connector = CadastreCommon.getConnectorFromUri(connectionParams)
+connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
+connector = common_utils.getConnectorFromUri(connectionParams)
 
 # Get compte communal
-comptecommunal = CadastreCommon.getCompteCommunalFromParcelleId(
+comptecommunal = common_utils.getCompteCommunalFromParcelleId(
     feat["geo_parcelle"], connectionParams, connector
 )
 
 pmulti = 0
 if export_type == "proprietaire" and pmulti == 1:
-    comptecommunal = CadastreCommon.getProprietaireComptesCommunaux(
-        comptecommunal, connectionParams, connector
-    )
+    comptecommunal = common_utils.getProprietaireComptesCommunaux(comptecommunal, connectionParams, connector)
 
 # Export PDF
 print(target_dir)

@@ -9,6 +9,7 @@ from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
+from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
 from cadastre.dialogs.search_dialog import CadastreSearchDialog
 from cadastre.feedback import CadastreFeedback
 
@@ -43,7 +44,7 @@ def test_load_all_layers(database: CadastreDatabase, project: QgsProject):
     assert len(layers) > len(MAIN_LAYERS)
     assert all(layer.isValid() for layer in layers), [layer.name() for layer in layers if not layer.isValid()]
     names = {layer.name() for layer in layers}
-    assert MAIN_LAYERS <= names
+    assert names >= MAIN_LAYERS
     assert len(project.mapLayers()) == len(layers)
 
     # Layers are in the "Cadastre" group
@@ -115,3 +116,22 @@ def test_load_with_dialog(database: CadastreDatabase, project: QgsProject, qgis_
     dialog.onProcessLoadingClicked()
 
     assert {layer.name() for layer in project.mapLayers().values()} == MAIN_LAYERS
+
+
+def test_search_and_parcelle_dialogs(database: CadastreDatabase, project: QgsProject, qgis_iface: QgisInterface):
+    """ Search and parcelle dialogs use the loaded layers. """
+    CadastreLoading(CadastreFeedback()).process_loading(LoadingOptions(database, main_layers_only=True))
+
+    search_dialog = CadastreSearchDialog(qgis_iface)
+    search_dialog.checkMajicContent()
+    # MAJIC fixtures only contain the TOPO file with data
+    assert search_dialog.hasMajicDataVoie
+    assert not search_dialog.hasMajicDataProp
+
+    layer = project.mapLayersByName("Parcelles")[0]
+    feature = next(layer.getFeatures())
+    dialog = CadastreParcelleDialog(qgis_iface, layer, feature, search_dialog)
+
+    assert not dialog.hasMajicDataProp
+    assert feature["geo_parcelle"] in dialog.windowTitle()
+    assert dialog.parcelleInfo.toPlainText().strip()

@@ -45,11 +45,12 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.PyQt.QtXml import QDomDocument
 
+import cadastre.cadastre_common_base as common_utils
+
 from cadastre.cadastre_identify_parcelle import IdentifyParcelle
 from cadastre.definitions import URL_DOCUMENTATION
 from cadastre.dialogs.about_dialog import CadastreAboutDialog
 from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
-from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.dialogs.import_dialog import CadastreImportDialog
 from cadastre.dialogs.message_dialog import CadastreMessageDialog
 from cadastre.dialogs.options_dialog import CadastreOptionDialog
@@ -299,7 +300,7 @@ class CadastreMenu:
         QApplication.restoreOverrideCursor()
 
         if os.path.exists(temppath):
-            CadastreCommon.openFile(temppath)
+            common_utils.openFile(temppath)
 
     def open_option_dialog(self):
         """
@@ -345,9 +346,9 @@ class CadastreMenu:
         # Find parcelle layer
         parcelleLayer = None
         try:
-            from cadastre.dialogs.dialog_common import CadastreCommon
-
-            parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps("parcelle_info")
+            parcelleLayer = common_utils.getLayerFromLegendByTableProps(
+                QgsProject.instance(), "parcelle_info"
+            )
         except Exception as err:
             Logger.log_exception(err)
             parcelleLayer = None
@@ -364,7 +365,7 @@ class CadastreMenu:
         """
 
         # Find parcelle layer
-        parcelleLayer = CadastreCommon.getLayerFromLegendByTableProps("parcelle_info")
+        parcelleLayer = common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), "parcelle_info")
         if not parcelleLayer:
             QMessageBox.warning(
                 self.cadastre_search_dialog,

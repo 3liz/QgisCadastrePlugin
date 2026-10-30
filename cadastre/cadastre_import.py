@@ -49,6 +49,8 @@ from qgis.core import (
 from qgis.PyQt.QtCore import QObject, QSettings, Qt
 from qgis.PyQt.QtWidgets import QApplication
 
+import cadastre.cadastre_common_base as common_utils
+
 from cadastre.definitions import (
     IMPORT_MEMORY_ERROR_MESSAGE,
     REGEX_BATI,
@@ -60,7 +62,6 @@ from cadastre.definitions import (
     URL_TOPO,
 )
 from cadastre.cadastre_database import CadastreDatabase, DatabaseStructure
-from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.feedback import CadastreFeedback
 from cadastre.tools import plugin_path
 
@@ -136,7 +137,7 @@ class cadastreImport(QObject):
                     "SELECT auth_srid FROM spatial_ref_sys WHERE auth_name='IGNF' AND  srtext LIKE '%s' LIMIT 1"
                     % sqlsearch
                 )
-                data, row_count, _ok = CadastreCommon.fetchDataFromSqlQuery(self.connector, sql)
+                data, row_count, _ok = common_utils.fetchDataFromSqlQuery(self.connector, sql)
                 if row_count == 1:
                     for line in data:
                         self.sourceSrid = str(line[0])
@@ -723,7 +724,7 @@ class cadastreImport(QObject):
                 if self.database.db_type == "postgis":
                     try:
                         sql = "BEGIN;"
-                        sql = CadastreCommon.setSearchPath(sql, self.database.schema)
+                        sql = common_utils.setSearchPath(sql, self.database.schema)
                         # Build INSERT list
                         sql += "\n".join(
                             [
@@ -1080,13 +1081,13 @@ class cadastreImport(QObject):
             sql = "DELETE FROM geo_label WHERE NOT MbrWithin(geom, ( SELECT ST_Buffer(ST_Envelope(Collect(geom)), 100 ) AS geom FROM geo_commune ));"
         else:
             sql = "DELETE FROM geo_label WHERE NOT ST_Within(geom, ( SELECT ST_Buffer(ST_Envelope(ST_Collect(geom)), 100 ) AS geom FROM geo_commune ));"
-            sql = CadastreCommon.setSearchPath(sql, self.database.schema)
+            sql = common_utils.setSearchPath(sql, self.database.schema)
         self.executeSqlQuery(sql)
 
         # Add parcelle_info index for postgis only (not capability of that type for spatialite)
         if self.database.db_type == "postgis":
             sql = 'CREATE INDEX IF NOT EXISTS parcelle_info_geo_parcelle_sub ON parcelle_info( substr("geo_parcelle", 1, 10));'
-            sql = CadastreCommon.setSearchPath(sql, self.database.schema)
+            sql = common_utils.setSearchPath(sql, self.database.schema)
             self.executeSqlQuery(sql)
 
             # Add index on geo_parcelle and geo_batiment centroids
@@ -1094,7 +1095,7 @@ class cadastreImport(QObject):
             CREATE INDEX IF NOT EXISTS geo_parcelle_centroide_geom_idx ON geo_parcelle USING gist (ST_Centroid(geom));
             CREATE INDEX IF NOT EXISTS geo_batiment_centroide_geom_idx ON geo_batiment USING gist (ST_Centroid(geom));
             """
-            sql = CadastreCommon.setSearchPath(sql, self.database.schema)
+            sql = common_utils.setSearchPath(sql, self.database.schema)
             self.executeSqlQuery(sql)
 
         # Refresh spatialite layer statistics
@@ -1393,7 +1394,7 @@ class cadastreImport(QObject):
 
             # Set schema if needed
             if self.database.db_type == "postgis":
-                sql = CadastreCommon.setSearchPath(sql, self.database.schema)
+                sql = common_utils.setSearchPath(sql, self.database.schema)
 
             # Remove make valid if asked
             if not self.options.edigeo_make_valid:
@@ -1407,8 +1408,8 @@ class cadastreImport(QObject):
 
             # Convert SQL into spatialite syntax
             if self.database.db_type == "spatialite":
-                sql = CadastreCommon.postgisToSpatialite(sql, self.targetSrid)
-                sql = CadastreCommon.postgisToSpatialiteLocal10(sql, self.options.data_year)
+                sql = common_utils.postgisToSpatialite(sql, self.targetSrid)
+                sql = common_utils.postgisToSpatialiteLocal10(sql, self.options.data_year)
 
             # Execute query
             if not divide:
@@ -1837,7 +1838,7 @@ class cadastreImport(QObject):
                             item[0], item[1], item[2]
                         )
                     sql += "COMMIT;"
-                    sql = CadastreCommon.setSearchPath(sql, self.database.schema)
+                    sql = common_utils.setSearchPath(sql, self.database.schema)
                     self.executeSqlQuery(sql)
                 if self.database.db_type == "spatialite":
                     c = self.connector._get_cursor()
@@ -1864,7 +1865,7 @@ class cadastreImport(QObject):
         # Run each query
         for sql in sqlList:
             if self.database.db_type == "postgis":
-                sql = CadastreCommon.setSearchPath(sql, self.database.schema)
+                sql = common_utils.setSearchPath(sql, self.database.schema)
             self.executeSqlQuery(sql)
 
     def getUpdateMultipolygonFromVecQuery(self, path, layerType="edigeo"):
@@ -1974,5 +1975,5 @@ class cadastreImport(QObject):
             for table in edigeoImportTables:
                 sql += 'DROP TABLE IF EXISTS "%s";' % table
             if self.database.db_type == "postgis":
-                sql = CadastreCommon.setSearchPath(sql, self.database.schema)
+                sql = common_utils.setSearchPath(sql, self.database.schema)
             self.executeSqlQuery(sql)

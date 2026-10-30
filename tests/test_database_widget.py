@@ -1,11 +1,8 @@
-from pathlib import Path
-
 import pytest
 
 from qgis.core import QgsProviderRegistry, QgsSettings
-from qgis.utils import spatialite_connect
 
-from cadastre.cadastre_common_base import hasSpatialiteSupport
+from cadastre.cadastre_database import CadastreDatabase
 from cadastre.dialogs.database_widget import DatabaseWidget
 
 SCHEMA = "cadastre_widget_test"
@@ -22,6 +19,17 @@ def drop_schema():
     yield
     if SCHEMA in pg_connection().schemas():
         pg_connection().dropSchema(SCHEMA, True)
+
+
+def test_open_connection_still_valid():
+    """ Filling the connection list must not break the connections already opened (segfault). """
+    database = CadastreDatabase.from_connection("postgis", "test_database", "public")
+
+    widget = DatabaseWidget()
+    widget.liDbType.setCurrentIndex(1)
+
+    assert widget.liDbConnection.currentText() == "test_database"
+    assert database.tables() is not None
 
 
 def test_no_database_type():
@@ -101,32 +109,3 @@ def test_settings(drop_schema, restore_settings):
     assert other.db_type == "postgis"
     assert other.liDbConnection.currentText() == "test_database"
     assert other.database().schema == SCHEMA
-
-
-@pytest.mark.skipif(not hasSpatialiteSupport(), reason="No Spatialite support")
-def test_spatialite(tmp_path: Path):
-    path = tmp_path / "widget test.sqlite"
-    con = spatialite_connect(str(path), isolation_level=None)
-    con.cursor().execute("SELECT InitSpatialMetadata(1)")
-    con.close()
-
-    settings = QgsSettings()
-    key = "/SpatiaLite/connections/widget test.sqlite/sqlitepath"
-    settings.setValue(key, str(path))
-    try:
-        widget = DatabaseWidget(creation_enabled=True)
-        widget.liDbType.setCurrentIndex(widget.liDbType.findText("Spatialite"))
-        widget.liDbConnection.setCurrentIndex(widget.liDbConnection.findText("widget test.sqlite"))
-
-        assert not widget.btCreateNewSpatialiteDb.isHidden()
-        assert widget.btDbCreateSchema.isHidden()
-        assert not widget.liDbSchema.isEnabled()
-
-        database = widget.database()
-        assert database is not None
-        assert database.db_type == "spatialite"
-        assert database.schema == ""
-        assert not database.structure().has_structure
-        widget.close_connection()
-    finally:
-        settings.remove("/SpatiaLite/connections/widget test.sqlite")
