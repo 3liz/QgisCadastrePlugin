@@ -1592,6 +1592,8 @@ class cadastreImport(QObject):
 
         # normalising file path
         file_path = os.path.normpath(file_path)
+        # runGdal joins args with spaces then re-splits them (QProcess rules): wrap in double quotes
+        file_path = f'"{file_path}"'
         if self.dialog.dbType == "postgis":
             if not settings.contains("database"):  # non-existent entry?
                 raise Exception(self.tr('There is no defined database connection "%s".') % conn_name)
@@ -1679,7 +1681,7 @@ class cadastreImport(QObject):
                 self.go = False
                 raise Exception('there is no defined database connection "%s".' % conn_name)
 
-            database = settings.value("sqlitepath")
+            database = '"{}"'.format(os.path.normpath(settings.value("sqlitepath")))
 
             cmdArgs = [
                 "ogr2ogr",
@@ -1730,12 +1732,13 @@ class cadastreImport(QObject):
             return
 
         # Use GdalUtils to run ogr2ogr command
+        loglines = []
+        error_message = ""
         try:
             loglines = GdalUtils.runGdal(cmdArgs, None)
         except QgsProcessingException as e:
             self.go = False
             error_message = f"Erreur lors de l'exécution d'ogr2ogr : {e}"
-            self.qc.updateLog(loglines.join("\n"))
             self.qc.updateLog(error_message)
 
         for line in loglines:

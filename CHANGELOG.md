@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* Import
+  * Correction de l'import via `ogr2ogr` lorsque le chemin des fichiers EDIGEO, TOPO
+    ou de la base Spatialite contient des espaces
+  * Correction de la gestion des erreurs lors de l'exécution d'`ogr2ogr`
+
 ## 2.3.1 - 2026-08-06
 
 * Import
