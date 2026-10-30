@@ -1,3 +1,5 @@
+import shutil
+
 from pathlib import Path
 from typing import NamedTuple
 
@@ -178,6 +180,24 @@ def test_import_majic_wrong_departement(accept: bool, fixtures: Path):
         assert options.departement == CornillonMajic.dept
         results = connection.executeSql('SELECT ccodep FROM cadastre.commune_majic;')
         assert results == [[CornillonMajic.dept]]
+
+
+def test_import_majic_path_with_spaces(fixtures: Path, tmp_path: Path):
+    """ The TOPO file is imported with ogr2ogr, the spaces of its path must be kept """
+    remove_schema()
+    metadata = QgsProviderRegistry.instance().providerMetadata("postgres")
+    metadata.findConnection("test_database").createSchema(TEST_SCHEMA)
+
+    majic_dir = tmp_path / "Fichiers MAJIC 2026" / "13029"
+    shutil.copytree(fixtures.joinpath("majic", "13029"), majic_dir)
+    options = import_options(CornillonMajic, fixtures)
+    options.majic_source_dir = str(majic_dir)
+    options.edigeo_source_dir = ""
+
+    assert cadastreImport(options, CadastreFeedback()).run()
+
+    connection = metadata.findConnection("test_database")
+    assert connection.executeSql(f"SELECT libvoi FROM {TEST_SCHEMA}.voie WHERE ccoriv = '0870'") == [["DE CAMPREOUX"]]
 
 
 def import_options(test_case: TestCase, fixtures: Path) -> ImportOptions:
