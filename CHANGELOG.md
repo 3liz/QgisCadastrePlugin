@@ -8,6 +8,8 @@
   * Correction de la gestion des erreurs lors de l'exécution d'`ogr2ogr`
   * Les erreurs SQL sont affichées dans le journal de l'import au lieu d'une fenêtre
   * Correction de l'affichage des erreurs lors d'un manque de mémoire ou d'une archive EDIGEO corrompue
+  * MAJIC PostGIS : correction du dénominateur des lots de copropriété (`ddenql`), dont le dernier chiffre
+    était perdu (10000 importé en 1000), ainsi que de `majposca` pour le format 2014
 * Processing
   * Nouveaux traitements « Import des données dans PostGIS » et « Import des données dans Spatialite »,
     équivalents au dialogue d'import, pour automatiser les imports (modèles, scripts)
@@ -28,7 +30,8 @@
 * Refactorisation
   * Import et chargement indépendants des dialogues, utilisables sans interface
   * Suppression de la classe `CadastreCommon`
-  * Ajout de tests : import sans dialogue, chargement des couches, Spatialite, choix de la base
+  * Ajout de tests : import sans dialogue, chargement des couches, Spatialite, choix de la base,
+    fiche parcellaire et relevé de propriété, avec un jeu de données MAJIC fictif lié aux données EDIGEO
 
 ## 2.3.1 - 2026-08-06
 

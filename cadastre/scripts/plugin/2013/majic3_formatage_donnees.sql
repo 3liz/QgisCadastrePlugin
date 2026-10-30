@@ -688,7 +688,7 @@ SELECT
   CASE WHEN trim(SUBSTRING(tmp,28,1))='' THEN NULL ELSE trim(SUBSTRING(tmp,28,1)) END AS cconlo,
   CASE WHEN trim(SUBSTRING(tmp,29,9))='' THEN NULL ELSE to_number(SUBSTRING(tmp,29,9),'999999999') END AS dcntlo,
   CASE WHEN trim(SUBSTRING(tmp,38,7))='' THEN NULL ELSE to_number(SUBSTRING(tmp,38,7),'9999999') END AS dnumql,
-  CASE WHEN trim(SUBSTRING(tmp,45,7))='' THEN NULL ELSE to_number(SUBSTRING(tmp,45,7),'999999') END AS ddenql,
+  CASE WHEN trim(SUBSTRING(tmp,45,7))='' THEN NULL ELSE to_number(SUBSTRING(tmp,45,7),'9999999') END AS ddenql,
   SUBSTRING(tmp,52,20) AS dfilot,
   CASE WHEN trim(SUBSTRING(tmp,72,8))='' THEN NULL ELSE to_date(SUBSTRING(tmp,72,8),'DDMMYYYY') END AS datact,
   SUBSTRING(tmp,83,6) AS dnuprol,
