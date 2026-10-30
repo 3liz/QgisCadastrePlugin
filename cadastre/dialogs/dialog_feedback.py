@@ -4,10 +4,10 @@ __email__ = "info@3liz.org"
 
 import os
 
-from qgis.core import QgsProcessingFeedback
 from qgis.PyQt.QtGui import QTextCursor
 from qgis.PyQt.QtWidgets import QApplication, QLabel, QProgressBar, QTextEdit
 
+from ..feedback import CadastreFeedback
 from ..logger import Logger
 
 
@@ -28,10 +28,10 @@ def append_log(text_edit: QTextEdit, msg: str):
     QApplication.instance().processEvents()
 
 
-class CadastreDialogFeedback(QgsProcessingFeedback):
+class CadastreDialogFeedback(CadastreFeedback):
     """Feedback writing messages and progress into the widgets of a dialog.
 
-    Business classes (import, loading) only know the QgsProcessingFeedback API,
+    Business classes (import, loading) only know the CadastreFeedback API,
     so they can also run without any UI.
     """
 
@@ -40,11 +40,13 @@ class CadastreDialogFeedback(QgsProcessingFeedback):
         txt_log: QTextEdit,
         progress_bar: QProgressBar,
         step_label: QLabel | None = None,
+        sub_step_label: QLabel | None = None,
     ):
         super().__init__()
         self._txt_log = txt_log
         self._progress_bar = progress_bar
         self._step_label = step_label
+        self._sub_step_label = sub_step_label
         self.progressChanged.connect(self._on_progress_changed)
 
     def pushInfo(self, info: str):
@@ -60,6 +62,10 @@ class CadastreDialogFeedback(QgsProcessingFeedback):
     def setProgressText(self, text: str):
         if self._step_label:
             self._step_label.setText(f"<b>{text}</b>")
+
+    def setSubStepText(self, text: str):
+        if self._sub_step_label:
+            self._sub_step_label.setText(text)
 
     def _on_progress_changed(self, progress: float):
         self._progress_bar.setValue(int(progress))

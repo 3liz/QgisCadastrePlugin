@@ -14,7 +14,8 @@ from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox
 
-from cadastre.cadastre_import import cadastreImport
+from cadastre.cadastre_database import CadastreDatabase
+from cadastre.cadastre_import import ImportOptions, cadastreImport
 from cadastre.definitions import MAXIMUM_YEAR, MINIMUM_YEAR
 from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback
@@ -81,12 +82,6 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.db = None
         self.schema = None
         self.schemaList = None
-        self.hasStructure = None
-        self.hasData = None
-        self.hasMajicData = None
-        self.hasMajicDataParcelle = None
-        self.hasMajicDataVoie = None
-        self.hasMajicDataProp = None
         self.edigeoSourceProj = None
         self.edigeoTargetProj = None
         self.edigeoDepartement = None
@@ -282,34 +277,57 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         msg = self.checkImportInputData()
         if msg:
             QMessageBox.critical(self, "Cadastre", msg)
-            return None
+            return False
 
         # Store settings
         self.storeSettings()
 
-        # cadastreImport instance
-        qi = cadastreImport(self, CadastreDialogFeedback(self.txtLog, self.pbProcess, self.stepLabel))
+        options = ImportOptions(
+            database=CadastreDatabase(self.db, self.dbType, self.connectionName, self.schema),
+            data_version=self.dataVersion,
+            data_year=self.dataYear,
+            lot=self.edigeoLot,
+            departement=self.edigeoDepartement,
+            direction=self.edigeoDirection,
+            majic_source_dir=self.majicSourceDir,
+            edigeo_source_dir=self.edigeoSourceDir,
+            edigeo_source_proj=self.edigeoSourceProj,
+            edigeo_target_proj=self.edigeoTargetProj,
+            edigeo_make_valid=self.edigeoMakeValid,
+        )
+        feedback = CadastreDialogFeedback(self.txtLog, self.pbProcess, self.stepLabel, self.subStepLabel)
+        qi = cadastreImport(options, feedback, self.confirm)
+        success = qi.run()
 
-        # Check if structure already exists in the database/schema
-        self.qc.check_database_for_existing_structure()
+        # The user may have accepted the departement and direction found in MAJIC files
+        if (options.departement, options.direction) != (self.edigeoDepartement, self.edigeoDirection):
+            self.inEdigeoDepartement.setText(options.departement)
+            self.inEdigeoDirection.setValue(int(options.direction))
+            self.checkImportInputData()
+            self.storeSettings()
 
-        # Run Script for creating tables
-        if not self.hasStructure:
-            qi.installCadastreStructure()
-        else:
-            # Run update script which add some missing tables when needed
-            qi.updateCadastreStructure()
+        if os.getenv("CI", "").lower() != "true":
+            # We don't want QMessagebox in test
+            if success:
+                msg = "Import terminé"
+            else:
+                msg = "Des erreurs ont été rencontrées pendant l'import. Veuillez consulter le log."
+            QMessageBox.information(self, "Cadastre", msg)
 
-        # Run MAJIC import
-        if self.doMajicImport:
-            qi.importMajic()
+        return success
 
-        # Run Edigeo import
-        if self.doEdigeoImport:
-            qi.importEdigeo()
-
-        qi.endImport()
-        return qi.go
+    def confirm(self, question: str) -> bool:
+        """
+        Ask a yes/no question to the user during the import
+        """
+        answer = QMessageBox.question(
+            self,
+            "Cadastre",
+            question,
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        return answer == QMessageBox.StandardButton.Yes
 
     def storeSettings(self):
         """

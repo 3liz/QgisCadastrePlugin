@@ -6,8 +6,11 @@ import pytest
 from qgis.core import QgsCoordinateReferenceSystem, QgsProviderRegistry
 from qgis.gui import QgisInterface
 
+from cadastre.cadastre_database import CadastreDatabase
+from cadastre.cadastre_import import ImportOptions, cadastreImport
 from cadastre.definitions import MAXIMUM_YEAR
 from cadastre.dialogs.import_dialog import CadastreImportDialog
+from cadastre.feedback import CadastreFeedback
 
 
 
@@ -136,6 +139,63 @@ def test_import(test_case: TestCase, qgis_iface: QgisInterface, fixtures: Path):
     # As we want to the return of the self.go, we call the slot directly
     assert dialog.processImport()
 
+    check_imported_data(test_case, connection)
+
+
+def test_import_without_dialog(test_case: TestCase, fixtures: Path):
+    """ Import using the import class only, without any UI. """
+    metadata = QgsProviderRegistry.instance().providerMetadata("postgres")
+    connection = metadata.findConnection("test_database")
+    connection.createSchema(TEST_SCHEMA)
+
+    options = import_options(test_case, fixtures)
+    assert cadastreImport(options, CadastreFeedback()).run()
+
+    check_imported_data(test_case, connection)
+
+
+@pytest.mark.parametrize("accept", [True, False], ids=["accepted", "refused"])
+def test_import_majic_wrong_departement(accept: bool, fixtures: Path):
+    """ The departement found in MAJIC files is different from the one given. """
+    remove_schema()
+    metadata = QgsProviderRegistry.instance().providerMetadata("postgres")
+    connection = metadata.findConnection("test_database")
+    connection.createSchema(TEST_SCHEMA)
+
+    options = import_options(CornillonMajic, fixtures)
+    options.edigeo_source_dir = ""
+    options.departement = "14"
+
+    questions = []
+
+    def confirm(question: str) -> bool:
+        questions.append(question)
+        return accept
+
+    assert cadastreImport(options, CadastreFeedback(), confirm).run() is accept
+    assert len(questions) == 1
+    if accept:
+        assert options.departement == CornillonMajic.dept
+        results = connection.executeSql('SELECT ccodep FROM cadastre.commune_majic;')
+        assert results == [[CornillonMajic.dept]]
+
+
+def import_options(test_case: TestCase, fixtures: Path) -> ImportOptions:
+    return ImportOptions(
+        database=CadastreDatabase.from_connection("postgis", "test_database", TEST_SCHEMA),
+        data_version=test_case.version,
+        data_year=test_case.year,
+        lot=test_case.lot,
+        departement=test_case.dept,
+        direction=test_case.direction,
+        majic_source_dir=str(fixtures.joinpath('majic', test_case.insee)) if test_case.has_majic else "",
+        edigeo_source_dir=str(fixtures.joinpath('edigeo', test_case.insee)),
+        edigeo_source_proj=test_case.epsg,
+        edigeo_target_proj=test_case.epsg,
+    )
+
+
+def check_imported_data(test_case: TestCase, connection):
     # Check we have a town in edigeo
     results = connection.executeSql('SELECT "geo_commune", "tex2" FROM cadastre.geo_commune;')
 

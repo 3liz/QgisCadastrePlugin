@@ -47,7 +47,6 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         self.db = None
         self.schema = None
         self.schemaList = None
-        self.hasStructure = None
 
         # Get style list
         self.getStyleList()
