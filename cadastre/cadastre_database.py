@@ -2,16 +2,28 @@ __copyright__ = "Copyright 2026, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
-from dataclasses import dataclass
-from typing import TYPE_CHECKING
+import re
+import sqlite3
 
-from db_manager.db_plugins import createDbPlugin
+from dataclasses import dataclass
+from typing import Any
+
+from qgis.core import (
+    QgsAbstractDatabaseProviderConnection,
+    QgsDataSourceUri,
+    QgsProviderConnectionException,
+    QgsProviderRegistry,
+)
+from qgis.utils import spatialite_connect
 
 import cadastre.cadastre_common_base as common_utils
 
-if TYPE_CHECKING:
-    from db_manager.db_plugins.connector import DBConnector
-    from db_manager.db_plugins.plugin import Database, DBPlugin, Table
+from cadastre.logger import Logger
+
+POSTGIS = "postgis"
+SPATIALITE = "spatialite"
+# QGIS provider names
+PROVIDERS = {POSTGIS: "postgres", SPATIALITE: "spatialite"}
 
 
 @dataclass(frozen=True)
@@ -26,56 +38,134 @@ class DatabaseStructure:
     has_majic_data_voie: bool = False
 
 
-class CadastreDatabase:
-    """A database (and schema for PostGIS) where cadastre data is stored."""
+def _regexp(pattern: str, item: str | None) -> bool:
+    """REGEXP function for SQLite, used by the SQL scripts"""
+    try:
+        return re.search(pattern, item or "", re.IGNORECASE) is not None
+    except re.error as err:
+        Logger.log_exception(err)
+        return False
 
-    def __init__(self, db: "Database", db_type: str, connection_name: str, schema: str = ""):
-        self.db = db
+
+class CadastreDatabase:
+    """A database (and schema for PostGIS) where cadastre data is stored.
+
+    Metadata (schemas, tables) and PostGIS queries use the QGIS database connection API.
+    SQLite queries use a Python sqlite3 connection with Spatialite, like QGIS does, because the import
+    needs executemany and a REGEXP function.
+    """
+
+    def __init__(
+        self,
+        connection: QgsAbstractDatabaseProviderConnection,
+        db_type: str,
+        connection_name: str,
+        schema: str = "",
+    ):
+        self.connection = connection
         # "postgis" or "spatialite"
         self.db_type = db_type
         self.connection_name = connection_name
-        self.schema = schema if db_type == "postgis" else ""
-        # db_manager plugin owning the database, when created by from_connection
-        self._dbplugin: DBPlugin | None = None
+        self.schema = schema if db_type == POSTGIS else ""
+        self._sqlite: sqlite3.Connection | None = None
 
     @classmethod
     def from_connection(cls, db_type: str, connection_name: str, schema: str = "") -> "CadastreDatabase":
         """Connect to a database from a connection stored in the QGIS settings.
 
-        Raises a db_manager BaseError if the connection fails.
+        Raises a QgsProviderConnectionException if the connection fails.
         """
-        dbpluginclass = createDbPlugin(db_type, connection_name)
-        dbpluginclass.connect()
-        database = cls(dbpluginclass.database(), db_type, connection_name, schema)
-        # The db_manager database is owned by the plugin object, keep it alive
-        database._dbplugin = dbpluginclass
+        metadata = QgsProviderRegistry.instance().providerMetadata(PROVIDERS[db_type])
+        # Use the cached connections, without reloading them
+        stored = metadata.dbConnections().get(connection_name)
+        if stored is None:
+            raise QgsProviderConnectionException(f"La connexion '{connection_name}' n'existe pas")
+
+        # A new connection object, owned by Python, not by the QGIS cache
+        connection = metadata.createConnection(stored.uri(), stored.configuration())
+        database = cls(connection, db_type, connection_name, schema)
+        # Check the connection now, to report errors to the user
+        database.fetch("SELECT 1")
         return database
 
     def with_schema(self, schema: str) -> "CadastreDatabase":
-        """The same database, with another schema."""
-        database = CadastreDatabase(self.db, self.db_type, self.connection_name, schema)
-        database._dbplugin = self._dbplugin
+        """The same database and connection, with another schema."""
+        database = CadastreDatabase(self.connection, self.db_type, self.connection_name, schema)
+        database._sqlite = self._sqlite
         return database
 
     @property
-    def connector(self) -> "DBConnector":
-        return self.db.connector
-
-    @property
     def is_postgis(self) -> bool:
-        return self.db_type == "postgis"
+        return self.db_type == POSTGIS
 
     @property
     def provider_name(self) -> str:
         """QGIS data provider name: postgres or spatialite"""
-        return self.db.dbplugin().providerName()
+        return PROVIDERS[self.db_type]
 
-    def tables(self) -> list["Table"]:
-        """List the db_manager tables of the database/schema."""
+    def uri(self) -> QgsDataSourceUri:
+        """Connection URI, without table, to build layer data sources"""
+        return QgsDataSourceUri(self.connection.uri())
+
+    @property
+    def sqlite_path(self) -> str:
+        return self.uri().database()
+
+    def sqlite_connection(self) -> sqlite3.Connection:
+        """Python connection to the Spatialite database, with a REGEXP function."""
+        if self._sqlite is None:
+            self._sqlite = spatialite_connect(self.sqlite_path)
+            self._sqlite.create_function("regexp", 2, _regexp)
+        return self._sqlite
+
+    def execute(self, sql: str):
+        """Execute SQL statements and commit. Raises an exception if it fails."""
         if self.is_postgis:
-            schemas = [s for s in self.db.schemas() if s.name == self.schema]
-            return self.db.tables(schemas[0]) if schemas else []
-        return self.db.tables()
+            self.connection.executeSql(sql)
+            return
+
+        connection = self.sqlite_connection()
+        connection.executescript(sql)
+        connection.commit()
+
+    def fetch(self, sql: str) -> list[list[Any]]:
+        """Execute a query and return the rows. Raises an exception if it fails.
+
+        PostgreSQL values are returned as strings, like the db_manager plugin was doing.
+        """
+        if self.is_postgis:
+            return common_utils.rowsFromQgis(self.connection.executeSql(sql), as_string=True)
+
+        cursor = self.sqlite_connection().cursor()
+        try:
+            cursor.execute(sql)
+            return [list(row) for row in cursor.fetchall()]
+        finally:
+            cursor.close()
+
+    def fetch_or_empty(self, sql: str) -> list[list[Any]]:
+        """Like fetch, but returns an empty list and logs the error if the query fails."""
+        try:
+            return self.fetch(sql)
+        except (QgsProviderConnectionException, sqlite3.Error) as err:
+            Logger.info(f"Erreur pour la requête {sql} : {err}")
+            return []
+
+    def schemas(self) -> list[str]:
+        """List the schemas, PostGIS only"""
+        if not self.is_postgis:
+            return []
+        return self.connection.schemas()
+
+    def create_schema(self, schema: str):
+        """Create a PostGIS schema. Raises a QgsProviderConnectionException if it fails."""
+        self.connection.createSchema(schema)
+
+    def tables(self) -> list[QgsAbstractDatabaseProviderConnection.TableProperty]:
+        """List the tables of the database/schema."""
+        if self.is_postgis and self.schema not in self.schemas():
+            return []
+        return self.connection.tables(self.schema)
 
     def table_exists(self, table_name: str) -> bool:
         """Check if the given table exists in the database/schema."""
@@ -87,8 +177,7 @@ class CadastreDatabase:
         else:
             sql = f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'"
 
-        _data, row_count, ok = common_utils.fetchDataFromSqlQuery(self.connector, sql)
-        return bool(ok and row_count >= 1)
+        return len(self.fetch_or_empty(sql)) >= 1
 
     def _has_rows(self, table_name: str) -> bool:
         if self.is_postgis:
@@ -96,12 +185,11 @@ class CadastreDatabase:
         else:
             sql = f'SELECT * FROM "{table_name}" LIMIT 1'
 
-        _data, row_count, ok = common_utils.fetchDataFromSqlQuery(self.connector, sql)
-        return bool(ok and row_count >= 1)
+        return len(self.fetch_or_empty(sql)) >= 1
 
     def structure(self) -> DatabaseStructure:
         """Search if there are already cadastre tables and data in the database/schema."""
-        if not [t for t in self.tables() if t.name == "geo_commune"]:
+        if not self.table_exists("geo_commune"):
             return DatabaseStructure()
 
         has_majic_data_parcelle = self._has_rows("parcelle")
@@ -115,3 +203,9 @@ class CadastreDatabase:
             has_majic_data_prop=has_majic_data_prop,
             has_majic_data_voie=has_majic_data_voie,
         )
+
+    def close(self):
+        """Close the Spatialite connection, if any"""
+        if self._sqlite is not None:
+            self._sqlite.close()
+            self._sqlite = None

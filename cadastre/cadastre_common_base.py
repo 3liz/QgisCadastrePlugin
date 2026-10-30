@@ -22,19 +22,17 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
-from db_manager.db_plugins.plugin import BaseError, ConnectionError
-from db_manager.db_plugins.postgis.connector import (
-    DBConnector,
-    PostGisDBConnector,
-)
 from qgis.core import (
     Qgis,
+    QgsAbstractDatabaseProviderConnection,
     QgsDataSourceUri,
     QgsMapLayer,
     QgsMessageLog,
     QgsProject,
+    QgsProviderConnectionException,
+    QgsProviderRegistry,
 )
-from qgis.PyQt.QtCore import QObject, QUrl
+from qgis.PyQt.QtCore import QDate, QDateTime, Qt, QTime, QUrl, QVariant
 from qgis.PyQt.QtGui import QDesktopServices
 
 from cadastre.tools import plugin_path
@@ -45,15 +43,7 @@ def hasSpatialiteSupport() -> bool:
     Check whether or not
     spatialite support is ok
     """
-    try:
-        from db_manager.db_plugins.spatialite.connector import (  # NOQA
-            SpatiaLiteDBConnector,
-        )
-
-        return True
-    except ImportError:
-        return False
-        pass
+    return QgsProviderRegistry.instance().providerMetadata("spatialite") is not None
 
 
 def openFile(filename: str) -> None:
@@ -128,6 +118,7 @@ def getConnectionParameterFromDbLayer(layer: QgsMapLayer) -> dict[str, str]:
         "user": uri.username(),
         "password": uri.password(),
         "sslmode": uri.sslMode(),
+        "authcfg": uri.authConfigId(),
         "key": uri.keyColumn(),
         "estimatedmetadata": str(uri.useEstimatedMetadata()),
         "checkPrimaryKeyUnicity": "",
@@ -154,88 +145,98 @@ def setSearchPath(sql: str, schema: str) -> str:
     return sql
 
 
-def fetchDataFromSqlQuery(connector: "DBConnector", sql: str) -> list[Any]:
+def quoteString(value: str) -> str:
+    """
+    Quote a string value for a SQL query (PostgreSQL and SQLite)
+    """
+    return "'{}'".format(str(value).replace("'", "''"))
+
+
+def rowsFromQgis(rows: list[list[Any]], as_string: bool) -> list[list[Any]]:
+    """
+    Convert the values returned by QgsAbstractDatabaseProviderConnection.executeSql:
+    NULL becomes None, and when as_string is True (PostgreSQL), values are converted to strings
+    like the db_manager plugin was doing.
+    """
+    result = []
+    for row in rows:
+        values = []
+        for value in row:
+            if value is None or (isinstance(value, QVariant) and value.isNull()):
+                value = None
+            elif isinstance(value, (QDateTime, QDate, QTime)):
+                value = value.toString(Qt.DateFormat.ISODate)
+            elif as_string:
+                value = str(value)
+            values.append(value)
+        result.append(values)
+    return result
+
+
+def fetchDataFromSqlQuery(connector: QgsAbstractDatabaseProviderConnection, sql: str) -> list[Any]:
     """
     Execute an SQL query and
     return [data, rowCount, ok]
-    NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
     """
     data = []
     row_count = 0
-    c = None
     ok = True
-    if False:
-        QgsMessageLog.logMessage(sql, "cadastre", Qgis.MessageLevel.Info)
     try:
-        c = connector._execute(None, str(sql))
-        data = connector._fetchall(c)
+        rows = connector.executeSql(str(sql))
+        data = rowsFromQgis(rows, connector.providerKey() == "postgres")
         row_count = len(data)
 
-    except BaseError as e:
+    except QgsProviderConnectionException as e:
         ok = False
         QgsMessageLog.logMessage(
-            f"Error while fetching data from database : {e.msg!s}", "cadastre", Qgis.MessageLevel.Critical
+            f"Error while fetching data from database : {e!s}", "cadastre", Qgis.MessageLevel.Critical
         )
         QgsMessageLog.logMessage(sql, "cadastre", Qgis.MessageLevel.Info)
-
-    finally:
-        if c:
-            c.close()
-            del c
 
     return [data, row_count, ok]
 
 
-def getConnectorFromUri(connectionParams: dict[str, str]) -> "DBConnector":
+def getConnectorFromUri(connectionParams: dict[str, str]) -> QgsAbstractDatabaseProviderConnection | None:
     """
-    Set connector property
+    Get a QGIS database connection
     for the given database type
     and parameters
     """
-    connector = None
     uri = QgsDataSourceUri()
     if connectionParams["dbType"] == "postgis":
-        if connectionParams["host"]:
-            uri.setConnection(
-                connectionParams["host"],
-                connectionParams["port"],
-                connectionParams["dbname"],
-                connectionParams["user"],
-                connectionParams["password"],
-            )
+        provider = "postgres"
         if connectionParams["service"]:
             uri.setConnection(
                 connectionParams["service"],
                 connectionParams["dbname"],
                 connectionParams["user"],
                 connectionParams["password"],
+                connectionParams["sslmode"],
+                connectionParams.get("authcfg", ""),
             )
-
-        # we need a fake DBPlugin object
-        # with connectionName and providerName methods
-        obj = QObject()
-        obj.connectionName = lambda: "fake"
-        obj.providerName = lambda: "postgres"
-        connector = PostGisDBConnector(uri, obj)
-
-    if connectionParams["dbType"] == "spatialite":
-        uri.setConnection("", "", connectionParams["dbname"], "", "")
-        if hasSpatialiteSupport():
-            from db_manager.db_plugins.spatialite.connector import (
-                SpatiaLiteDBConnector,
+        else:
+            uri.setConnection(
+                connectionParams["host"],
+                connectionParams["port"],
+                connectionParams["dbname"],
+                connectionParams["user"],
+                connectionParams["password"],
+                connectionParams["sslmode"],
+                connectionParams.get("authcfg", ""),
             )
+    else:
+        provider = "spatialite"
+        uri.setDatabase(connectionParams["dbname"])
 
-            # Il y a bug évident ici si il n'y pas le support spatialite, quid de SpatiaLiteDBConnector ?
-        try:
-            connector = SpatiaLiteDBConnector(uri)
-        except ConnectionError as e:
-            QgsMessageLog.logMessage(
-                f"Erreur lors de la récupération du fichier SQLite : {e!s}",
-                "cadastre",
-                Qgis.MessageLevel.Critical,
-            )
-
-    return connector
+    try:
+        return QgsProviderRegistry.instance().providerMetadata(provider).createConnection(uri.uri(False), {})
+    except QgsProviderConnectionException as e:
+        QgsMessageLog.logMessage(
+            f"Erreur lors de la connexion à la base de données : {e!s}",
+            "cadastre",
+            Qgis.MessageLevel.Critical,
+        )
+        return None
 
 
 def normalizeString(s: str) -> str:
@@ -380,7 +381,7 @@ def postgisToSpatialiteLocal10(sql: str, dataYear: str) -> str:
 
 
 def getCompteCommunalFromParcelleId(
-    parcelleId: str, connectionParams: dict[str, str], connector: "DBConnector"
+    parcelleId: str, connectionParams: dict[str, str], connector: QgsAbstractDatabaseProviderConnection
 ) -> str | None:
     comptecommunal = None
 
@@ -396,7 +397,10 @@ def getCompteCommunalFromParcelleId(
 
 
 def getProprietaireComptesCommunaux(
-    comptecommunal: str, connectionParams: dict[str, str], connector: "DBConnector", allCities: bool = True
+    comptecommunal: str,
+    connectionParams: dict[str, str],
+    connector: QgsAbstractDatabaseProviderConnection,
+    allCities: bool = True,
 ) -> list[str]:
     """
     Get the list of "comptecommunal" for all cities
@@ -434,7 +438,7 @@ def getItemHtml(
     item: str,
     feature: dict,
     connectionParams: dict[str, str],
-    connector: "DBConnector",
+    connector: QgsAbstractDatabaseProviderConnection,
     for_third_party: bool = False,
 ) -> str:
     """

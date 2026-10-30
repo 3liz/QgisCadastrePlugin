@@ -29,12 +29,14 @@ from datetime import datetime
 from typing import Any
 
 from qgis.core import (
+    QgsAbstractDatabaseProviderConnection,
     QgsExpression,
     QgsFeatureRequest,
     QgsLayerTreeLayer,
     QgsMapLayer,
     QgsProcessingFeedback,
     QgsProject,
+    QgsProviderConnectionException,
     QgsVectorLayer,
 )
 from qgis.gui import QgsMapCanvas
@@ -433,13 +435,11 @@ class CadastreLoading(QObject):
         if commune_expression and not c_exp.hasParserError():
             self.feedback.pushInfo(f"Filtrage à partir des communes : {commune_expression}")
             c_req = QgsFeatureRequest(c_exp)
-            c_table_list = [a for a in db_tables if a.name == "geo_commune"]
-            c_table = c_table_list[0]
             c_unique_col = "ogc_fid"
             c_schema = database.schema
             c_geom_col = "geom"
-            c_layer_uri = database.db.uri()
-            c_layer_uri.setDataSource(c_schema, c_table.name, c_geom_col, "", c_unique_col)
+            c_layer_uri = database.uri()
+            c_layer_uri.setDataSource(c_schema, "geo_commune", c_geom_col, "", c_unique_col)
             c_layer = QgsVectorLayer(c_layer_uri.uri(), "com", provider_name)
             c_features = c_layer.getFeatures(c_req)
             c_ids = [a["commune"] for a in c_features]
@@ -462,8 +462,8 @@ class CadastreLoading(QObject):
             self.feedback.pushInfo(f"* {item['label']}")
             self.update_progress_bar()
 
-            # Tables - Get db_manager table instance
-            table_list = [a for a in db_tables if a.name == item["table"]]
+            # Tables - Get the table properties
+            table_list = [a for a in db_tables if a.tableName() == item["table"]]
             if len(table_list) == 0 and "isView" not in item:
                 self.feedback.pushInfo(f"  - Aucune table trouvée pour {item['label']}")
                 continue
@@ -473,13 +473,9 @@ class CadastreLoading(QObject):
 
             if table_list:
                 table = table_list[0]
-                source = table.name
-                # noinspection PyBroadException
-                try:
-                    unique_field = table.getValidQGisUniqueFields(True)
-                    unique_col = unique_field.name
-                except Exception:
-                    unique_col = "ogc_fid"
+                source = table.tableName()
+                primary_keys = table.primaryKeyColumns()
+                unique_col = primary_keys[0] if primary_keys else "ogc_fid"
 
             schema: str | None = database.schema
 
@@ -535,7 +531,7 @@ class CadastreLoading(QObject):
                     sql += subset % commune_filter_text
 
             # Create vector layer
-            a_layer_uri = database.db.uri()
+            a_layer_uri = database.uri()
             a_layer_uri.setDataSource(schema, source, geom_col, sql, unique_col)
 
             layer_name = item["label"]
@@ -678,16 +674,17 @@ class CadastreLoading(QObject):
         if not layer_name:
             layer_name = f"requete_cadastre_{datetime.now()}"
 
-        layer = database.db.toSqlLayer(
-            sql_text,
-            geometry_column or None,
-            None,
-            layer_name,
-            QgsMapLayer.LayerType.VectorLayer,
-            # QgsMapLayer.VectorLayer is an equivalent to QgsMapLayerType.VectorLayer since 3.8
-            False,
-        )
-        if layer.isValid():
+        options = QgsAbstractDatabaseProviderConnection.SqlVectorLayerOptions()
+        options.sql = sql_text
+        options.geometryColumn = geometry_column
+        options.layerName = layer_name
+        try:
+            layer = database.connection.createSqlVectorLayer(options)
+        except QgsProviderConnectionException as e:
+            self.feedback.reportError(str(e))
+            layer = None
+
+        if layer and layer.isValid():
             # Add layer to layer tree
             QgsProject.instance().addMapLayers([layer], True)
             return layer

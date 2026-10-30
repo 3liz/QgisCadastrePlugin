@@ -37,13 +37,13 @@ from pathlib import Path
 from string import Template
 from typing import Callable
 
-from db_manager.db_plugins.plugin import BaseError
 from qgis.core import (
     Qgis,
     QgsApplication,
     QgsAuthMethodConfig,
     QgsMessageLog,
     QgsProcessingException,
+    QgsProviderConnectionException,
     QgsProcessingFeedback,
 )
 from qgis.PyQt.QtCore import QObject, QSettings
@@ -117,8 +117,6 @@ class cadastreImport(QObject):
         self.feedback = feedback
         self.confirm = confirm
 
-        self.db = self.database.db
-        self.connector = self.database.connector
         self.pScriptSourceDir = str(plugin_path("scripts", "plugin"))
 
         # projections
@@ -136,10 +134,9 @@ class cadastreImport(QObject):
                     "SELECT auth_srid FROM spatial_ref_sys WHERE auth_name='IGNF' AND  srtext LIKE '%s' LIMIT 1"
                     % sqlsearch
                 )
-                data, row_count, _ok = common_utils.fetchDataFromSqlQuery(self.connector, sql)
-                if row_count == 1:
-                    for line in data:
-                        self.sourceSrid = str(line[0])
+                data = self.database.fetch_or_empty(sql)
+                if len(data) == 1:
+                    self.sourceSrid = str(data[0][0])
 
         else:
             self.targetSrid = "2154"
@@ -729,7 +726,7 @@ class cadastreImport(QObject):
                             [
                                 'INSERT INTO "{}" VALUES ({});'.format(
                                     table_name,
-                                    self.connector.quoteString(
+                                    common_utils.quoteString(
                                         regex_remove_non_ascii.sub(" ", x.strip("\r\n"))
                                     ),
                                 )
@@ -748,8 +745,8 @@ class cadastreImport(QObject):
                     self.executeSqlQuery(sql)
                 else:
                     try:
-                        c = self.connector._get_cursor()
-                        c.executemany(
+                        connection = self.database.sqlite_connection()
+                        connection.executemany(
                             f'INSERT INTO "{table_name}" VALUES (?)',
                             [
                                 (regex_remove_non_ascii.sub(" ", x.strip("\r\n")),)
@@ -757,9 +754,7 @@ class cadastreImport(QObject):
                                 if x and x[0:3] == dep_dir
                             ],
                         )
-                        self.connector._commit()
-                        c.close()
-                        del c
+                        connection.commit()
                     except MemoryError as err:
                         # Issue #326
                         Logger.critical(f"{err}")
@@ -1469,81 +1464,22 @@ class cadastreImport(QObject):
         """
         Execute a SQL string query
         And commit
-        NB: commit qgis/QGIS@14ab5eb changes QGIS DBmanager behaviour
         """
-        if self.go:
-            c = None
+        if not self.go:
+            return
 
-            if self.database.db_type == "postgis":
-                try:
-                    c = self.connector._execute_and_commit(sql)
-                except BaseError as e:
-                    if not ignoreError and not re.search(r"CREATE INDEX ", sql, re.IGNORECASE):
-                        self.go = False
-                        self.feedback.reportError(e.msg)
-                except UnicodeDecodeError:
-                    try:
-                        c = self.connector._execute_and_commit(sql)
-                    except BaseError as e:
-                        if not ignoreError and not re.search(r"CREATE INDEX ", sql, re.IGNORECASE):
-                            self.go = False
-                            self.feedback.reportError(e.msg)
-                finally:
-                    if c:
-                        try:
-                            c.close()
-                            del c
-                        except Exception as err:
-                            Logger.log_exception(err)
-                            self.feedback.pushInfo("issue closing connection")
-
-            if self.database.db_type == "spatialite":
-                # ~ self.feedback.pushInfo(sql)
-
-                try:
-                    # Get cursor
-                    c = self.connector._get_cursor()
-
-                    # Add regex function (use the above regexp python function)
-                    def regexp(motif, item):
-                        import re
-
-                        a = False
-                        if item is None or not item:
-                            item = ""
-                        try:
-                            regex = re.compile(motif, re.I)  # re.I: ignore casse
-                            a = regex.search(item) is not None
-                        except Exception as err:
-                            Logger.log_exception(err)
-
-                        return a
-
-                    c.connection.create_function("regexp", 2, regexp)
-
-                    # Run query
-                    c.executescript(sql)
-                except BaseError as e:
-                    if not re.search(r"CREATE INDEX ", sql, re.IGNORECASE):
-                        self.go = False
-                        self.feedback.pushInfo("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
-                        self.feedback.pushInfo("<b>Erreur </b> <p>%s</p>" % e.msg)
-                except sqlite.OperationalError as e:
-                    if (
-                        not re.search(r"CREATE INDEX ", sql, re.IGNORECASE)
-                        and "duplicate column name" not in e.args[0]
-                    ):
-                        self.go = False
-                        self.feedback.pushInfo("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
-                        self.feedback.pushInfo("<b>Erreur </b> <p>%s</p>" % format(e))
-                finally:
-                    if c:
-                        try:
-                            c.close()
-                            del c
-                        except Exception as err:
-                            Logger.log_exception(err)
-                            self.feedback.pushInfo("issue closing connection")
+        try:
+            self.database.execute(sql)
+        except QgsProviderConnectionException as e:
+            # PostgreSQL
+            if not ignoreError and not re.search(r"CREATE INDEX ", sql, re.IGNORECASE):
+                self.go = False
+                self.feedback.reportError(str(e))
+        except sqlite.Error as e:
+            if not re.search(r"CREATE INDEX ", sql, re.IGNORECASE) and "duplicate column name" not in str(e):
+                self.go = False
+                self.feedback.pushInfo("<b>Erreur rencontrée pour la requête:</b> <p>%s</p>" % sql)
+                self.feedback.pushInfo("<b>Erreur </b> <p>%s</p>" % format(e))
 
     def importAllEdigeoToDatabase(self):
         """
@@ -1618,20 +1554,20 @@ class cadastreImport(QObject):
 
         # Build ogr2ogr command
         conn_name = self.database.connection_name
-        settings = QSettings()
-        settings.beginGroup(f"/{self.db.dbplugin().connectionSettingsKey()}/{conn_name}")
+        uri = self.database.uri()
 
         # normalising file path
         file_path = os.path.normpath(file_path)
         # runGdal joins args with spaces then re-splits them (QProcess rules): wrap in double quotes
         file_path = f'"{file_path}"'
         if self.database.db_type == "postgis":
-            if not settings.contains("database"):  # non-existent entry?
-                raise Exception(self.tr('There is no defined database connection "%s".') % conn_name)
-            settingsList = ["service", "host", "port", "database", "username", "password", "authcfg"]
-            service, host, port, database, username, password, authcfg = (
-                settings.value(x) for x in settingsList
-            )
+            service = uri.service()
+            host = uri.host()
+            port = uri.port()
+            database = uri.database()
+            username = uri.username()
+            password = uri.password()
+            authcfg = uri.authConfigId()
 
             # Get username/password from QGIS auth manager
             if authcfg:
@@ -1708,11 +1644,7 @@ class cadastreImport(QObject):
             # self.feedback.pushInfo(' '.join(cmdArgs))
 
         if self.database.db_type == "spatialite":
-            if not settings.contains("sqlitepath"):  # non-existent entry?
-                self.go = False
-                raise Exception('there is no defined database connection "%s".' % conn_name)
-
-            database = '"{}"'.format(os.path.normpath(settings.value("sqlitepath")))
+            database = '"{}"'.format(os.path.normpath(self.database.sqlite_path))
 
             cmdArgs = [
                 "ogr2ogr",
@@ -1818,17 +1750,14 @@ class cadastreImport(QObject):
                     sql = common_utils.setSearchPath(sql, self.database.schema)
                     self.executeSqlQuery(sql)
                 if self.database.db_type == "spatialite":
-                    c = self.connector._get_cursor()
+                    connection = self.database.sqlite_connection()
                     query = "INSERT INTO edigeo_rel (nom, de, vers) VALUES (?, ?, ?)"
                     try:
-                        c.executemany(query, [(item[0], item[1], item[2]) for item in la])
-                        self.connector._commit()
+                        connection.executemany(query, [(item[0], item[1], item[2]) for item in la])
+                        connection.commit()
                     except Exception as err:
                         Logger.log_exception(err)
-                        self.feedback.pushInfo("<b>Erreurs pendant la requête :</b> %s" % sql)
-                    finally:
-                        c.close()
-                        del c
+                        self.feedback.pushInfo("<b>Erreurs pendant la requête :</b> %s" % query)
 
     def updateMultipolygonFromVec(self, path, layerType="edigeo"):
         """

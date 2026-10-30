@@ -371,8 +371,6 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 if ok and rowCount >= 1:
                     self.hasMajicDataParcelle = True
 
-                connector.__del__()
-
         self.liAdresse.setEnabled(self.hasMajicDataVoie and self.hasMajicDataParcelle)
         self.grpProprietaire.setEnabled(self.hasMajicDataProp)
         self.btExportParcelle.setEnabled(self.hasMajicDataProp)
@@ -491,7 +489,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         if not connectionParams:
             return
 
-        # Use db_manager tool to run the query
+        # QGIS connection to run the query
         connector = common_utils.getConnectorFromUri(connectionParams)
         self.connector = connector
 
@@ -667,7 +665,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += " INNER JOIN geo_commune c ON c.commune = v.commune"
             sql += " WHERE 2>1"
             for sv in searchValues:
-                sql += " AND libvoi LIKE %s" % self.connector.quoteString("%" + sv + "%")
+                sql += " AND libvoi LIKE %s" % common_utils.quoteString("%" + sv + "%")
 
             # filter on the chosen commune in the combobox, if any
             communeCb = self.searchComboBoxes["commune"]
@@ -679,7 +677,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 and "item(s)" not in searchCom
             ):
                 geo_commune = communeCb["chosenFeature"]["geo_commune"]
-                sql += " AND trim(c.geo_commune) = %s" % self.connector.quoteString(geo_commune)
+                sql += " AND trim(c.geo_commune) = %s" % common_utils.quoteString(geo_commune)
                 hasCommuneFilter = True
 
             # order
@@ -725,9 +723,9 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += "WHERE 2>1\r\n"
 
                 for sv in searchValues:
-                    sql += "AND nom_usage LIKE %s" % self.connector.quoteString("%" + sv + "%") + "\r\n"
+                    sql += "AND nom_usage LIKE %s" % common_utils.quoteString("%" + sv + "%") + "\r\n"
 
-                sql += " AND commune.commune LIKE %s" % self.connector.quoteString("%" + selectedCity + "%")
+                sql += " AND commune.commune LIKE %s" % common_utils.quoteString("%" + selectedCity + "%")
                 sql += "GROUP BY proprio.ccocom, comptecommunal, dnuper, nom_usage, geo_commune\r\n"
                 sql += "ORDER BY nom_usage\r\n"
 
@@ -749,10 +747,10 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 sql += "WHERE 2>1\r\n"
 
                 for sv in searchValues:
-                    sql += "AND nom_naissance LIKE %s" % self.connector.quoteString("%" + sv + "%") + "\r\n"
+                    sql += "AND nom_naissance LIKE %s" % common_utils.quoteString("%" + sv + "%") + "\r\n"
 
                 sql += (
-                    " AND commune.commune LIKE %s" % self.connector.quoteString("%" + selectedCity + "%")
+                    " AND commune.commune LIKE %s" % common_utils.quoteString("%" + selectedCity + "%")
                     + "\r\n"
                 )
                 sql += "GROUP BY proprio.ccocom, comptecommunal, dnuper, dnomus, dprnus, nom_naissance, geo_commune\r\n"
@@ -839,7 +837,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.dbType = connectionParams["dbType"]
         self.schema = connectionParams["schema"]
 
-        # Use db_manager tool to run the query
+        # QGIS connection to run the query
         connector = common_utils.getConnectorFromUri(connectionParams)
 
         # SQL
@@ -878,8 +876,6 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
                 request.addOrderBy(orderBy[0])
             for feat in layer.getFeatures(request):
                 features.append(feat)
-
-        connector.__del__()
 
         return features
 

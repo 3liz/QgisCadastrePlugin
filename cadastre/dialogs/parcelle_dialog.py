@@ -544,5 +544,4 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         Run some actions when
         the user closes the dialog
         """
-        self.connector.__del__()
         self.close()

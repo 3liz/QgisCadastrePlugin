@@ -4,12 +4,14 @@ __email__ = "info@3liz.org"
 
 import os
 
-from db_manager.db_plugins.plugin import BaseError
-from db_manager.dlg_db_error import DlgDbError
-from qgis.core import QgsProviderRegistry, QgsSettings
+from qgis.core import (
+    QgsDataSourceUri,
+    QgsProviderConnectionException,
+    QgsProviderRegistry,
+    QgsSettings,
+)
 from qgis.PyQt.QtCore import QFileInfo, Qt, pyqtSignal
 from qgis.PyQt.QtWidgets import (
-    QApplication,
     QComboBox,
     QFileDialog,
     QGridLayout,
@@ -24,13 +26,8 @@ from qgis.utils import OverrideCursor, spatialite_connect
 
 import cadastre.cadastre_common_base as common_utils
 
-from cadastre.cadastre_database import CadastreDatabase
+from cadastre.cadastre_database import POSTGIS, PROVIDERS, SPATIALITE, CadastreDatabase
 from cadastre.logger import Logger
-
-POSTGIS = "postgis"
-SPATIALITE = "spatialite"
-# QGIS provider names
-PROVIDERS = {POSTGIS: "postgres", SPATIALITE: "spatialite"}
 
 
 class DatabaseWidget(QWidget):
@@ -122,8 +119,8 @@ class DatabaseWidget(QWidget):
             # Clearing the list will reset the current connection
             self.liDbConnection.clear()
             if self.db_type:
-                # Use the QGIS cache: reloading the connections, like db_manager connections() does,
-                # deletes the connection objects used by the opened db_manager connectors (crash)
+                # Use the QGIS cache: reloading the connections deletes the connection objects
+                # returned by findConnection() and still used elsewhere (crash)
                 metadata = QgsProviderRegistry.instance().providerMetadata(PROVIDERS[self.db_type])
                 self.liDbConnection.addItems(sorted(metadata.dbConnections().keys()))
         self._update_widgets()
@@ -137,9 +134,8 @@ class DatabaseWidget(QWidget):
             try:
                 with OverrideCursor(Qt.CursorShape.WaitCursor):
                     self._database = CadastreDatabase.from_connection(self.db_type, connection_name)
-            except BaseError as e:
-                DlgDbError.showError(e, self)
-                self.logMessage.emit(e.msg)
+            except QgsProviderConnectionException as e:
+                self._show_error(str(e))
             except Exception as err:
                 Logger.log_exception(err)
                 self.logMessage.emit(
@@ -154,7 +150,7 @@ class DatabaseWidget(QWidget):
         self.liDbSchema.blockSignals(True)
         self.liDbSchema.clear()
         if self._database and self._database.is_postgis:
-            self.liDbSchema.addItems([s.name for s in self._database.db.schemas()])
+            self.liDbSchema.addItems(self._database.schemas())
             if current:
                 self.liDbSchema.setCurrentIndex(self.liDbSchema.findText(current))
         self.liDbSchema.blockSignals(False)
@@ -162,13 +158,7 @@ class DatabaseWidget(QWidget):
     def create_schema(self):
         """Create a schema in the PostGIS database and select it"""
         if self._database is None:
-            QMessageBox.warning(
-                self,
-                QApplication.translate("DBManagerPlugin", "Sorry"),
-                QApplication.translate(
-                    "DBManagerPlugin", "No database selected or you are not connected to it."
-                ),
-            )
+            self._show_error("Aucune base de données sélectionnée, ou la connexion a échoué.")
             return
 
         schema = self.inDbCreateSchema.text().strip()
@@ -177,10 +167,9 @@ class DatabaseWidget(QWidget):
 
         try:
             with OverrideCursor(Qt.CursorShape.WaitCursor):
-                self._database.db.createSchema(schema)
-        except BaseError as e:
-            DlgDbError.showError(e, self)
-            self.logMessage.emit(e.msg)
+                self._database.create_schema(schema)
+        except QgsProviderConnectionException as e:
+            self._show_error(str(e))
             return
 
         self.inDbCreateSchema.clear()
@@ -224,7 +213,9 @@ class DatabaseWidget(QWidget):
         # Create QGIS connexion
         name = os.path.basename(ipath)
         metadata = QgsProviderRegistry.instance().providerMetadata(PROVIDERS[SPATIALITE])
-        metadata.saveConnection(metadata.createConnection(QFileInfo(ipath).canonicalFilePath(), {}), name)
+        uri = QgsDataSourceUri()
+        uri.setDatabase(QFileInfo(ipath).canonicalFilePath())
+        metadata.saveConnection(metadata.createConnection(uri.uri(), {}), name)
 
         # Update connections combo box and set new db selected
         self.update_connection_list()
@@ -269,4 +260,10 @@ class DatabaseWidget(QWidget):
     def close_connection(self):
         """Close the connection to the database"""
         if self._database:
-            self._database.connector.__del__()
+            self._database.close()
+
+    def _show_error(self, message: str):
+        if os.getenv("CI", "").lower() != "true":
+            # We don't want QMessagebox in test
+            QMessageBox.warning(self, "Cadastre", message)
+        self.logMessage.emit(message)

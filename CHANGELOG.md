@@ -6,6 +6,26 @@
   * Correction de l'import via `ogr2ogr` lorsque le chemin des fichiers EDIGEO, TOPO
     ou de la base Spatialite contient des espaces
   * Correction de la gestion des erreurs lors de l'exécution d'`ogr2ogr`
+  * Les erreurs SQL sont affichées dans le journal de l'import au lieu d'une fenêtre
+  * Correction de l'affichage des erreurs lors d'un manque de mémoire ou d'une archive EDIGEO corrompue
+* Chargement
+  * Correction du message « expression invalide » affiché à tort sans filtre de communes
+* Interface
+  * Dialogues d'import et de chargement : bloc commun de choix de la base, de la connexion
+    et du schéma (suppression des onglets PostGIS / Spatialite dans l'import)
+  * Correction du curseur d'attente qui pouvait rester affiché après une erreur
+* Base de données
+  * Remplacement de l'extension `DB Manager` par l'API native de QGIS pour les connexions
+    aux bases de données, les requêtes SQL et la liste des connexions de l'utilisateur
+  * Le serveur QGIS ne dépend plus de l'extension `DB Manager`
+  * Correction d'un plantage de QGIS lors du rafraîchissement de la liste des connexions
+    alors qu'une connexion était déjà ouverte dans un autre dialogue du plugin
+  * Recherche, fiche parcelle et export : prise en compte de la configuration d'authentification
+    (`authcfg`) et du mode SSL des couches PostgreSQL
+* Refactorisation
+  * Import et chargement indépendants des dialogues, utilisables sans interface
+  * Suppression de la classe `CadastreCommon`
+  * Ajout de tests : import sans dialogue, chargement des couches, Spatialite, choix de la base
 
 ## 2.3.1 - 2026-08-06
 
