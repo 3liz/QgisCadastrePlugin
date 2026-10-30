@@ -5,7 +5,6 @@ __email__ = "info@3liz.org"
 import os.path
 
 from functools import partial
-from pathlib import Path
 
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.dlg_db_error import DlgDbError
@@ -19,11 +18,9 @@ from cadastre.cadastre_import import cadastreImport
 from cadastre.definitions import MAXIMUM_YEAR, MINIMUM_YEAR
 from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback
-from cadastre.tools import set_window_title
+from cadastre.tools import plugin_path, set_window_title
 
-IMPORT_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_import_form.ui")
-)
+IMPORT_FORM_CLASS, _ = uic.loadUiType(str(plugin_path("forms", "cadastre_import_form.ui")))
 
 
 class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
@@ -34,9 +31,8 @@ class CadastreImportDialog(QDialog, IMPORT_FORM_CLASS):
         self.setWindowTitle(f"{self.windowTitle()} {set_window_title()}")
 
         # Images
-        plugin_dir = str(Path(__file__).resolve().parent.parent)
-        self.btEdigeoSourceDir.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "open.png")))
-        self.btMajicSourceDir.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "open.png")))
+        self.btEdigeoSourceDir.setIcon(QIcon(str(plugin_path("forms", "icons", "open.png"))))
+        self.btMajicSourceDir.setIcon(QIcon(str(plugin_path("forms", "icons", "open.png"))))
 
         self.connectionDbList = []
         # common cadastre methods

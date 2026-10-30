@@ -58,7 +58,7 @@ from cadastre.dialogs.search_dialog import CadastreSearchDialog
 from cadastre.logger import Logger
 from cadastre.plausible import Plausible
 from cadastre.processing.provider import CadastreProvider
-from cadastre.tools import metadata_config
+from cadastre.tools import metadata_config, plugin_path
 
 
 class CadastreMenu:
@@ -95,8 +95,7 @@ class CadastreMenu:
 
         self.initProcessing()
 
-        plugin_dir = str(Path(__file__).resolve().parent)
-        main_icon = QIcon(os.path.join(plugin_dir, "icon.png"))
+        main_icon = QIcon(str(plugin_path("icon.png")))
 
         # Open the online help
         self.help_action_about_menu = QAction(main_icon, "Cadastre", self.iface.mainWindow())
@@ -115,7 +114,7 @@ class CadastreMenu:
         }
 
         for key in actions:
-            icon_path = os.path.join(plugin_dir, "icons", actions[key][0])
+            icon_path = str(plugin_path("icons", actions[key][0]))
             icon = QIcon(icon_path)
             action = QAction(QIcon(icon), actions[key][1], self.iface.mainWindow())
             if actions[key][2] != "":
@@ -159,7 +158,7 @@ class CadastreMenu:
 
         # Create action for "Parcelle information"
         self.identifyParcelleAction = QAction(
-            QIcon(os.path.join(plugin_dir, "icons", "toolbar", "get-parcelle-info.png")),
+            QIcon(str(plugin_path("icons", "toolbar", "get-parcelle-info.png"))),
             "Infos parcelle",
             self.iface.mainWindow(),
         )
@@ -241,12 +240,11 @@ class CadastreMenu:
         """
         Update search button icon
         """
-        plugin_dir = str(Path(__file__).resolve().parent)
         if self.cadastre_search_dialog.isVisible():
             icon_file = "nosearch.png"
         else:
             icon_file = "search.png"
-        icon_path = os.path.join(plugin_dir, "icons", icon_file)
+        icon_path = str(plugin_path("icons", icon_file))
         self.search_action.setIcon(QIcon(icon_path))
 
     def export_view(self):
@@ -257,7 +255,7 @@ class CadastreMenu:
         s = QSettings()
         f = s.value("cadastre/composerTemplateFile", "", type=str)
         if not os.path.exists(f):
-            f = os.path.join(str(Path(__file__).resolve().parent), "composers", "paysage_a4.qpt")
+            f = str(plugin_path("composers", "paysage_a4.qpt"))
             s.setValue("cadastre/composerTemplateFile", f)
 
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)

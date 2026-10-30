@@ -4,7 +4,6 @@ __email__ = "info@3liz.org"
 
 import os.path
 
-from pathlib import Path
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
@@ -13,9 +12,7 @@ from cadastre.cadastre_loading import CadastreLoading
 from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback
 from cadastre.tools import plugin_path, set_window_title
 
-LOAD_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_load_form.ui")
-)
+LOAD_FORM_CLASS, _ = uic.loadUiType(str(plugin_path("forms", "cadastre_load_form.ui")))
 
 
 class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):

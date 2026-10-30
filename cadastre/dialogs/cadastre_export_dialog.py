@@ -16,10 +16,8 @@ the Free Software Foundation; either version 2 of the License, or
 
 """
 
-import os.path
 
 from contextlib import contextmanager
-from pathlib import Path
 from typing import Callable, Generator
 
 from qgis.core import QgsMapLayer, QgsMapSettings, QgsProject
@@ -31,10 +29,10 @@ from qgis.PyQt.QtWidgets import QApplication, QDialog
 import cadastre.cadastre_common_base as cadastre_common
 
 from cadastre.cadastre_export import CadastreExport as cadastreExportBase
-from cadastre.tools import set_window_title
+from cadastre.tools import plugin_path, set_window_title
 
 PRINT_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_print_form.ui")
+    str(plugin_path("forms", "cadastre_print_form.ui"))
 )
 
 

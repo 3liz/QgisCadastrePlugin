@@ -20,11 +20,9 @@ from cadastre.definitions import (
     REGEX_PROP,
     REGEX_TOPO,
 )
-from cadastre.tools import set_window_title
+from cadastre.tools import plugin_path, set_window_title
 
-OPTION_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_option_form.ui")
-)
+OPTION_FORM_CLASS, _ = uic.loadUiType(str(plugin_path("forms", "cadastre_option_form.ui")))
 
 
 class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
@@ -37,11 +35,8 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         self.setWindowTitle(f"{self.windowTitle()} {set_window_title()}")
 
         # Images
-        self.plugin_dir = str(Path(__file__).resolve().parent.parent)
-        self.btComposerTemplateFile.setIcon(
-            QIcon(os.path.join(self.plugin_dir, "forms", "icons", "open.png"))
-        )
-        self.btTempDir.setIcon(QIcon(os.path.join(self.plugin_dir, "forms", "icons", "open.png")))
+        self.btComposerTemplateFile.setIcon(QIcon(str(plugin_path("forms", "icons", "open.png"))))
+        self.btTempDir.setIcon(QIcon(str(plugin_path("forms", "icons", "open.png"))))
 
         # Signals/Slot Connections
         self.rejected.connect(self.onReject)
@@ -141,7 +136,7 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
             else:
                 self.inSpatialiteTempStore.setCurrentIndex(1)
         composerTemplateFile = s.value(
-            "cadastre/composerTemplateFile", "%s/composers/paysage_a4.qpt" % self.plugin_dir, type=str
+            "cadastre/composerTemplateFile", str(plugin_path("composers", "paysage_a4.qpt")), type=str
         )
         if composerTemplateFile:
             self.inComposerTemplateFile.setText(composerTemplateFile)
@@ -153,7 +148,7 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):
         """
 
         # item = self.interfaceSelectors[key]
-        iniPath = os.path.join(self.plugin_dir, "interface/")
+        iniPath = f"{plugin_path('interface')}/"
         interfaceInfo = """
         Pour appliquer l'interface <b>{}</b>
         <ul>

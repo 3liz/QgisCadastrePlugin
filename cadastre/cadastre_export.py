@@ -53,6 +53,7 @@ from qgis.PyQt.QtGui import QFont
 import cadastre.cadastre_common_base as cadastre_common
 
 from .logger import Logger
+from .tools import plugin_path
 
 
 @contextmanager
@@ -73,7 +74,6 @@ class CadastreExport:
         for_third_party: bool = False,
     ) -> None:
 
-        self.plugin_dir = str(Path(__file__).resolve().parent)
 
         self.print_parcelle_page = False
 
@@ -374,7 +374,7 @@ class CadastreExport:
         replaceDict = ""
 
         # Build template file path
-        tplPath = os.path.join(self.plugin_dir, "templates", "%s.tpl" % key)
+        tplPath = str(plugin_path("templates", "%s.tpl" % key))
 
         # Build replace dict depending on source type
         if item["type"] == "sql":

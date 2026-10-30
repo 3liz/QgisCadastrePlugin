@@ -1,10 +1,10 @@
 from abc import abstractmethod
-from os.path import join
-from pathlib import Path
 
 from qgis.core import QgsProcessingAlgorithm
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtGui import QIcon
+
+from cadastre.tools import plugin_path
 
 __copyright__ = "Copyright 2021, 3Liz"
 __license__ = "GPL version 3"
@@ -23,5 +23,4 @@ class BaseProcessingAlgorithm(QgsProcessingAlgorithm):
         return self.__class__()
 
     def icon(self):
-        plugin_dir = str(Path(__file__).resolve().parent.parent.parent)
-        return QIcon(join(plugin_dir, "icon.png"))
+        return QIcon(str(plugin_path("icon.png")))

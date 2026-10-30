@@ -5,7 +5,6 @@ __email__ = "info@3liz.org"
 import os.path
 
 from functools import partial
-from pathlib import Path
 
 from qgis.core import QgsCoordinateTransform, QgsMapSettings, QgsProject
 from qgis.PyQt import uic
@@ -25,14 +24,12 @@ from qgis.PyQt.QtWidgets import (
 from cadastre.dialogs.cadastre_export_dialog import CadastreExport
 from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.dialogs.dialog_feedback import append_log
-from cadastre.tools import set_window_title
+from cadastre.tools import plugin_path, set_window_title
 
 from ..logger import Logger
 
 
-PARCELLE_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_parcelle_form.ui")
-)
+PARCELLE_FORM_CLASS, _ = uic.loadUiType(str(plugin_path("forms", "cadastre_parcelle_form.ui")))
 
 
 class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
@@ -41,8 +38,6 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
     def __init__(self, iface, layer, feature, cadastre_search_dialog, parent=None):
         super().__init__(parent)
 
-        plugin_dir = str(Path(__file__).resolve().parent.parent)
-
         self.iface = iface
         self.feature = feature
         self.layer = layer
@@ -50,7 +45,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.setupUi(self)
         self.setWindowTitle(f"{self.windowTitle()} {set_window_title()}")
         self.cadastre_search_dialog = cadastre_search_dialog
-        self.setWindowIcon(QIcon(os.path.join(plugin_dir, "icons", "toolbar", "get-parcelle-info.png")))
+        self.setWindowIcon(QIcon(str(plugin_path("icons", "toolbar", "get-parcelle-info.png"))))
         self.setWindowTitle("Cadastre+, ID parcelle : %s" % self.feature["geo_parcelle"])
         self.setMinimumWidth(450)
 
@@ -69,7 +64,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
             "",
             "Actions ...",
             True,
-            QIcon(os.path.join(plugin_dir, "icons", "actions.png")),
+            QIcon(str(plugin_path("icons", "actions.png"))),
             40,
             24,
             True,
@@ -77,12 +72,12 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         self.contextMnubutActions(self.butActions)
 
         # Images
-        self.btCentrer.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "centrer.png")))
-        self.btZoomer.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "zoom.png")))
-        self.btSelectionner.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "select.png")))
-        self.btParcellesProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "select.png")))
-        self.btExportParcelle.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png")))
-        self.btExportProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png")))
+        self.btCentrer.setIcon(QIcon(str(plugin_path("forms", "icons", "centrer.png"))))
+        self.btZoomer.setIcon(QIcon(str(plugin_path("forms", "icons", "zoom.png"))))
+        self.btSelectionner.setIcon(QIcon(str(plugin_path("forms", "icons", "select.png"))))
+        self.btParcellesProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "select.png"))))
+        self.btExportParcelle.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
+        self.btExportProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
 
         # Get connection parameters
         connectionParams = CadastreCommon.getConnectionParameterFromDbLayer(layer)
@@ -280,9 +275,8 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
     def builderContextMenu(self, obj, actions):
         contextMnu = QMenu()
 
-        plugin_dir = str(Path(__file__).resolve().parent.parent)
         for key in actions:
-            icon = os.path.join(plugin_dir, "icons", actions[key][0])
+            icon = str(plugin_path("icons", actions[key][0]))
             if key.startswith("~"):
                 contextMnu.addSeparator()
             elif key.startswith("list-"):
@@ -309,11 +303,10 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):
         """
         Get CSS from CSS file
         """
-        plugin_dir = str(Path(__file__).resolve().parent.parent)
-        with open(os.path.join(plugin_dir, "scripts", "css", "cadastre.css"), encoding="utf8") as f:
+        with open(str(plugin_path("scripts", "css", "cadastre.css")), encoding="utf8") as f:
             css = f.read()
             self.css = css
-        with open(os.path.join(plugin_dir, "scripts", "css", "fiche_parcelle.css"), encoding="utf8") as f:
+        with open(str(plugin_path("scripts", "css", "fiche_parcelle.css")), encoding="utf8") as f:
             parcelle_css = f.read()
             self.fiche_parcelle_css = parcelle_css
 

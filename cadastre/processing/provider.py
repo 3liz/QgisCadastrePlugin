@@ -21,12 +21,10 @@
  ***************************************************************************/
 """
 
-from os.path import join
-from pathlib import Path
-
 from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
 
+from cadastre.tools import plugin_path
 from cadastre.processing.algorithms.config import ConfigProjectAlgorithm
 from cadastre.processing.algorithms.edigeo_downloader import EdigeoDownloader
 
@@ -46,5 +44,4 @@ class CadastreProvider(QgsProcessingProvider):
         return "Outils d'exploitation des données cadastrale français"
 
     def icon(self):
-        plugin_dir = str(Path(__file__).resolve().parent.parent)
-        return QIcon(join(plugin_dir, "icon.png"))
+        return QIcon(str(plugin_path("icon.png")))

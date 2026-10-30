@@ -16,7 +16,6 @@ the Free Software Foundation; either version 2 of the License, or
 
 """
 
-import os
 import re
 import unicodedata
 
@@ -37,6 +36,8 @@ from qgis.core import (
 )
 from qgis.PyQt.QtCore import QObject, QUrl
 from qgis.PyQt.QtGui import QDesktopServices
+
+from cadastre.tools import plugin_path
 
 
 def hasSpatialiteSupport() -> bool:
@@ -441,7 +442,6 @@ def getItemHtml(
     based on SQL query
     """
     html = ""
-    plugin_dir = str(Path(__file__).resolve().parent)
 
     infos = {
         "parcelle_majic": {"label": "Parcelle"},
@@ -456,7 +456,7 @@ def getItemHtml(
     info = infos[item]
 
     sqlfile = "templates/parcelle_info_%s.sql" % item
-    with open(os.path.join(plugin_dir, sqlfile), encoding="utf8") as sqltemplate:
+    with open(plugin_path(sqlfile), encoding="utf8") as sqltemplate:
         if item in ("proprietaires", "indivisions", "locaux_detail"):
             sql = sqltemplate.read().format(
                 parcelle_id=feature["geo_parcelle"], not_for_third_part=(not for_third_party)

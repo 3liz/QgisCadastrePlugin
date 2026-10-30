@@ -2,7 +2,6 @@ __copyright__ = "Copyright 2021, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
-import os.path
 import re
 
 from functools import partial
@@ -27,6 +26,7 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.utils import OverrideCursor
 
+from cadastre.tools import plugin_path
 from cadastre.cadastre_export import CadastreExport
 from cadastre.dialogs.custom_qcompleter import CustomQCompleter
 from cadastre.cadastre_common_base import normalizeString
@@ -34,9 +34,7 @@ from cadastre.dialogs.dialog_common import CadastreCommon
 from cadastre.dialogs.dialog_feedback import append_log
 from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
 
-SEARCH_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_search_form.ui")
-)
+SEARCH_FORM_CLASS, _ = uic.loadUiType(str(plugin_path("forms", "cadastre_search_form.ui")))
 
 
 class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
@@ -50,34 +48,23 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         self.iface.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self)
 
         # Images
-        plugin_dir = str(Path(__file__).resolve().parent.parent)
-        self.btExportParcelle.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png")))
-        self.btResetCommune.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "delete.png")))
-        self.btResetParcelle.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "delete.png")))
-        self.btResetSection.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "delete.png")))
-        self.btResetAdresse.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "delete.png")))
-        self.btCentrerLieu.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "centrer.png")))
-        self.btZoomerLieu.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "zoom.png")))
-        self.btSelectionnerLieu.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "select.png")))
-        self.btExportProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png")))
-        self.btExportParcelleProprietaire.setIcon(
-            QIcon(os.path.join(plugin_dir, "forms", "icons", "releve.png"))
-        )
-        self.btResetProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "delete.png")))
-        self.btResetParcelleProprietaire.setIcon(
-            QIcon(os.path.join(plugin_dir, "forms", "icons", "delete.png"))
-        )
-        self.btIdentifierProprietaire.setIcon(
-            QIcon(os.path.join(plugin_dir, "forms", "icons", "identify.png"))
-        )
-        self.btCentrerProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "centrer.png")))
-        self.btZoomerProprietaire.setIcon(QIcon(os.path.join(plugin_dir, "forms", "icons", "zoom.png")))
-        self.btSelectionnerProprietaire.setIcon(
-            QIcon(os.path.join(plugin_dir, "forms", "icons", "select.png"))
-        )
-        self.btResetCommuneProprietaire.setIcon(
-            QIcon(os.path.join(plugin_dir, "forms", "icons", "delete.png"))
-        )
+        self.btExportParcelle.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
+        self.btResetCommune.setIcon(QIcon(str(plugin_path("forms", "icons", "delete.png"))))
+        self.btResetParcelle.setIcon(QIcon(str(plugin_path("forms", "icons", "delete.png"))))
+        self.btResetSection.setIcon(QIcon(str(plugin_path("forms", "icons", "delete.png"))))
+        self.btResetAdresse.setIcon(QIcon(str(plugin_path("forms", "icons", "delete.png"))))
+        self.btCentrerLieu.setIcon(QIcon(str(plugin_path("forms", "icons", "centrer.png"))))
+        self.btZoomerLieu.setIcon(QIcon(str(plugin_path("forms", "icons", "zoom.png"))))
+        self.btSelectionnerLieu.setIcon(QIcon(str(plugin_path("forms", "icons", "select.png"))))
+        self.btExportProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
+        self.btExportParcelleProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
+        self.btResetProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "delete.png"))))
+        self.btResetParcelleProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "delete.png"))))
+        self.btIdentifierProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "identify.png"))))
+        self.btCentrerProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "centrer.png"))))
+        self.btZoomerProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "zoom.png"))))
+        self.btSelectionnerProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "select.png"))))
+        self.btResetCommuneProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "delete.png"))))
 
         # database properties
         self.connectionParams = None
@@ -1197,15 +1184,13 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
             )
         )
 
-        plugin_dir = str(Path(__file__).resolve().parent.parent)
-
         printer = QPrinter()
         printer.setPageSize(QPrinter.A4)
         printer.setOrientation(QPrinter.Landscape)
         printer.setPageMargins(5, 10, 5, 10, QPrinter.Unit.Millimeter)
         printer.setOutputFormat(QPrinter.OutputFormat.NativeFormat)
         dlg = QPrintPreviewDialog(printer)
-        dlg.setWindowIcon(QIcon(os.path.join(plugin_dir, "icons", "print.png")))
+        dlg.setWindowIcon(QIcon(str(plugin_path("icons", "print.png"))))
         dlg.setWindowTitle("Aperçu")
         dlg.setWindowFlags(
             Qt.WindowType.WindowMaximizeButtonHint
@@ -1224,14 +1209,12 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):
         append_log(self.txtLog, "Texte copié dans le presse papier !")
 
     def saveInfosProprietaires(self):
-        plugin_dir = str(Path(__file__).resolve().parent.parent)
-
         dlgFile = QFileDialog(self, "Enregistrer sous ...")
         dlgFile.setNameFilters(("All (*.htm*)", "HTML (*.html)", "HTM (*.htm)"))
         dlgFile.selectNameFilter("Fichier HTML (*.html)")
         dlgFile.setDefaultSuffix("html")
         dlgFile.setViewMode(QFileDialog.ViewMode.Detail)
-        dlgFile.setDirectory(plugin_dir)
+        dlgFile.setDirectory(str(plugin_path()))
         dlgFile.setAcceptMode(QFileDialog.AcceptMode.AcceptSave)
 
         if not dlgFile.exec():

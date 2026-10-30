@@ -2,18 +2,13 @@ __copyright__ = "Copyright 2021, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
-import os.path
-
-from pathlib import Path
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
 
-from cadastre.tools import set_window_title
+from cadastre.tools import plugin_path, set_window_title
 
-MESSAGE_FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(str(Path(__file__).resolve().parent.parent), "forms", "cadastre_message_form.ui")
-)
+MESSAGE_FORM_CLASS, _ = uic.loadUiType(str(plugin_path("forms", "cadastre_message_form.ui")))
 
 
 class CadastreMessageDialog(QDialog, MESSAGE_FORM_CLASS):
