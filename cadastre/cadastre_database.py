@@ -11,7 +11,7 @@ import cadastre.cadastre_common_base as common_utils
 
 if TYPE_CHECKING:
     from db_manager.db_plugins.connector import DBConnector
-    from db_manager.db_plugins.plugin import Database, DBPlugin
+    from db_manager.db_plugins.plugin import Database, DBPlugin, Table
 
 
 @dataclass(frozen=True)
@@ -59,6 +59,18 @@ class CadastreDatabase:
     def is_postgis(self) -> bool:
         return self.db_type == "postgis"
 
+    @property
+    def provider_name(self) -> str:
+        """QGIS data provider name: postgres or spatialite"""
+        return self.db.dbplugin().providerName()
+
+    def tables(self) -> list["Table"]:
+        """List the db_manager tables of the database/schema."""
+        if self.is_postgis:
+            schemas = [s for s in self.db.schemas() if s.name == self.schema]
+            return self.db.tables(schemas[0]) if schemas else []
+        return self.db.tables()
+
     def table_exists(self, table_name: str) -> bool:
         """Check if the given table exists in the database/schema."""
         if self.is_postgis:
@@ -83,13 +95,7 @@ class CadastreDatabase:
 
     def structure(self) -> DatabaseStructure:
         """Search if there are already cadastre tables and data in the database/schema."""
-        if self.is_postgis:
-            schemas = [s for s in self.db.schemas() if s.name == self.schema]
-            tables = self.db.tables(schemas[0]) if schemas else []
-        else:
-            tables = self.db.tables()
-
-        if not [t for t in tables if t.name == "geo_commune"]:
+        if not [t for t in self.tables() if t.name == "geo_commune"]:
             return DatabaseStructure()
 
         has_majic_data_parcelle = self._has_rows("parcelle")

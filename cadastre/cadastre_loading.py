@@ -24,8 +24,9 @@
 import os
 import unicodedata
 
+from dataclasses import dataclass
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import Any
 
 from qgis.core import (
     QgsExpression,
@@ -36,22 +37,38 @@ from qgis.core import (
     QgsProject,
     QgsVectorLayer,
 )
-from qgis.PyQt.QtCore import QObject, QSettings, Qt, pyqtSignal
-from qgis.PyQt.QtWidgets import QApplication, QMessageBox
+from qgis.gui import QgsMapCanvas
+from qgis.PyQt.QtCore import QObject, QSettings, pyqtSignal
 
+from cadastre.cadastre_database import CadastreDatabase
 from cadastre.tools import plugin_path
 
-if TYPE_CHECKING:
-    from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
+DEFAULT_THEME = "classique"
+
+
+@dataclass
+class LoadingOptions:
+    """Parameters of the loading of cadastre layers in the QGIS project."""
+
+    database: CadastreDatabase
+    # Style directory in the plugin "styles" folder
+    theme: str = DEFAULT_THEME
+    # QGIS expression on the geo_commune table, to load only some communes
+    commune_expression: str = ""
+    main_layers_only: bool = False
 
 
 class CadastreLoading(QObject):
     cadastreLoadingFinished = pyqtSignal()
 
-    def __init__(self, dialog: "CadastreLoadDialog", feedback: QgsProcessingFeedback):
+    def __init__(self, feedback: QgsProcessingFeedback, canvas: QgsMapCanvas | None = None):
+        """
+        :param feedback: Feedback for logs and progress
+        :param canvas: Map canvas to zoom on the layers, if any
+        """
         QObject.__init__(self)
-        self.dialog = dialog
         self.feedback = feedback
+        self.canvas = canvas
         self.step = 0
         self.totalSteps = 0
 
@@ -61,14 +78,11 @@ class CadastreLoading(QObject):
         # https://github.com/3liz/lizmap-web-client/issues/2985
         self.set_short_names = False
 
-        # common cadastre methods
-        self.qc = self.dialog.qc
-        self.defaultThemeDir = "classique"
-        self.themeDir = None
+        self.themeDir = DEFAULT_THEME
 
         # List of database layers to load in QGIS
         self.mainLayers = ["Communes", "Sections", "Parcelles", "Bâti"]
-        self.qgisCadastreLayerList = [
+        self.qgisCadastreLayerList: list[dict[str, Any]] = [
             {
                 "label": "Communes",
                 "name": "geo_commune",
@@ -356,19 +370,6 @@ class CadastreLoading(QObject):
         diff = b - self.startTime
         self.feedback.pushInfo(f"{diff.seconds} s")
 
-    def get_group_index(self, group_name):
-        """
-        Get a legend group index by its name
-        """
-        relation_list = self.dialog.iface.legendInterface().groupLayerRelationship()
-        i = 0
-        for item in relation_list:
-            if item[0]:
-                if item[0] == group_name:
-                    return i
-                i = i + 1
-        return 0
-
     @staticmethod
     def short_name(name: str) -> str:
         """Clean layer/group name to build the short name for WMS."""
@@ -384,19 +385,20 @@ class CadastreLoading(QObject):
         only_ascii = only_ascii.strip("_")
         return only_ascii.lower()
 
-    def process_loading(self):
+    def process_loading(self, options: LoadingOptions) -> list[QgsVectorLayer]:
         """
         Load all the layers in QGIS
         and apply corresponding style
+
+        Returns the layers added to the project
         """
+        database = options.database
         self.startTime = datetime.now()
-        # noinspection PyUnresolvedReferences
-        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         # default style to apply for Cadastre layers
-        self.themeDir = str(self.dialog.liTheme.currentText())
-        if not os.path.exists(plugin_path("styles", self.themeDir)):
-            self.themeDir = self.defaultThemeDir
+        self.themeDir = options.theme
+        if not self.themeDir or not os.path.exists(plugin_path("styles", self.themeDir)):
+            self.themeDir = DEFAULT_THEME
 
         # set Cadastre SVG path if not set
         cadastre_svg_path = str(plugin_path("styles", self.themeDir, "svg"))
@@ -411,9 +413,8 @@ class CadastreLoading(QObject):
             )
 
         # Get selected options
-        provider_name = self.dialog.dbpluginclass.providerName()
+        provider_name = database.provider_name
         qgis_cadastre_layers = []
-        self.dialog.schema = str(self.dialog.liDbSchema.currentText())
         self.step = 0
         # One step per layer, plus the final one
         self.totalSteps = len(self.qgisCadastreLayerList) + 1
@@ -423,43 +424,38 @@ class CadastreLoading(QObject):
         self.feedback.pushInfo("Chargement des tables :")
 
         # Get database list of tables
-        if self.dialog.dbType == "postgis":
-            schema_search = [s for s in self.dialog.db.schemas() if s.name == self.dialog.schema]
-            schema_inst = schema_search[0]
-            db_tables = self.dialog.db.tables(schema_inst)
-        else:
-            db_tables = self.dialog.db.tables()
+        db_tables = database.tables()
 
         # Get commune filter by expression
-        commune_expression = self.dialog.communeFilter.text().strip()
+        commune_expression = options.commune_expression.strip()
         commune_filter = None
         c_exp = QgsExpression(commune_expression)
-        if commune_expression != "" and not c_exp.hasParserError():
+        if commune_expression and not c_exp.hasParserError():
             self.feedback.pushInfo(f"Filtrage à partir des communes : {commune_expression}")
             c_req = QgsFeatureRequest(c_exp)
             c_table_list = [a for a in db_tables if a.name == "geo_commune"]
             c_table = c_table_list[0]
             c_unique_col = "ogc_fid"
-            c_schema = self.dialog.schema
+            c_schema = database.schema
             c_geom_col = "geom"
-            c_layer_uri = self.dialog.db.uri()
+            c_layer_uri = database.db.uri()
             c_layer_uri.setDataSource(c_schema, c_table.name, c_geom_col, "", c_unique_col)
             c_layer = QgsVectorLayer(c_layer_uri.uri(), "com", provider_name)
             c_features = c_layer.getFeatures(c_req)
             c_ids = [a["commune"] for a in c_features]
             if len(c_ids):
                 commune_filter = c_ids
-        else:
+        elif commune_expression:
             self.feedback.pushInfo(
                 f"Filtrage à partir des communes, expression invalide : {c_exp.parserErrorString()}"
             )
 
         # Loop through qgisCadastreLayerList and load each corresponding table
         for item in self.qgisCadastreLayerList:
-            if item["label"] not in self.mainLayers and self.dialog.cbMainLayersOnly.isChecked():
+            if item["label"] not in self.mainLayers and options.main_layers_only:
                 continue
 
-            if "dbType" in item and item["dbType"] != self.dialog.dbType:
+            if "dbType" in item and item["dbType"] != database.db_type:
                 continue
 
             # update progress bar
@@ -485,14 +481,14 @@ class CadastreLoading(QObject):
                 except Exception:
                     unique_col = "ogc_fid"
 
-            schema = self.dialog.schema
+            schema: str | None = database.schema
 
             # View
             if "isView" in item:
-                if self.dialog.dbType == "spatialite":
+                if database.db_type == "spatialite":
                     schema_replace = ""
                 else:
-                    schema_replace = f'"{self.dialog.schema}".'
+                    schema_replace = f'"{database.schema}".'
                 source = item["table"].replace("schema.", schema_replace)
                 unique_col = item["key"]
                 schema = None
@@ -503,7 +499,7 @@ class CadastreLoading(QObject):
             if commune_filter:
                 commune_filter_text = "'" + "', '".join(commune_filter) + "'"
                 ns_schema = ""
-                if self.dialog.dbType == "postgis":
+                if database.db_type == "postgis":
                     ns_schema = f'"{schema}".'
                 if "subset" in item:
                     subset = item["subset"]
@@ -539,7 +535,7 @@ class CadastreLoading(QObject):
                     sql += subset % commune_filter_text
 
             # Create vector layer
-            a_layer_uri = self.dialog.db.uri()
+            a_layer_uri = database.db.uri()
             a_layer_uri.setDataSource(schema, source, geom_col, sql, unique_col)
 
             layer_name = item["label"]
@@ -557,11 +553,9 @@ class CadastreLoading(QObject):
 
         self.update_timer()
 
-        # Get canvas and disable rendering
-        from qgis.utils import iface
-
-        canvas = iface.mapCanvas()
-        canvas.freeze(True)
+        # Disable rendering
+        if self.canvas:
+            self.canvas.freeze(True)
 
         # Add all layers to QGIS registry (but not yet to the layer tree)
         self.feedback.pushInfo("Ajout des couches dans le registre de QGIS")
@@ -618,9 +612,9 @@ class CadastreLoading(QObject):
             node_layer = QgsLayerTreeLayer(layer)
 
             # Get layer options
-            q_layer = [a for a in self.qgisCadastreLayerList if a["label"] == layer.name()]
-            if q_layer:
-                q_layer = q_layer[0]
+            q_layers = [a for a in self.qgisCadastreLayerList if a["label"] == layer.name()]
+            if q_layers:
+                q_layer = q_layers[0]
 
                 # Move layer to proper group
                 if q_layer["group"] == "E":
@@ -654,11 +648,12 @@ class CadastreLoading(QObject):
         self.update_timer()
 
         # Zoom to full extent
-        self.feedback.pushInfo("Zoom sur les couches")
-        canvas.zoomToFullExtent()
-        canvas.freeze(False)
-        canvas.refresh()
-        self.update_timer()
+        if self.canvas:
+            self.feedback.pushInfo("Zoom sur les couches")
+            self.canvas.zoomToFullExtent()
+            self.canvas.freeze(False)
+            self.canvas.refresh()
+            self.update_timer()
 
         # progress bar
         self.update_progress_bar()
@@ -668,35 +663,24 @@ class CadastreLoading(QObject):
         self.cadastreLoadingFinished.emit()
         self.update_timer()
 
-        # Final message
-        QApplication.restoreOverrideCursor()
-        QMessageBox.information(self.dialog, "Cadastre", "Les données ont bien été chargées dans QGIS")
         self.feedback.setProgress(0)
 
-        QApplication.restoreOverrideCursor()
+        return qgis_cadastre_layers
 
-    def load_sql_layer(self):
+    def load_sql_layer(
+        self, database: CadastreDatabase, sql_text: str, geometry_column: str = "", layer_name: str = ""
+    ) -> QgsMapLayer | None:
         """
         Load a vector layer from SQL and information given by the user
+
+        Returns the layer added to the project, None if the layer is not valid
         """
-        self.dialog.dbpluginclass.providerName()
-        self.dialog.schema = str(self.dialog.liDbSchema.currentText())
-
-        sql_text = self.dialog.sqlText.toPlainText()
-        if self.dialog.dbType == "postgis":
-            self.dialog.schema = str(self.dialog.liDbSchema.currentText())
-
-        geometry_column = self.dialog.geometryColumn.text()
-        if not geometry_column:
-            geometry_column = None
-
-        layer_name = self.dialog.layerName.text()
         if not layer_name:
             layer_name = f"requete_cadastre_{datetime.now()}"
 
-        layer = self.dialog.db.toSqlLayer(
+        layer = database.db.toSqlLayer(
             sql_text,
-            geometry_column,
+            geometry_column or None,
             None,
             layer_name,
             QgsMapLayer.LayerType.VectorLayer,
@@ -706,9 +690,10 @@ class CadastreLoading(QObject):
         if layer.isValid():
             # Add layer to layer tree
             QgsProject.instance().addMapLayers([layer], True)
-            return
+            return layer
 
         self.feedback.pushInfo(
             "La couche n'est pas valide et n'a pu être chargée. Pour PostGIS, avez-vous pensé à indiquer le schéma "
             "comme préfixe des tables ?"
         )
+        return None

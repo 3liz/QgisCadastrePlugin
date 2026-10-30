@@ -6,9 +6,12 @@ import os.path
 
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDialog
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtWidgets import QDialog, QMessageBox
+from qgis.utils import OverrideCursor
 
-from cadastre.cadastre_loading import CadastreLoading
+from cadastre.cadastre_database import CadastreDatabase
+from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback
 from cadastre.tools import plugin_path, set_window_title
 
@@ -31,7 +34,7 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         from cadastre.dialogs.dialog_common import CadastreCommon
 
         self.qc = CadastreCommon(self)
-        self.ql = CadastreLoading(self, CadastreDialogFeedback(self.txtLog, self.pbProcess))
+        self.ql = CadastreLoading(CadastreDialogFeedback(self.txtLog, self.pbProcess), self.mc)
 
         # spatialite support
         self.hasSpatialiteSupport = CadastreCommon.hasSpatialiteSupport()
@@ -93,8 +96,21 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         from database tables
         when user clicked on button
         """
-        if self.connection and self.db:
-            self.ql.process_loading()
+        if not (self.connection and self.db):
+            return
+
+        options = LoadingOptions(
+            database=self.database(),
+            theme=self.liTheme.currentText(),
+            commune_expression=self.communeFilter.text(),
+            main_layers_only=self.cbMainLayersOnly.isChecked(),
+        )
+        with OverrideCursor(Qt.CursorShape.WaitCursor):
+            self.ql.process_loading(options)
+
+        if os.getenv("CI", "").lower() != "true":
+            # We don't want QMessagebox in test
+            QMessageBox.information(self, "Cadastre", "Les données ont bien été chargées dans QGIS")
 
     def onLoadSqlLayerClicked(self):
         """
@@ -103,7 +119,19 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         when user clicked on button
         """
         if self.connection and self.db:
-            self.ql.load_sql_layer()
+            self.ql.load_sql_layer(
+                self.database(),
+                self.sqlText.toPlainText(),
+                self.geometryColumn.text(),
+                self.layerName.text(),
+            )
+
+    def database(self) -> CadastreDatabase:
+        """
+        Database and schema selected by the user
+        """
+        self.schema = self.liDbSchema.currentText()
+        return CadastreDatabase(self.db, self.dbType, self.connectionName, self.schema)
 
     def onLoadingEnd(self):
         """
