@@ -107,9 +107,9 @@ def test_load_with_dialog(database: CadastreDatabase, project: QgsProject, qgis_
     dialog = CadastreLoadDialog(qgis_iface, search_dialog)
 
     # PostGIS, default connection and test schema
-    dialog.liDbType.setCurrentIndex(1)
-    assert dialog.liDbConnection.currentText() == "test_database"
-    dialog.liDbSchema.setCurrentIndex(dialog.liDbSchema.findText(TEST_SCHEMA))
+    dialog.database_widget.liDbType.setCurrentIndex(1)
+    assert dialog.database_widget.liDbConnection.currentText() == "test_database"
+    dialog.database_widget.liDbSchema.setCurrentIndex(dialog.database_widget.liDbSchema.findText(TEST_SCHEMA))
     dialog.cbMainLayersOnly.setChecked(True)
 
     dialog.onProcessLoadingClicked()

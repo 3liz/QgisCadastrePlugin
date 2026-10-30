@@ -89,10 +89,10 @@ def test_import(test_case: TestCase, qgis_iface: QgisInterface, fixtures: Path):
     dialog = CadastreImportDialog(qgis_iface)
 
     # Set postgis
-    dialog.liDbType.setCurrentIndex(1)
+    dialog.database_widget.liDbType.setCurrentIndex(1)
 
     # Let the default connexion
-    assert dialog.liDbConnection.count() == 1
+    assert dialog.database_widget.liDbConnection.count() == 1
 
     # Check empty database before
     metadata = QgsProviderRegistry.instance().providerMetadata("postgres")
@@ -100,8 +100,8 @@ def test_import(test_case: TestCase, qgis_iface: QgisInterface, fixtures: Path):
     assert TEST_SCHEMA not in connection.schemas()
 
     # Create schema
-    dialog.inDbCreateSchema.setText(TEST_SCHEMA)
-    dialog.btDbCreateSchema.click()
+    dialog.database_widget.inDbCreateSchema.setText(TEST_SCHEMA)
+    dialog.database_widget.btDbCreateSchema.click()
 
     # Check the schema exists
     assert TEST_SCHEMA in connection.schemas()

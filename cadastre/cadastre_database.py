@@ -51,6 +51,12 @@ class CadastreDatabase:
         database._dbplugin = dbpluginclass
         return database
 
+    def with_schema(self, schema: str) -> "CadastreDatabase":
+        """The same database, with another schema."""
+        database = CadastreDatabase(self.db, self.db_type, self.connection_name, schema)
+        database._dbplugin = self._dbplugin
+        return database
+
     @property
     def connector(self) -> "DBConnector":
         return self.db.connector

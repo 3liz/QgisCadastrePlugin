@@ -10,9 +10,9 @@ from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtWidgets import QDialog, QMessageBox
 from qgis.utils import OverrideCursor
 
-from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
-from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback
+from cadastre.dialogs.database_widget import DatabaseWidget
+from cadastre.dialogs.dialog_feedback import CadastreDialogFeedback, append_log
 from cadastre.tools import plugin_path, set_window_title
 
 LOAD_FORM_CLASS, _ = uic.loadUiType(str(plugin_path("forms", "cadastre_load_form.ui")))
@@ -30,33 +30,17 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
 
         self.cadastre_search_dialog = cadastre_search_dialog
 
-        # common cadastre methods
-        from cadastre.dialogs.dialog_common import CadastreCommon
-
-        self.qc = CadastreCommon(self)
         self.ql = CadastreLoading(CadastreDialogFeedback(self.txtLog, self.pbProcess), self.mc)
 
-        # spatialite support
-        self.hasSpatialiteSupport = CadastreCommon.hasSpatialiteSupport()
-        if not self.hasSpatialiteSupport:
-            self.liDbType.removeItem(2)
-
-        # Set initial values
-        self.go = True
-        self.dbType = None
-        self.dbpluginclass = None
-        self.connectionName = None
-        self.connection = None
-        self.db = None
-        self.schema = None
-        self.schemaList = None
+        # Database, connection and schema
+        self.database_widget = DatabaseWidget(self)
+        self.databaseLayout.addWidget(self.database_widget)
+        self.database_widget.logMessage.connect(lambda msg: append_log(self.txtLog, msg))
 
         # Get style list
         self.getStyleList()
 
         # Signals/Slot Connections
-        self.liDbType.currentIndexChanged.connect(self.qc.updateConnectionList)
-        self.liDbConnection.currentIndexChanged.connect(self.qc.updateSchemaList)
         self.btProcessLoading.clicked.connect(self.onProcessLoadingClicked)
         self.ql.cadastreLoadingFinished.connect(self.onLoadingEnd)
 
@@ -65,14 +49,13 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         self.rejected.connect(self.onClose)
         self.buttonBox.rejected.connect(self.onClose)
 
-        self.qc.load_default_values()
+        self.database_widget.load_settings()
 
     def onClose(self):
         """
         Close dialog
         """
-        if self.db:
-            self.db.connector.__del__()
+        self.database_widget.close_connection()
         self.close()
 
     def getStyleList(self):
@@ -96,11 +79,12 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         from database tables
         when user clicked on button
         """
-        if not (self.connection and self.db):
+        database = self.database_widget.database()
+        if not database:
             return
 
         options = LoadingOptions(
-            database=self.database(),
+            database=database,
             theme=self.liTheme.currentText(),
             commune_expression=self.communeFilter.text(),
             main_layers_only=self.cbMainLayersOnly.isChecked(),
@@ -118,20 +102,14 @@ class CadastreLoadDialog(QDialog, LOAD_FORM_CLASS):
         from given SQL
         when user clicked on button
         """
-        if self.connection and self.db:
+        database = self.database_widget.database()
+        if database:
             self.ql.load_sql_layer(
-                self.database(),
+                database,
                 self.sqlText.toPlainText(),
                 self.geometryColumn.text(),
                 self.layerName.text(),
             )
-
-    def database(self) -> CadastreDatabase:
-        """
-        Database and schema selected by the user
-        """
-        self.schema = self.liDbSchema.currentText()
-        return CadastreDatabase(self.db, self.dbType, self.connectionName, self.schema)
 
     def onLoadingEnd(self):
         """
