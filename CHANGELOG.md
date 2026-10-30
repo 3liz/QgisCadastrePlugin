@@ -19,6 +19,9 @@
   * Dialogues d'import et de chargement : bloc commun de choix de la base, de la connexion
     et du schéma (suppression des onglets PostGIS / Spatialite dans l'import)
   * Correction du curseur d'attente qui pouvait rester affiché après une erreur
+  * Correction du déchargement de l'extension (ex. avec Plugin Reloader) : le panneau de recherche,
+    le menu et la barre d'outils ne sont plus dupliqués, et les signaux de QGIS sont déconnectés
+  * Le bouton « Infos parcelle » ne modifie plus le groupe des outils de navigation de QGIS
 * Base de données
   * Remplacement de l'extension `DB Manager` par l'API native de QGIS pour les connexions
     aux bases de données, les requêtes SQL et la liste des connexions de l'utilisateur

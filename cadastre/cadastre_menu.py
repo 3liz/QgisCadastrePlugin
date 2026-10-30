@@ -16,6 +16,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 """
 
+import contextlib
 import os
 import os.path
 import tempfile
@@ -37,10 +38,8 @@ from qgis.PyQt.QtCore import QSettings, QUrl
 from qgis.PyQt.QtGui import QDesktopServices, QIcon, QKeySequence
 from qgis.PyQt.QtWidgets import (
     QAction,
-    QActionGroup,
     QMenu,
     QMessageBox,
-    QWidgetAction,
 )
 from qgis.PyQt.QtXml import QDomDocument
 
@@ -80,6 +79,11 @@ class CadastreMenu:
         self.help_action: Optional[QAction] = None
         self.version_action: Optional[QAction] = None
         self.menu: Optional[QMenu] = None
+        # Menu where the Cadastre menu is added
+        self.parent_menu = None
+        self.toolbar = None
+        self.identifyParcelleAction: Optional[QAction] = None
+        self.identyParcelleTool: Optional[IdentifyParcelle] = None
         self.mConfig = None
 
         self.mapCanvas = iface.mapCanvas()
@@ -151,6 +155,7 @@ class CadastreMenu:
                 menu = child
                 break
         menu.addMenu(self.menu)
+        self.parent_menu = menu
 
         # Add cadastre toolbar
         self.toolbar = self.iface.addToolBar("&Cadastre")
@@ -174,8 +179,6 @@ class CadastreMenu:
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.option_action)
         self.toolbar.addAction(self.about_action)
-
-        self.setActionsExclusive()
 
         # Disable some dialogs on CI : about and changelog
         on_ci = os.getenv("CI", "").lower() == "true"
@@ -314,27 +317,6 @@ class CadastreMenu:
         dialog = CadastreAboutDialog(self.iface)
         dialog.exec()
 
-    def setActionsExclusive(self):
-
-        # Build an action list from QGIS navigation toolbar
-        actionList = self.iface.mapNavToolToolBar().actions()
-
-        # Add actions from QGIS attributes toolbar (handling QWidgetActions)
-        tmpActionList = self.iface.attributesToolBar().actions()
-        for action in tmpActionList:
-            if isinstance(action, QWidgetAction):
-                actionList.extend(action.defaultWidget().actions())
-            else:
-                actionList.append(action)
-        # ... add other toolbars' action lists...
-
-        # Build a group with actions from actionList and add your own action
-        group = QActionGroup(self.iface.mainWindow())
-        group.setExclusive(True)
-        for action in actionList:
-            group.addAction(action)
-        group.addAction(self.identifyParcelleAction)
-
     def checkIdentifyParcelleTool(self, layerIds=None):
         """
         When layers are removed from the project
@@ -376,6 +358,8 @@ class CadastreMenu:
 
         self.identyParcelleTool = IdentifyParcelle(self.mapCanvas, parcelleLayer)
         self.identyParcelleTool.cadastreGeomIdentified.connect(self.getParcelleInfo)
+        # The action is unchecked by QGIS when another map tool is activated
+        self.identyParcelleTool.setAction(self.identifyParcelleAction)
 
         # The activate identify tool
         self.mapCanvas.setMapTool(self.identyParcelleTool)
@@ -434,27 +418,67 @@ class CadastreMenu:
         dialog.exec()
 
     def unload(self):
+        if self.iface:
+            self.unload_gui()
+
+        # Remove processing provider
+        if self.provider:
+            # noinspection PyArgumentList
+            QgsApplication.processingRegistry().removeProvider(self.provider)
+            self.provider = None
+
+    def unload_gui(self):
+        """Remove everything added by initGui, so that the plugin can be reloaded"""
+        # Signals, otherwise this instance would still be called after a reload
+        for signal, slot in (
+            (self.iface.projectRead, self.onProjectRead),
+            (self.iface.newProjectCreated, self.on_new_project_created),
+            (QgsProject.instance().layersRemoved, self.checkIdentifyParcelleTool),
+        ):
+            # TypeError if not connected, when initGui has not been fully run
+            with contextlib.suppress(TypeError):
+                signal.disconnect(slot)
+
+        if self.identyParcelleTool:
+            self.mapCanvas.unsetMapTool(self.identyParcelleTool)
+            self.identyParcelleTool.deleteLater()
+            self.identyParcelleTool = None
+
         if self.help_action_about_menu:
             self.iface.pluginHelpMenu().removeAction(self.help_action_about_menu)
-            del self.help_action_about_menu
+            self.help_action_about_menu.deleteLater()
+            self.help_action_about_menu = None
 
-        self.iface.removePluginMenu("&Cadastre", self.import_action)
-        self.iface.removePluginMenu("&Cadastre", self.load_action)
-        self.iface.removePluginMenu("&Cadastre", self.search_action)
-        self.iface.removePluginMenu("&Cadastre", self.export_action)
-        self.iface.removePluginMenu("&Cadastre", self.option_action)
-        self.iface.removePluginMenu("&Cadastre", self.about_action)
-        self.iface.removePluginMenu("&Cadastre", self.version_action)
-        self.iface.removePluginMenu("&Cadastre", self.help_action)
+        if self.menu:
+            self.parent_menu.removeAction(self.menu.menuAction())
+            self.menu.deleteLater()
+            self.menu = None
 
-        self.iface.mainWindow().removeToolBar(self.toolbar)
+        if self.toolbar:
+            self.iface.mainWindow().removeToolBar(self.toolbar)
+            self.toolbar.deleteLater()
+            self.toolbar = None
+
+        for name in (
+            "import_action",
+            "search_action",
+            "load_action",
+            "export_action",
+            "option_action",
+            "about_action",
+            "help_action",
+            "version_action",
+            "identifyParcelleAction",
+        ):
+            action = getattr(self, name)
+            if action:
+                action.deleteLater()
+                setattr(self, name, None)
 
         if self.cadastre_search_dialog:
             self.iface.removeDockWidget(self.cadastre_search_dialog)
-
-        # Remove processing provider
-        # noinspection PyArgumentList
-        QgsApplication.processingRegistry().removeProvider(self.provider)
+            self.cadastre_search_dialog.deleteLater()
+            self.cadastre_search_dialog = None
 
     @staticmethod
     def run_tests(pattern="test_*.py", package=None):
