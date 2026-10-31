@@ -335,7 +335,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
         else:
             item = "parcelle_simple"
 
-        html = common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+        html = self.itemHtml(item)
         self.parcelleInfo.setStyleSheet(self.css)
         self.parcelleInfo.setHtml(
             f"""
@@ -356,10 +356,8 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
             html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
             item = "proprietaires"
-            html = common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
-            html += common_utils.getItemHtml(
-                "indivisions", self.feature, self.connectionParams, self.connector
-            )
+            html = self.itemHtml(item)
+            html += self.itemHtml("indivisions")
         self.proprietairesInfo.setStyleSheet(self.css)
         self.proprietairesInfo.setHtml(
             f"""
@@ -380,7 +378,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
             html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
             item = "subdivisions"
-            html = common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            html = self.itemHtml(item)
         self.subdivisionsInfo.setStyleSheet(self.css)
         self.subdivisionsInfo.setHtml(
             f"""
@@ -401,9 +399,9 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
             html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
             item = "locaux"
-            html = common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            html = self.itemHtml(item)
             item = "locaux_detail"
-            html += common_utils.getItemHtml(item, self.feature, self.connectionParams, self.connector)
+            html += self.itemHtml(item)
         self.locauxInfo.setStyleSheet(self.css)
         self.locauxInfo.setHtml(
             f"""
@@ -412,6 +410,20 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
             </style>
             {html}
             """
+        )
+
+    def itemHtml(self, item: str) -> str:
+        """HTML of an item of the fiche parcellaire, with all the data, sensitive data included"""
+        return common_utils.getItemHtml(
+            item, self.feature, self.connectionParams, self.connector, common_utils.SensitiveData.full()
+        )
+
+    def sensitiveData(self) -> common_utils.SensitiveData:
+        """Sensitive data to write in the relevés, from the options of the dialog"""
+        return common_utils.SensitiveData(
+            birth=self.cbExportBirth.isChecked(),
+            revenue=self.cbExportRevenue.isChecked(),
+            exoneration=self.cbExportExoneration.isChecked(),
         )
 
     def export_as_pdf(self, key):
@@ -429,9 +441,6 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
             self.proprietairesInfo.setText("Pas de données de propriétaires dans la base")
             return
 
-        # Check if PDF must be exported for a third party or not
-        for_third_party = self.combo_for_third_party.isChecked()
-
         if self.feature:
             comptecommunal = common_utils.getCompteCommunalFromParcelleId(
                 self.feature["geo_parcelle"], self.connectionParams, self.connector
@@ -446,7 +455,12 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
                     )
                 if self.layer:
                     qe = CadastreExport(
-                        self.layer, key, comptecommunal, self.feature["geo_parcelle"], None, for_third_party
+                        self.layer,
+                        key,
+                        comptecommunal,
+                        self.feature["geo_parcelle"],
+                        None,
+                        self.sensitiveData(),
                     )
                     qe.export_as_pdf()
 

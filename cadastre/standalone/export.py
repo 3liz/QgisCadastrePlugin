@@ -19,6 +19,7 @@ sys.path.append(os.path.join(qgisPrefixPath, "share/qgis/python/plugins/"))
 sys.path.append("/srv/qgis/plugins")
 
 import argparse
+import dataclasses
 
 from qgis.core import QgsApplication, QgsFeatureRequest, QgsProject
 from qgis.gui import QgsLayerTreeMapCanvasBridge, QgsMapCanvas
@@ -36,8 +37,11 @@ parser.add_argument("-T", metavar='"Export type"', help="Usage: Override Export 
 parser.add_argument(
     "-S",
     metavar='"For third-party"',
-    help="Usage: Specify the export is for third-party and must be simplified: use true or false",
+    help="Usage: Specify the export is for third-party: use false to write all the sensitive data",
 )
+parser.add_argument("-N", metavar='"Birth"', help="Usage: Write the date and place of birth: use true or false")
+parser.add_argument("-R", metavar='"Revenue"', help="Usage: Write the revenues: use true or false")
+parser.add_argument("-E", metavar='"Exoneration"', help="Usage: Write the exonerations: use true or false")
 parser.add_argument("-O", metavar='"Output log file"', help="Usage: Override Output log file")
 
 ####      Hardcode variables here      ####
@@ -50,8 +54,9 @@ parcelle_layer = "Parcelles"
 parcelle_id = "2018300189000EY0670"
 # -T = Export type ("proprietaire")
 export_type = "parcelle"
-# -S = For third party ("True")
-for_third_party = False
+# -S = For third party ("True"), "False" to write all the sensitive data
+# -N, -R, -E = Write the date and place of birth, the revenues, the exonerations ("True")
+sensitive = common_utils.SensitiveData()
 # -D = Target directory for PDF ("/tmp/")
 target_dir = "/tmp/"
 # -O = Output log file ("/tmp/export_cadastre.log")
@@ -68,8 +73,11 @@ if "-T" in sys.argv:
     export_type = sys.argv[sys.argv.index("-T") + 1]
 if "-S" in sys.argv:
     _for_third_party = sys.argv[sys.argv.index("-S") + 1]
-    if _for_third_party.lower() == "true":
-        for_third_party = True
+    if _for_third_party.lower() == "false":
+        sensitive = common_utils.SensitiveData.full()
+for flag, option in (("-N", "birth"), ("-R", "revenue"), ("-E", "exoneration")):
+    if flag in sys.argv and sys.argv[sys.argv.index(flag) + 1].lower() == "true":
+        sensitive = dataclasses.replace(sensitive, **{option: True})
 if "-D" in sys.argv:
     target_dir = sys.argv[sys.argv.index("-D") + 1]
 if "-O" in sys.argv:
@@ -125,7 +133,7 @@ if export_type == "proprietaire" and pmulti == 1:
 
 # Export PDF
 print(target_dir)
-qex = CadastreExport(p, layer, export_type, comptes_communaux, feat["geo_parcelle"], target_dir, for_third_party)
+qex = CadastreExport(p, layer, export_type, comptes_communaux, feat["geo_parcelle"], target_dir, sensitive)
 paths = qex.export_as_pdf()
 print(paths)
 

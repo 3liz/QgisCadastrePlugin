@@ -1246,6 +1246,14 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):  # type: ignore[vali
         if w:
             self.setSelectionToChosenSearchCombobox(w)
 
+    def sensitiveData(self) -> common_utils.SensitiveData:
+        """Sensitive data to write in the relevés, from the options of the dialog"""
+        return common_utils.SensitiveData(
+            birth=self.cbExportBirth.isChecked(),
+            revenue=self.cbExportRevenue.isChecked(),
+            exoneration=self.cbExportExoneration.isChecked(),
+        )
+
     def export_proprietaire(self):
         """
         Export the selected proprietaire
@@ -1266,11 +1274,9 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):  # type: ignore[vali
 
         layer = self.searchComboBoxes["proprietaire"]["layer"]
 
-        # If export are for third-party persons
-        # we need to remove sensitive data
-        for_third_party = self.combo_for_third_party.isChecked()
-
-        qex = CadastreExport(QgsProject.instance(), layer, "proprietaire", cc, None, None, for_third_party)
+        qex = CadastreExport(
+            QgsProject.instance(), layer, "proprietaire", cc, None, None, self.sensitiveData()
+        )
 
         with OverrideCursor(Qt.CursorShape.WaitCursor):
             exports = qex.export_as_pdf()
@@ -1308,9 +1314,6 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):  # type: ignore[vali
             feature["geo_parcelle"], self.connectionParams, self.connector
         )
 
-        # If export are for third-party persons
-        # we need to remove sensitive data
-        for_third_party = self.combo_for_third_party.isChecked()
         qex = CadastreExport(
             QgsProject.instance(),
             layer,
@@ -1318,7 +1321,7 @@ class CadastreSearchDialog(QDockWidget, SEARCH_FORM_CLASS):  # type: ignore[vali
             compte_communal,
             feature["geo_parcelle"],
             None,
-            for_third_party,
+            self.sensitiveData(),
         )
 
         with OverrideCursor(Qt.CursorShape.WaitCursor):

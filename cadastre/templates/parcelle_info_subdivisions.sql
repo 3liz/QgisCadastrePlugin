@@ -23,12 +23,12 @@ FROM (
         '<td>' || Coalesce(s.cnatsp, '') || '</td>' ||
         '<td>' || Coalesce(s.dclssf, '') || '</td>' ||
         '<td>' || s.dcntsf || ' m²</td>' ||
-        '<td>' || s.drcsuba || '</td>' ||
+        '<td>' || CASE WHEN s.drcsuba IS NULL OR {revenue} THEN Cast(s.drcsuba AS text) ELSE 'XXX' END || '</td>' ||
     '</tr>'
     AS line
     FROM suf s
     LEFT JOIN "cgrnum" ON s.cgrnum = cgrnum.cgrnum
     LEFT JOIN "dsgrpf" ON s.dsgrpf = dsgrpf.dsgrpf
-    WHERE 2>1 AND s.parcelle = '%s'
+    WHERE 2>1 AND s.parcelle = '{parcelle_id}'
 ) foo
 

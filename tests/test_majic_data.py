@@ -18,7 +18,7 @@ import cadastre.cadastre_common_base as common_utils
 import cadastre.releve_layout as releve_layout
 
 from cadastre.cadastre_database import CadastreDatabase
-from cadastre.cadastre_export import ROW_HEIGHT, CadastreExport
+from cadastre.cadastre_export import DEFAULT_MASK, MASKS, ROW_HEIGHT, SENSITIVE_COLUMNS, CadastreExport
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.feedback import CadastreFeedback
@@ -204,3 +204,104 @@ def test_releve_pages(parcelles: QgsVectorLayer, lines: int, pages: int, monkeyp
     export.getPageNumberNeeded()
 
     assert export.numPages == pages
+
+
+def owner_with_exonerations() -> tuple[str, str, str]:
+    """ Compte communal, parcel and date of birth of an owner of a building with exonerations """
+    rows = fetch(
+        "SELECT p.comptecommunal, l10.parcelle, Cast(p.jdatnss AS text) FROM cadastre.proprietaire p "
+        "JOIN cadastre.local10 l10 ON l10.comptecommunal = p.comptecommunal "
+        "JOIN cadastre.pev ON pev.local10 = l10.local10 "
+        "JOIN cadastre.pevexoneration px ON px.pev = pev.pev "
+        "WHERE p.jdatnss IS NOT NULL AND p.comptecommunal NOT LIKE '%+%' ORDER BY 1, 2 LIMIT 1"
+    )
+    assert rows
+    return tuple(rows[0])
+
+
+def releve_rows(
+    parcelles: QgsVectorLayer, sensitive: common_utils.SensitiveData
+) -> dict[str, list[dict[str, str]]]:
+    compte, geo_parcelle, _ = owner_with_exonerations()
+    export = CadastreExport(
+        QgsProject.instance(), parcelles, "proprietaire", compte, geo_parcelle, sensitive=sensitive
+    )
+    export.set_composer_templates(compte)
+    keys = ("proprietes_baties_sum", "proprietes_non_baties_sum")
+    items = {**export.main_tables, **{key: export.composerTemplates[key] for key in keys}}
+    return {key: export.getDataForGivenItem(key, item) for key, item in items.items()}
+
+
+@pytest.mark.parametrize(
+    "sensitive",
+    [
+        common_utils.SensitiveData(),
+        common_utils.SensitiveData(birth=True),
+        common_utils.SensitiveData(revenue=True),
+        common_utils.SensitiveData(exoneration=True),
+    ],
+    ids=["none", "birth", "revenue", "exoneration"],
+)
+def test_releve_sensitive_data(parcelles: QgsVectorLayer, sensitive: common_utils.SensitiveData):
+    """ Without access, the existing sensitive values are masked, the other values are unchanged """
+    full = releve_rows(parcelles, common_utils.SensitiveData.full())
+    rows = releve_rows(parcelles, sensitive)
+
+    masked = {option: 0 for option in SENSITIVE_COLUMNS}
+    for key, full_rows in full.items():
+        assert len(rows[key]) == len(full_rows)
+        for row, full_row in zip(rows[key], full_rows):
+            for name, value in full_row.items():
+                option = next((o for o, names in SENSITIVE_COLUMNS.items() if name in names), None)
+                if option and value.strip() and not getattr(sensitive, option):
+                    assert row[name] == MASKS.get(name, DEFAULT_MASK), (key, name)
+                    masked[option] += 1
+                else:
+                    assert row[name] == value, (key, name)
+
+    # The data set has values for each kind of sensitive data
+    for option, count in masked.items():
+        assert (count > 0) != getattr(sensitive, option), option
+
+
+def test_releve_birth(parcelles: QgsVectorLayer):
+    _, _, birth = owner_with_exonerations()
+    nele = [row["nele"] for row in releve_rows(parcelles, common_utils.SensitiveData())["proprietaires_line"]]
+    assert "Né(e) le XX/XX/XXXX à XXX" in nele
+    assert not any(birth in value for value in nele)
+
+    nele = [
+        row["nele"]
+        for row in releve_rows(parcelles, common_utils.SensitiveData(birth=True))["proprietaires_line"]
+    ]
+    assert any(birth in value for value in nele)
+
+
+@pytest.mark.parametrize(
+    "item, sensitive, masks",
+    [
+        ("proprietaires", common_utils.SensitiveData(), ["XX/XX/XXXX", "XXX"]),
+        ("subdivisions", common_utils.SensitiveData(), ["XXX"]),
+        ("locaux_detail", common_utils.SensitiveData(), ["XX/XX/XXXX", "XXX"]),
+        ("proprietaires", common_utils.SensitiveData.full(), []),
+        ("subdivisions", common_utils.SensitiveData.full(), []),
+        ("locaux_detail", common_utils.SensitiveData.full(), []),
+    ],
+)
+def test_fiche_sensitive_data(
+    parcelles: QgsVectorLayer, item: str, sensitive: common_utils.SensitiveData, masks: list[str]
+):
+    """ Sensitive data in the fiche parcellaire of Lizmap """
+    _, geo_parcelle, birth = owner_with_exonerations()
+    params = common_utils.getConnectionParameterFromDbLayer(parcelles)
+    connector = common_utils.getConnectorFromUri(params)
+
+    html = common_utils.getItemHtml(item, feature(parcelles, geo_parcelle), params, connector, sensitive)
+
+    assert "<table" in html
+    for mask in masks:
+        assert f"{mask}</" in html, mask
+    if not masks:
+        assert "XXX" not in html
+    if item != "subdivisions":
+        assert (birth in html) == sensitive.birth

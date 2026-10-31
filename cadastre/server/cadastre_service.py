@@ -19,6 +19,14 @@ import cadastre.cadastre_common_base as cadastre_common
 from cadastre.cadastre_export import CadastreExport
 from cadastre.logger import Logger
 
+
+def sensitive_data(params: Dict[str, str]) -> cadastre_common.SensitiveData:
+    """The ADVANCED parameter, set by Lizmap from the rights of the user, gives access to all sensitive data"""
+    if params.get("ADVANCED", "f").lower() in ("t", "true", "1"):
+        return cadastre_common.SensitiveData.full()
+    return cadastre_common.SensitiveData()
+
+
 # Parcelle format for validation
 PARCELLE_FORMAT_RE = re.compile("^([A-Z0-9]+)*$")
 
@@ -190,9 +198,15 @@ class CadastreService(QgsService):
         Logger.debug(f"comptecommunal = {comptes_communaux}")
 
         # Export PDF
-        qex = CadastreExport(project, res.layer, res.type, comptes_communaux, res.geo_parcelle)
+        qex = CadastreExport(
+            project,
+            res.layer,
+            res.type,
+            comptes_communaux,
+            res.geo_parcelle,
+            sensitive=sensitive_data(params),
+        )
         qex.print_parcelle_page = True
-        qex.for_third_party = params.get("ADVANCED", "f").lower() not in ("t", "true", "1")
         paths = qex.export_as_pdf()
 
         if not paths:
@@ -230,12 +244,10 @@ class CadastreService(QgsService):
     ) -> None:
         # Load ressources based on passed params
         res = self.get_ressources(params, project, request_id)
-        for_third_party = params.get("ADVANCED", "f").lower() not in ("t", "true", "1")
+        sensitive = sensitive_data(params)
 
         def get_item_html(n):
-            return cadastre_common.getItemHtml(
-                n, res.feature, res.connectionParams, res.connector, for_third_party
-            )
+            return cadastre_common.getItemHtml(n, res.feature, res.connectionParams, res.connector, sensitive)
 
         html = ""
         html += get_item_html("parcelle_majic")

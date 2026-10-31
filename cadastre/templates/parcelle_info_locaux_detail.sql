@@ -24,8 +24,8 @@ WITH infos AS (
             trim(coalesce(pr.ddenom, '')) ||
             '</td>' ||
             '<td>' || replace(ltrim(trim(coalesce(pr.dlign4, '')), '0') || ' ' || trim(coalesce(pr.dlign5, '')) || ' ' || trim(coalesce(pr.dlign6, '')), '  ',' ') || '</td>' ||
-            CASE WHEN {not_for_third_part} THEN '<td>' || Coalesce( trim(cast(pr.jdatnss AS text) ), '-') || '</td>' ELSE '' END ||
-            CASE WHEN {not_for_third_part} THEN '<td>' || coalesce(trim(pr.dldnss), '-') || '</td>' ELSE '' END ||
+            '<td>' || CASE WHEN pr.jdatnss IS NULL THEN '-' WHEN {birth} THEN trim(cast(pr.jdatnss AS text)) ELSE 'XX/XX/XXXX' END || '</td>' ||
+            '<td>' || CASE WHEN pr.dldnss IS NULL THEN '-' WHEN {birth} THEN trim(pr.dldnss) ELSE 'XXX' END || '</td>' ||
             '<td>' || Coalesce(ccodro_lib, '') || '</td>' ||
             '<td>' || Coalesce(ccodem_lib, '') || '</td>' ||
         '</tr>'
@@ -267,9 +267,9 @@ SELECT
         '<br/><strong>Lettre de série: </strong>' ||  pev_lettre_serie ||
         '<br/><strong>Catégorie: </strong>' ||  pev_categorie ||
         '<br/><strong>Entretien: </strong>' ||  Coalesce(pev_entretien, -1) ||
-        '<br/><strong>Valeur locative (en valeur de référence): </strong>' ||  Coalesce(pev_valeur_locative_ref, -1) ||
-        '<br/><strong>Valeur locative (en valeur de l''année): </strong>' ||  Coalesce(pev_valeur_locative_an, -1) ||
-        '<br/><strong>Exonération permanente: </strong>' ||  Coalesce(pev_nature_exoneration_permanente, '') ||
+        '<br/><strong>Valeur locative (en valeur de référence): </strong>' ||  CASE WHEN pev_valeur_locative_ref IS NULL THEN '-1' WHEN {revenue} THEN Cast(pev_valeur_locative_ref AS text) ELSE 'XXX' END ||
+        '<br/><strong>Valeur locative (en valeur de l''année): </strong>' ||  CASE WHEN pev_valeur_locative_an IS NULL THEN '-1' WHEN {revenue} THEN Cast(pev_valeur_locative_an AS text) ELSE 'XXX' END ||
+        '<br/><strong>Exonération permanente: </strong>' ||  CASE WHEN pev_nature_exoneration_permanente IS NULL THEN '' WHEN {exoneration} THEN Cast(pev_nature_exoneration_permanente AS text) ELSE 'XXX' END ||
         '<br/><strong>Numéro du local type: </strong>' ||  Coalesce(pev_numero_local_type, '') ||
         '<br/><strong>Situation générale: </strong>' ||  Coalesce(pev_coefficient_situation_generale, '') ||
         '<br/><strong>Situation particulière: </strong>' ||  Coalesce(pev_coefficient_situation_particuliere, '') ||
@@ -277,10 +277,10 @@ SELECT
 
         '<h4>Taxation</h4>' ||
         '<p>' ||
-        '<strong>Commune: </strong>' ||  Coalesce(co_bipevla, 0) ||
-        '<br/><strong>Intercommunalité: </strong>' ||  Coalesce(gp_bipevla, 0) ||
-        '<br/><strong>Département: </strong>' ||  Coalesce(de_bipevla, 0) ||
-        '<br/><strong>Région: </strong>' ||  Coalesce(re_bipevla, 0) ||
+        '<strong>Commune: </strong>' ||  CASE WHEN co_bipevla IS NULL THEN '0' WHEN {revenue} THEN Cast(co_bipevla AS text) ELSE 'XXX' END ||
+        '<br/><strong>Intercommunalité: </strong>' ||  CASE WHEN gp_bipevla IS NULL THEN '0' WHEN {revenue} THEN Cast(gp_bipevla AS text) ELSE 'XXX' END ||
+        '<br/><strong>Département: </strong>' ||  CASE WHEN de_bipevla IS NULL THEN '0' WHEN {revenue} THEN Cast(de_bipevla AS text) ELSE 'XXX' END ||
+        '<br/><strong>Région: </strong>' ||  CASE WHEN re_bipevla IS NULL THEN '0' WHEN {revenue} THEN Cast(re_bipevla AS text) ELSE 'XXX' END ||
         '</p>' ||
 
         '<h3>Parties d''évaluation</h3>' ||
@@ -305,8 +305,8 @@ SELECT
             '<th>Code</th>' ||
             '<th>Nom</th>' ||
             '<th>Adresse</th>' ||
-            CASE WHEN {not_for_third_part} THEN '<th>Date de naissance</th>' ELSE '' END ||
-            CASE WHEN {not_for_third_part} THEN '<th>Lieux de naissance</th>' ELSE '' END ||
+            '<th>Date de naissance</th>' ||
+            '<th>Lieux de naissance</th>' ||
             '<th>Code droit</th>' ||
             '<th>Code démembrement</th>' ||
         '</tr>' ||

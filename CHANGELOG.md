@@ -26,12 +26,17 @@
   * Le bouton « Infos parcelle » ne modifie plus le groupe des outils de navigation de QGIS
   * Export d'un relevé : pas d'erreur si aucun fichier PDF n'a été produit
 * Relevés de propriété et parcellaires
+  * Remplacement de l'option « Les relevés sont destinés à des tiers » par 3 options, décochées par défaut :
+    dates et lieux de naissance, revenus, exonérations. Les valeurs non exportées sont remplacées
+    par `XX/XX/XXXX` ou `XXX`, pour indiquer qu'elles existent
   * Utilisation des tableaux natifs de QGIS au lieu de blocs HTML : les relevés ne dépendent plus de QtWebKit,
     absent de certaines installations (pages vides, seule la carte s'affichait) et de QGIS 4
   * Les textes trop longs pour leur colonne sont tronqués
   * Correction d'une page vide en trop pour 15, 30, 45... lignes
   * Correction du texte « None » affiché dans les totaux à partir de la 2e page
 * Serveur
+  * Sans le paramètre `ADVANCED=true`, les revenus et les exonérations sont aussi masqués
+    dans les relevés et la fiche de la parcelle, en plus des dates et lieux de naissance
   * `CreatePdf` : erreur 404 explicite pour une parcelle sans données MAJIC
 * Base de données
   * Remplacement de l'extension `DB Manager` par l'API native de QGIS pour les connexions

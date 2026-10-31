@@ -62,6 +62,36 @@ def _printProgress(_this, nb: int) -> Generator[Callable[[int], None], None, Non
 # Height of a line of the main tables, in mm: 15 lines are displayed in the zone of each table
 ROW_HEIGHT = 3.3
 
+# Columns of the relevés with sensitive data, by option of SensitiveData
+SENSITIVE_COLUMNS = {
+    "birth": ["nele"],
+    "revenue": [
+        "revenucadastral",
+        "rcteom",
+        "co_bipevla",
+        "gp_bipevla",
+        "de_bipevla",
+        "re_bipevla",
+        "sum_drcsuba",
+    ],
+    "exoneration": [
+        "coll",
+        "natexo",
+        "anret",
+        "andeb",
+        "fractionrcexo",
+        "pourcentageexo",
+        "co_vlbaia",
+        "gp_vlbaia",
+        "de_vlbaia",
+        "re_vlbaia",
+    ],
+}
+
+# Masks of the sensitive values, to show that the value exists
+MASKS = {"nele": "Né(e) le XX/XX/XXXX à XXX"}
+DEFAULT_MASK = "XXX"
+
 
 class CadastreExport:
     def __init__(
@@ -72,7 +102,7 @@ class CadastreExport:
         comptecommunal: str | list[str],
         geo_parcelle: str | None = None,
         target_dir: str | None = None,
-        for_third_party: bool = False,
+        sensitive: cadastre_common.SensitiveData | None = None,
     ) -> None:
         self.print_parcelle_page = False
 
@@ -91,10 +121,8 @@ class CadastreExport:
         # type of export : proprietaire or parcelle
         self.etype = etype
 
-        # third party export
-        # If true, remove some sensitive fields
-        # For example date and location of birth
-        self.for_third_party = for_third_party
+        # Sensitive data to write, the other values are masked
+        self.sensitive = sensitive or cadastre_common.SensitiveData()
 
         # id of the parcelle
         self.geo_parcelle = geo_parcelle
@@ -365,11 +393,6 @@ class CadastreExport:
             else:
                 sql = sql.replace("$schema", "")
 
-            # Add the for_third_party values
-            # only useful for proprietaire
-            # to empty sensitive data (date and location of birth)
-            sql = sql.replace("$for_third_party", str(self.for_third_party))
-
             # Add where clause depending on etype
             sql = sql.replace("$and", item["and"][self.etype])
 
@@ -382,13 +405,26 @@ class CadastreExport:
                 self.lineCount[key]["count"] = row_count
                 self.lineCount[key]["data"] = data
 
-        rows = [
-            {name: "" if value is None else str(value) for name, value in zip(item["names"], line)}
-            for line in data
-        ]
+        masked = self.maskedColumns()
+        rows = []
+        for line in data:
+            row = {name: "" if value is None else str(value) for name, value in zip(item["names"], line)}
+            for name in masked.intersection(row):
+                if row[name].strip():
+                    row[name] = MASKS.get(name, DEFAULT_MASK)
+            rows.append(row)
         if item.get("keepContent"):
             self.dataKept[key] = rows
         return rows
+
+    def maskedColumns(self) -> set[str]:
+        """Columns with sensitive data which must not be written"""
+        return {
+            name
+            for option, names in SENSITIVE_COLUMNS.items()
+            if not getattr(self.sensitive, option)
+            for name in names
+        }
 
     def createComposition(self):
         """

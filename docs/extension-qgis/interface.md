@@ -46,6 +46,7 @@ Ainsi qu'une zone contenant des **boutons d'action** :
 * 2 boutons pour **exporter** au format PDF :
   - le **relevé parcellaire**
   - le **relevé de propriété** avec une option pour réaliser un export sur toutes les communes ou seulement à la commune de la parcelle
+  - avec les options de [données sensibles](#donnees-sensibles-dans-les-releves) à inclure dans les relevés
 * 3 boutons pour **interagir avec l'objet géométrique** lié à la parcelle : centrer la carte sur la
   parcelle, zoomer sur la parcelle ou sélectionner l'objet dans la couche
 * Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
@@ -171,6 +172,25 @@ suivantes :
 
 Il est possible d'exporter le relevé de propriété pour les personnes qui ne possèdent pas de propriété non
 bâtie.
+
+### Données sensibles dans les relevés
+
+Le panneau de recherche et la fenêtre d'information de la parcelle proposent 3 options pour les relevés
+exportés en PDF, **décochées par défaut** :
+
+* **Exporter les dates et lieux de naissance des propriétaires**
+* **Exporter les revenus** : revenus cadastraux, revenus imposables par collectivité et RC TEOM
+* **Exporter les exonérations** : collectivité, nature, années, fraction de revenu exonéré
+  et pourcentage d'exonération, revenus exonérés par collectivité
+
+Lorsqu'une option n'est pas cochée, les valeurs existantes sont remplacées par un masque, par exemple
+`Né(e) le XX/XX/XXXX à XXX` ou `XXX`, pour indiquer que l'information existe sans la donner. Une case
+vide signifie qu'il n'y a pas de valeur.
+
+Les onglets de la fenêtre d'information de la parcelle affichent toujours toutes les données.
+
+Avec QGIS Server (par exemple dans Lizmap), les relevés et la fiche de la parcelle contiennent
+toutes les données sensibles seulement si la requête contient le paramètre `ADVANCED=true`.
 
 ### Utilisation du plugin QuickFinder pour chercher les parcelles
 

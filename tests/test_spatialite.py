@@ -3,10 +3,16 @@ from typing import Iterator
 
 import pytest
 
-from qgis.core import QgsDataSourceUri, QgsProject, QgsProviderRegistry
+from qgis.core import QgsDataSourceUri, QgsFeatureRequest, QgsProject, QgsProviderRegistry
 from qgis.utils import spatialite_connect
 
-from cadastre.cadastre_common_base import hasSpatialiteSupport
+from cadastre.cadastre_common_base import (
+    SensitiveData,
+    getConnectionParameterFromDbLayer,
+    getConnectorFromUri,
+    getItemHtml,
+    hasSpatialiteSupport,
+)
 from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
@@ -75,7 +81,20 @@ def test_import_and_load(connection_name: str, fixtures: Path):
         )
         assert {layer.name() for layer in layers} == {"Communes", "Sections", "Parcelles", "Bâti"}
         assert all(layer.isValid() for layer in layers)
-        assert project.mapLayersByName("Parcelles")[0].featureCount() > 0
+        parcelles = project.mapLayersByName("Parcelles")[0]
+        assert parcelles.featureCount() > 0
+
+        # Fiche parcellaire of a parcel with a building, the sensitive data are masked or not
+        geo_parcelle = database.fetch("SELECT parcelle FROM local10 ORDER BY parcelle LIMIT 1")[0][0]
+        request = QgsFeatureRequest().setFilterExpression(f"\"geo_parcelle\" = '{geo_parcelle}'")
+        feature = next(parcelles.getFeatures(request))
+        params = getConnectionParameterFromDbLayer(parcelles)
+        connector = getConnectorFromUri(params)
+        for item in ("proprietaires", "subdivisions", "locaux_detail"):
+            html = getItemHtml(item, feature, params, connector)
+            assert "XXX</" in html, item
+            html = getItemHtml(item, feature, params, connector, SensitiveData.full())
+            assert "<table" in html and "XXX" not in html, item
     finally:
         project.clear()
         database.close()

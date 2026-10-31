@@ -19,6 +19,7 @@ the Free Software Foundation; either version 2 of the License, or
 import re
 import unicodedata
 
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -36,6 +37,25 @@ from qgis.PyQt.QtCore import QDate, QDateTime, Qt, QTime, QUrl, QVariant
 from qgis.PyQt.QtGui import QDesktopServices
 
 from cadastre.tools import plugin_path
+
+
+@dataclass(frozen=True)
+class SensitiveData:
+    """Sensitive data written in the relevés and the fiche parcellaire.
+
+    Without the access, an existing value is replaced by a mask like XX/XX/XXXX or XXX.
+    """
+
+    # Date and place of birth of the owners
+    birth: bool = False
+    # Revenus cadastraux, valeurs locatives and bases d'imposition
+    revenue: bool = False
+    # Exonérations: nature, collectivité, years, percentage and exonerated revenue
+    exoneration: bool = False
+
+    @classmethod
+    def full(cls) -> "SensitiveData":
+        return cls(birth=True, revenue=True, exoneration=True)
 
 
 def hasSpatialiteSupport() -> bool:
@@ -439,12 +459,13 @@ def getItemHtml(
     feature: dict,
     connectionParams: dict[str, str],
     connector: QgsAbstractDatabaseProviderConnection,
-    for_third_party: bool = False,
+    sensitive: SensitiveData | None = None,
 ) -> str:
     """
     Build Html for a item (parcelle, proprietaires, etc.)
     based on SQL query
     """
+    sensitive = sensitive or SensitiveData()
     html = ""
 
     infos = {
@@ -461,9 +482,12 @@ def getItemHtml(
 
     sqlfile = "templates/parcelle_info_%s.sql" % item
     with open(plugin_path(sqlfile), encoding="utf8") as sqltemplate:
-        if item in ("proprietaires", "indivisions", "locaux_detail"):
+        if item in ("proprietaires", "indivisions", "subdivisions", "locaux_detail"):
             sql = sqltemplate.read().format(
-                parcelle_id=feature["geo_parcelle"], not_for_third_part=(not for_third_party)
+                parcelle_id=feature["geo_parcelle"],
+                birth=sensitive.birth,
+                revenue=sensitive.revenue,
+                exoneration=sensitive.exoneration,
             )
         else:
             sql = sqltemplate.read() % feature["geo_parcelle"]

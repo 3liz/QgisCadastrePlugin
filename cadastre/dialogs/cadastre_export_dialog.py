@@ -67,13 +67,13 @@ class CadastreExport(cadastreExportBase):
         comptecommunal: str,
         geo_parcelle: str | None = None,
         target_dir: str | None = None,
-        for_third_party: bool = False,
+        sensitive: cadastre_common.SensitiveData | None = None,
     ) -> None:
 
         self.mProgress = printProgress
 
         super().__init__(
-            QgsProject.instance(), layer, etype, comptecommunal, geo_parcelle, target_dir, for_third_party
+            QgsProject.instance(), layer, etype, comptecommunal, geo_parcelle, target_dir, sensitive
         )
 
         self.print_parcelle_page = True
