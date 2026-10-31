@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Compatibilité avec QGIS 4 : l'extension est déclarée compatible jusqu'à QGIS 4.2
+* Abandon du support de QGIS 3.34 : la version minimale est désormais QGIS 3.40
 * Import
   * Correction de l'import via `ogr2ogr` lorsque le chemin des fichiers EDIGEO, TOPO
     ou de la base Spatialite contient des espaces

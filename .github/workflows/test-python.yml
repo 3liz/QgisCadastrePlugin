@@ -18,7 +18,6 @@ jobs:
       fail-fast: false
       matrix:
         qgis_version: [
-          "3.34",
           "3.40",
           "3.44",
           #"4.2",

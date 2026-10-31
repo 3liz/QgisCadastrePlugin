@@ -109,17 +109,17 @@ def _load_plugin(
 def _check_qgis_version(minver: Optional[str], maxver: Optional[str]) -> bool:
     version = semver.Version.parse(Qgis.QGIS_VERSION.split("-", maxsplit=1)[0])
 
-    def _version(ver: Optional[str]) -> semver.Version:
+    def _version(ver: Optional[str], patch: str) -> semver.Version:
         if not ver:
             return version
 
-        # Normalize version
+        # Normalize version, like the QGIS plugin manager: 4.2 as maximum version means 4.2.99
         parts = ver.split(".")
         match len(parts):
             case 1:
-                parts.extend(("0", "0"))
+                parts.extend(("0", patch))
             case 2:
-                parts.append("0")
+                parts.append(patch)
         return semver.Version.parse(".".join(parts))
 
-    return _version(minver) <= version <= _version(maxver)
+    return _version(minver, "0") <= version <= _version(maxver, "99")
