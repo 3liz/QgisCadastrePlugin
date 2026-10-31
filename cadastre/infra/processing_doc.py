@@ -11,7 +11,7 @@ from qgis.core import (
     QgsProcessingParameterVectorLayer,
 )
 from qgis.PyQt.QtCore import QPoint, QRect, QSize
-from qgis.utils import Qgis, plugins
+from qgis.utils import plugins
 
 plugin_name = basename(dirname(dirname(__file__)))
 provider = plugins[plugin_name].provider
@@ -83,20 +83,8 @@ def generate_processing_doc():
             else:
                 info = ""
 
-            if Qgis.QGIS_VERSION_INT >= 31500 and not info:
+            if not info:
                 info = param.help()
-
-            dict_type = {
-                -1: "VectorAnyGeometry",
-                -2: "MapLayer",
-                0: "Point",
-                1: "Line",
-                2: "Polygon",
-                3: "Raster",
-                4: "File",
-                5: "Vector",
-                6: "Mesh",
-            }
 
             option = ""
             if param.defaultValue():
@@ -114,19 +102,12 @@ def generate_processing_doc():
                     option += "Max: " + str(param.maximum()) + " <br>"
             elif isinstance(param, QgsProcessingParameterVectorLayer):
                 option += "Type: "
-                if Qgis.QGIS_VERSION_INT < 30600:
-                    name_types = [dict_type[item] for item in param.dataTypes()]
-                    option += ", ".join(name_types) + " <br>"
-                else:
-                    name_types = [QgsProcessing.sourceTypeToString(item) for item in param.dataTypes()]
-                    option += ", ".join(name_types) + " <br>"
+                name_types = [QgsProcessing.sourceTypeToString(item) for item in param.dataTypes()]
+                option += ", ".join(name_types) + " <br>"
 
             elif isinstance(param, QgsProcessingParameterFeatureSink):
                 option += "Type: "
-                if Qgis.QGIS_VERSION_INT < 30600:
-                    option += dict_type[param.dataType()] + " <br>"
-                else:
-                    option += QgsProcessing.sourceTypeToString(param.dataType()) + " <br>"
+                option += QgsProcessing.sourceTypeToString(param.dataType()) + " <br>"
 
             elif isinstance(param, QgsProcessingParameterEnum):
                 list_value = param.options()

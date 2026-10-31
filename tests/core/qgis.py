@@ -27,7 +27,7 @@ def install_logger_hook() -> None:
     from qgis.core import Qgis
 
     # Add a hook to qgis  message log
-    def writelogmessage(message, tag, level):
+    def writelogmessage(message, tag, level, *args):
         arg = f"{tag}: {message}"
         if level == Qgis.Warning:
             logging.warning(arg)
@@ -37,7 +37,11 @@ def install_logger_hook() -> None:
             logging.debug(arg)
 
     messageLog = QgsApplication.messageLog()
-    messageLog.messageReceived.connect(writelogmessage)
+    if Qgis.QGIS_VERSION_INT < 40000:
+        messageLog.messageReceived.connect(writelogmessage)
+    else:
+        # QGIS 4 only emits the signal with the format of the message
+        messageLog.messageReceivedWithFormat.connect(writelogmessage)
 
 
 #
@@ -84,13 +88,13 @@ def _load_plugin(
     with plugin_path.joinpath("metadata.txt").open() as f:
         cp.read_file(f)
         if server:
-            assert cp["server"].getboolean("server")
+            assert cp["server"].getboolean("server"), "Server plugin required"
         if processing:
-            assert cp["general"].getboolean("hasProcessingProvider")
+            assert cp["general"].getboolean("hasProcessingProvider"), "Processing plugin required"
         assert _check_qgis_version(
             cp["general"].get("qgisMinimumVersion"),
             cp["general"].get("qgisMaximumVersion"),
-        )
+        ), f"QGIS version {Qgis.version()} not supported"
 
     sys.path.append(str(plugin_path.parent))
 
