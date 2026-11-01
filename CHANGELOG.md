@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.4.0 - 2026-11-01
+
 * Compatibilité avec QGIS 4 : l'extension est déclarée compatible jusqu'à QGIS 4.2
 * Abandon du support de QGIS 3.34 : la version minimale est désormais QGIS 3.40
 * Import
@@ -15,6 +17,7 @@
 * Processing
   * Nouveaux traitements « Import des données dans PostGIS » et « Import des données dans Spatialite »,
     équivalents au dialogue d'import, pour automatiser les imports (modèles, scripts)
+  * Téléchargement EDIGEO : correction de la lecture de la liste des feuilles sur cadastre.data.gouv.fr
 * Chargement
   * Correction du message « expression invalide » affiché à tort sans filtre de communes
 * Interface
@@ -47,6 +50,8 @@
     alors qu'une connexion était déjà ouverte dans un autre dialogue du plugin
   * Recherche, fiche parcelle et export : prise en compte de la configuration d'authentification
     (`authcfg`) et du mode SSL des couches PostgreSQL
+* Documentation
+  * Ajout des fichiers PDF de description du format MAJIC 2026
 * Refactorisation
   * Import et chargement indépendants des dialogues, utilisables sans interface
   * Suppression de la classe `CadastreCommon`

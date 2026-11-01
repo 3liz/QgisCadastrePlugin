@@ -107,7 +107,7 @@ wheels = [
 
 [[package]]
 name = "cadastre-plugin"
-version = "2.3.1"
+version = "2.4.0"
 source = { virtual = "." }
 
 [package.dev-dependencies]
