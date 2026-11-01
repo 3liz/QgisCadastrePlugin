@@ -14,10 +14,11 @@ about=This plugins helps users to use French land registry data, called Cadastre
   Régional de Picardie, Conseil Régional de Picardie, Agence de Développement et d'Urbanisme du Grand Amienois.
 
 
-# Done by qgis-plugin-ci
+# Set by yapt-pkg when packaging, from pyproject.toml
 #author=3Liz
 #email=info@3liz.com
-#version=master
+# Required when the plugin is used from the sources
+version=master
 #changelog=
 #commitNumber=
 #commitSha1=

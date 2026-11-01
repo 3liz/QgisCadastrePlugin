@@ -38,6 +38,7 @@
   * Sans le paramètre `ADVANCED=true`, les revenus et les exonérations sont aussi masqués
     dans les relevés et la fiche de la parcelle, en plus des dates et lieux de naissance
   * `CreatePdf` : erreur 404 explicite pour une parcelle sans données MAJIC
+  * Correction du chargement du plugin serveur installé depuis les sources (version absente de `metadata.txt`)
 * Base de données
   * Remplacement de l'extension `DB Manager` par l'API native de QGIS pour les connexions
     aux bases de données, les requêtes SQL et la liste des connexions de l'utilisateur
