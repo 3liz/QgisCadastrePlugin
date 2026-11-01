@@ -13,14 +13,16 @@ stages:
 # Lint
 # ------------
 lint:
-  image: ${REGISTRY_URL}/factory-ci-runner:qgis-ltr
+  image: ${REGISTRY_URL}/factory-ci-runner:qgis-${QGIS_FLAVOR}
   tags:
     - factory-plain
   stage: lint
   script:
+    - pip install --quiet -r requirements/lint.txt -r requirements/security.txt
     - make lint scan
-  # Temporary allow failure until lint errors are fixed
-  allow_failure: true
+  parallel:
+    matrix:
+      - QGIS_FLAVOR: [ "ltr", "release" ]
 
 # ------------
 # Tests
@@ -41,7 +43,8 @@ qgis-tests:
       - QGIS_FLAVOR: [
         "3.40",
         "3.44",
-        #"release",
+        "4.0",
+        "4.2",
       ]
 
 
@@ -61,16 +64,13 @@ build:
     - if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
       variables:
         PRERELEASE: ""
-        STATUS: stable
     - if: $RELEASE_BRANCH == "true"
       variables:
         PRERELEASE: "--pre"
-        STATUS: unstable
   script:
-      - echo "Building plugin ${PRODUCT_NAME} STATUS=${STATUS}"
+      - echo "Building plugin ${PRODUCT_NAME}"
       - yapt-pkg package $PRERELEASE
       - echo "PACKAGE=`ls -1 *.zip`" > build.env
-      - echo "STATUS=$STATUS" >> build.env
       - cat build.env
   artifacts:
     reports:
@@ -90,7 +90,7 @@ deploy:
   dependencies:
     - build
   script:
-    - upload_plugins ${PRODUCT_NAME} ${PACKAGE} ${STATUS}
+    - upload_plugins ${PRODUCT_NAME} ${PACKAGE}
     - update-snap-qgis-plugins
 
 #
@@ -105,9 +105,6 @@ release:
   tags:
     - factory-plain
   stage: release
-  dependencies:
-    - build
-    - deploy
   rules:
     - if: '$CI_COMMIT_TAG =~ /^(?:release-|v)?\d+\.\d+\.\d+(?:-.*)?$/'
   script:

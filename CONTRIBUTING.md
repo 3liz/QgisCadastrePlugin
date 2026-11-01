@@ -6,45 +6,20 @@ Le projet est hébergé sur GitHub
 
 ## Code
 
-Les tests unitaires sont en cours.
+[![🎳 Tests](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/ci.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/ci.yml)
 
-[![❄ Flake8](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml)
-[![🎳 Tests](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml)
+La CI GitHub et GitLab lance le linter (`ruff`), l'analyse de sécurité (`bandit`) et les tests
+avec QGIS 3.40, 3.44, 4.0 et 4.2. La CI GitHub vérifie aussi les types (`mypy`).
 
 ```bash
-pip install -r requirements/dev.txt
-flake8
+# Linter, analyse de sécurité et types
+make lint scan typecheck
+
+# Tests dans Docker, avec PostGIS, pour une version de QGIS (3.44 par défaut)
+make docker-test QGIS_VERSION=4.2
 ```
 
 La variable d'environnement `CI=true` permet d'éviter certaines QMessageBox.
-
-* Run tests in Docker
-
-```bash
-make start_tests
-make run_tests
-# Run a custom pattern
-cd .docker/ && ./exec_tests.sh test_*.py
-make stop_tests
-
-# All in one, but slower
-make tests
-```
-
-* In your QGIS Desktop itself
-  * Open the QGIS console
-
-```python
-from qgis.utils import plugins
-plugins['cadastre'].run_tests()
-
-# Custom pattern
-plugins['cadastre'].run_tests('test_*.py')
-```
-
-* In your IDE, with linked QGIS library
-    * Setup your `QGIS_PREFIX_PATH` etc
-    * Right-click on a test and launch it
 
 
 ## Documentation

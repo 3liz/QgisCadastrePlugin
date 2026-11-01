@@ -10,6 +10,9 @@ services:
     volumes:
     - {type: bind, source: "..", target: /src}
     - {type: bind, source: "./qgis_settings.ini", target: /src/tests/qgis_settings.ini}
+    depends_on:
+      db:
+        condition: service_healthy
     profiles:
       - "qgis"
 

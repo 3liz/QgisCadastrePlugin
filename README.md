@@ -1,8 +1,7 @@
 # Cadastre
 
 [![QGIS.org](https://img.shields.io/badge/QGIS.org-published-green)](https://plugins.qgis.org/plugins/cadastre/#plugin-versions)
-[![❄ Flake8](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml)
-[![🎳 Tests](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml)
+[![🎳 Tests](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/ci.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/ci.yml)
 [![📖 Documentation](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml/badge.svg)](https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml)
 
 ## Description
