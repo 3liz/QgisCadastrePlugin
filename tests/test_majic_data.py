@@ -142,7 +142,7 @@ def test_parcelle_info(database: CadastreDatabase):
     [
         ("parcelle_majic", "CORNILLON-CONFOUX"),
         ("proprietaires", "COPROPRIETE LE CLOS DES OLIVIERS"),
-        ("indivisions", "Détails"),
+        ("indivisions", "Lots de copropriété"),
         ("subdivisions", "Subdivisions fiscales"),
         ("locaux", "Appartement"),
         ("locaux", "Habitation"),

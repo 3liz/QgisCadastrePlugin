@@ -7,8 +7,12 @@
     ses propriétaires, ses parties d'évaluation (PEV) avec leur description (habitation, dépendances,
     local professionnel) et leurs exonérations (collectivité, nature, années, taux, montants exonérés)
   * Correction des locaux répétés lorsqu'un local a plusieurs PEV ou qu'une PEV a plusieurs exonérations
-  * Les tableaux sont décrits en Python et non plus générés en HTML par les requêtes SQL,
-    ce qui permettra de choisir les champs affichés
+  * Onglet « Propriétaires » : les lots d'une copropriété affichent leur quote-part, et les libellés
+    des droits et démembrements au lieu de leurs codes
+  * Onglet « Subdivisions fiscales » : ajout des exonérations (collectivité, nature, années, taux,
+    revenu exonéré), masquées sans l'option des exonérations, et du libellé de la nature de culture
+  * Les tableaux de tous les onglets sont décrits en Python et non plus générés en HTML
+    par les requêtes SQL, ce qui permettra de choisir les champs affichés
 * Relevé de propriété, propriétés bâties
   * Le revenu cadastral d'une PEV est la moitié de sa valeur locative, il n'est plus remplacé
     par le revenu exonéré, et il n'est écrit qu'une fois lorsque la PEV a plusieurs exonérations

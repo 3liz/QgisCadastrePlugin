@@ -93,6 +93,9 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         feature = next(parcelles.getFeatures(request))
         params = getConnectionParameterFromDbLayer(parcelles)
         connector = getConnectorFromUri(params)
+        for item in ("parcelle_majic", "parcelle_simple"):
+            html = getItemHtml(item, feature, params, connector)
+            assert "<th>Surface géographique</th>" in html and " m²</td>" in html, item
         for item in ("proprietaires", "subdivisions", "locaux"):
             html = getItemHtml(item, feature, params, connector)
             assert "XXX</" in html, item

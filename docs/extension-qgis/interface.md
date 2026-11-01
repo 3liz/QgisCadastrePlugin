@@ -37,8 +37,9 @@ La fenêtre d'identification s'affiche alors,
 Elle présente plusieurs onglets :
 
 * un onglet avec les **informations générales de la parcelle**
-* un onglet avec les **propriétaires** de la parcelle
-* un onglet avec les **subdivisions fiscales**
+* un onglet avec les **propriétaires** de la parcelle et, pour une copropriété, les lots avec leur quote-part
+  et leurs propriétaires
+* un onglet avec les **subdivisions fiscales** et leurs exonérations
 * un onglet avec les **locaux** : un tableau récapitulatif, puis pour chaque local sa description, ses propriétaires,
   ses parties d'évaluation (PEV) avec leur description (habitation, dépendances, local professionnel)
   et leurs exonérations

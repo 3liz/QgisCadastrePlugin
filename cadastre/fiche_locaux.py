@@ -19,7 +19,6 @@ from dataclasses import dataclass, field
 from qgis.core import QgsAbstractDatabaseProviderConnection
 
 from cadastre.fiche import (
-    DATE_MASK,
     DisplayOptions,
     Field,
     Row,
@@ -34,6 +33,7 @@ from cadastre.fiche import (
     table_html,
     yes_no,
 )
+from cadastre.fiche_parcelle import SQL_ADRESSE, SQL_NOM, proprietaires_section
 
 # The local00 of the parcel, the tables are joined from it because local00.parcelle is indexed
 FROM_LOCAUX = """
@@ -41,6 +41,7 @@ FROM local00 l
 JOIN local10 l10 ON l10.local00 = l.local00
 """
 
+# Locaux of the parcel: one row per local, with its address and its description
 SQL_LOCAUX = (
     """
 SELECT
@@ -75,26 +76,16 @@ ORDER BY l.dnubat, l.descr, l.dniv, l.dpor, l.invar
 """
 )
 
+# Owners of the locaux: one row per owner of the compte communal of each local.
+# gdesip = 1 for the owner receiving the tax notice (destinataire de l'avis)
 SQL_PROPRIETAIRES = (
-    """
+    f"""
 SELECT
     l10.local10 AS local10,
     pr.dnulp AS numero,
     pr.dnuper AS code,
-    trim(
-        Coalesce(trim(pr.dqualp) || ' ', '')
-        || CASE
-            WHEN trim(pr.dnomus) != trim(pr.dnomlp)
-            THEN Coalesce(trim(pr.dnomus) || '/' || trim(pr.dprnus) || ', née ', '')
-            ELSE ''
-        END
-        || Coalesce(trim(pr.ddenom), '')
-    ) AS nom,
-    trim(
-        Coalesce(ltrim(trim(pr.dlign4), '0') || ' ', '')
-        || Coalesce(trim(pr.dlign5) || ' ', '')
-        || Coalesce(trim(pr.dlign6), '')
-    ) AS adresse,
+    {SQL_NOM} AS nom,
+    {SQL_ADRESSE} AS adresse,
     pr.jdatnss AS date_naissance,
     pr.dldnss AS lieu_naissance,
     ccodro.ccodro_lib AS droit,
@@ -111,6 +102,7 @@ ORDER BY l10.local10, pr.dnulp, pr.dnuper
 """
 )
 
+# Parties d'évaluation (PEV) of the locaux: one row per PEV, with its taxation (one per PEV)
 SQL_PEVS = (
     """
 SELECT
@@ -143,6 +135,7 @@ ORDER BY pev.pev
 """
 )
 
+# Description of the PEV of the habitations (pevprincipale), with the 4 dependances incorporated
 SQL_HABITATIONS = (
     """
 SELECT
@@ -172,6 +165,7 @@ ORDER BY pp.pev, pp.dnudes
 """
 )
 
+# Description of the dependances (pevdependances): one row per dependance, several for a PEV
 SQL_DEPENDANCES = (
     """
 SELECT
@@ -195,6 +189,7 @@ ORDER BY pd.pev, pd.dnudes
 """
 )
 
+# Description of the PEV of the professional locaux, the surfaces of the older and newer formats
 SQL_PROFESSIONNELS = (
     """
 SELECT
@@ -216,6 +211,8 @@ ORDER BY po.pev
 """
 )
 
+# Exonerations of the PEV: one row per exoneration, several for a PEV.
+# The amounts are read in the integer columns rcexba2 and fcexba2, or in the text columns rcexba and fcexba
 SQL_EXONERATIONS = (
     """
 SELECT
@@ -242,6 +239,9 @@ ORDER BY px.pev, px.dnuexb
 
 @dataclass
 class Pev:
+    """A partie d'évaluation (PEV) of a local, with the rows describing it"""
+
+    # Row of SQL_PEVS
     values: Row
     habitations: list[Row] = field(default_factory=list)
     dependances: list[Row] = field(default_factory=list)
@@ -251,12 +251,17 @@ class Pev:
 
 @dataclass
 class Local:
+    """A local of the parcel, with its owners and its PEV"""
+
+    # Row of SQL_LOCAUX
     values: Row
+    # Rows of SQL_PROPRIETAIRES
     proprietaires: list[Row] = field(default_factory=list)
     pevs: list[Pev] = field(default_factory=list)
 
     @property
     def destinataire(self) -> str:
+        """Return the names of the owners receiving the tax notice, separated by commas"""
         names = [p["nom"] for p in self.proprietaires if p.get("destinataire") == "1" and p.get("nom")]
         return ", ".join(names)
 
@@ -264,21 +269,33 @@ class Local:
 def load_locaux(
     connector: QgsAbstractDatabaseProviderConnection, connection_params: dict[str, str], parcelle: str
 ) -> list[Local]:
-    """The locaux of the parcel, with their owners and their PEV"""
+    """Read the locaux of the parcel, with their owners, their PEV and the descriptions of the PEV.
+
+    Each query returns the rows of one level for the whole parcel, they are attached to their local
+    or to their PEV by their identifier (local10 or pev).
+
+    :param connector: The connection to the database.
+    :param connection_params: The parameters of the connection, see fetch_rows.
+    :param parcelle: The identifier of the parcel, like 1320290000A0107.
+    :return: The locaux, in the order of the building, the entrance, the level and the door.
+    """
 
     def fetch(sql: str) -> list[Row]:
         return fetch_rows(connector, connection_params, sql, parcelle=parcelle)
 
+    # The locaux, by their identifier local10
     locaux = {row["local10"]: Local(row) for row in fetch(SQL_LOCAUX)}
     for row in fetch(SQL_PROPRIETAIRES):
         if row["local10"] in locaux:
             locaux[row["local10"]].proprietaires.append(row)
 
+    # The PEV, by their identifier pev, attached to their local
     pevs = {}
     for row in fetch(SQL_PEVS):
         if row["local10"] in locaux:
             pevs[row["pev"]] = Pev(row)
             locaux[row["local10"]].pevs.append(pevs[row["pev"]])
+    # The rows describing the PEV, attached to their PEV
     for sql, attribute in (
         (SQL_HABITATIONS, "habitations"),
         (SQL_DEPENDANCES, "dependances"),
@@ -294,6 +311,7 @@ def load_locaux(
 
 # Description of the tables
 
+# Labels of the codes of the MAJIC description (articles 40 and 60 of the fichier des propriétés bâties)
 MURS = {
     "1": "pierre",
     "2": "meulière",
@@ -315,7 +333,11 @@ ENTRETIEN = {
 
 
 def dependances_incorporees(row: Row) -> str:
-    """The dependances described with the habitation, like a garage or a cellar"""
+    """Return the dependances incorporated in the habitation, like "Garage (15 m²), Cave (8 m²)".
+
+    :param row: A row of SQL_HABITATIONS, with the 4 dependances dep1 to dep4 and their surfaces.
+    :return: The labels and the surfaces of the dependances, separated by commas.
+    """
     names = []
     for i in range(1, 5):
         if row.get(f"dep{i}"):
@@ -325,9 +347,11 @@ def dependances_incorporees(row: Row) -> str:
 
 
 def numero_voirie_et_voie(row: Row) -> str:
+    """Return the address of a local, like "22 VC MONTEE DES AIRES", from a row of SQL_LOCAUX"""
     return " ".join(v for v in (row.get("numero_voirie"), row.get("voie")) if v).strip()
 
 
+# Summary of the locaux: one line per local, the number of PEV and the destinataire are computed
 SUMMARY = Section(
     "locaux",
     "",
@@ -346,6 +370,7 @@ SUMMARY = Section(
     ],
 )
 
+# Description of a local
 LOCAL = Section(
     "local",
     "Description générale",
@@ -367,21 +392,10 @@ LOCAL = Section(
     layout="list",
 )
 
-PROPRIETAIRES = Section(
-    "local.proprietaires",
-    "Propriétaires",
-    [
-        Field("Numéro", "numero"),
-        Field("Code", "code"),
-        Field("Nom", "nom"),
-        Field("Adresse", "adresse"),
-        Field("Date de naissance", "date_naissance", sensitive="birth", mask=DATE_MASK, format=date_fr),
-        Field("Lieu de naissance", "lieu_naissance", sensitive="birth"),
-        Field("Droit", "droit"),
-        Field("Démembrement", "demembrement"),
-    ],
-)
+PROPRIETAIRES = proprietaires_section("local.proprietaires")
 
+# PEV of a local: one line per PEV, with its bases d'imposition by collectivité.
+# The parts of the valeur locative imposable (vlbaia) are hidden by default.
 PEVS = Section(
     "local.pevs",
     "Parties d'évaluation (PEV)",
@@ -404,6 +418,7 @@ PEVS = Section(
     ],
 )
 
+# Evaluation of a PEV
 EVALUATION = Section(
     "pev.evaluation",
     "Évaluation",
@@ -420,7 +435,11 @@ EVALUATION = Section(
 
 
 def confort(optional: bool = False) -> list[Field]:
-    """Elements of comfort, not displayed for dependances without them"""
+    """Create the fields of the elements of comfort: water, electricity, heating, bathrooms...
+
+    :param optional: True to hide the elements which are empty, like for a garage.
+    :return: The fields, added to the sections of the habitations and of the dependances.
+    """
     return [
         Field("Eau", "eau", format=yes_no, optional=optional),
         Field("Électricité", "electricite", format=yes_no, optional=optional),
@@ -433,6 +452,7 @@ def confort(optional: bool = False) -> list[Field]:
     ]
 
 
+# Description of the PEV of a habitation
 HABITATION = Section(
     "pev.habitation",
     "Habitation",
@@ -455,6 +475,7 @@ HABITATION = Section(
     layout="list",
 )
 
+# Dependances of a PEV: one line per dependance
 DEPENDANCES = Section(
     "pev.dependances",
     "Dépendances",
@@ -471,6 +492,7 @@ DEPENDANCES = Section(
     ],
 )
 
+# Description of the PEV of a professional local, the surfaces depend on the MAJIC format
 PROFESSIONNEL = Section(
     "pev.professionnel",
     "Local professionnel",
@@ -501,6 +523,7 @@ PROFESSIONNEL = Section(
     layout="list",
 )
 
+# Exonerations of a PEV: one line per exoneration
 EXONERATIONS = Section(
     "pev.exonerations",
     "Exonérations",
@@ -517,6 +540,15 @@ EXONERATIONS = Section(
 
 
 def locaux_html(locaux: list[Local], options: DisplayOptions | None = None) -> str:
+    """Build the HTML of the tab Locaux.
+
+    The tab contains the summary of the locaux, then for each local: its description, its owners,
+    the table of its PEV, then for each PEV its evaluation, its description and its exonerations.
+
+    :param locaux: The locaux of the parcel, see load_locaux.
+    :param options: The fields to display and the sensitive data allowed.
+    :return: The HTML of the tab.
+    """
     options = options or DisplayOptions()
     count = len(locaux)
     text = "<h2>Locaux</h2>"
@@ -524,6 +556,7 @@ def locaux_html(locaux: list[Local], options: DisplayOptions | None = None) -> s
         return text + "<p>La parcelle ne contient aucun local</p>"
     text += f"<p>La parcelle contient {count} {'local' if count == 1 else 'locaux'}</p>"
 
+    # Summary, with the values computed for each local
     summary = [
         {**local.values, "destinataire": local.destinataire, "nombre_pev": str(len(local.pevs))}
         for local in locaux
@@ -531,6 +564,7 @@ def locaux_html(locaux: list[Local], options: DisplayOptions | None = None) -> s
     text += table_html(SUMMARY, summary, options)
 
     for local in locaux:
+        # Title like "Local 0290002178 : Maison, 22 VC MONTEE DES AIRES"
         title = ", ".join(v for v in (local.values.get("type"), numero_voirie_et_voie(local.values)) if v)
         text += f"<h3>Local {html.escape(local.values.get('invariant') or '')}"
         text += f" : {html.escape(title)}</h3>" if title else "</h3>"
@@ -539,6 +573,7 @@ def locaux_html(locaux: list[Local], options: DisplayOptions | None = None) -> s
         pev_rows = [{**pev.values, "nombre_exonerations": str(len(pev.exonerations))} for pev in local.pevs]
         text += table_html(PEVS, pev_rows, options)
 
+        # Details of each PEV, not displayed if the table of the PEV is hidden
         for pev in local.pevs:
             if not options.is_visible(PEVS):
                 break

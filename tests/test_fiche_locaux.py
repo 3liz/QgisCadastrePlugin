@@ -9,7 +9,7 @@ from qgis.core import QgsVectorLayer
 import cadastre.cadastre_common_base as common_utils
 
 from cadastre.cadastre_common_base import SensitiveData
-from cadastre.fiche import DisplayOptions, Field, Section, codes, date_fr, table_html
+from cadastre.fiche import DisplayOptions, Field, Section, codes, date_fr, number, table_html
 from cadastre.fiche_locaux import EXONERATIONS, PEVS, PROPRIETAIRES, Local, load_locaux, locaux_html
 
 from .test_majic_data import COPROPRIETE, database, feature, fetch, parcelles  # noqa: F401
@@ -163,6 +163,14 @@ def test_list_layout():
 )
 def test_date_fr(value: str, expected: str):
     assert date_fr(value) == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [("05", "5"), ("1.00", "1"), ("326.18", "326.18"), ("326.10", "326.1"), ("1500000", "1500000"), ("A", "A")],
+)
+def test_number(value: str, expected: str):
+    assert number(value) == expected
 
 
 @pytest.mark.parametrize("value, expected", [("04", "briques"), ("14", "pierre, briques"), ("00", "indéterminé")])

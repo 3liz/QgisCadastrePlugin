@@ -38,8 +38,6 @@ from qgis.PyQt.QtCore import QDate, QDateTime, Qt, QTime, QUrl, QVariant
 from qgis.PyQt.QtGui import QDesktopServices
 from qgis.utils import spatialite_connect
 
-from cadastre.tools import plugin_path
-
 
 @dataclass(frozen=True)
 class SensitiveData:
@@ -505,65 +503,27 @@ def getItemHtml(
     sensitive: SensitiveData | None = None,
 ) -> str:
     """
-    Build Html for a item (parcelle, proprietaires, etc.)
-    based on SQL query
+    Build the HTML of an item of the fiche parcellaire: parcelle_majic, parcelle_simple, proprietaires,
+    indivisions (lots of a copropriété), subdivisions or locaux.
+    The tables are described in cadastre/fiche_parcelle.py and cadastre/fiche_locaux.py.
     """
-    sensitive = sensitive or SensitiveData()
-    html = ""
+    # Not imported at the top, the modules of the fiche use this one
+    from cadastre.fiche import DisplayOptions
+    from cadastre.fiche_locaux import load_locaux, locaux_html
+    from cadastre.fiche_parcelle import lots_html, parcelle_html, proprietaires_html, subdivisions_html
 
+    options = DisplayOptions(sensitive=sensitive or SensitiveData())
+    parcelle = feature["geo_parcelle"]
+    if item == "parcelle_majic":
+        return parcelle_html(connector, connectionParams, parcelle, True, options)
+    if item == "parcelle_simple":
+        return parcelle_html(connector, connectionParams, parcelle, False, options)
+    if item == "proprietaires":
+        return proprietaires_html(connector, connectionParams, parcelle, options)
+    if item == "indivisions":
+        return lots_html(connector, connectionParams, parcelle, options)
+    if item == "subdivisions":
+        return subdivisions_html(connector, connectionParams, parcelle, options)
     if item == "locaux":
-        # The tables are described in Python, not in the SQL query
-        from cadastre.fiche import DisplayOptions
-        from cadastre.fiche_locaux import load_locaux, locaux_html
-
-        locaux = load_locaux(connector, connectionParams, feature["geo_parcelle"])
-        return locaux_html(locaux, DisplayOptions(sensitive=sensitive))
-
-    infos = {
-        "parcelle_majic": {"label": "Parcelle"},
-        "parcelle_simple": {"label": "Parcelle"},
-        "proprietaires": {"label": "Propriétaires"},
-        "indivisions": {"label": "Détails"},
-        "subdivisions": {"label": "Subdivisions fiscales"},
-        "subdivisions_exoneration": {"label": "Exonérations"},
-    }
-    info = infos[item]
-
-    sqlfile = "templates/parcelle_info_%s.sql" % item
-    with open(plugin_path(sqlfile), encoding="utf8") as sqltemplate:
-        if item in ("proprietaires", "indivisions", "subdivisions"):
-            sql = sqltemplate.read().format(
-                parcelle_id=feature["geo_parcelle"],
-                birth=sensitive.birth,
-                revenue=sensitive.revenue,
-                exoneration=sensitive.exoneration,
-            )
-        else:
-            sql = sqltemplate.read() % feature["geo_parcelle"]
-    if not sql:
-        html += "Impossible de lire le SQL dans le fichier %s" % sqlfile
-        return html
-
-    if connectionParams["dbType"] == "postgis":
-        sql = setSearchPath(sql, connectionParams["schema"])
-    if connectionParams["dbType"] == "spatialite":
-        sql = postgisToSpatialite(sql, connectionParams["srid"])
-    data, _, ok = fetchDataFromSqlQuery(connector, sql)
-    # print sql
-
-    if ok:
-        if item == "indivisions":
-            html += "<h3>" + info["label"] + "</h3>"
-        else:
-            html += "<h2>" + info["label"] + "</h2>"
-        for line in data:
-            # print info['label']
-            # print line
-            if line and len(line) > 0 and line[0]:
-                if item == "indivisions":
-                    html += "<br>"
-                html += f"""
-                    {line[0].replace("100p", "100%")}
-                """
-
-    return html
+        return locaux_html(load_locaux(connector, connectionParams, parcelle), options)
+    raise ValueError(f"Unknown item of the fiche parcellaire: {item}")
