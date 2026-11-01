@@ -232,6 +232,36 @@ def releve_rows(
     return {key: export.getDataForGivenItem(key, item) for key, item in items.items()}
 
 
+def test_releve_exonerations(parcelles: QgsVectorLayer):
+    """ Relevé of the parcel of the house with 2 PEV, the 1st one with 2 exonerations """
+    geo_parcelle, compte = fetch(
+        "SELECT l10.parcelle, l10.comptecommunal FROM cadastre.pev "
+        "JOIN cadastre.local10 l10 ON l10.local10 = pev.local10 "
+        "GROUP BY l10.local10, l10.parcelle, l10.comptecommunal HAVING count(*) > 1"
+    )[0]
+    export = CadastreExport(
+        QgsProject.instance(), parcelles, "parcelle", compte, geo_parcelle,
+        sensitive=common_utils.SensitiveData.full(),
+    )
+    export.set_composer_templates(compte)
+
+    lines = export.getDataForGivenItem("proprietes_baties_line", export.main_tables["proprietes_baties_line"])
+    total = export.getDataForGivenItem("proprietes_baties_sum", export.composerTemplates["proprietes_baties_sum"])[0]
+
+    # Valeurs locatives 6480 and 720: the revenu cadastral is written once per PEV
+    assert [line["revenucadastral"] for line in lines] == ["3240", "", "360"]
+    assert [line["coll"] for line in lines] == ["C", "GC", ""]
+    assert [line["fractionrcexo"] for line in lines] == ["3240", "1620", ""]
+    # Not counted once per exoneration
+    assert total["revenucadastral"] == "3600"
+    assert total["co_bipevla"] == "3600"
+    assert total["gp_bipevla"] == "3600"
+    # The exonerations of the commune and of the groupement
+    assert total["co_vlbaia"] == "3240"
+    assert total["gp_vlbaia"] == "1620"
+    assert total["de_vlbaia"] == "0"
+
+
 @pytest.mark.parametrize(
     "sensitive",
     [

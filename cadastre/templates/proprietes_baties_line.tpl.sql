@@ -5,12 +5,22 @@ CASE WHEN v.libvoi IS NOT NULL THEN Coalesce(v.natvoi || ' ', '') || v.libvoi EL
 l.ccoriv AS coderivoli,
 l.dnubat AS bat, l.descr AS ent, l.dniv AS niv, l.dpor AS ndeporte, substring(l.invar, 4, length(l.invar)) || ' ' || l.cleinvar AS numeroinvar,
 pev.ccostb AS star, l10.ccoeva AS meval, pev.ccoaff AS af, l10.cconlc AS natloc, pev.dcapec AS cat,
+-- Revenu cadastral of the PEV, half of its valeur locative, only on the line of its first exoneration
+-- to be counted once
 CASE
-  WHEN px.rcexba2 > 0 THEN px.rcexba2
-  ELSE pt.tse_bipevla
+  WHEN px.dnuexb IS NULL
+    OR px.dnuexb = (SELECT min(e.dnuexb) FROM $schema"pevexoneration" e WHERE e.pev = pev.pev)
+  THEN Cast(pev.dvlpera / 2 AS integer)
 END AS revenucadastral,
-px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb, Cast(px.rcexba2 * px.pexb / 100 AS numeric(10,2)) AS fractionrcexo,
-px.pexb AS pourcentageexo, l10.gtauom AS txom, '' AS coefreduc, pt.bateom as rcteom
+px.ccolloc AS coll, px.gnextl AS natexo, px.janimp AS anret, px.jandeb AS andeb,
+-- Revenu cadastral exonéré, the percentage of the exoneration is already applied
+Coalesce(px.rcexba2, Cast(NULLIF(trim(px.rcexba), '') AS integer)) AS fractionrcexo,
+px.pexb AS pourcentageexo, l10.gtauom AS txom, '' AS coefreduc,
+CASE
+  WHEN px.dnuexb IS NULL
+    OR px.dnuexb = (SELECT min(e.dnuexb) FROM $schema"pevexoneration" e WHERE e.pev = pev.pev)
+  THEN pt.bateom
+END AS rcteom
 FROM
 $schema"parcelle" p
 INNER JOIN $schema"local00" l ON l.parcelle = p.parcelle
@@ -22,4 +32,4 @@ LEFT JOIN $schema"pevexoneration" px ON px.pev = pev.pev
 LEFT JOIN $schema"pevtaxation" pt ON pt.pev = pev.pev
 WHERE 2>1
 $and
-ORDER BY p.parcelle, l.dnvoiri, v.natvoi, v.libvoi, bat, ent, niv
+ORDER BY p.parcelle, l.dnvoiri, v.natvoi, v.libvoi, bat, ent, niv, pev.pev, px.dnuexb

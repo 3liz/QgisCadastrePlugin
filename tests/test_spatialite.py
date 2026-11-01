@@ -15,6 +15,7 @@ from cadastre.cadastre_common_base import (
     hasSpatialiteSupport,
 )
 from cadastre.cadastre_database import CadastreDatabase
+from cadastre.cadastre_export import CadastreExport
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.dialogs.database_widget import DatabaseWidget
@@ -105,6 +106,20 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         # Communes of the search tool
         _layer, features = CadastreSearchDialog(qgis_iface).setupSearchCombobox("commune", None, "sql")
         assert [feature["tex2"] for feature in features] == [CornillonMajic.commune]
+
+        # Relevé of the parcel of the house with 2 PEV, the 1st one with 2 exonerations
+        geo_parcelle, compte = database.fetch(
+            "SELECT l10.parcelle, l10.comptecommunal FROM pev JOIN local10 l10 ON l10.local10 = pev.local10 "
+            "GROUP BY l10.local10, l10.parcelle, l10.comptecommunal HAVING count(*) > 1"
+        )[0]
+        export = CadastreExport(project, parcelles, "parcelle", compte, geo_parcelle, sensitive=SensitiveData.full())
+        export.set_composer_templates(compte)
+        lines = export.getDataForGivenItem("proprietes_baties_line", export.main_tables["proprietes_baties_line"])
+        assert [line["revenucadastral"] for line in lines] == ["3240", "", "360"]
+        total = export.getDataForGivenItem("proprietes_baties_sum", export.composerTemplates["proprietes_baties_sum"])
+        assert [total[0][k] for k in ("revenucadastral", "co_vlbaia", "gp_vlbaia", "co_bipevla")] == [
+            "3600", "3240", "1620", "3600"
+        ]
     finally:
         project.clear()
         database.close()

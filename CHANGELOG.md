@@ -9,6 +9,13 @@
   * Correction des locaux répétés lorsqu'un local a plusieurs PEV ou qu'une PEV a plusieurs exonérations
   * Les tableaux sont décrits en Python et non plus générés en HTML par les requêtes SQL,
     ce qui permettra de choisir les champs affichés
+* Relevé de propriété, propriétés bâties
+  * Le revenu cadastral d'une PEV est la moitié de sa valeur locative, il n'est plus remplacé
+    par le revenu exonéré, et il n'est écrit qu'une fois lorsque la PEV a plusieurs exonérations
+  * La fraction de revenu cadastral exonérée est le montant exonéré de MAJIC, sans appliquer
+    une seconde fois le pourcentage d'exonération
+  * Totaux : les revenus exonérés (R EXO) sont calculés à partir des exonérations de chaque collectivité,
+    et les revenus imposables ne sont plus comptés plusieurs fois pour une PEV ayant plusieurs exonérations
 * Base de données
   * Ajout d'index sur les tables des PEV pour la fiche des locaux
 
