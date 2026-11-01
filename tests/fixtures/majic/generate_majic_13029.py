@@ -417,6 +417,8 @@ class Local:
     dpor: str = "01001"
     dependances: list = field(default_factory=list)  # (cconad, surface)
     lot: str = ""
+    # A 2nd PEV (garage) and 2 exonerations on the 1st PEV, without random values
+    multiple_pev: bool = False
 
 
 invariants: set[str] = set()
@@ -468,7 +470,7 @@ def bati_records(local: Local) -> list[str]:
     lines.append(str(r))
 
     # 30: exoneration of the recent houses, 2 years for a new construction
-    if local.type == "MA" and jannat >= 2024:
+    if local.type == "MA" and jannat >= 2024 and not local.multiple_pev:
         r = record("30", "001").text(24, 4, ANNEE).text(33, 3, "001").text(36, 2, "C").num(38, 5, 10000)
         r.text(43, 2, "ND").text(45, 4, str(jannat + 1)).text(49, 4, str(jannat + 3))
         r.num(93, 9, dvltrt // 2).num(143, 9, dvltrt // 2)
@@ -503,6 +505,39 @@ def bati_records(local: Local) -> list[str]:
         r.text(50, 2, "03").text(52, 2, "01").text(54, 1, "2").text(55, 3, "NON")
         r.num(69, 2, 6).num(71, 3, 100)
         lines.append(str(r))
+
+    if local.multiple_pev:
+        lines += multiple_pev_records(record, dvltrt)
+    return lines
+
+
+def multiple_pev_records(record, dvltrt: int) -> list[str]:
+    """Exonerations by the commune (100 %) and the groupement (50 %) of the 1st PEV, and a garage in a 2nd PEV"""
+    lines = []
+    for dnuexb, ccolloc, pexb in (("001", "C", 10000), ("002", "GC", 5000)):
+        fraction = dvltrt * pexb // 10000
+        r = record("30", "001").text(24, 4, ANNEE).text(33, 3, dnuexb).text(36, 2, ccolloc).num(38, 5, pexb)
+        r.text(43, 2, "ND").text(45, 4, "2025").text(49, 4, "2027")
+        r.num(93, 9, fraction // 2).num(133, 9, fraction).num(143, 9, fraction // 2)
+        lines.append(str(r))
+
+    surface, dvlpera = 18, 720
+    r = record("21", "002").text(36, 1, "H").text(37, 1, "A").text(38, 2, "06").num(40, 3, 100)
+    r.num(55, 6, surface).num(61, 9, dvlpera * 100 // 497).num(70, 9, dvlpera)
+    r.text(111, 1, "P").num(144, 1, 1).num(145, 3, int(COM))
+    lines.append(str(r))
+
+    r = record("36", "002")
+    for i, start in enumerate((36, 66, 96, 126)):
+        if i != 1:
+            r.num(start, 9, dvlpera * 100 // 497).num(start + 10, 9, dvlpera).num(start + 20, 9, dvlpera // 2)
+    r.num(156, 9, dvlpera // 2).num(166, 9, dvlpera // 2)
+    lines.append(str(r))
+
+    r = record("60", "002").text(33, 3, "001").num(36, 6, surface).text(42, 2, "GA")
+    r.text(50, 2, "03").text(52, 2, "01").text(54, 1, "2").text(55, 3, "NON")
+    r.num(69, 2, 6).num(71, 3, 100)
+    lines.append(str(r))
     return lines
 
 
@@ -637,6 +672,9 @@ def build():
             # Isolated dependance: remise
             surface = rng.randint(10, 40)
             locaux.append(Local(invariant(), p, p.compte, "DE", surface, dnubat="B", dependances=[("RS", surface)]))
+
+    # The first house has 2 PEV and 2 exonerations, for the fiche of the locaux
+    next(local for local in sorted(locaux, key=lambda local: local.invar) if local.type == "MA").multiple_pev = True
 
     return parcelles, comptes, locaux, copro_parcelle, lots
 

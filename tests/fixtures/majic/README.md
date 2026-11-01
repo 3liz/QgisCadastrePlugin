@@ -32,7 +32,8 @@ de la commune, auquel ont été ajoutés les lieux-dits présents dans les donn�
 **Tout le reste est inventé** : 72 comptes de propriétaires (personnes physiques seules, couples,
 indivisions, usufruit et nue-propriété, commune, département, SCI, GFA, copropriété et son syndic),
 166 locaux (maisons, dépendances, appartements), les subdivisions fiscales, les exonérations et
-les montants.
+les montants. La première maison, par ordre d'invariant, a deux parties d'évaluation (l'habitation et
+un garage) et deux exonérations (commune et groupement de communes), pour tester la fiche des locaux.
 
 ## Génération
 

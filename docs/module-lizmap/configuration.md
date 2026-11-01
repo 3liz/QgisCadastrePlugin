@@ -72,8 +72,7 @@ dans l'onglet `Couches` de Lizmap.
 * À noter que depuis la version **1.6.0** du module Cadastre, lorsque l'utilisateur a
 **le droit de voir les données de propriétaires**, le contenu détaillé des informations de la parcelle est
 **affiché sous le contenu de la popup**. Les onglets correspondent à ceux visibles dans QGIS lorsqu'on
-affiche le détail d'une parcelle : **Parcelle, Propriétaires, Subdivisions fiscales, Locaux,
-Locaux : informations détaillées**. Vous pouvez donc afficher moins d'information dans la popup,
+affiche le détail d'une parcelle : **Parcelle, Propriétaires, Subdivisions fiscales, Locaux**. Vous pouvez donc afficher moins d'information dans la popup,
 par exemple seulement le code de la parcelle et la commune
 
 ## Dans Lizmap Web Client

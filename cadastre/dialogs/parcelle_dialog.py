@@ -398,10 +398,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
         if self.feature.fieldNameIndex("proprietaire") == -1:
             html = "Les données MAJIC n'ont pas été trouvées dans la base de données"
         else:
-            item = "locaux"
-            html = self.itemHtml(item)
-            item = "locaux_detail"
-            html += self.itemHtml(item)
+            html = self.itemHtml("locaux")
         self.locauxInfo.setStyleSheet(self.css)
         self.locauxInfo.setHtml(
             f"""

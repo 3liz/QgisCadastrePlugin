@@ -255,7 +255,6 @@ class CadastreService(QgsService):
         html += get_item_html("indivisions")
         html += get_item_html("subdivisions")
         html += get_item_html("locaux")
-        html += get_item_html("locaux_detail")
 
         write_json_response(
             {"status": "success", "message": "HTML generated", "data": html}, response, request_id

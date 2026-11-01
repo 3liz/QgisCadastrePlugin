@@ -38,6 +38,10 @@ DROP INDEX IF EXISTS idx_local10_comptecommunal;
 DROP INDEX IF EXISTS idx_pevexoneration_imposable_pev;
 DROP INDEX IF EXISTS idx_pevexoneration_imposee_pev;
 DROP INDEX IF EXISTS idx_pevtaxation_pev;
+DROP INDEX IF EXISTS idx_pev_local10;
+DROP INDEX IF EXISTS idx_pevprincipale_pev;
+DROP INDEX IF EXISTS idx_pevdependances_pev;
+DROP INDEX IF EXISTS idx_pevprofessionnelle_pev;
 DROP INDEX IF EXISTS idx_parcelle_voie;
 DROP INDEX IF EXISTS idx_parcelle_comptecommunal;
 

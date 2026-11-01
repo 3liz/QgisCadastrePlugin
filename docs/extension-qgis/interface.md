@@ -39,7 +39,9 @@ Elle présente plusieurs onglets :
 * un onglet avec les **informations générales de la parcelle**
 * un onglet avec les **propriétaires** de la parcelle
 * un onglet avec les **subdivisions fiscales**
-* un onglet avec les **locaux** et leurs informations détaillées
+* un onglet avec les **locaux** : un tableau récapitulatif, puis pour chaque local sa description, ses propriétaires,
+  ses parties d'évaluation (PEV) avec leur description (habitation, dépendances, local professionnel)
+  et leurs exonérations
 
 Ainsi qu'une zone contenant des **boutons d'action** :
 

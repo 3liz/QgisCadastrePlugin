@@ -67,7 +67,7 @@ def feature(layer: QgsVectorLayer, geo_parcelle: str) -> QgsFeature:
         ("parcelle_info", 389),
         ("comptecommunal", 72),
         ("local10", 166),
-        ("pev", 166),
+        ("pev", 167),
         ("pdl", 1),
         ("lots", 5),
         ("lotslocaux", 5),
@@ -145,7 +145,7 @@ def test_parcelle_info(database: CadastreDatabase):
         ("indivisions", "Détails"),
         ("subdivisions", "Subdivisions fiscales"),
         ("locaux", "Appartement"),
-        ("locaux_detail", "Habitation"),
+        ("locaux", "Habitation"),
     ],
 )
 def test_fiche_parcellaire(parcelles: QgsVectorLayer, item: str, expected: str):
@@ -282,10 +282,10 @@ def test_releve_birth(parcelles: QgsVectorLayer):
     [
         ("proprietaires", common_utils.SensitiveData(), ["XX/XX/XXXX", "XXX"]),
         ("subdivisions", common_utils.SensitiveData(), ["XXX"]),
-        ("locaux_detail", common_utils.SensitiveData(), ["XX/XX/XXXX", "XXX"]),
+        ("locaux", common_utils.SensitiveData(), ["XX/XX/XXXX", "XXX"]),
         ("proprietaires", common_utils.SensitiveData.full(), []),
         ("subdivisions", common_utils.SensitiveData.full(), []),
-        ("locaux_detail", common_utils.SensitiveData.full(), []),
+        ("locaux", common_utils.SensitiveData.full(), []),
     ],
 )
 def test_fiche_sensitive_data(

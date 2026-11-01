@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+* Fiche parcellaire
+  * Onglet « Locaux » refait : un tableau récapitulatif, puis pour chaque local sa description,
+    ses propriétaires, ses parties d'évaluation (PEV) avec leur description (habitation, dépendances,
+    local professionnel) et leurs exonérations (collectivité, nature, années, taux, montants exonérés)
+  * Correction des locaux répétés lorsqu'un local a plusieurs PEV ou qu'une PEV a plusieurs exonérations
+  * Les tableaux sont décrits en Python et non plus générés en HTML par les requêtes SQL,
+    ce qui permettra de choisir les champs affichés
+* Base de données
+  * Ajout d'index sur les tables des PEV pour la fiche des locaux
+
 ## 2.4.1 - 2026-11-02
 
 * Spatialite : correction de l'outil de recherche (listes des communes et sections vides) et de la

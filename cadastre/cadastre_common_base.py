@@ -511,6 +511,14 @@ def getItemHtml(
     sensitive = sensitive or SensitiveData()
     html = ""
 
+    if item == "locaux":
+        # The tables are described in Python, not in the SQL query
+        from cadastre.fiche import DisplayOptions
+        from cadastre.fiche_locaux import load_locaux, locaux_html
+
+        locaux = load_locaux(connector, connectionParams, feature["geo_parcelle"])
+        return locaux_html(locaux, DisplayOptions(sensitive=sensitive))
+
     infos = {
         "parcelle_majic": {"label": "Parcelle"},
         "parcelle_simple": {"label": "Parcelle"},
@@ -518,14 +526,12 @@ def getItemHtml(
         "indivisions": {"label": "Détails"},
         "subdivisions": {"label": "Subdivisions fiscales"},
         "subdivisions_exoneration": {"label": "Exonérations"},
-        "locaux": {"label": "Locaux"},
-        "locaux_detail": {"label": "Locaux : informations détaillées"},
     }
     info = infos[item]
 
     sqlfile = "templates/parcelle_info_%s.sql" % item
     with open(plugin_path(sqlfile), encoding="utf8") as sqltemplate:
-        if item in ("proprietaires", "indivisions", "subdivisions", "locaux_detail"):
+        if item in ("proprietaires", "indivisions", "subdivisions"):
             sql = sqltemplate.read().format(
                 parcelle_id=feature["geo_parcelle"],
                 birth=sensitive.birth,

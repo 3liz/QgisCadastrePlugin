@@ -92,7 +92,7 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         feature = next(parcelles.getFeatures(request))
         params = getConnectionParameterFromDbLayer(parcelles)
         connector = getConnectorFromUri(params)
-        for item in ("proprietaires", "subdivisions", "locaux_detail"):
+        for item in ("proprietaires", "subdivisions", "locaux"):
             html = getItemHtml(item, feature, params, connector)
             assert "XXX</" in html, item
             html = getItemHtml(item, feature, params, connector, SensitiveData.full())
