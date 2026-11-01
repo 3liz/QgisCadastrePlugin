@@ -38,6 +38,10 @@ lint = [
 security = [
     "bandit",
 ]
+doc = [
+    "mkdocs-material>=8.1.0,<10.0.0",
+    "mkdocs-git-revision-date-localized-plugin",
+]
 extras = [
     "ipython",
     "pydantic",

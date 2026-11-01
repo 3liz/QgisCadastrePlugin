@@ -18,9 +18,10 @@ jobs:
           cache-dependency-path: |
             requirements/lint.txt
             requirements/security.txt
+            requirements/tests.txt
 
       - name: Install Python requirements
-        run: pip install -r requirements/lint.txt -r requirements/security.txt
+        run: pip install -r requirements/lint.txt -r requirements/security.txt -r requirements/tests.txt
 
       - name: Run linter
         run: ruff check --output-format=concise cadastre

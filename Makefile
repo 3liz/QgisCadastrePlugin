@@ -25,6 +25,7 @@ REQUIREMENT_GROUPS= \
 	tests \
 	lint \
 	security \
+	doc \
 	$(NULL)
 
 .PHONY: update-requirements
