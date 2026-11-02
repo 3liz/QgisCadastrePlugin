@@ -379,6 +379,8 @@ def postgisToSpatialite(sql: str, targetSrid: str = "2154") -> str:
             "out": r"CASE WHEN ST_IsValid(p.geom) THEN p.geom ELSE ST_Buffer(p.geom,0) END",
         },
         {"in": r" ~ ", "out": " regexp "},
+        # ST_DWithin does not exist in Spatialite, without its spatial indexes: same result, slower
+        {"in": r"ST_DWithin\(([^,()]+),([^,()]+),([^,()]+)\)", "out": r"(ST_Distance(\1,\2) <= \3)"},
     ]
 
     for a in replaceDict:

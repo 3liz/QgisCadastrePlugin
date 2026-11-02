@@ -2,7 +2,7 @@
 
 import pytest
 
-from qgis.core import QgsVectorLayer
+from qgis.core import QgsProject, QgsVectorLayer
 
 import cadastre.cadastre_common_base as common_utils
 
@@ -12,9 +12,10 @@ from cadastre.export_csv import (
     locaux_proprietaires_export,
     parcelles_proprietaires_export,
     parcelles_sql,
+    recherche_spatiale,
 )
 
-from .test_majic_data import COPROPRIETE, database, parcelles  # noqa: F401
+from .test_majic_data import COPROPRIETE, database, fetch, parcelles  # noqa: F401
 
 # A parcel with 2 locaux in the fictitious data
 PARCELLE = "1320290000A1088"
@@ -88,3 +89,41 @@ def test_locaux(connection: tuple):
     # The birth data are not read without the right
     assert all(row["jdatnss"] is None for row in rows)
     assert any(row["jdatnss"] for row in locaux(*connection, [COPROPRIETE], SensitiveData.full()))
+
+
+def test_recherche_spatiale(connection: tuple, parcelles: QgsVectorLayer):  # noqa: F811
+    """ The codes of the buildings selected near the parcelles are added to the owners """
+    bati = QgsProject.instance().mapLayersByName("Bâti")[0]
+    # The buildings in the copropriété, and the farthest building
+    near = fetch(
+        "SELECT b.ogc_fid, b.geo_batiment FROM cadastre.geo_batiment b "
+        "JOIN cadastre.geo_parcelle p ON ST_Intersects(b.geom, p.geom) "
+        f"WHERE p.geo_parcelle = '{COPROPRIETE}'"
+    )
+    far = fetch(
+        "SELECT b.ogc_fid FROM cadastre.geo_batiment b, cadastre.geo_parcelle p "
+        f"WHERE p.geo_parcelle = '{COPROPRIETE}' ORDER BY ST_Distance(b.geom, p.geom) DESC LIMIT 1"
+    )
+    assert near
+    objets = [str(fid) for fid, _code in near] + [str(far[0][0])]
+
+    recherche = recherche_spatiale(bati, parcelles, "geo_batiment", objets, 0)
+    columns, rows = parcelles_proprietaires_export(*connection, [COPROPRIETE, PARCELLE], SensitiveData(), recherche)
+    assert columns[-1] == "code_objet"
+    result = {row[-2]: row[-1] for row in rows}
+    assert result[COPROPRIETE] == ", ".join(sorted(code for _fid, code in near))
+    # No selected building near the other parcel
+    assert result[PARCELLE] is None
+
+    # The values used in the SQL query are checked
+    for args in (
+        ("geo_batiment", [f"{objets[0]}') OR ('1'='1"], 0),
+        ("unknown_field", objets, 0),
+        ("geo_batiment", objets, -1),
+        ("geo_batiment", [], 0),
+    ):
+        with pytest.raises(ValueError):
+            recherche_spatiale(bati, parcelles, *args)
+    # The layer of the objects must be in the database of the cadastre data
+    with pytest.raises(ValueError):
+        recherche_spatiale(QgsVectorLayer("Point?crs=EPSG:2154", "memory", "memory"), parcelles, "x", objets, 0)

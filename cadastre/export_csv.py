@@ -16,15 +16,89 @@ __email__ = "info@3liz.org"
 
 import re
 
+from dataclasses import dataclass
 from typing import Any
 
-from qgis.core import QgsAbstractDatabaseProviderConnection
+from qgis.core import QgsAbstractDatabaseProviderConnection, QgsSqliteUtils, QgsVectorLayer
 
-from cadastre.cadastre_common_base import SensitiveData, quoteString
+from cadastre.cadastre_common_base import SensitiveData, getConnectionParameterFromDbLayer, quoteString
 from cadastre.fiche import DATE_MASK, DEFAULT_MASK, Row, fetch_rows, load_sql
 
 # Identifier of a parcelle, the field geo_parcelle, like 1320290000A0107
 PARCELLE_PATTERN = re.compile(r"^[0-9A-Z]{1,20}$")
+
+# Value of the primary key of an object selected in the spatial search of Lizmap
+OBJET_PATTERN = re.compile(r"^[0-9A-Za-z_-]{1,100}$")
+
+# Parameters of the database of a layer which must be the same as those of the cadastre data
+SAME_DATABASE_PARAMETERS = ("dbType", "service", "host", "port", "dbname")
+
+
+@dataclass(frozen=True)
+class RechercheSpatiale:
+    """Objects selected in another layer by the spatial search of Lizmap, added to the export of the owners.
+
+    The names are quoted for SQL: use recherche_spatiale() to build it from a layer.
+    """
+
+    # Table of the layer, with its schema for PostgreSQL
+    table: str
+    # Primary key of the table
+    cle: str
+    # Field giving the code of the objects, written in the export
+    champ: str
+    # Geometry column of the table
+    geometrie: str
+    # Values of the primary key of the selected objects
+    objets: tuple[str, ...]
+    # Maximum distance between an object and a parcelle, in the unit of the geometries
+    distance: int
+
+
+def recherche_spatiale(
+    layer: QgsVectorLayer, parcelles_layer: QgsVectorLayer, champ: str, objets: list[str], distance: int
+) -> RechercheSpatiale:
+    """Build the spatial search of an export from the layer of the selected objects.
+
+    :param layer: The layer of the objects, in the same database as the layer of the parcelles.
+    :param parcelles_layer: The layer of the parcelles, giving the database of the cadastre data.
+    :param champ: The field of the layer giving the code of the objects.
+    :param objets: The values of the primary key of the selected objects.
+    :param distance: The maximum distance between an object and a parcelle.
+    :return: The spatial search, with the names quoted for SQL.
+    :raises ValueError: If the layer is not in the same database, if it has no primary key or no such field,
+        or if a value or the distance is not valid.
+    """
+    params = getConnectionParameterFromDbLayer(layer)
+    parcelles_params = getConnectionParameterFromDbLayer(parcelles_layer)
+    if layer.providerType() not in ("postgres", "spatialite") or any(
+        params[name] != parcelles_params[name] for name in SAME_DATABASE_PARAMETERS
+    ):
+        raise ValueError(f"The layer {layer.name()} is not in the database of the cadastre data")
+    if not params["key"] or "," in params["key"]:
+        raise ValueError(f"The layer {layer.name()} has no primary key with a single field")
+    if champ not in layer.fields().names():
+        raise ValueError(f"The layer {layer.name()} has no field {champ}")
+    if not objets or not all(OBJET_PATTERN.match(objet) for objet in objets):
+        raise ValueError("Invalid identifiers of the selected objects")
+    if not isinstance(distance, int) or distance < 0:
+        raise ValueError(f"Invalid distance: {distance}")
+
+    # The names given by QgsDataSourceUri are not quoted. The SQL quoting of QgsSqliteUtils is standard:
+    # it is also valid for PostgreSQL
+    quote = QgsSqliteUtils.quotedIdentifier
+    table = quote(params["table"])
+    if params["dbType"] == "postgis":
+        table = f"{quote(params['schema'])}.{table}"
+    return RechercheSpatiale(
+        table=table,
+        cle=quote(params["key"]),
+        champ=quote(champ),
+        geometrie=quote(params["geocol"]),
+        objets=tuple(objets),
+        distance=distance,
+    )
+
 
 # Common queries
 
@@ -89,6 +163,36 @@ def locaux(
     :return: The rows, with the MAJIC names of the columns.
     """
     return fetch_rows(connector, connection_params, query("locaux", parcelles, sensitive))
+
+
+def objets_proches(
+    connector: QgsAbstractDatabaseProviderConnection,
+    connection_params: dict[str, str],
+    parcelles: list[str],
+    recherche: RechercheSpatiale,
+) -> dict[str, set[str]]:
+    """Return the codes of the selected objects near each parcelle.
+
+    :param connector: The connection to the database.
+    :param connection_params: The parameters of the connection, see fetch_rows.
+    :param parcelles: The identifiers of the parcelles.
+    :param recherche: The objects selected by the spatial search.
+    :return: For each parcelle near at least one object, the codes of the objects, as text.
+    """
+    sql = load_sql("export/objets_proches").format(
+        parcelles=parcelles_sql(parcelles),
+        table=recherche.table,
+        cle=recherche.cle,
+        champ=recherche.champ,
+        geometrie=recherche.geometrie,
+        objets=", ".join(quoteString(objet) for objet in recherche.objets),
+        distance=recherche.distance,
+    )
+    codes: dict[str, set[str]] = {}
+    # The names of the layer are not parameters of fetch_rows: their braces are escaped
+    for row in fetch_rows(connector, connection_params, sql.replace("{", "{{").replace("}", "}}")):
+        codes.setdefault(row["parcelle"], set()).add(str(row["code"]))
+    return codes
 
 
 # SQL functions, with the same handling of NULL values as PostgreSQL
@@ -254,13 +358,16 @@ def parcelles_proprietaires_export(
     connection_params: dict[str, str],
     parcelles: list[str],
     sensitive: SensitiveData,
+    recherche: RechercheSpatiale | None = None,
 ) -> tuple[list[str], list[list[str | None]]]:
     """Export of the owners of the parcelles, for mail merges: one row per owner, with the list of his parcelles.
 
     :param connector: The connection to the database.
     :param connection_params: The parameters of the connection, see fetch_rows.
     :param parcelles: The identifiers of the parcelles.
-    :param sensitive: The sensitive data the user can see: the birth data are only exported with the right.
+    :param sensitive: The sensitive data the user can see: the birth data are masked without the right.
+    :param recherche: The objects selected by the spatial search of Lizmap: their codes near the parcelles
+        of each owner are added in the column code_objet.
     :return: The names of the columns and the rows, like the export parcellesProprios of Lizmap.
     """
     columns = [
@@ -279,6 +386,10 @@ def parcelles_proprietaires_export(
         "lieu_naissance",
         "parcelles",
     ]
+    codes = {}
+    if recherche is not None:
+        columns.append("code_objet")
+        codes = objets_proches(connector, connection_params, parcelles, recherche)
 
     # Owners grouped like the GROUP BY of the Lizmap query, with their parcelles
     keys = [
@@ -329,6 +440,10 @@ def parcelles_proprietaires_export(
         ]
         values += naissance(row, sensitive)
         values.append(", ".join(sorted(owner_parcelles)))
+        if recherche is not None:
+            # The codes near the parcelles of the owner, NULL if there is none
+            owner_codes = set().union(*(codes.get(parcelle, set()) for parcelle in owner_parcelles))
+            values.append(", ".join(sorted(owner_codes)) or None)
         rows.append(values)
 
     # Ordered by commune and denomination, the NULL values at the end like PostgreSQL

@@ -16,7 +16,7 @@ from cadastre.cadastre_common_base import (
 )
 from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_export import CadastreExport
-from cadastre.export_csv import locaux_proprietaires_export, parcelles_proprietaires_export
+from cadastre.export_csv import locaux_proprietaires_export, parcelles_proprietaires_export, recherche_spatiale
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.dialogs.database_widget import DatabaseWidget
@@ -116,6 +116,12 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         assert "p_date_naissance" in columns and rows and all(row[0] == geo_parcelle for row in rows)
         columns, rows = parcelles_proprietaires_export(connector, params, [geo_parcelle], SensitiveData())
         assert rows[0][11] == "XX/XX/XXXX" and rows[0][-1] == geo_parcelle
+        # Spatial search: the buildings near the parcel, ST_DWithin does not exist in Spatialite
+        bati = project.mapLayersByName("Bâti")[0]
+        objets = [str(fid) for (fid,) in database.fetch("SELECT ogc_fid FROM geo_batiment")]
+        recherche = recherche_spatiale(bati, parcelles, "geo_batiment", objets, 1000)
+        columns, rows = parcelles_proprietaires_export(connector, params, [geo_parcelle], SensitiveData(), recherche)
+        assert columns[-1] == "code_objet" and rows[0][-1]
 
         # The parameters of the fiche, created by the import, with 1 or 0 for the booleans
         rows = database.fetch("SELECT cle, visible FROM cadastre_parametre_fiche_parcelle")
