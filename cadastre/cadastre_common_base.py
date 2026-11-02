@@ -17,6 +17,7 @@ the Free Software Foundation; either version 2 of the License, or
 """
 
 import re
+import sqlite3
 import unicodedata
 
 from dataclasses import dataclass
@@ -35,6 +36,7 @@ from qgis.core import (
 )
 from qgis.PyQt.QtCore import QDate, QDateTime, Qt, QTime, QUrl, QVariant
 from qgis.PyQt.QtGui import QDesktopServices
+from qgis.utils import spatialite_connect
 
 from cadastre.tools import plugin_path
 
@@ -193,6 +195,47 @@ def rowsFromQgis(rows: list[list[Any]], as_string: bool) -> list[list[Any]]:
     return result
 
 
+def sqliteRegexp(pattern: str, item: str | None) -> bool:
+    """REGEXP function for SQLite, used by the SQL queries and scripts"""
+    try:
+        return re.search(pattern, item or "", re.IGNORECASE) is not None
+    except re.error as err:
+        QgsMessageLog.logMessage(
+            f"Invalid regular expression {pattern} : {err!s}", "cadastre", Qgis.MessageLevel.Critical
+        )
+        return False
+
+
+def executeSql(
+    connector: QgsAbstractDatabaseProviderConnection, sql: str
+) -> tuple[list[str], list[list[Any]]]:
+    """Execute an SQL query and return its columns and its rows.
+
+    With Spatialite, the query is run with a Python sqlite3 connection, like CadastreDatabase does:
+    the QGIS connection drops the integer primary key columns (ogc_fid, rowid) from the results,
+    because they become the feature ids (issue #598).
+
+    :param connector: The QGIS connection to the database.
+    :param sql: The query.
+    :return: The names of the columns and the rows.
+    :raises QgsProviderConnectionException: If the query fails.
+    """
+    if connector.providerKey() != "spatialite":
+        result = connector.execSql(sql)
+        return result.columns(), result.rows()
+
+    connection = spatialite_connect(QgsDataSourceUri(connector.uri()).database())
+    try:
+        connection.create_function("regexp", 2, sqliteRegexp)
+        cursor = connection.execute(sql)
+        columns = [description[0] for description in cursor.description or []]
+        return columns, [list(row) for row in cursor.fetchall()]
+    except sqlite3.Error as e:
+        raise QgsProviderConnectionException(str(e)) from e
+    finally:
+        connection.close()
+
+
 def fetchDataFromSqlQuery(connector: QgsAbstractDatabaseProviderConnection, sql: str) -> list[Any]:
     """
     Execute an SQL query and
@@ -202,7 +245,7 @@ def fetchDataFromSqlQuery(connector: QgsAbstractDatabaseProviderConnection, sql:
     row_count = 0
     ok = True
     try:
-        rows = connector.executeSql(str(sql))
+        _columns, rows = executeSql(connector, str(sql))
         data = rowsFromQgis(rows, connector.providerKey() == "postgres")
         row_count = len(data)
 

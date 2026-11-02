@@ -8,6 +8,7 @@ from qgis.utils import spatialite_connect
 
 from cadastre.cadastre_common_base import (
     SensitiveData,
+    executeSql,
     getConnectionParameterFromDbLayer,
     getConnectorFromUri,
     getItemHtml,
@@ -17,6 +18,7 @@ from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.dialogs.database_widget import DatabaseWidget
+from cadastre.dialogs.search_dialog import CadastreSearchDialog
 from cadastre.feedback import CadastreFeedback
 
 from .test_import_data import CornillonMajic, import_options
@@ -59,7 +61,7 @@ def test_widget(connection_name: str):
     widget.close_connection()
 
 
-def test_import_and_load(connection_name: str, fixtures: Path):
+def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
     database = CadastreDatabase.from_connection("spatialite", connection_name)
     options = import_options(CornillonMajic, fixtures)
     options.database = database
@@ -95,6 +97,14 @@ def test_import_and_load(connection_name: str, fixtures: Path):
             assert "XXX</" in html, item
             html = getItemHtml(item, feature, params, connector, SensitiveData.full())
             assert "<table" in html and "XXX" not in html, item
+
+        # The integer primary keys are returned by the queries: the QGIS connection drops them (issue #598)
+        assert executeSql(connector, "SELECT ogc_fid, tex2 FROM geo_commune") == (
+            ["ogc_fid", "tex2"], [[1, CornillonMajic.commune]]
+        )
+        # Communes of the search tool
+        _layer, features = CadastreSearchDialog(qgis_iface).setupSearchCombobox("commune", None, "sql")
+        assert [feature["tex2"] for feature in features] == [CornillonMajic.commune]
     finally:
         project.clear()
         database.close()

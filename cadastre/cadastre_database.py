@@ -2,7 +2,6 @@ __copyright__ = "Copyright 2026, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
-import re
 import sqlite3
 
 from dataclasses import dataclass
@@ -36,15 +35,6 @@ class DatabaseStructure:
     has_majic_data_parcelle: bool = False
     has_majic_data_prop: bool = False
     has_majic_data_voie: bool = False
-
-
-def _regexp(pattern: str, item: str | None) -> bool:
-    """REGEXP function for SQLite, used by the SQL scripts"""
-    try:
-        return re.search(pattern, item or "", re.IGNORECASE) is not None
-    except re.error as err:
-        Logger.log_exception(err)
-        return False
 
 
 class CadastreDatabase:
@@ -115,7 +105,7 @@ class CadastreDatabase:
         """Python connection to the Spatialite database, with a REGEXP function."""
         if self._sqlite is None:
             self._sqlite = spatialite_connect(self.sqlite_path)
-            self._sqlite.create_function("regexp", 2, _regexp)
+            self._sqlite.create_function("regexp", 2, common_utils.sqliteRegexp)
         return self._sqlite
 
     def execute(self, sql: str):

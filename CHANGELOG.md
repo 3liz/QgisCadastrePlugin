@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Spatialite : correction de l'outil de recherche (listes des communes et sections vides) et de la
+  consultation des parcelles, régression de la version 2.4.0 #598
+
 ## 2.4.0 - 2026-11-01
 
 * Compatibilité avec QGIS 4 : l'extension est déclarée compatible jusqu'à QGIS 4.2
