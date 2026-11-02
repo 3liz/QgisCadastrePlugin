@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* Service serveur (Lizmap)
+  * Nouvelle requête `GetExport` : données des exports CSV des locaux et des propriétaires d'une liste
+    de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.
+    Les données de naissance sont masquées sans le droit
+  * Les droits sur les données sensibles peuvent être donnés séparément : `BIRTH`, `REVENUE`
+    et `EXONERATION`, en plus de `ADVANCED` qui les donne tous
+  * `GetCapabilities` liste les requêtes disponibles
 * Fiche parcellaire
   * Onglet « Locaux » refait : un tableau récapitulatif, puis pour chaque local sa description,
     ses propriétaires, ses parties d'évaluation (PEV) avec leur description (habitation, dépendances,
