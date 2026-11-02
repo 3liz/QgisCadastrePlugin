@@ -998,6 +998,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#241-2026-11-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.1 - 2026-11-02
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#240-2026-11-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.0 - 2026-11-01
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#231-2026-08-06" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1963,6 +1985,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#241-2026-11-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.1 - 2026-11-02
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#240-2026-11-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.0 - 2026-11-01
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#231-2026-08-06" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2882,6 +2926,67 @@ On your local, make a symlink with ln -s
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<h2 id="241-2026-11-02">2.4.1 - 2026-11-02<a class="headerlink" href="#241-2026-11-02" title="Permanent link">#</a></h2>
+<ul>
+<li>Spatialite : correction de l'outil de recherche (listes des communes et sections vides) et de la
+  consultation des parcelles, régression de la version 2.4.0 #598</li>
+</ul>
+<h2 id="240-2026-11-01">2.4.0 - 2026-11-01<a class="headerlink" href="#240-2026-11-01" title="Permanent link">#</a></h2>
+<ul>
+<li>Compatibilité avec QGIS 4 : l'extension est déclarée compatible jusqu'à QGIS 4.2</li>
+<li>Abandon du support de QGIS 3.34 : la version minimale est désormais QGIS 3.40</li>
+<li>Import</li>
+<li>Correction de l'import via <code>ogr2ogr</code> lorsque le chemin des fichiers EDIGEO, TOPO
+    ou de la base Spatialite contient des espaces</li>
+<li>Correction de la gestion des erreurs lors de l'exécution d'<code>ogr2ogr</code></li>
+<li>Les erreurs SQL sont affichées dans le journal de l'import au lieu d'une fenêtre</li>
+<li>Correction de l'affichage des erreurs lors d'un manque de mémoire ou d'une archive EDIGEO corrompue</li>
+<li>MAJIC PostGIS : correction du dénominateur des lots de copropriété (<code>ddenql</code>), dont le dernier chiffre
+    était perdu (10000 importé en 1000), ainsi que de <code>majposca</code> pour le format 2014</li>
+<li>Processing</li>
+<li>Nouveaux traitements « Import des données dans PostGIS » et « Import des données dans Spatialite »,
+    équivalents au dialogue d'import, pour automatiser les imports (modèles, scripts)</li>
+<li>Téléchargement EDIGEO : correction de la lecture de la liste des feuilles sur cadastre.data.gouv.fr</li>
+<li>Chargement</li>
+<li>Correction du message « expression invalide » affiché à tort sans filtre de communes</li>
+<li>Interface</li>
+<li>Dialogues d'import et de chargement : bloc commun de choix de la base, de la connexion
+    et du schéma (suppression des onglets PostGIS / Spatialite dans l'import)</li>
+<li>Correction du curseur d'attente qui pouvait rester affiché après une erreur</li>
+<li>Correction du déchargement de l'extension (ex. avec Plugin Reloader) : le panneau de recherche,
+    le menu et la barre d'outils ne sont plus dupliqués, et les signaux de QGIS sont déconnectés</li>
+<li>Le bouton « Infos parcelle » ne modifie plus le groupe des outils de navigation de QGIS</li>
+<li>Export d'un relevé : pas d'erreur si aucun fichier PDF n'a été produit</li>
+<li>Relevés de propriété et parcellaires</li>
+<li>Remplacement de l'option « Les relevés sont destinés à des tiers » par 3 options, décochées par défaut :
+    dates et lieux de naissance, revenus, exonérations. Les valeurs non exportées sont remplacées
+    par <code>XX/XX/XXXX</code> ou <code>XXX</code>, pour indiquer qu'elles existent</li>
+<li>Utilisation des tableaux natifs de QGIS au lieu de blocs HTML : les relevés ne dépendent plus de QtWebKit,
+    absent de certaines installations (pages vides, seule la carte s'affichait) et de QGIS 4</li>
+<li>Les textes trop longs pour leur colonne sont tronqués</li>
+<li>Correction d'une page vide en trop pour 15, 30, 45... lignes</li>
+<li>Correction du texte « None » affiché dans les totaux à partir de la 2e page</li>
+<li>Serveur</li>
+<li>Sans le paramètre <code>ADVANCED=true</code>, les revenus et les exonérations sont aussi masqués
+    dans les relevés et la fiche de la parcelle, en plus des dates et lieux de naissance</li>
+<li><code>CreatePdf</code> : erreur 404 explicite pour une parcelle sans données MAJIC</li>
+<li>Correction du chargement du plugin serveur installé depuis les sources (version absente de <code>metadata.txt</code>)</li>
+<li>Base de données</li>
+<li>Remplacement de l'extension <code>DB Manager</code> par l'API native de QGIS pour les connexions
+    aux bases de données, les requêtes SQL et la liste des connexions de l'utilisateur</li>
+<li>Le serveur QGIS ne dépend plus de l'extension <code>DB Manager</code></li>
+<li>Correction d'un plantage de QGIS lors du rafraîchissement de la liste des connexions
+    alors qu'une connexion était déjà ouverte dans un autre dialogue du plugin</li>
+<li>Recherche, fiche parcelle et export : prise en compte de la configuration d'authentification
+    (<code>authcfg</code>) et du mode SSL des couches PostgreSQL</li>
+<li>Documentation</li>
+<li>Ajout des fichiers PDF de description du format MAJIC 2026</li>
+<li>Refactorisation</li>
+<li>Import et chargement indépendants des dialogues, utilisables sans interface</li>
+<li>Suppression de la classe <code>CadastreCommon</code></li>
+<li>Ajout de tests : import sans dialogue, chargement des couches, Spatialite, choix de la base,
+    fiche parcellaire et relevé de propriété, avec un jeu de données MAJIC fictif lié aux données EDIGEO</li>
+</ul>
 <h2 id="231-2026-08-06">2.3.1 - 2026-08-06<a class="headerlink" href="#231-2026-08-06" title="Permanent link">#</a></h2>
 <ul>
 <li>Import</li>

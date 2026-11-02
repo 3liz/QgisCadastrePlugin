@@ -748,6 +748,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tester-lextension-avec-des-donnees-dexemple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tester l'extension avec des données d'exemple
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#outre-mer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1279,6 +1290,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tester-lextension-avec-des-donnees-dexemple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tester l'extension avec des données d'exemple
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#outre-mer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1480,6 +1502,33 @@ pas toujours le cas, comme des voies non référencées dans <code>voie</code> m
 <p>Pendant l'import, il est conseillé de ne pas déplacer ou cliquer dans la fenêtre. Pour l'instant, l'extension
 n'intègre pas de bouton pour annuler un import en cours.</p>
 </div>
+<h2 id="tester-lextension-avec-des-donnees-dexemple">Tester l'extension avec des données d'exemple<a class="headerlink" href="#tester-lextension-avec-des-donnees-dexemple" title="Permanent link">#</a></h2>
+<p>Pour découvrir l'extension sans avoir de données cadastrales, vous pouvez utiliser les données de test
+du dépôt, pour la commune de Cornillon-Confoux :</p>
+<ul>
+<li>les données EDIGEO : <a href="https://github.com/3liz/QgisCadastrePlugin/tree/master/tests/fixtures/edigeo/13029">tests/fixtures/edigeo/13029</a></li>
+<li>les données MAJIC : <a href="https://github.com/3liz/QgisCadastrePlugin/tree/master/tests/fixtures/majic/13029">tests/fixtures/majic/13029</a></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Données MAJIC fictives</p>
+<p><strong>Les données MAJIC de test sont entièrement fictives.</strong> <strong>Les propriétaires, noms, prénoms, dates et
+lieux de naissance, adresses, locaux, évaluations et montants ont été inventés</strong> : ils ne décrivent
+aucune personne et aucun bien réel. <strong>Ces données ne doivent pas être utilisées comme des données
+cadastrales.</strong></p>
+<p>Seules les parcelles correspondent à celles des données EDIGEO de test, afin que les deux jeux de
+données soient liés après l'import.</p>
+</div>
+<p>Téléchargez les deux répertoires, puis lancez l'import avec les paramètres suivants :</p>
+<ul>
+<li><strong>Projection source</strong> et <strong>projection cible</strong> : <code>EPSG:2154</code></li>
+<li><strong>Département</strong> : <code>13</code></li>
+<li><strong>Direction</strong> : <code>2</code></li>
+<li><strong>Version du format</strong> et <strong>millésime</strong> : <code>2026</code></li>
+<li><strong>Lot</strong> : par exemple <code>13029</code></li>
+</ul>
+<p>Vous pouvez ensuite charger les couches, ouvrir la fiche d'une parcelle avec ses propriétaires et ses
+locaux, faire une recherche par propriétaire ou éditer un relevé de propriété, <strong>à partir de ces données
+fictives</strong>.</p>
 <h2 id="outre-mer">Outre-mer<a class="headerlink" href="#outre-mer" title="Permanent link">#</a></h2>
 <p>Pour l'import des communes en France d'outre-mer, il faut découper le code du département pour avoir la direction.
 Par exemple, concernant le département de la Guadeloupe, code INSEE <code>971</code>, dans l'extension Cadastre, le code du
@@ -1502,10 +1551,10 @@ suivante pour <code>IGNF:GUAD48UTM20</code> avec la chaîne <strong>WKT</strong>
 <span class="normal">6</span>
 <span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="mi">998999</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'IGNF'</span><span class="p">,</span>
 <span class="w">    </span><span class="mi">998999</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">&#39;PROJCS[&quot;Guadeloupe Ste Anne&quot;,GEOGCS[&quot;Guadeloupe Ste Anne&quot;,DATUM[&quot;Guadeloupe St Anne&quot;,SPHEROID[&quot;International-Hayford 1909&quot;,6378388.0000,297.0000000000000,AUTHORITY[&quot;IGNF&quot;,&quot;ELG001&quot;]],TOWGS84[-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400],AUTHORITY[&quot;IGNF&quot;,&quot;REG425&quot;]],PRIMEM[&quot;Greenwich&quot;,0.000000000,AUTHORITY[&quot;IGNF&quot;,&quot;LGO01&quot;]],UNIT[&quot;degree&quot;,0.01745329251994330],AXIS[&quot;Longitude&quot;,EAST],AXIS[&quot;Latitude&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;GUAD48GEO&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;,AUTHORITY[&quot;IGNF&quot;,&quot;PRC0220&quot;]],PARAMETER[&quot;semi_major&quot;,6378388.0000],PARAMETER[&quot;semi_minor&quot;,6356911.9461],PARAMETER[&quot;latitude_of_origin&quot;,0.000000000],PARAMETER[&quot;central_meridian&quot;,-63.000000000],PARAMETER[&quot;scale_factor&quot;,0.99960000],PARAMETER[&quot;false_easting&quot;,500000.000],PARAMETER[&quot;false_northing&quot;,0.000],UNIT[&quot;metre&quot;,1],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;GUAD48UTM20&quot;]]&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">&#39;+init=IGNF:GUAD48UTM20&#39;</span>
+<span class="w">    </span><span class="s1">'PROJCS["Guadeloupe Ste Anne",GEOGCS["Guadeloupe Ste Anne",DATUM["Guadeloupe St Anne",SPHEROID["International-Hayford 1909",6378388.0000,297.0000000000000,AUTHORITY["IGNF","ELG001"]],TOWGS84[-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400],AUTHORITY["IGNF","REG425"]],PRIMEM["Greenwich",0.000000000,AUTHORITY["IGNF","LGO01"]],UNIT["degree",0.01745329251994330],AXIS["Longitude",EAST],AXIS["Latitude",NORTH],AUTHORITY["IGNF","GUAD48GEO"]],PROJECTION["Transverse_Mercator",AUTHORITY["IGNF","PRC0220"]],PARAMETER["semi_major",6378388.0000],PARAMETER["semi_minor",6356911.9461],PARAMETER["latitude_of_origin",0.000000000],PARAMETER["central_meridian",-63.000000000],PARAMETER["scale_factor",0.99960000],PARAMETER["false_easting",500000.000],PARAMETER["false_northing",0.000],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","GUAD48UTM20"]]'</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'+init=IGNF:GUAD48UTM20'</span>
 <span class="p">);</span>
 </code></pre></div></td></tr></table></div>
 <p>Attention, il est important d'utiliser un code qui est ≤ 998999, car PostGIS place des contraintes sur le
@@ -1514,7 +1563,7 @@ SRID. Nous avons utilisé ici <code>998999</code>, qui est le maximum possible.<
 <p class="admonition-title">Tip</p>
 <p>Pour trouver la chaîne <strong>WKT</strong> décrivant la projection, à défaut de la trouver sur internet pour le moment,
 nous pouvons utiliser l'API PyQGIS. Dans le menu <strong>Extensions</strong> → <strong>Console Python</strong>, écrire :</p>
-<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="s1">&#39;IGNF:GUAD48UTM20&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">toWkt</span><span class="p">()</span>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="s1">'IGNF:GUAD48UTM20'</span><span class="p">)</span><span class="o">.</span><span class="n">toWkt</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 puis <span class="keys"><kbd class="key-enter">Enter</kbd></span></p>
 <p>Il existait auparavant une fichier SQL sur le site de l'IGN que l'on peut trouver sur la discussion
@@ -1531,10 +1580,10 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
 <span class="normal">6</span>
 <span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">CODE</span><span class="w"> </span><span class="n">INTERNE</span><span class="w"> </span><span class="err">À</span><span class="w"> </span><span class="n">VOUS</span><span class="w"> </span><span class="n">COMME</span><span class="w"> </span><span class="mi">998999</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'IGNF'</span><span class="p">,</span>
 <span class="w">    </span><span class="n">CODE</span><span class="w"> </span><span class="n">INTERNE</span><span class="w"> </span><span class="err">À</span><span class="w"> </span><span class="n">VOUS</span><span class="w"> </span><span class="n">COMME</span><span class="w"> </span><span class="mi">998999</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">&#39;RESULTAT DE LA LIGNE PyQGIS&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="s1">&#39;+init=NOM DE LA PROJECTION COMME IGNF:GUAD48UTM20&#39;</span>
+<span class="w">    </span><span class="s1">'RESULTAT DE LA LIGNE PyQGIS'</span><span class="p">,</span>
+<span class="w">    </span><span class="s1">'+init=NOM DE LA PROJECTION COMME IGNF:GUAD48UTM20'</span>
 <span class="p">);</span>
 </code></pre></div></td></tr></table></div>
 <details class="note">
@@ -1549,10 +1598,10 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
 <span class="normal">6</span>
 <span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">   </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
 <span class="w">   </span><span class="mi">998995</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">'IGNF'</span><span class="p">,</span>
 <span class="w">   </span><span class="mi">998995</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;PROJCS[&quot;RGFG95 UTM Nord f.22&quot;,GEOGCS[&quot;RGFG95 geographiques (dms)&quot;,DATUM[&quot;Reseau_Geodesique_Francais_Guyane_1995&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6624&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;IGNF&quot;,&quot;RGFG95G&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,-51],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGFG95UTM22&quot;]]&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGFG95UTM22&#39;</span>
+<span class="w">   </span><span class="s1">'PROJCS["RGFG95 UTM Nord f.22",GEOGCS["RGFG95 geographiques (dms)",DATUM["Reseau_Geodesique_Francais_Guyane_1995",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6624"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGFG95G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-51],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGFG95UTM22"]]'</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">'+init=IGNF:RGFG95UTM22'</span>
 <span class="w">   </span><span class="p">);</span>
 </code></pre></div></td></tr></table></div></li>
 </ul>
@@ -1569,10 +1618,10 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
 <span class="normal">6</span>
 <span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">   </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
 <span class="w">   </span><span class="mi">998997</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">'IGNF'</span><span class="p">,</span>
 <span class="w">   </span><span class="mi">998997</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;GEOCCS[&quot;RGM04 cartesiennes geocentriques&quot;,DATUM[&quot;Reseau_Geodesique_de_Mayotte_2004&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;1036&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Geocentric X&quot;,OTHER],AXIS[&quot;Geocentric Y&quot;,OTHER],AXIS[&quot;Geocentric Z&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04&quot;]]&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGM04&#39;</span>
+<span class="w">   </span><span class="s1">'GEOCCS["RGM04 cartesiennes geocentriques",DATUM["Reseau_Geodesique_de_Mayotte_2004",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","1036"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Geocentric X",OTHER],AXIS["Geocentric Y",OTHER],AXIS["Geocentric Z",NORTH],AUTHORITY["IGNF","RGM04"]]'</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">'+init=IGNF:RGM04'</span>
 <span class="w">   </span><span class="p">);</span>
 </code></pre></div></td></tr></table></div></li>
 </ul>
@@ -1589,10 +1638,10 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
 <span class="normal">6</span>
 <span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">   </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">spatial_ref_sys</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span>
 <span class="w">   </span><span class="mi">998996</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;IGNF&#39;</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">'IGNF'</span><span class="p">,</span>
 <span class="w">   </span><span class="mi">998996</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;PROJCS[&quot;RGM04 UTM Sud fuseau 38&quot;,GEOGCS[&quot;RGM04 geographiques (dms)&quot;,DATUM[&quot;Reseau_Geodesique_de_Mayotte_2004&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;1036&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04G&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,45],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,10000000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;IGNF&quot;,&quot;RGM04UTM38S&quot;]]&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="s1">&#39;+init=IGNF:RGR92UTM40S&#39;</span>
+<span class="w">   </span><span class="s1">'PROJCS["RGM04 UTM Sud fuseau 38",GEOGCS["RGM04 geographiques (dms)",DATUM["Reseau_Geodesique_de_Mayotte_2004",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","1036"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["IGNF","RGM04G"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",45],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",10000000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["IGNF","RGM04UTM38S"]]'</span><span class="p">,</span>
+<span class="w">   </span><span class="s1">'+init=IGNF:RGR92UTM40S'</span>
 <span class="w">   </span><span class="p">);</span>
 </code></pre></div></td></tr></table></div></li>
 </ul>
@@ -1617,7 +1666,7 @@ la commande <code>INSERT</code> qui correspond à votre code <code>IGNF</code>, 
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="4 août 2026 12:22:25 UTC">4 août 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="30 octobre 2026 16:28:19 UTC">30 octobre 2026</span>
   </span>
 
     

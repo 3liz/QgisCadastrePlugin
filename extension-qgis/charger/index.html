@@ -1267,17 +1267,17 @@ et les noms des propriétaires</p>
 <span class="n">string_agg</span><span class="p">(</span>
 <span class="w">   </span><span class="k">trim</span><span class="p">(</span>
 <span class="w">      </span><span class="n">concat</span><span class="p">(</span>
-<span class="w">         </span><span class="n">pr</span><span class="p">.</span><span class="n">dnuper</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39; - &#39;</span><span class="p">,</span>
-<span class="w">         </span><span class="k">trim</span><span class="p">(</span><span class="n">pr</span><span class="p">.</span><span class="n">dqualp</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+<span class="w">         </span><span class="n">pr</span><span class="p">.</span><span class="n">dnuper</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">' - '</span><span class="p">,</span>
+<span class="w">         </span><span class="k">trim</span><span class="p">(</span><span class="n">pr</span><span class="p">.</span><span class="n">dqualp</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">' '</span><span class="p">,</span>
 <span class="w">         </span><span class="k">trim</span><span class="p">(</span><span class="n">pr</span><span class="p">.</span><span class="n">ddenom</span><span class="p">)</span>
 <span class="w">      </span><span class="p">)</span>
-<span class="w">   </span><span class="p">),</span><span class="s1">&#39;|&#39;</span>
+<span class="w">   </span><span class="p">),</span><span class="s1">'|'</span>
 <span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">proprietaire</span><span class="p">,</span>
 <span class="n">gp</span><span class="p">.</span><span class="n">geom</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">geom</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">cadastre</span><span class="p">.</span><span class="n">geo_parcelle</span><span class="w"> </span><span class="n">gp</span>
 <span class="k">JOIN</span><span class="w"> </span><span class="n">cadastre</span><span class="p">.</span><span class="n">parcelle</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">gp</span><span class="p">.</span><span class="n">geo_parcelle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">parcelle</span>
 <span class="k">JOIN</span><span class="w"> </span><span class="n">cadastre</span><span class="p">.</span><span class="n">proprietaire</span><span class="w"> </span><span class="n">pr</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">comptecommunal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pr</span><span class="p">.</span><span class="n">comptecommunal</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">pr</span><span class="p">.</span><span class="n">dnatpr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CLL&#39;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">pr</span><span class="p">.</span><span class="n">dnatpr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'CLL'</span>
 <span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">gp</span><span class="p">.</span><span class="n">geo_parcelle</span><span class="p">,</span><span class="w"> </span><span class="n">gp</span><span class="p">.</span><span class="n">geom</span>
 </code></pre></div></td></tr></table></div>
 

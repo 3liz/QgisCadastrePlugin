@@ -1038,54 +1038,20 @@
 <p>Le projet est hébergé sur GitHub</p>
 <p><a class="md-button md-button--primary" href="https://github.com/3liz/QgisCadastrePlugin">Visiter GitHub</a></p>
 <h2 id="code">Code<a class="headerlink" href="#code" title="Permanent link">#</a></h2>
-<p>Les tests unitaires sont en cours.</p>
-<p><a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml"><img alt="❄ Flake8" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-lint.yml/badge.svg" /></a>
-<a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml"><img alt="🎳 Tests" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/test-python.yml/badge.svg" /></a></p>
+<p><a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/ci.yml"><img alt="🎳 Tests" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/ci.yml/badge.svg" /></a></p>
+<p>La CI GitHub et GitLab lance le linter (<code>ruff</code>), l'analyse de sécurité (<code>bandit</code>) et les tests
+avec QGIS 3.40, 3.44, 4.0 et 4.2. La CI GitHub vérifie aussi les types (<code>mypy</code>).</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements/dev.txt
-flake8
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="c1"># Linter, analyse de sécurité et types</span>
+make<span class="w"> </span>lint<span class="w"> </span>scan<span class="w"> </span>typecheck
+
+<span class="c1"># Tests dans Docker, avec PostGIS, pour une version de QGIS (3.44 par défaut)</span>
+make<span class="w"> </span>docker-test<span class="w"> </span><span class="nv">QGIS_VERSION</span><span class="o">=</span><span class="m">4</span>.2
 </code></pre></div></td></tr></table></div>
 <p>La variable d'environnement <code>CI=true</code> permet d'éviter certaines QMessageBox.</p>
-<ul>
-<li>Run tests in Docker</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code>make<span class="w"> </span>start_tests
-make<span class="w"> </span>run_tests
-<span class="c1"># Run a custom pattern</span>
-<span class="nb">cd</span><span class="w"> </span>.docker/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./exec_tests.sh<span class="w"> </span>test_*.py
-make<span class="w"> </span>stop_tests
-
-<span class="c1"># All in one, but slower</span>
-make<span class="w"> </span>tests
-</code></pre></div></td></tr></table></div>
-<ul>
-<li>In your QGIS Desktop itself</li>
-<li>Open the QGIS console</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">qgis.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">plugins</span>
-<span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;cadastre&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run_tests</span><span class="p">()</span>
-
-<span class="c1"># Custom pattern</span>
-<span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;cadastre&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run_tests</span><span class="p">(</span><span class="s1">&#39;test_*.py&#39;</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-<ul>
-<li>In your IDE, with linked QGIS library<ul>
-<li>Setup your <code>QGIS_PREFIX_PATH</code> etc</li>
-<li>Right-click on a test and launch it</li>
-</ul>
-</li>
-</ul>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">#</a></h2>
 <p><a href="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml"><img alt="📖 Documentation" src="https://github.com/3liz/QgisCadastrePlugin/actions/workflows/publish-doc.yml/badge.svg" /></a></p>
 <p>La documentation utilise <a href="https://www.mkdocs.org/">MkDocs</a> avec <a href="https://squidfunk.github.io/mkdocs-material/">Material</a> :</p>
@@ -1113,7 +1079,7 @@ mkdocs<span class="w"> </span>serve
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="6 août 2026 13:59:58 UTC">6 août 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2 novembre 2026 14:41:11 UTC">2 novembre 2026</span>
   </span>
 
     
