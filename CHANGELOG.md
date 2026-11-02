@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.4.1 - 2026-11-02
+
 * Spatialite : correction de l'outil de recherche (listes des communes et sections vides) et de la
   consultation des parcelles, régression de la version 2.4.0 #598
 
