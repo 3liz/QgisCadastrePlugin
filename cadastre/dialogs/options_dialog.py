@@ -20,6 +20,13 @@ from cadastre.definitions import (
     REGEX_PROP,
     REGEX_TOPO,
 )
+from cadastre.dialogs.fiche_parameters_widget import FicheParametersWidget
+from cadastre.fiche_parametres import (
+    options_from_visibility,
+    read_settings,
+    visibility_from_options,
+    write_settings,
+)
 from cadastre.tools import plugin_path, set_window_title
 
 OPTION_FORM_CLASS, _ = uic.loadUiType(str(plugin_path("forms", "cadastre_option_form.ui")))
@@ -71,6 +78,12 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):  # type: ignore[valid-ty
             control = item["button"]
             slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
+
+        # Sections and fields of the fiche parcellaire, before the buttons
+        self.fiche_parameters = FicheParametersWidget(self.scrollAreaWidgetContents)
+        self.verticalLayout_2.insertWidget(
+            self.verticalLayout_2.indexOf(self.buttonBox), self.fiche_parameters
+        )
 
         # Set initial widget values
         self.getValuesFromSettings()
@@ -141,6 +154,8 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):  # type: ignore[valid-ty
         if composerTemplateFile:
             self.inComposerTemplateFile.setText(composerTemplateFile)
 
+        self.fiche_parameters.set_visibility(visibility_from_options(*read_settings()))
+
     def applyInterface(self, key):
         """
         Help the user to select
@@ -183,6 +198,9 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):  # type: ignore[valid-ty
         # Save performance tuning
         s.setValue("cadastre/maxInsertRows", int(self.inMaxInsertRows.value()))
         s.setValue("cadastre/spatialiteTempStore", self.inSpatialiteTempStore.currentText().upper())
+
+        # Save the sections and fields of the fiche parcellaire
+        write_settings(*options_from_visibility(self.fiche_parameters.visibility()))
 
         self.accept()
 

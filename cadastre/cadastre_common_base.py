@@ -508,11 +508,12 @@ def getItemHtml(
     The tables are described in cadastre/fiche_parcelle.py and cadastre/fiche_locaux.py.
     """
     # Not imported at the top, the modules of the fiche use this one
-    from cadastre.fiche import DisplayOptions
     from cadastre.fiche_locaux import load_locaux, locaux_html
+    from cadastre.fiche_parametres import display_options
     from cadastre.fiche_parcelle import lots_html, parcelle_html, proprietaires_html, subdivisions_html
 
-    options = DisplayOptions(sensitive=sensitive or SensitiveData())
+    # Fields displayed according to the parameters of the database, or of the plugin
+    options = display_options(connector, connectionParams, sensitive)
     parcelle = feature["geo_parcelle"]
     if item == "parcelle_majic":
         return parcelle_html(connector, connectionParams, parcelle, True, options)

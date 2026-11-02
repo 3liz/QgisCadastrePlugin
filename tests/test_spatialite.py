@@ -110,6 +110,11 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         _layer, features = CadastreSearchDialog(qgis_iface).setupSearchCombobox("commune", None, "sql")
         assert [feature["tex2"] for feature in features] == [CornillonMajic.commune]
 
+        # The parameters of the fiche, created by the import, with 1 or 0 for the booleans
+        rows = database.fetch("SELECT cle, visible FROM cadastre_parametre_fiche_parcelle")
+        assert len(rows) == 159
+        assert dict(rows)["local.pevs.co_vlbaia"] == 0
+
         # Relevé of the parcel of the house with 2 PEV, the 1st one with 2 exonerations
         geo_parcelle, compte = database.fetch(
             "SELECT l10.parcelle, l10.comptecommunal FROM pev JOIN local10 l10 ON l10.local10 = pev.local10 "

@@ -71,3 +71,40 @@ matériel :
 * **Stockage temporaire** : Le mode *MEMORY* est plus rapide, mais nécessite assez de mémoire vive pour
   stocker les données à traiter. Le mode *DEFAULT* est plus lent et adapté à des ordinateurs avec peu de
   mémoire vive.
+
+## Fiche parcellaire
+
+Ce groupe permet de choisir les **sections** et les **champs** affichés dans la fiche parcellaire,
+onglet par onglet. Décocher une section masque tous ses champs. Certains champs sont masqués par défaut,
+comme les parts de valeur locative imposable dans le tableau des parties d'évaluation (PEV) des locaux.
+
+Ces options sont aussi stockées dans la base de données, dans la table `cadastre_parametre_fiche_parcelle`
+du schéma des données cadastrales :
+
+* lors d'un **import**, la table est créée à partir des options si elle n'existe pas encore. Si elle existe déjà,
+  ses paramètres sont conservés et seuls les champs absents, par exemple ajoutés par une nouvelle version
+  de l'extension, sont ajoutés ;
+* le bouton **Enregistrer dans une base…** remplace les paramètres de la table d'une base existante
+  par les options cochées, sans refaire d'import.
+
+Lorsque la base contient cette table, c'est elle qui est utilisée pour la fiche parcellaire, dans QGIS comme
+dans Lizmap : tous les utilisateurs voient alors la même fiche. Sinon, ce sont les options de l'extension
+qui sont utilisées.
+
+La table contient une ligne par section et par champ, avec des libellés lisibles : elle peut aussi être
+modifiée directement, en SQL ou dans la table attributaire de QGIS.
+
+| Colonne    | Contenu                                                                               |
+|------------|---------------------------------------------------------------------------------------|
+| `cle`      | Identifiant de la section (`local.pevs`) ou du champ (`local.pevs.co_vlbaia`)          |
+| `onglet`   | Onglet de la fiche                                                                    |
+| `section`  | Libellé de la section                                                                 |
+| `champ`    | Libellé du champ, vide pour une section                                               |
+| `sensible` | `birth`, `revenue` ou `exoneration` pour une donnée sensible, vide sinon              |
+| `visible`  | Section ou champ affiché                                                              |
+| `ordre`    | Ordre dans la fiche                                                                   |
+
+!!! note
+    Ces paramètres ne donnent jamais accès aux données sensibles : un champ sensible peut être masqué, mais
+    s'il est affiché, sa valeur reste remplacée par `XXX` ou `XX/XX/XXXX` pour un utilisateur qui n'a pas le droit
+    de la voir (options d'export dans QGIS, droits du module Cadastre dans Lizmap).

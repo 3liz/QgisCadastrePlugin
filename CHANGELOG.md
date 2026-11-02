@@ -12,7 +12,10 @@
   * Onglet « Subdivisions fiscales » : ajout des exonérations (collectivité, nature, années, taux,
     revenu exonéré), masquées sans l'option des exonérations, et du libellé de la nature de culture
   * Les tableaux de tous les onglets sont décrits en Python et non plus générés en HTML
-    par les requêtes SQL, ce qui permettra de choisir les champs affichés
+    par les requêtes SQL
+  * Choix des sections et des champs affichés : dans les options de l'extension, et dans la table
+    `cadastre_parametre_fiche_parcelle` de la base, créée ou complétée à chaque import sans perdre
+    les paramètres existants. La table est utilisée par QGIS et par Lizmap lorsqu'elle existe
 * Relevé de propriété, propriétés bâties
   * Le revenu cadastral d'une PEV est la moitié de sa valeur locative, il n'est plus remplacé
     par le revenu exonéré, et il n'est écrit qu'une fois lorsque la PEV a plusieurs exonérations

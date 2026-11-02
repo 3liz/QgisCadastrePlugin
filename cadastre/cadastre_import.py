@@ -62,6 +62,8 @@ from cadastre.definitions import (
 )
 from cadastre.cadastre_database import CadastreDatabase, DatabaseStructure
 from cadastre.feedback import CadastreFeedback
+from cadastre.fiche_parametres import TABLE as FICHE_PARAMETRES_TABLE
+from cadastre.fiche_parametres import complete_table
 from cadastre.tools import plugin_path
 
 from .logger import Logger
@@ -1091,6 +1093,18 @@ class cadastreImport(QObject):
             """
             sql = common_utils.setSearchPath(sql, self.database.schema)
             self.executeSqlQuery(sql)
+
+        # Parameters of the fiche parcellaire: the table is created, or completed with the new fields,
+        # the parameters already set in the database are kept
+        self.setSubStep("Paramètres de la fiche parcellaire")
+        try:
+            added = complete_table(self.database)
+            if added:
+                self.feedback.pushInfo(f"{added} paramètres ajoutés dans la table {FICHE_PARAMETRES_TABLE}")
+        except (QgsProviderConnectionException, sqlite.Error) as e:
+            self.feedback.pushInfo(
+                f"<b>Erreur lors de l'écriture de la table {FICHE_PARAMETRES_TABLE} : {e}</b>"
+            )
 
         # Refresh spatialite layer statistics
         if self.database.db_type == "spatialite":

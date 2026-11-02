@@ -74,6 +74,8 @@ dans l'onglet `Couches` de Lizmap.
 **affiché sous le contenu de la popup**. Les onglets correspondent à ceux visibles dans QGIS lorsqu'on
 affiche le détail d'une parcelle : **Parcelle, Propriétaires, Subdivisions fiscales, Locaux**. Vous pouvez donc afficher moins d'information dans la popup,
 par exemple seulement le code de la parcelle et la commune
+* Les sections et les champs affichés dans ce contenu sont ceux de la table `cadastre_parametre_fiche_parcelle`
+de la base, voir la [configuration de l'extension QGIS](../extension-qgis/configuration.md#fiche-parcellaire).
 
 ## Dans Lizmap Web Client
 
