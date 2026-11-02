@@ -22,6 +22,7 @@ import html
 import re
 
 from dataclasses import dataclass, field
+from functools import cache
 from typing import Callable
 
 from qgis.core import QgsAbstractDatabaseProviderConnection, QgsProviderConnectionException
@@ -35,6 +36,7 @@ from cadastre.cadastre_common_base import (
     setSearchPath,
 )
 from cadastre.logger import Logger
+from cadastre.tools import plugin_path
 
 # CSS classes of the tables, used by the style sheets of QGIS and of Lizmap
 TABLE_CLASS = 'class="table table-condensed table-striped" border=1 cellspacing=0 cellpadding=3 width="100%"'
@@ -186,6 +188,18 @@ def table_html(section: Section, rows: list[Row], options: DisplayOptions, title
         for row in rows:
             text += "<tr>" + "".join(f"<td>{options.text(f, row)}</td>" for f in fields) + "</tr>"
     return text + "</table>"
+
+
+@cache
+def load_sql(name: str) -> str:
+    """Return a SQL query of the plugin, read once from its file in cadastre/sql.
+
+    The queries are written for PostgreSQL, with parameters like {parcelle}, see fetch_rows.
+
+    :param name: The name of the query, its path in cadastre/sql without the extension, like "fiche/locaux".
+    :return: The query.
+    """
+    return plugin_path("sql", f"{name}.sql").read_text(encoding="utf-8")
 
 
 def fetch_rows(
