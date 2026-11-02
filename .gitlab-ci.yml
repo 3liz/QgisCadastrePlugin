@@ -110,4 +110,8 @@ release:
   script:
     - create_ticket.py
     - gitlab_release
+  variables:
+    # Needed by create_ticket.py, like in the other QGIS plugins
+    FACTORY_PRODUCT_NAME: cadastre
+    FACTORY_PACKAGE_TYPE: plugin
 
