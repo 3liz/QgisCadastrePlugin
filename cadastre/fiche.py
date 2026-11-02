@@ -28,6 +28,7 @@ from qgis.core import QgsAbstractDatabaseProviderConnection, QgsProviderConnecti
 
 from cadastre.cadastre_common_base import (
     SensitiveData,
+    executeSql,
     postgisToSpatialite,
     quoteString,
     rowsFromQgis,
@@ -210,9 +211,8 @@ def fetch_rows(
     else:
         sql = postgisToSpatialite(sql, connection_params.get("srid", "2154"))
     try:
-        result = connector.execSql(sql)
-        columns = result.columns()
-        rows = rowsFromQgis(result.rows(), False)
+        columns, rows = executeSql(connector, sql)
+        rows = rowsFromQgis(rows, False)
     except QgsProviderConnectionException as e:
         Logger.critical(f"Error while fetching data from database : {e!s}")
         Logger.info(sql)
