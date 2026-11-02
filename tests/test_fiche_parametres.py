@@ -4,7 +4,7 @@ from typing import Iterator
 
 import pytest
 
-from qgis.core import QgsVectorLayer
+from qgis.core import QgsSettings, QgsVectorLayer
 from qgis.PyQt.QtCore import Qt
 
 import cadastre.cadastre_common_base as common_utils
@@ -15,6 +15,8 @@ from cadastre.dialogs.fiche_parameters_widget import FicheParametersWidget
 from cadastre.fiche_parametres import (
     TABLE,
     complete_table,
+    current_database_with_table,
+    database_label,
     options_from_visibility,
     parameters,
     read_settings,
@@ -170,3 +172,40 @@ def test_write_table(database: CadastreDatabase, parcelles: QgsVectorLayer):  # 
         assert len(database.fetch(f"SELECT cle FROM cadastre.{TABLE}")) == len(parameters())
     finally:
         write_table(database, visibility)
+
+
+@pytest.fixture
+def current_database() -> Iterator[None]:
+    """ Restore the database of the plugin after the test """
+    settings = QgsSettings()
+    keys = ("cadastre/databaseType", "cadastre/connection", "cadastre/schema")
+    saved = [settings.value(key, "", type=str) for key in keys]
+    yield
+    for key, value in zip(keys, saved):
+        settings.setValue(key, value)
+
+
+def set_current_database(db_type: str, connection: str, schema: str):
+    settings = QgsSettings()
+    settings.setValue("cadastre/databaseType", db_type)
+    settings.setValue("cadastre/connection", connection)
+    settings.setValue("cadastre/schema", schema)
+
+
+def test_current_database_with_table(database: CadastreDatabase, current_database):  # noqa: F811
+    """ The options dialog offers to write the parameters in the current database only if it has the table """
+    set_current_database("postgis", "test_database", database.schema)
+    current = current_database_with_table()
+    assert current is not None
+    assert database_label(current) == f"test_database (schéma {database.schema})"
+    current.close()
+
+    # A schema without the table
+    set_current_database("postgis", "test_database", "public")
+    assert current_database_with_table() is None
+    # A connection which does not exist
+    set_current_database("postgis", "unknown_connection", database.schema)
+    assert current_database_with_table() is None
+    # No database
+    set_current_database("", "", "")
+    assert current_database_with_table() is None

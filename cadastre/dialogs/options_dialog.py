@@ -3,11 +3,12 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
+import sqlite3
 import tempfile
 
 from pathlib import Path
 
-from qgis.core import QgsSettings
+from qgis.core import QgsProviderConnectionException, QgsSettings
 from qgis.PyQt import uic
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QFileDialog, QMessageBox
@@ -21,11 +22,15 @@ from cadastre.definitions import (
     REGEX_TOPO,
 )
 from cadastre.dialogs.fiche_parameters_widget import FicheParametersWidget
+from cadastre.fiche_parametres import TABLE as FICHE_TABLE
 from cadastre.fiche_parametres import (
+    current_database_with_table,
+    database_label,
     options_from_visibility,
     read_settings,
     visibility_from_options,
     write_settings,
+    write_table,
 )
 from cadastre.tools import plugin_path, set_window_title
 
@@ -79,11 +84,9 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):  # type: ignore[valid-ty
             slot = partial(self.chooseDataPath, key)
             control.clicked.connect(slot)
 
-        # Sections and fields of the fiche parcellaire, before the buttons
+        # Sections and fields of the fiche parcellaire, at the top: the option the most often changed
         self.fiche_parameters = FicheParametersWidget(self.scrollAreaWidgetContents)
-        self.verticalLayout_2.insertWidget(
-            self.verticalLayout_2.indexOf(self.buttonBox), self.fiche_parameters
-        )
+        self.verticalLayout_2.insertWidget(0, self.fiche_parameters)
 
         # Set initial widget values
         self.getValuesFromSettings()
@@ -200,9 +203,43 @@ class CadastreOptionDialog(QDialog, OPTION_FORM_CLASS):  # type: ignore[valid-ty
         s.setValue("cadastre/spatialiteTempStore", self.inSpatialiteTempStore.currentText().upper())
 
         # Save the sections and fields of the fiche parcellaire
-        write_settings(*options_from_visibility(self.fiche_parameters.visibility()))
+        options = options_from_visibility(self.fiche_parameters.visibility())
+        changed = options != read_settings()
+        write_settings(*options)
+        if changed:
+            self.saveFicheParametersInCurrentDatabase()
 
         self.accept()
+
+    def saveFicheParametersInCurrentDatabase(self):
+        """Offer to write the parameters of the fiche in the current database, if it has the table.
+
+        The table of a database has priority over the options of the plugin: without this question,
+        changing the options would have no visible effect on the fiche of this database.
+        """
+        if os.getenv("CI", "").lower() == "true":
+            # No question in the tests
+            return
+        database = current_database_with_table()
+        if database is None:
+            return
+        try:
+            answer = QMessageBox.question(
+                self,
+                "Cadastre",
+                f"La base {database_label(database)} a sa propre table {FICHE_TABLE}, utilisée à la place "
+                "des options pour la fiche parcellaire.\n\n"
+                "Enregistrer aussi ces paramètres dans cette base ?",
+            )
+            if answer != QMessageBox.StandardButton.Yes:
+                return
+            write_table(database, self.fiche_parameters.visibility())
+        except (QgsProviderConnectionException, sqlite3.Error) as e:
+            QMessageBox.critical(
+                self, "Cadastre", f"Erreur lors de l'écriture de la table {FICHE_TABLE} : {e}"
+            )
+        finally:
+            database.close()
 
     def onReject(self):
         """

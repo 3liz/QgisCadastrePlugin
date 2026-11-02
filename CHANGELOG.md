@@ -15,7 +15,9 @@
     par les requêtes SQL
   * Choix des sections et des champs affichés : dans les options de l'extension, et dans la table
     `cadastre_parametre_fiche_parcelle` de la base, créée ou complétée à chaque import sans perdre
-    les paramètres existants. La table est utilisée par QGIS et par Lizmap lorsqu'elle existe
+    les paramètres existants. La table est utilisée par QGIS et par Lizmap lorsqu'elle existe.
+    Après une modification des options, l'extension propose de les enregistrer aussi dans la base
+    courante si elle a déjà sa table
 * Relevé de propriété, propriétés bâties
   * Le revenu cadastral d'une PEV est la moitié de sa valeur locative, il n'est plus remplacé
     par le revenu exonéré, et il n'est écrit qu'une fois lorsque la PEV a plusieurs exonérations

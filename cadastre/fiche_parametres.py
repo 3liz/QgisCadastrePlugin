@@ -22,7 +22,7 @@ from dataclasses import dataclass
 from qgis.core import QgsAbstractDatabaseProviderConnection, QgsProviderConnectionException, QgsSettings
 
 from cadastre.cadastre_common_base import SensitiveData, quoteString
-from cadastre.cadastre_database import CadastreDatabase
+from cadastre.cadastre_database import PROVIDERS, CadastreDatabase
 from cadastre.fiche import DisplayOptions, Section, fetch_rows
 from cadastre.fiche_locaux import (
     DEPENDANCES,
@@ -217,6 +217,39 @@ def write_table(database: CadastreDatabase, visibility: dict[str, bool]):
     """
     database.execute(SQL_CREATE_TABLE.format(table=table_name(database)))
     database.execute(f"DELETE FROM {table_name(database)};" + insert_sql(database, parameters(), visibility))
+
+
+def current_database_with_table() -> CadastreDatabase | None:
+    """Return the database last used by the plugin, if it has the table of the parameters.
+
+    The database is the one stored in the options of the plugin by the import and load dialogs.
+
+    :return: The database and schema, or None if there is no database, if the connection fails,
+        or if the database has no table: the options of the plugin are then used by the fiche.
+    """
+    settings = QgsSettings()
+    db_type = settings.value("cadastre/databaseType", "", type=str)
+    connection_name = settings.value("cadastre/connection", "", type=str)
+    schema = settings.value("cadastre/schema", "", type=str)
+    if db_type not in PROVIDERS or not connection_name:
+        return None
+    try:
+        database = CadastreDatabase.from_connection(db_type, connection_name, schema)
+    except Exception as e:
+        # Any error of connection: the database is not available, the question is not asked
+        Logger.warning(f"Impossible de se connecter à la base « {connection_name} » : {e!s}")
+        return None
+    if not database.table_exists(TABLE):
+        database.close()
+        return None
+    return database
+
+
+def database_label(database: CadastreDatabase) -> str:
+    """Return the name of the database for the user: its connection, and its schema for PostGIS"""
+    if database.is_postgis:
+        return f"{database.connection_name} (schéma {database.schema})"
+    return database.connection_name
 
 
 def read_table(

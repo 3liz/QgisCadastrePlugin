@@ -42,8 +42,9 @@ class FicheParametersWidget(QGroupBox):
         label = QLabel(
             "Sections et champs affichés dans la fiche parcellaire. Lors d'un import, ces options sont copiées "
             f"dans la table <b>{TABLE}</b> de la base si elle n'existe pas encore : ensuite, c'est cette table "
-            "qui est utilisée, dans QGIS et dans Lizmap. Le bouton « Enregistrer dans une base » remplace "
-            "les paramètres d'une base existante. Les données sensibles restent masquées selon les droits.",
+            "qui est utilisée, dans QGIS et dans Lizmap.<br><b>Une base qui a déjà cette table n'est pas "
+            "modifiée par ces options</b> : utiliser le bouton « Enregistrer dans une base » pour remplacer "
+            "ses paramètres. Les données sensibles restent masquées selon les droits.",
             self,
         )
         label.setWordWrap(True)
