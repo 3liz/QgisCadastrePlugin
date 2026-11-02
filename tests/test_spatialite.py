@@ -16,6 +16,7 @@ from cadastre.cadastre_common_base import (
 )
 from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_export import CadastreExport
+from cadastre.export_csv import locaux_proprietaires_export, parcelles_proprietaires_export
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.dialogs.database_widget import DatabaseWidget
@@ -109,6 +110,12 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         # Communes of the search tool
         _layer, features = CadastreSearchDialog(qgis_iface).setupSearchCombobox("commune", None, "sql")
         assert [feature["tex2"] for feature in features] == [CornillonMajic.commune]
+
+        # Exports of the locaux and of the owners, for Lizmap
+        columns, rows = locaux_proprietaires_export(connector, params, [geo_parcelle], SensitiveData.full())
+        assert "p_date_naissance" in columns and rows and all(row[0] == geo_parcelle for row in rows)
+        columns, rows = parcelles_proprietaires_export(connector, params, [geo_parcelle], SensitiveData())
+        assert rows[0][11] == "XX/XX/XXXX" and rows[0][-1] == geo_parcelle
 
         # The parameters of the fiche, created by the import, with 1 or 0 for the booleans
         rows = database.fetch("SELECT cle, visible FROM cadastre_parametre_fiche_parcelle")
