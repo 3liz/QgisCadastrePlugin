@@ -15,11 +15,13 @@ __copyright__ = "Copyright 2026, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
+import csv
+import io
 import re
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, TextIO
 
 from qgis.core import (
     QgsAbstractDatabaseProviderConnection,
@@ -54,10 +56,6 @@ CSV_EXPORTS = {
 # Number of selected parcelles above which the user confirms the CSV export: the export runs in the interface
 # of QGIS, which does not respond until it ends
 CSV_EXPORT_CONFIRM_COUNT = 5000
-
-# Characters for which a value is enclosed in double quotes in the CSV files, like the PHP function fputcsv
-# used by Lizmap
-CSV_ENCLOSED_CHARACTERS = (",", '"', "\n", "\r", "\t", " ", "\\")
 
 
 @dataclass(frozen=True)
@@ -489,26 +487,28 @@ def parcelles_proprietaires_export(
 # CSV files of the selected parcelles in QGIS
 
 
-def csv_value(value: str | None) -> str:
-    """Return a value of a CSV file, written like the PHP function fputcsv used by Lizmap.
+def write_csv_rows(output: TextIO, columns: list[str], rows: list[list[str | None]]) -> None:
+    """Write the CSV content of an export: the names of the columns, then one line per row.
 
-    The value is enclosed in double quotes if it contains a comma, a double quote, a space, a tabulation,
-    a backslash or a line break, the double quotes are doubled. NULL is an empty value.
+    Standard CSV (module csv of Python): separated by commas, values enclosed in double quotes only if needed.
+    The lines end with \\n, like the files written before by Lizmap. NULL is an empty value.
     """
-    if value is None:
-        return ""
-    value = str(value)
-    if any(character in value for character in CSV_ENCLOSED_CHARACTERS):
-        return '"' + value.replace('"', '""') + '"'
-    return value
+    writer = csv.writer(output, lineterminator="\n")
+    writer.writerow(columns)
+    writer.writerows(rows)
+
+
+def csv_text(columns: list[str], rows: list[list[str | None]]) -> str:
+    """Return the CSV content of an export, see write_csv_rows."""
+    output = io.StringIO()
+    write_csv_rows(output, columns, rows)
+    return output.getvalue()
 
 
 def write_csv(path: Path, columns: list[str], rows: list[list[str | None]]) -> None:
-    """Write a CSV file like Lizmap: UTF-8, separated by commas, one line per row after the names of the columns."""
-    with path.open("w", encoding="utf-8", newline="") as f:
-        f.write(",".join(csv_value(column) for column in columns) + "\n")
-        for values in rows:
-            f.write(",".join(csv_value(value) for value in values) + "\n")
+    """Write the CSV file of an export, in UTF-8, see write_csv_rows."""
+    with path.open("w", encoding="utf-8", newline="") as output:
+        write_csv_rows(output, columns, rows)
 
 
 def export_selected_parcelles(

@@ -81,7 +81,7 @@ sur la carte, quelle que soit la façon dont elles ont été sélectionnées :
   avec son droit.
 
 Seules les parcelles que l'utilisateur peut voir sont exportées, selon les filtres de la couche des parcelles
-(par utilisateur, par polygone).
+(par utilisateur, par polygone). Un export est limité à 20 000 parcelles sélectionnées.
 
 Les fichiers contiennent les dates et lieux de naissance que les droits de l'utilisateur lui permettent de
 voir. La case **Exporter pour un tiers** les masque (`XX/XX/XXXX`, `XXX`), par exemple pour un fichier

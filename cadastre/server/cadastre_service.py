@@ -19,6 +19,7 @@ import cadastre.cadastre_common_base as cadastre_common
 from cadastre.cadastre_export import CadastreExport
 from cadastre.export_csv import (
     RechercheSpatiale,
+    csv_text,
     locaux_proprietaires_export,
     parcelles_proprietaires_export,
     recherche_spatiale,
@@ -305,7 +306,8 @@ class CadastreService(QgsService):
           by the spatial search of Lizmap and the distance: the codes of the objects near the parcelles
           of each owner are added.
 
-        The response is JSON, the data are the names of the columns and the rows: Lizmap writes the CSV file.
+        The response is the CSV file itself (standard CSV, see export_csv.csv_text): Lizmap sends it
+        to the user without reading it all. The errors are in JSON.
         """
         export_type = params.get("TYPE", "")
         if export_type not in EXPORT_TYPES:
@@ -331,11 +333,10 @@ class CadastreService(QgsService):
         except ValueError as e:
             raise CadastreError(400, str(e), request_id) from e
 
-        write_json_response(
-            {"status": "success", "message": "Export generated", "data": {"columns": columns, "rows": rows}},
-            response,
-            request_id,
-        )
+        response.setStatusCode(200)
+        response.setHeader("Content-Type", "text/csv; charset=utf-8")
+        response.setHeader("X-Request-Id", request_id)
+        response.write(csv_text(columns, rows))
 
     @staticmethod
     def parcelles_layer(params: Dict[str, str], project: QgsProject, request_id: str) -> QgsVectorLayer:

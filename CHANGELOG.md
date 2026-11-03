@@ -14,8 +14,9 @@
   par QGIS Server, en WMS et en WFS. Ils étaient visibles de tous dans Lizmap, sans les droits du module
   cadastre. Pour un projet existant, relancer l'algorithme ou décocher les cases à la main
 * Service serveur (Lizmap)
-  * Nouvelle requête `GetExport` : données des exports CSV des locaux et des propriétaires d'une liste
+  * Nouvelle requête `GetExport` : fichier CSV des exports des locaux et des propriétaires d'une liste
     de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.
+    Lizmap le transmet à l'utilisateur sans le charger en mémoire.
     Les données de naissance sont masquées sans le droit
   * Les droits sur les données sensibles peuvent être donnés séparément : `BIRTH`, `REVENUE`
     et `EXONERATION`, en plus de `ADVANCED` qui les donne tous

@@ -1,6 +1,7 @@
 """ Exports of the cadastre data for a list of parcelles, used by the CSV exports of Lizmap """
 
 import csv
+import io
 
 from pathlib import Path
 
@@ -23,7 +24,7 @@ from cadastre.export_csv import (
     locaux_proprietaires_export,
     parcelles_proprietaires_export,
     numero_voirie,
-    csv_value,
+    csv_text,
     export_selected_parcelles,
     parcelles_sql,
     recherche_spatiale,
@@ -184,14 +185,13 @@ def read_csv(path: Path) -> list[list[str]]:
         return list(csv.reader(f))
 
 
-def test_csv_value():
-    """Values written like the PHP function fputcsv used by Lizmap"""
-    assert csv_value(None) == ""
-    assert csv_value("") == ""
-    assert csv_value("A0107") == "A0107"
-    assert csv_value("CHEM DE LA COOPERATIVE") == '"CHEM DE LA COOPERATIVE"'
-    assert csv_value('a"b') == '"a""b"'
-    assert csv_value("a,b") == '"a,b"'
+def test_csv_text():
+    """Standard CSV: quotes only when needed, NULL is empty, lines ending with \\n"""
+    content = csv_text(["a", "b"], [["CHEM DE LA COOPERATIVE", None], ['a"b', "a,b"], ["ligne\nsuivante", ""]])
+    assert content == 'a,b\nCHEM DE LA COOPERATIVE,\n"a""b","a,b"\n"ligne\nsuivante",\n'
+    assert list(csv.reader(io.StringIO(content))) == [
+        ["a", "b"], ["CHEM DE LA COOPERATIVE", ""], ['a"b', "a,b"], ["ligne\nsuivante", ""],
+    ]
 
 
 def test_export_selected_parcelles(connection: Connection, parcelles: QgsVectorLayer, tmp_path: Path):  # noqa: F811
