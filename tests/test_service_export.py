@@ -25,6 +25,15 @@ def request(tmp_path: Path, **params: str) -> tuple[int, dict]:
     return response.statusCode(), json.loads(bytes(response.body()).decode())
 
 
+@pytest.mark.parametrize("name", ["", "GetMap", "getexports"])
+def test_unknown_request(tmp_path: Path, name: str):
+    """ An unknown request is refused at once, with the list of the requests """
+    code, data = request(tmp_path, REQUEST=name)
+    assert code == 400
+    assert data["status"] == "fail"
+    assert "GetExport" in data["message"]
+
+
 def test_capabilities_requests(tmp_path: Path, parcelles: QgsVectorLayer):  # noqa: F811
     """ Lizmap knows from GetCapabilities that it can use GetExport """
     project = QgsProject.instance()

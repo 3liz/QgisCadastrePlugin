@@ -116,6 +116,13 @@ class CadastreService(QgsService):
         # noinspection PyBroadException
         try:
             req_param = params.get("REQUEST", "").lower()
+            # Unknown request: stop at once, before reading anything
+            if req_param not in {name.lower() for name in REQUESTS}:
+                raise CadastreError(
+                    400,
+                    f"Invalid REQUEST parameter: must be one of {', '.join(REQUESTS)}, found '{req_param}'",
+                    request_id,
+                )
 
             if req_param == "getcapabilities":
                 self.get_capabilities(response, project, request_id)
@@ -127,12 +134,6 @@ class CadastreService(QgsService):
                 self.get_html(params, response, project, request_id)
             elif req_param == "getexport":
                 self.get_export(params, response, project, request_id)
-            else:
-                raise CadastreError(
-                    400,
-                    f"Invalid REQUEST parameter: must be one of {', '.join(REQUESTS)}, found '{req_param}'",
-                    request_id,
-                )
 
         except CadastreError as err:
             err.format_response(response)
