@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>suftaxation - qgistest Database</title>
+        <title>suftaxation - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>suftaxation</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>suftaxation</h1><p><span id="recordNumber">486</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -100,7 +100,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -133,7 +139,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="annee">annee</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="annee">annee</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -283,7 +289,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="suftaxation.suf&#39;s name implies that it&#39;s a child of suf.suf, but it doesn&#39;t reference that column."><a href='suf.html'>suf</a><span class='relatedKey'>.suf</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -490,7 +497,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -505,6 +518,12 @@
                                     <td>Primary key</td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>suftaxation</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idxan_suftaxation</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>annee</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -530,29 +549,29 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="suftaxation.html" target="_top" title="suftaxation" alt="" coords="5,5,287,691">
+<area shape="rect" id="node1" href="suftaxation.html" target="_top" title="suftaxation" alt="" coords="5,5,312,691">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/suftaxation.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="suftaxation.html" target="_top" title="suftaxation" alt="" coords="244,5,525,691">
-<area shape="rect" id="node2" href="suf.html" target="_top" title="suf" alt="" coords="5,272,200,595">
+<area shape="rect" id="node1" href="suftaxation.html" target="_top" title="suftaxation" alt="" coords="271,5,577,691">
+<area shape="rect" id="node2" href="suf.html" target="_top" title="suf" alt="" coords="5,272,227,624">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/suftaxation.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="parcelle.html" target="_top" title="parcelle" alt="" coords="457,64,605,152">
-<area shape="rect" id="node2" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,64,231,152">
-<area shape="rect" id="node3" href="pdl.html" target="_top" title="pdl" alt="" coords="275,64,413,152">
-<area shape="rect" id="node4" href="suf.html" target="_top" title="suf" alt="" coords="649,191,844,513">
-<area shape="rect" id="node5" href="cgrnum.html" target="_top" title="cgrnum" alt="" coords="459,311,603,399">
-<area shape="rect" id="node6" href="cnatsp.html" target="_top" title="cnatsp" alt="" coords="460,521,603,609">
-<area shape="rect" id="node7" href="dsgrpf.html" target="_top" title="dsgrpf" alt="" coords="464,416,599,504">
-<area shape="rect" id="node8" href="gnexps.html" target="_top" title="gnexps" alt="" coords="462,205,601,293">
-<area shape="rect" id="node9" href="sufexoneration.html" target="_top" title="sufexoneration" alt="" coords="927,5,1130,93">
-<area shape="rect" id="node10" href="suftaxation.html" target="_top" title="suftaxation" alt="" coords="888,111,1169,796">
+<area shape="rect" id="node1" href="parcelle.html" target="_top" title="parcelle" alt="" coords="484,93,655,181">
+<area shape="rect" id="node2" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,93,261,181">
+<area shape="rect" id="node3" href="pdl.html" target="_top" title="pdl" alt="" coords="305,93,440,181">
+<area shape="rect" id="node4" href="suf.html" target="_top" title="suf" alt="" coords="699,191,920,543">
+<area shape="rect" id="node5" href="cgrnum.html" target="_top" title="cgrnum" alt="" coords="491,340,648,428">
+<area shape="rect" id="node6" href="cnatsp.html" target="_top" title="cnatsp" alt="" coords="495,551,643,639">
+<area shape="rect" id="node7" href="dsgrpf.html" target="_top" title="dsgrpf" alt="" coords="496,445,643,533">
+<area shape="rect" id="node8" href="gnexps.html" target="_top" title="gnexps" alt="" coords="493,235,646,323">
+<area shape="rect" id="node9" href="sufexoneration.html" target="_top" title="sufexoneration" alt="" coords="1002,5,1233,93">
+<area shape="rect" id="node10" href="suftaxation.html" target="_top" title="suftaxation" alt="" coords="964,111,1271,796">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/suftaxation.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -563,7 +582,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -574,7 +593,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

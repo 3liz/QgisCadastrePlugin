@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>indldnbat - qgistest Database</title>
+        <title>indldnbat - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>indldnbat</h1><p><span id="recordNumber">2</span> rows</p><br />
+                    <h1>indldnbat</h1><p><span id="recordNumber">-1</span> rows</p><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -87,7 +87,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -113,11 +119,13 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="commune.indldnbat&#39;s name implies that it&#39;s a child of indldnbat.indldnbat, but it doesn&#39;t reference that column."><a href='commune.html'>commune</a><span class='relatedKey'>.indldnbat</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="voie.indldnbat&#39;s name implies that it&#39;s a child of indldnbat.indldnbat, but it doesn&#39;t reference that column."><a href='voie.html'>voie</a><span class='relatedKey'>.indldnbat</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -158,7 +166,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -198,33 +212,35 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,5,299,133">
+<area shape="rect" id="node1" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,5,328,133">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/indldnbat.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="343,5,507,299">
-<area shape="rect" id="node2" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,349,299,477">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="355,316,494,639">
+<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="372,5,560,357">
+<area shape="rect" id="node2" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,423,328,551">
+<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="390,375,542,727">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/indldnbat.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="343,427,507,720">
-<area shape="rect" id="node2" href="annul.html" target="_top" title="annul" alt="" coords="87,427,217,515">
-<area shape="rect" id="node3" href="carvoi.html" target="_top" title="carvoi" alt="" coords="85,321,219,409">
-<area shape="rect" id="node4" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,637,299,765">
-<area shape="rect" id="node5" href="typcom.html" target="_top" title="typcom" alt="" coords="80,216,224,304">
-<area shape="rect" id="node6" href="typvoi.html" target="_top" title="typvoi" alt="" coords="85,532,219,620">
-<area shape="rect" id="node7" href="local00.html" target="_top" title="local00" alt="" coords="769,57,909,145">
-<area shape="rect" id="node8" href="parcelle.html" target="_top" title="parcelle" alt="" coords="551,127,699,215">
-<area shape="rect" id="node9" href="voie.html" target="_top" title="voie" alt="" coords="355,87,494,409">
-<area shape="rect" id="node12" href="natvoi.html" target="_top" title="natvoi" alt="" coords="81,111,223,199">
-<area shape="rect" id="node13" href="natvoiriv.html" target="_top" title="natvoiriv" alt="" coords="74,5,230,93">
-<area shape="rect" id="node10" href="local10.html" target="_top" title="local10" alt="" coords="979,57,1127,145">
-<area shape="rect" id="node11" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="743,199,935,263">
+<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="372,623,560,975">
+<area shape="rect" id="node2" href="annul.html" target="_top" title="annul" alt="" coords="98,652,235,740">
+<area shape="rect" id="node3" href="carvoi.html" target="_top" title="carvoi" alt="" coords="95,547,238,635">
+<area shape="rect" id="node4" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,863,328,991">
+<area shape="rect" id="node5" href="typcom.html" target="_top" title="typcom" alt="" coords="89,441,245,529">
+<area shape="rect" id="node6" href="typvoi.html" target="_top" title="typvoi" alt="" coords="95,757,239,845">
+<area shape="rect" id="node7" href="local00.html" target="_top" title="local00" alt="" coords="850,147,1011,235">
+<area shape="rect" id="node8" href="parcelle.html" target="_top" title="parcelle" alt="" coords="604,79,775,167">
+<area shape="rect" id="node9" href="voie.html" target="_top" title="voie" alt="" coords="390,253,542,605">
+<area shape="rect" id="node14" href="natvoi.html" target="_top" title="natvoi" alt="" coords="94,336,239,424">
+<area shape="rect" id="node15" href="natvoiriv.html" target="_top" title="natvoiriv" alt="" coords="81,231,252,319">
+<area shape="rect" id="node10" href="local10.html" target="_top" title="local10" alt="" coords="1087,147,1257,235">
+<area shape="rect" id="node11" href="parcelle_info.html" target="_top" title="parcelle_info" alt="" coords="827,5,1035,93">
+<area shape="rect" id="node12" href="topo.html" target="_top" title="topo" alt="" coords="625,256,753,344">
+<area shape="rect" id="node13" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="819,252,1043,316">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/indldnbat.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -235,7 +251,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -246,7 +262,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>gtyp4 - qgistest Database</title>
+        <title>gtyp4 - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>gtyp4</h1><p><span id="recordNumber">9</span> rows</p><br />
+                    <h1>gtyp4</h1><p><span id="recordNumber">-1</span> rows</p><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -87,7 +87,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -113,7 +119,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="proprietaire.gtyp4&#39;s name implies that it&#39;s a child of gtyp4.gtyp4, but it doesn&#39;t reference that column."><a href='proprietaire.html'>proprietaire</a><span class='relatedKey'>.gtyp4</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -154,7 +161,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -194,32 +207,32 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="gtyp4.html" target="_top" title="gtyp4" alt="" coords="5,5,265,133">
+<area shape="rect" id="node1" href="gtyp4.html" target="_top" title="gtyp4" alt="" coords="5,5,291,133">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/gtyp4.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="proprietaire.html" target="_top" title="proprietaire" alt="" coords="309,5,504,504">
-<area shape="rect" id="node2" href="gtyp4.html" target="_top" title="gtyp4" alt="" coords="5,296,265,424">
+<area shape="rect" id="node1" href="proprietaire.html" target="_top" title="proprietaire" alt="" coords="335,5,556,621">
+<area shape="rect" id="node2" href="gtyp4.html" target="_top" title="gtyp4" alt="" coords="5,413,291,541">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/gtyp4.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="proprietaire.html" target="_top" title="proprietaire" alt="" coords="309,363,504,861">
-<area shape="rect" id="node2" href="ccodem.html" target="_top" title="ccodem" alt="" coords="63,216,208,304">
-<area shape="rect" id="node3" href="ccodro.html" target="_top" title="ccodro" alt="" coords="67,111,204,199">
-<area shape="rect" id="node4" href="ccogrm.html" target="_top" title="ccogrm" alt="" coords="65,637,206,725">
-<area shape="rect" id="node5" href="ccoqua.html" target="_top" title="ccoqua" alt="" coords="65,427,205,515">
-<area shape="rect" id="node6" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="23,5,248,93">
-<area shape="rect" id="node7" href="dformjur.html" target="_top" title="dformjur" alt="" coords="58,1204,213,1292">
-<area shape="rect" id="node8" href="dnatpr.html" target="_top" title="dnatpr" alt="" coords="66,532,205,620">
-<area shape="rect" id="node9" href="gtoper.html" target="_top" title="gtoper" alt="" coords="67,321,203,409">
-<area shape="rect" id="node10" href="gtyp3.html" target="_top" title="gtyp3" alt="" coords="71,743,200,831">
-<area shape="rect" id="node11" href="gtyp4.html" target="_top" title="gtyp4" alt="" coords="5,848,265,976">
-<area shape="rect" id="node12" href="gtyp5.html" target="_top" title="gtyp5" alt="" coords="71,993,200,1081">
-<area shape="rect" id="node13" href="gtyp6.html" target="_top" title="gtyp6" alt="" coords="71,1099,200,1187">
+<area shape="rect" id="node1" href="proprietaire.html" target="_top" title="proprietaire" alt="" coords="335,275,556,891">
+<area shape="rect" id="node2" href="ccodem.html" target="_top" title="ccodem" alt="" coords="69,216,227,304">
+<area shape="rect" id="node3" href="ccodro.html" target="_top" title="ccodro" alt="" coords="74,111,222,199">
+<area shape="rect" id="node4" href="ccogrm.html" target="_top" title="ccogrm" alt="" coords="71,637,225,725">
+<area shape="rect" id="node5" href="ccoqua.html" target="_top" title="ccoqua" alt="" coords="72,427,224,515">
+<area shape="rect" id="node6" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="20,5,276,93">
+<area shape="rect" id="node7" href="dformjur.html" target="_top" title="dformjur" alt="" coords="64,1204,232,1292">
+<area shape="rect" id="node8" href="dnatpr.html" target="_top" title="dnatpr" alt="" coords="73,532,223,620">
+<area shape="rect" id="node9" href="gtoper.html" target="_top" title="gtoper" alt="" coords="74,321,222,409">
+<area shape="rect" id="node10" href="gtyp3.html" target="_top" title="gtyp3" alt="" coords="78,743,218,831">
+<area shape="rect" id="node11" href="gtyp4.html" target="_top" title="gtyp4" alt="" coords="5,848,291,976">
+<area shape="rect" id="node12" href="gtyp5.html" target="_top" title="gtyp5" alt="" coords="78,993,218,1081">
+<area shape="rect" id="node13" href="gtyp6.html" target="_top" title="gtyp6" alt="" coords="78,1099,218,1187">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/gtyp4.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -230,7 +243,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -241,7 +254,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

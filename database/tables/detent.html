@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>detent - qgistest Database</title>
+        <title>detent - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>detent</h1><p><span id="recordNumber">5</span> rows</p><br />
+                    <h1>detent</h1><p><span id="recordNumber">-1</span> rows</p><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -87,7 +87,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -113,11 +119,13 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="pevdependances.detent&#39;s name implies that it&#39;s a child of detent.detent, but it doesn&#39;t reference that column."><a href='pevdependances.html'>pevdependances</a><span class='relatedKey'>.detent</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="pevprincipale.detent&#39;s name implies that it&#39;s a child of detent.detent, but it doesn&#39;t reference that column."><a href='pevprincipale.html'>pevprincipale</a><span class='relatedKey'>.detent</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -158,7 +166,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -198,27 +212,27 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="detent.html" target="_top" title="detent" alt="" coords="5,5,273,133">
+<area shape="rect" id="node1" href="detent.html" target="_top" title="detent" alt="" coords="5,5,299,133">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/detent.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="317,5,532,269">
-<area shape="rect" id="node2" href="detent.html" target="_top" title="detent" alt="" coords="5,335,273,463">
-<area shape="rect" id="node3" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="329,287,521,639">
+<area shape="rect" id="node1" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="343,5,591,299">
+<area shape="rect" id="node2" href="detent.html" target="_top" title="detent" alt="" coords="5,379,299,507">
+<area shape="rect" id="node3" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="359,316,575,697">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/detent.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="317,375,532,639">
-<area shape="rect" id="node2" href="cconad.html" target="_top" title="cconad" alt="" coords="69,143,209,231">
-<area shape="rect" id="node3" href="detent.html" target="_top" title="detent" alt="" coords="5,511,273,639">
-<area shape="rect" id="node4" href="dmatgm.html" target="_top" title="dmatgm" alt="" coords="64,277,215,365">
-<area shape="rect" id="node5" href="dmatto.html" target="_top" title="dmatto" alt="" coords="68,397,211,485">
-<area shape="rect" id="node6" href="pev.html" target="_top" title="pev" alt="" coords="70,37,209,125">
-<area shape="rect" id="node7" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="329,5,521,357">
+<area shape="rect" id="node1" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="343,404,591,697">
+<area shape="rect" id="node2" href="cconad.html" target="_top" title="cconad" alt="" coords="76,172,228,260">
+<area shape="rect" id="node3" href="detent.html" target="_top" title="detent" alt="" coords="5,565,299,693">
+<area shape="rect" id="node4" href="dmatgm.html" target="_top" title="dmatgm" alt="" coords="70,288,234,376">
+<area shape="rect" id="node5" href="dmatto.html" target="_top" title="dmatto" alt="" coords="75,416,229,504">
+<area shape="rect" id="node6" href="pev.html" target="_top" title="pev" alt="" coords="71,67,233,155">
+<area shape="rect" id="node7" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="359,5,575,387">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/detent.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -229,7 +243,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -240,7 +254,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

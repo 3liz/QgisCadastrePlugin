@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>gnextl - qgistest Database</title>
+        <title>gnextl - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>gnextl</h1><p><span id="recordNumber">110</span> rows</p><br />
+                    <h1>gnextl</h1><p><span id="recordNumber">-1</span> rows</p><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -87,7 +87,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -113,15 +119,18 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="pevexoneration.gnextl&#39;s name implies that it&#39;s a child of gnextl.gnextl, but it doesn&#39;t reference that column."><a href='pevexoneration.html'>pevexoneration</a><span class='relatedKey'>.gnextl</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="pevexoneration_imposable.gnextl&#39;s name implies that it&#39;s a child of gnextl.gnextl, but it doesn&#39;t reference that column."><a href='pevexoneration_imposable.html'>pevexoneration_imposable</a><span class='relatedKey'>.gnextl</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="pevexoneration_imposee.gnextl&#39;s name implies that it&#39;s a child of gnextl.gnextl, but it doesn&#39;t reference that column."><a href='pevexoneration_imposee.html'>pevexoneration_imposee</a><span class='relatedKey'>.gnextl</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -162,7 +171,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -202,27 +217,27 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="gnextl.html" target="_top" title="gnextl" alt="" coords="5,5,271,133">
+<area shape="rect" id="node1" href="gnextl.html" target="_top" title="gnextl" alt="" coords="5,5,296,133">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/gnextl.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="357,5,564,211">
-<area shape="rect" id="node2" href="gnextl.html" target="_top" title="gnextl" alt="" coords="5,284,271,412">
-<area shape="rect" id="node3" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="315,228,607,404">
-<area shape="rect" id="node4" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="322,421,599,597">
+<area shape="rect" id="node1" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="395,5,631,211">
+<area shape="rect" id="node2" href="gnextl.html" target="_top" title="gnextl" alt="" coords="5,313,296,441">
+<area shape="rect" id="node3" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="340,228,685,433">
+<area shape="rect" id="node4" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="349,451,676,656">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/gnextl.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="357,5,564,211">
-<area shape="rect" id="node2" href="ccolloc.html" target="_top" title="ccolloc" alt="" coords="69,260,207,348">
-<area shape="rect" id="node3" href="gnextl.html" target="_top" title="gnextl" alt="" coords="5,365,271,493">
-<area shape="rect" id="node4" href="pev.html" target="_top" title="pev" alt="" coords="69,155,207,243">
-<area shape="rect" id="node5" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="315,228,607,404">
-<area shape="rect" id="node6" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="322,421,599,597">
+<area shape="rect" id="node1" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="395,5,631,211">
+<area shape="rect" id="node2" href="ccolloc.html" target="_top" title="ccolloc" alt="" coords="76,289,225,377">
+<area shape="rect" id="node3" href="gnextl.html" target="_top" title="gnextl" alt="" coords="5,395,296,523">
+<area shape="rect" id="node4" href="pev.html" target="_top" title="pev" alt="" coords="70,184,231,272">
+<area shape="rect" id="node5" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="340,228,685,433">
+<area shape="rect" id="node6" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="349,451,676,656">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/gnextl.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -233,7 +248,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -244,7 +259,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

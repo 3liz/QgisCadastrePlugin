@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>commune - qgistest Database</title>
+        <title>commune - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>commune</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>commune</h1><p><span id="recordNumber">1</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -100,7 +100,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -133,7 +139,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="annee">annee</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="annee">annee</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -150,7 +156,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="ccodep">ccodep</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="ccodep">ccodep</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -249,7 +255,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="commune.typcom&#39;s name implies that it&#39;s a child of typcom.typcom, but it doesn&#39;t reference that column."><a href='typcom.html'>typcom</a><span class='relatedKey'>.typcom</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -287,7 +294,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="commune.carvoi&#39;s name implies that it&#39;s a child of carvoi.carvoi, but it doesn&#39;t reference that column."><a href='carvoi.html'>carvoi</a><span class='relatedKey'>.carvoi</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -376,7 +384,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="commune.annul&#39;s name implies that it&#39;s a child of annul.annul, but it doesn&#39;t reference that column."><a href='annul.html'>annul</a><span class='relatedKey'>.annul</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -448,7 +457,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="commune.typvoi&#39;s name implies that it&#39;s a child of typvoi.typvoi, but it doesn&#39;t reference that column."><a href='typvoi.html'>typvoi</a><span class='relatedKey'>.typvoi</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -469,7 +479,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="commune.indldnbat&#39;s name implies that it&#39;s a child of indldnbat.indldnbat, but it doesn&#39;t reference that column."><a href='indldnbat.html'>indldnbat</a><span class='relatedKey'>.indldnbat</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -540,7 +551,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -557,10 +574,28 @@
                                     <td>commune</td>
                                 </tr>
                                 <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> commune_commune_key</td>
+                                    <td>Must be unique</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>commune</td>
+                                </tr>
+                                <tr>
                                     <td title='Indexed'>idx_commune_ccocom</td>
                                     <td>Performance</td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>ccocom</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idx_commune_ccodep</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>ccodep</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idxan_commune</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>annee</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -586,30 +621,30 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="5,5,309,749">
+<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="5,5,340,749">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/commune.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="212,5,516,749">
-<area shape="rect" id="node2" href="annul.html" target="_top" title="annul" alt="" coords="21,407,152,524">
-<area shape="rect" id="node3" href="carvoi.html" target="_top" title="carvoi" alt="" coords="20,272,153,389">
-<area shape="rect" id="node4" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,676,168,793">
-<area shape="rect" id="node5" href="typcom.html" target="_top" title="typcom" alt="" coords="15,137,159,255">
-<area shape="rect" id="node6" href="typvoi.html" target="_top" title="typvoi" alt="" coords="19,541,154,659">
+<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="227,5,561,749">
+<area shape="rect" id="node2" href="annul.html" target="_top" title="annul" alt="" coords="25,407,163,524">
+<area shape="rect" id="node3" href="carvoi.html" target="_top" title="carvoi" alt="" coords="23,272,165,389">
+<area shape="rect" id="node4" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,676,183,793">
+<area shape="rect" id="node5" href="typcom.html" target="_top" title="typcom" alt="" coords="16,137,172,255">
+<area shape="rect" id="node6" href="typvoi.html" target="_top" title="typvoi" alt="" coords="22,541,166,659">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/commune.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="212,5,516,749">
-<area shape="rect" id="node2" href="annul.html" target="_top" title="annul" alt="" coords="21,485,152,603">
-<area shape="rect" id="node3" href="carvoi.html" target="_top" title="carvoi" alt="" coords="20,349,153,467">
-<area shape="rect" id="node4" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,759,168,876">
-<area shape="rect" id="node5" href="typcom.html" target="_top" title="typcom" alt="" coords="15,215,159,332">
-<area shape="rect" id="node6" href="typvoi.html" target="_top" title="typvoi" alt="" coords="19,621,154,739">
-<area shape="rect" id="node7" href="voie.html" target="_top" title="voie" alt="" coords="295,767,433,855">
+<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="227,5,561,749">
+<area shape="rect" id="node2" href="annul.html" target="_top" title="annul" alt="" coords="25,485,163,603">
+<area shape="rect" id="node3" href="carvoi.html" target="_top" title="carvoi" alt="" coords="23,349,165,467">
+<area shape="rect" id="node4" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,759,183,876">
+<area shape="rect" id="node5" href="typcom.html" target="_top" title="typcom" alt="" coords="16,215,172,332">
+<area shape="rect" id="node6" href="typvoi.html" target="_top" title="typvoi" alt="" coords="22,621,166,739">
+<area shape="rect" id="node7" href="voie.html" target="_top" title="voie" alt="" coords="318,767,470,855">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/commune.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -620,7 +655,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -631,7 +666,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

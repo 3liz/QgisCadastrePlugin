@@ -6,7 +6,7 @@ $(document).ready(function() {
         lengthChange: false,
         ordering: false,
         paging: config.pagination,
-		autoWidth: true,
+        autoWidth: true,
 		buttons: [
 					{
 						text: 'Related columns',
@@ -61,7 +61,7 @@ $(function() {
 
 $.fn.digits = function(){
 	return this.each(function(){
-		$(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "1 ") );
+		$(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ") );
 	})
 }
 

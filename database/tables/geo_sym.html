@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>geo_sym - qgistest Database</title>
+        <title>geo_sym - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -87,7 +87,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -113,23 +119,28 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="geo_ptcanv.geo_sym&#39;s name implies that it&#39;s a child of geo_sym.geo_sym, but it doesn&#39;t reference that column."><a href='geo_ptcanv.html'>geo_ptcanv</a><span class='relatedKey'>.geo_sym</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="geo_symblim.geo_sym&#39;s name implies that it&#39;s a child of geo_sym.geo_sym, but it doesn&#39;t reference that column."><a href='geo_symblim.html'>geo_symblim</a><span class='relatedKey'>.geo_sym</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="geo_tline.geo_sym&#39;s name implies that it&#39;s a child of geo_sym.geo_sym, but it doesn&#39;t reference that column."><a href='geo_tline.html'>geo_tline</a><span class='relatedKey'>.geo_sym</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="geo_tpoint.geo_sym&#39;s name implies that it&#39;s a child of geo_sym.geo_sym, but it doesn&#39;t reference that column."><a href='geo_tpoint.html'>geo_tpoint</a><span class='relatedKey'>.geo_sym</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="geo_tsurf.geo_sym&#39;s name implies that it&#39;s a child of geo_sym.geo_sym, but it doesn&#39;t reference that column."><a href='geo_tsurf.html'>geo_tsurf</a><span class='relatedKey'>.geo_sym</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -170,7 +181,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -210,37 +227,37 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="geo_sym.html" target="_top" title="geo_sym" alt="" coords="5,5,288,133">
+<area shape="rect" id="node1" href="geo_sym.html" target="_top" title="geo_sym" alt="" coords="5,5,319,133">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/geo_sym.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="geo_ptcanv.html" target="_top" title="geo_ptcanv" alt="" coords="339,5,509,299">
-<area shape="rect" id="node2" href="geo_sym.html" target="_top" title="geo_sym" alt="" coords="5,536,288,664">
-<area shape="rect" id="node3" href="geo_symblim.html" target="_top" title="geo_symblim" alt="" coords="332,316,516,492">
-<area shape="rect" id="node4" href="geo_tline.html" target="_top" title="geo_tline" alt="" coords="347,509,501,685">
-<area shape="rect" id="node5" href="geo_tpoint.html" target="_top" title="geo_tpoint" alt="" coords="341,703,507,879">
-<area shape="rect" id="node6" href="geo_tsurf.html" target="_top" title="geo_tsurf" alt="" coords="347,896,501,1072">
+<area shape="rect" id="node1" href="geo_ptcanv.html" target="_top" title="geo_ptcanv" alt="" coords="371,5,565,299">
+<area shape="rect" id="node2" href="geo_sym.html" target="_top" title="geo_sym" alt="" coords="5,536,319,664">
+<area shape="rect" id="node3" href="geo_symblim.html" target="_top" title="geo_symblim" alt="" coords="363,316,573,492">
+<area shape="rect" id="node4" href="geo_tline.html" target="_top" title="geo_tline" alt="" coords="382,509,554,685">
+<area shape="rect" id="node5" href="geo_tpoint.html" target="_top" title="geo_tpoint" alt="" coords="375,703,561,879">
+<area shape="rect" id="node6" href="geo_tsurf.html" target="_top" title="geo_tsurf" alt="" coords="381,896,555,1072">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/geo_sym.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="geo_ptcanv.html" target="_top" title="geo_ptcanv" alt="" coords="339,87,509,380">
-<area shape="rect" id="node2" href="geo_can.html" target="_top" title="geo_can" alt="" coords="74,5,219,93">
-<area shape="rect" id="node3" href="geo_map.html" target="_top" title="geo_map" alt="" coords="71,321,223,409">
-<area shape="rect" id="node4" href="geo_palt.html" target="_top" title="geo_palt" alt="" coords="72,216,221,304">
-<area shape="rect" id="node5" href="geo_ppln.html" target="_top" title="geo_ppln" alt="" coords="70,111,223,199">
-<area shape="rect" id="node6" href="geo_sym.html" target="_top" title="geo_sym" alt="" coords="5,617,288,745">
-<area shape="rect" id="node7" href="geo_symblim.html" target="_top" title="geo_symblim" alt="" coords="332,397,516,573">
-<area shape="rect" id="node8" href="geo_symblim_parcelle.html" target="_top" title="geo_symblim_parcelle" alt="" coords="560,400,812,488">
-<area shape="rect" id="node9" href="geo_tline.html" target="_top" title="geo_tline" alt="" coords="347,591,501,767">
-<area shape="rect" id="node10" href="geo_tline_commune.html" target="_top" title="geo_tline_commune" alt="" coords="568,593,804,681">
-<area shape="rect" id="node11" href="geo_tpoint.html" target="_top" title="geo_tpoint" alt="" coords="341,784,507,960">
-<area shape="rect" id="node12" href="geo_tpoint_commune.html" target="_top" title="geo_tpoint_commune" alt="" coords="562,787,810,875">
-<area shape="rect" id="node13" href="geo_tsurf.html" target="_top" title="geo_tsurf" alt="" coords="347,977,501,1153">
-<area shape="rect" id="node14" href="geo_tsurf_commune.html" target="_top" title="geo_tsurf_commune" alt="" coords="567,980,805,1068">
+<area shape="rect" id="node1" href="geo_ptcanv.html" target="_top" title="geo_ptcanv" alt="" coords="371,87,565,380">
+<area shape="rect" id="node2" href="geo_can.html" target="_top" title="geo_can" alt="" coords="81,5,243,93">
+<area shape="rect" id="node3" href="geo_map.html" target="_top" title="geo_map" alt="" coords="77,321,247,409">
+<area shape="rect" id="node4" href="geo_palt.html" target="_top" title="geo_palt" alt="" coords="79,216,245,304">
+<area shape="rect" id="node5" href="geo_ppln.html" target="_top" title="geo_ppln" alt="" coords="77,111,247,199">
+<area shape="rect" id="node6" href="geo_sym.html" target="_top" title="geo_sym" alt="" coords="5,617,319,745">
+<area shape="rect" id="node7" href="geo_symblim.html" target="_top" title="geo_symblim" alt="" coords="363,397,573,573">
+<area shape="rect" id="node8" href="geo_symblim_parcelle.html" target="_top" title="geo_symblim_parcelle" alt="" coords="617,400,915,488">
+<area shape="rect" id="node9" href="geo_tline.html" target="_top" title="geo_tline" alt="" coords="382,591,554,767">
+<area shape="rect" id="node10" href="geo_tline_commune.html" target="_top" title="geo_tline_commune" alt="" coords="628,593,904,681">
+<area shape="rect" id="node11" href="geo_tpoint.html" target="_top" title="geo_tpoint" alt="" coords="375,784,561,960">
+<area shape="rect" id="node12" href="geo_tpoint_commune.html" target="_top" title="geo_tpoint_commune" alt="" coords="621,787,911,875">
+<area shape="rect" id="node13" href="geo_tsurf.html" target="_top" title="geo_tsurf" alt="" coords="381,977,555,1153">
+<area shape="rect" id="node14" href="geo_tsurf_commune.html" target="_top" title="geo_tsurf_commune" alt="" coords="627,980,905,1068">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/geo_sym.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -251,7 +268,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -262,7 +279,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

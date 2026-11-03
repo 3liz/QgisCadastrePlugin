@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>ccthp - qgistest Database</title>
+        <title>ccthp - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>ccthp</h1><p><span id="recordNumber">13</span> rows</p><br />
+                    <h1>ccthp</h1><p><span id="recordNumber">-1</span> rows</p><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -87,7 +87,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -113,7 +119,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="pev.ccthp&#39;s name implies that it&#39;s a child of ccthp.ccthp, but it doesn&#39;t reference that column."><a href='pev.html'>pev</a><span class='relatedKey'>.ccthp</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -154,7 +161,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -194,33 +207,33 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="ccthp.html" target="_top" title="ccthp" alt="" coords="5,5,264,133">
+<area shape="rect" id="node1" href="ccthp.html" target="_top" title="ccthp" alt="" coords="5,5,287,133">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/ccthp.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pev.html" target="_top" title="pev" alt="" coords="308,5,447,269">
-<area shape="rect" id="node2" href="ccthp.html" target="_top" title="ccthp" alt="" coords="5,120,264,248">
+<area shape="rect" id="node1" href="pev.html" target="_top" title="pev" alt="" coords="331,5,492,299">
+<area shape="rect" id="node2" href="ccthp.html" target="_top" title="ccthp" alt="" coords="5,149,287,277">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/ccthp.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pev.html" target="_top" title="pev" alt="" coords="308,372,447,636">
-<area shape="rect" id="node2" href="ccoaff.html" target="_top" title="ccoaff" alt="" coords="67,357,202,445">
-<area shape="rect" id="node3" href="ccocac.html" target="_top" title="ccocac" alt="" coords="67,713,203,801">
-<area shape="rect" id="node4" href="ccthp.html" target="_top" title="ccthp" alt="" coords="5,568,264,696">
-<area shape="rect" id="node5" href="gnexpl.html" target="_top" title="gnexpl" alt="" coords="66,463,203,551">
-<area shape="rect" id="node6" href="local10.html" target="_top" title="local10" alt="" coords="61,252,209,340">
-<area shape="rect" id="node7" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="529,5,744,93">
-<area shape="rect" id="node8" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="533,111,740,199">
-<area shape="rect" id="node9" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="491,216,783,304">
-<area shape="rect" id="node10" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="498,321,775,409">
-<area shape="rect" id="node11" href="pevlissage.html" target="_top" title="pevlissage" alt="" coords="555,427,719,515">
-<area shape="rect" id="node12" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="541,532,733,620">
-<area shape="rect" id="node13" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="521,637,752,725">
-<area shape="rect" id="node14" href="pevtaxation.html" target="_top" title="pevtaxation" alt="" coords="547,743,726,831">
+<area shape="rect" id="node1" href="pev.html" target="_top" title="pev" alt="" coords="331,372,492,665">
+<area shape="rect" id="node2" href="ccoaff.html" target="_top" title="ccoaff" alt="" coords="75,387,217,475">
+<area shape="rect" id="node3" href="ccocac.html" target="_top" title="ccocac" alt="" coords="72,743,220,831">
+<area shape="rect" id="node4" href="ccthp.html" target="_top" title="ccthp" alt="" coords="5,597,287,725">
+<area shape="rect" id="node5" href="gnexpl.html" target="_top" title="gnexpl" alt="" coords="71,492,221,580">
+<area shape="rect" id="node6" href="local10.html" target="_top" title="local10" alt="" coords="61,281,231,369">
+<area shape="rect" id="node7" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="585,5,833,93">
+<area shape="rect" id="node8" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="591,111,827,199">
+<area shape="rect" id="node9" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="536,216,881,304">
+<area shape="rect" id="node10" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="545,321,872,409">
+<area shape="rect" id="node11" href="pevlissage.html" target="_top" title="pevlissage" alt="" coords="615,427,802,515">
+<area shape="rect" id="node12" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="601,532,817,620">
+<area shape="rect" id="node13" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="574,637,843,725">
+<area shape="rect" id="node14" href="pevtaxation.html" target="_top" title="pevtaxation" alt="" coords="609,743,809,831">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/ccthp.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -231,7 +244,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -242,7 +255,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

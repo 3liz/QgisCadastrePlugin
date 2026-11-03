@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>voie - qgistest Database</title>
+        <title>voie - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>voie</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>voie</h1><p><span id="recordNumber">15</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -100,7 +100,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -126,19 +132,48 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="local00.voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='local00.html'>local00</a><span class='relatedKey'>.voie</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="local10.voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='local10.html'>local10</a><span class='relatedKey'>.voie</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="parcelle.voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='parcelle.html'>parcelle</a><span class='relatedKey'>.voie</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="parcelle_info.voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='parcelle_info.html'>parcelle_info</a><span class='relatedKey'>.voie</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="topo.caractere_voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='topo.html'>topo</a><span class='relatedKey'>.caractere_voie</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="topo.code_voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='topo.html'>topo</a><span class='relatedKey'>.code_voie</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="topo.nature_de_voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='topo.html'>topo</a><span class='relatedKey'>.nature_de_voie</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="topo.type_voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='topo.html'>topo</a><span class='relatedKey'>.type_voie</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="v_geo_parcelle.voie&#39;s name implies that it&#39;s a child of voie.voie, but it doesn&#39;t reference that column."><a href='v_geo_parcelle.html'>v_geo_parcelle</a><span class='relatedKey'>.voie</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -149,7 +184,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="annee">annee</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="annee">annee</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -248,7 +283,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="voie.natvoiriv&#39;s name implies that it&#39;s a child of natvoiriv.natvoiriv, but it doesn&#39;t reference that column."><a href='natvoiriv.html'>natvoiriv</a><span class='relatedKey'>.natvoiriv</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -303,7 +339,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="voie.natvoi&#39;s name implies that it&#39;s a child of natvoi.natvoi, but it doesn&#39;t reference that column."><a href='natvoi.html'>natvoi</a><span class='relatedKey'>.natvoi</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -341,7 +378,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="voie.typcom&#39;s name implies that it&#39;s a child of typcom.typcom, but it doesn&#39;t reference that column."><a href='typcom.html'>typcom</a><span class='relatedKey'>.typcom</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -379,7 +417,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="voie.carvoi&#39;s name implies that it&#39;s a child of carvoi.carvoi, but it doesn&#39;t reference that column."><a href='carvoi.html'>carvoi</a><span class='relatedKey'>.carvoi</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -468,7 +507,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="voie.annul&#39;s name implies that it&#39;s a child of annul.annul, but it doesn&#39;t reference that column."><a href='annul.html'>annul</a><span class='relatedKey'>.annul</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -540,7 +580,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="voie.typvoi&#39;s name implies that it&#39;s a child of typvoi.typvoi, but it doesn&#39;t reference that column."><a href='typvoi.html'>typvoi</a><span class='relatedKey'>.typvoi</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -561,7 +602,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="voie.indldnbat&#39;s name implies that it&#39;s a child of indldnbat.indldnbat, but it doesn&#39;t reference that column."><a href='indldnbat.html'>indldnbat</a><span class='relatedKey'>.indldnbat</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -615,7 +657,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -628,6 +676,24 @@
                                 <tr>
                                     <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> voie_pk</td>
                                     <td>Primary key</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>voie</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idx_voie_voie_substr</td>
+                                    <td>Performance</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idxan_voie</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>annee</td>
+                                </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> voie_voie_key</td>
+                                    <td>Must be unique</td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>voie</td>
                                 </tr>
@@ -655,72 +721,74 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="voie.html" target="_top" title="voie" alt="" coords="5,5,275,837">
+<area shape="rect" id="node1" href="voie.html" target="_top" title="voie" alt="" coords="5,5,296,837">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/voie.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="local00.html" target="_top" title="local00" alt="" coords="791,5,931,181">
-<area shape="rect" id="node2" href="parcelle.html" target="_top" title="parcelle" alt="" coords="525,144,720,408">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="212,320,481,1152">
-<area shape="rect" id="node6" href="annul.html" target="_top" title="annul" alt="" coords="21,851,152,968">
-<area shape="rect" id="node7" href="carvoi.html" target="_top" title="carvoi" alt="" coords="20,716,153,833">
-<area shape="rect" id="node8" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,1120,168,1237">
-<area shape="rect" id="node9" href="natvoi.html" target="_top" title="natvoi" alt="" coords="15,447,158,564">
-<area shape="rect" id="node10" href="natvoiriv.html" target="_top" title="natvoiriv" alt="" coords="9,312,165,429">
-<area shape="rect" id="node11" href="typcom.html" target="_top" title="typcom" alt="" coords="15,581,159,699">
-<area shape="rect" id="node12" href="typvoi.html" target="_top" title="typvoi" alt="" coords="19,985,154,1103">
-<area shape="rect" id="node4" href="local10.html" target="_top" title="local10" alt="" coords="1003,100,1197,687">
-<area shape="rect" id="node5" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="764,235,959,445">
+<area shape="rect" id="node1" href="local00.html" target="_top" title="local00" alt="" coords="973,5,1134,240">
+<area shape="rect" id="node2" href="parcelle.html" target="_top" title="parcelle" alt="" coords="619,212,840,564">
+<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="227,651,517,1483">
+<area shape="rect" id="node8" href="annul.html" target="_top" title="annul" alt="" coords="25,1181,163,1299">
+<area shape="rect" id="node9" href="carvoi.html" target="_top" title="carvoi" alt="" coords="23,1047,165,1164">
+<area shape="rect" id="node10" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="5,1451,183,1568">
+<area shape="rect" id="node11" href="natvoi.html" target="_top" title="natvoi" alt="" coords="21,777,167,895">
+<area shape="rect" id="node12" href="natvoiriv.html" target="_top" title="natvoiriv" alt="" coords="9,643,179,760">
+<area shape="rect" id="node13" href="typcom.html" target="_top" title="typcom" alt="" coords="16,912,172,1029">
+<area shape="rect" id="node14" href="typvoi.html" target="_top" title="typvoi" alt="" coords="22,1316,166,1433">
+<area shape="rect" id="node4" href="local10.html" target="_top" title="local10" alt="" coords="1209,100,1431,745">
+<area shape="rect" id="node5" href="parcelle_info.html" target="_top" title="parcelle_info" alt="" coords="943,293,1164,587">
+<area shape="rect" id="node6" href="topo.html" target="_top" title="topo" alt="" coords="561,653,897,859">
+<area shape="rect" id="node7" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="941,604,1165,785">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/voie.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="328,855,491,943">
-<area shape="rect" id="node2" href="annul.html" target="_top" title="annul" alt="" coords="53,639,183,756">
-<area shape="rect" id="node3" href="carvoi.html" target="_top" title="carvoi" alt="" coords="51,504,185,621">
-<area shape="rect" id="node4" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="37,908,199,1025">
-<area shape="rect" id="node5" href="typcom.html" target="_top" title="typcom" alt="" coords="46,369,190,487">
-<area shape="rect" id="node6" href="typvoi.html" target="_top" title="typvoi" alt="" coords="51,773,185,891">
-<area shape="rect" id="node7" href="geo_batiment_parcelle.html" target="_top" title="geo_batiment_parcelle" alt="" coords="827,1173,1085,1261">
-<area shape="rect" id="node8" href="parcelle.html" target="_top" title="parcelle" alt="" coords="588,1381,783,1645">
-<area shape="rect" id="node18" href="voie.html" target="_top" title="voie" alt="" coords="275,5,544,837">
-<area shape="rect" id="node25" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,1383,231,1471">
-<area shape="rect" id="node30" href="gpdl.html" target="_top" title="gpdl" alt="" coords="347,1367,472,1455">
-<area shape="rect" id="node34" href="pdl.html" target="_top" title="pdl" alt="" coords="340,1472,479,1560">
-<area shape="rect" id="node36" href="type_filiation.html" target="_top" title="type_filiation" alt="" coords="316,1577,503,1665">
-<area shape="rect" id="node9" href="geo_borne_parcelle.html" target="_top" title="geo_borne_parcelle" alt="" coords="841,1279,1071,1367">
-<area shape="rect" id="node10" href="geo_croix_parcelle.html" target="_top" title="geo_croix_parcelle" alt="" coords="844,1384,1068,1472">
-<area shape="rect" id="node11" href="geo_numvoie_parcelle.html" target="_top" title="geo_numvoie_parcelle" alt="" coords="829,2121,1083,2209">
-<area shape="rect" id="node12" href="geo_parcelle.html" target="_top" title="geo_parcelle" alt="" coords="866,2964,1046,3052">
-<area shape="rect" id="node13" href="geo_indp.html" target="_top" title="geo_indp" alt="" coords="609,3079,762,3167">
-<area shape="rect" id="node14" href="geo_subdsect.html" target="_top" title="geo_subdsect" alt="" coords="592,2965,779,3053">
-<area shape="rect" id="node15" href="geo_subdfisc_parcelle.html" target="_top" title="geo_subdfisc_parcelle" alt="" coords="832,2227,1080,2315">
-<area shape="rect" id="node16" href="geo_symblim_parcelle.html" target="_top" title="geo_symblim_parcelle" alt="" coords="830,2332,1082,2420">
-<area shape="rect" id="node17" href="local00.html" target="_top" title="local00" alt="" coords="886,731,1026,907">
-<area shape="rect" id="node42" href="natvoi.html" target="_top" title="natvoi" alt="" coords="47,235,189,352">
-<area shape="rect" id="node43" href="natvoiriv.html" target="_top" title="natvoiriv" alt="" coords="40,100,196,217">
-<area shape="rect" id="node19" href="local10.html" target="_top" title="local10" alt="" coords="1129,1463,1324,2049">
-<area shape="rect" id="node20" href="cbtabt.html" target="_top" title="cbtabt" alt="" coords="887,3297,1025,3385">
-<area shape="rect" id="node21" href="ccoeva.html" target="_top" title="ccoeva" alt="" coords="887,1489,1025,1577">
-<area shape="rect" id="node22" href="cconac.html" target="_top" title="cconac" alt="" coords="885,3403,1027,3491">
-<area shape="rect" id="node23" href="cconlc.html" target="_top" title="cconlc" alt="" coords="889,1805,1023,1893">
-<area shape="rect" id="node24" href="ccoplc.html" target="_top" title="ccoplc" alt="" coords="889,1700,1023,1788">
-<area shape="rect" id="node26" href="dnatcg.html" target="_top" title="dnatcg" alt="" coords="887,2753,1025,2841">
-<area shape="rect" id="node27" href="dnatlc.html" target="_top" title="dnatlc" alt="" coords="889,2016,1023,2104">
-<area shape="rect" id="node28" href="dteloc.html" target="_top" title="dteloc" alt="" coords="889,1595,1023,1683">
-<area shape="rect" id="node29" href="gimtom.html" target="_top" title="gimtom" alt="" coords="883,2859,1029,2947">
-<area shape="rect" id="node31" href="hlmsem.html" target="_top" title="hlmsem" alt="" coords="883,2543,1029,2631">
-<area shape="rect" id="node32" href="top48a.html" target="_top" title="top48a" alt="" coords="887,1911,1025,1999">
-<area shape="rect" id="node33" href="lots.html" target="_top" title="lots" alt="" coords="887,625,1025,713">
-<area shape="rect" id="node35" href="lotslocaux.html" target="_top" title="lotslocaux" alt="" coords="1368,733,1532,821">
-<area shape="rect" id="node37" href="parcelle_info.html" target="_top" title="parcelle_info" alt="" coords="864,1068,1048,1156">
-<area shape="rect" id="node38" href="parcellecomposante.html" target="_top" title="parcellecomposante" alt="" coords="835,2437,1077,2525">
-<area shape="rect" id="node39" href="pev.html" target="_top" title="pev" alt="" coords="1381,1465,1519,1553">
-<area shape="rect" id="node40" href="suf.html" target="_top" title="suf" alt="" coords="887,2648,1025,2736">
-<area shape="rect" id="node41" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="859,3069,1053,3280">
+<area shape="rect" id="node1" href="commune.html" target="_top" title="commune" alt="" coords="361,954,540,1042">
+<area shape="rect" id="node2" href="annul.html" target="_top" title="annul" alt="" coords="65,738,202,856">
+<area shape="rect" id="node3" href="carvoi.html" target="_top" title="carvoi" alt="" coords="62,604,205,721">
+<area shape="rect" id="node4" href="indldnbat.html" target="_top" title="indldnbat" alt="" coords="45,1008,222,1125">
+<area shape="rect" id="node5" href="typcom.html" target="_top" title="typcom" alt="" coords="55,469,211,586">
+<area shape="rect" id="node6" href="typvoi.html" target="_top" title="typvoi" alt="" coords="61,873,205,990">
+<area shape="rect" id="node7" href="geo_batiment_parcelle.html" target="_top" title="geo_batiment_parcelle" alt="" coords="1020,1938,1324,2026">
+<area shape="rect" id="node8" href="parcelle.html" target="_top" title="parcelle" alt="" coords="723,1836,893,1924">
+<area shape="rect" id="node17" href="voie.html" target="_top" title="voie" alt="" coords="305,105,596,937">
+<area shape="rect" id="node24" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,1704,261,1792">
+<area shape="rect" id="node29" href="gpdl.html" target="_top" title="gpdl" alt="" coords="387,2706,514,2794">
+<area shape="rect" id="node33" href="pdl.html" target="_top" title="pdl" alt="" coords="383,1882,518,1970">
+<area shape="rect" id="node35" href="type_filiation.html" target="_top" title="type_filiation" alt="" coords="345,1777,556,1865">
+<area shape="rect" id="node9" href="geo_borne_parcelle.html" target="_top" title="geo_borne_parcelle" alt="" coords="1036,2044,1308,2132">
+<area shape="rect" id="node10" href="geo_croix_parcelle.html" target="_top" title="geo_croix_parcelle" alt="" coords="1041,1201,1303,1289">
+<area shape="rect" id="node11" href="geo_numvoie_parcelle.html" target="_top" title="geo_numvoie_parcelle" alt="" coords="1023,1306,1321,1394">
+<area shape="rect" id="node12" href="geo_parcelle.html" target="_top" title="geo_parcelle" alt="" coords="1069,2477,1275,2565">
+<area shape="rect" id="node13" href="geo_indp.html" target="_top" title="geo_indp" alt="" coords="723,2429,893,2517">
+<area shape="rect" id="node14" href="geo_subdfisc_parcelle.html" target="_top" title="geo_subdfisc_parcelle" alt="" coords="1024,1622,1320,1710">
+<area shape="rect" id="node15" href="geo_symblim_parcelle.html" target="_top" title="geo_symblim_parcelle" alt="" coords="1023,1728,1321,1816">
+<area shape="rect" id="node16" href="local00.html" target="_top" title="local00" alt="" coords="1091,181,1253,269">
+<area shape="rect" id="node42" href="natvoi.html" target="_top" title="natvoi" alt="" coords="61,334,206,452">
+<area shape="rect" id="node43" href="natvoiriv.html" target="_top" title="natvoiriv" alt="" coords="48,200,219,317">
+<area shape="rect" id="node18" href="local10.html" target="_top" title="local10" alt="" coords="1368,993,1539,1081">
+<area shape="rect" id="node19" href="cbtabt.html" target="_top" title="cbtabt" alt="" coords="1099,1833,1245,1921">
+<area shape="rect" id="node20" href="ccoeva.html" target="_top" title="ccoeva" alt="" coords="1097,2290,1247,2378">
+<area shape="rect" id="node21" href="cconac.html" target="_top" title="cconac" alt="" coords="1097,2688,1247,2776">
+<area shape="rect" id="node22" href="cconlc.html" target="_top" title="cconlc" alt="" coords="1100,569,1244,657">
+<area shape="rect" id="node23" href="ccoplc.html" target="_top" title="ccoplc" alt="" coords="1100,674,1244,762">
+<area shape="rect" id="node25" href="dnatcg.html" target="_top" title="dnatcg" alt="" coords="1097,780,1247,868">
+<area shape="rect" id="node26" href="dnatlc.html" target="_top" title="dnatlc" alt="" coords="1100,885,1244,973">
+<area shape="rect" id="node27" href="dteloc.html" target="_top" title="dteloc" alt="" coords="1100,990,1244,1078">
+<area shape="rect" id="node28" href="gimtom.html" target="_top" title="gimtom" alt="" coords="1093,1096,1251,1184">
+<area shape="rect" id="node30" href="hlmsem.html" target="_top" title="hlmsem" alt="" coords="1092,1412,1252,1500">
+<area shape="rect" id="node31" href="top48a.html" target="_top" title="top48a" alt="" coords="1096,1517,1248,1605">
+<area shape="rect" id="node32" href="lots.html" target="_top" title="lots" alt="" coords="1101,464,1243,552">
+<area shape="rect" id="node34" href="lotslocaux.html" target="_top" title="lotslocaux" alt="" coords="1583,464,1765,552">
+<area shape="rect" id="node36" href="parcelle_info.html" target="_top" title="parcelle_info" alt="" coords="1068,358,1276,446">
+<area shape="rect" id="node37" href="parcellecomposante.html" target="_top" title="parcellecomposante" alt="" coords="1032,2185,1312,2273">
+<area shape="rect" id="node38" href="pev.html" target="_top" title="pev" alt="" coords="1593,990,1755,1078">
+<area shape="rect" id="node39" href="suf.html" target="_top" title="suf" alt="" coords="1091,2582,1253,2670">
+<area shape="rect" id="node40" href="topo.html" target="_top" title="topo" alt="" coords="640,64,976,269">
+<area shape="rect" id="node41" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="1060,2396,1284,2460">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/voie.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -731,7 +799,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -742,7 +810,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

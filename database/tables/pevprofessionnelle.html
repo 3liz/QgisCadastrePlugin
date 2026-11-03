@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>pevprofessionnelle - qgistest Database</title>
+        <title>pevprofessionnelle - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -100,7 +100,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -133,7 +139,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="annee">annee</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="annee">annee</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -249,7 +255,8 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="pevprofessionnelle.pev&#39;s name implies that it&#39;s a child of pev.pev, but it doesn&#39;t reference that column."><a href='pev.html'>pev</a><span class='relatedKey'>.pev</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -524,7 +531,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -539,6 +552,18 @@
                                     <td>Primary key</td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>pevprofessionnelle</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idx_pevprofessionnelle_pev</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>pev</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>idxan_pevprofessionnelle</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>annee</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -564,33 +589,33 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="5,5,347,749">
+<area shape="rect" id="node1" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="5,5,387,749">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/pevprofessionnelle.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="188,5,529,749">
-<area shape="rect" id="node2" href="pev.html" target="_top" title="pev" alt="" coords="5,213,144,477">
+<area shape="rect" id="node1" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="211,5,592,749">
+<area shape="rect" id="node2" href="pev.html" target="_top" title="pev" alt="" coords="5,213,167,507">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/pevprofessionnelle.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="pev.html" target="_top" title="pev" alt="" coords="197,372,336,636">
-<area shape="rect" id="node2" href="ccoaff.html" target="_top" title="ccoaff" alt="" coords="12,357,147,445">
-<area shape="rect" id="node3" href="ccocac.html" target="_top" title="ccocac" alt="" coords="11,673,147,761">
-<area shape="rect" id="node4" href="ccthp.html" target="_top" title="ccthp" alt="" coords="12,568,147,656">
-<area shape="rect" id="node5" href="gnexpl.html" target="_top" title="gnexpl" alt="" coords="11,463,148,551">
-<area shape="rect" id="node6" href="local10.html" target="_top" title="local10" alt="" coords="5,252,153,340">
-<area shape="rect" id="node7" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="443,5,658,93">
-<area shape="rect" id="node8" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="447,111,654,199">
-<area shape="rect" id="node9" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="405,216,697,304">
-<area shape="rect" id="node10" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="412,321,689,409">
-<area shape="rect" id="node11" href="pevlissage.html" target="_top" title="pevlissage" alt="" coords="469,427,633,515">
-<area shape="rect" id="node12" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="455,532,647,620">
-<area shape="rect" id="node13" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="380,637,721,1381">
-<area shape="rect" id="node14" href="pevtaxation.html" target="_top" title="pevtaxation" alt="" coords="461,1399,640,1487">
+<area shape="rect" id="node1" href="pev.html" target="_top" title="pev" alt="" coords="220,372,381,665">
+<area shape="rect" id="node2" href="ccoaff.html" target="_top" title="ccoaff" alt="" coords="19,387,162,475">
+<area shape="rect" id="node3" href="ccocac.html" target="_top" title="ccocac" alt="" coords="17,703,165,791">
+<area shape="rect" id="node4" href="ccthp.html" target="_top" title="ccthp" alt="" coords="22,597,159,685">
+<area shape="rect" id="node5" href="gnexpl.html" target="_top" title="gnexpl" alt="" coords="16,492,165,580">
+<area shape="rect" id="node6" href="local10.html" target="_top" title="local10" alt="" coords="5,281,176,369">
+<area shape="rect" id="node7" href="pevdependances.html" target="_top" title="pevdependances" alt="" coords="492,5,740,93">
+<area shape="rect" id="node8" href="pevexoneration.html" target="_top" title="pevexoneration" alt="" coords="498,111,734,199">
+<area shape="rect" id="node9" href="pevexoneration_imposable.html" target="_top" title="pevexoneration_imposable" alt="" coords="443,216,789,304">
+<area shape="rect" id="node10" href="pevexoneration_imposee.html" target="_top" title="pevexoneration_imposee" alt="" coords="453,321,779,409">
+<area shape="rect" id="node11" href="pevlissage.html" target="_top" title="pevlissage" alt="" coords="523,427,709,515">
+<area shape="rect" id="node12" href="pevprincipale.html" target="_top" title="pevprincipale" alt="" coords="508,532,724,620">
+<area shape="rect" id="node13" href="pevprofessionnelle.html" target="_top" title="pevprofessionnelle" alt="" coords="425,637,807,1381">
+<area shape="rect" id="node14" href="pevtaxation.html" target="_top" title="pevtaxation" alt="" coords="516,1399,716,1487">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/pevprofessionnelle.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -601,7 +626,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -612,7 +637,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

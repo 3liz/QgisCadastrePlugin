@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>geo_indp - qgistest Database</title>
+        <title>geo_indp - gis.cadastre</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>gis</b></a><span class="navbar-brand" style="padding-left: 0">.cadastre</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>geo_indp</h1><p><span id="recordNumber">2</span> rows</p><br />
+                    <h1>geo_indp</h1><p><span id="recordNumber">-1</span> rows</p><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -87,7 +87,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -113,11 +119,13 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="geo_parcelle.geo_indp&#39;s name implies that it&#39;s a child of geo_indp.geo_indp, but it doesn&#39;t reference that column."><a href='geo_parcelle.html'>geo_parcelle</a><span class='relatedKey'>.geo_indp</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="v_geo_parcelle.geo_indp&#39;s name implies that it&#39;s a child of geo_indp.geo_indp, but it doesn&#39;t reference that column."><a href='v_geo_parcelle.html'>v_geo_parcelle</a><span class='relatedKey'>.geo_indp</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">Implied Constraint</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -158,7 +166,13 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -198,27 +212,26 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="geo_indp.html" target="_top" title="geo_indp" alt="" coords="5,5,291,133">
+<area shape="rect" id="node1" href="geo_indp.html" target="_top" title="geo_indp" alt="" coords="5,5,321,133">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/geo_indp.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="geo_parcelle.html" target="_top" title="geo_parcelle" alt="" coords="342,5,522,299">
-<area shape="rect" id="node2" href="geo_indp.html" target="_top" title="geo_indp" alt="" coords="5,247,291,375">
-<area shape="rect" id="node3" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="335,316,529,527">
+<area shape="rect" id="node1" href="geo_parcelle.html" target="_top" title="geo_parcelle" alt="" coords="374,5,581,269">
+<area shape="rect" id="node2" href="geo_indp.html" target="_top" title="geo_indp" alt="" coords="5,203,321,331">
+<area shape="rect" id="node3" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="365,287,589,468">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/geo_indp.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="geo_parcelle.html" target="_top" title="geo_parcelle" alt="" coords="611,5,791,299">
-<area shape="rect" id="node2" href="geo_indp.html" target="_top" title="geo_indp" alt="" coords="275,295,560,423">
-<area shape="rect" id="node3" href="parcelle.html" target="_top" title="parcelle" alt="" coords="343,84,491,172">
-<area shape="rect" id="node4" href="geo_subdsect.html" target="_top" title="geo_subdsect" alt="" coords="324,189,511,277">
-<area shape="rect" id="node5" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,147,231,235">
-<area shape="rect" id="node6" href="voie.html" target="_top" title="voie" alt="" coords="49,315,187,403">
-<area shape="rect" id="node7" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="604,316,799,527">
+<area shape="rect" id="node1" href="geo_parcelle.html" target="_top" title="geo_parcelle" alt="" coords="674,5,881,269">
+<area shape="rect" id="node2" href="geo_indp.html" target="_top" title="geo_indp" alt="" coords="305,236,621,364">
+<area shape="rect" id="node3" href="parcelle.html" target="_top" title="parcelle" alt="" coords="378,131,549,219">
+<area shape="rect" id="node4" href="comptecommunal.html" target="_top" title="comptecommunal" alt="" coords="5,167,261,255">
+<area shape="rect" id="node5" href="voie.html" target="_top" title="voie" alt="" coords="57,308,209,396">
+<area shape="rect" id="node6" href="v_geo_parcelle.html" target="_top" title="v_geo_parcelle" alt="" coords="665,287,889,468">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/geo_indp.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -229,7 +242,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -240,7 +253,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>
