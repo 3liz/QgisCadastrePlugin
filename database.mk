@@ -24,16 +24,17 @@ run-db-command:
 		docker compose --profile=dbrunner down -v; \
 	}
 
-#schemaspy:
-#	@rm -rf docs/database/ && mkdir docs/database/
-#	{ \
-#		cd .docker; \
-#		export DB_COMMAND="./install_db_and_wait.sh"; \
-#		docker compose --profile=schemaspy up  \
-#			--quiet-pull \
-#			--abort-on-container-exit \
-#			--exit-code-from schemaspy; \
-#		docker compose --profile=schemaspy down -v; \
-#	}
-
-
+# Documentation of the database in docs/database, with SchemaSpy, like in the plugin road network:
+# the schema cadastre is created by an import of the test data with the plugin (see .docker/schemaspy_import.py)
+schemaspy:
+	@rm -rf docs/database/ && mkdir docs/database/
+	@# The schemaspy container runs with its own user (java, uid 1000): the output directory must be writable
+	@chmod 777 docs/database/
+	{ \
+		cd .docker; \
+		docker compose --profile=schemaspy run --rm --quiet-pull schemaspy-import \
+			&& docker compose --profile=schemaspy run --rm --quiet-pull schemaspy; \
+		status=$$?; \
+		docker compose --profile=schemaspy down -v; \
+		exit $$status; \
+	}

@@ -57,6 +57,35 @@ services:
       start_interval: 2s
       start_period: 10s 
     profiles:
-    - schemaspy
     - dbrunner
- 
+
+  # Documentation of the database: make schemaspy.
+  # The schema cadastre is created by an import of the test data with the plugin, then documented by SchemaSpy
+  schemaspy-import:
+    image: ${QGIS_IMAGE_TAG}
+    user: ${UID}:${GID}
+    working_dir: /src
+    command: python3 /src/.docker/schemaspy_import.py
+    environment:
+      HOME: /tmp
+      QT_QPA_PLATFORM: offscreen
+      PYTHONPATH: /src:/usr/share/qgis/python/plugins
+    volumes:
+    - {type: bind, source: "..", target: /src}
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+    - schemaspy
+
+  schemaspy:
+    image: schemaspy/schemaspy:latest
+    volumes:
+    - {type: bind, source: "../docs/database", target: /output}
+    command: >-
+      -t pgsql11 -host db -db gis -u docker -p docker -port 5432 -s cadastre -nopages --include-routine-definition
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+    - schemaspy
