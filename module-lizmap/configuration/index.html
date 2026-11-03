@@ -18,7 +18,7 @@
         <link rel="prev" href="../installation/">
       
       
-        <link rel="next" href="../../database/">
+        <link rel="next" href="../utilisation/">
       
       
         
@@ -959,6 +959,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1264,14 +1292,70 @@ de la base, voir la <a href="../../extension-qgis/configuration/#fiche-parcellai
 </ul>
 <h2 id="dans-lizmap-web-client">Dans Lizmap Web Client<a class="headerlink" href="#dans-lizmap-web-client" title="Permanent link">#</a></h2>
 <p>Maintenant, vous devez configurer les droits d'accès à l'outil via l'interface d'administration.
-Le module a créé :</p>
+Le module a créé un groupe d'utilisateurs <code>Cadastre Lizmap</code> (identifiant <code>cadastre_lizmap</code>), qui a tous
+les droits du module, et les droits suivants :</p>
+<table>
+<thead>
+<tr>
+<th>Droit</th>
+<th>Donne accès à</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Utiliser le panneau de recherche</td>
+<td>la recherche par commune, section, parcelle et adresse</td>
+</tr>
+<tr>
+<td>Accéder aux données des propriétaires (noms et adresses)</td>
+<td>la recherche par propriétaire et les exports CSV des parcelles et des locaux avec leurs propriétaires</td>
+</tr>
+<tr>
+<td>Accéder aux dates et lieux de naissance des propriétaires</td>
+<td>ces données dans la fiche, les relevés et les exports</td>
+</tr>
+<tr>
+<td>Accéder aux informations de revenus</td>
+<td>ces données dans la fiche et les relevés</td>
+</tr>
+<tr>
+<td>Accéder aux informations d'exonérations fiscales</td>
+<td>ces données dans la fiche et les relevés</td>
+</tr>
+<tr>
+<td>Accéder à la fonction de relevé parcellaire</td>
+<td>le bouton du relevé parcellaire (PDF) dans la popup</td>
+</tr>
+<tr>
+<td>Accéder à la fonction de relevé de propriété</td>
+<td>le bouton du relevé de propriété (PDF) dans la popup</td>
+</tr>
+<tr>
+<td>Accéder aux onglets d'informations détaillées dans la popup des parcelles</td>
+<td>les onglets de la fiche sous la popup, et leur impression</td>
+</tr>
+</tbody>
+</table>
+<p>Les dates et lieux de naissance, les revenus et les exonérations sont masqués (<code>XX/XX/XXXX</code>, <code>XXX</code>) sans
+le droit correspondant. Les exports CSV des parcelles sélectionnées et les relevés parcellaire et de propriété
+contiennent celles que les droits de l'utilisateur autorisent. Il peut aussi les produire pour un tiers, sans
+ces données, par exemple pour un fichier transmis à une personne qui n'est pas autorisée à les connaître :</p>
 <ul>
-<li>un groupe d'utilisateurs <code>Cadastre Lizmap</code> (identifiant <code>cadastre_lizmap</code>)</li>
-<li>2 sujets de droit : <code>Accéder aux données de propriétaires</code> et <code>Utiliser le panneau de recherche</code></li>
+<li>pour les exports CSV, avec la case « Exporter pour un tiers », décochée par défaut ;</li>
+<li>pour les relevés, en choisissant « Pour un tiers (sans données sensibles) » dans le menu qui s'ouvre
+  au clic sur le bouton du relevé, à la place de « Avec les données que je peux voir ».</li>
 </ul>
-<p>Vous pouvez mettre certains utilisateurs dans ce groupe <code>Cadastre Lizmap</code>. Ils auront alors accès
-au panneau de recherche par localisation <strong>ET</strong> par nom de propriétaires. <strong>Vous devez bien faire
-attention de n'accorder le droit <code>Accéder aux données de propriétaires</code> qu'aux personnes habilitées !</strong>.</p>
+<p>La case et le menu ne sont proposés qu'aux utilisateurs qui ont au moins un des 3 droits sur les données
+sensibles : sans eux, les exports et les relevés sont de toute façon ceux d'un tiers.</p>
+<p>Vous pouvez mettre certains utilisateurs dans ce groupe <code>Cadastre Lizmap</code>. <strong>Vous devez bien faire
+attention de n'accorder les droits sur les propriétaires et leurs données qu'aux personnes habilitées !</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Avant la version 2.3.0 du module, il existait deux droits : <code>Accéder aux données de propriétaires
+simplifiées</code> et <code>Accéder aux données de propriétaires avancées</code>. Lors de la mise à jour du module,
+les groupes qui avaient le droit avancé reçoivent tous les nouveaux droits, et le droit simplifié devient
+<code>Accéder aux données des propriétaires (noms et adresses)</code> : rien ne change pour les utilisateurs.</p>
+</div>
 <p>Vous pouvez modifier plus finement les droits via le bouton <code>Changer les droits des groupes</code> situés
 dans le menu <code>Groupes d'utilisateurs pour les droits</code> de l'interface d'administration de Lizmap Web Client.</p>
 <div class="admonition warning">
@@ -1299,7 +1383,7 @@ Nous conseillons de ne pas toucher aux droits liés à Lizmap ici, sauf si vous 
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2 novembre 2026 07:42:36 UTC">2 novembre 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="3 novembre 2026 13:37:41 UTC">3 novembre 2026</span>
   </span>
 
     
