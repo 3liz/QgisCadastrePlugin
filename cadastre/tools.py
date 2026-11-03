@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 from typing import Union
 
+from qgis.core import Qgis, QgsVectorLayer
 from qgis.PyQt.QtCore import Qt
 from qgis.utils import OverrideCursor, pluginMetadata
 
@@ -23,6 +24,20 @@ def plugin_path(*args) -> Path:
         path = path.joinpath(item)
 
     return path
+
+
+def hide_fields_from_server(layer: QgsVectorLayer, field_names: tuple[str, ...]):
+    """Do not publish fields with QGIS Server: in WMS (GetFeatureInfo) and in WFS.
+
+    The boxes "WMS" and "WFS" of the fields in the properties of the layer are unchecked.
+    A field which does not exist, for example without MAJIC data, is ignored.
+    """
+    for name in field_names:
+        index = layer.fields().indexOf(name)
+        if index < 0:
+            continue
+        layer.setFieldConfigurationFlag(index, Qgis.FieldConfigurationFlag.HideFromWms, True)
+        layer.setFieldConfigurationFlag(index, Qgis.FieldConfigurationFlag.HideFromWfs, True)
 
 
 def wait_cursor(func):

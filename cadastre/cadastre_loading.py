@@ -43,7 +43,8 @@ from qgis.gui import QgsMapCanvas
 from qgis.PyQt.QtCore import QObject, QSettings, pyqtSignal
 
 from cadastre.cadastre_database import CadastreDatabase
-from cadastre.tools import plugin_path
+from cadastre.definitions import OWNER_FIELDS
+from cadastre.tools import hide_fields_from_server, plugin_path
 
 DEFAULT_THEME = "classique"
 
@@ -207,6 +208,7 @@ class CadastreLoading(QObject):
                 "active": True,
                 "group": "C",
                 "subset": 'substr("geo_parcelle", 1, 6) IN (%s)',
+                "hidden_from_server": OWNER_FIELDS,
             },
             {
                 "label": "Sections (étiquettes)",
@@ -543,6 +545,9 @@ class CadastreLoading(QObject):
             qml_path = str(plugin_path("styles", self.themeDir, f"{item['name']}.qml"))
             if os.path.exists(qml_path):
                 v_layer.loadNamedStyle(qml_path)
+
+            # After the style, which could publish them
+            hide_fields_from_server(v_layer, item.get("hidden_from_server", ()))
 
             # append vector layer to the list
             qgis_cadastre_layers.append(v_layer)

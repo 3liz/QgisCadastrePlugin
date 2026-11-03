@@ -28,8 +28,9 @@ from qgis.core import (
     QgsProcessingParameterVectorLayer,
 )
 
-from cadastre.definitions import URL_DOCUMENTATION
+from cadastre.definitions import OWNER_FIELDS, URL_DOCUMENTATION
 from cadastre.processing.algorithms.base import BaseProcessingAlgorithm
+from cadastre.tools import hide_fields_from_server
 
 
 class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
@@ -128,6 +129,14 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
         variables["cadastre_parcelle_unique_field"] = parcelle_unique_field
 
         context.project().setCustomVariables(variables)
+
+        # The owners of the parcelles are not published by QGIS Server: only the module cadastre of Lizmap
+        # gives them, according to the rights of the user
+        hide_fields_from_server(parcelle_layer, OWNER_FIELDS)
+        feedback.pushInfo(
+            "Les champs des propriétaires de la couche des parcelles ne sont pas publiés en WMS et WFS : "
+            + ", ".join(OWNER_FIELDS)
+        )
         # Returns empty dict if no outputs
         return {self.SUCCESS: 1}
 
@@ -146,6 +155,8 @@ class ConfigProjectAlgorithm(BaseProcessingAlgorithm):
             "Ce traitement permet de configurer un projet QGIS pour de la publication sur le web avec "
             '<a href="https://github.com/3liz/lizmap-web-client/">Lizmap Web Client</a> et son '
             '<a href="https://github.com/3liz/lizmap-cadastre-module">module Cadastre</a>.\n'
+            "Les champs des propriétaires de la couche des parcelles (noms et adresses) ne sont plus publiés "
+            "en WMS et WFS par QGIS Server."
         )
 
     def helpUrl(self) -> str:

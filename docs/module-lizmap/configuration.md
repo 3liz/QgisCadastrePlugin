@@ -24,6 +24,13 @@ avec l'extension **Cadastre** :
 
     ![Publication WFS](media/wfs_properties.png)
 
+    - Dans les **propriétés de la couche** `Parcelles`, onglet **Champs**, les champs `proprietaire` et
+  `proprietaire_info` (noms et adresses des propriétaires) ne doivent pas être publiés : décochez leurs cases
+  `WMS` et `WFS`. Sinon, ils seraient visibles de tous les utilisateurs dans les popups, la table attributaire
+  et les requêtes WFS, sans les droits du module. L'outil de chargement des couches et l'algorithme
+  **Configuration du projet** les décochent automatiquement : pour un projet existant, relancez l'algorithme
+  ou décochez les cases à la main.
+
 ??? note "Liste des variables qui doivent être dans les propriétés du projet"
     Ces variables sont obligatoires dans les propriétés du projet pour avoir le module Cadastre fonctionnel sur le
     projet en question :

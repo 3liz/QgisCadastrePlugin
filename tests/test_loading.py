@@ -1,14 +1,16 @@
 from pathlib import Path
 from typing import Iterator
 
+import processing
 import pytest
 
-from qgis.core import QgsProject, QgsProviderRegistry
+from qgis.core import Qgis, QgsProject, QgsProviderRegistry
 from qgis.gui import QgisInterface
 
 from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
+from cadastre.definitions import OWNER_FIELDS
 from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
 from cadastre.dialogs.parcelle_dialog import CadastreParcelleDialog
 from cadastre.dialogs.search_dialog import CadastreSearchDialog
@@ -59,6 +61,51 @@ def test_load_all_layers(database: CadastreDatabase, project: QgsProject):
     variables = project.customVariables()
     assert variables["cadastre_parcelle_layer_id"] == parcelles.id()
     assert variables["cadastre_parcelle_unique_field"] == "geo_parcelle"
+
+
+def test_owner_fields_hidden_from_server(database: CadastreDatabase, project: QgsProject):
+    """The fields with the owners of the parcelles are not published in WMS and WFS by QGIS Server"""
+    CadastreLoading(CadastreFeedback()).process_loading(LoadingOptions(database, main_layers_only=True))
+
+    parcelles = project.mapLayersByName("Parcelles")[0]
+    for name in OWNER_FIELDS:
+        index = parcelles.fields().indexOf(name)
+        assert index >= 0, name
+        flags = parcelles.fieldConfigurationFlags(index)
+        assert flags & Qgis.FieldConfigurationFlag.HideFromWms, name
+        assert flags & Qgis.FieldConfigurationFlag.HideFromWfs, name
+
+    # The other fields are still published, like the key of the parcelle
+    flags = parcelles.fieldConfigurationFlags(parcelles.fields().indexOf("geo_parcelle"))
+    assert not flags & Qgis.FieldConfigurationFlag.HideFromWms
+    assert not flags & Qgis.FieldConfigurationFlag.HideFromWfs
+
+
+def test_config_project_hides_owner_fields(database: CadastreDatabase, project: QgsProject):
+    """The algorithm configuring an existing project also stops publishing the owners of the parcelles"""
+    CadastreLoading(CadastreFeedback()).process_loading(LoadingOptions(database, main_layers_only=True))
+    parcelles = project.mapLayersByName("Parcelles")[0]
+    # A project created before: the fields are published
+    for name in OWNER_FIELDS:
+        parcelles.setFieldConfigurationFlags(parcelles.fields().indexOf(name), Qgis.FieldConfigurationFlags())
+
+    results = processing.run(
+        "cadastre:config_project",
+        {
+            "COMMUNE_LAYER": project.mapLayersByName("Communes")[0],
+            "COMMUNE_UNIQUE_FIELD": "geo_commune",
+            "SECTION_LAYER": project.mapLayersByName("Sections")[0],
+            "SECTION_UNIQUE_FIELD": "geo_section",
+            "PARCELLE_LAYER": parcelles,
+            "PARCELLE_UNIQUE_FIELD": "geo_parcelle",
+        },
+    )
+
+    assert results["SUCCESS"] == 1
+    for name in OWNER_FIELDS:
+        flags = parcelles.fieldConfigurationFlags(parcelles.fields().indexOf(name))
+        assert flags & Qgis.FieldConfigurationFlag.HideFromWms, name
+        assert flags & Qgis.FieldConfigurationFlag.HideFromWfs, name
 
 
 def test_load_main_layers_only(database: CadastreDatabase, project: QgsProject):

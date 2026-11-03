@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Chargement des couches et algorithme « Configuration du projet » : les champs `proprietaire` et
+  `proprietaire_info` de la couche des parcelles (noms et adresses des propriétaires) ne sont plus publiés
+  par QGIS Server, en WMS et en WFS. Ils étaient visibles de tous dans Lizmap, sans les droits du module
+  cadastre. Pour un projet existant, relancer l'algorithme ou décocher les cases à la main
 * Service serveur (Lizmap)
   * Nouvelle requête `GetExport` : données des exports CSV des locaux et des propriétaires d'une liste
     de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.
