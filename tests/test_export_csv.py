@@ -8,9 +8,12 @@ import cadastre.cadastre_common_base as common_utils
 
 from cadastre.cadastre_common_base import SensitiveData
 from cadastre.export_csv import (
+    adresse_local,
+    adresse_proprietaire,
     locaux,
     locaux_proprietaires_export,
     parcelles_proprietaires_export,
+    numero_voirie,
     parcelles_sql,
     recherche_spatiale,
 )
@@ -43,6 +46,28 @@ def connection(parcelles: QgsVectorLayer) -> tuple:  # noqa: F811
     """ The connection to the test database and its parameters, from the layer of the parcelles """
     params = common_utils.getConnectionParameterFromDbLayer(parcelles)
     return common_utils.getConnectorFromUri(params), params
+
+
+def test_adresse_local():
+    """ The nature of the street is optional, the address of the parcel is used without street """
+    assert adresse_local({"natvoi": "RUE", "libvoi": "DES OLIVIERS"}) == "RUE DES OLIVIERS"
+    assert adresse_local({"natvoi": None, "libvoi": "LES AIRES"}) == "LES AIRES"
+    assert adresse_local({"libvoi": None, "cconvo": "CHE", "dvoilib": "DE CAMPREOUX"}) == "CHE DE CAMPREOUX"
+
+
+def test_numero_voirie():
+    """ The leading zeros are removed, the index of repetition is optional """
+    assert numero_voirie({"dnvoiri": "0012", "dindic": "B"}) == "12B"
+    assert numero_voirie({"dnvoiri": "0012", "dindic": None}) == "12"
+    assert numero_voirie({"dnvoiri": None, "dindic": "B"}) is None
+
+
+def test_adresse_proprietaire():
+    """ The lines 4 to 6 of the address are separated by spaces, the empty ones are ignored """
+    row = {"dlign4": "0021 CHE DE CAMPREOUX ", "dlign5": "LES AIRES", "dlign6": "13250 CORNILLON CONFOUX"}
+    assert adresse_proprietaire(row) == "21 CHE DE CAMPREOUX LES AIRES 13250 CORNILLON CONFOUX"
+    assert adresse_proprietaire({**row, "dlign5": None}) == "21 CHE DE CAMPREOUX 13250 CORNILLON CONFOUX"
+    assert adresse_proprietaire({**row, "dlign5": "  "}) == "21 CHE DE CAMPREOUX 13250 CORNILLON CONFOUX"
 
 
 def test_parcelles_sql():

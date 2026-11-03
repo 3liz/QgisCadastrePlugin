@@ -7,7 +7,8 @@ Two common queries, for PostgreSQL and Spatialite, in the files of cadastre/sql/
 
 The exports build their columns from these rows. They have the same names and values as the SQL queries
 of the Lizmap module which they replace, so that the CSV files used for mail merges or by third parties
-do not change: the formulas of these queries are reproduced, including how they handle NULL values.
+do not change: the formulas of these queries are reproduced, including how they handle NULL values,
+with the module (cadastreExtraInfos.class.php) kept in sync.
 """
 
 __copyright__ = "Copyright 2026, 3Liz"
@@ -242,13 +243,27 @@ def nom_proprietaire(row: Row) -> str:
 
 
 def adresse_proprietaire(row: Row) -> str:
-    """Address of the owner in the export of the locaux, p_adresse"""
-    return (
-        (ltrim_zeros(trim(coalesce(row["dlign4"], ""))) or "")
-        + (trim(coalesce(row["dlign5"], "")) or "")
-        + " "
-        + (trim(coalesce(row["dlign6"], "")) or "")
-    )
+    """Address of the owner in the export of the locaux, p_adresse: the lines 4 to 6 separated by spaces.
+
+    The number of the street is written without its leading zeros, the empty lines are ignored.
+    """
+    lines = [ltrim_zeros(trim(row["dlign4"])), trim(row["dlign5"]), trim(row["dlign6"])]
+    return " ".join(line for line in lines if line)
+
+
+def adresse_local(row: Row) -> str | None:
+    """Street of the local in the export of the locaux, l_adresse: from the table voie, otherwise from the parcel.
+
+    The nature of the street, like RUE, is optional.
+    """
+    if row["libvoi"] is not None:
+        return (concat(row["natvoi"], " ") or "") + str(row["libvoi"])
+    return concat(row["cconvo"], " ", row["dvoilib"])
+
+
+def numero_voirie(row: Row) -> str | None:
+    """Number of the local in the street, l_numero_voirie: without its leading zeros, with its optional index"""
+    return concat(ltrim_zeros(text(row["dnvoiri"])), coalesce(row["dindic"], ""))
 
 
 def naissance(row: Row, sensitive: SensitiveData) -> list[str | None]:
@@ -311,11 +326,6 @@ def locaux_proprietaires_export(
 
     rows = []
     for row in locaux(connector, connection_params, parcelles, sensitive):
-        if row["libvoi"] is not None:
-            # The Lizmap query uses coalesce(natvoi || ' '): the address is NULL without nature of the street
-            adresse = concat(concat(row["natvoi"], " "), row["libvoi"])
-        else:
-            adresse = concat(row["cconvo"], " ", row["dvoilib"])
         values = [
             text(row["parcelle"]),
             text(row["dnubat"]),
@@ -324,8 +334,8 @@ def locaux_proprietaires_export(
             text(row["dpor"]),
             text(row["invar"]),
             concat(row["dnubat"], "-", row["descr"], "-", row["dniv"], "-", row["dpor"]),
-            concat(ltrim_zeros(text(row["dnvoiri"])), row["dindic"]),
-            adresse,
+            numero_voirie(row),
+            adresse_local(row),
             concat(row["ccodep"], row["ccocom"], "-", row["dnupro"]),
             text(row["dteloc"]),
             text(row["dteloc_lib"]),
