@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Spatialite : la couche des parcelles est chargée avec la clé `ogc_fid`, comme avant la version 2.4,
+  et non plus avec la pseudo-colonne `rowid`, avec laquelle certaines versions de QGIS n'identifient pas
+  les parcelles (outil d'information et outil de recherche) #598 #600. Les couches déjà chargées
+  doivent être rechargées
 * Service serveur (Lizmap)
   * Nouvelle requête `GetExport` : données des exports CSV des locaux et des propriétaires d'une liste
     de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.
