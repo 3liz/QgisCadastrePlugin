@@ -2927,6 +2927,13 @@ On your local, make a symlink with ln -s
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
 <ul>
+<li>Service serveur (Lizmap)</li>
+<li>Nouvelle requête <code>GetExport</code> : données des exports CSV des locaux et des propriétaires d'une liste
+    de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.
+    Les données de naissance sont masquées sans le droit</li>
+<li>Les droits sur les données sensibles peuvent être donnés séparément : <code>BIRTH</code>, <code>REVENUE</code>
+    et <code>EXONERATION</code>, en plus de <code>ADVANCED</code> qui les donne tous</li>
+<li><code>GetCapabilities</code> liste les requêtes disponibles</li>
 <li>Fiche parcellaire</li>
 <li>Onglet « Locaux » refait : un tableau récapitulatif, puis pour chaque local sa description,
     ses propriétaires, ses parties d'évaluation (PEV) avec leur description (habitation, dépendances,
