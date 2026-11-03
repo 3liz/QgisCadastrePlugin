@@ -112,16 +112,17 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         assert [feature["tex2"] for feature in features] == [CornillonMajic.commune]
 
         # Exports of the locaux and of the owners, for Lizmap
-        columns, rows = locaux_proprietaires_export(connector, params, [geo_parcelle], SensitiveData.full())
-        assert "p_date_naissance" in columns and rows and all(row[0] == geo_parcelle for row in rows)
-        columns, rows = parcelles_proprietaires_export(connector, params, [geo_parcelle], SensitiveData())
-        assert rows[0][11] == "XX/XX/XXXX" and rows[0][-1] == geo_parcelle
+        export_columns, export_rows = locaux_proprietaires_export(connector, params, [geo_parcelle], SensitiveData.full())
+        assert "p_date_naissance" in export_columns and export_rows
+        assert all(row[0] == geo_parcelle for row in export_rows)
+        export_columns, export_rows = parcelles_proprietaires_export(connector, params, [geo_parcelle], SensitiveData())
+        assert export_rows[0][11] == "XX/XX/XXXX" and export_rows[0][-1] == geo_parcelle
         # Spatial search: the buildings near the parcel, ST_DWithin does not exist in Spatialite
         bati = project.mapLayersByName("Bâti")[0]
         objets = [str(fid) for (fid,) in database.fetch("SELECT ogc_fid FROM geo_batiment")]
         recherche = recherche_spatiale(bati, parcelles, "geo_batiment", objets, 1000)
-        columns, rows = parcelles_proprietaires_export(connector, params, [geo_parcelle], SensitiveData(), recherche)
-        assert columns[-1] == "code_objet" and rows[0][-1]
+        export_columns, export_rows = parcelles_proprietaires_export(connector, params, [geo_parcelle], SensitiveData(), recherche)
+        assert export_columns[-1] == "code_objet" and export_rows[0][-1]
 
         # The parameters of the fiche, created by the import, with 1 or 0 for the booleans
         rows = database.fetch("SELECT cle, visible FROM cadastre_parametre_fiche_parcelle")

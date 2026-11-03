@@ -2,7 +2,7 @@
 
 import pytest
 
-from qgis.core import QgsProject, QgsVectorLayer
+from qgis.core import QgsAbstractDatabaseProviderConnection, QgsProject, QgsVectorLayer
 
 import cadastre.cadastre_common_base as common_utils
 
@@ -41,11 +41,17 @@ PARCELLES_COLUMNS = [
 ]
 
 
+# The connection to the test database and its parameters
+Connection = tuple[QgsAbstractDatabaseProviderConnection, dict[str, str]]
+
+
 @pytest.fixture(scope="module")
-def connection(parcelles: QgsVectorLayer) -> tuple:  # noqa: F811
+def connection(parcelles: QgsVectorLayer) -> Connection:  # noqa: F811
     """ The connection to the test database and its parameters, from the layer of the parcelles """
     params = common_utils.getConnectionParameterFromDbLayer(parcelles)
-    return common_utils.getConnectorFromUri(params), params
+    connector = common_utils.getConnectorFromUri(params)
+    assert connector is not None
+    return connector, params
 
 
 def test_adresse_local():
@@ -77,7 +83,7 @@ def test_parcelles_sql():
             parcelles_sql(invalid)
 
 
-def test_locaux_export(connection: tuple):
+def test_locaux_export(connection: Connection):
     """ One row per local and owner, the birth data are masked without the right """
     columns, rows = locaux_proprietaires_export(*connection, [COPROPRIETE, PARCELLE], SensitiveData())
     assert columns == LOCAUX_COLUMNS
@@ -93,12 +99,12 @@ def test_locaux_export(connection: tuple):
     assert not any("XX" in str(value) for row in rows for value in row)
 
 
-def test_parcelles_export(connection: tuple):
+def test_parcelles_export(connection: Connection):
     """ One row per owner, with the list of his parcelles """
     columns, rows = parcelles_proprietaires_export(*connection, [COPROPRIETE, PARCELLE], SensitiveData())
     assert columns == PARCELLES_COLUMNS
-    parcelles = {parcelle for row in rows for parcelle in row[-1].split(", ")}
-    assert parcelles == {COPROPRIETE, PARCELLE}
+    exported = {parcelle for row in rows for parcelle in str(row[-1]).split(", ")}
+    assert exported == {COPROPRIETE, PARCELLE}
 
     assert {(row[11], row[12]) for row in rows} == {("XX/XX/XXXX", "XXX")}
 
@@ -107,7 +113,7 @@ def test_parcelles_export(connection: tuple):
     assert not any("XX" in str(value) for row in rows for value in row)
 
 
-def test_locaux(connection: tuple):
+def test_locaux(connection: Connection):
     """ The common query of the locaux gives also the lots, used by the carte d'identité of the parcel """
     rows = locaux(*connection, [COPROPRIETE], SensitiveData())
     assert any(row["dnulot"] and row["ddenql"] for row in rows)
@@ -116,7 +122,7 @@ def test_locaux(connection: tuple):
     assert any(row["jdatnss"] for row in locaux(*connection, [COPROPRIETE], SensitiveData.full()))
 
 
-def test_recherche_spatiale(connection: tuple, parcelles: QgsVectorLayer):  # noqa: F811
+def test_recherche_spatiale(connection: Connection, parcelles: QgsVectorLayer):  # noqa: F811
     """ The codes of the buildings selected near the parcelles are added to the owners """
     bati = QgsProject.instance().mapLayersByName("Bâti")[0]
     # The buildings in the copropriété, and the farthest building
