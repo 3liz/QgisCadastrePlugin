@@ -11,20 +11,46 @@ from pathlib import Path
 from typing import Any, Dict, Sequence
 from uuid import uuid4
 
-from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject
+from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject, QgsVectorLayer
 from qgis.server import QgsServerRequest, QgsServerResponse, QgsService
 
 import cadastre.cadastre_common_base as cadastre_common
 
 from cadastre.cadastre_export import CadastreExport
+from cadastre.export_csv import (
+    RechercheSpatiale,
+    locaux_proprietaires_export,
+    parcelles_proprietaires_export,
+    recherche_spatiale,
+)
 from cadastre.logger import Logger
 
 
+# Requests of the service, listed in GetCapabilities so that Lizmap knows those it can use
+REQUESTS = ["GetCapabilities", "GetHtml", "CreatePdf", "GetPdf", "GetExport"]
+
+# Types of the request GetExport
+EXPORT_TYPES = ("locaux", "proprietaires")
+
+
+def is_true(params: Dict[str, str], name: str) -> bool:
+    """Return True if the parameter is set to t, true or 1"""
+    return params.get(name, "f").lower() in ("t", "true", "1")
+
+
 def sensitive_data(params: Dict[str, str]) -> cadastre_common.SensitiveData:
-    """The ADVANCED parameter, set by Lizmap from the rights of the user, gives access to all sensitive data"""
-    if params.get("ADVANCED", "f").lower() in ("t", "true", "1"):
+    """Sensitive data the user can see, given by Lizmap from the rights of the user.
+
+    ADVANCED gives access to all the sensitive data. Otherwise BIRTH, REVENUE and EXONERATION give access
+    to the birth data, to the revenues and to the exonerations.
+    """
+    if is_true(params, "ADVANCED"):
         return cadastre_common.SensitiveData.full()
-    return cadastre_common.SensitiveData()
+    return cadastre_common.SensitiveData(
+        birth=is_true(params, "BIRTH"),
+        revenue=is_true(params, "REVENUE"),
+        exoneration=is_true(params, "EXONERATION"),
+    )
 
 
 # Parcelle format for validation
@@ -90,6 +116,13 @@ class CadastreService(QgsService):
         # noinspection PyBroadException
         try:
             req_param = params.get("REQUEST", "").lower()
+            # Unknown request: stop at once, before reading anything
+            if req_param not in {name.lower() for name in REQUESTS}:
+                raise CadastreError(
+                    400,
+                    f"Invalid REQUEST parameter: must be one of {', '.join(REQUESTS)}, found '{req_param}'",
+                    request_id,
+                )
 
             if req_param == "getcapabilities":
                 self.get_capabilities(response, project, request_id)
@@ -99,15 +132,8 @@ class CadastreService(QgsService):
                 self.get_pdf(params, response, request_id)
             elif req_param == "gethtml":
                 self.get_html(params, response, project, request_id)
-            else:
-                raise CadastreError(
-                    400,
-                    (
-                        f"Invalid REQUEST parameter: must be one of GetCapabilities, GetHtml, CreatePdf or GetPdf, "
-                        f"found '{req_param}'"
-                    ),
-                    request_id,
-                )
+            elif req_param == "getexport":
+                self.get_export(params, response, project, request_id)
 
         except CadastreError as err:
             err.format_response(response)
@@ -136,8 +162,8 @@ class CadastreService(QgsService):
             "parcelle": {
                 "id": player.id(),
                 "name": player.name(),
-                "title": player.title(),
-                "shortName": player.shortName(),
+                "title": player.serverProperties().title(),
+                "shortName": player.serverProperties().shortName(),
                 "unique_field": parcelle_layer_unique_field,
             }
         }
@@ -149,8 +175,8 @@ class CadastreService(QgsService):
                 capabilities["section"] = {
                     "id": slayer.id(),
                     "name": slayer.name(),
-                    "title": slayer.title(),
-                    "shortName": slayer.shortName(),
+                    "title": slayer.serverProperties().title(),
+                    "shortName": slayer.serverProperties().shortName(),
                 }
                 if "cadastre_section_unique_field" in variables:
                     capabilities["section"]["unique_field"] = variables["cadastre_section_unique_field"]
@@ -162,12 +188,13 @@ class CadastreService(QgsService):
                 capabilities["commune"] = {
                     "id": slayer.id(),
                     "name": slayer.name(),
-                    "title": slayer.title(),
-                    "shortName": slayer.shortName(),
+                    "title": slayer.serverProperties().title(),
+                    "shortName": slayer.serverProperties().shortName(),
                 }
                 if "cadastre_commune_unique_field" in variables:
                     capabilities["commune"]["unique_field"] = variables["cadastre_commune_unique_field"]
 
+        capabilities["requests"] = REQUESTS
         write_json_response(
             {"status": "success", "message": "Capabilities", "data": capabilities}, response, request_id
         )
@@ -258,6 +285,86 @@ class CadastreService(QgsService):
 
         write_json_response(
             {"status": "success", "message": "HTML generated", "data": html}, response, request_id
+        )
+
+    def get_export(
+        self, params: Dict[str, str], response: QgsServerResponse, project: QgsProject, request_id: str
+    ) -> None:
+        """Export the locaux or the owners of a list of parcelles, for the CSV exports of Lizmap.
+
+        Parameters:
+
+        * LAYER: the name of the layer of the parcelles;
+        * TYPE: locaux (one row per local and owner) or proprietaires (one row per owner, for mail merges);
+        * PARCELLES: the identifiers of the parcelles, separated by commas. Lizmap gives only the parcelles
+          the user can see (filters by login, of the layer and by polygon). The list can be long:
+          the request can be sent with POST;
+        * ADVANCED, or BIRTH, REVENUE and EXONERATION: the sensitive data the user can see;
+        * SPATIAL_LAYER, SPATIAL_FIELD, SPATIAL_OBJECTS and SPATIAL_DISTANCE, optional, only for the type
+          proprietaires: the id of a layer, its field, the values of the primary key of the objects selected
+          by the spatial search of Lizmap and the distance: the codes of the objects near the parcelles
+          of each owner are added.
+
+        The response is JSON, the data are the names of the columns and the rows: Lizmap writes the CSV file.
+        """
+        export_type = params.get("TYPE", "")
+        if export_type not in EXPORT_TYPES:
+            raise CadastreError(
+                400, f"Invalid or missing value for 'TYPE': {', '.join(EXPORT_TYPES)}", request_id
+            )
+        layer = self.parcelles_layer(params, project, request_id)
+        parcelles = [p.strip() for p in params.get("PARCELLES", "").split(",") if p.strip()]
+        sensitive = sensitive_data(params)
+        connection_params = cadastre_common.getConnectionParameterFromDbLayer(layer)
+        connector = cadastre_common.getConnectorFromUri(connection_params)
+
+        try:
+            if export_type == "locaux":
+                columns, rows = locaux_proprietaires_export(
+                    connector, connection_params, parcelles, sensitive
+                )
+            else:
+                recherche = self.spatial_search(params, project, layer, request_id)
+                columns, rows = parcelles_proprietaires_export(
+                    connector, connection_params, parcelles, sensitive, recherche
+                )
+        except ValueError as e:
+            raise CadastreError(400, str(e), request_id) from e
+
+        write_json_response(
+            {"status": "success", "message": "Export generated", "data": {"columns": columns, "rows": rows}},
+            response,
+            request_id,
+        )
+
+    @staticmethod
+    def parcelles_layer(params: Dict[str, str], project: QgsProject, request_id: str) -> QgsVectorLayer:
+        """Return the layer of the parcelles given by the parameter LAYER, from a database"""
+        name = params.get("LAYER")
+        if not name:
+            raise CadastreError(400, "Missing parameter 'LAYER'", request_id)
+        layers = project.mapLayersByName(name)
+        if not layers or layers[0].providerType() not in ("postgres", "spatialite"):
+            raise CadastreError(404, f"Layer '{name}' not found", request_id)
+        return layers[0]
+
+    @staticmethod
+    def spatial_search(
+        params: Dict[str, str], project: QgsProject, parcelles_layer: QgsVectorLayer, request_id: str
+    ) -> RechercheSpatiale | None:
+        """Return the spatial search of the export of the owners, None without SPATIAL_LAYER"""
+        layer_id = params.get("SPATIAL_LAYER")
+        if not layer_id:
+            return None
+        layer = project.mapLayer(layer_id)
+        if not isinstance(layer, QgsVectorLayer):
+            raise CadastreError(404, f"Layer '{layer_id}' not found", request_id)
+        distance = params.get("SPATIAL_DISTANCE", "0")
+        if not distance.isdigit():
+            raise CadastreError(400, f"Invalid value for 'SPATIAL_DISTANCE': {distance}", request_id)
+        objets = [o.strip() for o in params.get("SPATIAL_OBJECTS", "").split(",") if o.strip()]
+        return recherche_spatiale(
+            layer, parcelles_layer, params.get("SPATIAL_FIELD", ""), objets, int(distance)
         )
 
     @staticmethod

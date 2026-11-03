@@ -35,3 +35,9 @@ def test_sensitive_data(params: dict[str, str], full: bool):
     """ ADVANCED gives access to all the sensitive data, nothing by default """
     expected = SensitiveData.full() if full else SensitiveData()
     assert sensitive_data(params) == expected
+
+
+def test_sensitive_data_separately():
+    """ BIRTH, REVENUE and EXONERATION give access to each kind of sensitive data """
+    assert sensitive_data({"BIRTH": "1", "EXONERATION": "true"}) == SensitiveData(birth=True, exoneration=True)
+    assert sensitive_data({"REVENUE": "t", "ADVANCED": "f"}) == SensitiveData(revenue=True)
