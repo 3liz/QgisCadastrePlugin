@@ -24,6 +24,7 @@ nav:
         - 'Index': module-lizmap/index.md
         - 'Installation': module-lizmap/installation.md
         - 'Configuration': module-lizmap/configuration.md
+        - 'Utilisation': module-lizmap/utilisation.md
     - Base de données: database/index.html
     - Contribution: contributing.md
     - Changelog: changelog.md

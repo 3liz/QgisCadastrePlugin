@@ -80,14 +80,40 @@ de la base, voir la [configuration de l'extension QGIS](../extension-qgis/config
 ## Dans Lizmap Web Client
 
 Maintenant, vous devez configurer les droits d'accès à l'outil via l'interface d'administration.
-Le module a créé :
+Le module a créé un groupe d'utilisateurs `Cadastre Lizmap` (identifiant `cadastre_lizmap`), qui a tous
+les droits du module, et les droits suivants :
 
-* un groupe d'utilisateurs `Cadastre Lizmap` (identifiant `cadastre_lizmap`)
-* 2 sujets de droit : `Accéder aux données de propriétaires` et `Utiliser le panneau de recherche`
+| Droit | Donne accès à |
+|-------|---------------|
+| Utiliser le panneau de recherche | la recherche par commune, section, parcelle et adresse |
+| Accéder aux données des propriétaires (noms et adresses) | la recherche par propriétaire et les exports CSV des parcelles et des locaux avec leurs propriétaires |
+| Accéder aux dates et lieux de naissance des propriétaires | ces données dans la fiche, les relevés et les exports |
+| Accéder aux informations de revenus | ces données dans la fiche et les relevés |
+| Accéder aux informations d'exonérations fiscales | ces données dans la fiche et les relevés |
+| Accéder à la fonction de relevé parcellaire | le bouton du relevé parcellaire (PDF) dans la popup |
+| Accéder à la fonction de relevé de propriété | le bouton du relevé de propriété (PDF) dans la popup |
+| Accéder aux onglets d'informations détaillées dans la popup des parcelles | les onglets de la fiche sous la popup, et leur impression |
 
-Vous pouvez mettre certains utilisateurs dans ce groupe `Cadastre Lizmap`. Ils auront alors accès
-au panneau de recherche par localisation **ET** par nom de propriétaires. **Vous devez bien faire
-attention de n'accorder le droit `Accéder aux données de propriétaires` qu'aux personnes habilitées !**.
+Les dates et lieux de naissance, les revenus et les exonérations sont masqués (`XX/XX/XXXX`, `XXX`) sans
+le droit correspondant. Les exports CSV des parcelles sélectionnées et les relevés parcellaire et de propriété
+contiennent celles que les droits de l'utilisateur autorisent. Il peut aussi les produire pour un tiers, sans
+ces données, par exemple pour un fichier transmis à une personne qui n'est pas autorisée à les connaître :
+
+* pour les exports CSV, avec la case « Exporter pour un tiers », décochée par défaut ;
+* pour les relevés, en choisissant « Pour un tiers (sans données sensibles) » dans le menu qui s'ouvre
+  au clic sur le bouton du relevé, à la place de « Avec les données que je peux voir ».
+
+La case et le menu ne sont proposés qu'aux utilisateurs qui ont au moins un des 3 droits sur les données
+sensibles : sans eux, les exports et les relevés sont de toute façon ceux d'un tiers.
+
+Vous pouvez mettre certains utilisateurs dans ce groupe `Cadastre Lizmap`. **Vous devez bien faire
+attention de n'accorder les droits sur les propriétaires et leurs données qu'aux personnes habilitées !**
+
+!!! note
+    Avant la version 2.3.0 du module, il existait deux droits : `Accéder aux données de propriétaires
+    simplifiées` et `Accéder aux données de propriétaires avancées`. Lors de la mise à jour du module,
+    les groupes qui avaient le droit avancé reçoivent tous les nouveaux droits, et le droit simplifié devient
+    `Accéder aux données des propriétaires (noms et adresses)` : rien ne change pour les utilisateurs.
 
 Vous pouvez modifier plus finement les droits via le bouton `Changer les droits des groupes` situés
 dans le menu `Groupes d'utilisateurs pour les droits` de l'interface d'administration de Lizmap Web Client.

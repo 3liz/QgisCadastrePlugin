@@ -8,4 +8,6 @@ Pour cela, il faut :
 * [installer](installation.md) le module sur le serveur Lizmap
 * [configurer](configuration.md) le projet QGIS
 
+L'[utilisation](utilisation.md) décrit le panneau de recherche, les exports CSV et la popup des parcelles.
+
 ![démo](./media/demo.png)
