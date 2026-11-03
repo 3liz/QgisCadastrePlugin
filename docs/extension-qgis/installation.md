@@ -14,6 +14,7 @@ comporte les sous-menus suivants :
 * **Charger des données**
 * **Outils de recherche**
 * **Exporter la vue**
+* **Exporter un CSV pour publipostage**
 * **Configurer le plugin**
 * **À propos**
 * **Notes de version**

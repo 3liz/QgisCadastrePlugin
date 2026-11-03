@@ -18,11 +18,22 @@ __email__ = "info@3liz.org"
 import re
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
-from qgis.core import QgsAbstractDatabaseProviderConnection, QgsSqliteUtils, QgsVectorLayer
+from qgis.core import (
+    QgsAbstractDatabaseProviderConnection,
+    QgsFeatureRequest,
+    QgsSqliteUtils,
+    QgsVectorLayer,
+)
 
-from cadastre.cadastre_common_base import SensitiveData, getConnectionParameterFromDbLayer, quoteString
+from cadastre.cadastre_common_base import (
+    SensitiveData,
+    getConnectionParameterFromDbLayer,
+    getConnectorFromUri,
+    quoteString,
+)
 from cadastre.fiche import DATE_MASK, DEFAULT_MASK, Row, fetch_rows, load_sql
 
 # Identifier of a parcelle, the field geo_parcelle, like 1320290000A0107
@@ -33,6 +44,20 @@ OBJET_PATTERN = re.compile(r"^[0-9A-Za-z_-]{1,100}$")
 
 # Parameters of the database of a layer which must be the same as those of the cadastre data
 SAME_DATABASE_PARAMETERS = ("dbType", "service", "host", "port", "dbname")
+
+# CSV exports of the selected parcelles in QGIS: the label and the default name of the file, like Lizmap
+CSV_EXPORTS = {
+    "proprietaires": ("Parcelles et propriétaires", "cadastre_parcelles_et_proprietaires.csv"),
+    "locaux": ("Locaux et propriétaires", "cadastre_extra_infos.csv"),
+}
+
+# Number of selected parcelles above which the user confirms the CSV export: the export runs in the interface
+# of QGIS, which does not respond until it ends
+CSV_EXPORT_CONFIRM_COUNT = 5000
+
+# Characters for which a value is enclosed in double quotes in the CSV files, like the PHP function fputcsv
+# used by Lizmap
+CSV_ENCLOSED_CHARACTERS = (",", '"', "\n", "\r", "\t", " ", "\\")
 
 
 @dataclass(frozen=True)
@@ -459,3 +484,57 @@ def parcelles_proprietaires_export(
     # Ordered by commune and denomination, the NULL values at the end like PostgreSQL
     rows.sort(key=lambda values: [(value is None, value or "") for value in (values[0], values[5])])
     return columns, rows
+
+
+# CSV files of the selected parcelles in QGIS
+
+
+def csv_value(value: str | None) -> str:
+    """Return a value of a CSV file, written like the PHP function fputcsv used by Lizmap.
+
+    The value is enclosed in double quotes if it contains a comma, a double quote, a space, a tabulation,
+    a backslash or a line break, the double quotes are doubled. NULL is an empty value.
+    """
+    if value is None:
+        return ""
+    value = str(value)
+    if any(character in value for character in CSV_ENCLOSED_CHARACTERS):
+        return '"' + value.replace('"', '""') + '"'
+    return value
+
+
+def write_csv(path: Path, columns: list[str], rows: list[list[str | None]]) -> None:
+    """Write a CSV file like Lizmap: UTF-8, separated by commas, one line per row after the names of the columns."""
+    with path.open("w", encoding="utf-8", newline="") as f:
+        f.write(",".join(csv_value(column) for column in columns) + "\n")
+        for values in rows:
+            f.write(",".join(csv_value(value) for value in values) + "\n")
+
+
+def export_selected_parcelles(
+    layer: QgsVectorLayer, export_type: str, path: Path, sensitive: SensitiveData
+) -> int:
+    """Write the CSV file of an export of the selected parcelles of a layer, like the CSV exports of Lizmap.
+
+    :param layer: The layer of the parcelles, from the table parcelle_info, with the field geo_parcelle.
+    :param export_type: The export: proprietaires (one row per owner) or locaux (one row per local and owner),
+        see CSV_EXPORTS.
+    :param path: The CSV file.
+    :param sensitive: The sensitive data written in the file.
+    :return: The number of rows of the file, without the names of the columns.
+    :raises ValueError: If the export is unknown, if no parcelle is selected or if an identifier is not valid.
+    """
+    if export_type not in CSV_EXPORTS:
+        raise ValueError(f"Unknown export: {export_type}")
+    # Only the identifiers of the parcelles are read
+    request = QgsFeatureRequest().setFlags(QgsFeatureRequest.Flag.NoGeometry)
+    request.setSubsetOfAttributes(["geo_parcelle"], layer.fields())
+    parcelles = sorted({str(feature["geo_parcelle"]) for feature in layer.getSelectedFeatures(request)})
+    connection_params = getConnectionParameterFromDbLayer(layer)
+    connector = getConnectorFromUri(connection_params)
+    if export_type == "locaux":
+        columns, rows = locaux_proprietaires_export(connector, connection_params, parcelles, sensitive)
+    else:
+        columns, rows = parcelles_proprietaires_export(connector, connection_params, parcelles, sensitive)
+    write_csv(path, columns, rows)
+    return len(rows)

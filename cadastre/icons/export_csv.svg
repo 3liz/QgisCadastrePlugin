@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Export CSV des parcelles sélectionnées : un tableau avec un en-tête et une grille de 3 colonnes et 2 lignes -->
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Fond et en-tête du tableau -->
+  <rect x="2.5" y="3.5" width="19" height="17" rx="1.5" fill="#ffffff" stroke="#3a6b8c" stroke-width="1"/>
+  <path d="M2.5 5 a1.5 1.5 0 0 1 1.5 -1.5 h16 a1.5 1.5 0 0 1 1.5 1.5 v3.5 h-19 z" fill="#3a6b8c"/>
+  <!-- Grille : 3 colonnes et 2 lignes -->
+  <g stroke="#3a6b8c" stroke-width="1" fill="none">
+    <line x1="2.5" y1="14.5" x2="21.5" y2="14.5"/>
+    <line x1="8.83" y1="8.5" x2="8.83" y2="20.5"/>
+    <line x1="15.17" y1="8.5" x2="15.17" y2="20.5"/>
+  </g>
+</svg>

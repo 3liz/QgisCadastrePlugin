@@ -38,12 +38,15 @@ from qgis.PyQt.QtCore import QSettings, QUrl
 from qgis.PyQt.QtGui import QDesktopServices, QIcon, QKeySequence
 from qgis.PyQt.QtWidgets import (
     QAction,
+    QFileDialog,
     QMenu,
     QMessageBox,
+    QToolButton,
 )
 from qgis.PyQt.QtXml import QDomDocument
 
 import cadastre.cadastre_common_base as common_utils
+import cadastre.export_csv as export_csv
 
 from cadastre.cadastre_identify_parcelle import IdentifyParcelle
 from cadastre.definitions import URL_DOCUMENTATION
@@ -74,6 +77,9 @@ class CadastreMenu:
         self.search_action: Optional[QAction] = None
         self.load_action: Optional[QAction] = None
         self.export_action: Optional[QAction] = None
+        # CSV exports of the selected parcelles, with a menu to choose the export
+        self.csv_export_action: Optional[QAction] = None
+        self.csv_export_menu: Optional[QMenu] = None
         self.option_action: Optional[QAction] = None
         self.about_action: Optional[QAction] = None
         self.help_action: Optional[QAction] = None
@@ -128,6 +134,23 @@ class CadastreMenu:
             action.setObjectName(key)
             action.triggered.connect(actions[key][3])
 
+        # CSV exports of the selected parcelles: a menu with one action per export
+        self.csv_export_menu = QMenu("Exporter un CSV pour publipostage", self.iface.mainWindow())
+        for export_type, (label, _filename) in export_csv.CSV_EXPORTS.items():
+            export = self.csv_export_menu.addAction(label)
+            export.setObjectName(f"csv_export_{export_type}")
+            export.triggered.connect(lambda _checked=False, t=export_type: self.export_csv(t))
+        self.csv_export_action = QAction(
+            QIcon(str(plugin_path("icons", "export_csv.svg"))),
+            "Exporter un CSV pour publipostage",
+            self.iface.mainWindow(),
+        )
+        self.csv_export_action.setObjectName("csv_export_action")
+        self.csv_export_action.setToolTip(
+            "Exporter un CSV pour publipostage, à partir des parcelles sélectionnées"
+        )
+        self.csv_export_action.setMenu(self.csv_export_menu)
+
         if not self.cadastre_search_dialog:
             dialog = CadastreSearchDialog(self.iface)
             self.cadastre_search_dialog = dialog
@@ -142,6 +165,7 @@ class CadastreMenu:
         self.menu.addSeparator()
         self.menu.addAction(self.search_action)
         self.menu.addAction(self.export_action)
+        self.menu.addAction(self.csv_export_action)
         self.menu.addSeparator()
         self.menu.addAction(self.option_action)
         self.menu.addAction(self.about_action)
@@ -176,6 +200,11 @@ class CadastreMenu:
         self.toolbar.addAction(self.search_action)
         self.toolbar.addAction(self.identifyParcelleAction)
         self.toolbar.addAction(self.export_action)
+        self.toolbar.addAction(self.csv_export_action)
+        # A click on the button opens the menu of the exports
+        csv_export_button = self.toolbar.widgetForAction(self.csv_export_action)
+        if isinstance(csv_export_button, QToolButton):
+            csv_export_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.option_action)
         self.toolbar.addAction(self.about_action)
@@ -201,6 +230,12 @@ class CadastreMenu:
         # noinspection PyArgumentList
         lr = QgsProject.instance()
         lr.layersRemoved.connect(self.checkIdentifyParcelleTool)
+
+        # The CSV export needs selected parcelles
+        self.mapCanvas.selectionChanged.connect(self.update_csv_export_action)
+        lr.layersAdded.connect(self.update_csv_export_action)
+        lr.layersRemoved.connect(self.update_csv_export_action)
+        self.update_csv_export_action()
 
         self.updateSearchButton()
 
@@ -306,6 +341,78 @@ class CadastreMenu:
 
         if os.path.exists(temppath):
             common_utils.openFile(temppath)
+
+    @staticmethod
+    def parcelles_layer():
+        """Return the layer of the parcelles of the project, from the table parcelle_info, None if there is none"""
+        try:
+            return common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), "parcelle_info")
+        except Exception as err:
+            Logger.log_exception(err)
+            return None
+
+    def update_csv_export_action(self, *_args):
+        """Enable the CSV export if at least one parcelle is selected"""
+        if not self.csv_export_action:
+            # The plugin is being unloaded
+            return
+        layer = self.parcelles_layer()
+        self.csv_export_action.setEnabled(bool(layer and layer.selectedFeatureCount()))
+
+    def export_csv(self, export_type: str):
+        """Export the selected parcelles in a CSV file, like the CSV exports of Lizmap
+
+        :param export_type: The export: proprietaires or locaux, see export_csv.CSV_EXPORTS.
+        """
+        layer = self.parcelles_layer()
+        if not layer or not layer.selectedFeatureCount():
+            self.iface.messageBar().pushWarning("Cadastre", "Aucune parcelle sélectionnée")
+            return
+
+        label, filename = export_csv.CSV_EXPORTS[export_type]
+
+        # Many parcelles: QGIS does not respond during the export
+        count = layer.selectedFeatureCount()
+        if count > export_csv.CSV_EXPORT_CONFIRM_COUNT:
+            answer = QMessageBox.question(
+                self.iface.mainWindow(),
+                "Exporter un CSV pour publipostage",
+                f"L'export de {count} parcelles peut prendre du temps, "
+                "QGIS ne répondra pas pendant l'export. Continuer ?",
+            )
+            if answer != QMessageBox.StandardButton.Yes:
+                return
+
+        s = QSettings()
+        directory = s.value("cadastre/csvExportDir", str(Path.home()), type=str)
+        path, _filter = QFileDialog.getSaveFileName(
+            self.iface.mainWindow(),
+            f"Exporter un CSV pour publipostage : {label}",
+            str(Path(directory) / filename),
+            "CSV (*.csv)",
+        )
+        if not path:
+            return
+        csv_path = Path(path)
+        if csv_path.suffix.lower() != ".csv":
+            csv_path = csv_path.with_name(csv_path.name + ".csv")
+        s.setValue("cadastre/csvExportDir", str(csv_path.parent))
+
+        try:
+            # The QGIS user reads the database: all the sensitive data are exported, like in the fiche
+            count = wait_cursor(export_csv.export_selected_parcelles)(
+                layer, export_type, csv_path, common_utils.SensitiveData.full()
+            )
+        except (ValueError, OSError) as err:
+            Logger.log_exception(err)
+            self.iface.messageBar().pushCritical("Cadastre", f"Erreur lors de l'export CSV : {err}")
+            return
+
+        url = QUrl.fromLocalFile(str(csv_path)).toString()
+        self.iface.messageBar().pushSuccess(
+            "Cadastre",
+            f'{label} : {count} ligne(s) exportée(s) dans <a href="{url}">{csv_path}</a>',
+        )
 
     def open_option_dialog(self):
         """
@@ -438,6 +545,9 @@ class CadastreMenu:
             (self.iface.projectRead, self.onProjectRead),
             (self.iface.newProjectCreated, self.on_new_project_created),
             (QgsProject.instance().layersRemoved, self.checkIdentifyParcelleTool),
+            (self.mapCanvas.selectionChanged, self.update_csv_export_action),
+            (QgsProject.instance().layersAdded, self.update_csv_export_action),
+            (QgsProject.instance().layersRemoved, self.update_csv_export_action),
         ]
         if self.cadastre_search_dialog:
             # Removing the dock widget hides it, after the actions have been deleted
@@ -477,6 +587,8 @@ class CadastreMenu:
             "help_action",
             "version_action",
             "identifyParcelleAction",
+            "csv_export_action",
+            "csv_export_menu",
         ):
             action = getattr(self, name)
             if action:

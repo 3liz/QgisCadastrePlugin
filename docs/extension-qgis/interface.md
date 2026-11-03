@@ -13,7 +13,7 @@ Elle contient :
 
 * Un outil pour **identifier une parcelle** sur la carte
 * Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Exporter la vue,
-  Configurer, À propos
+  Exporter un CSV pour publipostage, Configurer, À propos
 
 Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir
 apparaître une bulle d'information.
@@ -70,6 +70,27 @@ est utilisé.
 
 > Cette fonctionnalité est basique, et ne gère pas pour l'instant les composeurs complexes, avec des tables
 > attributaires et des configurations d'atlas.
+
+### Exporter un CSV pour publipostage
+
+Le bouton **Exporter un CSV pour publipostage** (icône en forme de tableau) de la barre d'outil Cadastre,
+également présent dans le menu, exporte dans un fichier CSV les données des **parcelles sélectionnées**
+dans la couche des parcelles. Il n'est actif que si au moins une parcelle est sélectionnée.
+
+Un clic sur le bouton propose deux exports :
+
+* **Parcelles et propriétaires** : une ligne par propriétaire, avec son adresse découpée (adresse, complément,
+  code postal, ville) et la liste de ses parcelles. Ce fichier est adapté au publipostage ;
+* **Locaux et propriétaires** : une ligne par local et par propriétaire, avec l'identification du local
+  (bâtiment, entrée, niveau, porte, invariant), son adresse, sa nature et son occupation, et le propriétaire
+  avec son droit.
+
+Les fichiers ont les mêmes colonnes que les exports CSV du [module Lizmap](../module-lizmap/utilisation.md),
+encodés en UTF-8 et séparés par des virgules. Ils contiennent les dates et lieux de naissance
+des propriétaires.
+
+L'export se fait dans QGIS, qui ne répond pas pendant ce temps : au-delà de 5 000 parcelles sélectionnées,
+une confirmation est demandée.
 
 
 ## Le panneau de recherche

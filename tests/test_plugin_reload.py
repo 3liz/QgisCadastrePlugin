@@ -22,9 +22,11 @@ def test_reload(qgis_iface: QgisInterface, plugin: Any):
 
     # The plugin loaded for the other tests has its own processing provider
     registry.removeProvider(plugin.provider)
+    canvas = qgis_iface.mapCanvas()
     receivers = (
         project.receivers(project.layersRemoved),
         qgis_iface.receivers(qgis_iface.newProjectCreated),
+        canvas.receivers(canvas.selectionChanged),
     )
 
     old_docks = []
@@ -49,9 +51,10 @@ def test_reload(qgis_iface: QgisInterface, plugin: Any):
         assert all(sip.isdeleted(dock) for dock in old_docks)
         assert not sip.isdeleted(menu.cadastre_search_dialog)
 
-        # Signals are connected once
-        assert project.receivers(project.layersRemoved) == receivers[0] + 1
+        # Signals are connected once: layersRemoved for the identify tool and the CSV export
+        assert project.receivers(project.layersRemoved) == receivers[0] + 2
         assert qgis_iface.receivers(qgis_iface.newProjectCreated) == receivers[1] + 1
+        assert canvas.receivers(canvas.selectionChanged) == receivers[2] + 1
 
         dock = menu.cadastre_search_dialog
         dock_receivers = dock.receivers(dock.visibilityChanged)
@@ -68,6 +71,7 @@ def test_reload(qgis_iface: QgisInterface, plugin: Any):
         assert registry.providerById("cadastre") is None
         assert project.receivers(project.layersRemoved) == receivers[0]
         assert qgis_iface.receivers(qgis_iface.newProjectCreated) == receivers[1]
+        assert canvas.receivers(canvas.selectionChanged) == receivers[2]
     finally:
         # Restore the processing provider for the other tests
         plugin.initProcessing()

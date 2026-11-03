@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Nouveau bouton « Exporter un CSV pour publipostage » dans la barre d'outils et le menu : export des parcelles
+  sélectionnées, au choix « Parcelles et propriétaires » ou « Locaux et propriétaires », avec les mêmes
+  colonnes que les exports CSV du module Lizmap. Il est actif lorsqu'au moins une parcelle est sélectionnée
 * Spatialite : la couche des parcelles est chargée avec la clé `ogc_fid`, comme avant la version 2.4,
   et non plus avec la pseudo-colonne `rowid`, avec laquelle certaines versions de QGIS n'identifient pas
   les parcelles (outil d'information et outil de recherche) #598 #600. Les couches déjà chargées
