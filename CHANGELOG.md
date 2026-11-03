@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* Spatialite : la couche des parcelles est chargée avec la clé `ogc_fid`, comme avant la version 2.4,
+  et non plus avec la pseudo-colonne `rowid`, avec laquelle certaines versions de QGIS n'identifient pas
+  les parcelles (outil d'information et outil de recherche) #598 #600. Les couches déjà chargées
+  doivent être rechargées
 * Chargement des couches et algorithme « Configuration du projet » : les champs `proprietaire` et
   `proprietaire_info` de la couche des parcelles (noms et adresses des propriétaires) ne sont plus publiés
   par QGIS Server, en WMS et en WFS. Ils étaient visibles de tous dans Lizmap, sans les droits du module

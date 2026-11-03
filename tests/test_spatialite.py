@@ -87,6 +87,8 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         assert all(layer.isValid() for layer in layers)
         parcelles = project.mapLayersByName("Parcelles")[0]
         assert parcelles.featureCount() > 0
+        # The key of the layer is ogc_fid, not the pseudo column rowid of Spatialite (issues #598 and #600)
+        assert QgsDataSourceUri(parcelles.source()).keyColumn() == "ogc_fid"
 
         # Fiche parcellaire of a parcel with a building, the sensitive data are masked or not
         geo_parcelle = database.fetch("SELECT parcelle FROM local10 ORDER BY parcelle LIMIT 1")[0][0]

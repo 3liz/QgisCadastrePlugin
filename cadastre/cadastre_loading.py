@@ -476,7 +476,10 @@ class CadastreLoading(QObject):
             if table_list:
                 table = table_list[0]
                 source = table.tableName()
-                primary_keys = table.primaryKeyColumns()
+                # Spatialite gives the pseudo column rowid for a table without primary key, like parcelle_info:
+                # the column ogc_fid of the cadastre tables is used instead, like before the version 2.4,
+                # some versions of QGIS do not identify the features of such a layer (issues #598 and #600)
+                primary_keys = [key for key in table.primaryKeyColumns() if key.lower() != "rowid"]
                 unique_col = primary_keys[0] if primary_keys else "ogc_fid"
 
             schema: str | None = database.schema
