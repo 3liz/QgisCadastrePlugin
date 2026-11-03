@@ -2909,6 +2909,17 @@ On your local, make a symlink with ln -s
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
 <ul>
+<li>Nouveau bouton « Exporter un CSV pour publipostage » dans la barre d'outils et le menu : export des parcelles
+  sélectionnées, au choix « Parcelles et propriétaires » ou « Locaux et propriétaires », avec les mêmes
+  colonnes que les exports CSV du module Lizmap. Il est actif lorsqu'au moins une parcelle est sélectionnée</li>
+<li>Spatialite : la couche des parcelles est chargée avec la clé <code>ogc_fid</code>, comme avant la version 2.4,
+  et non plus avec la pseudo-colonne <code>rowid</code>, avec laquelle certaines versions de QGIS n'identifient pas
+  les parcelles (outil d'information et outil de recherche) #598 #600. Les couches déjà chargées
+  doivent être rechargées</li>
+<li>Chargement des couches et algorithme « Configuration du projet » : les champs <code>proprietaire</code> et
+  <code>proprietaire_info</code> de la couche des parcelles (noms et adresses des propriétaires) ne sont plus publiés
+  par QGIS Server, en WMS et en WFS. Ils étaient visibles de tous dans Lizmap, sans les droits du module
+  cadastre. Pour un projet existant, relancer l'algorithme ou décocher les cases à la main</li>
 <li>Service serveur (Lizmap)</li>
 <li>Nouvelle requête <code>GetExport</code> : données des exports CSV des locaux et des propriétaires d'une liste
     de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.
