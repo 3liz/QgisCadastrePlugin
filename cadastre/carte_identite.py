@@ -122,11 +122,11 @@ class LocalIdentite:
     # Rows of fiche/locaux_proprietaires.sql
     pevs: list[Pev] = field(default_factory=list)
 
-    @property
-    def destinataire(self) -> str:
-        """Return the names of the owners receiving the tax notice, separated by commas"""
-        names = [p["nom"] for p in self.proprietaires if p.get("destinataire") == "1" and p.get("nom")]
-        return ", ".join(names)
+    # @property
+    # def destinataire(self) -> str:
+    #     """Return the names of the owners receiving the tax notice, separated by commas"""
+    #     names = [p["nom"] for p in self.proprietaires if p.get("destinataire") == "1" and p.get("nom")]
+    #     return ", ".join(names)
 
 
 def proprietaires(row: Row) -> str:

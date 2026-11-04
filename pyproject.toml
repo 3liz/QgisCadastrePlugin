@@ -123,6 +123,7 @@ suppress-dummy-args = true
 #
 [tool.mypy]
 python_version = "3.10"
+disable_error_code = ["annotation-unchecked"]
 
 [[tool.mypy.overrides]]
 module = [
