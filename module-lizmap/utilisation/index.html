@@ -1362,7 +1362,7 @@ sur la carte, quelle que soit la façon dont elles ont été sélectionnées :</
   avec son droit.</li>
 </ul>
 <p>Seules les parcelles que l'utilisateur peut voir sont exportées, selon les filtres de la couche des parcelles
-(par utilisateur, par polygone).</p>
+(par utilisateur, par polygone). Un export est limité à 20 000 parcelles sélectionnées.</p>
 <p>Les fichiers contiennent les dates et lieux de naissance que les droits de l'utilisateur lui permettent de
 voir. La case <strong>Exporter pour un tiers</strong> les masque (<code>XX/XX/XXXX</code>, <code>XXX</code>), par exemple pour un fichier
 transmis à une personne qui n'est pas autorisée à les connaître. Elle n'est affichée qu'aux utilisateurs
@@ -1384,6 +1384,10 @@ qui ont au moins un droit sur les données sensibles.</p>
 <td>Relevé parcellaire de la parcelle, en PDF</td>
 </tr>
 <tr>
+<td>Liste (<strong>Carte d'identité de la parcelle</strong>)</td>
+<td>Synthèse de la parcelle en PDF : informations générales, propriétaires et locaux (lot, quote-part, surface, catégorie, valeur locative, exonérations)</td>
+</tr>
+<tr>
 <td>Livre (<strong>Relevé de propriété</strong>)</td>
 <td>Relevé de propriété du compte de la parcelle, en PDF</td>
 </tr>
@@ -1403,8 +1407,9 @@ qui ont au moins un droit sur les données sensibles.</p>
 </table>
 <p>Les boutons de sélection des parcelles du propriétaire ne sont proposés que si la couche des parcelles est
 disponible dans la table attributaire du projet.</p>
+<p>Le relevé parcellaire et la carte d'identité demandent le même droit, celui du relevé parcellaire.</p>
 <p>Pour un utilisateur qui a au moins un droit sur les données sensibles, un clic sur un bouton de relevé
-propose de le produire <strong>Avec les données que je peux voir</strong> ou <strong>Pour un tiers (sans données sensibles)</strong>.
+ou de carte d'identité propose de le produire <strong>Avec les données que je peux voir</strong> ou <strong>Pour un tiers (sans données sensibles)</strong>.
 Sans droit sur les données sensibles, le relevé est produit directement, pour un tiers.</p>
 <h3 id="onglets-dinformations-detaillees">Onglets d'informations détaillées<a class="headerlink" href="#onglets-dinformations-detaillees" title="Permanent link">#</a></h3>
 <p>Sous les informations de la parcelle, pour les utilisateurs qui ont le droit correspondant, les onglets
@@ -1434,7 +1439,7 @@ sensibles sont masquées sans le droit correspondant.</p>
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="3 novembre 2026 13:37:41 UTC">3 novembre 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="4 novembre 2026 14:48:17 UTC">4 novembre 2026</span>
   </span>
 
     

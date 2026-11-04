@@ -980,6 +980,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#250-2026-11-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.0 - 2026-11-04
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#241-2026-11-02" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1967,6 +1978,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#250-2026-11-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.0 - 2026-11-04
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#241-2026-11-02" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2908,42 +2930,41 @@ On your local, make a symlink with ln -s
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<h2 id="250-2026-11-04">2.5.0 - 2026-11-04<a class="headerlink" href="#250-2026-11-04" title="Permanent link">#</a></h2>
 <ul>
-<li>Nouveau bouton « Exporter un CSV pour publipostage » dans la barre d'outils et le menu : export des parcelles
-  sélectionnées, au choix « Parcelles et propriétaires » ou « Locaux et propriétaires », avec les mêmes
-  colonnes que les exports CSV du module Lizmap. Il est actif lorsqu'au moins une parcelle est sélectionnée</li>
-<li>Spatialite : la couche des parcelles est chargée avec la clé <code>ogc_fid</code>, comme avant la version 2.4,
+<li><strong>Nouvelle « carte d'identité de la parcelle » en PDF</strong> : informations générales de la parcelle, propriétaires,
+  et un tableau des locaux</li>
+<li>Nouveau bouton <strong>« Exporter un CSV pour publipostage »</strong> dans la barre d'outils et le menu : export des parcelles
+  sélectionnées, au choix « Parcelles et propriétaires » ou « Locaux et propriétaires »</li>
+<li><strong>Spatialite</strong> : la couche des parcelles est chargée avec la clé <code>ogc_fid</code>, comme avant la version 2.4,
   et non plus avec la pseudo-colonne <code>rowid</code>, avec laquelle certaines versions de QGIS n'identifient pas
   les parcelles (outil d'information et outil de recherche) #598 #600. Les couches déjà chargées
   doivent être rechargées</li>
-<li>Chargement des couches et algorithme « Configuration du projet » : les champs <code>proprietaire</code> et
+<li><strong>Chargement des couches</strong> et algorithme « <strong>Configuration du projet</strong> » : les champs <code>proprietaire</code> et
   <code>proprietaire_info</code> de la couche des parcelles (noms et adresses des propriétaires) ne sont plus publiés
   par QGIS Server, en WMS et en WFS. Ils étaient visibles de tous dans Lizmap, sans les droits du module
   cadastre. Pour un projet existant, relancer l'algorithme ou décocher les cases à la main</li>
-<li>Service serveur (Lizmap)</li>
-<li>Nouvelle requête <code>GetExport</code> : données des exports CSV des locaux et des propriétaires d'une liste
-    de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.
-    Les données de naissance sont masquées sans le droit</li>
+<li><strong>Service serveur</strong> (Lizmap)</li>
+<li>Nouvelle requête <code>GetExport</code> : fichier CSV des exports des locaux et des propriétaires d'une liste
+    de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.</li>
 <li>Les droits sur les données sensibles peuvent être donnés séparément : <code>BIRTH</code>, <code>REVENUE</code>
     et <code>EXONERATION</code>, en plus de <code>ADVANCED</code> qui les donne tous</li>
 <li><code>GetCapabilities</code> liste les requêtes disponibles</li>
-<li>Fiche parcellaire</li>
-<li>Onglet « Locaux » refait : un tableau récapitulatif, puis pour chaque local sa description,
+<li><strong>Fiche parcellaire</strong></li>
+<li>Onglet <strong>« Locaux »</strong> refait : un tableau récapitulatif, puis pour chaque local sa description,
     ses propriétaires, ses parties d'évaluation (PEV) avec leur description (habitation, dépendances,
     local professionnel) et leurs exonérations (collectivité, nature, années, taux, montants exonérés)</li>
-<li>Correction des locaux répétés lorsqu'un local a plusieurs PEV ou qu'une PEV a plusieurs exonérations</li>
-<li>Onglet « Propriétaires » : les lots d'une copropriété affichent leur quote-part, et les libellés
+<li><strong>Correction des locaux répétés</strong> lorsqu'un local a plusieurs PEV ou qu'une PEV a plusieurs exonérations</li>
+<li>Onglet <strong>« Propriétaires »</strong> : les lots d'une copropriété affichent leur quote-part, et les libellés
     des droits et démembrements au lieu de leurs codes</li>
-<li>Onglet « Subdivisions fiscales » : ajout des exonérations (collectivité, nature, années, taux,
+<li>Onglet <strong>« Subdivisions fiscales »</strong> : ajout des exonérations (collectivité, nature, années, taux,
     revenu exonéré), masquées sans l'option des exonérations, et du libellé de la nature de culture</li>
-<li>Les tableaux de tous les onglets sont décrits en Python et non plus générés en HTML
+<li>Les tableaux de tous les onglets sont <strong>décrits en Python</strong> et non plus générés en HTML
     par les requêtes SQL</li>
-<li>Choix des sections et des champs affichés : dans les options de l'extension, et dans la table
+<li><strong>Choix des sections et des champs affichés</strong> : dans les options de l'extension, et dans la table
     <code>cadastre_parametre_fiche_parcelle</code> de la base, créée ou complétée à chaque import sans perdre
-    les paramètres existants. La table est utilisée par QGIS et par Lizmap lorsqu'elle existe.
-    Après une modification des options, l'extension propose de les enregistrer aussi dans la base
-    courante si elle a déjà sa table</li>
-<li>Relevé de propriété, propriétés bâties</li>
+    les paramètres existants. La table est utilisée par QGIS et par Lizmap lorsqu'elle existe.</li>
+<li><strong>Relevé de propriété, propriétés bâties</strong></li>
 <li>Le revenu cadastral d'une PEV est la moitié de sa valeur locative, il n'est plus remplacé
     par le revenu exonéré, et il n'est écrit qu'une fois lorsque la PEV a plusieurs exonérations</li>
 <li>La fraction de revenu cadastral exonérée est le montant exonéré de MAJIC, sans appliquer
