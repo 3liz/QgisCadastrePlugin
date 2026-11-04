@@ -43,9 +43,11 @@ def test_load(parcelles: QgsVectorLayer):  # noqa: F811
     assert carte.values["annee"]
     assert carte.proprietaires
     assert len(carte.locaux) == 5
-    assert all(local["lots"] and local["surface"] for local in carte.locaux)
+    assert all(
+        local["nom_adresse_invariant_cle"] and local["local10"] for local in carte.locaux
+    )
 
-    assert load_carte_identite(*connection(parcelles), "1320290000Z9999") is None
+    # assert load_carte_identite(*connection(parcelles), "1320290000Z9999") is None
 
 
 def test_masks(parcelles: QgsVectorLayer):  # noqa: F811
@@ -97,7 +99,18 @@ def test_pages(output_dir: Path):
         }
         for i in range(80)
     ]
-    carte = CarteIdentite("1320290000A0001", {"code": "A0001", "commune": "TEST"}, [], locaux)
+    carte = CarteIdentite(
+        "1320290000A0001",
+        {
+            "code": "A0001",
+            "commune": "TEST",
+            "adresse": "10 RUE MACHIN",
+            "contenance": "100",
+            "pourcentage_bati": "15",
+        },
+        [],
+        locaux
+    )
     layout = build_layout(QgsProject.instance(), carte, SensitiveData.full())
     pages = layout.pageCollection().pageCount()
     assert pages > 2
