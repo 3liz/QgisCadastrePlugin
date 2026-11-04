@@ -7,6 +7,8 @@ import pytest
 from qgis.core import Qgis, QgsProject, QgsProviderRegistry
 from qgis.gui import QgisInterface
 
+import cadastre.cadastre_common_base as common_utils
+
 from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_import import cadastreImport
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
@@ -184,3 +186,19 @@ def test_search_and_parcelle_dialogs(database: CadastreDatabase, project: QgsPro
     assert feature["geo_parcelle"] in dialog.windowTitle()
     assert dialog.parcelleInfo.toPlainText().strip()
     assert "Propriétaire" in dialog.proprietairesInfo.toPlainText()
+
+
+def test_carte_identite_button(
+    database: CadastreDatabase, project: QgsProject, qgis_iface: QgisInterface, monkeypatch: pytest.MonkeyPatch
+):
+    """ The button Carte d'identité of the fiche parcellaire writes the PDF of the parcel and opens it """
+    CadastreLoading(CadastreFeedback()).process_loading(LoadingOptions(database, main_layers_only=True))
+    layer = project.mapLayersByName("Parcelles")[0]
+    feature = next(layer.getFeatures())
+    dialog = CadastreParcelleDialog(qgis_iface, layer, feature, CadastreSearchDialog(qgis_iface))
+
+    opened: list[str] = []
+    monkeypatch.setattr(common_utils, "openFile", opened.append)
+    dialog.btExportIdentite.click()
+    assert len(opened) == 1
+    assert Path(opened[0]).read_bytes().startswith(b"%PDF")

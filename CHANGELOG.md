@@ -2,42 +2,41 @@
 
 ## Unreleased
 
-* Nouveau bouton « Exporter un CSV pour publipostage » dans la barre d'outils et le menu : export des parcelles
-  sélectionnées, au choix « Parcelles et propriétaires » ou « Locaux et propriétaires », avec les mêmes
-  colonnes que les exports CSV du module Lizmap. Il est actif lorsqu'au moins une parcelle est sélectionnée
-* Spatialite : la couche des parcelles est chargée avec la clé `ogc_fid`, comme avant la version 2.4,
+## 2.5.0 - 2026-11-04
+
+* **Nouvelle « carte d'identité de la parcelle » en PDF** : informations générales de la parcelle, propriétaires,
+  et un tableau des locaux
+* Nouveau bouton **« Exporter un CSV pour publipostage »** dans la barre d'outils et le menu : export des parcelles
+  sélectionnées, au choix « Parcelles et propriétaires » ou « Locaux et propriétaires »
+* **Spatialite** : la couche des parcelles est chargée avec la clé `ogc_fid`, comme avant la version 2.4,
   et non plus avec la pseudo-colonne `rowid`, avec laquelle certaines versions de QGIS n'identifient pas
   les parcelles (outil d'information et outil de recherche) #598 #600. Les couches déjà chargées
   doivent être rechargées
-* Chargement des couches et algorithme « Configuration du projet » : les champs `proprietaire` et
+* **Chargement des couches** et algorithme « **Configuration du projet** » : les champs `proprietaire` et
   `proprietaire_info` de la couche des parcelles (noms et adresses des propriétaires) ne sont plus publiés
   par QGIS Server, en WMS et en WFS. Ils étaient visibles de tous dans Lizmap, sans les droits du module
   cadastre. Pour un projet existant, relancer l'algorithme ou décocher les cases à la main
-* Service serveur (Lizmap)
+* **Service serveur** (Lizmap)
   * Nouvelle requête `GetExport` : fichier CSV des exports des locaux et des propriétaires d'une liste
     de parcelles, avec les codes des objets de la recherche spatiale, en PostgreSQL et en Spatialite.
-    Lizmap le transmet à l'utilisateur sans le charger en mémoire.
-    Les données de naissance sont masquées sans le droit
   * Les droits sur les données sensibles peuvent être donnés séparément : `BIRTH`, `REVENUE`
     et `EXONERATION`, en plus de `ADVANCED` qui les donne tous
   * `GetCapabilities` liste les requêtes disponibles
-* Fiche parcellaire
-  * Onglet « Locaux » refait : un tableau récapitulatif, puis pour chaque local sa description,
+* **Fiche parcellaire**
+  * Onglet **« Locaux »** refait : un tableau récapitulatif, puis pour chaque local sa description,
     ses propriétaires, ses parties d'évaluation (PEV) avec leur description (habitation, dépendances,
     local professionnel) et leurs exonérations (collectivité, nature, années, taux, montants exonérés)
-  * Correction des locaux répétés lorsqu'un local a plusieurs PEV ou qu'une PEV a plusieurs exonérations
-  * Onglet « Propriétaires » : les lots d'une copropriété affichent leur quote-part, et les libellés
+  * **Correction des locaux répétés** lorsqu'un local a plusieurs PEV ou qu'une PEV a plusieurs exonérations
+  * Onglet **« Propriétaires »** : les lots d'une copropriété affichent leur quote-part, et les libellés
     des droits et démembrements au lieu de leurs codes
-  * Onglet « Subdivisions fiscales » : ajout des exonérations (collectivité, nature, années, taux,
+  * Onglet **« Subdivisions fiscales »** : ajout des exonérations (collectivité, nature, années, taux,
     revenu exonéré), masquées sans l'option des exonérations, et du libellé de la nature de culture
-  * Les tableaux de tous les onglets sont décrits en Python et non plus générés en HTML
+  * Les tableaux de tous les onglets sont **décrits en Python** et non plus générés en HTML
     par les requêtes SQL
-  * Choix des sections et des champs affichés : dans les options de l'extension, et dans la table
+  * **Choix des sections et des champs affichés** : dans les options de l'extension, et dans la table
     `cadastre_parametre_fiche_parcelle` de la base, créée ou complétée à chaque import sans perdre
     les paramètres existants. La table est utilisée par QGIS et par Lizmap lorsqu'elle existe.
-    Après une modification des options, l'extension propose de les enregistrer aussi dans la base
-    courante si elle a déjà sa table
-* Relevé de propriété, propriétés bâties
+* **Relevé de propriété, propriétés bâties**
   * Le revenu cadastral d'une PEV est la moitié de sa valeur locative, il n'est plus remplacé
     par le revenu exonéré, et il n'est écrit qu'une fois lorsque la PEV a plusieurs exonérations
   * La fraction de revenu cadastral exonérée est le montant exonéré de MAJIC, sans appliquer

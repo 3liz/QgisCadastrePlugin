@@ -4,6 +4,7 @@
 SELECT
     l10.local10 AS local10,
     l.invar AS invariant,
+    l.cleinvar AS cle,
     l.dnubat AS batiment,
     l.descr AS entree,
     l.dniv AS niveau,
@@ -19,7 +20,15 @@ SELECT
     cconlc.cconlc_lib AS nature,
     ccoplc.ccoplc_lib AS construction,
     l10.jannat AS annee_construction,
-    l10.dnbniv AS niveaux
+    l10.dnbniv AS niveaux,
+    -- Lot of a copropriété and its share, surface of the rooms of the habitations: carte d'identité
+    (SELECT min(ll.dnulot) FROM lotslocaux ll WHERE ll.local00 = l.local00) AS lot,
+    (SELECT min(ll.dnumql) FROM lotslocaux ll WHERE ll.local00 = l.local00) AS numerateur,
+    (SELECT min(ll.ddenql) FROM lotslocaux ll WHERE ll.local00 = l.local00) AS denominateur,
+    (
+        SELECT sum(pp.dsupdc) FROM pev JOIN pevprincipale pp ON pp.pev = pev.pev
+        WHERE pev.local10 = l10.local10
+    ) AS surface
 FROM local00 l
 JOIN local10 l10 ON l10.local00 = l.local00
 LEFT JOIN voie v
@@ -28,4 +37,4 @@ LEFT JOIN dteloc ON dteloc.dteloc = l10.dteloc
 LEFT JOIN cconlc ON cconlc.cconlc = l10.cconlc
 LEFT JOIN ccoplc ON ccoplc.ccoplc = l10.ccoplc
 WHERE l.parcelle = {parcelle}
-ORDER BY l.dnubat, l.descr, l.dniv, l.dpor, l.invar
+ORDER BY l.dnubat, l.descr, l.dniv, l.dpor, l.invar, l.cleinvar

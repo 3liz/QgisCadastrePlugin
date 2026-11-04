@@ -142,22 +142,31 @@ class DisplayOptions:
             if self.is_visible(section, f) and not (f.optional and not any(f.raw(row) for row in rows))
         ]
 
-    def text(self, item: Field, row: Row) -> str:
-        """Return the text of a field in a row, ready to be written in the HTML.
+    def plain_text(self, item: Field, row: Row) -> str:
+        """Return the text of a field in a row, like in a PDF document.
 
         An existing sensitive value which is not allowed is replaced by the mask of the field,
-        otherwise the value is formatted, then escaped for HTML.
+        otherwise the value is formatted.
 
         :param item: The field.
         :param row: A row of the SQL query.
-        :return: The HTML text, empty if the value is NULL.
+        :return: The text, empty if the value is NULL.
         """
         value = item.raw(row)
         if value and item.sensitive and not getattr(self.sensitive, item.sensitive):
             return item.mask
         if value and item.format:
             value = item.format(value)
-        return html.escape(value)
+        return value
+
+    def text(self, item: Field, row: Row) -> str:
+        """Return the text of a field in a row, ready to be written in the HTML, see plain_text.
+
+        :param item: The field.
+        :param row: A row of the SQL query.
+        :return: The HTML text, empty if the value is NULL.
+        """
+        return html.escape(self.plain_text(item, row))
 
 
 def table_html(section: Section, rows: list[Row], options: DisplayOptions, title_tag: str = "h4") -> str:

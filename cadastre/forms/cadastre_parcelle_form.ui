@@ -203,6 +203,16 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="btExportIdentite">
+              <property name="toolTip">
+               <string>Synthèse de la parcelle en PDF : informations générales, propriétaires et locaux</string>
+              </property>
+              <property name="text">
+               <string>Carte d'identité</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -245,6 +255,7 @@
  <tabstops>
   <tabstop>scrollArea</tabstop>
   <tabstop>btExportParcelle</tabstop>
+  <tabstop>btExportIdentite</tabstop>
   <tabstop>btCentrer</tabstop>
   <tabstop>btZoomer</tabstop>
   <tabstop>btSelectionner</tabstop>

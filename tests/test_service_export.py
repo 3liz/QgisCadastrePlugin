@@ -111,3 +111,15 @@ def test_export_errors(tmp_path: Path, parcelles: QgsVectorLayer, params: dict):
     code, data = request(tmp_path, **{"REQUEST": "GetExport", "LAYER": "Parcelles", **params})
     assert code in (400, 404)
     assert data["status"] == "fail"
+
+
+def test_carte_identite(tmp_path: Path, parcelles: QgsVectorLayer):  # noqa: F811
+    """ CreatePdf with the type identite: the carte d'identité of the parcel, then GetPdf gives the file """
+    code, data = request(tmp_path, REQUEST="CreatePdf", LAYER="Parcelles", PARCELLE=COPROPRIETE, TYPE="identite")
+    assert code == 200, data
+    tokens = data["data"]["tokens"]
+    assert len(tokens) == 1
+
+    response = raw_request(tmp_path, REQUEST="GetPdf", TOKEN=tokens[0])
+    assert response.statusCode() == 200
+    assert bytes(response.body()).startswith(b"%PDF")

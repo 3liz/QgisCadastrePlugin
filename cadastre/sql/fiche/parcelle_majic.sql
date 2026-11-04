@@ -17,7 +17,9 @@ SELECT
         THEN trim(Coalesce(ltrim(p.dnvoiri, '0'), '') || ' ' || trim(Coalesce(v.natvoi, '')) || ' ' || v.libvoi)
         ELSE trim(Coalesce(ltrim(p.cconvo, '0'), '') || ' ' || Coalesce(p.dvoilib, ''))
     END AS adresse,
-    p.gurbpa AS urbaine
+    p.gurbpa AS urbaine,
+    -- Year of the MAJIC data, written in the carte d'identité
+    p.annee AS annee
 FROM parcelle p
 INNER JOIN geo_parcelle gp ON p.parcelle = gp.geo_parcelle
 LEFT JOIN geo_batiment b
@@ -27,4 +29,4 @@ LEFT JOIN voie v
     ON SUBSTR(p.voie, 1, 6) || SUBSTR(p.voie, 12, 4) = SUBSTR(v.voie, 1, 6) || SUBSTR(v.voie, 12, 4)
 WHERE p.parcelle = {parcelle}
 GROUP BY p.ccosec, p.dnupla, c.libcom, p.jdatat, p.dcntpa, gp.geom, v.libvoi, p.dnvoiri, v.natvoi,
-    p.cconvo, p.dvoilib, p.gurbpa, p.gparbat
+    p.cconvo, p.dvoilib, p.gurbpa, p.gparbat, p.annee

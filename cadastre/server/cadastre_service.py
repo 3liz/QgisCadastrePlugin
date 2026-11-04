@@ -17,6 +17,7 @@ from qgis.server import QgsServerRequest, QgsServerResponse, QgsService
 import cadastre.cadastre_common_base as cadastre_common
 
 from cadastre.cadastre_export import CadastreExport
+from cadastre.carte_identite import export_carte_identite
 from cadastre.export_csv import (
     RechercheSpatiale,
     csv_text,
@@ -214,6 +215,17 @@ class CadastreService(QgsService):
         if not compte_communal:
             raise CadastreError(404, "No MAJIC data found for this parcel", request_id)
 
+        # Carte d'identité de la parcelle: a single PDF, built from the data of the fiche parcellaire
+        if res.type == "identite":
+            path = export_carte_identite(
+                project, res.connector, res.connectionParams, res.geo_parcelle, self.cache_dir,
+                sensitive_data(params),
+            )
+            if not path:
+                raise CadastreError(424, "An error occurred while generating the PDF", request_id)
+            self.write_pdf_tokens([path], response, request_id)
+            return
+
         # For an owner, all his comptes communaux
         comptes_communaux: str | list[str] = compte_communal
         p_multi = 1
@@ -241,9 +253,12 @@ class CadastreService(QgsService):
             raise CadastreError(424, "An error occurred while generating the PDF", request_id)
 
         Logger.debug(f"export_as_pdf(), paths: {paths}")
+        self.write_pdf_tokens([Path(path) for path in paths], response, request_id)
 
+    def write_pdf_tokens(self, paths: list[Path], response: QgsServerResponse, request_id: str) -> None:
+        """Move the PDF files in the cache, and write their tokens: Lizmap gets each file with GetPdf"""
         tokens = []
-        for path in map(Path, paths):
+        for path in paths:
             uid = uuid4()
 
             Logger.debug(f"Item path: {path}")
@@ -384,7 +399,7 @@ class CadastreService(QgsService):
         # Get layer and expression
         p_layer = get_param("LAYER")
         p_parcelle = get_param("PARCELLE")
-        p_type = get_param("TYPE", ("parcelle", "proprietaire", "fiche"))
+        p_type = get_param("TYPE", ("parcelle", "proprietaire", "identite", "fiche"))
 
         # Get feature
         if not PARCELLE_FORMAT_RE.match(p_parcelle):

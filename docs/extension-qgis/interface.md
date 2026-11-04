@@ -46,10 +46,13 @@ Elle présente plusieurs onglets :
 
 Ainsi qu'une zone contenant des **boutons d'action** :
 
-* 2 boutons pour **exporter** au format PDF :
+* 3 boutons pour **exporter** au format PDF :
   - le **relevé parcellaire**
+  - la **carte d'identité** de la parcelle : une synthèse de la parcelle (informations générales, propriétaires,
+    et un tableau des locaux avec leur lot et leur quote-part, leur surface, leur catégorie, leur valeur locative
+    et leurs exonérations)
   - le **relevé de propriété** avec une option pour réaliser un export sur toutes les communes ou seulement à la commune de la parcelle
-  - avec les options de [données sensibles](#donnees-sensibles-dans-les-releves) à inclure dans les relevés
+  - avec les options de [données sensibles](#donnees-sensibles-dans-les-releves) à inclure dans les documents
 * 3 boutons pour **interagir avec l'objet géométrique** lié à la parcelle : centrer la carte sur la
   parcelle, zoomer sur la parcelle ou sélectionner l'objet dans la couche
 * Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**

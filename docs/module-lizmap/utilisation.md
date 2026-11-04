@@ -99,6 +99,7 @@ Au-dessus des informations de la parcelle, selon les droits de l'utilisateur :
 | Bouton | Action |
 |--------|--------|
 | Page (**Relevé parcellaire**) | Relevé parcellaire de la parcelle, en PDF |
+| Liste (**Carte d'identité de la parcelle**) | Synthèse de la parcelle en PDF : informations générales, propriétaires et locaux (lot, quote-part, surface, catégorie, valeur locative, exonérations) |
 | Livre (**Relevé de propriété**) | Relevé de propriété du compte de la parcelle, en PDF |
 | Imprimante (**Imprimer le détail**) | Impression des informations détaillées de la parcelle |
 | Personne **+** | Ajoute à la sélection toutes les parcelles du propriétaire |
@@ -107,8 +108,10 @@ Au-dessus des informations de la parcelle, selon les droits de l'utilisateur :
 Les boutons de sélection des parcelles du propriétaire ne sont proposés que si la couche des parcelles est
 disponible dans la table attributaire du projet.
 
+Le relevé parcellaire et la carte d'identité demandent le même droit, celui du relevé parcellaire.
+
 Pour un utilisateur qui a au moins un droit sur les données sensibles, un clic sur un bouton de relevé
-propose de le produire **Avec les données que je peux voir** ou **Pour un tiers (sans données sensibles)**.
+ou de carte d'identité propose de le produire **Avec les données que je peux voir** ou **Pour un tiers (sans données sensibles)**.
 Sans droit sur les données sensibles, le relevé est produit directement, pour un tiers.
 
 ### Onglets d'informations détaillées

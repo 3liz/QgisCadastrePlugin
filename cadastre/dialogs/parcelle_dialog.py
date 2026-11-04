@@ -3,12 +3,14 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os.path
+import tempfile
 
 from functools import partial
+from pathlib import Path
 
 from qgis.core import QgsCoordinateTransform, QgsMapSettings, QgsProject
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtCore import QSettings, Qt
 from qgis.PyQt.QtGui import QIcon, QKeySequence, QTextDocument
 from qgis.PyQt.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from qgis.PyQt.QtWidgets import (
@@ -23,9 +25,10 @@ from qgis.PyQt.QtWidgets import (
 
 import cadastre.cadastre_common_base as common_utils
 
+from cadastre.carte_identite import export_carte_identite
 from cadastre.dialogs.cadastre_export_dialog import CadastreExport
 from cadastre.dialogs.dialog_feedback import append_log
-from cadastre.tools import plugin_path, set_window_title
+from cadastre.tools import plugin_path, set_window_title, wait_cursor
 
 from ..logger import Logger
 
@@ -79,6 +82,7 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
         self.btParcellesProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "select.png"))))
         self.btExportParcelle.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
         self.btExportProprietaire.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
+        self.btExportIdentite.setIcon(QIcon(str(plugin_path("forms", "icons", "releve.png"))))
 
         # Get connection parameters
         connectionParams = common_utils.getConnectionParameterFromDbLayer(layer)
@@ -99,7 +103,11 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
         self.buttonBox.accepted.connect(self.onAccept)
 
         # Export buttons
-        exportButtons = {"parcelle": self.btExportParcelle, "proprietaire": self.btExportProprietaire}
+        exportButtons = {
+            "parcelle": self.btExportParcelle,
+            "identite": self.btExportIdentite,
+            "proprietaire": self.btExportProprietaire,
+        }
         for key, item in list(exportButtons.items()):
             control = item
             slot = partial(self.export_as_pdf, key)
@@ -438,6 +446,10 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
             self.proprietairesInfo.setText("Pas de données de propriétaires dans la base")
             return
 
+        if self.feature and key == "identite":
+            self.export_carte_identite()
+            return
+
         if self.feature:
             comptecommunal = common_utils.getCompteCommunalFromParcelleId(
                 self.feature["geo_parcelle"], self.connectionParams, self.connector
@@ -460,6 +472,28 @@ class CadastreParcelleDialog(QDialog, PARCELLE_FORM_CLASS):  # type: ignore[vali
                         self.sensitiveData(),
                     )
                     qe.export_as_pdf()
+
+    @wait_cursor
+    def export_carte_identite(self):
+        """Export the carte d'identité of the parcel as a PDF file, with the sensitive data of the options,
+        then open it"""
+        directory = QSettings().value("cadastre/tempDir", type=str)
+        if not directory or not Path(directory).exists():
+            directory = tempfile.gettempdir()
+        path = export_carte_identite(
+            QgsProject.instance(),
+            self.connector,
+            self.connectionParams,
+            self.feature["geo_parcelle"],
+            Path(tempfile.mkdtemp("", "cad_export_", directory)),
+            self.sensitiveData(),
+        )
+        if path:
+            common_utils.openFile(str(path))
+        else:
+            self.iface.messageBar().pushCritical(
+                "Cadastre", "La carte d'identité de la parcelle n'a pas pu être créée"
+            )
 
     def centerToParcelle(self):
         """
