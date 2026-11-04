@@ -28,6 +28,10 @@ class CadastreAboutDialog(QDialog, ABOUT_FORM_CLASS):  # type: ignore[valid-type
         self.buttonBox.accepted.connect(self.onAccept)
 
         # Images
+        self.label_logo_cd14.setPixmap(QPixmap(str(plugin_path("forms", "images", "logo_cd14.png"))))
+        self.label_logo_cd64.setPixmap(QPixmap(str(plugin_path("forms", "images", "logo_cd64.png"))))
+        self.label_logo_gn.setPixmap(QPixmap(str(plugin_path("forms", "images", "logo_grandnarbonne.png"))))
+
         self.label_logo_craig.setPixmap(QPixmap(str(plugin_path("forms", "images", "logo_craig.png"))))
         self.label_logo_craig.setText("")
         self.label_logo_rennes_metropole.setPixmap(

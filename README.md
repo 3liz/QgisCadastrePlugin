@@ -49,6 +49,11 @@ Les évolutions 2025 ont été soutenues par :
 - Le **[CRAIG](https://www.craig.fr/)** (Centre Régional Auvergne-Rhône-Alpes de l'Information Géographique) :
   Abandon du support des fichiers FANTOIR au bénéfice des fichiers TOPO
 
+Les évolutions 2026 ont été soutenues par :
+
+- Le **[Conseil départemental du Calvados](https://www.calvados.fr)** et le **[Conseil départemental des Pyrénées Atlantiques](https://le64.fr)**: ajout de droits plus fins dans le module Cadastre pour Lizmap Web Client, choix des champs exportés dans la fiche
+- Le **[Grand Narbonne](https://www.legrandnarbonne.com)**: export PDF d'une carte d'identité simplifiée de la parcelle
+
 ## Conception
 
 L'extension Cadastre a été conçue et développée par la Société **3Liz**.
