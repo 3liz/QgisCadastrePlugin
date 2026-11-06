@@ -2,18 +2,23 @@
 
 ## La barre d'outil
 
-![alt](../media/cadastre_toolbar.png)
+![Barre d'outil Cadastre](../media/cadastre_toolbar.png)
 
 La barre d'outil peut s'afficher ou se masquer à partir :
 
 * du menu **Vue > Barres d'outils > Cadastre**
 * d'un clic droit à côté d'une des barres d'outils de QGIS et sélectionner **Cadastre**
 
-Elle contient :
+Elle contient, de gauche à droite :
 
-* Un outil pour **identifier une parcelle** sur la carte
-* Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Exporter la vue,
-  Exporter un CSV pour publipostage, Configurer, À propos
+* **Importer des données** : import des données EDIGEO et MAJIC dans la base
+* **Charger des données** : chargement des couches cadastrales dans le projet
+* **Outils de recherche** : affiche ou masque le [panneau de recherche](#le-panneau-de-recherche)
+* **Infos parcelle** : outil pour [identifier une parcelle](#identifier-une-parcelle) sur la carte
+* **Exporter la vue** : [export de la vue courante en PDF](#exporter-la-vue)
+* **Exporter un CSV pour publipostage** : [export des parcelles sélectionnées](#exporter-un-csv-pour-publipostage)
+* **Configurer le plugin** : options de l'extension
+* **À propos**
 
 Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir
 apparaître une bulle d'information.
@@ -26,41 +31,73 @@ certains boutons d'action sont désactivés.
 
 Pour faire apparaître la fiche d'information d'une parcelle, il faut :
 
-* activer l'outil **Identifier une parcelle** de la barre d'outil
+* activer l'outil **Infos parcelle** de la barre d'outil
 * **Zoomer à une échelle** pour laquelle les parcelles sont visibles (à partir de 1/20 000).
 * **Cliquer sur une des parcelles** de la carte.
 
-La fenêtre d'identification s'affiche alors,
+La fenêtre d'identification s'affiche alors :
 
-![alt](../media/cadastre_parcelle_info.png)
+![Fiche de la parcelle, onglet Résumé](../media/cadastre_parcelle_info.png)
 
 Elle présente plusieurs onglets :
 
-* un onglet avec les **informations générales de la parcelle**
-* un onglet avec les **propriétaires** de la parcelle et, pour une copropriété, les lots avec leur quote-part
-  et leurs propriétaires
-* un onglet avec les **subdivisions fiscales** et leurs exonérations
-* un onglet avec les **locaux** : un tableau récapitulatif, puis pour chaque local sa description, ses propriétaires,
+* **Résumé** : les **informations générales de la parcelle** (code, commune, date de l'acte, surfaces cadastrale,
+  géographique et bâtie, adresse, etc.)
+* **Propriétaires** : les **propriétaires** de la parcelle et, pour une copropriété, les **lots** avec leur
+  quote-part et leurs propriétaires
+* **Subdivisions** : les **subdivisions fiscales** et leurs exonérations
+* **Locaux** : un tableau récapitulatif, puis pour chaque local sa description, ses propriétaires,
   ses parties d'évaluation (PEV) avec leur description (habitation, dépendances, local professionnel)
   et leurs exonérations
 
-Ainsi qu'une zone contenant des **boutons d'action** :
+![Fiche de la parcelle, onglet Propriétaires d'une copropriété](../media/cadastre_parcelle_proprietaires.png)
 
+![Fiche de la parcelle, onglet Locaux](../media/cadastre_parcelle_locaux.png)
+
+Les onglets affichent toujours toutes les données, y compris les [données sensibles](#donnees-sensibles-dans-les-releves).
+
+Le bouton **⋮** en haut à droite des onglets ouvre un menu pour **imprimer**, **copier** dans le presse-papier
+ou **enregistrer** le contenu de l'onglet courant. Depuis l'onglet **Propriétaires**, il permet aussi de
+copier les informations des propriétaires dans le panneau de recherche.
+
+Sous les onglets, la zone **Actions** contient :
+
+* 3 boutons pour **interagir avec l'objet géométrique** lié à la parcelle : **Centrer** la carte sur la
+  parcelle, **Zoomer** sur la parcelle ou **Sélect.** pour sélectionner l'objet dans la couche
+* un bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
+
+La zone **Export** contient :
+
+* les 3 options de [données sensibles](#donnees-sensibles-dans-les-releves) à inclure dans les documents
+  exportés : dates et lieux de naissance des propriétaires, revenus, exonérations
 * 3 boutons pour **exporter** au format PDF :
-  - le **relevé parcellaire**
-  - la **carte d'identité** de la parcelle : une synthèse de la parcelle (informations générales, propriétaires,
-    et un tableau des locaux avec leur lot et leur quote-part, leur surface, leur catégorie, leur valeur locative
-    et leurs exonérations)
-  - le **relevé de propriété** avec une option pour réaliser un export sur toutes les communes ou seulement à la commune de la parcelle
-  - avec les options de [données sensibles](#donnees-sensibles-dans-les-releves) à inclure dans les documents
-* 3 boutons pour **interagir avec l'objet géométrique** lié à la parcelle : centrer la carte sur la
-  parcelle, zoomer sur la parcelle ou sélectionner l'objet dans la couche
-* Un dernier bouton pour **sélectionner dans la couche toutes les parcelles du propriétaire**
+    * le **relevé parcellaire**
+    * la [**carte d'identité**](#carte-didentite-de-la-parcelle) de la parcelle
+    * le **relevé de propriété**, avec l'option **Exporter pour toutes les communes** pour réaliser un export
+      sur toutes les communes, ou seulement sur la commune de la parcelle
 
 > Si vous n'avez pas importé de données TOPO, la commune de la parcelle ne sera pas affichée dans la
 > fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)
 
 >Si vous n'avez pas de données MAJIC, seule les informations sur la parcelle (1er onglet) seront présentées.
+
+#### Carte d'identité de la parcelle
+
+Le bouton **Carte d'identité** de la fiche de la parcelle produit une **synthèse de la parcelle** dans un
+PDF au format A4 paysage, qui s'ouvre automatiquement. Elle contient :
+
+* un **en-tête** : code et commune de la parcelle, millésime des données MAJIC, date d'édition, adresse,
+  contenance et pourcentage de bâti
+* les **ayants droit de la parcelle** : droit, nom, date et lieu de naissance, numéro MAJIC et adresse
+  des propriétaires
+* les **locaux** de la parcelle : propriétaire, adresse, numéro d'invariant et clé, démembrement, nature
+  et occupation du local, lot et quote-part pour une copropriété, surface, catégorie, bâtiment,
+  entrée, niveau et porte
+
+Comme pour les relevés, les dates et lieux de naissance des propriétaires ne sont écrits que si l'option
+**Exporter les dates et lieux de naissance des propriétaires** de la zone **Export** est cochée.
+
+![Carte d'identité de la parcelle](../media/cadastre_carte_identite.png)
 
 ### Exporter la vue
 

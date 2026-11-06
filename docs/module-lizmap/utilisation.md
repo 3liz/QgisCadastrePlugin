@@ -99,7 +99,7 @@ Au-dessus des informations de la parcelle, selon les droits de l'utilisateur :
 | Bouton | Action |
 |--------|--------|
 | Page (**Relevé parcellaire**) | Relevé parcellaire de la parcelle, en PDF |
-| Liste (**Carte d'identité de la parcelle**) | Synthèse de la parcelle en PDF : informations générales, propriétaires et locaux (lot, quote-part, surface, catégorie, valeur locative, exonérations) |
+| Liste (**Carte d'identité de la parcelle**) | Synthèse de la parcelle en PDF : informations générales, propriétaires et locaux (lot, quote-part, surface, catégorie, bâtiment, entrée, niveau, porte) |
 | Livre (**Relevé de propriété**) | Relevé de propriété du compte de la parcelle, en PDF |
 | Imprimante (**Imprimer le détail**) | Impression des informations détaillées de la parcelle |
 | Personne **+** | Ajoute à la sélection toutes les parcelles du propriétaire |
