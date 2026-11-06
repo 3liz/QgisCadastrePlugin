@@ -705,6 +705,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Identifier une parcelle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#carte-didentite-de-la-parcelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Carte d'identité de la parcelle
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1219,6 +1236,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Identifier une parcelle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#carte-didentite-de-la-parcelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Carte d'identité de la parcelle
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1386,17 +1420,22 @@
 
 <h1 id="interface">Interface<a class="headerlink" href="#interface" title="Permanent link">#</a></h1>
 <h2 id="la-barre-doutil">La barre d'outil<a class="headerlink" href="#la-barre-doutil" title="Permanent link">#</a></h2>
-<p><img alt="alt" src="../../media/cadastre_toolbar.png" /></p>
+<p><img alt="Barre d'outil Cadastre" src="../../media/cadastre_toolbar.png" /></p>
 <p>La barre d'outil peut s'afficher ou se masquer à partir :</p>
 <ul>
 <li>du menu <strong>Vue &gt; Barres d'outils &gt; Cadastre</strong></li>
 <li>d'un clic droit à côté d'une des barres d'outils de QGIS et sélectionner <strong>Cadastre</strong></li>
 </ul>
-<p>Elle contient :</p>
+<p>Elle contient, de gauche à droite :</p>
 <ul>
-<li>Un outil pour <strong>identifier une parcelle</strong> sur la carte</li>
-<li>Des boutons qui reprennent les sous-menus du plugin : Importer, Charger, Rechercher, Exporter la vue,
-  Exporter un CSV pour publipostage, Configurer, À propos</li>
+<li><strong>Importer des données</strong> : import des données EDIGEO et MAJIC dans la base</li>
+<li><strong>Charger des données</strong> : chargement des couches cadastrales dans le projet</li>
+<li><strong>Outils de recherche</strong> : affiche ou masque le <a href="#le-panneau-de-recherche">panneau de recherche</a></li>
+<li><strong>Infos parcelle</strong> : outil pour <a href="#identifier-une-parcelle">identifier une parcelle</a> sur la carte</li>
+<li><strong>Exporter la vue</strong> : <a href="#exporter-la-vue">export de la vue courante en PDF</a></li>
+<li><strong>Exporter un CSV pour publipostage</strong> : <a href="#exporter-un-csv-pour-publipostage">export des parcelles sélectionnées</a></li>
+<li><strong>Configurer le plugin</strong> : options de l'extension</li>
+<li><strong>À propos</strong></li>
 </ul>
 <p>Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir
 apparaître une bulle d'information.</p>
@@ -1406,40 +1445,67 @@ dans la base de données. Sinon, seules les informations principales issues de l
 certains boutons d'action sont désactivés.</p>
 <p>Pour faire apparaître la fiche d'information d'une parcelle, il faut :</p>
 <ul>
-<li>activer l'outil <strong>Identifier une parcelle</strong> de la barre d'outil</li>
+<li>activer l'outil <strong>Infos parcelle</strong> de la barre d'outil</li>
 <li><strong>Zoomer à une échelle</strong> pour laquelle les parcelles sont visibles (à partir de 1/20 000).</li>
 <li><strong>Cliquer sur une des parcelles</strong> de la carte.</li>
 </ul>
-<p>La fenêtre d'identification s'affiche alors,</p>
-<p><img alt="alt" src="../../media/cadastre_parcelle_info.png" /></p>
+<p>La fenêtre d'identification s'affiche alors :</p>
+<p><img alt="Fiche de la parcelle, onglet Résumé" src="../../media/cadastre_parcelle_info.png" /></p>
 <p>Elle présente plusieurs onglets :</p>
 <ul>
-<li>un onglet avec les <strong>informations générales de la parcelle</strong></li>
-<li>un onglet avec les <strong>propriétaires</strong> de la parcelle et, pour une copropriété, les lots avec leur quote-part
-  et leurs propriétaires</li>
-<li>un onglet avec les <strong>subdivisions fiscales</strong> et leurs exonérations</li>
-<li>un onglet avec les <strong>locaux</strong> : un tableau récapitulatif, puis pour chaque local sa description, ses propriétaires,
+<li><strong>Résumé</strong> : les <strong>informations générales de la parcelle</strong> (code, commune, date de l'acte, surfaces cadastrale,
+  géographique et bâtie, adresse, etc.)</li>
+<li><strong>Propriétaires</strong> : les <strong>propriétaires</strong> de la parcelle et, pour une copropriété, les <strong>lots</strong> avec leur
+  quote-part et leurs propriétaires</li>
+<li><strong>Subdivisions</strong> : les <strong>subdivisions fiscales</strong> et leurs exonérations</li>
+<li><strong>Locaux</strong> : un tableau récapitulatif, puis pour chaque local sa description, ses propriétaires,
   ses parties d'évaluation (PEV) avec leur description (habitation, dépendances, local professionnel)
   et leurs exonérations</li>
 </ul>
-<p>Ainsi qu'une zone contenant des <strong>boutons d'action</strong> :</p>
+<p><img alt="Fiche de la parcelle, onglet Propriétaires d'une copropriété" src="../../media/cadastre_parcelle_proprietaires.png" /></p>
+<p><img alt="Fiche de la parcelle, onglet Locaux" src="../../media/cadastre_parcelle_locaux.png" /></p>
+<p>Les onglets affichent toujours toutes les données, y compris les <a href="#donnees-sensibles-dans-les-releves">données sensibles</a>.</p>
+<p>Le bouton <strong>⋮</strong> en haut à droite des onglets ouvre un menu pour <strong>imprimer</strong>, <strong>copier</strong> dans le presse-papier
+ou <strong>enregistrer</strong> le contenu de l'onglet courant. Depuis l'onglet <strong>Propriétaires</strong>, il permet aussi de
+copier les informations des propriétaires dans le panneau de recherche.</p>
+<p>Sous les onglets, la zone <strong>Actions</strong> contient :</p>
 <ul>
-<li>3 boutons pour <strong>exporter</strong> au format PDF :</li>
+<li>3 boutons pour <strong>interagir avec l'objet géométrique</strong> lié à la parcelle : <strong>Centrer</strong> la carte sur la
+  parcelle, <strong>Zoomer</strong> sur la parcelle ou <strong>Sélect.</strong> pour sélectionner l'objet dans la couche</li>
+<li>un bouton pour <strong>sélectionner dans la couche toutes les parcelles du propriétaire</strong></li>
+</ul>
+<p>La zone <strong>Export</strong> contient :</p>
+<ul>
+<li>les 3 options de <a href="#donnees-sensibles-dans-les-releves">données sensibles</a> à inclure dans les documents
+  exportés : dates et lieux de naissance des propriétaires, revenus, exonérations</li>
+<li>3 boutons pour <strong>exporter</strong> au format PDF :<ul>
 <li>le <strong>relevé parcellaire</strong></li>
-<li>la <strong>carte d'identité</strong> de la parcelle : une synthèse de la parcelle (informations générales, propriétaires,
-    et un tableau des locaux avec leur lot et leur quote-part, leur surface, leur catégorie, leur valeur locative
-    et leurs exonérations)</li>
-<li>le <strong>relevé de propriété</strong> avec une option pour réaliser un export sur toutes les communes ou seulement à la commune de la parcelle</li>
-<li>avec les options de <a href="#donnees-sensibles-dans-les-releves">données sensibles</a> à inclure dans les documents</li>
-<li>3 boutons pour <strong>interagir avec l'objet géométrique</strong> lié à la parcelle : centrer la carte sur la
-  parcelle, zoomer sur la parcelle ou sélectionner l'objet dans la couche</li>
-<li>Un dernier bouton pour <strong>sélectionner dans la couche toutes les parcelles du propriétaire</strong></li>
+<li>la <a href="#carte-didentite-de-la-parcelle"><strong>carte d'identité</strong></a> de la parcelle</li>
+<li>le <strong>relevé de propriété</strong>, avec l'option <strong>Exporter pour toutes les communes</strong> pour réaliser un export
+  sur toutes les communes, ou seulement sur la commune de la parcelle</li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <p>Si vous n'avez pas importé de données TOPO, la commune de la parcelle ne sera pas affichée dans la
 fenêtre et l'adresse pourra être tronquée (de même pour les relevés exportés)</p>
 <p>Si vous n'avez pas de données MAJIC, seule les informations sur la parcelle (1er onglet) seront présentées.</p>
 </blockquote>
+<h4 id="carte-didentite-de-la-parcelle">Carte d'identité de la parcelle<a class="headerlink" href="#carte-didentite-de-la-parcelle" title="Permanent link">#</a></h4>
+<p>Le bouton <strong>Carte d'identité</strong> de la fiche de la parcelle produit une <strong>synthèse de la parcelle</strong> dans un
+PDF au format A4 paysage, qui s'ouvre automatiquement. Elle contient :</p>
+<ul>
+<li>un <strong>en-tête</strong> : code et commune de la parcelle, millésime des données MAJIC, date d'édition, adresse,
+  contenance et pourcentage de bâti</li>
+<li>les <strong>ayants droit de la parcelle</strong> : droit, nom, date et lieu de naissance, numéro MAJIC et adresse
+  des propriétaires</li>
+<li>les <strong>locaux</strong> de la parcelle : propriétaire, adresse, numéro d'invariant et clé, démembrement, nature
+  et occupation du local, lot et quote-part pour une copropriété, surface, catégorie, bâtiment,
+  entrée, niveau et porte</li>
+</ul>
+<p>Comme pour les relevés, les dates et lieux de naissance des propriétaires ne sont écrits que si l'option
+<strong>Exporter les dates et lieux de naissance des propriétaires</strong> de la zone <strong>Export</strong> est cochée.</p>
+<p><img alt="Carte d'identité de la parcelle" src="../../media/cadastre_carte_identite.png" /></p>
 <h3 id="exporter-la-vue">Exporter la vue<a class="headerlink" href="#exporter-la-vue" title="Permanent link">#</a></h3>
 <p>Dans la barre d'outil Cadastre, ainsi que dans le menu, vous pouvez exporter la vue courante de la carte en
 PDF via le menu <strong>Exporter la vue</strong>.</p>
@@ -1668,7 +1734,7 @@ soit <strong>19 caractères</strong></p>
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="4 novembre 2026 14:48:17 UTC">4 novembre 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="6 novembre 2026 09:06:15 UTC">6 novembre 2026</span>
   </span>
 
     

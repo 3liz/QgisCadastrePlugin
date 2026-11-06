@@ -1,5 +1,5 @@
-date=2026-11-04 14:50:08+0000
-os=Linux 7.0.0-1016-aws
+date=2026-11-06 09:07:33+0000
+os=Linux 7.0.0-1019-azure
 schemaspy-version=7.0.2
 schemaspy-revision=v7.0.2
 renderer=Graphviz dot 2.43.0 
