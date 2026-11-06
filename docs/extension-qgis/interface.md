@@ -23,6 +23,9 @@ Elle contient, de gauche à droite :
 Pour connaître l'action d'une des icônes, il suffit de laisser la souris un moment au-dessus pour voir
 apparaître une bulle d'information.
 
+!!! tip
+    Les données MAJIC visibles dans cette page et dans les copies d'écran sont des **données fictives** générées aléatoirement. Les noms, adresses, dates de naissance, revenus sont faux et ne correspondent à aucune réalité.
+
 ### Identifier une parcelle
 
 Pour avoir des informations complètes sur une parcelle, il faut avoir au préalable importé des données MAJIC
