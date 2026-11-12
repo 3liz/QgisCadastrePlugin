@@ -241,7 +241,7 @@
             <column ascending="true" name="cgrnum"/>
          </index>
       </table>
-      <table name="cnatsp" numRows="153" remarks="" schema="cadastre" type="TABLE">
+      <table name="cnatsp" remarks="" schema="cadastre" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="cnatsp" nullable="false" remarks="" size="2147483647" type="text" typeCode="12">
             <child column="cnatsp" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="cadastre" table="suf"/>
          </column>
@@ -1130,7 +1130,7 @@
             <column ascending="true" name="geo_tsurf_commune"/>
          </index>
       </table>
-      <table name="geo_unite_fonciere" numRows="364" remarks="Regroupe les unités foncières, c est a dire la fusion de parcelles adjacentes d un même propriétaire" schema="cadastre" type="TABLE">
+      <table name="geo_unite_fonciere" remarks="Regroupe les unités foncières, c est a dire la fusion de parcelles adjacentes d un même propriétaire" schema="cadastre" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('cadastre.geo_unite_fonciere_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant des unités foncières" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="comptecommunal" nullable="true" remarks="Compte communal des parcelles composant l unité foncière" size="2147483647" type="text" typeCode="12">
             <parent column="comptecommunal" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="cadastre" table="comptecommunal"/>
@@ -1213,7 +1213,7 @@
             <column ascending="true" name="gnexps"/>
          </index>
       </table>
-      <table name="gnextl" numRows="122" remarks="" schema="cadastre" type="TABLE">
+      <table name="gnextl" remarks="" schema="cadastre" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="gnextl" nullable="false" remarks="" size="2147483647" type="text" typeCode="12">
             <child column="gnextl" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="cadastre" table="pevexoneration"/>
             <child column="gnextl" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="cadastre" table="pevexoneration_imposable"/>
@@ -1572,7 +1572,7 @@
             <column ascending="true" name="annee"/>
          </index>
       </table>
-      <table name="natvoi" numRows="189" remarks="" schema="cadastre" type="TABLE">
+      <table name="natvoi" remarks="" schema="cadastre" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="natvoi" nullable="false" remarks="" size="2147483647" type="text" typeCode="12">
             <child column="natvoi" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="cadastre" table="voie"/>
          </column>
@@ -1592,7 +1592,7 @@
             <column ascending="true" name="natvoiriv"/>
          </index>
       </table>
-      <table name="nbat" numRows="0" remarks="" schema="cadastre" type="TABLE">
+      <table name="nbat" remarks="" schema="cadastre" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="tmp" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
       </table>
       <table name="parcelle" numRows="389" remarks="Article descriptif de parcelle" schema="cadastre" type="TABLE">
@@ -2245,7 +2245,7 @@
             <column ascending="true" name="annee"/>
          </index>
       </table>
-      <table name="prop" numRows="0" remarks="" schema="cadastre" type="TABLE">
+      <table name="prop" remarks="" schema="cadastre" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="tmp" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
       </table>
       <table name="proprietaire" numRows="117" remarks="Propriétaire" schema="cadastre" type="TABLE">

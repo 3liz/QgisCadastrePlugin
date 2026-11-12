@@ -2976,6 +2976,12 @@ On your local, make a symlink with ln -s
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
 <h2 id="252-2026-11-12">2.5.2 - 2026-11-12<a class="headerlink" href="#252-2026-11-12" title="Permanent link">#</a></h2>
 <ul>
+<li><strong>Outil « Identifier une parcelle »</strong> : la parcelle est cherchée au moment du clic dans toutes les couches
+  de parcelles du projet, celles affichées d'abord, et non plus dans une seule couche choisie à l'activation
+  de l'outil. Une couche dont la table contient seulement <code>parcelle_info</code> dans son nom n'est plus prise
+  pour la couche des parcelles #600</li>
+<li><strong>Export CSV pour publipostage</strong> : avec plusieurs couches de parcelles, les parcelles exportées sont celles
+  sélectionnées dans la couche active, ou à défaut dans la première couche de parcelles avec une sélection</li>
 <li><strong>Mise à jour du plugin</strong> : un message affiche une fois les commandes SQL, pour PostgreSQL et Spatialite,
   qui créent les index de la fiche parcellaire manquants dans une base importée avec une version précédente.
   Sans eux, la fiche d'une parcelle avec beaucoup de locaux peut prendre plusieurs dizaines de secondes</li>
