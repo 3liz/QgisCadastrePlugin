@@ -1522,6 +1522,9 @@
          <index name="lots_pk" unique="true">
             <column ascending="true" name="lots"/>
          </index>
+         <index name="idx_lots_parcelle" unique="false">
+            <column ascending="true" name="parcelle"/>
+         </index>
          <index name="idx_lots_tmp1" unique="false">
             <column ascending="true" name="annee"/>
             <column ascending="true" name="ccodep"/>
@@ -1561,6 +1564,9 @@
          <primaryKey column="lotslocaux" sequenceNumberInPK="1"/>
          <index name="loclocaux_pk" unique="true">
             <column ascending="true" name="lotslocaux"/>
+         </index>
+         <index name="idx_lotslocaux_local00" unique="false">
+            <column ascending="true" name="local00"/>
          </index>
          <index name="idxan_lotslocaux" unique="false">
             <column ascending="true" name="annee"/>
