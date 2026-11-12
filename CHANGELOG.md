@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 2.5.2 - 2026-11-12
+
+* **Mise à jour du plugin** : un message affiche une fois les commandes SQL, pour PostgreSQL et Spatialite,
+  qui créent les index de la fiche parcellaire manquants dans une base importée avec une version précédente.
+  Sans eux, la fiche d'une parcelle avec beaucoup de locaux peut prendre plusieurs dizaines de secondes
+* **Notes de version** (menu Cadastre) : correction de l'erreur à l'ouverture. Elles affichent le lien vers
+  l'historique des versions et les messages de mise à jour, pour relire les commandes SQL des index
 * **Carte d'identité de la parcelle** : en Spatialite, le tableau des locaux était vide, depuis la version 2.5.0
 
 ## 2.5.1 - 2026-11-12
