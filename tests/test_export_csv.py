@@ -273,6 +273,20 @@ def test_csv_export_action(
         parcelles.removeSelection()
         menu.update_csv_export_action()
         assert not menu.csv_export_action.isEnabled()
+
+        # Another layer of the parcels, with the selection: its parcelles are exported (issue #600)
+        other = QgsVectorLayer(parcelles.source(), "Parcelles bis", "postgres")
+        QgsProject.instance().addMapLayer(other)
+        try:
+            select(other, [COPROPRIETE])
+            menu.update_csv_export_action()
+            assert menu.csv_export_action.isEnabled()
+            assert menu.parcelles_layer() == other
+            (tmp_path / "export.csv").unlink()
+            menu.csv_export_menu.actions()[1].trigger()
+            assert {row[0] for row in read_csv(tmp_path / "export.csv")[1:]} == {COPROPRIETE}
+        finally:
+            QgsProject.instance().removeMapLayer(other.id())
     finally:
         parcelles.removeSelection()
         menu.unload()

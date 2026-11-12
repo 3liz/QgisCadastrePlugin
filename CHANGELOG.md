@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* **Outil « Identifier une parcelle »** : la parcelle est cherchée au moment du clic dans toutes les couches
+  de parcelles du projet, celles affichées d'abord, et non plus dans une seule couche choisie à l'activation
+  de l'outil. Une couche dont la table contient seulement `parcelle_info` dans son nom n'est plus prise
+  pour la couche des parcelles #600
+* **Export CSV pour publipostage** : avec plusieurs couches de parcelles, les parcelles exportées sont celles
+  sélectionnées dans la couche active, ou à défaut dans la première couche de parcelles avec une sélection
+
 ## 2.5.2 - 2026-11-12
 
 * **Mise à jour du plugin** : un message affiche une fois les commandes SQL, pour PostgreSQL et Spatialite,

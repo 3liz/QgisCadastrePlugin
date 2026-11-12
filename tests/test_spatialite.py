@@ -25,6 +25,7 @@ from cadastre.dialogs.database_widget import DatabaseWidget
 from cadastre.dialogs.search_dialog import CadastreSearchDialog
 from cadastre.feedback import CadastreFeedback
 
+from .test_identify import click_parcelle
 from .test_import_data import CornillonMajic, import_options
 
 pytestmark = pytest.mark.skipif(not hasSpatialiteSupport(), reason="No Spatialite support")
@@ -91,6 +92,9 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
         assert parcelles.featureCount() > 0
         # The key of the layer is ogc_fid, not the pseudo column rowid of Spatialite (issues #598 and #600)
         assert QgsDataSourceUri(parcelles.source()).keyColumn() == "ogc_fid"
+
+        # Tool "Identifier une parcelle": the parcel under the click is identified (issue #600)
+        assert [p for _, p in click_parcelle(parcelles, "1320290000A0107")] == ["1320290000A0107"]
 
         # Fiche parcellaire of a parcel with a building, the sensitive data are masked or not
         geo_parcelle = database.fetch("SELECT parcelle FROM local10 ORDER BY parcelle LIMIT 1")[0][0]

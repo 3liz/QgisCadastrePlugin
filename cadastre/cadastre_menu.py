@@ -33,6 +33,7 @@ from qgis.core import (
     QgsPrintLayout,
     QgsProject,
     QgsReadWriteContext,
+    QgsVectorLayer,
 )
 from qgis.PyQt.QtCore import QSettings, QUrl
 from qgis.PyQt.QtGui import QDesktopServices, QIcon, QKeySequence
@@ -48,7 +49,7 @@ from qgis.PyQt.QtXml import QDomDocument
 import cadastre.cadastre_common_base as common_utils
 import cadastre.export_csv as export_csv
 
-from cadastre.cadastre_identify_parcelle import IdentifyParcelle
+from cadastre.cadastre_identify_parcelle import IdentifyParcelle, parcelle_layers
 from cadastre.definitions import URL_DOCUMENTATION
 from cadastre.dialogs.about_dialog import CadastreAboutDialog
 from cadastre.dialogs.cadastre_load_dialog import CadastreLoadDialog
@@ -345,14 +346,20 @@ class CadastreMenu:
         if os.path.exists(temppath):
             common_utils.openFile(temppath)
 
-    @staticmethod
-    def parcelles_layer():
-        """Return the layer of the parcelles of the project, from the table parcelle_info, None if there is none"""
-        try:
-            return common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), "parcelle_info")
-        except Exception as err:
-            Logger.log_exception(err)
-            return None
+    def parcelles_layer(self) -> QgsVectorLayer | None:
+        """Return the layer of the parcels whose selected parcels are exported in CSV.
+
+        The project may have several layers of the parcels, see parcelle_layers: the active layer
+        is used if it is one of them and has a selection, otherwise the first one with a selection.
+
+        :return: The layer, None if no parcel is selected in any layer of the parcels.
+        """
+        layers = [layer for layer in parcelle_layers(QgsProject.instance()) if layer.selectedFeatureCount()]
+        active = self.iface.activeLayer()
+        for layer in layers:
+            if active is not None and layer.id() == active.id():
+                return layer
+        return layers[0] if layers else None
 
     def update_csv_export_action(self, *_args):
         """Enable the CSV export if at least one parcelle is selected"""
@@ -432,35 +439,20 @@ class CadastreMenu:
         dialog.exec()
 
     def checkIdentifyParcelleTool(self, layerIds=None):
-        """
-        When layers are removed from the project
-        Check if the layer Parcelle remains
-        If not deactivate Identify parcelle tool
-        """
-        # Find parcelle layer
-        parcelleLayer = None
-        try:
-            parcelleLayer = common_utils.getLayerFromLegendByTableProps(
-                QgsProject.instance(), "parcelle_info"
-            )
-        except Exception as err:
-            Logger.log_exception(err)
-            parcelleLayer = None
+        """Deactivate the tool "Identifier une parcelle" when the project has no layer of the parcels.
 
-        if not parcelleLayer:
+        :param layerIds: The layers removed from the project, when called by layersRemoved.
+        """
+        if not parcelle_layers(QgsProject.instance()):
             self.identifyParcelleAction.setChecked(False)
             self.iface.actionPan().trigger()
-            return
 
     def setIndentifyParcelleTool(self):
-        """
-        Activite the identify tool
-        for the layer geo_parcelle
-        """
+        """Activate the tool "Identifier une parcelle", if the project has a layer of the parcels.
 
-        # Find parcelle layer
-        parcelleLayer = common_utils.getLayerFromLegendByTableProps(QgsProject.instance(), "parcelle_info")
-        if not parcelleLayer:
+        The layers of the parcels are searched by the tool at each click, see IdentifyParcelle.
+        """
+        if not parcelle_layers(QgsProject.instance()):
             QMessageBox.warning(
                 self.cadastre_search_dialog,
                 "Cadastre",
@@ -470,7 +462,7 @@ class CadastreMenu:
             self.iface.actionPan().trigger()
             return
 
-        self.identyParcelleTool = IdentifyParcelle(self.mapCanvas, parcelleLayer)
+        self.identyParcelleTool = IdentifyParcelle(self.mapCanvas)
         self.identyParcelleTool.cadastreGeomIdentified.connect(self.getParcelleInfo)
         # The action is unchecked by QGIS when another map tool is activated
         self.identyParcelleTool.setAction(self.identifyParcelleAction)
