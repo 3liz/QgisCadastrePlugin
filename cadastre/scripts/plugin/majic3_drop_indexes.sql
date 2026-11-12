@@ -42,6 +42,8 @@ DROP INDEX IF EXISTS idx_pev_local10;
 DROP INDEX IF EXISTS idx_pevprincipale_pev;
 DROP INDEX IF EXISTS idx_pevdependances_pev;
 DROP INDEX IF EXISTS idx_pevprofessionnelle_pev;
+DROP INDEX IF EXISTS idx_lots_parcelle;
+DROP INDEX IF EXISTS idx_lotslocaux_local00;
 DROP INDEX IF EXISTS idx_parcelle_voie;
 DROP INDEX IF EXISTS idx_parcelle_comptecommunal;
 

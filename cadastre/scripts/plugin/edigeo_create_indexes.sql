@@ -49,6 +49,8 @@ CREATE INDEX IF NOT EXISTS idx_pev_local10 ON pev (local10);
 CREATE INDEX IF NOT EXISTS idx_pevprincipale_pev ON pevprincipale (pev);
 CREATE INDEX IF NOT EXISTS idx_pevdependances_pev ON pevdependances (pev);
 CREATE INDEX IF NOT EXISTS idx_pevprofessionnelle_pev ON pevprofessionnelle (pev);
+CREATE INDEX IF NOT EXISTS idx_lots_parcelle ON lots (parcelle);
+CREATE INDEX IF NOT EXISTS idx_lotslocaux_local00 ON lotslocaux (local00);
 CREATE INDEX IF NOT EXISTS idx_parcelle_voie ON parcelle (voie);
 CREATE INDEX IF NOT EXISTS idx_parcelle_voie_substr ON parcelle ((substr(voie, 1, 6) || substr(voie, 12, 4)));
 CREATE INDEX IF NOT EXISTS idx_parcelle_comptecommunal ON parcelle (comptecommunal);

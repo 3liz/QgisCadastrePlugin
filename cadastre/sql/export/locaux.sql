@@ -35,9 +35,9 @@ SELECT
     l10.dnbniv AS dnbniv,
     l10.dnatlc AS dnatlc,
     dnatlc.dnatlc_lib AS dnatlc_lib,
-    (SELECT min(ll.dnulot) FROM lotslocaux ll WHERE ll.local00 = l.local00) AS dnulot,
-    (SELECT min(ll.dnumql) FROM lotslocaux ll WHERE ll.local00 = l.local00) AS dnumql,
-    (SELECT min(ll.ddenql) FROM lotslocaux ll WHERE ll.local00 = l.local00) AS ddenql,
+    ll.dnulot AS dnulot,
+    ll.dnumql AS dnumql,
+    ll.ddenql AS ddenql,
     (
         SELECT sum(pp.dsupdc) FROM pev JOIN pevprincipale pp ON pp.pev = pev.pev
         WHERE pev.local10 = l10.local10
@@ -66,6 +66,19 @@ FROM parcelle p
 JOIN parcelle_info gp ON gp.geo_parcelle = p.parcelle
 JOIN local00 l ON l.parcelle = p.parcelle
 JOIN local10 l10 ON l10.local00 = l.local00
+-- Lots of the locaux of the parcelles only: a subquery correlated to each local would read
+-- the whole table lotslocaux for each local when it has no index on local00
+LEFT JOIN (
+    SELECT
+        lll.local00 AS local00,
+        min(lll.dnulot) AS dnulot,
+        min(lll.dnumql) AS dnumql,
+        min(lll.ddenql) AS ddenql
+    FROM lotslocaux lll
+    JOIN local00 ll0 ON ll0.local00 = lll.local00
+    WHERE ll0.parcelle IN ({parcelles})
+    GROUP BY lll.local00
+) ll ON ll.local00 = l.local00
 LEFT JOIN voie v
     ON SUBSTR(l.voie, 1, 6) || SUBSTR(l.voie, 12, 4) = SUBSTR(v.voie, 1, 6) || SUBSTR(v.voie, 12, 4)
 LEFT JOIN dteloc ON dteloc.dteloc = l10.dteloc

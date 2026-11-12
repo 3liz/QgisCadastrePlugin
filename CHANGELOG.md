@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* **Fiche parcellaire** : correction de la lenteur de l'affichage d'une parcelle avec beaucoup de locaux,
+  régression de la version 2.5.0. Les lots des locaux étaient lus dans toute la table `lotslocaux`
+  pour chaque local. Même correction pour la carte d'identité de la parcelle et l'export CSV des locaux
+* **Carte d'identité de la parcelle** : la colonne « Lots » est vide pour un local qui n'est pas dans un lot,
+  au lieu de `Lot  : /`
+* **Import** : nouveaux index sur `lotslocaux (local00)` et `lots (parcelle)`, créés au prochain import
+
 ## 2.5.0 - 2026-11-04
 
 * **Nouvelle « carte d'identité de la parcelle » en PDF** : informations générales de la parcelle, propriétaires,
