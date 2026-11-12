@@ -60,7 +60,8 @@ from cadastre.dialogs.search_dialog import CadastreSearchDialog
 from cadastre.logger import Logger
 from cadastre.plausible import Plausible
 from cadastre.processing.provider import CadastreProvider
-from cadastre.tools import metadata_config, plugin_path, wait_cursor
+from cadastre.tools import metadata_config, plugin_path, version, wait_cursor
+from cadastre.upgrade import release_notes, upgrade_message
 
 
 class CadastreMenu:
@@ -221,6 +222,8 @@ class CadastreMenu:
 
         # Display some messages depending on version number
         self.mConfig = metadata_config()
+        if not on_ci:
+            self.open_upgrade_dialog(first_use=firstUse == 1)
 
         # Project load or create : refresh search and identify tool
         self.iface.projectRead.connect(self.onProjectRead)
@@ -511,22 +514,33 @@ class CadastreMenu:
         QDesktopServices.openUrl(QUrl(URL_DOCUMENTATION))
 
     def open_message_dialog(self):
-        """
-        Display a message to the user
-        """
-        changelog = self.mConfig.get("general", "changelog")
-        message = "<h3>Changelog</h3>"
-        message += "<p>"
-        for i, item in enumerate(changelog.split("*")):
-            if i == 0:
-                message += "<b>%s</b><ul>" % item
-            else:
-                message += "<li>%s</li>" % item
-        message += "</ul>"
-        message += "</p>"
-
+        """Display the release notes: the changelog of the version, if packaged, and the update messages."""
+        # The changelog is written in metadata.txt by the packaging only, not in the sources
+        changelog = self.mConfig.get("general", "changelog", fallback=None)
+        message = release_notes(version(), changelog, f"{URL_DOCUMENTATION}changelog/")
         dialog = CadastreMessageDialog(self.iface, message)
         dialog.exec()
+
+    def open_upgrade_dialog(self, first_use: bool):
+        """Display the messages of an update of the plugin, once, then record the version.
+
+        The messages are given again by the release notes of the menu, see open_message_dialog.
+
+        :param first_use: True for a first installation of the plugin: there is no message,
+            the data imported with this version have the new indexes.
+        """
+        s = QSettings()
+        current = version()
+        previous = s.value("cadastre/version", "", type=str)
+        if previous == current:
+            return
+        s.setValue("cadastre/version", current)
+
+        # Without a recorded version, the plugin was used before the recording of the versions
+        message = upgrade_message(None if first_use else previous, current)
+        if message:
+            dialog = CadastreMessageDialog(self.iface, message)
+            dialog.exec()
 
     def unload(self):
         if self.iface:
