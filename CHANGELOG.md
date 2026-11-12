@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* **Carte d'identité de la parcelle** : un local avec plusieurs propriétaires affiche tous ses propriétaires,
+  et non plus seulement le dernier. Un local sans propriétaire n'est plus oublié
 * **Fiche parcellaire** : correction de la lenteur de l'affichage d'une parcelle avec beaucoup de locaux,
   régression de la version 2.5.0. Les lots des locaux étaient lus dans toute la table `lotslocaux`
   pour chaque local. Même correction pour la carte d'identité de la parcelle et l'export CSV des locaux

@@ -117,9 +117,10 @@ class Pev:
 class LocalIdentite:
     """A local of the parcel, with its owners and its PEV for the carte identité"""
 
-    # Row of fiche/locaux.sql
+    # First row of fiche/locaux_carte_identite.sql for the local: the values of the local
     values: Row
-    # Rows of fiche/locaux_proprietaires.sql
+    # Rows of fiche/locaux_carte_identite.sql: one per owner of the local
+    proprietaires: list[Row] = field(default_factory=list)
     pevs: list[Pev] = field(default_factory=list)
 
     # @property
@@ -137,6 +138,56 @@ def proprietaires(row: Row) -> str:
 def adresse(row: Row) -> str:
     """Return the adresse of the owners of a local, separated by commas"""
     return row.get("adresse", "")
+
+
+def distinct(values: Sequence[str | None]) -> list[str]:
+    """Return the non empty values, stripped, without duplicates, in their order.
+
+    :param values: The values, None for a NULL value.
+    :return: The distinct values.
+    """
+    result: list[str] = []
+    for value in values:
+        text = (value or "").strip()
+        if text and text not in result:
+            result.append(text)
+    return result
+
+
+def nom_adresse_invariant_cle(local: LocalIdentite) -> str:
+    """Return the text of the first column of a local: its owners, then its invariant and its key.
+
+    :param local: The local, with its owners.
+    :return: The name and the address of each owner, one per line, then the invariant and the key.
+    """
+    lines: list[str] = []
+    # Name, then address of each owner
+    for owner in local.proprietaires:
+        lines.extend(distinct([owner.get("nom"), owner.get("adresse")]))
+    # Invariant and key of the local
+    invariant = " ".join(distinct([local.values.get("invariant"), local.values.get("cle")]))
+    if invariant:
+        lines.append(invariant)
+    return "\n".join(lines)
+
+
+def demembrement_nature_occupation(local: LocalIdentite) -> str:
+    """Return the text of the second column of a local: démembrement, nature du local and occupation.
+
+    The démembrement and the occupation of the owners are written once, separated by commas.
+
+    :param local: The local, with its owners.
+    :return: The 3 values, one per line, "-" when there is no démembrement.
+    """
+    demembrements = distinct([owner.get("demembrement") for owner in local.proprietaires])
+    occupations = distinct([owner.get("occupation") for owner in local.proprietaires])
+    return "\n".join(
+        [
+            ", ".join(demembrements) or "-",
+            (local.values.get("nature") or "").strip(),
+            ", ".join(occupations),
+        ]
+    )
 
 
 def valeur_locative(local: LocalIdentite) -> str:
@@ -263,8 +314,14 @@ def load_locaux(
     def fetch(name: str) -> list[Row]:
         return fetch_rows(connector, connection_params, load_sql(f"fiche/{name}"), parcelle=parcelle)
 
-    # The locaux, by their identifier local10
-    locaux = {row["local10"]: LocalIdentite(row) for row in fetch("locaux_carte_identite")}
+    # The locaux, by their identifier local10: the query returns one row per owner of each local
+    locaux: dict[str, LocalIdentite] = {}
+    for row in fetch("locaux_carte_identite"):
+        local = locaux.setdefault(row["local10"], LocalIdentite(row))
+        local.proprietaires.append(row)
+    # The owners of each local in the order of their number in the compte communal
+    for local in locaux.values():
+        local.proprietaires.sort(key=lambda owner: owner.get("numero") or "")
 
     # The PEV, by their identifier pev, attached to their local
     pevs = {}
@@ -290,6 +347,8 @@ def local_row(local: LocalIdentite) -> Row:
     """Return the row of a local in the carte d'identité: its values and the values computed from its PEV"""
     return {
         **local.values,
+        "nom_adresse_invariant_cle": nom_adresse_invariant_cle(local),
+        "demembrement_nature_occupation": demembrement_nature_occupation(local),
         "categorie": categorie(local),
     }
 

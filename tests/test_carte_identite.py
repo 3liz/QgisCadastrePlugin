@@ -47,6 +47,22 @@ def test_load(parcelles: QgsVectorLayer):  # noqa: F811
         local["nom_adresse_invariant_cle"] and local["local10"] for local in carte.locaux
     )
 
+
+def test_owners(parcelles: QgsVectorLayer):  # noqa: F811
+    """ A local with several owners has one row, with all its owners """
+    carte = load_carte_identite(*connection(parcelles), COPROPRIETE)
+    assert carte is not None
+    # Lot 1 belongs to M and MME CHABAUD
+    rows = [local for local in carte.locaux if local["lots"] == "Lot 1 : 2400/10000"]
+    assert len(rows) == 1
+    text = rows[0]["nom_adresse_invariant_cle"]
+    assert "M CHABAUD/GILLES" in text
+    assert "MME CHABAUD/MONIQUE" in text
+    # The invariant and its key are on the last line
+    assert text.splitlines()[-1] == f"{rows[0]['invariant']} {rows[0]['cle']}"
+    # Démembrement, nature and occupation on 3 lines, each value written once
+    assert len(rows[0]["demembrement_nature_occupation"].splitlines()) == 3
+
     # assert load_carte_identite(*connection(parcelles), "1320290000Z9999") is None
 
 

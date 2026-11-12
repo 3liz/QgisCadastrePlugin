@@ -1,43 +1,37 @@
--- SQL pour récupérer les informations nécessaires pour l'affichage des lots
--- dans la fiche "Carte d'identité"
+-- Locaux of the carte d'identité de la parcelle: one row per local and per owner.
+-- The rows of a local are grouped in a single line of the table by carte_identite.load_locaux.
+-- Parameter: {parcelle}, the identifier of the parcel, quoted by fetch_rows
+
 SELECT
     -- code du local
     l10.local10 AS local10,
-    -- nom propriétaire / adresse / invariant / clé
-    concat(
-        -- nom
-        trim(
-            Coalesce(trim(pr.dqualp) || ' ', '')
-            || CASE
-                WHEN trim(pr.dnomus) != trim(pr.dnomlp)
-                THEN Coalesce(trim(pr.dnomus) || '/' || trim(pr.dprnus) || ', née ', '')
-                ELSE ''
-            END
-            || Coalesce(trim(pr.ddenom), '')
-        ), '
-',
-        -- adresse
-        replace(trim(
-            Coalesce(trim(pr.dlign3) || ' ', '')
-            || Coalesce(ltrim(trim(pr.dlign4), '0') || ' ', '')
-            || Coalesce(trim(pr.dlign5) || ' ', '')
-            || Coalesce(trim(pr.dlign6), '')
-        ), '  ', ' '), '
-',
-        -- invariant
-        l.invar, ' ',
-        -- clé
-        l.cleinvar
-    ) AS nom_adresse_invariant_cle,
+    -- Number of the owner in the compte communal, to sort the owners of a local
+    pr.dnulp AS numero,
+    -- Name of the owner: civility, usage and first name, birth name ("née") if it is different, denomination
+    trim(
+        Coalesce(trim(pr.dqualp) || ' ', '')
+        || CASE
+            WHEN trim(pr.dnomus) != trim(pr.dnomlp)
+            THEN Coalesce(trim(pr.dnomus) || '/' || trim(pr.dprnus) || ', née ', '')
+            ELSE ''
+        END
+        || Coalesce(trim(pr.ddenom), '')
+    ) AS nom,
+    -- Address of the owner: the 4 lines, without the leading zeros of the number
+    replace(trim(
+        Coalesce(trim(pr.dlign3) || ' ', '')
+        || Coalesce(ltrim(trim(pr.dlign4), '0') || ' ', '')
+        || Coalesce(trim(pr.dlign5) || ' ', '')
+        || Coalesce(trim(pr.dlign6), '')
+    ), '  ', ' ') AS adresse,
+    -- invariant, clé
+    l.invar AS invariant,
+    l.cleinvar AS cle,
 
-    -- démembrement, nature du local, occupation
-    concat(
-        Coalesce(ccodem.ccodem_lib, '-'), '
-',
-        cconlc.cconlc_lib, '
-',
-        ccodro.ccodro_lib
-    ) AS demembrement_nature_occupation,
+    -- démembrement and occupation (right) of the owner, nature du local
+    ccodem.ccodem_lib AS demembrement,
+    cconlc.cconlc_lib AS nature,
+    ccodro.ccodro_lib AS occupation,
 
     -- Lot, numérateur, dénominateur, empty when the local is not in a lot
     CASE
@@ -71,16 +65,11 @@ LEFT JOIN (
     WHERE ll0.parcelle = {parcelle}
     GROUP BY lll.local00
 ) ll ON ll.local00 = l.local00
-
-JOIN proprietaire pr ON pr.comptecommunal = l10.comptecommunal
-    LEFT JOIN ccodro ON ccodro.ccodro = pr.ccodro
-    LEFT JOIN ccodem ON ccodem.ccodem = pr.ccodem
-LEFT JOIN dteloc ON dteloc.dteloc = l10.dteloc
+-- A local without owner is kept
+LEFT JOIN proprietaire pr ON pr.comptecommunal = l10.comptecommunal
+LEFT JOIN ccodro ON ccodro.ccodro = pr.ccodro
+LEFT JOIN ccodem ON ccodem.ccodem = pr.ccodem
 LEFT JOIN cconlc ON cconlc.cconlc = l10.cconlc
-LEFT JOIN ccoplc ON ccoplc.ccoplc = l10.ccoplc
 WHERE l.parcelle = {parcelle}
-GROUP BY
-    "local10", nom_adresse_invariant_cle, demembrement_nature_occupation,
-    lots, batiment, entree, niveau, porte,
-    surface
-ORDER BY nom_adresse_invariant_cle, batiment, entree, niveau, porte
+-- The locaux are sorted by the name of their first owner. load_locaux sorts the owners of a local by their number
+ORDER BY nom, batiment, entree, niveau, porte, pr.dnulp, pr.dnuper
