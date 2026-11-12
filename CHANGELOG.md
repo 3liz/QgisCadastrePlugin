@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.5.1 - 2026-11-12
+
 * **Carte d'identité de la parcelle** : un local avec plusieurs propriétaires affiche tous ses propriétaires,
   et non plus seulement le dernier. Un local sans propriétaire n'est plus oublié
 * **Fiche parcellaire** : correction de la lenteur de l'affichage d'une parcelle avec beaucoup de locaux,
