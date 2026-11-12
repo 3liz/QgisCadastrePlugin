@@ -18,6 +18,7 @@ from cadastre.cadastre_database import CadastreDatabase
 from cadastre.cadastre_export import CadastreExport
 from cadastre.export_csv import locaux_proprietaires_export, parcelles_proprietaires_export, recherche_spatiale
 from cadastre.cadastre_import import cadastreImport
+from cadastre.carte_identite import load_carte_identite
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.dialogs.database_widget import DatabaseWidget
 from cadastre.dialogs.search_dialog import CadastreSearchDialog
@@ -104,6 +105,12 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
             assert "XXX</" in html, item
             html = getItemHtml(item, feature, params, connector, SensitiveData.full())
             assert "<table" in html and "XXX" not in html, item
+
+        # Carte d'identité of the copropriété: its locaux, with their lot and their share
+        carte = load_carte_identite(connector, params, "1320290000A0107")
+        assert carte is not None
+        assert len(carte.locaux) == 5
+        assert "Lot 1 : 2400/10000" in [local["lots"] for local in carte.locaux]
 
         # The integer primary keys are returned by the queries: the QGIS connection drops them (issue #598)
         assert executeSql(connector, "SELECT ogc_fid, tex2 FROM geo_commune") == (

@@ -33,10 +33,13 @@ SELECT
     cconlc.cconlc_lib AS nature,
     ccodro.ccodro_lib AS occupation,
 
-    -- Lot, numérateur, dénominateur, empty when the local is not in a lot
+    -- Lot, numérateur, dénominateur, empty when the local is not in a lot.
+    -- CAST and || instead of ::int and concat, which do not exist in Spatialite
     CASE
         WHEN ll.lot IS NOT NULL
-        THEN concat('Lot ', ll.lot::int, ' : ', ll.numerateur::int, '/', ll.denominateur::int)
+        THEN 'Lot ' || Coalesce(CAST(CAST(ll.lot AS integer) AS text), '')
+            || ' : ' || Coalesce(CAST(CAST(ll.numerateur AS integer) AS text), '')
+            || '/' || Coalesce(CAST(CAST(ll.denominateur AS integer) AS text), '')
     END AS lots,
 
     -- Surface pièces

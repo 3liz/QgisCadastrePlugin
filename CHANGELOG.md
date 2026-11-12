@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* **Carte d'identité de la parcelle** : en Spatialite, le tableau des locaux était vide, depuis la version 2.5.0
+
 ## 2.5.1 - 2026-11-12
 
 * **Carte d'identité de la parcelle** : un local avec plusieurs propriétaires affiche tous ses propriétaires,
