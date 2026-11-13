@@ -21,7 +21,7 @@ from dataclasses import dataclass
 
 from qgis.core import QgsAbstractDatabaseProviderConnection, QgsProviderConnectionException, QgsSettings
 
-from cadastre.cadastre_common_base import SensitiveData, quoteString
+from cadastre.cadastre_common_base import SensitiveData, executeSql, quoteString
 from cadastre.cadastre_database import PROVIDERS, CadastreDatabase
 from cadastre.fiche import DisplayOptions, Section, fetch_rows
 from cadastre.fiche_locaux import (
@@ -261,13 +261,24 @@ def read_table(
     :param connection_params: The parameters of the connection, see fetch_rows.
     :return: For each key of the table, True if it is displayed, or None if the database has no table.
     """
-    schema = connection_params.get("schema", "") if connection_params["dbType"] == "postgis" else ""
+    # The catalog is queried directly: tableExists of the QGIS Spatialite connection lists all the
+    # tables of the database with their geometries, more than 1 second each time the fiche is built
+    if connection_params["dbType"] == "postgis":
+        sql = (
+            "SELECT 1 FROM information_schema.tables "
+            f"WHERE table_schema = {quoteString(connection_params.get('schema', ''))} "
+            f"AND table_name = {quoteString(TABLE)}"
+        )
+    else:
+        sql = f"SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = {quoteString(TABLE)}"
     try:
-        if not connector.tableExists(schema, TABLE):
-            return None
+        _columns, exists = executeSql(connector, sql)
     except QgsProviderConnectionException as e:
         Logger.warning(f"Impossible de vérifier la table {TABLE} : {e!s}")
         return None
+    if not exists:
+        return None
+
     rows = fetch_rows(connector, connection_params, f"SELECT cle, visible FROM {TABLE}")
     # True or False with PostgreSQL, 1 or 0 with SQLite
     return {row["cle"]: str(row["visible"]).lower() in ("true", "1", "t") for row in rows}
