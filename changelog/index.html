@@ -3002,6 +3002,10 @@ On your local, make a symlink with ln -s
 <li><strong>Relevés de propriété et parcellaires</strong> : même correction pour un compte avec beaucoup de parcelles,
   3 secondes au lieu de 30 pour 54 pages. Le texte des PDF est conservé en texte, il peut être sélectionné
   et recherché, et les fichiers sont 14 fois plus légers</li>
+<li><strong>Lizmap</strong> : suppression du script <code>cadastre/standalone/export.py</code>, lancé par le module cadastre de Lizmap
+  pour exporter le relevé de propriété en arrière-plan. Avec les exports PDF plus rapides, le module passe
+  par QGIS Server, comme pour les autres PDF, ce qu'il fait déjà quand le script n'existe pas. Le relevé
+  contient alors tous les comptes du propriétaire, comme les autres relevés de propriété de Lizmap</li>
 <li>
 <p><strong>Fiche parcellaire</strong>, <strong>carte d'identité</strong> et <strong>export CSV des locaux</strong> : la surface des pièces, la catégorie
   et les lots sont lus une seule fois pour tous les locaux de la parcelle, et non plus pour chaque local.
