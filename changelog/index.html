@@ -2996,6 +2996,12 @@ On your local, make a symlink with ln -s
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Import EDIGEO</strong> : correction de l'erreur <code>UnboundLocalError: ... 'arguments'</code> quand les fichiers <code>.tar.bz2</code>
+  ne sont pas directement dans le dossier choisi, mais dans un fichier zip #588</li>
+<li><strong>Import EDIGEO</strong> : les fichiers <code>.VEC</code> en Latin-1, le cas courant, ne font plus apparaître d'erreur
+  <code>UnicodeDecodeError</code> dans le journal : elle était sans conséquence #588</li>
+</ul>
 <h2 id="253-2026-11-13">2.5.3 - 2026-11-13<a class="headerlink" href="#253-2026-11-13" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>Fiche parcellaire</strong> en Spatialite : correction de la lenteur à l'ouverture, environ 10 secondes depuis
