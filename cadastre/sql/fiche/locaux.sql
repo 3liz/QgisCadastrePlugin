@@ -25,14 +25,12 @@ SELECT
     ll.lot AS lot,
     ll.numerateur AS numerateur,
     ll.denominateur AS denominateur,
-    (
-        SELECT sum(pp.dsupdc) FROM pev JOIN pevprincipale pp ON pp.pev = pev.pev
-        WHERE pev.local10 = l10.local10
-    ) AS surface
+    s.surface AS surface
 FROM local00 l
 JOIN local10 l10 ON l10.local00 = l.local00
 -- Lots of the locaux of the parcel only: a subquery correlated to each local would read
--- the whole table lotslocaux for each local when it has no index on local00
+-- the whole table lotslocaux for each local when it has no index on local00.
+-- IN and not a join: without this index, SQLite would also read the table for each local
 LEFT JOIN (
     SELECT
         lll.local00 AS local00,
@@ -40,10 +38,26 @@ LEFT JOIN (
         min(lll.dnumql) AS numerateur,
         min(lll.ddenql) AS denominateur
     FROM lotslocaux lll
-    JOIN local00 ll0 ON ll0.local00 = lll.local00
-    WHERE ll0.parcelle = {parcelle}
+    WHERE lll.local00 IN (SELECT ll0.local00 FROM local00 ll0 WHERE ll0.parcelle = {parcelle})
     GROUP BY lll.local00
 ) ll ON ll.local00 = l.local00
+-- Surface of the rooms of the locaux of the parcel only, read once: a subquery correlated to each
+-- local would read the whole table pev for each local when it has no index on local10.
+-- IN and not a join: without this index, SQLite would read pevprincipale for each local
+LEFT JOIN (
+    SELECT
+        spev.local10 AS local10,
+        sum(spp.dsupdc) AS surface
+    FROM pev spev
+    JOIN pevprincipale spp ON spp.pev = spev.pev
+    WHERE spev.local10 IN (
+        SELECT sl10.local10
+        FROM local10 sl10
+        JOIN local00 sl0 ON sl0.local00 = sl10.local00
+        WHERE sl0.parcelle = {parcelle}
+    )
+    GROUP BY spev.local10
+) s ON s.local10 = l10.local10
 LEFT JOIN voie v
     ON SUBSTR(l.voie, 1, 6) || SUBSTR(l.voie, 12, 4) = SUBSTR(v.voie, 1, 6) || SUBSTR(v.voie, 12, 4)
 LEFT JOIN dteloc ON dteloc.dteloc = l10.dteloc

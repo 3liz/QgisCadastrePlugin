@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* **Fiche parcellaire**, **carte d'identité** et **export CSV des locaux** : la surface des pièces, la catégorie
+  et les lots sont lus une seule fois pour tous les locaux de la parcelle, et non plus pour chaque local.
+  Une base sans les index de la version 2.5 n'est plus lente : environ 0,2 seconde pour 2 000 locaux,
+  au lieu de plusieurs minutes en Spatialite
+
 * **Import EDIGEO** : correction de l'erreur `UnboundLocalError: ... 'arguments'` quand les fichiers `.tar.bz2`
   ne sont pas directement dans le dossier choisi, mais dans un fichier zip #588
 * **Import EDIGEO** : les fichiers `.VEC` en Latin-1, le cas courant, ne font plus apparaître d'erreur
