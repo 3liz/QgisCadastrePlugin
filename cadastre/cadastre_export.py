@@ -30,10 +30,8 @@ from qgis.core import (
     QgsExpression,
     QgsFeatureRequest,
     QgsFillSymbol,
-    QgsLayoutExporter,
     QgsLayoutGridSettings,
     QgsLayoutItemMap,
-    QgsLayoutItemPage,
     QgsLayoutMeasurement,
     QgsLayoutPoint,
     QgsLayoutSize,
@@ -112,8 +110,8 @@ class CadastreExport:
         # Store project from context
         self.mProject = project
 
-        # Store an instance of QgsComposition
-        self.currentComposition: QgsPrintLayout | None = None
+        # The pages of the relevé, one layout per page, see releve_layout.export_layouts
+        self.layouts: list[QgsPrintLayout] = []
 
         # Get instance needed for QgsComposition
         self.mInstance = self.getMapInstance()
@@ -149,7 +147,6 @@ class CadastreExport:
         self.numPages = 1
         self.pageHeight = 210
         self.pageWidth = 297
-        self.printResolution = 300
 
         # target directory for saving
         s = QSettings()
@@ -427,8 +424,15 @@ class CadastreExport:
         }
 
     def createComposition(self):
-        """
-        Create a print Layout
+        """Create the pages of the relevé: one print layout per page, see releve_layout.export_layouts"""
+        # Set page number
+        self.getPageNumberNeeded()
+        self.layouts = [self.create_page() for _ in range(self.numPages)]
+
+    def create_page(self) -> QgsPrintLayout:
+        """Create the print layout of a page.
+
+        :return: The layout, with one empty page.
         """
         c = QgsPrintLayout(self.mProject)
         # We need to set a name to the layout, otherwise, error when exporting
@@ -438,24 +442,14 @@ class CadastreExport:
         c.setName(f"cadastre_export_{uid.hex}")
         c.initializeDefaults()
         c.setUnits(QgsUnitTypes.LayoutUnit.LayoutMillimeters)
+        c.pageCollection().page(0).setPageSize(
+            QgsLayoutSize(self.pageWidth, self.pageHeight, QgsUnitTypes.LayoutUnit.LayoutMillimeters)
+        )
 
         g = QgsLayoutGridSettings(c)
         g.setOffset(QgsLayoutPoint(3.5, 0, QgsUnitTypes.LayoutUnit.LayoutMillimeters))
         g.setResolution(QgsLayoutMeasurement(2.5))
-
-        # Set page number
-        self.getPageNumberNeeded()
-        # Set main properties
-        for i in range(1, self.numPages):
-            p = QgsLayoutItemPage(c)
-            # page.setPageSize('A6')
-            p.setPageSize(
-                QgsLayoutSize(self.pageWidth, self.pageHeight, QgsUnitTypes.LayoutUnit.LayoutMillimeters)
-            )
-            c.pageCollection().addPage(p)
-
-        # Set the global currentComposition
-        self.currentComposition = c
+        return c
 
     def getPageNumberNeeded(self):
         """
@@ -488,9 +482,9 @@ class CadastreExport:
         if self.etype == "parcelle" and self.print_parcelle_page:
             dpage = page
 
-        layout = self.currentComposition
+        # Each page is a layout: the positions are the same on all the pages
+        layout = self.layouts[dpage]
         x, y, width, height = item["position"]
-        y += dpage * (self.pageHeight + 10)
 
         if key == "header1":
             rows = self.getDataForGivenItem(key, item)
@@ -634,7 +628,7 @@ class CadastreExport:
         # Add composer map & to parcelle
         miLayers = self.mInstance.layers()
         miLayers.insert(0, vl)
-        cm = QgsLayoutItemMap(self.currentComposition)
+        cm = QgsLayoutItemMap(self.layouts[0])
         cm.updateBoundingRect()
         cm.setRect(QRectF(0, 0, 286, 190))
         cm.setPos(6, 15)
@@ -645,7 +639,7 @@ class CadastreExport:
 
         cm.setFrameEnabled(True)
         cm.setBackgroundEnabled(True)
-        self.currentComposition.addItem(cm)
+        self.layouts[0].addItem(cm)
 
     def exportItemAsPdf(self, comptecommunal: str, suffix: str | None = None) -> str | None:
         """
@@ -660,7 +654,7 @@ class CadastreExport:
         # Create the composition
         self.createComposition()
 
-        if self.currentComposition:
+        if self.layouts:
             # Populate composition for all pages
             for i in range(self.numPages):
                 j = i + 1
@@ -688,17 +682,9 @@ class CadastreExport:
             temppath = os.path.normpath(temppath)
             QgsMessageLog.logMessage(f"Export PDF vers {temppath}", "cadastre", Qgis.MessageLevel.Info)
 
-            # add layout to layout manager: for tests only
-            # lmgr = self.mProject.layoutManager()
-            # lmgr.addLayout(self.currentComposition)
-
-            # Export as pdf
-            exportersettings = QgsLayoutExporter.PdfExportSettings()
-            exportersettings.dpi = 300
-            exportersettings.forceVectorOutput = True
-            exportersettings.rasterizeWholeImage = False
-            exporter = QgsLayoutExporter(self.currentComposition)
-            exporter.exportToPdf(temppath, exportersettings)
+            # Export as pdf, one page per layout
+            if not releve_layout.export_layouts(self.layouts, temppath, f"Relevé {self.typeLabel.lower()} {comptecommunal}"):
+                temppath = None
 
             # Remove redline layer
             if self.redlineLayer:

@@ -9,28 +9,35 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from qgis.core import (
     Qgis,
     QgsLayout,
+    QgsLayoutExporter,
     QgsLayoutFrame,
     QgsLayoutItem,
     QgsLayoutItemLabel,
     QgsLayoutItemManualTable,
     QgsLayoutMultiFrame,
     QgsLayoutPoint,
+    QgsLayoutRenderContext,
     QgsLayoutSize,
     QgsLayoutTable,
+    QgsPrintLayout,
     QgsTableCell,
     QgsTextFormat,
     QgsUnitTypes,
 )
-from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtGui import QColor, QFont
+from qgis.PyQt.QtCore import QMarginsF, QSizeF, Qt
+from qgis.PyQt.QtGui import QColor, QFont, QPageLayout, QPageSize, QPainter, QPdfWriter
 
 GRID_COLOR = QColor("#323232")
 ZEBRA_COLOR = QColor("#E2E2E2")
 MM = QgsUnitTypes.LayoutUnit.LayoutMillimeters
+
+# Resolution of the PDF, for the images and the effects: the texts and the tables are vectors
+PDF_DPI = 300
 
 CENTER = Qt.AlignmentFlag.AlignHCenter
 LEFT = Qt.AlignmentFlag.AlignLeft
@@ -304,3 +311,50 @@ NON_BATI_COLUMNS = completed(
     290,
     ADRESSE,
 )
+
+
+def export_layouts(layouts: list[QgsPrintLayout], path: Path | str, title: str) -> bool:
+    """Write the layouts of one page each in a single PDF file, one page per layout.
+
+    A layout of many pages is slow to export: the expression context of each of its items reads all
+    its pages, and the time of exportToPdf grows like the cube of the number of pages. The relevés and
+    the carte d'identité build one layout per page, written here in a single PDF.
+
+    It is what QgsLayoutExporter.exportToPdf does for the pages of a single layout, with the same settings:
+    vector output and texts kept as texts, so that they can be selected and searched in the PDF.
+
+    :param layouts: The layouts, of one page each, all of the size of the first one.
+    :param path: The PDF file.
+    :param title: The title in the metadata of the PDF.
+    :return: True if the file is written.
+    """
+    if not layouts:
+        return False
+    size = layouts[0].pageCollection().page(0).pageSize()
+    writer = QPdfWriter(str(path))
+    writer.setTitle(title)
+    writer.setCreator("QGIS - Cadastre")
+    writer.setResolution(PDF_DPI)
+    writer.setPageLayout(
+        QPageLayout(
+            QPageSize(QSizeF(size.width(), size.height()), QPageSize.Unit.Millimeter),
+            QPageLayout.Orientation.Portrait,
+            QMarginsF(0, 0, 0, 0),
+        )
+    )
+    painter = QPainter()
+    if not painter.begin(writer):
+        return False
+    try:
+        for i, layout in enumerate(layouts):
+            # The settings of exportToPdf
+            context = layout.renderContext()
+            context.setDpi(PDF_DPI)
+            context.setFlag(QgsLayoutRenderContext.Flag.FlagForceVectorOutput, True)
+            context.setTextRenderFormat(Qgis.TextRenderFormat.AlwaysText)
+            if i > 0:
+                writer.newPage()
+            QgsLayoutExporter(layout).renderPage(painter, 0)
+    finally:
+        painter.end()
+    return True

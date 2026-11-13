@@ -23,15 +23,12 @@ from pathlib import Path
 from uuid import uuid4
 
 from qgis.core import (
-    Qgis,
     QgsAbstractDatabaseProviderConnection,
-    QgsLayoutExporter,
     QgsLayoutFrame,
     QgsLayoutItemLabel,
     QgsLayoutItemManualTable,
     QgsLayoutMultiFrame,
     QgsLayoutPoint,
-    QgsLayoutRenderContext,
     QgsLayoutSize,
     QgsLayoutTable,
     QgsLayoutUtils,
@@ -40,8 +37,8 @@ from qgis.core import (
     QgsTableCell,
     QgsUnitTypes,
 )
-from qgis.PyQt.QtCore import QMarginsF, QSizeF, Qt
-from qgis.PyQt.QtGui import QColor, QFont, QPageLayout, QPageSize, QPainter, QPdfWriter
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtGui import QColor, QFont
 
 from cadastre.cadastre_common_base import SensitiveData
 from cadastre.fiche import (
@@ -62,11 +59,9 @@ from cadastre.releve_layout import (
     LEFT,
     MM,
     add_label,
+    export_layouts,
     text_format,
 )
-
-# Resolution of the PDF, for the images and the effects: the texts and the tables are vectors
-PDF_DPI = 300
 
 # Page: A4 landscape, with its margins, in mm
 PAGE_WIDTH = 297
@@ -661,43 +656,3 @@ def export_carte_identite(
     if not export_layouts(layouts, path, f"Carte d'identité de la parcelle {parcelle}"):
         return None
     return path
-
-
-def export_layouts(layouts: list[QgsPrintLayout], path: Path, title: str) -> bool:
-    """Write the layouts of one page each in a single PDF file, one page per layout.
-
-    It is what QgsLayoutExporter.exportToPdf does for the pages of a single layout, with the same settings:
-    vector output and texts kept as texts, so that they can be selected and searched in the PDF.
-
-    :param layouts: The layouts, of one page of PAGE_WIDTH x PAGE_HEIGHT each.
-    :param path: The PDF file.
-    :param title: The title in the metadata of the PDF.
-    :return: True if the file is written.
-    """
-    writer = QPdfWriter(str(path))
-    writer.setTitle(title)
-    writer.setCreator("QGIS - Cadastre")
-    writer.setResolution(PDF_DPI)
-    writer.setPageLayout(
-        QPageLayout(
-            QPageSize(QSizeF(PAGE_WIDTH, PAGE_HEIGHT), QPageSize.Unit.Millimeter),
-            QPageLayout.Orientation.Portrait,
-            QMarginsF(0, 0, 0, 0),
-        )
-    )
-    painter = QPainter()
-    if not painter.begin(writer):
-        return False
-    try:
-        for i, layout in enumerate(layouts):
-            # The settings of exportToPdf
-            context = layout.renderContext()
-            context.setDpi(PDF_DPI)
-            context.setFlag(QgsLayoutRenderContext.Flag.FlagForceVectorOutput, True)
-            context.setTextRenderFormat(Qgis.TextRenderFormat.AlwaysText)
-            if i > 0:
-                writer.newPage()
-            QgsLayoutExporter(layout).renderPage(painter, 0)
-    finally:
-        painter.end()
-    return True
