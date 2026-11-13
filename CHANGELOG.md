@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+* **Import EDIGEO** : correction de l'erreur `UnboundLocalError: ... 'arguments'` quand les fichiers `.tar.bz2`
+  ne sont pas directement dans le dossier choisi, mais dans un fichier zip #588
+* **Import EDIGEO** : les fichiers `.VEC` en Latin-1, le cas courant, ne font plus apparaître d'erreur
+  `UnicodeDecodeError` dans le journal : elle était sans conséquence #588
+
 ## 2.5.3 - 2026-11-13
 
 * **Fiche parcellaire** en Spatialite : correction de la lenteur à l'ouverture, environ 10 secondes depuis

@@ -1261,6 +1261,22 @@ class cadastreImport(QObject):
                     "EDIGEO peut résoudre le problème"
                 )
 
+                # Arguments of the extraction of the tar files, for the 2 loops below: the .bz2 files may
+                # be only in the zip files extracted above, not in the source folder (issue #588)
+                # See https://docs.python.org/3.10/library/tarfile.html#tarfile.TarFile.extractall
+                # See https://peps.python.org/pep-0706/
+                arguments = {"filter": "data"}
+                if sys.version_info < (3, 10, 12):
+                    msg = (
+                        "Version de Python obsolète, votre version comporte une faille de sécurité "
+                        "concernant l'extraction d'une archive. Veuillez monter votre version de QGIS afin "
+                        "de passer à une version plus récente dès que possible."
+                    )
+                    self.feedback.pushInfo(f"<b>{msg}</b>")
+                    # noinspection PyTypeChecker
+                    QgsMessageLog.logMessage(msg, "cadastre", Qgis.MessageLevel.Warning)
+                    arguments.pop("filter")
+
                 i = 0
                 # untar all tar.bz2 in source folder
                 self.feedback.pushInfo("* Recherche des fichiers .bz2")
@@ -1269,20 +1285,6 @@ class cadastreImport(QObject):
                 for z in tarFileListA:
                     with tarfile.open(z) as t:
                         try:
-                            # See https://docs.python.org/3.10/library/tarfile.html#tarfile.TarFile.extractall
-                            # See https://peps.python.org/pep-0706/
-                            arguments = {"filter": "data"}
-                            if sys.version_info < (3, 10, 12):
-                                msg = (
-                                    "Version de Python obsolète, votre version comporte une faille de sécurité "
-                                    "concernant l'extraction d'une archive. Veuillez monter votre version de QGIS afin "
-                                    "de passer à une version plus récente dès que possible."
-                                )
-                                self.feedback.pushInfo(f"<b>{msg}</b>")
-                                # noinspection PyTypeChecker
-                                QgsMessageLog.logMessage(msg, "cadastre", Qgis.MessageLevel.Warning)
-                                arguments.pop("filter")
-
                             self.safe_extract_tar(
                                 t,
                                 os.path.join(self.edigeoPlainDir, "tar_%s" % i),
@@ -1300,7 +1302,7 @@ class cadastreImport(QObject):
 
                 # untar all new tar.bz2 found in self.edigeoPlainDir
                 tarFileListB = self.list_files_in_directory(self.edigeoPlainDir, ["bz2"])
-                self.feedback.pushInfo(f"{len(tarFileListA)} fichier(s) .bz2 dans {self.edigeoPlainDir}")
+                self.feedback.pushInfo(f"{len(tarFileListB)} fichier(s) .bz2 dans {self.edigeoPlainDir}")
                 for z in tarFileListB:
                     with tarfile.open(z) as t:
                         try:
@@ -1746,8 +1748,9 @@ class cadastreImport(QObject):
                 with open(path, encoding="utf8") as inputFile:
                     # Get a list of RID relations combining a "Rel" and two "_Objet"
                     la = [a[0] for a in [re.findall(r"%s" % reg, line) for line in inputFile] if a]
-            except Exception as err:
-                Logger.log_exception(err)
+            except UnicodeDecodeError:
+                # The EDIGEO files of the DGFiP are usually in Latin-1: this is expected, not an error to log,
+                # users took the logged exception for the cause of other problems (issue #588)
                 with open(path, encoding="ISO-8859-15") as inputFile:
                     # Get a list of RID relations combining a "Rel" and two "_Objet"
                     la = [a[0] for a in [re.findall(r"%s" % reg, line) for line in inputFile] if a]

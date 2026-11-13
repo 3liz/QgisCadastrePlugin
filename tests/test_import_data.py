@@ -1,4 +1,5 @@
 import shutil
+import zipfile
 
 from pathlib import Path
 from typing import Iterator, NamedTuple
@@ -198,6 +199,24 @@ def test_import_majic_path_with_spaces(fixtures: Path, tmp_path: Path):
 
     connection = metadata.findConnection("test_database")
     assert connection.executeSql(f"SELECT libvoi FROM {TEST_SCHEMA}.voie WHERE ccoriv = '0870'") == [["DE CAMPREOUX"]]
+
+
+def test_import_edigeo_bz2_in_zip(fixtures: Path, tmp_path: Path):
+    """ The .tar.bz2 files are only in a zip file of the source folder, not in the folder (issue #588) """
+    remove_schema()
+    metadata = QgsProviderRegistry.instance().providerMetadata("postgres")
+    metadata.findConnection("test_database").createSchema(TEST_SCHEMA)
+
+    edigeo_dir = tmp_path / "edigeo"
+    edigeo_dir.mkdir()
+    with zipfile.ZipFile(edigeo_dir / "feuilles.zip", "w") as archive:
+        for sheet in fixtures.joinpath("edigeo", CornillonSansMajic.insee).glob("*.tar.bz2"):
+            archive.write(sheet, sheet.name)
+    options = import_options(CornillonSansMajic, fixtures)
+    options.edigeo_source_dir = str(edigeo_dir)
+
+    assert cadastreImport(options, CadastreFeedback()).run()
+    check_imported_data(CornillonSansMajic, metadata.findConnection("test_database"))
 
 
 def import_options(test_case: TestCase, fixtures: Path) -> ImportOptions:
