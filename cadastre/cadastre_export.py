@@ -655,10 +655,12 @@ class CadastreExport:
         self.createComposition()
 
         if self.layouts:
-            # Populate composition for all pages
-            for i in range(self.numPages):
-                j = i + 1
-                self.addPageContent(j)
+            # Populate the pages of the data: after the map page, the last one of numPages, if any
+            data_pages = self.numPages
+            if self.etype == "parcelle" and self.print_parcelle_page:
+                data_pages -= 1
+            for i in range(data_pages):
+                self.addPageContent(i + 1)
 
             # Add map in first page if export parcelle
             if self.etype == "parcelle" and self.print_parcelle_page:

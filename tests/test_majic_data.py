@@ -11,6 +11,7 @@ from qgis.core import (
     QgsFeature,
     QgsFeatureRequest,
     QgsLayoutItemManualTable,
+    QgsLayoutItemMap,
     QgsProject,
     QgsProviderRegistry,
     QgsVectorLayer,
@@ -160,9 +161,10 @@ def test_fiche_parcellaire(parcelles: QgsVectorLayer, item: str, expected: str):
     assert expected in html
 
 
-@pytest.mark.parametrize("etype", ["proprietaire", "parcelle"])
-def test_releve_pdf(parcelles: QgsVectorLayer, tmp_path: Path, etype: str):
-    """ Relevé de propriété of the owner of a house """
+@pytest.mark.parametrize("etype, map_page", [("proprietaire", False), ("parcelle", False), ("parcelle", True)])
+def test_releve_pdf(parcelles: QgsVectorLayer, tmp_path: Path, etype: str, map_page: bool):
+    """ Relevé de propriété of the owner of a house, relevé parcellaire with or without the map page
+    (enabled by QGIS Server and the dialog of QGIS) """
     geo_parcelle, compte = fetch(
         "SELECT p.parcelle, p.comptecommunal FROM cadastre.parcelle p "
         "JOIN cadastre.local10 l ON l.parcelle = p.parcelle "
@@ -170,9 +172,13 @@ def test_releve_pdf(parcelles: QgsVectorLayer, tmp_path: Path, etype: str):
     )[0]
 
     export = CadastreExport(QgsProject.instance(), parcelles, etype, compte, geo_parcelle, str(tmp_path))
+    export.print_parcelle_page = map_page
     paths = export.export_as_pdf()
 
     assert len(paths) == 1
+    # The map page, then the pages of the data
+    assert len(export.layouts) == (2 if map_page else 1)
+    assert any(isinstance(item, QgsLayoutItemMap) for item in export.layouts[0].items()) is map_page
     assert Path(paths[0]).stat().st_size > 10000
 
     # One layout of one page per page of the PDF
