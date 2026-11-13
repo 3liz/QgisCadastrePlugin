@@ -2997,8 +2997,16 @@ On your local, make a symlink with ln -s
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">#</a></h1>
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">#</a></h2>
 <ul>
-<li><strong>Import EDIGEO</strong> : correction de l'erreur <code>UnboundLocalError: ... 'arguments'</code> quand les fichiers <code>.tar.bz2</code>
-  ne sont pas directement dans le dossier choisi, mais dans un fichier zip #588</li>
+<li>
+<p><strong>Fiche parcellaire</strong>, <strong>carte d'identité</strong> et <strong>export CSV des locaux</strong> : la surface des pièces, la catégorie
+  et les lots sont lus une seule fois pour tous les locaux de la parcelle, et non plus pour chaque local.
+  Une base sans les index de la version 2.5 n'est plus lente : environ 0,2 seconde pour 2 000 locaux,
+  au lieu de plusieurs minutes en Spatialite</p>
+</li>
+<li>
+<p><strong>Import EDIGEO</strong> : correction de l'erreur <code>UnboundLocalError: ... 'arguments'</code> quand les fichiers <code>.tar.bz2</code>
+  ne sont pas directement dans le dossier choisi, mais dans un fichier zip #588</p>
+</li>
 <li><strong>Import EDIGEO</strong> : les fichiers <code>.VEC</code> en Latin-1, le cas courant, ne font plus apparaître d'erreur
   <code>UnicodeDecodeError</code> dans le journal : elle était sans conséquence #588</li>
 </ul>
