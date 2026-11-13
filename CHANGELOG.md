@@ -7,6 +7,10 @@
 * **Relevés de propriété et parcellaires** : même correction pour un compte avec beaucoup de parcelles,
   3 secondes au lieu de 30 pour 54 pages. Le texte des PDF est conservé en texte, il peut être sélectionné
   et recherché, et les fichiers sont 14 fois plus légers
+* **Lizmap** : suppression du script `cadastre/standalone/export.py`, lancé par le module cadastre de Lizmap
+  pour exporter le relevé de propriété en arrière-plan. Avec les exports PDF plus rapides, le module passe
+  par QGIS Server, comme pour les autres PDF, ce qu'il fait déjà quand le script n'existe pas. Le relevé
+  contient alors tous les comptes du propriétaire, comme les autres relevés de propriété de Lizmap
 * **Fiche parcellaire**, **carte d'identité** et **export CSV des locaux** : la surface des pièces, la catégorie
   et les lots sont lus une seule fois pour tous les locaux de la parcelle, et non plus pour chaque local.
   Une base sans les index de la version 2.5 n'est plus lente : moins d'une seconde pour 2 000 locaux,

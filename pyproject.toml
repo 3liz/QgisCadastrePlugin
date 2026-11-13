@@ -97,11 +97,6 @@ ignore = [
 "cadastre/tests/*" = [
     "T201",
 ]
-"cadastre/standalone/export.py" = [
-    "T201",
-    # Imports must come after the sys.path setup done at the top of the script
-    "E402",
-]
 "cadastre/xmltodict.py" = [
     "RET503",
     "SIM105",
