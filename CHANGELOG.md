@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.5.4 - 2026-11-13
+
 * **Carte d'identité de la parcelle** : export PDF beaucoup plus rapide pour une parcelle avec beaucoup
   de locaux, le temps augmentait comme le cube du nombre de pages : 1 seconde au lieu de 10 pour 73 pages
 * **Relevés de propriété et parcellaires** : même correction pour un compte avec beaucoup de parcelles,
