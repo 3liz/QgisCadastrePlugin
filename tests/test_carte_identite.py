@@ -1,5 +1,7 @@
 """ Carte d'identité de la parcelle: data, masks of the sensitive data and PDF """
 
+import re
+
 from pathlib import Path
 
 from qgis.core import QgsAbstractDatabaseProviderConnection, QgsLayoutExporter, QgsProject, QgsVectorLayer
@@ -11,8 +13,9 @@ from cadastre.carte_identite import (
     LOCAUX,
     CarteIdentite,
     PROPRIETAIRES,
-    build_layout,
+    build_layouts,
     export_carte_identite,
+    export_layouts,
     load_carte_identite,
     section_values,
 )
@@ -95,8 +98,9 @@ def test_pdf(parcelles: QgsVectorLayer, tmp_path: Path, output_dir: Path):  # no
 
     carte = load_carte_identite(*connection(parcelles), COPROPRIETE)
     assert carte is not None
-    layout = build_layout(QgsProject.instance(), carte, SensitiveData())
-    assert layout.pageCollection().pageCount() >= 1
+    layouts = build_layouts(QgsProject.instance(), carte, SensitiveData())
+    assert len(layouts) == 1
+    layout = layouts[0]
     image = output_dir / "carte_identite.png"
     settings = QgsLayoutExporter.ImageExportSettings()
     settings.dpi = 100
@@ -127,11 +131,15 @@ def test_pages(output_dir: Path):
         [],
         locaux
     )
-    layout = build_layout(QgsProject.instance(), carte, SensitiveData.full())
-    pages = layout.pageCollection().pageCount()
-    assert pages > 2
+    layouts = build_layouts(QgsProject.instance(), carte, SensitiveData.full())
+    assert len(layouts) > 2
+    assert all(layout.pageCollection().pageCount() == 1 for layout in layouts)
+    # One page of the PDF per layout
+    pdf = output_dir / "carte_identite_pages.pdf"
+    assert export_layouts(layouts, pdf, "Test")
+    assert len(re.findall(rb"/Type\s*/Page[^s]", pdf.read_bytes())) == len(layouts)
+    layout = layouts[0]
     image = output_dir / "carte_identite_pages.png"
     settings = QgsLayoutExporter.ImageExportSettings()
     settings.dpi = 100
-    settings.pages = [1]
     assert QgsLayoutExporter(layout).exportToImage(str(image), settings) == QgsLayoutExporter.ExportResult.Success

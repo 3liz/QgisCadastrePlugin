@@ -29,9 +29,9 @@ from qgis.core import (
     QgsLayoutFrame,
     QgsLayoutItemLabel,
     QgsLayoutItemManualTable,
-    QgsLayoutItemPage,
     QgsLayoutMultiFrame,
     QgsLayoutPoint,
+    QgsLayoutRenderContext,
     QgsLayoutSize,
     QgsLayoutTable,
     QgsLayoutUtils,
@@ -40,8 +40,8 @@ from qgis.core import (
     QgsTableCell,
     QgsUnitTypes,
 )
-from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtGui import QColor, QFont
+from qgis.PyQt.QtCore import QMarginsF, QSizeF, Qt
+from qgis.PyQt.QtGui import QColor, QFont, QPageLayout, QPageSize, QPainter, QPdfWriter
 
 from cadastre.cadastre_common_base import SensitiveData
 from cadastre.fiche import (
@@ -64,6 +64,9 @@ from cadastre.releve_layout import (
     add_label,
     text_format,
 )
+
+# Resolution of the PDF, for the images and the effects: the texts and the tables are vectors
+PDF_DPI = 300
 
 # Page: A4 landscape, with its margins, in mm
 PAGE_WIDTH = 297
@@ -410,43 +413,54 @@ def wrapped_lines(text: str, width: float, font: QFont) -> int:
 
 
 class PageWriter:
-    """Write the sections of the carte d'identité one after the other, adding the pages when needed"""
+    """Write the sections of the carte d'identité one after the other, adding the pages when needed.
 
-    def __init__(self, layout: QgsPrintLayout, title: str, subtitle: str) -> None:
-        self.layout = layout
+    Each page is a layout of one page: the expression context of each item of a layout reads all its
+    pages, and the export of a layout of many pages took minutes, its time growing like the cube of
+    the number of pages. See export_layouts to write them in a single PDF.
+    """
+
+    def __init__(self, project: QgsProject, title: str, subtitle: str) -> None:
+        """
+        :param project: The project of the layouts.
+        :param title: The title written at the top of each page.
+        :param subtitle: The subtitle written below the title.
+        """
+        self.project = project
         self.title = title
         self.subtitle = subtitle
         self.font = content_font()
         self.line_height = QgsLayoutUtils.fontHeightMM(self.font) * LINE_SPACING
-        self.page = -1
+        # The pages, the last one is the current page
+        self.layouts: list[QgsPrintLayout] = []
         self.y = 0.0
         self.new_page()
 
     @property
-    def bottom(self) -> float:
-        """Bottom of the content of the current page, in mm from the top of the layout"""
-        return self.page_top + PAGE_HEIGHT - MARGIN - PAGE_FOOTER_HEIGHT
+    def layout(self) -> QgsPrintLayout:
+        """The layout of the current page"""
+        return self.layouts[-1]
 
     @property
-    def page_top(self) -> float:
-        """Top of the current page, in mm from the top of the layout"""
-        return self.layout.pageCollection().page(self.page).pos().y()
+    def bottom(self) -> float:
+        """Bottom of the content of a page, in mm from its top"""
+        return PAGE_HEIGHT - MARGIN - PAGE_FOOTER_HEIGHT
 
     def new_page(self) -> None:
-        """Add a page if needed, with the header: title and subtitle"""
-        self.page += 1
-        pages = self.layout.pageCollection()
-        if self.page >= pages.pageCount():
-            page = QgsLayoutItemPage(self.layout)
-            page.setPageSize(QgsLayoutSize(PAGE_WIDTH, PAGE_HEIGHT, MM))
-            pages.addPage(page)
-        top = self.page_top + MARGIN
-        colored(add_label(self.layout, self.title, (MARGIN, top, CONTENT_WIDTH, 8), size=TITLE_SIZE, align=LEFT))
+        """Add a page, with the header: title and subtitle"""
+        layout = QgsPrintLayout(self.project)
+        layout.setName(f"cadastre_carte_identite_{uuid4().hex}")
+        layout.initializeDefaults()
+        layout.setUnits(QgsUnitTypes.LayoutUnit.LayoutMillimeters)
+        layout.pageCollection().page(0).setPageSize(QgsLayoutSize(PAGE_WIDTH, PAGE_HEIGHT, MM))
+        self.layouts.append(layout)
+
+        colored(add_label(layout, self.title, (MARGIN, MARGIN, CONTENT_WIDTH, 8), size=TITLE_SIZE, align=LEFT))
         add_label(
-            self.layout, self.subtitle, (MARGIN, top + 8, CONTENT_WIDTH, 5), size=SUBTITLE_SIZE, bold=False,
+            layout, self.subtitle, (MARGIN, MARGIN + 8, CONTENT_WIDTH, 5), size=SUBTITLE_SIZE, bold=False,
             italic=True, align=LEFT,
         )
-        self.y = top + PAGE_HEADER_HEIGHT
+        self.y = MARGIN + PAGE_HEADER_HEIGHT
 
     def ensure(self, height: float) -> None:
         """Start a new page if the height does not fit in the current one"""
@@ -556,14 +570,12 @@ class PageWriter:
 
     def footer(self) -> None:
         """Write the page numbers, once all the pages exist"""
-        pages = self.layout.pageCollection()
-        count = pages.pageCount()
-        for i in range(count):
-            top = pages.page(i).pos().y()
+        count = len(self.layouts)
+        for i, layout in enumerate(self.layouts):
             add_label(
-                self.layout,
+                layout,
                 f"Page {i + 1} / {count}",
-                (MARGIN, top + PAGE_HEIGHT - MARGIN - 4, CONTENT_WIDTH, 4),
+                (MARGIN, PAGE_HEIGHT - MARGIN - 4, CONTENT_WIDTH, 4),
                 size=SUBTITLE_SIZE,
                 bold=False,
                 align=Qt.AlignmentFlag.AlignRight,
@@ -576,20 +588,15 @@ def section_values(section: Section, rows: list[Row], options: DisplayOptions) -
     return fields, [[options.plain_text(f, row) for f in fields] for row in rows]
 
 
-def build_layout(project: QgsProject, carte: CarteIdentite, sensitive: SensitiveData) -> QgsPrintLayout:
-    """Build the layout of the carte d'identité of a parcel.
+def build_layouts(project: QgsProject, carte: CarteIdentite, sensitive: SensitiveData) -> list[QgsPrintLayout]:
+    """Build the pages of the carte d'identité of a parcel, one layout per page, see PageWriter.
 
-    :param project: The project of the layout.
+    :param project: The project of the layouts.
     :param carte: The data of the parcel.
     :param sensitive: The sensitive data written, the others are masked like in the fiche parcellaire.
-    :return: The layout, with as many pages as needed.
+    :return: The layouts of the pages, as many as needed.
     """
     options = DisplayOptions(sensitive=sensitive)
-    layout = QgsPrintLayout(project)
-    layout.setName(f"cadastre_carte_identite_{uuid4().hex}")
-    layout.initializeDefaults()
-    layout.setUnits(QgsUnitTypes.LayoutUnit.LayoutMillimeters)
-    layout.pageCollection().page(0).setPageSize(QgsLayoutSize(PAGE_WIDTH, PAGE_HEIGHT, MM))
 
     values = carte.values
     title = f"Carte d'identité de la parcelle {(values.get('code') or carte.parcelle).strip()}"
@@ -600,7 +607,7 @@ def build_layout(project: QgsProject, carte: CarteIdentite, sensitive: Sensitive
         subtitle += f" - Données MAJIC {values['annee']}"
     subtitle += f" - Édité le {date.today().strftime('%d/%m/%Y')}"
     subtitle += f"\nAdresse : {values['adresse']} - Contenance : {values['contenance']} m² - Bâti : {values['pourcentage_bati']} %"
-    writer = PageWriter(layout, title, subtitle)
+    writer = PageWriter(project, title, subtitle)
 
     # Owners
     fields, rows = section_values(PROPRIETAIRES, carte.proprietaires, options)
@@ -624,7 +631,7 @@ def build_layout(project: QgsProject, carte: CarteIdentite, sensitive: Sensitive
         writer.table([f.label for f in fields], rows, widths)
 
     writer.footer()
-    return layout
+    return writer.layouts
 
 
 def export_carte_identite(
@@ -648,16 +655,49 @@ def export_carte_identite(
     carte = load_carte_identite(connector, connection_params, parcelle)
     if carte is None:
         return None
-    layout = build_layout(project, carte, sensitive)
+    layouts = build_layouts(project, carte, sensitive)
     name = re.sub(r"[^0-9A-Za-z_-]", "", f"carte_identite_{parcelle}_{uuid4().hex[:8]}")
     path = directory / f"{name}.pdf"
-    settings = QgsLayoutExporter.PdfExportSettings()
-    settings.dpi = 300
-    settings.forceVectorOutput = True
-    settings.rasterizeWholeImage = False
-    # The texts are kept as texts, not as outlines: they can be selected and searched in the PDF
-    settings.textRenderFormat = Qgis.TextRenderFormat.AlwaysText
-    result = QgsLayoutExporter(layout).exportToPdf(str(path), settings)
-    if result != QgsLayoutExporter.ExportResult.Success:
+    if not export_layouts(layouts, path, f"Carte d'identité de la parcelle {parcelle}"):
         return None
     return path
+
+
+def export_layouts(layouts: list[QgsPrintLayout], path: Path, title: str) -> bool:
+    """Write the layouts of one page each in a single PDF file, one page per layout.
+
+    It is what QgsLayoutExporter.exportToPdf does for the pages of a single layout, with the same settings:
+    vector output and texts kept as texts, so that they can be selected and searched in the PDF.
+
+    :param layouts: The layouts, of one page of PAGE_WIDTH x PAGE_HEIGHT each.
+    :param path: The PDF file.
+    :param title: The title in the metadata of the PDF.
+    :return: True if the file is written.
+    """
+    writer = QPdfWriter(str(path))
+    writer.setTitle(title)
+    writer.setCreator("QGIS - Cadastre")
+    writer.setResolution(PDF_DPI)
+    writer.setPageLayout(
+        QPageLayout(
+            QPageSize(QSizeF(PAGE_WIDTH, PAGE_HEIGHT), QPageSize.Unit.Millimeter),
+            QPageLayout.Orientation.Portrait,
+            QMarginsF(0, 0, 0, 0),
+        )
+    )
+    painter = QPainter()
+    if not painter.begin(writer):
+        return False
+    try:
+        for i, layout in enumerate(layouts):
+            # The settings of exportToPdf
+            context = layout.renderContext()
+            context.setDpi(PDF_DPI)
+            context.setFlag(QgsLayoutRenderContext.Flag.FlagForceVectorOutput, True)
+            context.setTextRenderFormat(Qgis.TextRenderFormat.AlwaysText)
+            if i > 0:
+                writer.newPage()
+            QgsLayoutExporter(layout).renderPage(painter, 0)
+    finally:
+        painter.end()
+    return True

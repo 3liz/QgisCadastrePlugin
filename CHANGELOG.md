@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* **Carte d'identité de la parcelle** : export PDF beaucoup plus rapide pour une parcelle avec beaucoup
+  de locaux, le temps augmentait comme le cube du nombre de pages : 1,3 seconde au lieu de 10 pour 73 pages
+
 * **Fiche parcellaire**, **carte d'identité** et **export CSV des locaux** : la surface des pièces, la catégorie
   et les lots sont lus une seule fois pour tous les locaux de la parcelle, et non plus pour chaque local.
   Une base sans les index de la version 2.5 n'est plus lente : environ 0,2 seconde pour 2 000 locaux,
