@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.5.3 - 2026-11-13
+
 * **Fiche parcellaire** en Spatialite : correction de la lenteur à l'ouverture, environ 10 secondes depuis
   la version 2.5.0, même pour une petite parcelle. La recherche de la table des paramètres de la fiche
   listait toutes les tables de la base, 5 fois par fiche #600 #602
