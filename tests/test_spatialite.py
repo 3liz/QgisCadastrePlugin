@@ -19,7 +19,7 @@ from cadastre.cadastre_export import CadastreExport
 from cadastre.export_csv import locaux_proprietaires_export, parcelles_proprietaires_export, recherche_spatiale
 from cadastre.cadastre_import import cadastreImport
 from cadastre.carte_identite import load_carte_identite
-from cadastre.upgrade import indexes_sql
+from cadastre.upgrade import run_sql
 from cadastre.cadastre_loading import CadastreLoading, LoadingOptions
 from cadastre.dialogs.database_widget import DatabaseWidget
 from cadastre.dialogs.search_dialog import CadastreSearchDialog
@@ -119,7 +119,7 @@ def test_import_and_load(connection_name: str, fixtures: Path, qgis_iface):
 
         # The SQL commands of the message after an update create a missing index
         database.execute("DROP INDEX idx_pev_local10")
-        database.execute(indexes_sql(postgis=False))
+        assert run_sql(database, [(2, 5, 3)]) > 0
         assert database.fetch("SELECT name FROM sqlite_master WHERE name = 'idx_pev_local10'")
 
         # The integer primary keys are returned by the queries: the QGIS connection drops them (issue #598)

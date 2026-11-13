@@ -5,6 +5,10 @@
 * **Fiche parcellaire** en Spatialite : correction de la lenteur à l'ouverture, environ 10 secondes depuis
   la version 2.5.0, même pour une petite parcelle. La recherche de la table des paramètres de la fiche
   listait toutes les tables de la base, 5 fois par fiche #600 #602
+* **Messages de mise à jour** et **Notes de version** : bouton « Exécuter le SQL » pour lancer les commandes
+  SQL d'une version, comme la création des index de la fiche, dans la base choisie (connexion, et schéma
+  pour PostgreSQL), qui n'est pas forcément celle du projet ouvert. En Spatialite, « Exécuter SQL » de QGIS
+  refuse plusieurs commandes à la fois. Le message des index de la fiche s'affiche de nouveau, avec ce bouton #602
 
 ## 2.5.2 - 2026-11-12
 

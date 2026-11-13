@@ -62,7 +62,7 @@ from cadastre.logger import Logger
 from cadastre.plausible import Plausible
 from cadastre.processing.provider import CadastreProvider
 from cadastre.tools import metadata_config, plugin_path, version, wait_cursor
-from cadastre.upgrade import release_notes, upgrade_message
+from cadastre.upgrade import release_notes, release_versions, upgrade_message, upgrade_versions
 
 
 class CadastreMenu:
@@ -510,7 +510,8 @@ class CadastreMenu:
         # The changelog is written in metadata.txt by the packaging only, not in the sources
         changelog = self.mConfig.get("general", "changelog", fallback=None)
         message = release_notes(version(), changelog, f"{URL_DOCUMENTATION}changelog/")
-        dialog = CadastreMessageDialog(self.iface, message)
+        # The SQL commands of the update messages can be run again, in another database for example
+        dialog = CadastreMessageDialog(self.iface, message, release_versions(version()))
         dialog.exec()
 
     def open_upgrade_dialog(self, first_use: bool):
@@ -529,9 +530,10 @@ class CadastreMenu:
         s.setValue("cadastre/version", current)
 
         # Without a recorded version, the plugin was used before the recording of the versions
-        message = upgrade_message(None if first_use else previous, current)
+        previous_version = None if first_use else previous
+        message = upgrade_message(previous_version, current)
         if message:
-            dialog = CadastreMessageDialog(self.iface, message)
+            dialog = CadastreMessageDialog(self.iface, message, upgrade_versions(previous_version, current))
             dialog.exec()
 
     def unload(self):
